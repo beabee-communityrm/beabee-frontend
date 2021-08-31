@@ -27,6 +27,8 @@
     "husky": "^7.0.2",
     "lint-staged": "^11.1.2",
     "prettier": "^2.3.2",
+    "stylelint": "^13.13.1",
+    "stylelint-config-standard": "^22.0.0",
     "typescript": "^4.3.2",
     "vite": "^2.5.1",
     "vue-tsc": "^0.2.2"
@@ -35,6 +37,7 @@
     "*.{ts,js,vue}": [
       "npm run lint:fix",
       "prettier --ignore-unknown --write"
-    ]
+    ],
+    "*.{css,scss,vue}": "npx stylelint"
   }
 }
