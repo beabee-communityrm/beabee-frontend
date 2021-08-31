@@ -1,5 +1,5 @@
 <template>
-    <h1>Beabee new frontend</h1>
+  <h1>Beabee new frontend test</h1>
 </template>
 
 <style>
