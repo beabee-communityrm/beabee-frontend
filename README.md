@@ -36,7 +36,7 @@ It also uses `husky` and `stage-lint` to lint the codes at pre-commit stage.
 `commitlint` is used to make sure the commit messages meet the conventional commit format.
 For more information you can check the [commitlint repository](https://github.com/conventional-changelog/commitlint#what-is-commitlint).
 
-### Ii8n
+### I18n
 
 `yaml` locale files should be added to `locales` directory. For example: `en.yaml`.
 
