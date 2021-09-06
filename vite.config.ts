@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import path from 'path';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
@@ -14,4 +16,9 @@ export default defineConfig({
       fullInstall: false,
     }),
   ],
+  server: {
+    host: process.env.HOST,
+    port: Number(process.env.PORT),
+    strictPort: true,
+  },
 });
