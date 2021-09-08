@@ -1,3 +1,11 @@
 <template>
-  <h1 class="text-center text-4xl mt-12">Beabee new frontend</h1>
+  <div class="flex flex-col min-h-screen md:flex-row">
+    <the-menu />
+
+    <div class="flex-grow bg-primary-5"></div>
+  </div>
 </template>
+
+<script lang="ts" setup>
+import TheMenu from './layouts/menu/TheMenu.vue';
+</script>

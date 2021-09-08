@@ -2,36 +2,48 @@ module.exports = {
   purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
     colors: {
       primary: {
-        light: 'var(--primary-light-color)',
-        DEFAULT: 'var(--primary-color)',
-        dark: 'var(--primary-dark-color)',
+        DEFAULT: 'var(--primary)',
+        5: 'var(--primary-5-color)',
+        10: 'var(--primary-10-color)',
+        20: 'var(--primary-20-color)',
+        40: 'var(--primary-40-color)',
+        70: 'var(--primary-70-color)',
+        80: 'var(--primary-80-color)',
+      },
+      grey: {
+        lighter: 'var(--grey-lighter-color)',
+        light: 'var(--grey-light-color)',
+        DEFAULT: 'var(--grey-color)',
+        dark: 'var(--grey-dark-color)',
+        darker: 'var(--grey-darker-color)',
+      },
+      link: {
+        DEFAULT: 'var(--link-color)',
+      },
+      info: {
+        DEFAULT: 'var(--info-color)',
+      },
+      warning: {
+        DEFAULT: 'var(--warning-color)',
       },
       success: {
-        light: 'var(--success-light-color)',
         DEFAULT: 'var(--success-color)',
-        dark: 'var(--success-dark-color)',
       },
       danger: {
-        light: 'var(--danger-light-color)',
         DEFAULT: 'var(--danger-color)',
-        dark: 'var(--danger-dark-color)',
-      },
-    },
-    textColor: {
-      dark: {
-        100: 'var(--secondary-dark-text-color)',
-        DEFAULT: 'var(--primary-dark-text-color)',
       },
       white: {
-        DEFAULT: 'var(--primary-white-text-color)',
+        DEFAULT: 'var(--white-color)',
       },
     },
     extend: {
       fontFamily: {
         body: 'var(--body-font)',
+      },
+      borderRadius: {
+        DEFAULT: '3px',
       },
     },
   },
