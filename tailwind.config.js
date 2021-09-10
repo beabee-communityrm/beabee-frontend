@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     colors: {
       primary: {
-        DEFAULT: 'var(--primary)',
+        DEFAULT: 'var(--primary-color)',
         5: 'var(--primary-5-color)',
         10: 'var(--primary-10-color)',
         20: 'var(--primary-20-color)',
