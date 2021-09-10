@@ -10,7 +10,7 @@
 
     <div class="flex items-center cursor-pointer" @click="showMenu">
       <span class="text-2xl underline text-primary">{{
-        route.meta.pageName
+        route.meta.pageTitle
       }}</span>
 
       <font-awesome-icon
