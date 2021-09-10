@@ -9,10 +9,10 @@
         </template>
 
         <template v-else>
-          <a
+          <router-link
             class="block px-4 py-1.5 rounded"
             :class="itemClassses(item.isSubsection)"
-            :href="item.href"
+            :to="item.href"
           >
             <font-awesome-icon
               class="inline-block mr-2"
@@ -20,7 +20,7 @@
               size="lg"
             />
             <span>{{ item.title }}</span>
-          </a>
+          </router-link>
         </template>
       </li>
     </ul>
@@ -39,8 +39,18 @@ defineProps({
 
 const itemClassses = (isSubsection: boolean | undefined) => {
   const classses = isSubsection
-    ? ['text-grey-dark', 'hover:bg-grey-lighter']
-    : ['text-primary-80', 'hover:bg-primary-5'];
+    ? ['setting-item', 'text-grey-dark', 'hover:bg-grey-lighter']
+    : ['menu-item', 'text-primary-80', 'hover:bg-primary-5'];
   return classses;
 };
 </script>
+
+<style scoped>
+.router-link-active.menu-item {
+  @apply bg-primary-20 text-primary;
+}
+
+.router-link-active.setting-item {
+  @apply bg-primary-5 text-grey-darker;
+}
+</style>

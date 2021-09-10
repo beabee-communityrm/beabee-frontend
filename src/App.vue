@@ -2,7 +2,9 @@
   <div class="flex flex-col min-h-screen md:flex-row">
     <the-menu />
 
-    <div class="flex-grow bg-primary-5"></div>
+    <div class="flex-grow bg-primary-5">
+      <router-view />
+    </div>
   </div>
 </template>
 

@@ -8,9 +8,10 @@
       @click="isMenuVisible = false"
     />
 
-    <!-- TODO: replace it with the name of the route -->
     <div class="flex items-center cursor-pointer" @click="showMenu">
-      <span class="text-2xl underline text-primary">Page name</span>
+      <span class="text-2xl underline text-primary">{{
+        route.meta.pageName
+      }}</span>
 
       <font-awesome-icon
         class="inline-block ml-4 -mt-2"
@@ -45,8 +46,12 @@
 
 <script lang="ts" setup>
 import { ref } from '@vue/reactivity';
+import { useRoute } from 'vue-router';
+
 import menu from './menu-list';
 import TheMenuList from './TheMenuList.vue';
+
+const route = useRoute();
 
 const isMenuVisible = ref(false);
 
@@ -72,6 +77,6 @@ const showMobileMenuStyle = {
 }
 
 .menu {
-  @apply absolute flex flex-col h-full p-4 pt-0 bg-white md:pt-4 w-60 transform transition-transform -translate-x-full md:transform-none;
+  @apply absolute md:static flex flex-col h-full p-4 pt-0 bg-white md:pt-4 w-60 transform transition-transform -translate-x-full md:transform-none;
 }
 </style>
