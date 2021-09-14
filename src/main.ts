@@ -9,16 +9,7 @@ import messages from '@intlify/vite-plugin-vue-i18n/messages';
 import './index.css';
 
 // fontawesome icons imports
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import {
-  faAddressCard as farAddressCard,
-  faBuilding as farBuilding,
-  faCalendarCheck as farCalendarCheck,
-  faCreditCard as farCreditCard,
-  faUser as farUser,
-} from '@fortawesome/free-regular-svg-icons';
-import { faSignInAlt, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import Icons from './plugins/icons';
 
 const app = createApp(App);
 
@@ -30,15 +21,6 @@ const i18n = createI18n({
 app.use({ ...i18n, ...router });
 
 // icons
-library.add(
-  farBuilding,
-  farUser,
-  farCalendarCheck,
-  farAddressCard,
-  farCreditCard,
-  faSignInAlt,
-  faCaretDown
-);
-app.component('FontAwesomeIcon', FontAwesomeIcon);
+app.use(Icons);
 
 app.mount('#app');
