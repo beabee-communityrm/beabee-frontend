@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
     inputs:
       stage:
@@ -20,7 +20,7 @@ jobs:
     steps:
       - id: setvars
         run: |
-          if [[ "${{ github.event.inputs.stage }}" == "dev" || "${{ github.ref }}" != "refs/heads/master" ]]; then
+          if [[ "${{ github.event.inputs.stage }}" == "dev" || "${{ github.ref }}" != "refs/heads/main" ]]; then
             echo "::set-output name=stage::dev"
             echo "::set-output name=tag::dev"
           else
