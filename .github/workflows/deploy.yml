@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       stage:
-        description: "Stage"
+        description: 'Stage'
         required: true
-        default: "dev"
+        default: 'dev'
 
 jobs:
   init:
