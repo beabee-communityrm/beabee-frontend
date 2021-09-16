@@ -29,3 +29,11 @@ informationPage:
       address:
         required: 'This field is required if you want to add address'
       aggregator: 'Something is missing! Please check the fields above.'
+
+menu:
+  home: 'Home'
+  yourProfile: 'Your profile'
+  callouts: 'Callouts'
+  settings: 'Settings'
+  yourInformation: 'Your information'
+  contributions: 'Contributions'
