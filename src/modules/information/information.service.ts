@@ -23,7 +23,7 @@ const updateInformation = (
         deliveryAddress: {
           line1: updateInformation.addressLine1,
           line2: updateInformation.addressLine2,
-          cityOrTown: updateInformation.cityOrTown,
+          city: updateInformation.cityOrTown,
           postcode: updateInformation.postCode,
         },
       },

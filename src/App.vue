@@ -10,15 +10,4 @@
 
 <script lang="ts" setup>
 import TheMenu from './layouts/menu/TheMenu.vue';
-
-// hacky wayt to authenticate. It should get romoved
-// when we add authentication to the current code base
-// TODO: move it to router file when implementing
-// auth functionality
-import axios from './axios';
-const axiosLoginInstance = axios.create({
-  baseURL: '/login',
-  withCredentials: true,
-});
-axiosLoginInstance.get('/as/member').catch((err) => err);
 </script>
