@@ -38,7 +38,26 @@ For more information you can check the [commitlint repository](https://github.co
 
 ### I18n
 
-`yaml` locale files should be added to `locales` directory. For example: `en.yaml`.
+Use `scripts/i18n.py` to generate your locales. It takes a CSV of the form:
+
+```
+key,lang1,lang2,lang3
+common.yes,Yes,Ya,Oui
+common.no,No,Nein,Non
+```
+
+It will generate a `locales/<lang>.json` file for each header except `key`,
+which is used to build the JSON object. For the above example it would create
+a file called `locales/lang1.json` with the following:
+
+```json
+{
+  "common": {
+    "no": "No",
+    "yes": "Yes"
+  }
+}
+```
 
 In Vue files:
 
@@ -59,11 +78,4 @@ export default defineComponent({
 });
 </script>
 ```
-
-In locale file (e.g. en.yaml):
-
-```yaml
-hello: 'Hello World!'
-```
-
 For more information check [vue-i18n vite plugin](https://github.com/intlify/bundle-tools/tree/main/packages/vite-plugin-vue-i18n#intlifyvite-plugin-vue-i18n)
