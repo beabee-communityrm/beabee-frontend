@@ -1,0 +1,31 @@
+informationPage:
+  title: 'Your information'
+  subTitle: 'All information in this page is private.'
+  loginDetail: 'Login details'
+  contactInformation: 'Contact information'
+
+  form:
+    email: 'Email'
+    password: 'Password'
+    passwordInfo: 'Set a secure password: 8+ characters, at least one number, one uppercase and one lowercase letters.'
+    firstName: 'First name'
+    lastName: 'Last name'
+    addressLine1: 'Address line 1'
+    addressLine2: 'Address line 2'
+    cityOrTown: 'City/Town'
+    postCode: 'Postcode'
+    saveChanges: 'Save Changes'
+
+    errors:
+      email:
+        required: 'Email is required'
+        invalid: 'Invalid email address'
+      password:
+        invalid: 'Invalid password'
+      firstName:
+        required: 'First name is required'
+      lastName:
+        required: 'Last name is required'
+      address:
+        required: 'This field is required if you want to add address'
+      aggregator: 'Something is missing! Please check the fields above.'

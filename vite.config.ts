@@ -14,4 +14,15 @@ export default defineConfig({
       fullInstall: false,
     }),
   ],
+  server: {
+    proxy: {
+      '^/(api|login)': {
+        target: 'https://dev.beabee.io',
+        changeOrigin: true,
+        cookieDomainRewrite: {
+          'dev.beabee.io': 'localhost',
+        },
+      },
+    },
+  },
 });

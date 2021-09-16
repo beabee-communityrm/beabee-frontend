@@ -6,7 +6,11 @@ import {
   faCreditCard as farCreditCard,
   faUser as farUser,
 } from '@fortawesome/free-regular-svg-icons';
-import { faSignInAlt, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSignInAlt,
+  faCaretDown,
+  faExclamation,
+} from '@fortawesome/free-solid-svg-icons';
 
 library.add(
   farBuilding,
@@ -15,7 +19,8 @@ library.add(
   farAddressCard,
   farCreditCard,
   faSignInAlt,
-  faCaretDown
+  faCaretDown,
+  faExclamation
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

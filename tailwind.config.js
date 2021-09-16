@@ -33,6 +33,9 @@ module.exports = {
       },
       danger: {
         DEFAULT: 'var(--danger-color)',
+        10: 'var(--danger-10-color)',
+        30: 'var(--danger-30-color)',
+        70: 'var(--danger-70-color)',
       },
       white: {
         DEFAULT: 'var(--white-color)',
