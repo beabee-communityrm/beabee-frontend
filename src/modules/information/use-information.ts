@@ -126,7 +126,7 @@ const setInformation = async () => {
   information.firstName = informationData.firstname;
   information.lastName = informationData.lastname;
 
-  const address = informationData.profile.deliveryAddress;
+  const address = informationData.profile?.deliveryAddress;
   if (address) {
     information.addressLine1 = address?.line1;
     information.addressLine2 = address?.line2;
