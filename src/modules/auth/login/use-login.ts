@@ -33,11 +33,12 @@ const hasLoginError = computed(() => {
 
 const loginValidation = useVuelidate(loginRules, loginData);
 
-const submitLogin = async (router: Router) => {
+const submitLogin = async (router: Router, redirectTo: string) => {
   loading.value = true;
   login(loginData)
     .then(() => {
-      router.push('/profile');
+      localStorage.setItem('isAuthenticated', 'true');
+      redirectTo ? router.push(redirectTo) : router.push('/profile');
     })
     .catch((err) => err)
     .finally(() => (loading.value = false));

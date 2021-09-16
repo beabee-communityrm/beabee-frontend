@@ -21,4 +21,18 @@ const router = createRouter({
   },
 });
 
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+
+  const isAuthPath = new RegExp('^/(auth|join)').test(to.path);
+
+  const redirectTo = isAuthPath ? null : to.path;
+
+  if (!isAuthenticated && !isAuthPath) {
+    next({ path: '/auth/login', query: { redirectTo } });
+  } else {
+    next();
+  }
+});
+
 export default router;

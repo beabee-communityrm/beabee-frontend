@@ -40,7 +40,7 @@
     <AppButton
       variant="link"
       :disabled="isLoginInvalid || loading"
-      @click="submitLogin(router)"
+      @click="submitLogin(router, redirectTo)"
       >{{ t('login.login') }}</AppButton
     >
   </form>
@@ -52,12 +52,14 @@ import AppButton from '../../../components/forms/AppButton.vue';
 import ErrorAggregator from '../../../components/forms/ErrorAggregator.vue';
 import { errorGenerator } from '../../../utils/form-error-generator';
 import { useLogin } from './use-login';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
 const router = useRouter();
+const route = useRoute();
+const redirectTo = route.query.redirectTo as string;
 
 const {
   loginData,
