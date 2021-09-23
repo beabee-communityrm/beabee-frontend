@@ -2,7 +2,7 @@ import { RouteLocationNormalized, RouteRecordRaw } from 'vue-router';
 
 export const notFoundRoute: Array<RouteRecordRaw> = [
   {
-    path: '/:pathMatch(profile|callouts)?/:pathMatch(.*)*',
+    path: '/:path1(profile|callouts)?/:pathRest(.*)*',
     component: () => import('./notFound.vue'),
   },
   {
