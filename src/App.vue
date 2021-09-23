@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-col min-h-screen md:flex-row">
+  <div class="flex flex-col min-h-screen md:flex-row text-primary relative">
     <the-menu />
 
-    <div class="flex-grow bg-primary-5">
+    <main class="flex-grow px-4 pt-5 pb-24 bg-primary-5 md:pt-14 md:px-10">
       <router-view />
-    </div>
+    </main>
   </div>
 </template>
 

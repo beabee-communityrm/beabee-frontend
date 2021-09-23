@@ -1,18 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { informationRoute } from '../modules/information/information.route';
 
-const routes: RouteRecordRaw[] = [
-  {
-    path: '/',
-    redirect: '/profile',
-  },
-  {
-    path: '/profile',
-    component: () => import('../components/Profile.vue'),
-    meta: {
-      pageTitle: 'Your profile',
-    },
-  },
-];
+// routes
+
+const routes: RouteRecordRaw[] = [...informationRoute];
 
 const router = createRouter({
   history: createWebHistory(),

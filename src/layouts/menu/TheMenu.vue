@@ -9,12 +9,12 @@
     />
 
     <div class="flex items-center cursor-pointer" @click="showMenu">
-      <span class="text-2xl underline text-primary">{{
-        route.meta.pageTitle
-      }}</span>
+      <h1 class="text-2xl underline">
+        {{ route.meta.pageTitle }}
+      </h1>
 
       <font-awesome-icon
-        class="inline-block ml-4 -mt-2"
+        class="inline-block ml-2 -mt-2"
         :icon="['fas', 'caret-down']"
       />
     </div>
@@ -35,10 +35,13 @@
 
     <the-menu-list :menu-items="menu" />
 
-    <div class="mt-auto mb-8 sm:mb-10 text-primary-80">
+    <div class="mt-auto mb-6 sm:mb-10 text-primary-80">
       <a href="">
-        <font-awesome-icon :icon="['fas', 'sign-in-alt']" />
-        Log out
+        <font-awesome-icon
+          class="inline-block mr-2 h-4"
+          :icon="['fas', 'sign-in-alt']"
+        />
+        <span>Log out</span>
       </a>
     </div>
   </div>
@@ -77,6 +80,8 @@ const showMobileMenuStyle = {
 }
 
 .menu {
-  @apply absolute md:static flex flex-col h-full p-4 pt-0 bg-white md:pt-4 w-60 transform transition-transform -translate-x-full md:transform-none;
+  @apply absolute md:static flex flex-col p-4 pt-0 bottom-0 bg-white md:pt-4 transform transition-transform -translate-x-full md:transform-none;
+
+  min-width: 240px;
 }
 </style>
