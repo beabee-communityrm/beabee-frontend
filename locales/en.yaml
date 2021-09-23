@@ -1,6 +1,6 @@
 informationPage:
   title: 'Your information'
-  subTitle: 'All information in this page is private.'
+  subTitle: 'Required fields are marked with an asterisk. All information submitted here is private.'
   loginDetail: 'Login details'
   contactInformation: 'Contact information'
 

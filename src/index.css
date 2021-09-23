@@ -1,5 +1,6 @@
 @import './assets/styles/vars.css';
-@import '@fontsource/open-sans';
+@import '@fontsource/open-sans/400.css';
+@import '@fontsource/open-sans/600.css';
 
 @tailwind base;
 @tailwind components;

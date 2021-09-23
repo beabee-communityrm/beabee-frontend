@@ -48,6 +48,12 @@ module.exports = {
       borderRadius: {
         DEFAULT: '3px',
       },
+      lineHeight: {
+        tight: '1.3',
+      },
+      screens: {
+        xl: '1400px',
+      },
     },
   },
   variants: {

@@ -99,6 +99,8 @@ const rules = computed(() => ({
   },
 }));
 
+const isFormInvalid = computed(() => v$.value.$invalid);
+
 const touchAddressFields = () => {
   v$.value.addressLine1.$touch();
   v$.value.addressLine2.$touch();
@@ -125,6 +127,7 @@ const setInformation = async () => {
   information.emailAddress = informationData.email;
   information.firstName = informationData.firstname;
   information.lastName = informationData.lastname;
+  // for validating form on load
 
   const address = informationData.profile?.deliveryAddress;
   if (address) {
@@ -143,5 +146,6 @@ export function useInformation() {
     submitFormHandler,
     touchAddressFields,
     setInformation,
+    isFormInvalid,
   };
 }

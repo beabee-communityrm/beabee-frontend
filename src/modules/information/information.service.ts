@@ -16,7 +16,7 @@ const updateInformation = (
   return axios
     .put('/member/me', {
       email: updateInformation.emailAddress,
-      fristname: updateInformation.firstName,
+      firstname: updateInformation.firstName,
       lastname: updateInformation.lastName,
       password: updateInformation.password,
       profile: {

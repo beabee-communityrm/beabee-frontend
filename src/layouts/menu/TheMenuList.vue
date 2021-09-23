@@ -10,12 +10,12 @@
 
         <template v-else>
           <router-link
-            class="block px-4 py-1.5 rounded"
+            class="px-4 py-1.5 rounded flex items-center"
             :class="itemClassses(item.isSubsection)"
             :to="item.href"
           >
             <font-awesome-icon
-              class="inline-block mr-2"
+              class="inline-block mr-2 h-4"
               :icon="['far', item.icon]"
               size="lg"
             />

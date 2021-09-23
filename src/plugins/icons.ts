@@ -10,6 +10,7 @@ import {
   faSignInAlt,
   faCaretDown,
   faExclamation,
+  faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -20,6 +21,7 @@ library.add(
   farCreditCard,
   faSignInAlt,
   faCaretDown,
+  faInfoCircle,
   faExclamation
 );
 

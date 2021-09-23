@@ -1,6 +1,6 @@
 <template>
   <button
-    class="px-5 py-2 text-white rounded"
+    class="px-5 py-2 text-white rounded bg-link"
     :disabled="disabled"
     :class="statusClasses"
   >
@@ -19,8 +19,6 @@ const props = defineProps({
 });
 
 const statusClasses = computed(() => {
-  return props.disabled
-    ? ['bg-primary-20', 'cursor-not-allowed']
-    : ['bg-primary-70', 'hover:bg-primary-80'];
+  return props.disabled ? 'cursor-not-allowed' : null;
 });
 </script>

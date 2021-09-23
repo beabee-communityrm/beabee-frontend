@@ -25,5 +25,7 @@
   --danger-30-color: #edb6b6;
   --danger-70-color: #edb6b6;
   --white-color: #fff;
-  --body-font: 'Open Sans, sans-serif';
+  --body-font: 'Open Sans', sans-serif;
+  --input-focus-box-shadow-size: 0 0 0 0.125em;
+  --input-focus-box-shadow-color: rgba(67, 167, 150, 0.25);
 }

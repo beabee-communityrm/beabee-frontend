@@ -7,13 +7,13 @@
   <h2 class="mb-3 text-lg font-bold">{{ t('informationPage.loginDetail') }}</h2>
 
   <form @submit.prevent>
-    <div class="grid md:grid-cols-2">
+    <div class="grid lg:grid-cols-2 xl:grid-cols-3">
       <div>
         <div class="mb-5">
           <app-input
             v-model="information.emailAddress"
             input-type="email"
-            :label="t('informationPage.form.email')"
+            :label="t('informationPage.form.email') + '*'"
             :error-message="errorGenerator('emailAddress')"
             @blur="v$.emailAddress.$touch"
             @update:modelValue="v$.emailAddress.$touch"
@@ -39,7 +39,7 @@
           <app-input
             v-model="information.firstName"
             input-type="text"
-            :label="t('informationPage.form.firstName')"
+            :label="t('informationPage.form.firstName') + '*'"
             :error-message="errorGenerator('firstName')"
             @blur="v$.firstName.$touch"
           />
@@ -49,7 +49,7 @@
           <app-input
             v-model="information.lastName"
             input-type="text"
-            :label="t('informationPage.form.lastName')"
+            :label="t('informationPage.form.lastName') + '*'"
             :error-message="errorGenerator('lastName')"
             @blur="v$.lastName.$touch"
           />
@@ -96,16 +96,16 @@
           </div>
         </div>
 
-        <error-aggregator v-if="hasError" />
+        <error-aggregator v-if="isFormInvalid" class="mt-2" />
+
+        <app-button
+          :disabled="isFormInvalid"
+          class="mt-5 w-full"
+          @click="submitFormHandler"
+          >{{ t('informationPage.form.saveChanges') }}</app-button
+        >
       </div>
     </div>
-
-    <app-button
-      :disabled="isButtonDisabled"
-      class="mt-11"
-      @click="submitFormHandler"
-      >{{ t('informationPage.form.saveChanges') }}</app-button
-    >
   </form>
 </template>
 
@@ -115,7 +115,6 @@ import AppInput from '../../components/forms/AppInput.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import ErrorAggregator from '../../components/forms/ErrorAggregator.vue';
 import { useI18n } from 'vue-i18n';
-import { computed } from '@vue/reactivity';
 import { useInformation } from './use-information';
 import { onMounted } from '@vue/runtime-core';
 
@@ -126,12 +125,10 @@ const {
   submitFormHandler,
   touchAddressFields,
   setInformation,
+  isFormInvalid,
 } = useInformation();
 
 onMounted(setInformation);
 
 const { t } = useI18n();
-
-const isButtonDisabled = computed(() => v$.value.$invalid);
-const hasError = computed(() => v$.value.$errors.length);
 </script>

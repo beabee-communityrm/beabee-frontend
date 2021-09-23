@@ -1,25 +1,31 @@
 <template>
-  <label class="block mb-1 font-medium" :for="inputType"
+  <label class="block mb-1.5 font-semibold" :for="inputType"
     >{{ label }}
-
-    <input
-      :id="inputType"
-      class="px-2.5 w-full py-2.5 border border-primary-40 rounded"
-      :type="inputType"
-      :class="dangerClasses"
-      :value="modelValue"
-      v-bind="$attrs"
-      @input="$emit('update:modelValue', handleInput($event))"
-    />
   </label>
+  <input
+    :id="inputType"
+    class="p-2 w-full border border-primary-40 rounded focus:outline-none input"
+    :type="inputType"
+    :class="dangerClasses"
+    :value="modelValue"
+    v-bind="$attrs"
+    @input="$emit('update:modelValue', handleInput($event))"
+  />
 
-  <div v-if="errorMessage" class="absolute text-xs text-danger" role="alert">
+  <div
+    v-if="errorMessage"
+    class="text-xs text-danger font-semibold mt-1.5"
+    role="alert"
+  >
     {{ errorMessage }}
   </div>
 
-  <div v-if="infoMessage" class="mt-5 text-xs">
+  <div v-if="infoMessage" class="mt-2 text-xs">
     <div class="flex text-primary-80">
-      <font-awesome-icon class="text-xl" :icon="['fas', 'info-circle']" />
+      <font-awesome-icon
+        class="text-xl -mt-0.5"
+        :icon="['fas', 'info-circle']"
+      />
 
       <span class="ml-1">{{ infoMessage }}</span>
     </div>
@@ -65,3 +71,10 @@ const handleInput = (event: Event) => {
   return (event.target as HTMLInputElement).value;
 };
 </script>
+
+<style scoped>
+.input:focus {
+  box-shadow: var(--input-focus-box-shadow-size)
+    var(--input-focus-box-shadow-color);
+}
+</style>
