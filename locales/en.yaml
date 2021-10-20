@@ -1,34 +1,38 @@
+common:
+  month: 'month'
+  year: 'year'
+  monthly: 'Monthly'
+  annually: 'Annually'
+form:
+  email: 'Email'
+  password: 'Password'
+  passwordInfo: 'Set a secure password: 8+ characters at least one number  one uppercase and one lowercase letters.'
+  firstName: 'First name'
+  lastName: 'Last name'
+  addressLine1: 'Address line 1'
+  addressLine2: 'Address line 2'
+  cityOrTown: 'City/Town'
+  postCode: 'Postcode'
+  saveChanges: 'Save Changes'
+  errors:
+    email:
+      required: 'Email is required'
+      invalid: 'Invalid email address'
+    password:
+      invalid: 'Invalid password'
+    firstName:
+      required: 'First name is required'
+    lastName:
+      required: 'Last name is required'
+    address:
+      required: 'This field is required if you want to add address'
+    aggregator: 'Something is missing! Please check the fields above.'
+
 informationPage:
   title: 'Your information'
   subTitle: 'Required fields are marked with an asterisk. All information submitted here is private.'
   loginDetail: 'Login details'
   contactInformation: 'Contact information'
-
-  form:
-    email: 'Email'
-    password: 'Password'
-    passwordInfo: 'Set a secure password: 8+ characters, at least one number, one uppercase and one lowercase letters.'
-    firstName: 'First name'
-    lastName: 'Last name'
-    addressLine1: 'Address line 1'
-    addressLine2: 'Address line 2'
-    cityOrTown: 'City/Town'
-    postCode: 'Postcode'
-    saveChanges: 'Save Changes'
-
-    errors:
-      email:
-        required: 'Email is required'
-        invalid: 'Invalid email address'
-      password:
-        invalid: 'Invalid password'
-      firstName:
-        required: 'First name is required'
-      lastName:
-        required: 'Last name is required'
-      address:
-        required: 'This field is required if you want to add address'
-      aggregator: 'Something is missing! Please check the fields above.'
 
 menu:
   home: 'Home'
@@ -37,3 +41,36 @@ menu:
   settings: 'Settings'
   yourInformation: 'Your information'
   contributions: 'Contributions'
+
+join:
+  minimumContribution: 'Minimum contribution is'
+  memberAccount: 'Member account'
+  memberAlready: 'Are you a member already?'
+  login: 'Log in'
+  absorbFeeOptIn: "Yes, I'll absorb the {fee} fee."
+  absorbFeeText: 'Our payment processor charges us per transaction which means we receive less from monthly contributions. Are you happy to absorb the {fee} transaction fee?  Alternatively you could pay annually.'
+  contribute: 'Contribute {amount} {period}'
+  notice: 'By proceeding you are accepting the'
+  privacy: 'Privacy Policy'
+  errors:
+    confirmEmail:
+      message: 'Your payment is complete. Check your {email} inbox for a link to finish this process.'
+      proceed: "We've sent you an email please click the link to proceed"
+      title: "You're almost done!"
+    duplicateEmail:
+      message: 'This email address is already registered you can login to proceed.'
+      title: 'Duplicate email address'
+
+    failed:
+      backToJoin: 'Back to join page'
+      message: 'There was a problem setting up your membership our team has been notified. Please contact support if the problem persists.'
+      title: 'Something went wrong'
+
+    restartMembership:
+      message: 'This email address is associated with an expired membership thanks for rejoining!<br>For security reasons we need to check you have access to the email address before restarting your membership.'
+      title: 'Restart your membership'
+
+joinSetup:
+  confirmDetails: 'Please confirm your details'
+  continue: 'All good! Continue'
+  welcome: 'Welcome {firstName}!'
