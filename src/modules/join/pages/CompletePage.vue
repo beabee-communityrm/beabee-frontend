@@ -1,0 +1,1 @@
+<template>Completing signup</template>

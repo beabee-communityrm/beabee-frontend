@@ -1,5 +1,17 @@
 module.exports = {
-  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  purge: {
+    content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+    // TODO: dynamic classes for `AppButton`. Check if this is there is
+    // a better way to implement this
+    safelist: [
+      'bg-primary',
+      'bg-link',
+      'border-primary',
+      'border-link',
+      'text-primary',
+      'text-link',
+    ],
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
@@ -20,6 +32,7 @@ module.exports = {
         darker: 'var(--grey-darker-color)',
       },
       link: {
+        light: 'var(--link-light-color)',
         DEFAULT: 'var(--link-color)',
       },
       info: {
@@ -53,6 +66,9 @@ module.exports = {
       },
       screens: {
         xl: '1400px',
+      },
+      zIndex: {
+        '-1': '-1',
       },
     },
   },

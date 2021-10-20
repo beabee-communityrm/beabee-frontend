@@ -34,6 +34,7 @@
 
 <script lang="ts" setup>
 import { computed, Ref } from '@vue/reactivity';
+import handleInput from '../../utils/handle-input';
 
 const props = defineProps({
   modelValue: {
@@ -66,10 +67,6 @@ defineEmits(['update:modelValue']);
 const dangerClasses = computed(() => {
   return props.errorMessage ? ['bg-danger-10', 'border-danger-70'] : null;
 });
-
-const handleInput = (event: Event) => {
-  return (event.target as HTMLInputElement).value;
-};
 </script>
 
 <style scoped>
