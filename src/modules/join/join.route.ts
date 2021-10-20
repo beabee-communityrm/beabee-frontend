@@ -29,9 +29,13 @@ export const joinRoute: Array<RouteRecordRaw> = [
     },
     beforeEnter(to, from, next) {
       const redirectFlowId = to.query.redirect_flow_id;
-      completeSignUp(redirectFlowId).then(() => {
-        next('/join/confirm-email');
-      });
+      completeSignUp(redirectFlowId)
+        .then(() => {
+          next('/join/confirm-email');
+        })
+        .catch(() => {
+          next('/join/failed');
+        });
     },
   },
   {
