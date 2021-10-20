@@ -22,12 +22,13 @@ const completeSignUp = (
 ): Promise<any> => {
   return axios.post('/signup/complete', {
     redirectFlowId,
+    confirmUrl: import.meta.env.VITE_APP_BASE_URL + '/join/confirm-email',
   });
 };
 
 const confirmEmail = (id: string | string[]): Promise<any> => {
   return axios.post('/signup/confirm-email', {
-    restartFlowId: id,
+    joinFlowId: id,
   });
 };
 

@@ -29,18 +29,9 @@ export const joinRoute: Array<RouteRecordRaw> = [
     },
     beforeEnter(to, from, next) {
       const redirectFlowId = to.query.redirect_flow_id;
-      completeSignUp(redirectFlowId)
-        .then(() => {
-          next('/join/setup');
-        })
-        .catch((error) => {
-          const responseDataCode = error.response.data.code;
-          if (error.response && responseDataCode) {
-            next(`/join/${responseDataCode}`);
-          } else {
-            next('/join/failed');
-          }
-        });
+      completeSignUp(redirectFlowId).then(() => {
+        next('/join/confirm-email');
+      });
     },
   },
   {
@@ -59,10 +50,14 @@ export const joinRoute: Array<RouteRecordRaw> = [
       const { id } = to.params;
       confirmEmail(id)
         .then(() => {
-          next('/profile');
+          next('/join/setup');
         })
-        .catch(() => {
-          next('/join/failed');
+        .catch((error) => {
+          if (error.response?.data?.code === 'duplicate-email') {
+            next('/join/duplicate-email');
+          } else {
+            next('/join/failed');
+          }
         });
     },
   },
