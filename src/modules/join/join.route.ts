@@ -77,12 +77,4 @@ export const joinRoute: Array<RouteRecordRaw> = [
       layout: 'Splash',
     },
   },
-  {
-    path: '/join/restart-membership',
-    name: 'restart membership',
-    component: () => import('./pages/RestartMembershipPage.vue'),
-    meta: {
-      layout: 'Splash',
-    },
-  },
 ];
