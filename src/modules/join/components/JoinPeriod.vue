@@ -20,7 +20,7 @@
         color="link"
         class="font-bold"
         :outlined="period.name !== signUpData.period"
-        :class="{ 'hover:bg-link-light': period.name !== signUpData.period }"
+        :class="{ 'hover:bg-link-10': period.name !== signUpData.period }"
         tag="span"
       >
         {{
