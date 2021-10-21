@@ -1,8 +1,13 @@
 module.exports = {
-  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  purge: {
+    content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
+      black: {
+        DEFAULT: 'var(--black-color)',
+      },
       primary: {
         DEFAULT: 'var(--primary-color)',
         5: 'var(--primary-5-color)',
@@ -20,6 +25,7 @@ module.exports = {
         darker: 'var(--grey-darker-color)',
       },
       link: {
+        light: 'var(--link-light-color)',
         DEFAULT: 'var(--link-color)',
       },
       info: {
@@ -40,6 +46,9 @@ module.exports = {
       white: {
         DEFAULT: 'var(--white-color)',
       },
+      boxShadow: {
+        DEFAULT: '0 0 8px 0 rgba(0, 0, 0, 0.2)',
+      },
     },
     extend: {
       fontFamily: {
@@ -53,6 +62,21 @@ module.exports = {
       },
       screens: {
         xl: '1400px',
+      },
+      zIndex: {
+        '-1': '-1',
+      },
+      padding: {
+        4.5: '1.125rem',
+      },
+      width: {
+        76: '19rem',
+      },
+      height: {
+        7.5: '1.875rem',
+      },
+      boxShadow: {
+        DEFAULT: '0 0 8px 0 rgba(0, 0, 0, 0.2)',
       },
     },
   },

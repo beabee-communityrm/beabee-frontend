@@ -4,6 +4,8 @@ import { computed, reactive } from 'vue';
 import i18n from '../../i18n';
 import { fetchInformation, updateInformation } from './information.service';
 import { Information, UpdateInformation } from './information.interface';
+import { passwordValidator } from '../../utils/form-validators/password-validator';
+import { errorGenerator } from '../../utils/form-error-generator';
 
 const { t } = i18n.global;
 
@@ -18,49 +20,30 @@ const information = reactive<UpdateInformation>({
   postCode: '',
 });
 
-const addressFieldError = t('informationPage.form.errors.address.required');
-const mustBeValidPassword = (value: string) => {
-  // validates only if user enters password
-  if (!value) return true;
-  return (
-    value.length >= 8 &&
-    /[0-9]/.test(value) &&
-    /[A-Z]/.test(value) &&
-    /[a-z]/.test(value)
-  );
-};
+const addressFieldError = t('form.errors.address.required');
 
 const rules = computed(() => ({
   emailAddress: {
-    required: helpers.withMessage(
-      t('informationPage.form.errors.email.required'),
-      required
-    ),
-    email: helpers.withMessage(
-      t('informationPage.form.errors.email.invalid'),
-      email
-    ),
+    required: helpers.withMessage(t('form.errors.email.required'), required),
+    email: helpers.withMessage(t('form.errors.email.invalid'), email),
   },
 
   password: {
     validPassword: helpers.withMessage(
-      t('informationPage.form.errors.password.invalid'),
-      mustBeValidPassword
+      t('form.errors.password.invalid'),
+      passwordValidator
     ),
   },
 
   firstName: {
     required: helpers.withMessage(
-      t('informationPage.form.errors.firstName.required'),
+      t('form.errors.firstName.required'),
       required
     ),
   },
 
   lastName: {
-    required: helpers.withMessage(
-      t('informationPage.form.errors.lastName.required'),
-      required
-    ),
+    required: helpers.withMessage(t('form.errors.lastName.required'), required),
   },
 
   addressLine1: {
@@ -106,12 +89,6 @@ const touchAddressFields = () => {
   v$.value.addressLine2.$touch();
   v$.value.cityOrTown.$touch();
   v$.value.postCode.$touch();
-};
-
-const errorGenerator = (validationProperty: string) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  return v$.value[validationProperty].$errors[0]?.$message;
 };
 
 const v$ = useVuelidate(rules, information);

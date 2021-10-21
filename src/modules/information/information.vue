@@ -13,10 +13,9 @@
           <app-input
             v-model="information.emailAddress"
             input-type="email"
-            :label="t('informationPage.form.email') + '*'"
-            :error-message="errorGenerator('emailAddress')"
+            :label="t('form.email') + '*'"
+            :error-message="errorGenerator(v$, 'emailAddress')"
             @blur="v$.emailAddress.$touch"
-            @update:modelValue="v$.emailAddress.$touch"
           />
         </div>
 
@@ -24,9 +23,9 @@
           <app-input
             v-model="information.password"
             input-type="password"
-            :label="t('informationPage.form.password')"
-            :info-message="t('informationPage.form.passwordInfo')"
-            :error-message="errorGenerator('password')"
+            :label="t('form.password')"
+            :info-message="t('form.passwordInfo')"
+            :error-message="errorGenerator(v$, 'password')"
             @blur="v$.password.$touch"
           />
         </div>
@@ -39,8 +38,8 @@
           <app-input
             v-model="information.firstName"
             input-type="text"
-            :label="t('informationPage.form.firstName') + '*'"
-            :error-message="errorGenerator('firstName')"
+            :label="t('form.firstName') + '*'"
+            :error-message="errorGenerator(v$, 'firstName')"
             @blur="v$.firstName.$touch"
           />
         </div>
@@ -49,8 +48,8 @@
           <app-input
             v-model="information.lastName"
             input-type="text"
-            :label="t('informationPage.form.lastName') + '*'"
-            :error-message="errorGenerator('lastName')"
+            :label="t('form.lastName') + '*'"
+            :error-message="errorGenerator(v$, 'lastName')"
             @blur="v$.lastName.$touch"
           />
         </div>
@@ -59,8 +58,8 @@
           <app-input
             v-model="information.addressLine1"
             input-type="text"
-            :label="t('informationPage.form.addressLine1')"
-            :error-message="errorGenerator('addressLine1')"
+            :label="t('form.addressLine1')"
+            :error-message="errorGenerator(v$, 'addressLine1')"
             @update:modelValue="touchAddressFields"
           />
         </div>
@@ -69,7 +68,7 @@
           <app-input
             v-model="information.addressLine2"
             input-type="text"
-            :label="t('informationPage.form.addressLine2')"
+            :label="t('form.addressLine2')"
             @update:modelValue="touchAddressFields"
           />
         </div>
@@ -79,8 +78,8 @@
             <app-input
               v-model="information.cityOrTown"
               input-type="text"
-              :label="t('informationPage.form.cityOrTown')"
-              :error-message="errorGenerator('cityOrTown')"
+              :label="t('form.cityOrTown')"
+              :error-message="errorGenerator(v$, 'cityOrTown')"
               @update:modelValue="touchAddressFields"
             />
           </div>
@@ -89,8 +88,8 @@
             <app-input
               v-model="information.postCode"
               input-type="text"
-              :label="t('informationPage.form.postCode')"
-              :error-message="errorGenerator('postCode')"
+              :label="t('form.postCode')"
+              :error-message="errorGenerator(v$, 'postCode')"
               @update:modelValue="touchAddressFields"
             />
           </div>
@@ -101,8 +100,9 @@
         <app-button
           :disabled="isFormInvalid"
           class="mt-5 w-full"
+          color="link"
           @click="submitFormHandler"
-          >{{ t('informationPage.form.saveChanges') }}</app-button
+          >{{ t('form.saveChanges') }}</app-button
         >
       </div>
     </div>

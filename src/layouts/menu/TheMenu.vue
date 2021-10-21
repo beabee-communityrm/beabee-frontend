@@ -23,7 +23,7 @@
     <img class="w-11" src="../../assets/images/logo.png" alt="Newsroom logo" />
   </div>
 
-  <div class="menu" :style="isMenuVisible ? showMobileMenuStyle : ''">
+  <div class="menu-container" :style="isMenuVisible ? showMobileMenuStyle : ''">
     <div class="hidden mt-12 mb-16 text-center md:block">
       <!-- logo on bigger screens -->
       <img
@@ -34,16 +34,6 @@
     </div>
 
     <the-menu-list :menu-items="menu" />
-
-    <div class="mt-auto mb-6 sm:mb-10 text-primary-80">
-      <a href="">
-        <font-awesome-icon
-          class="inline-block mr-2 h-4"
-          :icon="['fas', 'sign-in-alt']"
-        />
-        <span>Log out</span>
-      </a>
-    </div>
   </div>
 </template>
 
@@ -69,18 +59,11 @@ const showMobileMenuStyle = {
 
 <style scoped>
 .overlay {
-  position: fixed;
-  background: rgba(0, 0, 0, 0.3);
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 240px;
-  bottom: 0;
-  right: 0;
+  @apply z-40 fixed w-full h-full top-0 bottom-0 right-0 left-60 opacity-30 bg-black;
 }
 
-.menu {
-  @apply absolute md:static flex flex-col p-4 pt-0 bottom-0 bg-white md:pt-4 transform transition-transform -translate-x-full md:transform-none;
+.menu-container {
+  @apply absolute md:static flex flex-col p-4 pt-0 bottom-0 bg-white md:pt-4 transform transition-transform -translate-x-full md:transform-none z-50;
 
   min-width: 240px;
 }
