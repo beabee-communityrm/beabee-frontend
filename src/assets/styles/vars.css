@@ -1,35 +1,9 @@
 :root {
-  /* primary colors */
-  --primary-color: #262453;
-  --primary-5-color: #f4f3f6;
-  --primary-10-color: #e9e8ed;
-  --primary-20-color: #d3d3dc;
-  --primary-40-color: #a8a7ba;
-  --primary-70-color: #666586;
-  --primary-80-color: #514f75;
-
-  /* grey colors */
-  --grey-lighter-color: #f6f6f6;
-  --grey-light-color: #c7c7c7;
-  --grey-color: #a4a4a4;
-  --grey-dark-color: #5f5f5f;
-  --grey-darker-color: #434343;
-
   /* other colors */
   --link-color: #43a796;
   --info-color: #4e85a8;
-  --warning-color: #f5cc5b;
-  --success-color: #3a9283;
-  --danger-color: #ce3d3d;
-  --white-color: #fff;
-  --body-font: 'Open Sans', sans-serif;
 
   /* not added to design system */
   --input-focus-box-shadow-size: 0 0 0 0.125em;
   --input-focus-box-shadow-color: rgba(67, 167, 150, 0.25);
-  --join-page-bg: 'url(~/assets/images/join-bg.jpg) #{$grey-lighter};';
-  --link-light-color: #ecf6f4;
-  --danger-10-color: #faebeb;
-  --danger-30-color: #edb6b6;
-  --danger-70-color: #edb6b6;
 }
