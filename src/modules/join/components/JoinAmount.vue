@@ -159,15 +159,15 @@ const period = computed(() => {
 
 /* group button */
 .group-button:nth-child(2) {
-  border-left: 1px solid var(--link-color);
-  border-right: 1px solid var(--link-color);
+  border-left: 1px solid theme('colors.link.DEFAULT');
+  border-right: 1px solid theme('colors.link.DEFAULT');
 }
 
 @media screen and (min-width: 768px) {
   .group-button:nth-child(2) {
     border: none;
-    border-bottom: 1px solid var(--link-color);
-    border-top: 1px solid var(--link-color);
+    border-bottom: 1px solid theme('colors.link.DEFAULT');
+    border-top: 1px solid theme('colors.link.DEFAULT');
   }
 }
 </style>

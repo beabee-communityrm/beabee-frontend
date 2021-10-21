@@ -47,7 +47,7 @@ module.exports = {
         darker: '#434343',
       },
       info: {
-        DEFAULT: 'var(--info-color)',
+        DEFAULT: '#4e85a8',
       },
     },
     fontFamily: {
