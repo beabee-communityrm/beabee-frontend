@@ -33,7 +33,7 @@ module.exports = {
     colors: {
       primary: shades(theme.colors.primary, [5, 10, 20, 40, 70, 80]),
       secondary: shades(theme.colors.secondary, [10, 30, 70]),
-      text: shades(theme.colors.text || theme.colors.primary, [10, 70, 80]),
+      body: shades(theme.colors.body || theme.colors.primary, [10, 70, 80]),
       link: shades(theme.colors.link || theme.colors.primary, [10, 70, 80]),
       warning: shades(theme.colors.warning || '#f5cc5b', [10, 30, 70]),
       success: shades(theme.colors.success || '#3a9283', [10, 30, 70]),
