@@ -90,3 +90,8 @@ homePage:
   newCallout: 'New callout!'
   openCallouts: 'Open callouts'
   viewAllCallouts: 'View all callouts'
+  quickActions:  'Quick actions'
+  editProfile: 'Edit your community profile'
+  viewOpenCallouts: 'View open callouts'
+  managePayment: 'Manage your payments'
+  
