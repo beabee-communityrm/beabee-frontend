@@ -79,7 +79,7 @@
         class="font-bold border-none group-button"
         :outlined="amount !== signUpData.amount"
         :rounded="false"
-        :class="{ 'hover:bg-link-light': amount !== signUpData.amount }"
+        :class="{ 'hover:bg-link-10': amount !== signUpData.amount }"
         @click="signUpData.amount = amount"
         >{{ n(amount, 'currency') }}</AppButton
       >
