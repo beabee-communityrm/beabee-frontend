@@ -10,9 +10,9 @@
         {{ notice.text }}
       </span>
 
-      <app-button :to="notice.url" class="ml-auto hidden md:flex">{{
-        notice.buttonText
-      }}</app-button>
+      <div class="ml-auto hidden md:flex">
+        <app-button :to="notice.url">{{ notice.buttonText }}</app-button>
+      </div>
     </div>
   </router-link>
 </template>
