@@ -46,9 +46,6 @@ module.exports = {
         dark: '#5f5f5f',
         darker: '#434343',
       },
-      info: {
-        DEFAULT: '#4e85a8',
-      },
     },
     fontFamily: {
       body: theme.fonts.body,
