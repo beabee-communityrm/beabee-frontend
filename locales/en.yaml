@@ -28,7 +28,9 @@ form:
       required: 'Email is required'
       invalid: 'Invalid email address'
     password:
+      required: 'Password is required'
       invalid: 'Invalid password'
+      sameAs: "The passwords don't match"
     firstName:
       required: 'First name is required'
     lastName:
@@ -90,3 +92,27 @@ homePage:
   editProfile: 'Edit your community profile'
   viewOpenCallouts: 'View open callouts'
   managePayment: 'Manage your payments'
+  passwordReset: 'Your password has been reset.'
+
+login:
+  backTo: 'Back to {newsroomName}'
+  title: 'Log in to your account'
+  notMember: 'Not a member?'
+  joinNow: 'Join now!'
+  forgotPassword: 'Forgot your password?'
+  login: 'Login'
+
+forgotPassword:
+  title: 'Forgot your password?'
+  descreption: 'Please enter your email address and we’ll send you password reset instructions.'
+  resetPassword: 'Reset your password'
+  messageFirstPart: 'If there is an account associated with'
+  messageSecondPart: ' you will receive an email shortly.<br>Please check your inbox and follow the instructions in the email.'
+
+resetPassword:
+  title: 'Reset your password?'
+  descreption: 'Set a new password to login.'
+  changePassword: 'Change password'
+  newPassword: 'New password'
+  confirmPassword: 'Confirm password'
+  login: 'Login to your account'

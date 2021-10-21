@@ -1,5 +1,5 @@
 <template>
-  <JoinBox>
+  <AuthBox>
     <JoinNotice>
       <template #header>{{ t('join.errors.confirmEmail.title') }}</template>
 
@@ -15,11 +15,11 @@
         <p class="font-bold">{{ t('join.errors.confirmEmail.proceed') }}</p>
       </template>
     </JoinNotice>
-  </JoinBox>
+  </AuthBox>
 </template>
 
 <script lang="ts" setup>
-import JoinBox from '../components/JoinBox.vue';
+import AuthBox from '../../AuthBox.vue';
 import JoinNotice from '../components/JoinNotice.vue';
 import { useI18n } from 'vue-i18n';
 import { useJoin } from '../use-join';

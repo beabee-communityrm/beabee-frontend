@@ -12,6 +12,7 @@ import {
   faExclamation,
   faInfoCircle,
   faBullhorn,
+  faKey,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -24,7 +25,8 @@ library.add(
   faCaretDown,
   faInfoCircle,
   faExclamation,
-  faBullhorn
+  faBullhorn,
+  faKey
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
