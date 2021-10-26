@@ -63,7 +63,7 @@ const showMobileMenuStyle = {
 }
 
 .menu-container {
-  @apply absolute md:static flex flex-col p-4 pt-0 bottom-0 bg-white md:pt-4 transform transition-transform -translate-x-full md:transform-none z-50;
+  @apply absolute md:static flex flex-col px-4 bottom-0 bg-white md:pt-4 transform transition-transform -translate-x-full md:transform-none z-50;
 
   min-width: 240px;
 }
