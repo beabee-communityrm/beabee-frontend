@@ -1,0 +1,89 @@
+{
+  "common": {
+    "annually": "Annually",
+    "month": "month",
+    "monthly": "Monthly",
+    "year": "year"
+  },
+  "form": {
+    "addressLine1": "Address line 1",
+    "addressLine2": "Address line 2",
+    "cityOrTown": "City/Town",
+    "email": "Email",
+    "errors": {
+      "address": {
+        "required": "This field is required if you want to add address"
+      },
+      "aggregator": "Something is missing! Please check the fields above.",
+      "email": {
+        "invalid": "Invalid email address",
+        "required": "Email is required"
+      },
+      "firstName": {
+        "required": "First name is required"
+      },
+      "lastName": {
+        "required": "Last name is required"
+      },
+      "password": {
+        "invalid": "Invalid password"
+      }
+    },
+    "firstName": "First name",
+    "lastName": "Last name",
+    "password": "Password",
+    "passwordInfo": "Set a secure password: 8+ characters at least one number  one uppercase and one lowercase letters.",
+    "postCode": "Postcode",
+    "saveChanges": "Save Changes"
+  },
+  "informationPage": {
+    "contactInformation": "Contact information",
+    "loginDetail": "Login details",
+    "subTitle": "Required fields are marked with an asterisk. All information submitted here is private.",
+    "title": "Your information"
+  },
+  "join": {
+    "absorbFeeOptIn": "Yes, I'll absorb the {fee} fee.",
+    "absorbFeeText": "Our payment processor charges us per transaction which means we receive less from monthly contributions. Are you happy to absorb the {fee} transaction fee?  Alternatively you could pay annually.",
+    "contribute": "Contribute {amount} {period}",
+    "errors": {
+      "confirmEmail": {
+        "message": "Your payment is complete. Check your {email} inbox for a link to finish this process.",
+        "proceed": "We've sent you an email please click the link to proceed",
+        "title": "You're almost done!"
+      },
+      "duplicateEmail": {
+        "message": "This email address is already registered you can login to proceed.",
+        "title": "Duplicate email address"
+      },
+      "failed": {
+        "backToJoin": "Back to join page",
+        "message": "There was a problem setting up your membership our team has been notified. Please contact support if the problem persists.",
+        "title": "Something went wrong"
+      },
+      "restartMembership": {
+        "message": "This email address is associated with an expired membership thanks for rejoining!<br>For security reasons we need to check you have access to the email address before restarting your membership.",
+        "title": "Restart your membership"
+      }
+    },
+    "login": "Log in",
+    "memberAccount": "Member account",
+    "memberAlready": "Are you a member already?",
+    "minimumContribution": "Minimum contribution is",
+    "notice": "By proceeding you are accepting the",
+    "privacy": "Privacy Policy"
+  },
+  "joinSetup": {
+    "confirmDetails": "Please confirm your details",
+    "continue": "All good! Continue",
+    "welcome": "Welcome {firstName}!"
+  },
+  "menu": {
+    "callouts": "Callouts",
+    "contributions": "Contributions",
+    "home": "Home",
+    "settings": "Settings",
+    "yourInformation": "Your information",
+    "yourProfile": "Your profile"
+  }
+}
