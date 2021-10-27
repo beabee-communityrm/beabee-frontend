@@ -1,0 +1,66 @@
+{
+  "common": {
+    "annually": "Jährlich",
+    "month": "Monat",
+    "monthly": "Monatlich",
+    "year": "Jahr"
+  },
+  "form": {
+    "addressLine1": "Adresse",
+    "addressLine2": "Adresse 2",
+    "cityOrTown": "Ort",
+    "email": "Email",
+    "errors": {
+      "address": {},
+      "aggregator": "Felder mit * müssen ausgefüllt werden. ",
+      "email": {
+        "invalid": "Ungültige Email-Adresse"
+      },
+      "firstName": {},
+      "lastName": {},
+      "password": {}
+    },
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "password": "Passwort",
+    "passwordInfo": "Das Passwort muss aus mindestens acht Zeichen bestehen und mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten.",
+    "postCode": "Postleitzahl"
+  },
+  "informationPage": {},
+  "join": {
+    "absorbFeeOptIn": "Ja, ich übernehme die {fee} Transaktionskosten.",
+    "absorbFeeText": "Unser Zahlungsdienstleister stellt uns jede Transaktion in Rechnung. Das heißt, wir erhalten weniger von deinem monatlichen Beitrag. Möchtest du die Kosten dafür übernehmen? Alternativ kannst du auch jährlich bezahlen.",
+    "contribute": "Mit {amount} {period} unterstützen",
+    "errors": {
+      "confirmEmail": {
+        "message": "Fast geschafft! Wir müssen nur noch deine Email-Adresse bestätigen, um fortzufahren.",
+        "proceed": "Wir haben dir eine Email geschickt. Bitte klicke auf den Bestätigungslink, um fortzufahren. ",
+        "title": "Email-Adresse bestätigen"
+      },
+      "duplicateEmail": {
+        "message": "Diese Email-Adresse ist bereits registriert. Bitte logge dich ein, um fortzufahren.",
+        "title": "Email-Adresse wiederholen"
+      },
+      "failed": {
+        "backToJoin": "Zurück zur Registrierung",
+        "message": "Es gab ein Problem bei der Registrierung, unser Team wurde benachrichtigt. Bitte kontaktiere uns, wenn das Problem weiterhin auftritt.",
+        "title": "Etwas ist schief gelaufen"
+      },
+      "restartMembership": {
+        "message": "Diese Email-Adresse war bereits in der Vergangenheit registriert. Aus Sicherheitsgründen müssen wir überprüfen, ob du Zugriff auf diese Email-Adresse hast.",
+        "title": "Mitgliedschaft erneuern"
+      }
+    },
+    "login": "Log in",
+    "memberAccount": "Mitglieder-Account",
+    "memberAlready": "Bist du bereits Mitglied?",
+    "minimumContribution": "Der minimale Beitrag ist",
+    "notice": "Indem du fortfährst, akzeptierst Du unsere",
+    "privacy": "Datenschutzerklärung"
+  },
+  "joinSetup": {
+    "continue": "Weiter",
+    "welcome": "Willkommen {firstname}!"
+  },
+  "menu": {}
+}
