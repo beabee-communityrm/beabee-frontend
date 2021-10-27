@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="notice.url">
+  <AppLink :to="notice.url">
     <div class="mb-2 bg-white rounded p-4.5 flex md:items-center shadow">
       <font-awesome-icon
         class="text-warning text-xl mr-2"
@@ -14,11 +14,12 @@
         <app-button :to="notice.url">{{ notice.buttonText }}</app-button>
       </div>
     </div>
-  </router-link>
+  </AppLink>
 </template>
 
 <script lang="ts" setup>
 import AppButton from '../../components/forms/AppButton.vue';
+import AppLink from '../../components/AppLink.vue';
 import { Notice } from './notice.interface';
 
 defineProps({
