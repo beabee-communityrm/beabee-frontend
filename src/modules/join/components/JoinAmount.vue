@@ -74,12 +74,8 @@
       <AppButton
         v-for="(amount, index) in definedAmounts"
         :key="index"
-        full-width
-        color="link"
-        class="font-bold border-none group-button"
-        :outlined="amount !== signUpData.amount"
-        :rounded="false"
-        :class="{ 'hover:bg-link-10': amount !== signUpData.amount }"
+        :variant="amount === signUpData.amount ? 'link' : 'linkOutlined'"
+        class="group-button"
         @click="signUpData.amount = amount"
         >{{ n(amount, 'currency') }}</AppButton
       >
@@ -154,7 +150,12 @@ const period = computed(() => {
 }
 
 .amount-button {
-  @apply h-1/2 bg-white py-2 px-4 border-link hover:text-link;
+  @apply h-1/2 bg-white py-2 px-4 hover:text-link;
+}
+
+.group-button {
+  @apply border-none;
+  @apply rounded-none !important;
 }
 
 /* group button */

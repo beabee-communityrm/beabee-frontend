@@ -3,6 +3,15 @@ common:
   year: 'year'
   monthly: 'Monthly'
   annually: 'Annually'
+  hello: 'Hello'
+  until: 'until'
+  in: 'in'
+  participate: 'Participate'
+  joined: 'joined'
+  contributing: 'contributing'
+  every: 'every'
+  new: 'new!'
+
 form:
   email: 'Email'
   password: 'Password'
@@ -74,3 +83,14 @@ joinSetup:
   confirmDetails: 'Please confirm your details'
   continue: 'All good! Continue'
   welcome: 'Welcome {firstName}!'
+
+homePage:
+  title: 'Home'
+  yourProfile: 'Your profile'
+  newCallout: 'New callout!'
+  openCallouts: 'Open callouts'
+  viewAllCallouts: 'View all callouts'
+  quickActions: 'Quick actions'
+  editProfile: 'Edit your community profile'
+  viewOpenCallouts: 'View open callouts'
+  managePayment: 'Manage your payments'

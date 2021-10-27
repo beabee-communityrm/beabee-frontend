@@ -6,7 +6,7 @@ import {
   JoinContentData,
   SetupContentData,
 } from './join.interface';
-import { ContributionPeriod } from './contribution-period.enum';
+import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import { helpers, email, required } from '@vuelidate/validators';
 import { passwordValidator } from '../../utils/form-validators/password-validator';
 import {
