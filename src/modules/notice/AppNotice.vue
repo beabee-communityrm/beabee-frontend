@@ -11,7 +11,7 @@
       </span>
 
       <div class="ml-auto hidden md:flex">
-        <app-button :to="notice.url">{{ notice.buttonText }}</app-button>
+        <AppButton :to="notice.url">{{ notice.buttonText }}</AppButton>
       </div>
     </div>
   </AppLink>
