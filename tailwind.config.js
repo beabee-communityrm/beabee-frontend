@@ -17,16 +17,6 @@ function shades(_color, levels = []) {
 module.exports = {
   purge: {
     content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-    // TODO: dynamic classes for `AppButton`. Check if this is there is
-    // a better way to implement this
-    safelist: [
-      'bg-primary',
-      'bg-link',
-      'border-primary',
-      'border-link',
-      'text-primary',
-      'text-link',
-    ],
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -46,6 +36,9 @@ module.exports = {
         dark: '#5f5f5f',
         darker: '#434343',
       },
+      black: {
+        DEFAULT: '#000000',
+      },
     },
     fontFamily: {
       body: theme.fonts.body,
@@ -63,6 +56,18 @@ module.exports = {
       },
       zIndex: {
         '-1': '-1',
+      },
+      padding: {
+        4.5: '1.125rem',
+      },
+      width: {
+        76: '19rem',
+      },
+      height: {
+        7.5: '1.875rem',
+      },
+      boxShadow: {
+        DEFAULT: '0 0 8px 0 rgba(0, 0, 0, 0.2)',
       },
     },
   },

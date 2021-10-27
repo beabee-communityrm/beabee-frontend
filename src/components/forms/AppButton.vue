@@ -33,55 +33,38 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  color: {
+  variant: {
     type: String,
-    default: 'primary-70',
-  },
-  fullWidth: {
-    type: Boolean,
-    default: false,
-  },
-  // - TODO: replace this with variant if there are
-  // more variants
-  outlined: {
-    type: Boolean,
-    default: false,
-  },
-  rounded: {
-    type: Boolean,
-    default: true,
+    default: 'primary',
   },
 });
 
+const variantStaticClasses = {
+  primary: 'bg-primary-70 text-white hover:bg-primary-80',
+  link: 'bg-link text-white',
+  linkOutlined: 'bg-white text-link border border-link hover:bg-link-light',
+  subtle:
+    'bg-white text-primary-80 border border-primary-70 hover:text-primary hover:border-primary',
+};
+
+const variantClasses = computed(() => {
+  return (
+    variantStaticClasses[props.variant as keyof typeof variantStaticClasses] ||
+    variantStaticClasses['primary']
+  );
+});
+
+// - TODO: Fix this. Using scoped style didn't work on `AppLink`, also check w-full
+// is necessary
 const baseClasses =
-  'h-10 py-2 text-center cursor-pointer flex justify-center items-center';
+  'h-10 px-2 text-center cursor-pointer flex justify-center items-center font-bold rounded w-full';
 
 const classes = computed(() => {
-  return [
-    baseClasses,
-    dynamicClasses.value,
-    colorClasses.value,
-    statusClasses.value,
-  ];
+  return [baseClasses, variantClasses.value, statusClasses.value];
 });
 
 const elementTypeAttribute = computed(() => {
   return props.tag === 'button' ? props.type : null;
-});
-
-const dynamicClasses = computed(() => {
-  return {
-    block: props.fullWidth,
-    'w-full': props.fullWidth,
-    rounded: props.rounded,
-  };
-});
-
-const colorClasses = computed(() => {
-  const { color } = props;
-  return props.outlined
-    ? ['bg-white border', `text-${color}`, `border-${props.color}`]
-    : [`bg-${color}`, 'text-white'];
 });
 
 const statusClasses = computed(() => {

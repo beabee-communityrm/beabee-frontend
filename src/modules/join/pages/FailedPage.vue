@@ -8,7 +8,7 @@
       </template>
 
       <template #footer>
-        <AppButton to="/join" full-width class="font-bold">
+        <AppButton to="/join">
           {{ t('join.errors.failed.backToJoin') }}
         </AppButton>
       </template>

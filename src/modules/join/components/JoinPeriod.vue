@@ -16,11 +16,7 @@
         @change="changePeriod(handleInput($event))"
       />
       <AppButton
-        full-width
-        color="link"
-        class="font-bold"
-        :outlined="period.name !== signUpData.period"
-        :class="{ 'hover:bg-link-10': period.name !== signUpData.period }"
+        :variant="period.name === signUpData.period ? 'link' : 'linkOutlined'"
         tag="span"
       >
         {{

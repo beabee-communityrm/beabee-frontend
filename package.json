@@ -20,6 +20,7 @@
     "@vuelidate/core": "^2.0.0-alpha.25",
     "@vuelidate/validators": "^2.0.0-alpha.21",
     "axios": "^0.21.4",
+    "date-fns": "^2.25.0",
     "vue": "^3.2.6",
     "vue-i18n": "^9.1.7",
     "vue-router": "^4.0.11"

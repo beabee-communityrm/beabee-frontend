@@ -4,7 +4,7 @@
       <img
         src="../../../assets/images/logo.png"
         alt="Logo"
-        class="w-16 self-start"
+        class="w-16 flex-none self-start"
       />
       <div class="flex flex-col ml-4">
         <h1 class="font-semibold text-2xl">

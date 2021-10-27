@@ -22,9 +22,8 @@
 
       <AppButton
         :disabled="isJoinFormInvalid"
-        color="link"
-        class="mb-4 font-bold"
-        full-width
+        variant="link"
+        class="mb-4"
         @click="submitSignUp"
       >
         {{

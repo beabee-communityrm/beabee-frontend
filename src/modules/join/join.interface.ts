@@ -1,4 +1,4 @@
-import { ContributionPeriod } from './contribution-period.enum';
+import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 
 export interface SignUpData {
   email: string;
