@@ -51,10 +51,11 @@
 
 <script lang="ts" setup>
 import { Callout } from './callout.interface';
-import { format, parseISO, formatDistanceToNow } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { ref } from '@vue/reactivity';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useI18n } from 'vue-i18n';
+import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
 
 const { t } = useI18n();
 
@@ -77,7 +78,7 @@ const formatDate = () => {
     parsedDate,
     'd'
   )}`;
-  expiresIn.value = formatDistanceToNow(parsedDate);
+  expiresIn.value = formatDistanceLocale(new Date(), parsedDate);
 };
 
 onBeforeMount(formatDate);
