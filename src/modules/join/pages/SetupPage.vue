@@ -62,8 +62,7 @@
       <ErrorAggregator v-if="hasSetupError" class="mb-4" />
 
       <AppButton
-        color="link"
-        full-width
+        variant="link"
         :disabled="isSetupFormInvalid"
         @click="completeSetup"
       >

@@ -99,7 +99,8 @@
 
         <app-button
           :disabled="isFormInvalid"
-          class="mt-5 w-full"
+          class="mt-5"
+          variant="link"
           @click="submitFormHandler"
           >{{ t('form.saveChanges') }}</app-button
         >

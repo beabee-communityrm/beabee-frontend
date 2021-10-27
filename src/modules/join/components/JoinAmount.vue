@@ -74,12 +74,8 @@
       <AppButton
         v-for="(amount, index) in definedAmounts"
         :key="index"
-        full-width
-        color="link"
-        class="font-bold border-none group-button"
-        :outlined="amount !== signUpData.amount"
-        :rounded="false"
-        :class="{ 'hover:bg-link-light': amount !== signUpData.amount }"
+        :variant="amount === signUpData.amount ? 'link' : 'linkOutlined'"
+        class="group-button"
         @click="signUpData.amount = amount"
         >{{ n(amount, 'currency') }}</AppButton
       >
@@ -154,20 +150,25 @@ const period = computed(() => {
 }
 
 .amount-button {
-  @apply h-1/2 bg-white py-2 px-4 border-link hover:text-link;
+  @apply h-1/2 bg-white py-2 px-4 hover:text-link;
+}
+
+.group-button {
+  @apply border-none;
+  @apply rounded-none !important;
 }
 
 /* group button */
 .group-button:nth-child(2) {
-  border-left: 1px solid var(--link-color);
-  border-right: 1px solid var(--link-color);
+  border-left: 1px solid theme('colors.link.DEFAULT');
+  border-right: 1px solid theme('colors.link.DEFAULT');
 }
 
 @media screen and (min-width: 768px) {
   .group-button:nth-child(2) {
     border: none;
-    border-bottom: 1px solid var(--link-color);
-    border-top: 1px solid var(--link-color);
+    border-bottom: 1px solid theme('colors.link.DEFAULT');
+    border-top: 1px solid theme('colors.link.DEFAULT');
   }
 }
 </style>
