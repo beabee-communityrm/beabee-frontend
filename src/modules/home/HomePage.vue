@@ -15,7 +15,7 @@
     <NoticeContainer />
   </section>
 
-  <section v-if="browserWidth.isSm" class="mb-8">
+  <section class="mb-8 md:hidden">
     <QuickActions />
   </section>
 
@@ -60,7 +60,6 @@ import PageTitle from '../../components/PageTitle.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import { useHome } from './use-home';
 import { onBeforeMount } from '@vue/runtime-core';
-import { browserWidth } from '../../utils/browser-width';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
