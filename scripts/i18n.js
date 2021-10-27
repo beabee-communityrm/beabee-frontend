@@ -20,16 +20,16 @@ const sheets = google.sheets({ version: 'v4', auth });
   const headers = resp.data.values[0];
   const rows = resp.data.values
     .slice(1)
-    // Convert to {header: value} object
     .map((row) =>
       Object.fromEntries(headers.map((header, i) => [header, row[i]]))
     )
-    // Sort by key for predictable writing
+    // Sort by key for predictable output
     .sort((a, b) => (a.key < b.key ? -1 : 1));
 
   const locales = headers.filter((h) => h !== 'key');
   const localeData = Object.fromEntries(locales.map((locale) => [locale, {}]));
 
+  // Construct nested objects from a.b.c key paths
   for (const row of rows) {
     const keyParts = row.key.split('.');
     const lastKeyPart = keyParts.pop();
