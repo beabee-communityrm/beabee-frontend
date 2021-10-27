@@ -59,6 +59,7 @@
     "privacy": "Datenschutzerklärung"
   },
   "joinSetup": {
+    "confirmDetails": "Bitte bestätige deine Angaben",
     "continue": "Weiter",
     "welcome": "Willkommen {firstname}!"
   },
