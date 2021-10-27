@@ -1,8 +1,16 @@
 {
   "common": {
     "annually": "Annually",
+    "contributing": "contributing",
+    "every": "every",
+    "hello": "Hello",
+    "in": "in",
+    "joined": "joined",
     "month": "month",
     "monthly": "Monthly",
+    "new": "new!",
+    "participate": "Participate",
+    "until": "until",
     "year": "year"
   },
   "form": {
@@ -35,6 +43,17 @@
     "passwordInfo": "Set a secure password: 8+ characters at least one number  one uppercase and one lowercase letters.",
     "postCode": "Postcode",
     "saveChanges": "Save Changes"
+  },
+  "homePage": {
+    "editProfile": "Edit your community profile",
+    "managePayment": "Manage your payments",
+    "newCallout": "New callout!",
+    "openCallouts": "Open callouts",
+    "quickActions": "Quick actions",
+    "title": "Home",
+    "viewAllCallouts": "View all callouts",
+    "viewOpenCallouts": "View open callouts",
+    "yourProfile": "Your profile"
   },
   "informationPage": {
     "contactInformation": "Contact information",

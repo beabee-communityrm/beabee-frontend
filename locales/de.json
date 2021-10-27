@@ -26,6 +26,7 @@
     "passwordInfo": "Das Passwort muss aus mindestens acht Zeichen bestehen und mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten.",
     "postCode": "Postleitzahl"
   },
+  "homePage": {},
   "informationPage": {},
   "join": {
     "absorbFeeOptIn": "Ja, ich übernehme die {fee} Transaktionskosten.",
