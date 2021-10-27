@@ -38,7 +38,17 @@ For more information you can check the [commitlint repository](https://github.co
 
 ### I18n
 
-`yaml` locale files should be added to `locales` directory. For example: `en.yaml`.
+Our locale data is stored in [this Google Sheet](https://docs.google.com/spreadsheets/d/1l35DW5OMi-xM8HXek5Q1jOxsXScINqqpEvPWDlpBPX8/edit#gid=0.)
+to make it easier to update. We use the Google Sheets APIs to pull this directly into
+the repository. You should create a Google Cloud service account with the Sheets API enabled
+and store the credentials file in `scripts/.credentials.json`
+
+Then to update the locale data in the repository you simply run the following
+
+```
+node scripts/i18n.js
+git commit locales/ -m 'chore: updated locales'
+```
 
 In Vue files:
 
