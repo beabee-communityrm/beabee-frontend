@@ -31,15 +31,10 @@ export const joinRoute: Array<RouteRecordRaw> = [
       const redirectFlowId = to.query.redirect_flow_id;
       completeSignUp(redirectFlowId)
         .then(() => {
-          next('/join/setup');
+          next('/join/confirm-email');
         })
-        .catch((error) => {
-          const responseDataCode = error.response.data.code;
-          if (error.response && responseDataCode) {
-            next(`/join/${responseDataCode}`);
-          } else {
-            next('/join/failed');
-          }
+        .catch(() => {
+          next('/join/failed');
         });
     },
   },
@@ -59,10 +54,14 @@ export const joinRoute: Array<RouteRecordRaw> = [
       const { id } = to.params;
       confirmEmail(id)
         .then(() => {
-          next('/profile');
+          next('/join/setup');
         })
-        .catch(() => {
-          next('/join/failed');
+        .catch((error) => {
+          if (error.response?.data?.code === 'duplicate-email') {
+            next('/join/duplicate-email');
+          } else {
+            next('/join/failed');
+          }
         });
     },
   },
@@ -78,14 +77,6 @@ export const joinRoute: Array<RouteRecordRaw> = [
     path: '/join/duplicate-email',
     name: 'duplicate email',
     component: () => import('./pages/DuplicateEmailPage.vue'),
-    meta: {
-      layout: 'Splash',
-    },
-  },
-  {
-    path: '/join/restart-membership',
-    name: 'restart membership',
-    component: () => import('./pages/RestartMembershipPage.vue'),
     meta: {
       layout: 'Splash',
     },
