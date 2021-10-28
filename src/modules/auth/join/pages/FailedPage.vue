@@ -1,5 +1,5 @@
 <template>
-  <JoinBox>
+  <AuthBox>
     <JoinNotice show-pattern>
       <template #header>{{ t('join.errors.failed.title') }}</template>
 
@@ -13,13 +13,13 @@
         </AppButton>
       </template>
     </JoinNotice>
-  </JoinBox>
+  </AuthBox>
 </template>
 
 <script lang="ts" setup>
-import JoinBox from '../components/JoinBox.vue';
+import AuthBox from '../../AuthBox.vue';
 import JoinNotice from '../components/JoinNotice.vue';
-import AppButton from '../../../components/forms/AppButton.vue';
+import AppButton from '../../../../components/forms/AppButton.vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();

@@ -1,4 +1,11 @@
 <template>
+  <AppAlert v-if="isPasswordReset" class="mb-8">
+    <template #icon>
+      <font-awesome-icon class="transform -rotate-90" :icon="['fas', 'key']" />
+    </template>
+
+    {{ t('homePage.passwordReset') }}
+  </AppAlert>
   <!-- TODO: check page title implementation, after implementing other pages
     you might want to improve it
   -->
@@ -58,11 +65,15 @@ import ThanksNotice from './ThanksNotice.vue';
 import SectionTitle from './SectionTitle.vue';
 import PageTitle from '../../components/PageTitle.vue';
 import AppButton from '../../components/forms/AppButton.vue';
+import AppAlert from '../../components/AppAlert.vue';
 import { useHome } from './use-home';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 
 const { t } = useI18n();
+
+const isPasswordReset = useRoute().query.passwordReset === 'true';
 
 const {
   member,

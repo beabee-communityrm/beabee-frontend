@@ -2,7 +2,7 @@
   <header>
     <div class="flex mb-4">
       <img
-        src="../../../assets/images/logo.png"
+        src="../../../../assets/images/logo.png"
         alt="Logo"
         class="w-16 flex-none self-start"
       />

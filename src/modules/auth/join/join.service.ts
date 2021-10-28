@@ -1,5 +1,5 @@
 import { LocationQueryValue } from 'vue-router';
-import axios from '../../axios';
+import axios from '../../../axios';
 import { MemberData, SignUpData } from './join.interface';
 import { NewsletterStaus } from './newsletter-status.enum';
 

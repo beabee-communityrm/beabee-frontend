@@ -28,8 +28,8 @@
 </template>
 
 <script lang="ts" setup>
-import AppButton from '../../../components/forms/AppButton.vue';
-import handleInput from '../../../utils/handle-input';
+import AppButton from '../../../../components/forms/AppButton.vue';
+import handleInput from '../../../../utils/handle-input';
 import { useJoin } from '../use-join';
 import { useI18n } from 'vue-i18n';
 

@@ -1,5 +1,5 @@
 <template>
-  <JoinBox>
+  <AuthBox>
     <form @submit.prevent>
       <JoinHeader
         class="mb-3"
@@ -36,19 +36,19 @@
 
       <JoinFooter :privacy-link="joinContent.privacyLink" />
     </form>
-  </JoinBox>
+  </AuthBox>
 </template>
 
 <script lang="ts" setup>
 import JoinHeader from './components/JoinHeader.vue';
 import JoinPeriod from './components/JoinPeriod.vue';
 import JoinAmount from './components/JoinAmount.vue';
-import JoinBox from './components/JoinBox.vue';
+import AuthBox from '../AuthBox.vue';
 import AccountSection from './components/AccountSection.vue';
 import PaymentSection from './components/PaymentSection.vue';
 import JoinFooter from './components/JoinFooter.vue';
-import AppButton from '../../components/forms/AppButton.vue';
-import ErrorAggregator from '../../components/forms/ErrorAggregator.vue';
+import AppButton from '../../../components/forms/AppButton.vue';
+import ErrorAggregator from '../../../components/forms/ErrorAggregator.vue';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useJoin } from './use-join';
 import { useI18n } from 'vue-i18n';
