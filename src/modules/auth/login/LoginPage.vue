@@ -39,7 +39,7 @@
 
     <AppButton
       variant="link"
-      :disabled="isLoginInvalid || loading"
+      :disabled="isFormInvalid || loading"
       @click="submitLogin(router, redirectTo)"
       >{{ t('login.login') }}</AppButton
     >
@@ -64,7 +64,7 @@ const redirectTo = route.query.redirectTo as string;
 const {
   loginData,
   loginValidation,
-  isLoginInvalid,
+  isFormInvalid,
   hasLoginError,
   submitLogin,
   loading,

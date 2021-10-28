@@ -18,7 +18,7 @@
 
       <AppButton
         variant="link"
-        :disabled="isFormValid || loading"
+        :disabled="isFormInvalid || loading"
         @click="submitForgotPassword"
         >{{ t('forgotPassword.resetPassword') }}</AppButton
       >
@@ -52,7 +52,7 @@ const { t } = useI18n();
 
 const {
   loading,
-  isFormValid,
+  isFormInvalid,
   submitForgotPassword,
   forgotPasswordData,
   isRequestSuccessful,

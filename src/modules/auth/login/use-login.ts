@@ -23,7 +23,7 @@ const loginRules = computed(() => ({
   },
 }));
 
-const isLoginInvalid = computed(() => {
+const isFormInvalid = computed(() => {
   return loginValidation.value.$invalid;
 });
 
@@ -48,7 +48,7 @@ export function useLogin() {
   return {
     loginData,
     loginValidation,
-    isLoginInvalid,
+    isFormInvalid,
     hasLoginError,
     submitLogin,
     loading,

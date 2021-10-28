@@ -21,7 +21,7 @@ const forgotPasswordValidation = useVuelidate(
   forgotPasswordData
 );
 
-const isFormValid = computed(() => {
+const isFormInvalid = computed(() => {
   return forgotPasswordValidation.value.$invalid;
 });
 
@@ -40,7 +40,7 @@ const submitForgotPassword = async () => {
 export function useForgotPassword() {
   return {
     loading,
-    isFormValid,
+    isFormInvalid,
     submitForgotPassword,
     forgotPasswordData,
     isRequestSuccessful,

@@ -31,7 +31,7 @@
 
     <AppButton
       variant="link"
-      :disabled="isFormValid || loading"
+      :disabled="isFormInvalid || loading"
       class="mb-4"
       @click="submitResetPassword(resetPasswordFlowId, router)"
       >{{ t('resetPassword.changePassword') }}</AppButton
@@ -65,7 +65,7 @@ const resetPasswordFlowId = route.params.id as string;
 
 const {
   loading,
-  isFormValid,
+  isFormInvalid,
   submitResetPassword,
   resetPasswordValidation,
   resetPasswordData,

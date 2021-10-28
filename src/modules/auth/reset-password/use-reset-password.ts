@@ -19,7 +19,6 @@ const resetPasswordValidationRule = computed(() => ({
   password: passwordValidationRule,
   repeatPassword: {
     sameAsPassword: helpers.withMessage(
-      // - TODO: replace it with the correct message -
       t('form.errors.password.sameAs'),
       sameAs(resetPasswordData.password)
     ),
@@ -31,7 +30,7 @@ const resetPasswordValidation = useVuelidate(
   resetPasswordData
 );
 
-const isFormValid = computed(() => {
+const isFormInvalid = computed(() => {
   return resetPasswordValidation.value.$invalid;
 });
 
@@ -51,7 +50,7 @@ const submitResetPassword = async (
 export function useResetPassword() {
   return {
     loading,
-    isFormValid,
+    isFormInvalid,
     submitResetPassword,
     resetPasswordData,
     resetPasswordValidation,

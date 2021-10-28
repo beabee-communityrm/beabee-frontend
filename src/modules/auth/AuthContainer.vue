@@ -1,7 +1,7 @@
 <template>
   <div v-if="isAuthPath" class="px-4 mb-5">
     <AppLink
-      to="https://example.com"
+      :to="newsroomLink"
       class="
         bg-primary-80
         rounded
@@ -40,6 +40,7 @@ const route = useRoute();
 const isAuthPath = computed(() => route.path.startsWith('/auth'));
 
 const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
+const newsroomLink = import.meta.env.VITE_NEWSROOM_LINK;
 </script>
 
 <style scoped>
