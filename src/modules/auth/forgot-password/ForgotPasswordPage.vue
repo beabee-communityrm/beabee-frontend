@@ -19,6 +19,7 @@
       <AppButton
         variant="link"
         :disabled="isFormInvalid || loading"
+        type="submit"
         @click="submitForgotPassword"
         >{{ t('forgotPassword.resetPassword') }}</AppButton
       >
@@ -34,7 +35,7 @@
         <span v-html="t('forgotPassword.messageSecondPart')" />
       </p>
 
-      <AppButton variant="link" to="/auth/login">{{
+      <AppButton variant="link" to="/auth/login" type="submit">{{
         t('login.login')
       }}</AppButton>
     </template>

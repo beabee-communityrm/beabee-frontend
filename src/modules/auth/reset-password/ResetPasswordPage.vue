@@ -33,6 +33,7 @@
       variant="link"
       :disabled="isFormInvalid || loading"
       class="mb-4"
+      type="submit"
       @click="submitResetPassword(resetPasswordFlowId, router)"
       >{{ t('resetPassword.changePassword') }}</AppButton
     >
