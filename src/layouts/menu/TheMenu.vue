@@ -51,6 +51,7 @@ const isMenuVisible = ref(false);
 function showMenu() {
   isMenuVisible.value = true;
 }
+
 const showMobileMenuStyle = {
   top: '68px',
   transform: 'translateX(0)',

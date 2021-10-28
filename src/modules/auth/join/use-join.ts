@@ -6,16 +6,19 @@ import {
   JoinContentData,
   SetupContentData,
 } from './join.interface';
-import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
-import { helpers, email, required } from '@vuelidate/validators';
-import { passwordValidator } from '../../utils/form-validators/password-validator';
+import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
+import { helpers, required } from '@vuelidate/validators';
 import {
   signUp,
   fetchMember,
   fetchJoinContent,
   fetchSetupContent,
 } from './join.service';
-import i18n from '../../i18n';
+import i18n from '../../../i18n';
+import {
+  emailValidationRule,
+  passwordValidationRule,
+} from '../../../utils/form-validation/rules';
 
 const { t } = i18n.global;
 
@@ -87,25 +90,13 @@ const hasJoinError = computed(() => {
   return isBelowThreshold.value || joinValidation.value.$errors.length;
 });
 
-const emailRule = {
-  required: helpers.withMessage(t('form.errors.email.required'), required),
-  email: helpers.withMessage(t('form.errors.email.invalid'), email),
-};
-
 const joinRules = computed(() => ({
-  email: emailRule,
-
-  password: {
-    required,
-    validPassword: helpers.withMessage(
-      t('form.errors.password.invalid'),
-      passwordValidator
-    ),
-  },
+  email: emailValidationRule,
+  password: passwordValidationRule,
 }));
 
 const setupRules = computed(() => ({
-  email: emailRule,
+  email: emailValidationRule,
   firstName: {
     required: helpers.withMessage(
       t('form.errors.firstName.required'),

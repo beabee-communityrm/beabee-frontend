@@ -4,7 +4,7 @@ import { computed, reactive } from 'vue';
 import i18n from '../../i18n';
 import { fetchInformation, updateInformation } from './information.service';
 import { Information, UpdateInformation } from './information.interface';
-import { passwordValidator } from '../../utils/form-validators/password-validator';
+import { passwordValidator } from '../../utils/form-validation/validators';
 import { errorGenerator } from '../../utils/form-error-generator';
 
 const { t } = i18n.global;
