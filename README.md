@@ -47,7 +47,7 @@ Then to update the locale data in the repository you simply run the following
 
 ```
 node scripts/i18n.js
-git commit locales/ -m 'chore: updated locales'
+git add -A locales/ && git commit locales/ -m 'chore: updated locales'
 ```
 
 In Vue files:
