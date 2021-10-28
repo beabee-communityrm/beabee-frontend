@@ -1,8 +1,16 @@
 {
   "common": {
     "annually": "Jährlich",
+    "contributing": "",
+    "every": "",
+    "hello": "Hallo",
+    "in": "in",
+    "joined": "",
     "month": "Monat",
     "monthly": "Monatlich",
+    "new": "neu!",
+    "participate": "Teilnehmen",
+    "until": "bis",
     "year": "Jahr"
   },
   "form": {
@@ -11,23 +19,48 @@
     "cityOrTown": "Ort",
     "email": "Email",
     "errors": {
-      "address": {},
+      "address": {
+        "required": "Dieses Feld wird benötigt, wenn Sie eine Adresse eintragen wollen"
+      },
       "aggregator": "Felder mit * müssen ausgefüllt werden. ",
       "email": {
-        "invalid": "Ungültige Email-Adresse"
+        "invalid": "Ungültige Email-Adresse",
+        "required": "Email-Adresse benötigt"
       },
-      "firstName": {},
-      "lastName": {},
-      "password": {}
+      "firstName": {
+        "required": "Vorname benötigt"
+      },
+      "lastName": {
+        "required": "Nachname benötigt"
+      },
+      "password": {
+        "invalid": "Passwort ungültig"
+      }
     },
     "firstName": "Vorname",
     "lastName": "Nachname",
     "password": "Passwort",
     "passwordInfo": "Das Passwort muss aus mindestens acht Zeichen bestehen und mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten.",
-    "postCode": "Postleitzahl"
+    "postCode": "Postleitzahl",
+    "saveChanges": "Änderungen speichern"
   },
-  "homePage": {},
-  "informationPage": {},
+  "homePage": {
+    "editProfile": "Profil bearbeiten",
+    "managePayment": "Zahlungsdaten bearbeiten",
+    "newCallout": "Neuer Callout!",
+    "openCallouts": "Offene Callouts",
+    "quickActions": "",
+    "title": "Home",
+    "viewAllCallouts": "Alle Callouts anzeigen",
+    "viewOpenCallouts": "Offene Callouts anzeigen",
+    "yourProfile": "Ihr Profil"
+  },
+  "informationPage": {
+    "contactInformation": "Kontaktdaten",
+    "loginDetail": "Login-Daten",
+    "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt",
+    "title": "Ihre Informationen"
+  },
   "join": {
     "absorbFeeOptIn": "Ja, ich übernehme die {fee} Transaktionskosten.",
     "absorbFeeText": "Bei unserem Zahlungsdienstleister zahlen wir für jede einzelne Transaktion. Das heißt, wir erhalten weniger von Ihrem monatlichen Beitrag. Sie haben die Möglichkeit, die Kosten dafür für uns zu übernehmen. Möchten Sie das? Alternativ können Sie auch jährlich bezahlen. ",
@@ -60,5 +93,12 @@
     "continue": "Weiter",
     "welcome": "Willkommen {firstname} {lastname}!"
   },
-  "menu": {}
+  "menu": {
+    "callouts": "Callouts",
+    "contributions": "Beiträge",
+    "home": "Home",
+    "settings": "Einstellungen",
+    "yourInformation": "Ihre Informationen",
+    "yourProfile": "Ihr Profil"
+  }
 }
