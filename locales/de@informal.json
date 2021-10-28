@@ -46,10 +46,6 @@
         "backToJoin": "Zurück zur Registrierung",
         "message": "Es gab ein Problem bei der Registrierung, unser Team wurde benachrichtigt. Bitte kontaktiere uns, wenn das Problem weiterhin auftritt.",
         "title": "Etwas ist schief gelaufen"
-      },
-      "restartMembership": {
-        "message": "Diese Email-Adresse war bereits in der Vergangenheit registriert. Aus Sicherheitsgründen müssen wir überprüfen, ob du Zugriff auf diese Email-Adresse hast.",
-        "title": "Mitgliedschaft erneuern"
       }
     },
     "login": "Log in",
