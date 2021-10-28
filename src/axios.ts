@@ -7,6 +7,8 @@ axios.interceptors.response.use(undefined, (error) => {
   if (status === 401) {
     localStorage.setItem('isAuthenticated', 'false');
   }
+
+  return Promise.reject(error);
 });
 
 export default axios;
