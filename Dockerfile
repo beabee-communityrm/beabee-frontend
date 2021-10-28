@@ -1,7 +1,7 @@
-FROM node:14.17-alpine as app
+FROM node:16.13-alpine as app
 
 WORKDIR /opt/beabee-frontend
 
 COPY . ./
 
-RUN npm install
+RUN npm ci
