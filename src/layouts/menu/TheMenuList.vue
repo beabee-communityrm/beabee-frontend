@@ -30,7 +30,7 @@
         <a
           class="nav-link cursor-pointer"
           :class="itemClassses(false)"
-          @click="logout"
+          @click="doLogout"
         >
           <font-awesome-icon class="menu-icon" :icon="['fas', 'sign-in-alt']" />
 
@@ -44,6 +44,7 @@
 <script lang="ts" setup>
 import { MenuItem } from './menu-list.interface';
 import { useRouter } from 'vue-router';
+import { logout } from '../../modules/auth/auth.service';
 
 const router = useRouter();
 
@@ -61,7 +62,8 @@ const itemClassses = (isSubsection: boolean | undefined) => {
   return classses;
 };
 
-const logout = () => {
+const doLogout = () => {
+  logout();
   localStorage.setItem('isAuthenticated', 'false');
   router.push('/auth/login');
 };
