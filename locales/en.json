@@ -13,6 +13,13 @@
     "until": "until",
     "year": "year"
   },
+  "forgotPassword": {
+    "descreption": "Please enter your email address and we’ll send you password reset instructions.",
+    "messageFirstPart": "If there is an account associated with",
+    "messageSecondPart": "you will receive an email shortly.<br>Please check your inbox and follow the instructions in the email.",
+    "resetPassword": "Reset your password",
+    "title": "Forgot your password?"
+  },
   "form": {
     "addressLine1": "Address line 1",
     "addressLine2": "Address line 2",
@@ -34,7 +41,9 @@
         "required": "Last name is required"
       },
       "password": {
-        "invalid": "Invalid password"
+        "invalid": "Invalid password",
+        "required": "Password is required",
+        "sameAs": "The passwords don't match"
       }
     },
     "firstName": "First name",
@@ -49,6 +58,7 @@
     "managePayment": "Manage your payments",
     "newCallout": "New callout!",
     "openCallouts": "Open callouts",
+    "passwordReset": "Your password has been reset.",
     "quickActions": "Quick actions",
     "title": "Home",
     "viewAllCallouts": "View all callouts",
@@ -93,6 +103,14 @@
     "continue": "All good! Continue",
     "welcome": "Welcome {firstName}!"
   },
+  "login": {
+    "backTo": "Back to {newsroomName}",
+    "forgotPassword": "Forgot your password?",
+    "joinNow": "Join now!",
+    "login": "Login",
+    "notMember": "Not a member?",
+    "title": "Log in to your account"
+  },
   "menu": {
     "callouts": "Callouts",
     "contributions": "Contributions",
@@ -100,5 +118,13 @@
     "settings": "Settings",
     "yourInformation": "Your information",
     "yourProfile": "Your profile"
+  },
+  "resetPassword": {
+    "changePassword": "Change password",
+    "confirmPassword": "Confirm password",
+    "descreption": "Set a new password to login.",
+    "login": "Login to your account",
+    "newPassword": "New password",
+    "title": "Reset your password?"
   }
 }

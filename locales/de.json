@@ -13,6 +13,7 @@
     "until": "bis",
     "year": "Jahr"
   },
+  "forgotPassword": {},
   "form": {
     "addressLine1": "Adresse",
     "addressLine2": "Adresse 2",
@@ -93,6 +94,7 @@
     "continue": "Weiter",
     "welcome": "Willkommen {firstname} {lastname}!"
   },
+  "login": {},
   "menu": {
     "callouts": "Callouts",
     "contributions": "Beiträge",
@@ -100,5 +102,6 @@
     "settings": "Einstellungen",
     "yourInformation": "Ihre Informationen",
     "yourProfile": "Ihr Profil"
-  }
+  },
+  "resetPassword": {}
 }
