@@ -41,6 +41,7 @@ const submitResetPassword = async (
   loading.value = true;
   resetPassword(resetPasswordData.password, resetPasswordFlowId)
     .then(() => {
+      localStorage.setItem('isAuthenticated', 'true');
       router.push({ path: '/profile', query: { passwordReset: 'true' } });
     })
     .catch((err) => err)
