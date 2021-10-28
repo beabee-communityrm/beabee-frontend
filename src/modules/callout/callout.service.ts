@@ -1,4 +1,5 @@
 import axios from '../../axios';
+import { Callout } from './callout.interface';
 
 function fetchCallouts(): Promise<any> {
   return axios.get('/callout', {
@@ -6,4 +7,8 @@ function fetchCallouts(): Promise<any> {
   });
 }
 
-export { fetchCallouts };
+async function fetchCallout(slug: string): Promise<Callout | undefined> {
+  return (await axios.get('/callout/' + slug)).data;
+}
+
+export { fetchCallouts, fetchCallout };

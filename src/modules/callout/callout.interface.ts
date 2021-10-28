@@ -4,4 +4,9 @@ export interface Callout {
   expires: string | null;
   excerpt: string;
   image?: string;
+  templateSchema: {
+    intro: string;
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    formSchema: object;
+  };
 }
