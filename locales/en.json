@@ -55,6 +55,7 @@
   },
   "homePage": {
     "editProfile": "Edit your community profile",
+    "manageContribution": "Manage contribution",
     "manageYourContribution": "Manage your contribution",
     "newCallout": "New callout!",
     "openCallouts": "Open callouts",
