@@ -7,7 +7,7 @@ export default [
     href: '/profile',
     icon: 'building',
   },
-  {
+  /*{
     title: t('menu.yourProfile'),
     href: '/profile/edit',
     icon: 'user',
@@ -16,7 +16,7 @@ export default [
     title: t('menu.callouts'),
     href: '/callouts',
     icon: 'calendar-check',
-  },
+  },*/
   {
     title: t('menu.settings'),
     divider: true,
