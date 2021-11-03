@@ -33,6 +33,12 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
+
+  const newsroomName = import.meta.env.VITE_NEWSROOM_NAME as string;
+
+  document.title = to.meta.pageTitle
+    ? to.meta.pageTitle + ' - ' + newsroomName
+    : newsroomName;
 });
 
 export default router;
