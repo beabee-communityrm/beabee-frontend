@@ -8,14 +8,14 @@
       @click="isMenuVisible = false"
     />
 
-    <div class="flex items-center cursor-pointer" @click="showMenu">
+    <div class="flex items-center cursor-pointer" @click="toggleMenu">
       <h1 class="text-2xl underline">
         {{ route.meta.pageTitle }}
       </h1>
 
       <font-awesome-icon
-        class="inline-block ml-2 -mt-2"
-        :icon="['fas', 'caret-down']"
+        class="inline-block ml-2"
+        :icon="['fas', isMenuVisible ? 'caret-up' : 'caret-down']"
       />
     </div>
 
@@ -50,8 +50,8 @@ const isMenuVisible = ref(false);
 
 const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
 
-function showMenu() {
-  isMenuVisible.value = true;
+function toggleMenu() {
+  isMenuVisible.value = !isMenuVisible.value;
 }
 
 const showMobileMenuStyle = {
