@@ -119,6 +119,10 @@
     "yourInformation": "Your information",
     "yourProfile": "Your profile"
   },
+  "notification": {
+    "error": "Oops, something went wrong!",
+    "success": "Well done! Your action was successful."
+  },
   "resetPassword": {
     "changePassword": "Change password",
     "confirmPassword": "Confirm password",
