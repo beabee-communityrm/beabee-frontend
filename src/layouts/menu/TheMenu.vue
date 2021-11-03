@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
 import { ref } from '@vue/reactivity';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import menu from './menu-list';
 import TheMenuList from './TheMenuList.vue';
@@ -47,6 +47,9 @@ import TheMenuList from './TheMenuList.vue';
 const route = useRoute();
 
 const isMenuVisible = ref(false);
+useRouter().afterEach(() => {
+  isMenuVisible.value = false;
+});
 
 const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
 
