@@ -49,7 +49,7 @@
     "firstName": "First name",
     "lastName": "Last name",
     "password": "Password",
-    "passwordInfo": "Set a secure password: 8+ characters at least one number  one uppercase and one lowercase letters.",
+    "passwordInfo": "Set a secure password: 8+ characters at least one number, one uppercase and one lowercase letters.",
     "postCode": "Postcode",
     "saveChanges": "Save Changes"
   },

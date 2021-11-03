@@ -1,11 +1,8 @@
 {
   "common": {
     "annually": "Jährlich",
-    "contributing": "",
-    "every": "",
     "hello": "Hallo",
     "in": "in",
-    "joined": "",
     "month": "Monat",
     "monthly": "Monatlich",
     "new": "neu!",
@@ -50,7 +47,6 @@
     "managePayment": "Zahlungsdaten bearbeiten",
     "newCallout": "Neuer Callout!",
     "openCallouts": "Offene Callouts",
-    "quickActions": "",
     "title": "Home",
     "viewAllCallouts": "Alle Callouts anzeigen",
     "viewOpenCallouts": "Offene Callouts anzeigen",
