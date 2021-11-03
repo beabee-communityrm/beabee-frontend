@@ -28,8 +28,8 @@ export default [
     isSubsection: true,
   },
   {
-    title: t('menu.contributions'),
-    href: '/profile/contributions',
+    title: t('menu.contribution'),
+    href: '/profile/contribution',
     icon: 'credit-card',
     isSubsection: true,
   },
