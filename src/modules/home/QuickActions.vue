@@ -15,8 +15,8 @@
       </router-link>
     </li>-->
     <li>
-      <router-link to="/contributions">
-        {{ t('homePage.managePayment') }}
+      <router-link to="/profile/contribution">
+        {{ t('homePage.manageYourContribution') }}
       </router-link>
     </li>
   </ul>

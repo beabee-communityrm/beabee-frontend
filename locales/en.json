@@ -1,11 +1,11 @@
 {
   "common": {
     "annually": "Annually",
-    "contributing": "contributing",
+    "contributing": "Contributing",
     "every": "every",
     "hello": "Hello",
     "in": "in",
-    "joined": "joined",
+    "joined": "Joined",
     "month": "month",
     "monthly": "Monthly",
     "new": "new!",
@@ -55,7 +55,7 @@
   },
   "homePage": {
     "editProfile": "Edit your community profile",
-    "managePayment": "Manage your payments",
+    "manageYourContribution": "Manage your contribution",
     "newCallout": "New callout!",
     "openCallouts": "Open callouts",
     "passwordReset": "Your password has been reset.",

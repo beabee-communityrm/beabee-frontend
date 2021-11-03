@@ -45,7 +45,7 @@
         <ContributionInfo :contribution-info="contributionInfo" />
       </div>
 
-      <AppButton class="mt-6" to="/profile/contributions" variant="subtle"
+      <AppButton class="mt-6" to="/profile/contribution" variant="subtle"
         >Manage contribution</AppButton
       >
     </section>
