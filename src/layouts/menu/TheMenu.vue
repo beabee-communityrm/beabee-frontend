@@ -20,7 +20,7 @@
     </div>
 
     <!-- logo on small screens -->
-    <img class="w-11" src="../../assets/images/logo.png" alt="Newsroom logo" />
+    <img class="w-11" src="../../assets/images/logo.png" :alt="newsroomName" />
   </div>
 
   <div class="menu-container" :style="isMenuVisible ? showMobileMenuStyle : ''">
@@ -29,7 +29,7 @@
       <img
         class="w-20 md:inline-block"
         src="../../assets/images/logo.png"
-        alt="News room logo"
+        :alt="newsroomName"
       />
     </div>
 
@@ -47,6 +47,8 @@ import TheMenuList from './TheMenuList.vue';
 const route = useRoute();
 
 const isMenuVisible = ref(false);
+
+const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
 
 function showMenu() {
   isMenuVisible.value = true;
