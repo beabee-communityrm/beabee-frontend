@@ -4,7 +4,7 @@
 
     <template v-if="!isRequestSuccessful">
       <div class="mb-2">
-        <p class="font-semibold">{{ t('forgotPassword.descreption') }}</p>
+        <p class="font-semibold">{{ t('forgotPassword.description') }}</p>
       </div>
 
       <div class="mb-5">

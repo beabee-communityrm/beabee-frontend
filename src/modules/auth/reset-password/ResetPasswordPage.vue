@@ -3,7 +3,7 @@
     <h1 class="text-2.5xl mb-6">{{ t('resetPassword.title') }}</h1>
 
     <div class="mb-5">
-      <p class="font-semibold">{{ t('resetPassword.descreption') }}</p>
+      <p class="font-semibold">{{ t('resetPassword.description') }}</p>
     </div>
 
     <div class="mb-5">

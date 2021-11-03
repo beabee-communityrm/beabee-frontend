@@ -14,7 +14,7 @@
     "year": "year"
   },
   "forgotPassword": {
-    "descreption": "Please enter your email address and we’ll send you password reset instructions.",
+    "description": "Please enter your email address and we’ll send you password reset instructions.",
     "messageFirstPart": "If there is an account associated with",
     "messageSecondPart": "you will receive an email shortly.<br>Please check your inbox and follow the instructions in the email.",
     "resetPassword": "Reset your password",
@@ -127,7 +127,7 @@
   "resetPassword": {
     "changePassword": "Change password",
     "confirmPassword": "Confirm password",
-    "descreption": "Set a new password to login.",
+    "description": "Set a new password to login.",
     "login": "Login to your account",
     "newPassword": "New password",
     "title": "Reset your password?"
