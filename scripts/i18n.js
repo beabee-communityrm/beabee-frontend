@@ -23,6 +23,7 @@ const sheets = google.sheets({ version: 'v4', auth });
     .map((row) =>
       Object.fromEntries(headers.map((header, i) => [header, row[i]]))
     )
+    .filter((row) => row.key)
     // Sort by key for predictable output
     .sort((a, b) => (a.key < b.key ? -1 : 1));
 
