@@ -1,8 +1,11 @@
 {
   "common": {
     "annually": "Jährlich",
+    "contributing": "Ihr Beitrag",
+    "every": "pro",
     "hello": "Hallo",
     "in": "in",
+    "joined": "Mitglied seit",
     "month": "Monat",
     "monthly": "Monatlich",
     "new": "neu!",
@@ -10,7 +13,13 @@
     "until": "bis",
     "year": "Jahr"
   },
-  "forgotPassword": {},
+  "forgotPassword": {
+    "description": "Bitte geben Sie Ihre Email-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.  ",
+    "messageFirstPart": "Existiert dieser Account,",
+    "messageSecondPart": "bekommen Sie in Kürze eine Email von uns. <br> Bitte schauen Sie in ihr Mailpostfach und folgen der Anleitung in der Email. ",
+    "resetPassword": "Passwort zurücksetzen",
+    "title": "Passwort vergessen?"
+  },
   "form": {
     "addressLine1": "Adresse",
     "addressLine2": "Adresse 2",
@@ -32,7 +41,9 @@
         "required": "Nachname benötigt"
       },
       "password": {
-        "invalid": "Passwort ungültig"
+        "invalid": "Passwort ungültig",
+        "required": "Passwort benötigt",
+        "sameAs": "Passwörter stimmen nicht überein"
       }
     },
     "firstName": "Vorname",
@@ -44,8 +55,12 @@
   },
   "homePage": {
     "editProfile": "Profil bearbeiten",
+    "manageContribution": "Beitrag ändern",
+    "manageYourContribution": "Beitrag ändern",
     "newCallout": "Neuer Callout!",
     "openCallouts": "Offene Callouts",
+    "passwordReset": "Ihr Passwort wurde zurückgesetzt.",
+    "quickActions": "Schnellaktionen",
     "title": "Home",
     "viewAllCallouts": "Alle Callouts anzeigen",
     "viewOpenCallouts": "Offene Callouts anzeigen",
@@ -89,7 +104,14 @@
     "continue": "Weiter",
     "welcome": "Willkommen {firstname} {lastname}!"
   },
-  "login": {},
+  "login": {
+    "backTo": "Zurück zu {newsroomName}",
+    "forgotPassword": "Passwort vergessen?",
+    "joinNow": "Jetzt Mitglied werden! ",
+    "login": "Login",
+    "notMember": "Noch kein Mitglied?",
+    "title": "Einloggen"
+  },
   "menu": {
     "callouts": "Callouts",
     "contribution": "Beiträge",
@@ -98,6 +120,16 @@
     "yourInformation": "Ihre Informationen",
     "yourProfile": "Ihr Profil"
   },
-  "notification": {},
-  "resetPassword": {}
+  "notification": {
+    "error": "Da ist etwas schiefgelaufen!",
+    "success": "Sehr gut! Das hat funktioniert."
+  },
+  "resetPassword": {
+    "changePassword": "Passwort ändern",
+    "confirmPassword": "Passwort bestätigen",
+    "description": "Neues Passwort eingeben um fortzufahren.",
+    "login": "Einloggen",
+    "newPassword": "Neues Passwort",
+    "title": "Passwort zurücksetzen?"
+  }
 }
