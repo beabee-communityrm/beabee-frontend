@@ -104,6 +104,7 @@
     "continue": "All good! Continue",
     "welcome": "Welcome {firstName}!"
   },
+  "locale": "en",
   "login": {
     "backTo": "Back to {newsroomName}",
     "forgotPassword": "Forgot your password?",

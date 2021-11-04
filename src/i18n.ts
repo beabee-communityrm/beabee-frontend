@@ -1,23 +1,23 @@
 import { createI18n } from 'vue-i18n';
-import messages from '@intlify/vite-plugin-vue-i18n/messages';
+import messages from '../locales/_current.json';
+
+// We don't allow changing locales for now so fine to hardcode
+const locale = messages.locale;
 
 const numberFormats = {
-  en: {
-    currency: {
-      style: 'currency',
-      currency: import.meta.env.VITE_CURRENCY as string,
-    },
-  },
-  de: {
+  [locale]: {
     currency: {
       style: 'currency',
       currency: import.meta.env.VITE_CURRENCY as string,
     },
   },
 };
+
 const i18n = createI18n({
-  locale: 'en',
-  messages,
+  locale,
+  messages: {
+    [locale]: messages,
+  },
   numberFormats,
 });
 

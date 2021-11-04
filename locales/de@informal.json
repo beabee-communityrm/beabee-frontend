@@ -104,6 +104,7 @@
     "continue": "Weiter",
     "welcome": "Willkommen {firstname}!"
   },
+  "locale": "de",
   "login": {
     "backTo": "Zurück zu {newsroomName}",
     "forgotPassword": "Passwort vergessen?",
