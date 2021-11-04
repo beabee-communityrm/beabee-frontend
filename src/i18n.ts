@@ -1,9 +1,8 @@
 import { createI18n } from 'vue-i18n';
 import messages from '../locales/_current.json';
 
-const locale = import.meta.env.VITE_LOCALE as string;
-
 // We don't allow changing locales for now so fine to hardcode
+const locale = messages.locale;
 
 const numberFormats = {
   [locale]: {
