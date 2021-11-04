@@ -49,8 +49,8 @@ const sheets = google.sheets({ version: 'v4', auth });
   for (const locale of locales) {
     console.log('Updating ' + locale);
     fs.writeFileSync(
-      path.join(__dirname, '../locales', locale + '.json'),
-      JSON.stringify(localeData[locale], null, 2) + '\n'
+      path.join(__dirname, '../locales', locale + '.js'),
+      'export default ' + JSON.stringify(localeData[locale], null, 2) + '\n'
     );
   }
 })().catch((err) => {
