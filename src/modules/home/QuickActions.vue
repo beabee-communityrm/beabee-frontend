@@ -4,7 +4,7 @@
   }}</SectionTitle>
 
   <ul class="list-disc pl-4 font-semibold underline space-y-2 mt-4">
-    <li>
+    <!--<li>
       <router-link to="/profile/edit">
         {{ t('homePage.editProfile') }}
       </router-link>
@@ -13,10 +13,10 @@
       <router-link to="/callouts">
         {{ t('homePage.viewOpenCallouts') }}
       </router-link>
-    </li>
+    </li>-->
     <li>
-      <router-link to="/contributions">
-        {{ t('homePage.managePayment') }}
+      <router-link to="/profile/contribution">
+        {{ t('homePage.manageYourContribution') }}
       </router-link>
     </li>
   </ul>

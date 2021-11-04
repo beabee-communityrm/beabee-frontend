@@ -9,6 +9,7 @@ import {
 import {
   faSignInAlt,
   faCaretDown,
+  faCaretUp,
   faExclamation,
   faInfoCircle,
   faBullhorn,
@@ -26,6 +27,7 @@ library.add(
   farCreditCard,
   faSignInAlt,
   faCaretDown,
+  faCaretUp,
   faInfoCircle,
   faExclamation,
   faBullhorn,

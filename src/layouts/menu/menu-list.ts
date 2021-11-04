@@ -7,7 +7,7 @@ export default [
     href: '/profile',
     icon: 'building',
   },
-  {
+  /*{
     title: t('menu.yourProfile'),
     href: '/profile/edit',
     icon: 'user',
@@ -16,7 +16,7 @@ export default [
     title: t('menu.callouts'),
     href: '/callouts',
     icon: 'calendar-check',
-  },
+  },*/
   {
     title: t('menu.settings'),
     divider: true,
@@ -28,8 +28,8 @@ export default [
     isSubsection: true,
   },
   {
-    title: t('menu.contributions'),
-    href: '/profile/contributions',
+    title: t('menu.contribution'),
+    href: '/profile/contribution',
     icon: 'credit-card',
     isSubsection: true,
   },

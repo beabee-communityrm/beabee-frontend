@@ -20,7 +20,11 @@
 
   <AuthBox>
     <div class="flex justify-center mb-10">
-      <img class="logo" src="../../assets/images/logo.png" alt="Logo" />
+      <img
+        class="logo"
+        src="../../assets/images/logo.png"
+        :alt="newsroomName"
+      />
     </div>
 
     <router-view />
