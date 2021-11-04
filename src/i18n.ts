@@ -1,8 +1,11 @@
 import { createI18n } from 'vue-i18n';
-import messages from '../locales/_current';
+import messages from '../locales/_current.json';
 
-// We don't allow changing locales for now so fine to hardcode
-const locale = messages.locale;
+// We don't allow changing locales for now so fine to hardcode the locale
+
+// messages are statically compiled, .source references the actual string
+// https://github.com/intlify/vite-plugin-vue-i18n#static-bundle-importing
+const locale = (messages.locale as any).source;
 
 const numberFormats = {
   [locale]: {
