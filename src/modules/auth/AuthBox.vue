@@ -3,7 +3,6 @@
     <div
       class="
         bg-white
-        text-primary
         py-6
         md:py-12
         px-5
