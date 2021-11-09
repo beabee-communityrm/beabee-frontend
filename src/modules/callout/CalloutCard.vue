@@ -2,7 +2,7 @@
   <div
     class="rounded overflow-hidden bg-white cursor-pointer shadow callout-card"
   >
-    <router-link :to="`/callouts/${callout.slug}`">
+    <router-link :to="`/polls/${callout.slug}`">
       <div class="bg-primary-40 mb-2 h-36">
         <img
           v-if="callout.image"
