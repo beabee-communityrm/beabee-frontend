@@ -44,8 +44,8 @@ const props = defineProps({
 const period = computed(() => {
   return props.contributionInfo.contributionPeriod ===
     ContributionPeriod.Monthly
-    ? 'month'
-    : 'year';
+    ? t('common.month')
+    : t('common.year');
 });
 
 const formattedJoinedDate = computed(() => {
