@@ -29,7 +29,8 @@ import { computed } from '@vue/reactivity';
 import { useI18n } from 'vue-i18n';
 import { ContributionInfo } from './contribution.interface';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
-import { parseISO, format } from 'date-fns';
+import { parseISO } from 'date-fns';
+import { formatLocale } from '../../utils/dates/locale-date-formats';
 
 const { t, n } = useI18n();
 
@@ -50,7 +51,7 @@ const period = computed(() => {
 const formattedJoinedDate = computed(() => {
   if (!props.contributionInfo.joined) return;
   const parsedDate = parseISO(props.contributionInfo.joined);
-  return format(parsedDate, 'do MMMM y').split(' ');
+  return formatLocale(parsedDate, 'do MMMM y').split(' ');
 });
 </script>
 
