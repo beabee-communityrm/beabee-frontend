@@ -18,6 +18,10 @@
     :sub-title="profileContent.welcomeMessage"
   />
 
+  <section class="mb-10">
+    <WelcomeMessage />
+  </section>
+
   <section class="mb-10 md:mb-12">
     <NoticeContainer />
   </section>
@@ -66,6 +70,7 @@ import SectionTitle from './SectionTitle.vue';
 import PageTitle from '../../components/PageTitle.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import AppAlert from '../../components/AppAlert.vue';
+import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
 import { useHome } from './use-home';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useI18n } from 'vue-i18n';
