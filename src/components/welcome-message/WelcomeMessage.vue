@@ -1,18 +1,30 @@
 <template>
-  <div class="bg-white rounded px-4 py-8 flex shadow">
-    <div>
+  <div
+    class="bg-white rounded px-4 py-4 md:py-8 flex flex-col md:flex-row shadow"
+  >
+    <div class="flex items-center md:items-start">
       <WelcomeIcon class="icon" />
+
+      <h3 class="title mb-2 md:hidden ml-4">Welcome aboard {{ name }}!</h3>
     </div>
-    <div class="ml-8">
-      <h3 class="text-lg font-semibold mb-2">Welcome aboard {{ name }}!</h3>
+
+    <div class="md:ml-8">
+      <h3 class="title mibold mb-2 hidden md:block">
+        Welcome aboard {{ name }}!
+      </h3>
+
       <!-- - TODO: what kind of content is gonna be added here is it just <p>?
       if yes we can just use space-y-5 for margin between paragraphs -->
-      <div class="text-lg mb-6 space-y-5" v-html="text" />
+      <div
+        class="text-sm md:text-lg mb-6 space-y-5 whitespace-normal"
+        v-html="text"
+      />
 
-      <div class="text-lg font-semibold leading-tight">
+      <div class="text-sm md:text-lg font-semibold leading-tight">
         {{ authorName }}
       </div>
-      <div class="text-sm italic">
+
+      <div class="text-xs md:text-sm italic">
         {{ authorTitle }}
       </div>
     </div>
@@ -45,8 +57,19 @@ defineProps({
 </script>
 
 <style scoped>
+.title {
+  @apply text-lg font-semibold;
+}
+
 .icon {
-  width: 17rem;
-  height: 19.125rem;
+  width: 4.5rem;
+  height: 5rem;
+}
+
+@media screen and (min-width: 768px) {
+  .icon {
+    width: 17rem;
+    height: 19.125rem;
+  }
 }
 </style>
