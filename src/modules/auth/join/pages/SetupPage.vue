@@ -102,7 +102,7 @@ const router = useRouter();
 const completeSetup = () => {
   updateMember(memberData)
     .then(() => {
-      router.push('/profile');
+      router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
     })
     .catch((err) => err);
 };

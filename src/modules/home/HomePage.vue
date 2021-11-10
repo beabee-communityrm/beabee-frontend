@@ -20,6 +20,7 @@
 
   <section class="mb-10">
     <WelcomeMessage
+      v-if="showWelcomeMessage"
       :member-first-name="member.firstName"
       :text="profileContent.introMessage"
       :author-name="profileContent.introMessageAuthorName"
@@ -84,6 +85,7 @@ import { useRoute } from 'vue-router';
 const { t } = useI18n();
 
 const isPasswordReset = useRoute().query.passwordReset === 'true';
+const showWelcomeMessage = useRoute().query.welcomeMessage === 'true';
 
 const {
   member,
