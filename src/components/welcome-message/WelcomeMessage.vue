@@ -6,17 +6,16 @@
       <WelcomeIcon class="icon" />
 
       <h3 class="title mb-2 md:hidden ml-4">
-        Welcome aboard {{ memberFirstName }}!
+        {{ t('homePage.welocme', { name: memberFirstName }) }}
       </h3>
     </div>
 
     <div class="md:ml-8">
       <h3 class="title mibold mb-2 hidden md:block">
-        Welcome aboard {{ memberFirstName }}!
+        {{ t('homePage.welocme', { name: memberFirstName }) }}
       </h3>
 
-      <!-- - TODO: what kind of content is gonna be added here is it just <p>?
-      if yes we can just use space-y-5 for margin between paragraphs -->
+      <!-- - TODO: what kind of content is gonna be added here is it just <p> element? -->
       <div
         class="
           welcome-message-content
@@ -41,25 +40,26 @@
 
 <script lang="ts" setup>
 import WelcomeIcon from './WelcomeIcon.vue';
+import { useI18n } from 'vue-i18n';
 
-// - TODO: replace placeholders with API response
+const { t } = useI18n();
+
 defineProps({
   memberFirstName: {
     type: String,
-    default: 'Luther',
+    default: '',
   },
   text: {
     type: String,
-    default:
-      '<p>Journal Register hyperhyperlocal Frontline inverted pyramid I love the Weather & Opera section blog future, right-sizing dingbat tweets monetization open newsroom.</p><p>Like button Steve Jobs David Foster Wallace content is king tablets TechCrunch ProPublica newspaper strike commons-based peer production Marshall McLuhan going forward, fair use monetization Neil Postman right-sizing Aron Pilhofer Chartbeat inverted pyramid hyperhyperhyperlocal.</p><p>Paid content backpack journalist I love the news.me plagiarism pay curtain Romenesko Jeff Jarvis, Walter Cronkite died vast wasteland tweet reality-based news.me Demand Media linkbait David Cohn explainer.</p>',
+    default: '',
   },
   authorName: {
     type: String,
-    default: 'Anja Merkenich',
+    default: '',
   },
   authorTitle: {
     type: String,
-    default: 'haupt-editor',
+    default: '',
   },
 });
 </script>
