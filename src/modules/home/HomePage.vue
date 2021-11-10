@@ -19,7 +19,12 @@
   />
 
   <section class="mb-10">
-    <WelcomeMessage />
+    <WelcomeMessage
+      :member-first-name="member.firstName"
+      :text="profileContent.introMessage"
+      :author-name="profileContent.introMessageAuthorName"
+      :author-title="profileContent.introMessageAuthorTitle"
+    />
   </section>
 
   <section class="mb-10 md:mb-12">

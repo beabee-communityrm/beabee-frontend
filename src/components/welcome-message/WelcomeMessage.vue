@@ -5,18 +5,26 @@
     <div class="flex items-center md:items-start">
       <WelcomeIcon class="icon" />
 
-      <h3 class="title mb-2 md:hidden ml-4">Welcome aboard {{ name }}!</h3>
+      <h3 class="title mb-2 md:hidden ml-4">
+        Welcome aboard {{ memberFirstName }}!
+      </h3>
     </div>
 
     <div class="md:ml-8">
       <h3 class="title mibold mb-2 hidden md:block">
-        Welcome aboard {{ name }}!
+        Welcome aboard {{ memberFirstName }}!
       </h3>
 
       <!-- - TODO: what kind of content is gonna be added here is it just <p>?
       if yes we can just use space-y-5 for margin between paragraphs -->
       <div
-        class="text-sm md:text-lg mb-6 space-y-5 whitespace-normal"
+        class="
+          welcome-message-content
+          text-sm
+          md:text-lg
+          mb-6
+          whitespace-normal
+        "
         v-html="text"
       />
 
@@ -36,7 +44,7 @@ import WelcomeIcon from './WelcomeIcon.vue';
 
 // - TODO: replace placeholders with API response
 defineProps({
-  name: {
+  memberFirstName: {
     type: String,
     default: 'Luther',
   },
@@ -71,5 +79,12 @@ defineProps({
     width: 17rem;
     height: 19.125rem;
   }
+}
+</style>
+
+/* not scoped because `p` is dynamic from the API */
+<style>
+.welcome-message-content p {
+  margin-bottom: 30px;
 }
 </style>
