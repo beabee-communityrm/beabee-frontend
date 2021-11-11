@@ -100,7 +100,7 @@ const {
 const router = useRouter();
 
 const completeSetup = () => {
-  updateMember(memberData)
+  updateMember(memberData, setupContent.showNewsletterOptIn)
     .then(() => {
       router.push('/profile');
     })
