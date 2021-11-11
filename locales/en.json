@@ -1,0 +1,136 @@
+{
+  "common": {
+    "annually": "Annually",
+    "contributing": "Contributing",
+    "every": "every",
+    "hello": "Hello",
+    "in": "in",
+    "joined": "Joined",
+    "month": "month",
+    "monthly": "Monthly",
+    "new": "new!",
+    "participate": "Participate",
+    "until": "until",
+    "year": "year"
+  },
+  "forgotPassword": {
+    "description": "Please enter your email address and we’ll send you password reset instructions.",
+    "messageFirstPart": "If there is an account associated with",
+    "messageSecondPart": "you will receive an email shortly.<br>Please check your inbox and follow the instructions in the email.",
+    "resetPassword": "Reset your password",
+    "title": "Forgot your password?"
+  },
+  "form": {
+    "addressLine1": "Address line 1",
+    "addressLine2": "Address line 2",
+    "cityOrTown": "City/Town",
+    "email": "Email",
+    "errors": {
+      "address": {
+        "required": "This field is required if you want to add address"
+      },
+      "aggregator": "Something is missing! Please check the fields above.",
+      "email": {
+        "invalid": "Invalid email address",
+        "required": "Email is required"
+      },
+      "firstName": {
+        "required": "First name is required"
+      },
+      "lastName": {
+        "required": "Last name is required"
+      },
+      "password": {
+        "invalid": "Invalid password",
+        "required": "Password is required",
+        "sameAs": "The passwords don't match"
+      }
+    },
+    "firstName": "First name",
+    "lastName": "Last name",
+    "password": "Password",
+    "passwordInfo": "Set a secure password: 8+ characters at least one number, one uppercase and one lowercase letters.",
+    "postCode": "Postcode",
+    "saveChanges": "Save Changes"
+  },
+  "homePage": {
+    "editProfile": "Edit your community profile",
+    "manageContribution": "Manage contribution",
+    "manageYourContribution": "Manage your contribution",
+    "newCallout": "New callout!",
+    "openCallouts": "Open callouts",
+    "passwordReset": "Your password has been reset.",
+    "quickActions": "Quick actions",
+    "title": "Home",
+    "viewAllCallouts": "View all callouts",
+    "viewOpenCallouts": "View open callouts",
+    "yourProfile": "Your profile"
+  },
+  "informationPage": {
+    "contactInformation": "Contact information",
+    "loginDetail": "Login details",
+    "subTitle": "Required fields are marked with an asterisk. All information submitted here is private.",
+    "title": "Your information"
+  },
+  "join": {
+    "absorbFeeOptIn": "Yes, I'll absorb the {fee} fee.",
+    "absorbFeeText": "Our payment processor charges us per transaction which means we receive less from monthly contributions. Are you happy to absorb the {fee} transaction fee?  Alternatively you could pay annually.",
+    "contribute": "Contribute {amount} {period}",
+    "errors": {
+      "confirmEmail": {
+        "message": "Almost there! We just need to confirm your email address to finish setting up your membership.",
+        "proceed": "We've sent you an email please click the link to proceed",
+        "title": "Confirm your email address"
+      },
+      "duplicateEmail": {
+        "message": "This email address is already registered you can login to proceed.",
+        "title": "Duplicate email address"
+      },
+      "failed": {
+        "backToJoin": "Back to join page",
+        "message": "There was a problem setting up your membership, our team has been notified. Please contact support if the problem persists.",
+        "title": "Something went wrong"
+      }
+    },
+    "login": "Log in",
+    "memberAccount": "Member account",
+    "memberAlready": "Are you a member already?",
+    "minimumContribution": "Minimum contribution is",
+    "notice": "By proceeding you are accepting the",
+    "privacy": "Privacy Policy"
+  },
+  "joinSetup": {
+    "confirmDetails": "Please confirm your details",
+    "continue": "All good! Continue",
+    "welcome": "Welcome {firstName}!"
+  },
+  "locale": "en",
+  "login": {
+    "backTo": "Back to {newsroomName}",
+    "forgotPassword": "Forgot your password?",
+    "joinNow": "Join now!",
+    "login": "Login",
+    "notMember": "Not a member?",
+    "title": "Log in to your account"
+  },
+  "menu": {
+    "callouts": "Callouts",
+    "contribution": "Contribution",
+    "home": "Home",
+    "settings": "Settings",
+    "yourInformation": "Your information",
+    "yourProfile": "Your profile"
+  },
+  "notification": {
+    "error": "Oops, something went wrong!",
+    "success": "Well done! Your action was successful."
+  },
+  "resetPassword": {
+    "changePassword": "Change password",
+    "confirmPassword": "Confirm password",
+    "description": "Set a new password to login.",
+    "login": "Login to your account",
+    "newPassword": "New password",
+    "title": "Reset your password?"
+  }
+}

@@ -9,9 +9,14 @@ import {
 import {
   faSignInAlt,
   faCaretDown,
+  faCaretUp,
   faExclamation,
   faInfoCircle,
   faBullhorn,
+  faKey,
+  faMagic,
+  faBomb,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -22,9 +27,14 @@ library.add(
   farCreditCard,
   faSignInAlt,
   faCaretDown,
+  faCaretUp,
   faInfoCircle,
   faExclamation,
-  faBullhorn
+  faBullhorn,
+  faKey,
+  faMagic,
+  faBomb,
+  faTimes
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

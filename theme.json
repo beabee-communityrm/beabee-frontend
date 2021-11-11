@@ -1,9 +1,12 @@
 {
   "colors": {
-    "primary": "#262453",
-    "secondary": "#43a796",
-    "link": "#43a796",
-    "danger": "#ce3d3d"
+    "primary": "chocolate",
+    "secondary": "blue",
+    "body": "black",
+    "link": "purple",
+    "warning": "yellow",
+    "success": "green",
+    "danger": "red"
   },
   "fonts": {
     "body": "'Open Sans', sans-serif"

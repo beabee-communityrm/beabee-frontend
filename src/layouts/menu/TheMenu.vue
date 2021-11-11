@@ -8,19 +8,19 @@
       @click="isMenuVisible = false"
     />
 
-    <div class="flex items-center cursor-pointer" @click="showMenu">
+    <div class="flex items-center cursor-pointer" @click="toggleMenu">
       <h1 class="text-2xl underline">
         {{ route.meta.pageTitle }}
       </h1>
 
       <font-awesome-icon
-        class="inline-block ml-2 -mt-2"
-        :icon="['fas', 'caret-down']"
+        class="inline-block ml-2"
+        :icon="['fas', isMenuVisible ? 'caret-up' : 'caret-down']"
       />
     </div>
 
     <!-- logo on small screens -->
-    <img class="w-11" src="../../assets/images/logo.png" alt="Newsroom logo" />
+    <img class="w-11" src="../../assets/images/logo.png" :alt="newsroomName" />
   </div>
 
   <div class="menu-container" :style="isMenuVisible ? showMobileMenuStyle : ''">
@@ -29,7 +29,7 @@
       <img
         class="w-20 md:inline-block"
         src="../../assets/images/logo.png"
-        alt="News room logo"
+        :alt="newsroomName"
       />
     </div>
 
@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
 import { ref } from '@vue/reactivity';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import menu from './menu-list';
 import TheMenuList from './TheMenuList.vue';
@@ -47,10 +47,16 @@ import TheMenuList from './TheMenuList.vue';
 const route = useRoute();
 
 const isMenuVisible = ref(false);
+useRouter().afterEach(() => {
+  isMenuVisible.value = false;
+});
 
-function showMenu() {
-  isMenuVisible.value = true;
+const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
+
+function toggleMenu() {
+  isMenuVisible.value = !isMenuVisible.value;
 }
+
 const showMobileMenuStyle = {
   top: '68px',
   transform: 'translateX(0)',

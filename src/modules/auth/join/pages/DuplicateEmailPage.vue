@@ -1,5 +1,5 @@
 <template>
-  <JoinBox>
+  <AuthBox>
     <JoinNotice>
       <template #header>{{ t('join.errors.duplicateEmail.title') }}</template>
 
@@ -19,14 +19,14 @@
         </div>
       </template>
     </JoinNotice>
-  </JoinBox>
+  </AuthBox>
 </template>
 
 <script lang="ts" setup>
-import JoinBox from '../components/JoinBox.vue';
+import AuthBox from '../../AuthBox.vue';
 import JoinNotice from '../components/JoinNotice.vue';
-import AppButton from '../../../components/forms/AppButton.vue';
-import AppLink from '../../../components/AppLink.vue';
+import AppButton from '../../../../components/forms/AppButton.vue';
+import AppLink from '../../../../components/AppLink.vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();

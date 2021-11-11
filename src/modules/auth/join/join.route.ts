@@ -7,7 +7,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     name: 'join',
     component: () => import('./JoinPage.vue'),
     meta: {
-      layout: 'Join',
+      layout: 'Auth',
     },
   },
   {
@@ -15,7 +15,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     name: 'setup',
     component: () => import('./pages/SetupPage.vue'),
     meta: {
-      layout: 'Join',
+      layout: 'Auth',
     },
   },
   {
@@ -25,7 +25,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     name: 'complete join',
     component: () => import('./pages/CompletePage.vue'),
     meta: {
-      layout: 'Join',
+      layout: 'Auth',
     },
     beforeEnter(to, from, next) {
       const redirectFlowId = to.query.redirect_flow_id;

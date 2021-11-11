@@ -17,6 +17,7 @@ function shades(_color, levels = []) {
 module.exports = {
   purge: {
     content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+    safelist: ['bg-success', 'bg-warning', 'bg-danger'],
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -26,7 +27,7 @@ module.exports = {
       body: shades(theme.colors.body || theme.colors.primary, [10, 70, 80]),
       link: shades(theme.colors.link || theme.colors.primary, [10, 70, 80]),
       warning: shades(theme.colors.warning || '#f5cc5b', [10, 30, 70]),
-      success: shades(theme.colors.success || '#3a9283', [10, 30, 70]),
+      success: shades(theme.colors.success || '#86a960', [10, 30, 70]),
       danger: shades(theme.colors.danger || '#ce3d3d', [10, 30, 70]),
       white: shades(theme.colors.white || '#ffffff'),
       grey: {
@@ -68,6 +69,9 @@ module.exports = {
       },
       boxShadow: {
         DEFAULT: '0 0 8px 0 rgba(0, 0, 0, 0.2)',
+      },
+      fontSize: {
+        '2.5xl': '1.75rem',
       },
     },
   },

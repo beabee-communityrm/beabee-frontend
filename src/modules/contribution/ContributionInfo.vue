@@ -1,6 +1,6 @@
 <template>
-  <div class="flex justify-between pt-3 w-76">
-    <div>
+  <div class="flex pt-3 w-76">
+    <div class="flex-1">
       <div class="title uppercase">{{ t('common.joined') }}</div>
 
       <div class="content">
@@ -12,7 +12,7 @@
 
     <div class="w-px bg-primary-20" />
 
-    <div>
+    <div class="flex-1 pl-4">
       <div class="title uppercase">{{ t('common.contributing') }}</div>
 
       <div class="content">

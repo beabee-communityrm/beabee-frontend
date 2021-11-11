@@ -2,8 +2,8 @@
   <header>
     <div class="flex mb-4">
       <img
-        src="../../../assets/images/logo.png"
-        alt="Logo"
+        src="../../../../assets/images/logo.png"
+        :alt="newsroomName"
         class="w-16 flex-none self-start"
       />
       <div class="flex flex-col ml-4">
@@ -23,6 +23,8 @@
 </template>
 
 <script lang="ts" setup>
+const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
+
 defineProps({
   title: {
     type: String,

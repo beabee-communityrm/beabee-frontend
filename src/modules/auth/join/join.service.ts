@@ -1,5 +1,5 @@
 import { LocationQueryValue } from 'vue-router';
-import axios from '../../axios';
+import axios from '../../../axios';
 import { MemberData, SignUpData } from './join.interface';
 import { NewsletterStaus } from './newsletter-status.enum';
 
@@ -36,17 +36,25 @@ const fetchMember = (): Promise<any> => {
   return axios.get('/member/me');
 };
 
-const updateMember = (memberData: MemberData): Promise<any> => {
-  return axios.put('/member/me', {
+const updateMember = (
+  memberData: MemberData,
+  updateNewsletterStatus: boolean
+): Promise<any> => {
+  const params = {
     email: memberData.email,
     firstname: memberData.firstName,
     lastname: memberData.lastName,
-    profile: {
-      newsletterStatus: memberData.profile.newsletterStatus
-        ? NewsletterStaus.Subscribed
-        : NewsletterStaus.Unsubscribed,
-    },
-  });
+  };
+
+  if (updateNewsletterStatus) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    params.profile.newsletterStatus = memberData.profile.newsletterStatus
+      ? NewsletterStaus.Subscribed
+      : NewsletterStaus.Unsubscribed;
+  }
+
+  return axios.put('/member/me', params);
 };
 
 export {

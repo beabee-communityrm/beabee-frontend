@@ -1,5 +1,5 @@
 <template>
-  <JoinBox>
+  <AuthBox>
     <form @submit.prevent>
       <JoinHeader
         class="mb-6"
@@ -69,17 +69,17 @@
         {{ t('joinSetup.continue') }}
       </AppButton>
     </form>
-  </JoinBox>
+  </AuthBox>
 </template>
 
 <script lang="ts" setup>
-import JoinBox from '../components/JoinBox.vue';
+import AuthBox from '../../AuthBox.vue';
 import JoinHeader from '../components/JoinHeader.vue';
-import AppInput from '../../../components/forms/AppInput.vue';
+import AppInput from '../../../../components/forms/AppInput.vue';
 import { useJoin } from '../use-join';
-import { errorGenerator } from '../../../utils/form-error-generator';
-import AppButton from '../../../components/forms/AppButton.vue';
-import ErrorAggregator from '../../../components/forms/ErrorAggregator.vue';
+import { errorGenerator } from '../../../../utils/form-error-generator';
+import AppButton from '../../../../components/forms/AppButton.vue';
+import ErrorAggregator from '../../../../components/forms/ErrorAggregator.vue';
 import { updateMember } from '../join.service';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useRouter } from 'vue-router';
@@ -100,7 +100,7 @@ const {
 const router = useRouter();
 
 const completeSetup = () => {
-  updateMember(memberData)
+  updateMember(memberData, setupContent.showNewsletterOptIn)
     .then(() => {
       router.push('/profile');
     })

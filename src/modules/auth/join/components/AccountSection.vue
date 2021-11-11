@@ -31,8 +31,8 @@
 </template>
 
 <script lang="ts" setup>
-import AppInput from '../../../components/forms/AppInput.vue';
-import { errorGenerator } from '../../../utils/form-error-generator';
+import AppInput from '../../../../components/forms/AppInput.vue';
+import { errorGenerator } from '../../../../utils/form-error-generator';
 import { useI18n } from 'vue-i18n';
 import { useJoin } from '../use-join';
 

@@ -27,7 +27,11 @@
 
       <!-- logout -->
       <li class="mt-auto mb-6 sm:mb-10">
-        <a class="nav-link cursor-pointer" :class="itemClassses(false)">
+        <a
+          class="nav-link cursor-pointer"
+          :class="itemClassses(false)"
+          @click="doLogout"
+        >
           <font-awesome-icon class="menu-icon" :icon="['fas', 'sign-in-alt']" />
 
           <span>Log out</span>
@@ -39,6 +43,10 @@
 
 <script lang="ts" setup>
 import { MenuItem } from './menu-list.interface';
+import { useRouter } from 'vue-router';
+import { logout } from '../../modules/auth/auth.service';
+
+const router = useRouter();
 
 defineProps({
   menuItems: {
@@ -52,6 +60,12 @@ const itemClassses = (isSubsection: boolean | undefined) => {
     ? ['setting-item', 'text-grey-dark', 'hover:bg-grey-lighter']
     : ['menu-item', 'text-primary-80', 'hover:bg-primary-5'];
   return classses;
+};
+
+const doLogout = () => {
+  logout();
+  localStorage.setItem('isAuthenticated', 'false');
+  router.push('/auth/login');
 };
 </script>
 
