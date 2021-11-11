@@ -35,7 +35,11 @@
       </router-link>
     </div>
 
-    <ErrorAggregator v-if="hasLoginError" class="mb-4" />
+    <ErrorAggregator v-if="hasLoginFormError" class="mb-4" />
+
+    <ErrorAggregator v-if="hasCredentialError" class="mb-4">
+      {{ t('login.wrongCredentials') }}
+    </ErrorAggregator>
 
     <AppButton
       variant="link"
@@ -66,7 +70,8 @@ const {
   loginData,
   loginValidation,
   isFormInvalid,
-  hasLoginError,
+  hasLoginFormError,
+  hasCredentialError,
   submitLogin,
   loading,
 } = useLogin();

@@ -5,7 +5,7 @@
     </div>
 
     <div class="flex-grow p-2 text-xs bg-danger-10">
-      {{ t('form.errors.aggregator') }}
+      <slot>{{ t('form.errors.aggregator') }}</slot>
     </div>
   </div>
 </template>
