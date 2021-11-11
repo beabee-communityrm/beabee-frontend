@@ -15,8 +15,8 @@
   },
   "forgotPassword": {
     "description": "Bitte gib deine Email-Adresse ein. Wir schicken dir dann die Anleitung zum Zurücksetzen deines Passworts. ",
-    "messageFirstPart": "Existiert dieser Account,",
-    "messageSecondPart": "bekommst du in Kürze eine Email von uns. <br> Bitte schaue in dein Mailpostfach und folge den Anleitung in der Email. ",
+    "messageFirstPart": "Existiert ein Account mit der Adresse",
+    "messageSecondPart": ", bekommst du in Kürze eine Email von uns.<br>Bitte schaue in dein Emailpostfach und folge den Anleitung in der Email. ",
     "resetPassword": "Passwort zurücksetzen",
     "title": "Passwort vergessen?"
   },
@@ -29,7 +29,7 @@
       "address": {
         "required": "Dieses Feld wird benötigt, wenn du eine Adresse eintragen willst"
       },
-      "aggregator": "Felder mit * müssen ausgefüllt werden. ",
+      "aggregator": "Es fehlt etwas! Bitte kontrolliere die obigen Felder. ",
       "email": {
         "invalid": "Ungültige Email-Adresse",
         "required": "Email-Adresse benötigt"
@@ -59,7 +59,7 @@
     "manageYourContribution": "Beitrag ändern",
     "newCallout": "Neuer Callout!",
     "openCallouts": "Offene Callouts",
-    "passwordReset": "Dein Passwort wurde zurückgesetzt. ",
+    "passwordReset": "Dein Passwort wurde aktualisiert. ",
     "quickActions": "Schnellaktionen",
     "title": "Home",
     "viewAllCallouts": "Alle Callouts anzeigen",
@@ -115,7 +115,7 @@
   },
   "menu": {
     "callouts": "Callouts",
-    "contribution": "Beiträge",
+    "contribution": "Beitrag",
     "home": "Home",
     "settings": "Einstellungen",
     "yourInformation": "Deine Informationen",
@@ -128,9 +128,9 @@
   "resetPassword": {
     "changePassword": "Passwort ändern",
     "confirmPassword": "Passwort bestätigen",
-    "description": "Neues Passwort eingeben um fortzufahren.",
+    "description": "Neues Passwort eingeben, um fortzufahren.",
     "login": "Einloggen",
     "newPassword": "Neues Passwort",
-    "title": "Passwort zurücksetzen?"
+    "title": "Passwort aktualisieren?"
   }
 }

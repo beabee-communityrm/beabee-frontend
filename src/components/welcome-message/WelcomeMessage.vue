@@ -6,13 +6,13 @@
       <WelcomeIcon class="icon" />
 
       <h3 class="title mb-2 md:hidden ml-4">
-        {{ t('homePage.welocme', { firstName: memberFirstName }) }}
+        {{ t('homePage.welcome', { firstName: memberFirstName }) }}
       </h3>
     </div>
 
     <div class="md:ml-8">
       <h3 class="title mibold mb-2 hidden md:block">
-        {{ t('homePage.welocme', { firstName: memberFirstName }) }}
+        {{ t('homePage.welcome', { firstName: memberFirstName }) }}
       </h3>
 
       <!-- - TODO: what kind of content is gonna be added here is it just <p> element? -->
