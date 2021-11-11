@@ -1,18 +1,18 @@
 <template>
   <div
-    class="bg-white rounded px-4 py-4 md:py-8 flex flex-col md:flex-row shadow"
+    class="bg-white rounded px-4 py-4 md:p-8 flex flex-col md:flex-row shadow"
   >
     <div class="flex items-center md:items-start">
       <WelcomeIcon class="icon" />
 
       <h3 class="title mb-2 md:hidden ml-4">
-        {{ t('homePage.welocme', { name: memberFirstName }) }}
+        {{ t('homePage.welocme', { firstName: memberFirstName }) }}
       </h3>
     </div>
 
     <div class="md:ml-8">
       <h3 class="title mibold mb-2 hidden md:block">
-        {{ t('homePage.welocme', { name: memberFirstName }) }}
+        {{ t('homePage.welocme', { firstName: memberFirstName }) }}
       </h3>
 
       <!-- - TODO: what kind of content is gonna be added here is it just <p> element? -->
@@ -85,6 +85,6 @@ defineProps({
 /* not scoped because `p` is dynamic from the API */
 <style>
 .welcome-message-content p {
-  margin-bottom: 30px;
+  @apply mb-4 leading-6;
 }
 </style>
