@@ -20,7 +20,7 @@
       </h3>
     </div>
 
-    <div class="md:ml-4 lg:ml-8 flex-grow">
+    <div class="lg:ml-8 flex-grow">
       <WelcomeIcon class="hidden md:block lg:hidden icon float-left mr-4" />
 
       <h3 class="title mb-2 hidden md:block">
@@ -40,7 +40,7 @@
         v-html="text"
       />
 
-      <div class="text-sm md:text-lg font-semibold leading-tight">
+      <div class="text-sm lg:text-lg font-semibold leading-tight">
         {{ authorName }}
       </div>
 
