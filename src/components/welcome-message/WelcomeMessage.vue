@@ -52,6 +52,7 @@
     <FontAwesomeIcon
       class="text-2xl absolute top-4 right-4 cursor-pointer"
       :icon="['fas', 'times']"
+      @click="$emit('close')"
     />
   </div>
 </template>
@@ -80,6 +81,8 @@ defineProps({
     default: '',
   },
 });
+
+defineEmits(['close']);
 </script>
 
 <style scoped>
