@@ -1,17 +1,29 @@
 <template>
   <div
-    class="bg-white rounded px-4 py-4 md:p-8 flex flex-col md:flex-row shadow"
+    class="
+      bg-white
+      rounded
+      px-4
+      py-4
+      md:p-8
+      flex flex-col
+      md:flex-row
+      shadow
+      relative
+    "
   >
-    <div class="flex items-center md:items-start">
-      <WelcomeIcon class="icon" />
+    <div class="flex items-center md:items-start mb-2 md:mb-0">
+      <WelcomeIcon class="icon md:hidden lg:block" />
 
-      <h3 class="title mb-2 md:hidden ml-4">
+      <h3 class="title md:hidden ml-4">
         {{ t('homePage.welcome', { firstName: memberFirstName }) }}
       </h3>
     </div>
 
-    <div class="md:ml-8">
-      <h3 class="title mibold mb-2 hidden md:block">
+    <div class="md:ml-4 lg:ml-8 flex-grow">
+      <WelcomeIcon class="hidden md:block lg:hidden icon float-left mr-4" />
+
+      <h3 class="title mb-2 hidden md:block">
         {{ t('homePage.welcome', { firstName: memberFirstName }) }}
       </h3>
 
@@ -20,7 +32,8 @@
         class="
           welcome-message-content
           text-sm
-          md:text-lg
+          md:text-base
+          lg:text-lg
           mb-6
           whitespace-normal
         "
@@ -35,6 +48,11 @@
         {{ authorTitle }}
       </div>
     </div>
+
+    <FontAwesomeIcon
+      class="text-2xl absolute top-4 right-4 cursor-pointer"
+      :icon="['fas', 'times']"
+    />
   </div>
 </template>
 
@@ -74,7 +92,14 @@ defineProps({
   height: 5rem;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .icon {
+    width: 7.625rem;
+    height: 8.625rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
   .icon {
     width: 17rem;
     height: 19.125rem;
