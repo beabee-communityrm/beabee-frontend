@@ -18,7 +18,7 @@
 
       <PaymentSection v-if="isMonthly" />
 
-      <error-aggregator v-if="hasJoinError" class="mb-4" />
+      <MessageBox v-if="hasJoinError" class="mb-4" />
 
       <AppButton
         :disabled="isJoinFormInvalid"
@@ -48,7 +48,7 @@ import AccountSection from './components/AccountSection.vue';
 import PaymentSection from './components/PaymentSection.vue';
 import JoinFooter from './components/JoinFooter.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
-import ErrorAggregator from '../../../components/forms/ErrorAggregator.vue';
+import MessageBox from '../../../components/MessageBox.vue';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useJoin } from './use-join';
 import { useI18n } from 'vue-i18n';

@@ -59,7 +59,7 @@
         </div>
       </template>
 
-      <ErrorAggregator v-if="hasSetupError" class="mb-4" />
+      <MessageBox v-if="hasSetupError" class="mb-4" />
 
       <AppButton
         variant="link"
@@ -79,7 +79,7 @@ import AppInput from '../../../../components/forms/AppInput.vue';
 import { useJoin } from '../use-join';
 import { errorGenerator } from '../../../../utils/form-error-generator';
 import AppButton from '../../../../components/forms/AppButton.vue';
-import ErrorAggregator from '../../../../components/forms/ErrorAggregator.vue';
+import MessageBox from '../../../../components/MessageBox.vue';
 import { updateMember } from '../join.service';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useRouter } from 'vue-router';

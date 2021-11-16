@@ -1,6 +1,6 @@
 import { email, helpers, required, requiredIf } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import i18n from '../../i18n';
 import { fetchInformation, updateInformation } from './information.service';
 import { Information, UpdateInformation } from './information.interface';
@@ -93,10 +93,18 @@ const touchAddressFields = () => {
 
 const v$ = useVuelidate(rules, information);
 
+const loading = ref(false);
+const isSaved = ref(false);
+
 const submitFormHandler = async () => {
   const isFormCorrect = await v$.value.$validate();
   if (!isFormCorrect) return;
-  updateInformation(information);
+  loading.value = true;
+  isSaved.value = false;
+  updateInformation(information)
+    .then(() => (isSaved.value = true))
+    .catch((err) => err)
+    .finally(() => (loading.value = false));
 };
 
 const setInformation = async () => {
@@ -124,5 +132,7 @@ export function useInformation() {
     touchAddressFields,
     setInformation,
     isFormInvalid,
+    isSaved,
+    loading,
   };
 }

@@ -95,12 +95,17 @@
           </div>
         </div>
 
-        <error-aggregator v-if="isFormInvalid" class="mt-2" />
+        <message-box v-if="isFormInvalid" type="error" class="mt-2" />
+
+        <message-box v-if="isSaved" type="success" class="mt-2">
+          {{ t('form.saved') }}
+        </message-box>
 
         <app-button
           :disabled="isFormInvalid"
           class="mt-5"
-          variant="link"
+          :loading="loading"
+          variant="secondary"
           @click="submitFormHandler"
           >{{ t('form.saveChanges') }}</app-button
         >
@@ -113,10 +118,10 @@
 import PageTitle from '../../components/PageTitle.vue';
 import AppInput from '../../components/forms/AppInput.vue';
 import AppButton from '../../components/forms/AppButton.vue';
-import ErrorAggregator from '../../components/forms/ErrorAggregator.vue';
+import MessageBox from '../../components/MessageBox.vue';
 import { useI18n } from 'vue-i18n';
 import { useInformation } from './use-information';
-import { onMounted } from '@vue/runtime-core';
+import { onBeforeMount } from '@vue/runtime-core';
 
 const {
   v$,
@@ -126,9 +131,18 @@ const {
   touchAddressFields,
   setInformation,
   isFormInvalid,
+  isSaved,
+  loading,
 } = useInformation();
 
-onMounted(setInformation);
+onBeforeMount(() => {
+  setInformation();
+  // - TODO: Why component isn't destroyed on route change?
+  // It's here because when you saved the information and showed the succes message,
+  // if you went to other pages and come back, you still saw the success
+  // message because isSaved remained true.
+  isSaved.value = false;
+});
 
 const { t } = useI18n();
 </script>

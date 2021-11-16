@@ -13,6 +13,10 @@
     "until": "until",
     "year": "year"
   },
+  "contribution": {
+    "manualPayment": "You are paying manually through bank transfer right now. To make it easier for you to manage your contribution and easier for us to know on how much money from our members we can rely on month on month, please update to paying automatically via direct debit.",
+    "updatePaymentType": "Update payment type"
+  },
   "forgotPassword": {
     "description": "Please enter your email address and we’ll send you password reset instructions.",
     "messageFirstPart": "If there is an account associated with",
@@ -51,7 +55,8 @@
     "password": "Password",
     "passwordInfo": "Set a secure password: 8+ characters at least one number, one uppercase and one lowercase letters.",
     "postCode": "Postcode",
-    "saveChanges": "Save Changes"
+    "saveChanges": "Save Changes",
+    "saved": "Saved!"
   },
   "homePage": {
     "editProfile": "Edit your community profile",
