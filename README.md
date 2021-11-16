@@ -1,7 +1,5 @@
 # beabee-new-frontend
 
-test
-
 ## Development setup
 
 To set up:
