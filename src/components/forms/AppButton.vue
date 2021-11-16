@@ -4,11 +4,21 @@
   <component
     :is="tag"
     v-else
-    :disabled="disabled"
+    :disabled="disabled || loading"
     :class="classes"
     :type="elementTypeAttribute"
   >
     <slot>Submit</slot>
+
+    <!-- only secondary buttons have loading state, that is 
+       why it `text-secondary` is added statically
+    -->
+    <FontAwesomeIcon
+      v-if="loading"
+      class="text-2xl absolute text-secondary"
+      :icon="['fas', 'circle-notch']"
+      spin
+    />
   </component>
 </template>
 
@@ -37,11 +47,18 @@ const props = defineProps({
     type: String,
     default: 'primary',
   },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const variantStaticClasses = {
   primary: 'bg-primary-70 text-white hover:bg-primary-80',
+  // - TODO: remove link, to do remove it you need to change all buttons -
   link: 'bg-link text-white',
+  secondary: 'bg-secondary text-white',
+  // - TODO: change it to `secondaryOutlined`. Check all the places it's been used
   linkOutlined: 'bg-white text-link border border-link hover:bg-link-light',
   subtle:
     'bg-white text-primary-80 border border-primary-70 hover:text-primary hover:border-primary',
@@ -54,10 +71,10 @@ const variantClasses = computed(() => {
   );
 });
 
-// - TODO: Fix this. Using scoped style didn't work on `AppLink`, also check w-full
+// - TODO: Fix this. Using scoped style didn't work on `AppLink`, also check if w-full
 // is necessary
 const baseClasses =
-  'h-10 px-2 text-center cursor-pointer flex justify-center items-center font-bold rounded w-full';
+  'h-10 px-2 text-center cursor-pointer flex justify-center items-center font-bold rounded w-full relative';
 
 const classes = computed(() => {
   return [baseClasses, variantClasses.value, statusClasses.value];
@@ -68,6 +85,17 @@ const elementTypeAttribute = computed(() => {
 });
 
 const statusClasses = computed(() => {
-  return props.disabled ? 'cursor-not-allowed opacity-50' : null;
+  return {
+    'cursor-not-allowed opacity-50': props.disabled,
+    loading: props.loading,
+  };
 });
 </script>
+
+<style scoped>
+.loading::before {
+  content: '';
+
+  @apply absolute top-0 left-0 h-full w-full bg-white opacity-30;
+}
+</style>
