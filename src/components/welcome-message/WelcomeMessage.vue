@@ -28,12 +28,17 @@
       </h3>
 
       <!-- - TODO: what kind of content is gonna be added here is it just <p> element? -->
+      <!-- - TODO: text sizees and line height (leading) is based on 
+             the pragraph type (highlighted, regular, small). Check if
+             if it's necessary to make this reusable
+      -->
       <div
         class="
           welcome-message-content
           text-sm
-          md:text-base
-          lg:text-lg
+          leading-5
+          md:text-base md:leading-5.5
+          lg:text-lg lg:leading-6
           mb-6
           whitespace-normal
         "
@@ -113,6 +118,6 @@ defineEmits(['close']);
 /* not scoped because `p` is dynamic from the API */
 <style>
 .welcome-message-content p {
-  @apply mb-4 leading-6;
+  @apply mb-4;
 }
 </style>
