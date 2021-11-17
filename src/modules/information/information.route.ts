@@ -7,7 +7,7 @@ export const informationRoute: Array<RouteRecordRaw> = [
   {
     path: '/profile/information',
     name: 'information',
-    component: () => import('./information.vue'),
+    component: () => import('./InformationPage.vue'),
     meta: {
       pageTitle: t('informationPage.title'),
     },

@@ -1,5 +1,5 @@
 <template>
-  <page-title
+  <PageTitle
     :title="t('informationPage.title')"
     :sub-title="t('informationPage.subTitle')"
   />
@@ -10,7 +10,7 @@
     <div class="grid lg:grid-cols-2 xl:grid-cols-3">
       <div>
         <div class="mb-5">
-          <app-input
+          <AppInput
             v-model="information.emailAddress"
             input-type="email"
             :label="t('form.email') + '*'"
@@ -20,7 +20,7 @@
         </div>
 
         <div class="mb-5">
-          <app-input
+          <AppInput
             v-model="information.password"
             input-type="password"
             :label="t('form.password')"
@@ -35,7 +35,7 @@
         </h2>
 
         <div class="mb-5">
-          <app-input
+          <AppInput
             v-model="information.firstName"
             input-type="text"
             :label="t('form.firstName') + '*'"
@@ -45,7 +45,7 @@
         </div>
 
         <div class="mb-5">
-          <app-input
+          <AppInput
             v-model="information.lastName"
             input-type="text"
             :label="t('form.lastName') + '*'"
@@ -55,7 +55,7 @@
         </div>
 
         <div class="mb-5">
-          <app-input
+          <AppInput
             v-model="information.addressLine1"
             input-type="text"
             :label="t('form.addressLine1')"
@@ -65,7 +65,7 @@
         </div>
 
         <div class="mb-5">
-          <app-input
+          <AppInput
             v-model="information.addressLine2"
             input-type="text"
             :label="t('form.addressLine2')"
@@ -75,7 +75,7 @@
 
         <div class="grid grid-cols-6 gap-4">
           <div class="mb-5 col-span-4">
-            <app-input
+            <AppInput
               v-model="information.cityOrTown"
               input-type="text"
               :label="t('form.cityOrTown')"
@@ -85,7 +85,7 @@
           </div>
 
           <div class="mb-5 col-span-2">
-            <app-input
+            <AppInput
               v-model="information.postCode"
               input-type="text"
               :label="t('form.postCode')"
@@ -95,19 +95,19 @@
           </div>
         </div>
 
-        <message-box v-if="isFormInvalid" type="error" class="mt-2" />
+        <MessageBox v-if="isFormInvalid" type="error" class="mt-2" />
 
-        <message-box v-if="isSaved" type="success" class="mt-2">
+        <MessageBox v-if="isSaved" type="success" class="mt-2">
           {{ t('form.saved') }}
-        </message-box>
+        </MessageBox>
 
-        <app-button
+        <AppButton
           :disabled="isFormInvalid"
           class="mt-5"
           :loading="loading"
           variant="secondary"
           @click="submitFormHandler"
-          >{{ t('form.saveChanges') }}</app-button
+          >{{ t('form.saveChanges') }}</AppButton
         >
       </div>
     </div>
