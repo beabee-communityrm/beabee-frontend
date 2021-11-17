@@ -67,5 +67,7 @@ const {
   changePeriod,
 } = useJoin();
 
-onBeforeMount(setJoinContent);
+onBeforeMount(() => {
+  setJoinContent();
+});
 </script>

@@ -81,7 +81,9 @@ const formatDate = () => {
   expiresIn.value = formatDistanceLocale(new Date(), parsedDate);
 };
 
-onBeforeMount(formatDate);
+onBeforeMount(() => {
+  formatDate();
+});
 </script>
 
 <style scoped>

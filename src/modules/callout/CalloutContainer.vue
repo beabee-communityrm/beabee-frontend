@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from '@vue/runtime-core';
+import { onBeforeMount } from '@vue/runtime-core';
 import CalloutCard from './CalloutCard.vue';
 import { useCallout } from './use-callout';
 import AppBadge from '../../components/AppBadge.vue';
@@ -65,5 +65,7 @@ const { t } = useI18n();
 
 const { setCallouts, callouts } = useCallout();
 
-onMounted(setCallouts);
+onBeforeMount(() => {
+  setCallouts();
+});
 </script>

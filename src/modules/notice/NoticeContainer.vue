@@ -5,11 +5,13 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from '@vue/runtime-core';
+import { onBeforeMount } from '@vue/runtime-core';
 import AppNotice from './AppNotice.vue';
 import { useNotice } from './use-notice';
 
 const { setNotices, notices } = useNotice();
 
-onMounted(setNotices);
+onBeforeMount(() => {
+  setNotices();
+});
 </script>

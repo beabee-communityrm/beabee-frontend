@@ -19,7 +19,7 @@
 import { emitter } from '../../plugins/notify';
 import { Notification } from './notification.interface';
 import { reactive } from 'vue';
-import { onMounted } from '@vue/runtime-core';
+import { onBeforeMount } from '@vue/runtime-core';
 import AppNotfication from './AppNotification.vue';
 
 const notifications = reactive<Notification[]>([]);
@@ -33,7 +33,7 @@ const removeItem = (id: number) => {
   notifications.splice(notificationIndex, 1);
 };
 
-onMounted(() => {
+onBeforeMount(() => {
   emitter.on('add', addItem);
 });
 </script>
