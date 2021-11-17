@@ -18,6 +18,17 @@
     :sub-title="profileContent.welcomeMessage"
   />
 
+  <section class="mb-10">
+    <WelcomeMessage
+      v-if="showWelcomeMessage"
+      :member-first-name="member.firstName"
+      :text="profileContent.introMessage"
+      :author-name="profileContent.introMessageAuthorName"
+      :author-title="profileContent.introMessageAuthorTitle"
+      @close="removeWelcomeMessage"
+    />
+  </section>
+
   <section class="mb-10 md:mb-12">
     <NoticeContainer />
   </section>
@@ -66,14 +77,24 @@ import SectionTitle from './SectionTitle.vue';
 import PageTitle from '../../components/PageTitle.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import AppAlert from '../../components/AppAlert.vue';
+import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
 import { useHome } from './use-home';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
+import { ref } from '@vue/reactivity';
 
 const { t } = useI18n();
 
 const isPasswordReset = useRoute().query.passwordReset === 'true';
+
+const hasWelcomeMessageQuery = useRoute().query.welcomeMessage === 'true';
+
+const showWelcomeMessage = ref(hasWelcomeMessageQuery);
+
+const removeWelcomeMessage = () => {
+  showWelcomeMessage.value = false;
+};
 
 const {
   member,
