@@ -18,6 +18,7 @@ import {
   faBomb,
   faTimes,
   faCircleNotch,
+  faCheck,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -36,7 +37,8 @@ library.add(
   faMagic,
   faBomb,
   faTimes,
-  faCircleNotch
+  faCircleNotch,
+  faCheck
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

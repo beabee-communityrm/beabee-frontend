@@ -13,10 +13,14 @@
     "until": "bis",
     "year": "Jahr"
   },
+  "contribution": {
+    "manualPayment": "Sie leisten Ihren Beitrag aktuell manuell via Banküberweisung. Richten Sie hier jetzt eine automatische Abbuchung via Lastschrift ein. Dann wird es für Sie leichter, Ihre Beiträge hier direkt zu verwalten. Und wir bekommen einen besseren Überblick darüber, auf welche Beiträge von unseren Leserinnen und Lesern wir uns monatlich verlassen können.",
+    "updatePaymentType": "Neuen Zahlungsweg einrichten"
+  },
   "forgotPassword": {
-    "description": "Bitte geben Sie Ihre Email-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.  ",
+    "description": "Bitte geben Sie Ihre Email-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.",
     "messageFirstPart": "Existiert ein Account mit der Adresse",
-    "messageSecondPart": ", bekommen Sie in Kürze eine Email von uns.<br>Bitte schauen Sie in ihr Emailpostfach und folgen der Anleitung in der Email. ",
+    "messageSecondPart": ", bekommen Sie in Kürze eine Email von uns.<br>Bitte schauen Sie in ihr Emailpostfach und folgen der Anleitung in der Email.",
     "resetPassword": "Passwort zurücksetzen",
     "title": "Passwort vergessen?"
   },
@@ -27,9 +31,9 @@
     "email": "Email",
     "errors": {
       "address": {
-        "required": "Dieses Feld wird benötigt, wenn Sie eine Adresse eintragen wollen"
+        "required": "Dieses Feld wird benötigt, wenn Sie eine Adresse eintragen wollen."
       },
-      "aggregator": "Es fehlt etwas! Bitte kontrollieren Sie die obigen Felder. ",
+      "aggregator": "Es fehlt etwas! Bitte kontrollieren Sie die obigen Felder.",
       "email": {
         "invalid": "Ungültige Email-Adresse",
         "required": "Email-Adresse benötigt"
@@ -64,18 +68,19 @@
     "title": "Home",
     "viewAllCallouts": "Alle Callouts anzeigen",
     "viewOpenCallouts": "Offene Callouts anzeigen",
+    "welcome": "Herzlich willkommen {firstName}!",
     "yourProfile": "Ihr Profil"
   },
   "informationPage": {
     "contactInformation": "Kontaktdaten",
     "loginDetail": "Login-Daten",
-    "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt",
+    "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt.",
     "title": "Ihre Informationen"
   },
   "join": {
     "absorbFeeOptIn": "Ja, ich übernehme die {fee} Transaktionskosten.",
-    "absorbFeeText": "Bei unserem Zahlungsdienstleister zahlen wir für jede einzelne Transaktion. Das heißt, wir erhalten weniger von Ihrem monatlichen Beitrag. Sie haben die Möglichkeit, die Kosten dafür für uns zu übernehmen. Möchten Sie das? Alternativ können Sie auch jährlich bezahlen. ",
-    "contribute": "Mit {amount} {period} unterstützen",
+    "absorbFeeText": "Bei unserem Zahlungsdienstleister zahlen wir für jede einzelne Transaktion. Das heißt, wir erhalten weniger von Ihrem monatlichen Beitrag. Sie haben die Möglichkeit, die Kosten dafür für uns zu übernehmen. Möchten Sie das? Alternativ können Sie auch jährlich bezahlen.",
+    "contribute": "Mit {amount} {period} unterstützen.",
     "errors": {
       "confirmEmail": {
         "message": "Fast geschafft! Wir müssen nur noch Ihre Email-Adresse bestätigen, um fortzufahren.",
@@ -83,7 +88,7 @@
         "title": "Email-Adresse bestätigen"
       },
       "duplicateEmail": {
-        "message": "Diese Email-Adresse ist bereits registriert. Bitte loggen Sie sich ein, um fortzufahren. ",
+        "message": "Diese Email-Adresse ist bereits registriert. Bitte loggen Sie sich ein, um fortzufahren.",
         "title": "Email-Adresse wiederholen"
       },
       "failed": {
@@ -95,7 +100,7 @@
     "login": "Log in",
     "memberAccount": "Mitglieder-Account",
     "memberAlready": "Sind Sie bereits Mitglied?",
-    "minimumContribution": "Der minimal Beitrag ist",
+    "minimumContribution": "Der minimale Beitrag ist",
     "notice": "Indem Sie fortfahren, akzeptieren Sie unsere",
     "privacy": "Datenschutzerklärung"
   },
@@ -108,10 +113,11 @@
   "login": {
     "backTo": "Zurück zu {newsroomName}",
     "forgotPassword": "Passwort vergessen?",
-    "joinNow": "Jetzt Mitglied werden! ",
+    "joinNow": "Jetzt Mitglied werden!",
     "login": "Login",
     "notMember": "Noch kein Mitglied?",
-    "title": "Einloggen"
+    "title": "Einloggen",
+    "wrongCredentials": "Falsche Kombination von Passwort und Email."
   },
   "menu": {
     "callouts": "Callouts",

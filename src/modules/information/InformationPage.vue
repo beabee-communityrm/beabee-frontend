@@ -1,5 +1,5 @@
 <template>
-  <page-title
+  <PageTitle
     :title="t('informationPage.title')"
     :sub-title="t('informationPage.subTitle')"
   />
@@ -10,7 +10,7 @@
     <div class="grid lg:grid-cols-2 xl:grid-cols-3">
       <div>
         <div class="mb-5">
-          <app-input
+          <AppInput
             v-model="information.emailAddress"
             input-type="email"
             :label="t('form.email') + '*'"
@@ -20,7 +20,7 @@
         </div>
 
         <div class="mb-5">
-          <app-input
+          <AppInput
             v-model="information.password"
             input-type="password"
             :label="t('form.password')"
@@ -35,7 +35,7 @@
         </h2>
 
         <div class="mb-5">
-          <app-input
+          <AppInput
             v-model="information.firstName"
             input-type="text"
             :label="t('form.firstName') + '*'"
@@ -45,7 +45,7 @@
         </div>
 
         <div class="mb-5">
-          <app-input
+          <AppInput
             v-model="information.lastName"
             input-type="text"
             :label="t('form.lastName') + '*'"
@@ -55,7 +55,7 @@
         </div>
 
         <div class="mb-5">
-          <app-input
+          <AppInput
             v-model="information.addressLine1"
             input-type="text"
             :label="t('form.addressLine1')"
@@ -65,7 +65,7 @@
         </div>
 
         <div class="mb-5">
-          <app-input
+          <AppInput
             v-model="information.addressLine2"
             input-type="text"
             :label="t('form.addressLine2')"
@@ -75,7 +75,7 @@
 
         <div class="grid grid-cols-6 gap-4">
           <div class="mb-5 col-span-4">
-            <app-input
+            <AppInput
               v-model="information.cityOrTown"
               input-type="text"
               :label="t('form.cityOrTown')"
@@ -85,7 +85,7 @@
           </div>
 
           <div class="mb-5 col-span-2">
-            <app-input
+            <AppInput
               v-model="information.postCode"
               input-type="text"
               :label="t('form.postCode')"
@@ -95,14 +95,19 @@
           </div>
         </div>
 
-        <error-aggregator v-if="isFormInvalid" class="mt-2" />
+        <MessageBox v-if="isFormInvalid" type="error" class="mt-2" />
 
-        <app-button
+        <MessageBox v-if="isSaved" type="success" class="mt-2">
+          {{ t('form.saved') }}
+        </MessageBox>
+
+        <AppButton
           :disabled="isFormInvalid"
           class="mt-5"
-          variant="link"
+          :loading="loading"
+          variant="secondary"
           @click="submitFormHandler"
-          >{{ t('form.saveChanges') }}</app-button
+          >{{ t('form.saveChanges') }}</AppButton
         >
       </div>
     </div>
@@ -113,10 +118,10 @@
 import PageTitle from '../../components/PageTitle.vue';
 import AppInput from '../../components/forms/AppInput.vue';
 import AppButton from '../../components/forms/AppButton.vue';
-import ErrorAggregator from '../../components/forms/ErrorAggregator.vue';
+import MessageBox from '../../components/MessageBox.vue';
 import { useI18n } from 'vue-i18n';
 import { useInformation } from './use-information';
-import { onMounted } from '@vue/runtime-core';
+import { onBeforeMount } from '@vue/runtime-core';
 
 const {
   v$,
@@ -126,9 +131,18 @@ const {
   touchAddressFields,
   setInformation,
   isFormInvalid,
+  isSaved,
+  loading,
 } = useInformation();
 
-onMounted(setInformation);
+onBeforeMount(() => {
+  setInformation();
+  // - TODO: Why component isn't destroyed on route change?
+  // It's here because when you saved the information and showed the succes message,
+  // if you went to other pages and come back, you still saw the success
+  // message because isSaved remained true.
+  isSaved.value = false;
+});
 
 const { t } = useI18n();
 </script>

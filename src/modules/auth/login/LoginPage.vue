@@ -35,11 +35,11 @@
       </router-link>
     </div>
 
-    <ErrorAggregator v-if="hasLoginFormError" class="mb-4" />
+    <MessageBox v-if="hasLoginFormError" class="mb-4" />
 
-    <ErrorAggregator v-if="hasCredentialError" class="mb-4">
+    <MessageBox v-if="hasCredentialError" class="mb-4">
       {{ t('login.wrongCredentials') }}
-    </ErrorAggregator>
+    </MessageBox>
 
     <AppButton
       variant="link"
@@ -54,7 +54,7 @@
 <script lang="ts" setup>
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
-import ErrorAggregator from '../../../components/forms/ErrorAggregator.vue';
+import MessageBox from '../../../components/MessageBox.vue';
 import { errorGenerator } from '../../../utils/form-error-generator';
 import { useLogin } from './use-login';
 import { useRouter, useRoute } from 'vue-router';
