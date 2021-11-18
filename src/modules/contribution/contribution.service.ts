@@ -1,4 +1,5 @@
 import axios from '../../axios';
+import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import { NewContribution, UpdateContribution } from './contribution.interface';
 
 // TODO: currently we use this because data needed for contribution
@@ -15,7 +16,9 @@ const createContribution = (newContribution: NewContribution): Promise<any> => {
   return axios.post('/member/me/contribution', {
     amount: newContribution.amount,
     period: newContribution.period,
-    payFee: newContribution.payFee,
+    payFee:
+      newContribution.payFee &&
+      newContribution.period === ContributionPeriod.Monthly,
     completeUrl:
       import.meta.env.VITE_APP_BASE_URL + '/profile/contribution/complete',
     // - TODO: always false for now

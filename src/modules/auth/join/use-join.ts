@@ -69,7 +69,9 @@ const fee = computed(() => {
 // an empty string and cause error (because it might come from an
 // input element)
 const totalAmount = computed(() =>
-  signUpData.payFee ? +signUpData.amount + fee.value : +signUpData.amount
+  signUpData.payFee && isMonthly.value
+    ? +signUpData.amount + fee.value
+    : +signUpData.amount
 );
 
 const isMonthly = computed(() => signUpData.period === 'monthly');
