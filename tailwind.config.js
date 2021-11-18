@@ -30,15 +30,13 @@ module.exports = {
       success: shades(theme.colors.success || '#86a960', [10, 30, 70]),
       danger: shades(theme.colors.danger || '#ce3d3d', [10, 30, 70]),
       white: shades(theme.colors.white || '#ffffff'),
+      black: shades(theme.colors.black || '#000000'),
       grey: {
         lighter: '#f6f6f6',
         light: '#c7c7c7',
         DEFAULT: '#a4a4a4',
         dark: '#5f5f5f',
         darker: '#434343',
-      },
-      black: {
-        DEFAULT: '#000000',
       },
     },
     fontFamily: {
