@@ -35,7 +35,9 @@
         <ContributionFee
           v-if="isMonthly"
           v-model="newContribution.payFee"
+          :amount="newContribution.amount"
           :fee="fee"
+          :force="shouldForceFee"
         />
 
         <p v-if="hasManualPayment" class="mb-3 text-sm">
@@ -109,6 +111,7 @@ const {
   setContributionContent,
   isMonthly,
   changePeriod,
+  shouldForceFee,
   minAmount,
   definedAmounts,
   fee,

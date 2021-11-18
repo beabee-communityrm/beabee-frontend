@@ -91,7 +91,7 @@
     "title": "Your information"
   },
   "join": {
-    "absorbFeeForce": "{amount} contributions must absorb the fee.",
+    "absorbFeeForce": "{amount} contributions must absorb the {fee} fee",
     "absorbFeeOptIn": "Yes, I'll absorb the {fee} fee.",
     "absorbFeeText": "Our payment processor charges us per transaction which means we receive less from monthly contributions. Are you happy to absorb the {fee} transaction fee?  Alternatively you could pay annually.",
     "contribute": "Contribute {amount} {period}",

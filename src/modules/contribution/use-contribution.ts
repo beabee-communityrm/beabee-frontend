@@ -1,4 +1,4 @@
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import {
   fetchJoinContent,
@@ -155,6 +155,13 @@ const changePeriod = (period: ContributionPeriod) => {
   newContribution.amount = definedAmounts.value[0];
 };
 
+const shouldForceFee = computed(() => {
+  return newContribution.amount === 1 && isMonthly.value;
+});
+watch(shouldForceFee, (force) => {
+  if (force) newContribution.payFee = true;
+});
+
 const isContributionFormInvalid = computed(() => {
   return newContribution.amount < minAmount.value;
 });
@@ -209,6 +216,7 @@ export function useContribution() {
     isContributionFormInvalid,
     isMonthly,
     changePeriod,
+    shouldForceFee,
     minAmount,
     definedAmounts,
     fee,

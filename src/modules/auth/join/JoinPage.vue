@@ -30,7 +30,9 @@
       <ContributionFee
         v-if="isMonthly"
         v-model="signUpData.payFee"
+        :amount="signUpData.amount"
         :fee="fee"
+        :force="shouldForceFee"
       />
 
       <MessageBox v-if="hasJoinError" class="mb-4" />
@@ -82,6 +84,7 @@ const {
   joinContent,
   setJoinContent,
   changePeriod,
+  shouldForceFee,
   fee,
 } = useJoin();
 

@@ -1,4 +1,4 @@
-import { computed, reactive, ref } from '@vue/reactivity';
+import { computed, reactive, ref, watch } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import {
   SignUpData,
@@ -139,6 +139,13 @@ const changePeriod = (period: ContributionPeriod) => {
   signUpData.amount = definedAmounts.value[0];
 };
 
+const shouldForceFee = computed(() => {
+  return signUpData.amount === 1 && isMonthly.value;
+});
+watch(shouldForceFee, (force) => {
+  if (force) signUpData.payFee = true;
+});
+
 const setMemberData = () => {
   fetchMember()
     .then(({ data }) => {
@@ -188,6 +195,7 @@ function useJoin() {
     setJoinContent,
     definedAmounts,
     changePeriod,
+    shouldForceFee,
     minAmount,
     setMemberData,
     setupContent,
