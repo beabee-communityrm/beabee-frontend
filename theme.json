@@ -7,8 +7,5 @@
     "warning": "yellow",
     "success": "green",
     "danger": "red"
-  },
-  "fonts": {
-    "body": "'Open Sans', sans-serif"
   }
 }

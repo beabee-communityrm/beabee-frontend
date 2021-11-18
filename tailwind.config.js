@@ -14,6 +14,9 @@ function shades(_color, levels = []) {
   );
 }
 
+const fonts = theme.fonts || {};
+const bodyFont = fonts.body || '"Open Sans", sans-serif';
+
 module.exports = {
   purge: {
     content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
@@ -40,8 +43,8 @@ module.exports = {
       },
     },
     fontFamily: {
-      body: theme.fonts.body,
-      title: theme.fonts.title || theme.fonts.body,
+      body: bodyFont,
+      title: fonts.title || bodyFont,
     },
     extend: {
       borderRadius: {
