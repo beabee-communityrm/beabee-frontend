@@ -6,7 +6,6 @@
         :icon="['far', 'credit-card']"
       />
 
-      <!-- - TODO: add dynamic content from API -->
       <span
         >{{ paymentSource.accountHolderName }}, {{ paymentSource.bankName }},
         ••••••••••{{ paymentSource.accountNumberEnding }}</span

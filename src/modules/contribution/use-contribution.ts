@@ -36,6 +36,12 @@ const paymentSource = reactive<PaymentSource>({
   accountNumberEnding: '',
 });
 
+const newContribution = reactive<NewContribution>({
+  amount: 5,
+  period: ContributionPeriod.Monthly,
+  payFee: true,
+});
+
 const hasPaymentSource = computed(() => paymentSource.type);
 
 const setCurrentContribution = () => {
@@ -48,6 +54,10 @@ const setCurrentContribution = () => {
       currentContribution.cancellationDate = data.cancellationDate;
       currentContribution.membershipStatus = data.membershipStatus;
 
+      newContribution.amount = data.amount;
+      newContribution.period = data.period;
+      // TODO: sync payFee too
+
       if (data.paymentSource) {
         paymentSource.type = data.paymentSource.type;
         paymentSource.bankName = data.paymentSource.bankName;
@@ -58,12 +68,6 @@ const setCurrentContribution = () => {
     })
     .catch((err) => err);
 };
-
-const newContribution = reactive<NewContribution>({
-  amount: 5,
-  period: ContributionPeriod.Monthly,
-  payFee: true,
-});
 
 const submitCreateContribution = () => {
   createContribution(newContribution)
@@ -199,11 +203,11 @@ const contributionButtonText = computed(() => {
 });
 
 const showContributionForm = computed(() => {
-  return isAnnualMember.value && !isExpiredMember.value ? false : true;
+  return !isAnnualMember.value || isExpiredMember.value;
 });
 
 const showCancelContribution = computed(() => {
-  return hasGoCardlessType.value || !isActiveMember.value ? false : true;
+  return hasGoCardlessType.value && isActiveMember.value;
 });
 
 export function useContribution() {

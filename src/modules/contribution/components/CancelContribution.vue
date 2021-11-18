@@ -9,7 +9,7 @@
       }}
     </p>
 
-    <AppButton variant="dangerOutlined" to="/contribution/cancel">
+    <AppButton variant="dangerOutlined" to="/profile/contribution/cancel">
       {{ t('contribution.cancelContribution') }}
     </AppButton>
   </div>
