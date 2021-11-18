@@ -57,7 +57,7 @@ const formattedJoinedDate = computed(() => {
 
 <style scoped>
 .title {
-  @apply text-sm text-primary-40 font-semibold -mt-3 mb-3;
+  @apply text-sm text-primary-80 font-semibold -mt-3 mb-3;
 }
 
 .content {
