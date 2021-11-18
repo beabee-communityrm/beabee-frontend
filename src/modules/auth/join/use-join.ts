@@ -1,11 +1,11 @@
-import { computed, reactive, ref } from '@vue/reactivity';
+import { computed, reactive, ref, watch } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import {
   SignUpData,
-  Periods,
   JoinContentData,
   SetupContentData,
 } from './join.interface';
+import { Periods } from '../../contribution/contribution.interface';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { helpers, required } from '@vuelidate/validators';
 import {
@@ -32,7 +32,6 @@ const signUpData = reactive<SignUpData>({
 });
 
 const joinContent = ref<JoinContentData>({
-  currencySymbol: '',
   initialAmount: 5,
   initialPeriod: '',
   minMonthlyAmount: 5,
@@ -70,7 +69,9 @@ const fee = computed(() => {
 // an empty string and cause error (because it might come from an
 // input element)
 const totalAmount = computed(() =>
-  signUpData.payFee ? +signUpData.amount + fee.value : +signUpData.amount
+  signUpData.payFee && isMonthly.value
+    ? +signUpData.amount + fee.value
+    : +signUpData.amount
 );
 
 const isMonthly = computed(() => signUpData.period === 'monthly');
@@ -140,6 +141,13 @@ const changePeriod = (period: ContributionPeriod) => {
   signUpData.amount = definedAmounts.value[0];
 };
 
+const shouldForceFee = computed(() => {
+  return signUpData.amount === 1 && isMonthly.value;
+});
+watch(shouldForceFee, (force) => {
+  if (force) signUpData.payFee = true;
+});
+
 const setMemberData = () => {
   fetchMember()
     .then(({ data }) => {
@@ -177,7 +185,6 @@ function useJoin() {
     fee,
     totalAmount,
     isMonthly,
-    isBelowThreshold,
     isJoinFormInvalid,
     hasJoinError,
     joinValidation,
@@ -190,6 +197,7 @@ function useJoin() {
     setJoinContent,
     definedAmounts,
     changePeriod,
+    shouldForceFee,
     minAmount,
     setMemberData,
     setupContent,

@@ -1,5 +1,6 @@
 import { LocationQueryValue } from 'vue-router';
 import axios from '../../../axios';
+import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { MemberData, SignUpData } from './join.interface';
 import { NewsletterStaus } from './newsletter-status.enum';
 
@@ -14,6 +15,8 @@ const fetchSetupContent = (): Promise<any> => {
 const signUp = (signUpData: SignUpData): Promise<any> => {
   return axios.post('/signup', {
     ...signUpData,
+    payFee:
+      signUpData.payFee && signUpData.period === ContributionPeriod.Monthly,
   });
 };
 

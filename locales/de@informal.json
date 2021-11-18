@@ -55,7 +55,8 @@
     "password": "Passwort",
     "passwordInfo": "Das Passwort muss aus mindestens acht Zeichen bestehen und mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten.",
     "postCode": "Postleitzahl",
-    "saveChanges": "Änderungen speichern"
+    "saveChanges": "Änderungen speichern",
+    "saved": "Gespeichert!"
   },
   "homePage": {
     "editProfile": "Profil bearbeiten",

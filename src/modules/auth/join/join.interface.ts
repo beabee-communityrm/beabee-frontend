@@ -1,4 +1,5 @@
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
+import { Periods } from '../../contribution/contribution.interface';
 
 export interface SignUpData {
   email: string;
@@ -19,7 +20,6 @@ export interface MemberData {
 }
 
 export interface JoinContentData {
-  currencySymbol: string;
   initialAmount: number;
   initialPeriod: string;
   minMonthlyAmount: number;
@@ -38,9 +38,4 @@ export interface SetupContentData {
   newsletterOptIn: string;
   newsletterTitle: string;
   showNewsletterOptIn: boolean;
-}
-
-export interface Periods {
-  name: string;
-  presetAmounts: number[];
 }

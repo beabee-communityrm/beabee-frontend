@@ -21,20 +21,14 @@
   </div>
 
   <div v-if="infoMessage" class="mt-2 text-xs">
-    <div class="flex text-body-80">
-      <font-awesome-icon
-        class="text-xl -mt-0.5"
-        :icon="['fas', 'info-circle']"
-      />
-
-      <span class="ml-1">{{ infoMessage }}</span>
-    </div>
+    <InfoMessage :message="infoMessage" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, Ref } from '@vue/reactivity';
 import handleInput from '../../utils/handle-input';
+import InfoMessage from '../InfoMessage.vue';
 
 const props = defineProps({
   modelValue: {
