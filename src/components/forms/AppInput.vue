@@ -21,7 +21,7 @@
   </div>
 
   <div v-if="infoMessage" class="mt-2 text-xs">
-    <div class="flex text-primary-80">
+    <div class="flex text-body-80">
       <font-awesome-icon
         class="text-xl -mt-0.5"
         :icon="['fas', 'info-circle']"
