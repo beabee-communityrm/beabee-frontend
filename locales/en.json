@@ -1,6 +1,7 @@
 {
   "common": {
     "annually": "Annually",
+    "backToHome": "Back to home",
     "contributing": "Contributing",
     "every": "every",
     "hello": "Hello",
@@ -10,12 +11,23 @@
     "monthly": "Monthly",
     "new": "new!",
     "participate": "Participate",
+    "thankYou": "Thank you!",
     "until": "until",
     "year": "year"
   },
   "contribution": {
+    "bankAccount": "Bank account",
+    "cancelContribution": "Cancel contribution",
+    "cancelDescription": "If you cancel your contribution your membership will finish at the end of your current payment cycle, {day} of {month}.",
+    "changeBank": "Change to a different bank account",
+    "changeBankInfo": "You'll be asked for the details of your new bank account in the next step.",
+    "contributing": "You're contributing",
+    "expired": "Your contribution expired.",
+    "expiredText": "Please consider renewing, even if at the lowest amount it would help us immensely. Thank you!",
     "manualPayment": "You are paying manually through bank transfer right now. To make it easier for you to manage your contribution and easier for us to know on how much money from our members we can rely on month on month, please update to paying automatically via direct debit.",
-    "updatePaymentType": "Update payment type"
+    "paymentSourceUpdateError": "You can't update your bank account at the moment as you have a payment pending",
+    "updatePaymentType": "Update payment type",
+    "willExpire": "Your contribution will expire in"
   },
   "forgotPassword": {
     "description": "Please enter your email address and we’ll send you password reset instructions.",
@@ -79,6 +91,7 @@
     "title": "Your information"
   },
   "join": {
+    "absorbFeeForce": "{amount} contributions must absorb the fee.",
     "absorbFeeOptIn": "Yes, I'll absorb the {fee} fee.",
     "absorbFeeText": "Our payment processor charges us per transaction which means we receive less from monthly contributions. Are you happy to absorb the {fee} transaction fee?  Alternatively you could pay annually.",
     "contribute": "Contribute {amount} {period}",

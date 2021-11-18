@@ -7,16 +7,31 @@
         :sub-title="joinContent.subtitle"
       />
 
-      <JoinPeriod class="mb-6" @change-period="changePeriod" />
+      <ContributionPeriod
+        class="mb-6"
+        :periods="joinContent.periods"
+        :selected-period="signUpData.period"
+        @change-period="changePeriod"
+      />
 
-      <JoinAmount v-model="signUpData.amount" class="mb-5" />
+      <ContributionAmount
+        v-model.number="signUpData.amount"
+        :is-monthly="isMonthly"
+        :min-amount="minAmount"
+        :defined-amounts="definedAmounts"
+        class="mb-5"
+      />
 
       <AccountSection
         @update-email="signUpData.email = $event"
         @update-password="signUpData.password = $event"
       />
 
-      <PaymentSection v-if="isMonthly" />
+      <ContributionFee
+        v-if="isMonthly"
+        v-model="signUpData.payFee"
+        :fee="fee"
+      />
 
       <MessageBox v-if="hasJoinError" class="mb-4" />
 
@@ -41,11 +56,11 @@
 
 <script lang="ts" setup>
 import JoinHeader from './components/JoinHeader.vue';
-import JoinPeriod from './components/JoinPeriod.vue';
-import JoinAmount from './components/JoinAmount.vue';
+import ContributionPeriod from '../../contribution/components/ContributionPeriod.vue';
+import ContributionAmount from '../../contribution/components/ContributionAmount.vue';
 import AuthBox from '../AuthBox.vue';
 import AccountSection from './components/AccountSection.vue';
-import PaymentSection from './components/PaymentSection.vue';
+import ContributionFee from '../../contribution/components/ContributionFee.vue';
 import JoinFooter from './components/JoinFooter.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import MessageBox from '../../../components/MessageBox.vue';
@@ -58,6 +73,8 @@ const { t, n } = useI18n();
 const {
   signUpData,
   totalAmount,
+  definedAmounts,
+  minAmount,
   isMonthly,
   isJoinFormInvalid,
   hasJoinError,
@@ -65,6 +82,7 @@ const {
   joinContent,
   setJoinContent,
   changePeriod,
+  fee,
 } = useJoin();
 
 onBeforeMount(() => {

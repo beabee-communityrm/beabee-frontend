@@ -3,6 +3,7 @@ import { homeRoute } from '../modules/home/home.route';
 import { informationRoute } from '../modules/information/information.route';
 import { joinRoute } from '../modules/auth/join/join.route';
 import { authRoute } from '../modules/auth/auth.route';
+import { contributionRoute } from '../modules/contribution/contribution.route';
 
 // routes
 
@@ -11,6 +12,7 @@ const routes: RouteRecordRaw[] = [
   ...joinRoute,
   ...homeRoute,
   ...authRoute,
+  ...contributionRoute,
 ];
 
 const router = createRouter({

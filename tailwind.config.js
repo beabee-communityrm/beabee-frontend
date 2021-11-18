@@ -77,6 +77,7 @@ module.exports = {
       },
       fontSize: {
         '2.5xl': '1.75rem',
+        '3.5xl': '2rem',
       },
     },
   },

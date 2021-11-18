@@ -62,6 +62,8 @@ const variantStaticClasses = {
   linkOutlined: 'bg-white text-link border border-link hover:bg-link-light',
   subtle:
     'bg-white text-primary-80 border border-primary-70 hover:text-primary hover:border-primary',
+  dangerOutlined:
+    'bg-white text-danger border border-danger hover:bg-danger-10',
 };
 
 const variantClasses = computed(() => {

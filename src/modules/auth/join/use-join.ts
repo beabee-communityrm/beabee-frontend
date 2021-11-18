@@ -2,10 +2,10 @@ import { computed, reactive, ref } from '@vue/reactivity';
 import useVuelidate from '@vuelidate/core';
 import {
   SignUpData,
-  Periods,
   JoinContentData,
   SetupContentData,
 } from './join.interface';
+import { Periods } from '../../contribution/contribution.interface';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { helpers, required } from '@vuelidate/validators';
 import {
@@ -32,7 +32,6 @@ const signUpData = reactive<SignUpData>({
 });
 
 const joinContent = ref<JoinContentData>({
-  currencySymbol: '',
   initialAmount: 5,
   initialPeriod: '',
   minMonthlyAmount: 5,
@@ -177,7 +176,6 @@ function useJoin() {
     fee,
     totalAmount,
     isMonthly,
-    isBelowThreshold,
     isJoinFormInvalid,
     hasJoinError,
     joinValidation,
