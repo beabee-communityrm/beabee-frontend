@@ -68,6 +68,9 @@ module.exports = {
       },
       boxShadow: {
         DEFAULT: '0 0 8px 0 rgba(0, 0, 0, 0.2)',
+        input:
+          '0 0 0 0.125em ' +
+          Color(theme.colors.secondary).alpha(0.25).rgb().string(),
       },
       fontSize: {
         '2.5xl': '1.75rem',

@@ -71,7 +71,6 @@ const dangerClasses = computed(() => {
 
 <style scoped>
 .input:focus {
-  box-shadow: var(--input-focus-box-shadow-size)
-    var(--input-focus-box-shadow-color);
+  @apply shadow-input;
 }
 </style>
