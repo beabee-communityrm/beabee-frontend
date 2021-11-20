@@ -75,7 +75,7 @@
 
         <CancelContribution
           class="mb-9 md:mb-0"
-          :cancellation-date="currentContribution.cancellationDate"
+          :expiry-date="currentContribution.membershipExpiryDate"
         />
       </template>
     </div>
