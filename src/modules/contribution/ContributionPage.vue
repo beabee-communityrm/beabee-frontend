@@ -129,7 +129,9 @@ const {
   cantUpdatePaymentSource,
 } = useContribution();
 
-const period = computed(() => (isMonthly ? 'month' : 'year'));
+const period = computed(() =>
+  t(isMonthly.value ? 'common.month' : 'common.year')
+);
 
 onBeforeMount(() => {
   // - TODO: Why component isn't destroyed on route change?
