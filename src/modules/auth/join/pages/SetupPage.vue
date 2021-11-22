@@ -36,6 +36,17 @@
         />
       </div>
 
+      <template v-if="setupContent.showMailOptIn">
+        <AppAddress
+          v-model:line1="memberData.addressLine1"
+          v-model:line2="memberData.addressLine2"
+          v-model:postCode="memberData.postCode"
+          v-model:cityOrTown="memberData.cityOrTown"
+          @isInvalid="isAddressInvalid = $event"
+          @hasError="hasAddressError = $event"
+        />
+      </template>
+
       <template v-if="setupContent.showNewsletterOptIn">
         <p class="text-lg mb-1">
           {{ setupContent.newsletterTitle }}
@@ -76,6 +87,7 @@
 import AuthBox from '../../AuthBox.vue';
 import JoinHeader from '../components/JoinHeader.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
+import AppAddress from '../../../../components/AppAddress.vue';
 import { useJoin } from '../use-join';
 import { errorGenerator } from '../../../../utils/form-error-generator';
 import AppButton from '../../../../components/forms/AppButton.vue';
@@ -95,6 +107,8 @@ const {
   setupValidation,
   hasSetupError,
   isSetupFormInvalid,
+  isAddressInvalid,
+  hasAddressError,
 } = useJoin();
 
 const router = useRouter();

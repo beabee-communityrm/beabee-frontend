@@ -17,6 +17,10 @@ export interface MemberData {
   profile: {
     newsletterStatus: boolean;
   };
+  addressLine1: string;
+  addressLine2: string;
+  cityOrTown: string;
+  postCode: string;
 }
 
 export interface JoinContentData {
@@ -38,4 +42,5 @@ export interface SetupContentData {
   newsletterOptIn: string;
   newsletterTitle: string;
   showNewsletterOptIn: boolean;
+  showMailOptIn: boolean;
 }

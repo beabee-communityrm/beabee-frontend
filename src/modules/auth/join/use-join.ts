@@ -59,6 +59,10 @@ const memberData = reactive({
   profile: {
     newsletterStatus: false,
   },
+  addressLine1: '',
+  addressLine2: '',
+  cityOrTown: '',
+  postCode: '',
 });
 
 const fee = computed(() => {
@@ -120,12 +124,15 @@ const submitSignUp = () => {
     .catch((err) => err);
 };
 
+const hasAddressError = ref(false);
+const isAddressInvalid = ref(false);
+
 const isSetupFormInvalid = computed(() => {
-  return setupValidation.value.$invalid;
+  return setupValidation.value.$invalid || isAddressInvalid.value;
 });
 
 const hasSetupError = computed(() => {
-  return setupValidation.value.$errors.length;
+  return setupValidation.value.$errors.length || hasAddressError.value;
 });
 
 const definedAmounts = computed(() => {
@@ -155,6 +162,10 @@ const setMemberData = () => {
       memberData.lastName = data.lastname;
       memberData.email = data.email;
       memberData.profile.newsletterStatus = data.profile.newsletterStatus;
+      memberData.addressLine1 = data.profile.deliveryAddress.line1;
+      memberData.addressLine2 = data.profile.deliveryAddress.line2;
+      memberData.cityOrTown = data.profile.deliveryAddress.city;
+      memberData.postCode = data.profile.deliveryAddress.postcode;
     })
     .catch((err) => err);
 };
@@ -164,7 +175,8 @@ const setupContent = reactive<SetupContentData>({
   newsletterText: '',
   newsletterOptIn: '',
   newsletterTitle: '',
-  showNewsletterOptIn: true,
+  showNewsletterOptIn: false,
+  showMailOptIn: false,
 });
 
 const setSetupContent = () => {
@@ -175,6 +187,7 @@ const setSetupContent = () => {
       setupContent.newsletterOptIn = data.newsletterOptIn;
       setupContent.newsletterTitle = data.newsletterTitle;
       setupContent.showNewsletterOptIn = data.showNewsletterOptIn;
+      setupContent.showMailOptIn = data.showMailOptIn;
     })
     .catch((err) => err);
 };
@@ -202,6 +215,8 @@ function useJoin() {
     setMemberData,
     setupContent,
     setSetupContent,
+    isAddressInvalid,
+    hasAddressError,
   };
 }
 
