@@ -132,5 +132,4 @@ watch(
     emits('hasError', hasError);
   }
 );
-// - TODO: you must replace address fields in information page with this component -
 </script>
