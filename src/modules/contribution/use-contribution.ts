@@ -77,15 +77,21 @@ const submitCreateContribution = () => {
     .catch((err) => err);
 };
 
+const updateContributionLoading = ref(false);
+
 const submitUpdateContribution = () => {
+  updateContributionLoading.value = true;
   updateContribution({
     amount: newContribution.amount,
     payFee: newContribution.payFee,
   })
-    .then(() => {
-      // TODO: to do somthing here? (ask the design team)
+    .then(({ data }) => {
+      currentContribution.amount = data.amount;
+      currentContribution.period = data.period;
+      // TODO: to do somthing here, like showing succes message? (ask the design team)
     })
-    .catch((err) => err);
+    .catch((err) => err)
+    .finally(() => (updateContributionLoading.value = false));
 };
 
 const submitContribution = () => {
@@ -234,5 +240,6 @@ export function useContribution() {
     showCancelContribution,
     paymentSource,
     cantUpdatePaymentSource,
+    updateContributionLoading,
   };
 }
