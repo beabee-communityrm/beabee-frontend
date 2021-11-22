@@ -1,6 +1,7 @@
 <template>
   <div class="mb-5">
-    <PageTitle :title="route.meta.pageTitle" />
+    <!--  TODO: remove typing if you make pageTitle required -->
+    <PageTitle :title="pageTitle" />
   </div>
 
   <h3 class="text-2xl font-semibold text-body mb-4">
@@ -33,4 +34,6 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
 const route = useRoute();
+
+const pageTitle = route.meta.pageTitle as string;
 </script>
