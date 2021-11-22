@@ -25,15 +25,15 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
 const props = defineProps({
-  cancellationDate: {
+  expiryDate: {
     type: String as () => null | string,
     default: '',
   },
 });
 
 const formattedDate = computed(() => {
-  if (!props.cancellationDate) return {};
-  const parsedDate = parseISO(props.cancellationDate);
+  if (!props.expiryDate) return {};
+  const parsedDate = parseISO(props.expiryDate);
   return {
     day: formatLocale(parsedDate, 'do'),
     month: formatLocale(parsedDate, 'LLLL'),

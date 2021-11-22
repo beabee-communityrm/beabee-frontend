@@ -4,9 +4,11 @@
 
     <p class="mb-3 text-sm">
       {{ t('join.memberAlready') }}
-      <router-link to="/login" class="text-link hover:text-primary underline">{{
-        t('join.login')
-      }}</router-link>
+      <router-link
+        to="/auth/login"
+        class="text-link hover:text-primary underline"
+        >{{ t('join.login') }}</router-link
+      >
     </p>
 
     <div class="mb-5">
