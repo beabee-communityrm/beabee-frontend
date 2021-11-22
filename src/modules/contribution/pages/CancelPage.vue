@@ -9,13 +9,18 @@
   </h3>
 
   <div class="flex">
-    <AppButton to="/profile/contribution" variant="subtle">{{
-      t('common.goBack')
-    }}</AppButton>
+    <!-- - TODO: remove spans and handle button width in AppButton  -->
+    <span>
+      <AppButton to="/profile/contribution" variant="subtle">{{
+        t('common.goBack')
+      }}</AppButton>
+    </span>
 
-    <AppButton class="ml-4" to="/profile/contribution">{{
-      t('contribution.cancelContribution')
-    }}</AppButton>
+    <span>
+      <AppButton class="ml-4" to="/profile/contribution">{{
+        t('contribution.cancelContribution')
+      }}</AppButton>
+    </span>
   </div>
 </template>
 
