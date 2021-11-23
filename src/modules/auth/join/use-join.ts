@@ -19,6 +19,7 @@ import {
   emailValidationRule,
   passwordValidationRule,
 } from '../../../utils/form-validation/rules';
+import { NewsletterStaus } from './newsletter-status.enum';
 
 const { t } = i18n.global;
 
@@ -161,7 +162,10 @@ const setMemberData = () => {
       memberData.firstName = data.firstname;
       memberData.lastName = data.lastname;
       memberData.email = data.email;
-      memberData.profile.newsletterStatus = data.profile.newsletterStatus;
+      memberData.profile.newsletterStatus =
+        data.profile.newsletterStatus === NewsletterStaus.Subscribed
+          ? true
+          : false;
       memberData.addressLine1 = data.profile.deliveryAddress.line1;
       memberData.addressLine2 = data.profile.deliveryAddress.line2;
       memberData.cityOrTown = data.profile.deliveryAddress.city;

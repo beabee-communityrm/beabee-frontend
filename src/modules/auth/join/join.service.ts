@@ -47,6 +47,7 @@ const updateMember = (
     email: memberData.email,
     firstname: memberData.firstName,
     lastname: memberData.lastName,
+    profile: {},
   };
 
   if (updateNewsletterStatus) {
