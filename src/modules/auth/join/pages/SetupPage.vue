@@ -12,7 +12,7 @@
         <AppInput
           v-model="memberData.email"
           input-type="email"
-          label="Email"
+          :label="t('form.email') + '*'"
           :error-message="errorGenerator(setupValidation, 'email')"
           @blur="setupValidation.email.$touch"
         />
@@ -21,7 +21,7 @@
       <div class="mb-3">
         <AppInput
           v-model="memberData.firstName"
-          label="First name"
+          :label="t('form.firstName') + '*'"
           :error-message="errorGenerator(setupValidation, 'firstName')"
           @blur="setupValidation.firstName.$touch"
         />
@@ -30,7 +30,7 @@
       <div class="mb-5">
         <AppInput
           v-model="memberData.lastName"
-          label="Last name"
+          :label="t('form.lastName') + '*'"
           :error-message="errorGenerator(setupValidation, 'lastName')"
           @blur="setupValidation.lastName.$touch"
         />
