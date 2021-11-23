@@ -13,6 +13,7 @@ import {
   fetchMember,
   fetchJoinContent,
   fetchSetupContent,
+  updateMember,
 } from './join.service';
 import i18n from '../../../i18n';
 import {
@@ -20,6 +21,7 @@ import {
   passwordValidationRule,
 } from '../../../utils/form-validation/rules';
 import { NewsletterStaus } from './newsletter-status.enum';
+import { Router } from 'vue-router';
 
 const { t } = i18n.global;
 
@@ -125,16 +127,30 @@ const submitSignUp = () => {
     .catch((err) => err);
 };
 
-const hasAddressError = ref(false);
-const isAddressInvalid = ref(false);
+// this is a vuelidate instance
+const addressValidation = ref<any>({});
 
-const isSetupFormInvalid = computed(() => {
-  return setupValidation.value.$invalid || isAddressInvalid.value;
-});
+const hasSetupError = computed(
+  () =>
+    // check errors exist in `addressValidation.value`
+    // because it might not exist at first and causes error
+    !!(
+      setupValidation.value.$errors.length ||
+      addressValidation.value.$errors?.length
+    )
+);
 
-const hasSetupError = computed(() => {
-  return setupValidation.value.$errors.length || hasAddressError.value;
-});
+const completeSetup = async (router: Router) => {
+  const isAddressCorrect = await addressValidation.value.$validate();
+  const isSetupCorrect = await setupValidation.value.$validate();
+  if (!isAddressCorrect || !isSetupCorrect) return;
+
+  updateMember(memberData, setupContent.showNewsletterOptIn)
+    .then(() => {
+      router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
+    })
+    .catch((err) => err);
+};
 
 const definedAmounts = computed(() => {
   const selectedPeriod = joinContent.value.periods.find((period) => {
@@ -208,7 +224,6 @@ function useJoin() {
     submitSignUp,
     memberData,
     setupValidation,
-    isSetupFormInvalid,
     hasSetupError,
     joinContent,
     setJoinContent,
@@ -219,8 +234,8 @@ function useJoin() {
     setMemberData,
     setupContent,
     setSetupContent,
-    isAddressInvalid,
-    hasAddressError,
+    addressValidation,
+    completeSetup,
   };
 }
 

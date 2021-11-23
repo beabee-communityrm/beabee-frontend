@@ -5,7 +5,7 @@
       input-type="text"
       :label="t('form.addressLine1')"
       :error-message="errorGenerator(addressValidation, 'line1')"
-      @update:modelValue="$emit('update:line1', $event), touchAddressFields()"
+      @update:modelValue="$emit('update:line1', $event)"
     />
   </div>
 
@@ -14,7 +14,7 @@
       :model-value="line2"
       input-type="text"
       :label="t('form.addressLine2')"
-      @update:modelValue="$emit('update:line2', $event), touchAddressFields()"
+      @update:modelValue="$emit('update:line2', $event)"
     />
   </div>
 
@@ -25,9 +25,7 @@
         input-type="text"
         :label="t('form.cityOrTown')"
         :error-message="errorGenerator(addressValidation, 'cityOrTown')"
-        @update:modelValue="
-          $emit('update:cityOrTown', $event), touchAddressFields()
-        "
+        @update:modelValue="$emit('update:cityOrTown', $event)"
       />
     </div>
 
@@ -37,9 +35,7 @@
         input-type="text"
         :label="t('form.postCode')"
         :error-message="errorGenerator(addressValidation, 'postCode')"
-        @update:modelValue="
-          $emit('update:postCode', $event), touchAddressFields()
-        "
+        @update:modelValue="$emit('update:postCode', $event)"
       />
     </div>
   </div>
@@ -72,6 +68,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  addressValidation: {
+    type: Object,
+    default: () => ({}),
+  },
 });
 
 const emits = defineEmits([
@@ -79,8 +79,7 @@ const emits = defineEmits([
   'update:line2',
   'update:cityOrTown',
   'update:postCode',
-  'hasError',
-  'isInvalid',
+  'update:addressValidation',
 ]);
 
 const addressFieldError = t('form.errors.address.required');
@@ -110,26 +109,13 @@ const rules = computed(() => ({
   },
 }));
 
-const touchAddressFields = () => {
-  addressValidation.value.line1.$touch();
-  addressValidation.value.line2.$touch();
-  addressValidation.value.cityOrTown.$touch();
-  addressValidation.value.postCode.$touch();
-};
-
 const addressValidation = useVuelidate(rules, props);
 
 watch(
-  () => addressValidation.value.$invalid,
-  (isInvalid) => {
-    emits('isInvalid', isInvalid);
-  }
-);
-
-watch(
-  () => addressValidation.value.$errors.length,
-  (hasError) => {
-    emits('hasError', hasError);
-  }
+  () => addressValidation.value,
+  (addressValidation) => {
+    emits('update:addressValidation', addressValidation);
+  },
+  { immediate: true }
 );
 </script>

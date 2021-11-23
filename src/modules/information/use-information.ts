@@ -45,22 +45,29 @@ const rules = computed(() => ({
   },
 }));
 
+// this is a vuelidate instance
+const addressValidation = ref<any>({});
+
 const informationValidation = useVuelidate(rules, information);
 
-const isAddressInvalid = ref(false);
-const hasAddressError = ref(false);
-
-const isFormInvalid = computed(
-  () => informationValidation.value.$invalid || isAddressInvalid.value
-);
 const hasFormError = computed(
-  () => informationValidation.value.$errors.length || hasAddressError.value
+  () =>
+    // check errors exist in `addressValidation.value`
+    // because it might not exist at first and causes error
+    !!(
+      informationValidation.value.$errors.length ||
+      addressValidation.value.$errors?.length
+    )
 );
 
 const loading = ref(false);
 const isSaved = ref(false);
 
 const submitFormHandler = async () => {
+  const isAddressCorrect = await addressValidation.value.$validate();
+  const isInformationCorrect = await informationValidation.value.$validate();
+  if (!isAddressCorrect || !isInformationCorrect) return;
+
   loading.value = true;
   isSaved.value = false;
   updateInformation(information)
@@ -91,11 +98,9 @@ export function useInformation() {
     information,
     submitFormHandler,
     setInformation,
-    isFormInvalid,
     isSaved,
     loading,
-    isAddressInvalid,
-    hasAddressError,
     hasFormError,
+    addressValidation,
   };
 }

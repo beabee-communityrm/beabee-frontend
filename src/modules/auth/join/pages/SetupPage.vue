@@ -42,8 +42,7 @@
           v-model:line2="memberData.addressLine2"
           v-model:postCode="memberData.postCode"
           v-model:cityOrTown="memberData.cityOrTown"
-          @isInvalid="isAddressInvalid = $event"
-          @hasError="hasAddressError = $event"
+          v-model:addressValidation="addressValidation"
         />
       </template>
 
@@ -74,8 +73,8 @@
 
       <AppButton
         variant="link"
-        :disabled="isSetupFormInvalid"
-        @click="completeSetup"
+        :disabled="hasSetupError"
+        @click="completeSetup(router)"
       >
         {{ t('joinSetup.continue') }}
       </AppButton>
@@ -92,7 +91,6 @@ import { useJoin } from '../use-join';
 import { errorGenerator } from '../../../../utils/form-error-generator';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import MessageBox from '../../../../components/MessageBox.vue';
-import { updateMember } from '../join.service';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
@@ -106,20 +104,11 @@ const {
   setupContent,
   setupValidation,
   hasSetupError,
-  isSetupFormInvalid,
-  isAddressInvalid,
-  hasAddressError,
+  addressValidation,
+  completeSetup,
 } = useJoin();
 
 const router = useRouter();
-
-const completeSetup = () => {
-  updateMember(memberData, setupContent.showNewsletterOptIn)
-    .then(() => {
-      router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
-    })
-    .catch((err) => err);
-};
 
 onBeforeMount(() => {
   setMemberData();

@@ -61,8 +61,7 @@
           v-model:line2="information.addressLine2"
           v-model:postCode="information.postCode"
           v-model:cityOrTown="information.cityOrTown"
-          @isInvalid="isAddressInvalid = $event"
-          @hasError="hasAddressError = $event"
+          v-model:addressValidation="addressValidation"
         />
 
         <MessageBox v-if="hasFormError" type="error" class="mt-2" />
@@ -72,7 +71,7 @@
         </MessageBox>
 
         <AppButton
-          :disabled="isFormInvalid"
+          :disabled="hasFormError"
           class="mt-5"
           :loading="loading"
           variant="secondary"
@@ -100,12 +99,10 @@ const {
   information,
   submitFormHandler,
   setInformation,
-  isFormInvalid,
   isSaved,
   loading,
-  isAddressInvalid,
-  hasAddressError,
   hasFormError,
+  addressValidation,
 } = useInformation();
 
 onBeforeMount(() => {
