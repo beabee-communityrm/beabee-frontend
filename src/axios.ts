@@ -8,13 +8,15 @@ axios.defaults.timeout = 5000;
 const onResponseSuccess = (response: AxiosResponse) => response;
 
 const onResponseError = (error: any) => {
-  const status = error.response?.status;
+  if (!error.response) return notifyError();
+
+  const status = error.response.status;
 
   // - TODO: if we receive more precise erros form
   // API response we can show more precise erros-
   if (status === 401) {
     localStorage.setItem('isAuthenticated', 'false');
-  } else if (status === 500) {
+  } else if (status >= 500) {
     notifyError();
   }
 
