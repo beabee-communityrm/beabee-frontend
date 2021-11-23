@@ -56,6 +56,10 @@ const completeUpdatePaymentSource = (redirectFlowId: string): Promise<any> => {
   });
 };
 
+const cancelContribution = (): Promise<any> => {
+  return axios.post('/member/me/contribution/cancel');
+};
+
 export {
   fetchJoinContent,
   createContribution,
@@ -64,4 +68,5 @@ export {
   updateContribution,
   updatePaymentSource,
   completeUpdatePaymentSource,
+  cancelContribution,
 };

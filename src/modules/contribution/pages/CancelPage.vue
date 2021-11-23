@@ -18,9 +18,12 @@
     </span>
 
     <span>
-      <AppButton class="ml-4" to="/profile/contribution">{{
-        t('contribution.cancelContribution')
-      }}</AppButton>
+      <AppButton
+        class="ml-4"
+        to="/profile/contribution"
+        @click="submitCancelContribution"
+        >{{ t('contribution.cancelContribution') }}</AppButton
+      >
     </span>
   </div>
 </template>
@@ -30,7 +33,9 @@ import PageTitle from '../../../components/PageTitle.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import { useContribution } from '../use-contribution';
 
+const { submitCancelContribution } = useContribution();
 const { t } = useI18n();
 
 const route = useRoute();

@@ -6,6 +6,7 @@ import {
   createContribution,
   updateContribution,
   updatePaymentSource as updateBankAccount,
+  cancelContribution,
 } from './contribution.service';
 import {
   ContributionContent,
@@ -216,6 +217,10 @@ const showCancelContribution = computed(() => {
   return hasGoCardlessType.value && isActiveMember.value;
 });
 
+const submitCancelContribution = () => {
+  cancelContribution();
+};
+
 export function useContribution() {
   return {
     newContribution,
@@ -241,5 +246,6 @@ export function useContribution() {
     paymentSource,
     cantUpdatePaymentSource,
     updateContributionLoading,
+    submitCancelContribution,
   };
 }
