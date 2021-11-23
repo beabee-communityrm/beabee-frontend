@@ -38,9 +38,7 @@
   </section>
 
   <div class="flex flex-col content-container">
-    <section class="mb-8 pr-4">
-      <CalloutContainer />
-    </section>
+    <CalloutContainer class="mb-8 pr-4" />
 
     <!-- your profile section -->
     <section>

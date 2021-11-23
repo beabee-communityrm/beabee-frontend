@@ -1,5 +1,5 @@
 <template>
-  <div v-if="callouts.length">
+  <section v-if="callouts.length">
     <!-- small screens title -->
     <div class="flex md:hidden justify-center mb-8 relative">
       <span class="absolute w-full h-px bg-white top-1/2" />
@@ -51,7 +51,7 @@
       >
     </div>
     -->
-  </div>
+  </section>
 </template>
 
 <script lang="ts" setup>
