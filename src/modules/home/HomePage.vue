@@ -38,9 +38,7 @@
   </section>
 
   <div class="flex flex-col content-container">
-    <section class="mb-8 pr-4">
-      <CalloutContainer />
-    </section>
+    <CalloutContainer class="mb-8 pr-4" />
 
     <!-- your profile section -->
     <section>
@@ -62,7 +60,7 @@
     </section>
   </div>
 
-  <section class="mt-20 max-w-xs md:max-w-sm mx-auto">
+  <section class="pt-20 mt-auto max-w-xs md:max-w-sm mx-auto">
     <ThanksNotice>{{ profileContent.footerMessage }}</ThanksNotice>
   </section>
 </template>
