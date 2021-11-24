@@ -50,6 +50,7 @@
           type="submit"
           variant="secondary"
           class="mb-4"
+          :loading="updateContributionLoading"
           @click="submitContribution"
         >
           {{ contributionButtonText }}
@@ -128,6 +129,7 @@ const {
   showCancelContribution,
   paymentSource,
   cantUpdatePaymentSource,
+  updateContributionLoading,
 } = useContribution();
 
 const period = computed(() =>

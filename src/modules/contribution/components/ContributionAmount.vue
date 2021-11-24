@@ -63,6 +63,7 @@
         border border-primary-40
         rounded
         overflow-hidden
+        bg-white
       "
     >
       <button

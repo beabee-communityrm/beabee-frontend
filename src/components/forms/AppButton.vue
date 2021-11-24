@@ -76,7 +76,7 @@ const variantClasses = computed(() => {
 // - TODO: Fix this. Using scoped style didn't work on `AppLink`, also check if w-full
 // is necessary
 const baseClasses =
-  'h-10 px-2 text-center cursor-pointer flex justify-center items-center font-bold rounded w-full whitespace-nowrap relative';
+  'h-10 px-2 text-center cursor-pointer flex justify-center items-center font-bold rounded whitespace-nowrap relative w-full';
 
 const classes = computed(() => {
   return [baseClasses, variantClasses.value, statusClasses.value];

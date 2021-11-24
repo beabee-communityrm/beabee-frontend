@@ -4,7 +4,7 @@
       v-for="(period, index) in periods"
       :key="index"
       :for="period.name"
-      class="flex-grow relative"
+      class="flex-grow relative bg-white"
     >
       <input
         :id="period.name"
