@@ -1,6 +1,6 @@
 <template>
   <div class="mb-5">
-    <PageTitle title="Contribution" />
+    <PageTitle :title="t('menu.contribution')" />
   </div>
 
   <div class="grid grid-cols-12">
