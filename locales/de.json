@@ -1,6 +1,7 @@
 {
   "common": {
     "annually": "Jährlich",
+    "backToHome": "Zurück zur Startseite",
     "contributing": "Ihr Beitrag",
     "every": "pro",
     "hello": "Hallo",
@@ -10,12 +11,23 @@
     "monthly": "Monatlich",
     "new": "neu!",
     "participate": "Teilnehmen",
+    "thankYou": "Danke!",
     "until": "bis",
     "year": "Jahr"
   },
   "contribution": {
+    "bankAccount": "Bankverbindung",
+    "cancelContribution": "Mitgliedschaft kündigen",
+    "cancelDescription": "Wenn Sie jetzt kündigen, endet Ihre Mitgliedschaft am {day}.{month}.",
+    "changeBank": "Ändern Sie ihre Bankverbindung.",
+    "changeBankInfo": "Im nächsten Schritt können Sie ihre neue Bankverbindung eingeben.",
+    "contributing": "Sie sind Mitglied!",
+    "expired": "Ihre Mitgliedschaft ist abgelaufen.",
+    "expiredText": "Möchten Sie Ihre Mitgliedschaft verlängern? Selbst kleinste Beträge helfen uns und unserer Arbeit. Danke!",
     "manualPayment": "Sie leisten Ihren Beitrag aktuell manuell via Banküberweisung. Richten Sie hier jetzt eine automatische Abbuchung via Lastschrift ein. Dann wird es für Sie leichter, Ihre Beiträge hier direkt zu verwalten. Und wir bekommen einen besseren Überblick darüber, auf welche Beiträge von unseren Leserinnen und Lesern wir uns monatlich verlassen können.",
-    "updatePaymentType": "Neuen Zahlungsweg einrichten"
+    "paymentSourceUpdateError": "Sie können Ihre Bankverbindung aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
+    "updatePaymentType": "Neuen Zahlungsweg einrichten",
+    "willExpire": "Ihre Mitgliedschaft läuft in {expires} ab."
   },
   "forgotPassword": {
     "description": "Bitte geben Sie Ihre Email-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.",
@@ -79,6 +91,7 @@
     "title": "Ihre Informationen"
   },
   "join": {
+    "absorbFeeForce": "Bei einem Beitrag von {amount}, müssen Sie die {fee} Transaktionskosten übernehmen.",
     "absorbFeeOptIn": "Ja, ich übernehme die {fee} Transaktionskosten.",
     "absorbFeeText": "Bei unserem Zahlungsdienstleister zahlen wir für jede einzelne Transaktion. Das heißt, wir erhalten weniger von Ihrem monatlichen Beitrag. Sie haben die Möglichkeit, die Kosten dafür für uns zu übernehmen. Möchten Sie das? Alternativ können Sie auch jährlich bezahlen.",
     "contribute": "Mit {amount} {period} unterstützen.",
