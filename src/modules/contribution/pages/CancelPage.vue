@@ -1,6 +1,6 @@
 <template>
   <div class="mb-5">
-    <PageTitle :title="pageTitle" />
+    <PageTitle :title="t('menu.contribution')" />
   </div>
 
   <h3 class="text-2xl font-semibold text-body mb-4">
@@ -30,16 +30,10 @@
 <script lang="ts" setup>
 import PageTitle from '../../../components/PageTitle.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
-import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useContribution } from '../use-contribution';
 
 const { submitCancelContribution, cancelContributionLoading } =
   useContribution();
 const { t } = useI18n();
-
-const route = useRoute();
-
-// TODO: remove typing if you make pageTitle required
-const pageTitle = route.meta.pageTitle as string;
 </script>
