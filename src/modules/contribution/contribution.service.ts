@@ -21,8 +21,6 @@ const createContribution = (newContribution: NewContribution): Promise<any> => {
       newContribution.period === ContributionPeriod.Monthly,
     completeUrl:
       import.meta.env.VITE_APP_BASE_URL + '/profile/contribution/complete',
-    // - TODO: always false for now
-    prorate: false,
   });
 };
 
