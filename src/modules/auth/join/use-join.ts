@@ -4,6 +4,7 @@ import {
   SignUpData,
   JoinContentData,
   SetupContentData,
+  MemberData,
 } from './join.interface';
 import { Periods } from '../../contribution/contribution.interface';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
@@ -55,7 +56,7 @@ const setJoinContent = () => {
     .catch((err) => err);
 };
 
-const memberData = reactive({
+const memberData = reactive<MemberData>({
   email: '',
   firstName: '',
   lastName: '',
@@ -146,7 +147,11 @@ const completeSetup = async (router: Router) => {
   const isSetupCorrect = await setupValidation.value.$validate();
   if (!isAddressCorrect || !isSetupCorrect) return;
 
-  updateMember(memberData, setupContent.value.showNewsletterOptIn)
+  updateMember(
+    memberData,
+    setupContent.value.showNewsletterOptIn,
+    setupContent.value.showMailOptIn
+  )
     .then(() => {
       router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
     })

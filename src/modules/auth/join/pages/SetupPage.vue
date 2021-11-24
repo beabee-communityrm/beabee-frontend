@@ -47,13 +47,13 @@
 
         <div class="mb-4">
           <input
-            id="updates"
+            id="deliveryOptIn"
             v-model="memberData.profile.deliveryOptIn"
             type="checkbox"
             name="updates"
           />
 
-          <label for="updates" class="font-bold ml-1">
+          <label for="deliveryOptIn" class="font-bold ml-1">
             {{ setupContent.mailOptIn }}
           </label>
         </div>
@@ -79,13 +79,13 @@
 
         <div class="mb-4">
           <input
-            id="updates"
+            id="newsletterOptIn"
             v-model="memberData.profile.newsletterStatus"
             type="checkbox"
             name="updates"
           />
 
-          <label for="updates" class="font-bold ml-1">
+          <label for="newsletterOptIn" class="font-bold ml-1">
             {{ setupContent.newsletterOptIn }}
           </label>
         </div>
@@ -119,6 +119,8 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
+const router = useRouter();
+
 const {
   setMemberData,
   memberData,
@@ -129,8 +131,6 @@ const {
   addressValidation,
   completeSetup,
 } = useJoin();
-
-const router = useRouter();
 
 onBeforeMount(() => {
   setMemberData();
