@@ -15,6 +15,11 @@
 
       <form v-if="showContributionForm" class="mb-7 md:mb-12" @submit.prevent>
         <SectionTitle class="mb-2">Billing</SectionTitle>
+
+        <p v-if="hasManualPayment" class="mb-4">
+          {{ t('contribution.manualPayment') }}
+        </p>
+
         <!-- users can't change period on an active GoCardless contribution -->
         <ContributionPeriod
           v-if="!isActiveMemberWithGoCardless"
@@ -39,10 +44,6 @@
           :fee="fee"
           :force="shouldForceFee"
         />
-
-        <p v-if="hasManualPayment" class="mb-3 text-sm">
-          {{ t('contribution.manualPayment') }}
-        </p>
 
         <AppButton
           :disabled="isContributionFormInvalid"
