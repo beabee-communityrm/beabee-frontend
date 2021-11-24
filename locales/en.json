@@ -4,6 +4,7 @@
     "backToHome": "Back to home",
     "contributing": "Contributing",
     "every": "every",
+    "goBack": "Go back",
     "hello": "Hello",
     "in": "in",
     "joined": "Joined",
@@ -19,6 +20,7 @@
     "bankAccount": "Bank account",
     "cancelContribution": "Cancel contribution",
     "cancelDescription": "If you cancel your contribution your membership will finish at the end of your current payment cycle, {day} of {month}.",
+    "cancelMessage": "We're sorry to see you go.",
     "changeBank": "Change to a different bank account",
     "changeBankInfo": "You'll be asked for the details of your new bank account in the next step.",
     "contributing": "You're contributing",
@@ -91,7 +93,7 @@
     "title": "Your information"
   },
   "join": {
-    "absorbFeeForce": "{amount} contributions must absorb the {fee} fee",
+    "absorbFeeForce": "{amount} contributions must absorb the {fee} fee.",
     "absorbFeeOptIn": "Yes, I'll absorb the {fee} fee.",
     "absorbFeeText": "Our payment processor charges us per transaction which means we receive less from monthly contributions. Are you happy to absorb the {fee} transaction fee?  Alternatively you could pay annually.",
     "contribute": "Contribute {amount} {period}",

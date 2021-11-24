@@ -21,8 +21,6 @@ const createContribution = (newContribution: NewContribution): Promise<any> => {
       newContribution.period === ContributionPeriod.Monthly,
     completeUrl:
       import.meta.env.VITE_APP_BASE_URL + '/profile/contribution/complete',
-    // - TODO: always false for now
-    prorate: false,
   });
 };
 
@@ -56,6 +54,10 @@ const completeUpdatePaymentSource = (redirectFlowId: string): Promise<any> => {
   });
 };
 
+const cancelContribution = (): Promise<any> => {
+  return axios.post('/member/me/contribution/cancel');
+};
+
 export {
   fetchJoinContent,
   createContribution,
@@ -64,4 +66,5 @@ export {
   updateContribution,
   updatePaymentSource,
   completeUpdatePaymentSource,
+  cancelContribution,
 };

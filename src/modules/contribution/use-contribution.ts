@@ -6,6 +6,7 @@ import {
   createContribution,
   updateContribution,
   updatePaymentSource as updateBankAccount,
+  cancelContribution,
 } from './contribution.service';
 import {
   ContributionContent,
@@ -17,6 +18,7 @@ import {
   MembershipStatus,
 } from './contribution.interface';
 import i18n from '../../i18n';
+import { useRouter } from 'vue-router';
 
 const { t } = i18n.global;
 
@@ -77,15 +79,21 @@ const submitCreateContribution = () => {
     .catch((err) => err);
 };
 
+const updateContributionLoading = ref(false);
+
 const submitUpdateContribution = () => {
+  updateContributionLoading.value = true;
   updateContribution({
     amount: newContribution.amount,
     payFee: newContribution.payFee,
   })
-    .then(() => {
-      // TODO: to do somthing here? (ask the design team)
+    .then(({ data }) => {
+      currentContribution.amount = data.amount;
+      currentContribution.period = data.period;
+      // TODO: to do somthing here, like showing succes message? (ask the design team)
     })
-    .catch((err) => err);
+    .catch((err) => err)
+    .finally(() => (updateContributionLoading.value = false));
 };
 
 const submitContribution = () => {
@@ -210,6 +218,17 @@ const showCancelContribution = computed(() => {
   return hasGoCardlessType.value && isActiveMember.value;
 });
 
+const cancelContributionLoading = ref(false);
+const submitCancelContribution = () => {
+  cancelContributionLoading.value = true;
+  cancelContribution()
+    .then(() => {
+      useRouter().push('/profile/contribution');
+    })
+    .catch((err) => err)
+    .finally(() => (cancelContributionLoading.value = false));
+};
+
 export function useContribution() {
   return {
     newContribution,
@@ -234,5 +253,8 @@ export function useContribution() {
     showCancelContribution,
     paymentSource,
     cantUpdatePaymentSource,
+    updateContributionLoading,
+    submitCancelContribution,
+    cancelContributionLoading,
   };
 }
