@@ -5,6 +5,7 @@
       input-type="text"
       :label="t('form.addressLine1')"
       :error-message="errorGenerator(addressValidation, 'line1')"
+      :required="addressValidation.line1.required.$invalid"
       @update:modelValue="$emit('update:line1', $event)"
     />
   </div>
@@ -25,6 +26,7 @@
         input-type="text"
         :label="t('form.cityOrTown')"
         :error-message="errorGenerator(addressValidation, 'cityOrTown')"
+        :required="addressValidation.cityOrTown.required.$invalid"
         @update:modelValue="$emit('update:cityOrTown', $event)"
       />
     </div>
@@ -35,6 +37,7 @@
         input-type="text"
         :label="t('form.postCode')"
         :error-message="errorGenerator(addressValidation, 'postCode')"
+        :required="addressValidation.postCode.required.$invalid"
         @update:modelValue="$emit('update:postCode', $event)"
       />
     </div>
