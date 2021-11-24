@@ -1,4 +1,5 @@
 import { computed, reactive, ref, watch } from 'vue';
+import { LocationQueryRaw } from 'vue-router';
 import useVuelidate from '@vuelidate/core';
 import {
   SignUpData,
@@ -22,15 +23,6 @@ import {
 
 const { t } = i18n.global;
 
-const signUpData = reactive<SignUpData>({
-  email: '',
-  password: '',
-  amount: 5,
-  period: ContributionPeriod.Monthly,
-  payFee: true,
-  completeUrl: import.meta.env.VITE_APP_BASE_URL + '/join/complete',
-});
-
 const joinContent = ref<JoinContentData>({
   initialAmount: 5,
   initialPeriod: '',
@@ -44,10 +36,24 @@ const joinContent = ref<JoinContentData>({
   title: '',
 });
 
-const setJoinContent = () => {
+const signUpData = reactive<SignUpData>({
+  email: '',
+  password: '',
+  // for some reasons it can't get the value from
+  // `joinContent.value.initialAmount`
+  amount: 5,
+  period: ContributionPeriod.Monthly,
+  payFee: true,
+  completeUrl: import.meta.env.VITE_APP_BASE_URL + '/join/complete',
+});
+
+const setJoinContent = (query: LocationQueryRaw) => {
   fetchJoinContent()
     .then(({ data }) => {
       joinContent.value = data;
+      // for some reasons `signUpData.amount` can't get the value from
+      // `joinContent.value.initialAmount`
+      signUpData.amount = query.amount ? +query.amount : data.initialAmount;
     })
     .catch((err) => err);
 };
