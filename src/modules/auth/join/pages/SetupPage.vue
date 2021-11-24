@@ -37,12 +37,34 @@
       </div>
 
       <template v-if="setupContent.showMailOptIn">
+        <p class="text-lg mb-1">
+          {{ setupContent.mailTitle }}
+        </p>
+
+        <p class="mb-4 text-sm">
+          {{ setupContent.mailText }}
+        </p>
+
+        <div class="mb-4">
+          <input
+            id="updates"
+            v-model="memberData.profile.deliveryOptIn"
+            type="checkbox"
+            name="updates"
+          />
+
+          <label for="updates" class="font-bold ml-1">
+            {{ setupContent.mailOptIn }}
+          </label>
+        </div>
+
         <AppAddress
           v-model:line1="memberData.addressLine1"
           v-model:line2="memberData.addressLine2"
           v-model:postCode="memberData.postCode"
           v-model:cityOrTown="memberData.cityOrTown"
           v-model:addressValidation="addressValidation"
+          :is-address-required="memberData.profile.deliveryOptIn"
         />
       </template>
 

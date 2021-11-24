@@ -72,6 +72,10 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  isAddressRequired: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emits = defineEmits([
@@ -88,7 +92,12 @@ const rules = computed(() => ({
   line1: {
     required: helpers.withMessage(
       addressFieldError,
-      requiredIf(props.postCode || props.cityOrTown || !!props.line2)
+      requiredIf(
+        props.isAddressRequired ||
+          props.postCode ||
+          props.cityOrTown ||
+          props.line2
+      )
     ),
   },
   // no validation is needed for this field
@@ -97,14 +106,21 @@ const rules = computed(() => ({
   cityOrTown: {
     required: helpers.withMessage(
       addressFieldError,
-      requiredIf(props.line1 || props.line2 || props.postCode)
+      requiredIf(
+        props.isAddressRequired || props.line1 || props.line2 || props.postCode
+      )
     ),
   },
 
   postCode: {
     required: helpers.withMessage(
       addressFieldError,
-      requiredIf(props.line1 || props.line2 || props.cityOrTown)
+      requiredIf(
+        props.isAddressRequired ||
+          props.line1 ||
+          props.line2 ||
+          props.cityOrTown
+      )
     ),
   },
 }));

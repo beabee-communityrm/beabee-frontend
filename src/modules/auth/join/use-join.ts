@@ -61,6 +61,7 @@ const memberData = reactive({
   lastName: '',
   profile: {
     newsletterStatus: false,
+    deliveryOptIn: false,
   },
   addressLine1: '',
   addressLine2: '',
@@ -145,7 +146,7 @@ const completeSetup = async (router: Router) => {
   const isSetupCorrect = await setupValidation.value.$validate();
   if (!isAddressCorrect || !isSetupCorrect) return;
 
-  updateMember(memberData, setupContent.showNewsletterOptIn)
+  updateMember(memberData, setupContent.value.showNewsletterOptIn)
     .then(() => {
       router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
     })
@@ -190,24 +191,22 @@ const setMemberData = () => {
     .catch((err) => err);
 };
 
-const setupContent = reactive<SetupContentData>({
+const setupContent = ref<SetupContentData>({
   welcome: '',
   newsletterText: '',
   newsletterOptIn: '',
   newsletterTitle: '',
   showNewsletterOptIn: false,
   showMailOptIn: false,
+  mailTitle: '',
+  mailText: '',
+  mailOptIn: '',
 });
 
 const setSetupContent = () => {
   fetchSetupContent()
     .then(({ data }) => {
-      setupContent.welcome = data.welcome;
-      setupContent.newsletterText = data.newsletterText;
-      setupContent.newsletterOptIn = data.newsletterOptIn;
-      setupContent.newsletterTitle = data.newsletterTitle;
-      setupContent.showNewsletterOptIn = data.showNewsletterOptIn;
-      setupContent.showMailOptIn = data.showMailOptIn;
+      setupContent.value = data;
     })
     .catch((err) => err);
 };

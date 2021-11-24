@@ -43,4 +43,7 @@ export interface SetupContentData {
   newsletterTitle: string;
   showNewsletterOptIn: boolean;
   showMailOptIn: boolean;
+  mailTitle: string;
+  mailText: string;
+  mailOptIn: string;
 }
