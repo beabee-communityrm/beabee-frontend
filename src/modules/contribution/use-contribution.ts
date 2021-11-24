@@ -18,6 +18,7 @@ import {
   MembershipStatus,
 } from './contribution.interface';
 import i18n from '../../i18n';
+import { useRouter } from 'vue-router';
 
 const { t } = i18n.global;
 
@@ -217,8 +218,15 @@ const showCancelContribution = computed(() => {
   return hasGoCardlessType.value && isActiveMember.value;
 });
 
+const cancelContributionLoading = ref(false);
 const submitCancelContribution = () => {
-  cancelContribution();
+  cancelContributionLoading.value = true;
+  cancelContribution()
+    .then(() => {
+      useRouter().push('/profile/contribution');
+    })
+    .catch((err) => err)
+    .finally(() => (cancelContributionLoading.value = false));
 };
 
 export function useContribution() {
@@ -247,5 +255,6 @@ export function useContribution() {
     cantUpdatePaymentSource,
     updateContributionLoading,
     submitCancelContribution,
+    cancelContributionLoading,
   };
 }
