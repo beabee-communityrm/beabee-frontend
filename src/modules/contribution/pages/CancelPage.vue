@@ -1,12 +1,10 @@
 <template>
   <div class="mb-5">
-    <!--  TODO: remove typing if you make pageTitle required -->
     <PageTitle :title="pageTitle" />
   </div>
 
   <h3 class="text-2xl font-semibold text-body mb-4">
     {{ t('contribution.cancelMessage') }}
-    <!-- We're sorry to see you go. -->
   </h3>
 
   <div class="flex">
@@ -42,5 +40,6 @@ const { t } = useI18n();
 
 const route = useRoute();
 
+// TODO: remove typing if you make pageTitle required
 const pageTitle = route.meta.pageTitle as string;
 </script>
