@@ -69,6 +69,7 @@ import MessageBox from '../../../components/MessageBox.vue';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useJoin } from './use-join';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 
 const { t, n } = useI18n();
 
@@ -88,7 +89,9 @@ const {
   fee,
 } = useJoin();
 
+const route = useRoute();
+
 onBeforeMount(() => {
-  setJoinContent();
+  setJoinContent(route.query);
 });
 </script>
