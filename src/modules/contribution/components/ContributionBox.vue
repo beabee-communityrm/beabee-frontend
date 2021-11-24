@@ -18,11 +18,11 @@
       <div class="font-bold mb-1.5">{{ t('common.every') }} {{ period }}</div>
 
       <div v-if="status === 'expiring'">
-        <div>
-          {{ t('contribution.willExpire') }}
-          <span class="text-danger"> {{ formattedExpiryDate }}</span
-          >.
-        </div>
+        <i18n-t keypath="contribution.willExpire">
+          <template #expires>
+            <span class="text-danger"> {{ formattedExpiryDate }}</span>
+          </template>
+        </i18n-t>
       </div>
 
       <div v-else>
