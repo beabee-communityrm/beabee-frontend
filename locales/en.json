@@ -35,9 +35,9 @@
     "willExpire": "Your contribution will expire in {expires}"
   },
   "forgotPassword": {
+    "checkInbox": "Please check your inbox and follow the instructions in the email.",
     "description": "Please enter your email address and we’ll send you password reset instructions.",
-    "messageFirstPart": "If there is an account associated with",
-    "messageSecondPart": ", you will receive an email shortly.<br>Please check your inbox and follow the instructions in the email.",
+    "message": "If there is an account associated with {email}, you will receive an email shortly.",
     "resetPassword": "Reset your password",
     "title": "Forgot your password?"
   },
