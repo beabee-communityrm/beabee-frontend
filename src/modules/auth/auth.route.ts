@@ -18,6 +18,7 @@ export const authRoute: Array<RouteRecordRaw> = [
         name: 'login',
         component: () => import('./login/LoginPage.vue'),
         meta: {
+          roles: [],
           pageTitle: t('pageTitle.login'),
         },
       },
@@ -26,6 +27,7 @@ export const authRoute: Array<RouteRecordRaw> = [
         name: 'forgot password',
         component: () => import('./forgot-password/ForgotPasswordPage.vue'),
         meta: {
+          roles: [],
           pageTitle: t('pageTitle.forgotPassword'),
         },
       },
@@ -34,6 +36,7 @@ export const authRoute: Array<RouteRecordRaw> = [
         name: 'reset password',
         component: () => import('./reset-password/ResetPasswordPage.vue'),
         meta: {
+          roles: [],
           pageTitle: t('pageTitle.resetPassword'),
         },
       },
