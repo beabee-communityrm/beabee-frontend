@@ -10,7 +10,7 @@
   >
     <slot>Submit</slot>
 
-    <!-- only secondary buttons have loading state, that is 
+    <!-- only secondary buttons have loading state, that is
        why it `text-secondary` is added statically
     -->
     <FontAwesomeIcon
@@ -62,6 +62,7 @@ const variantStaticClasses = {
   linkOutlined: 'bg-white text-link border border-link hover:bg-link-light',
   subtle:
     'bg-white text-primary-80 border border-primary-70 hover:text-primary hover:border-primary',
+  danger: 'bg-danger-70 text-white hover:bg-danger',
   dangerOutlined:
     'bg-white text-danger border border-danger hover:bg-danger-10',
 };
