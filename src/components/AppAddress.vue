@@ -5,7 +5,7 @@
       input-type="text"
       :label="t('form.addressLine1')"
       :error-message="errorGenerator(addressValidation, 'line1')"
-      :required="addressValidation.line1.required.$invalid"
+      :required="isAddressRequired"
       @update:modelValue="$emit('update:line1', $event)"
     />
   </div>
@@ -26,7 +26,7 @@
         input-type="text"
         :label="t('form.cityOrTown')"
         :error-message="errorGenerator(addressValidation, 'cityOrTown')"
-        :required="addressValidation.cityOrTown.required.$invalid"
+        :required="isAddressRequired"
         @update:modelValue="$emit('update:cityOrTown', $event)"
       />
     </div>
@@ -37,7 +37,7 @@
         input-type="text"
         :label="t('form.postCode')"
         :error-message="errorGenerator(addressValidation, 'postCode')"
-        :required="addressValidation.postCode.required.$invalid"
+        :required="isAddressRequired"
         @update:modelValue="$emit('update:postCode', $event)"
       />
     </div>
@@ -91,16 +91,15 @@ const emits = defineEmits([
 
 const addressFieldError = t('form.errors.address.required');
 
+const hasAddress = computed(
+  () => !!(props.line1 || props.line2 || props.cityOrTown || props.postCode)
+);
+
 const rules = computed(() => ({
   line1: {
     required: helpers.withMessage(
       addressFieldError,
-      requiredIf(
-        props.isAddressRequired ||
-          props.postCode ||
-          props.cityOrTown ||
-          props.line2
-      )
+      requiredIf(props.isAddressRequired || hasAddress.value)
     ),
   },
   // no validation is needed for this field
@@ -109,21 +108,14 @@ const rules = computed(() => ({
   cityOrTown: {
     required: helpers.withMessage(
       addressFieldError,
-      requiredIf(
-        props.isAddressRequired || props.line1 || props.line2 || props.postCode
-      )
+      requiredIf(props.isAddressRequired || hasAddress.value)
     ),
   },
 
   postCode: {
     required: helpers.withMessage(
       addressFieldError,
-      requiredIf(
-        props.isAddressRequired ||
-          props.line1 ||
-          props.line2 ||
-          props.cityOrTown
-      )
+      requiredIf(props.isAddressRequired || hasAddress.value)
     ),
   },
 }));
