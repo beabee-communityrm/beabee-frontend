@@ -25,7 +25,7 @@
           cursor-pointer
         "
         :class="{
-          'bg-secondary-10 text-secondary': period.name === selectedPeriod,
+          'bg-link text-white': period.name === selectedPeriod,
         }"
       >
         {{
