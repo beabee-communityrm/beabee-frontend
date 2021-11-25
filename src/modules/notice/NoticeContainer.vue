@@ -1,5 +1,5 @@
 <template>
-  <section v-if="notices.length" class="mb-10 md:mb-12">
+  <section v-if="notices.length">
     <AppNotice v-for="notice in notices" :key="notice.id" :notice="notice" />
   </section>
 </template>

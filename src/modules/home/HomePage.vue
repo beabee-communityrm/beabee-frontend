@@ -28,7 +28,7 @@
     />
   </section>
 
-  <NoticeContainer />
+  <NoticeContainer class="mb-10 md:mb-12" />
 
   <section class="mb-8 md:hidden">
     <QuickActions />
