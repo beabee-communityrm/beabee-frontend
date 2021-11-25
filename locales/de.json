@@ -35,9 +35,9 @@
     "willExpire": "Ihre Mitgliedschaft läuft in {expires} ab."
   },
   "forgotPassword": {
+    "checkInbox": ", bekommen Sie in Kürze eine Email von uns.<br>Bitte schauen Sie in ihr Emailpostfach und folgen der Anleitung in der Email.",
     "description": "Bitte geben Sie Ihre Email-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.",
-    "messageFirstPart": "Existiert ein Account mit der Adresse",
-    "messageSecondPart": ", bekommen Sie in Kürze eine Email von uns.<br>Bitte schauen Sie in ihr Emailpostfach und folgen der Anleitung in der Email.",
+    "message": "Existiert ein Account mit der Adresse",
     "resetPassword": "Passwort zurücksetzen",
     "title": "Passwort vergessen?"
   },
@@ -150,6 +150,7 @@
     "error": "Da ist etwas schiefgelaufen!",
     "success": "Sehr gut! Das hat funktioniert."
   },
+  "pageTitle": {},
   "resetPassword": {
     "changePassword": "Passwort ändern",
     "confirmPassword": "Passwort bestätigen",
