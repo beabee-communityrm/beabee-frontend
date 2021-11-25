@@ -17,6 +17,7 @@
     </MessageBox>
 
     <AppButton
+      :loading="loading"
       variant="subtle"
       class="mb-2"
       @click="$emit('update-payment-source')"
@@ -43,6 +44,10 @@ defineProps({
     default: () => ({}),
   },
   hasError: {
+    type: Boolean,
+    default: false,
+  },
+  loading: {
     type: Boolean,
     default: false,
   },
