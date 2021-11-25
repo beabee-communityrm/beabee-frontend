@@ -97,7 +97,7 @@ const submitUpdateContribution = () => {
 };
 
 const submitContribution = () => {
-  if (isActiveMember.value) {
+  if (isActiveMemberWithGoCardless.value) {
     submitUpdateContribution();
   } else {
     submitCreateContribution();
