@@ -98,6 +98,7 @@
 
       <AppButton
         variant="link"
+        type="submit"
         :disabled="hasSetupError"
         @click="completeSetup(router)"
       >
