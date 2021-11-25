@@ -1,5 +1,6 @@
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { Periods } from '../../contribution/contribution.interface';
+import { NewsletterStaus } from './newsletter-status.enum';
 
 export interface SignUpData {
   email: string;
@@ -16,7 +17,32 @@ export interface MemberData {
   lastName: string;
   profile: {
     newsletterStatus: boolean;
+    deliveryOptIn: boolean;
   };
+  addressLine1: string;
+  addressLine2: string;
+  cityOrTown: string;
+  postCode: string;
+}
+
+export interface MemberRequest {
+  email: string;
+  firstname: string;
+  lastname: string;
+  profile?: Profile;
+}
+
+export interface Profile {
+  newsletterStatus: NewsletterStaus;
+  deliveryOptIn: boolean;
+  deliveryAddress?: DeliveryAddress;
+}
+
+export interface DeliveryAddress {
+  line1: string;
+  line2: string;
+  city: string;
+  postcode: string;
 }
 
 export interface JoinContentData {
@@ -38,4 +64,8 @@ export interface SetupContentData {
   newsletterOptIn: string;
   newsletterTitle: string;
   showNewsletterOptIn: boolean;
+  showMailOptIn: boolean;
+  mailTitle: string;
+  mailText: string;
+  mailOptIn: string;
 }

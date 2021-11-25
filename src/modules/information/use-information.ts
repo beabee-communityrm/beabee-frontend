@@ -1,4 +1,4 @@
-import { email, helpers, required, requiredIf } from '@vuelidate/validators';
+import { email, helpers, required } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import { computed, reactive, ref } from 'vue';
 import i18n from '../../i18n';
@@ -19,8 +19,6 @@ const information = reactive<UpdateInformation>({
   cityOrTown: '',
   postCode: '',
 });
-
-const addressFieldError = t('form.errors.address.required');
 
 const rules = computed(() => ({
   emailAddress: {
@@ -45,60 +43,31 @@ const rules = computed(() => ({
   lastName: {
     required: helpers.withMessage(t('form.errors.lastName.required'), required),
   },
-
-  addressLine1: {
-    required: helpers.withMessage(
-      addressFieldError,
-      requiredIf(
-        information.postCode ||
-          information.cityOrTown ||
-          !!information.addressLine2
-      )
-    ),
-  },
-  // no validation is needed for this field
-  // but it should be present for 'v$.addressLine2.$touch'
-  addressLine2: {},
-  cityOrTown: {
-    required: helpers.withMessage(
-      addressFieldError,
-      requiredIf(
-        information.addressLine1 ||
-          information.addressLine2 ||
-          information.postCode
-      )
-    ),
-  },
-
-  postCode: {
-    required: helpers.withMessage(
-      addressFieldError,
-      requiredIf(
-        information?.addressLine1 ||
-          information.addressLine2 ||
-          information.cityOrTown
-      )
-    ),
-  },
 }));
 
-const isFormInvalid = computed(() => v$.value.$invalid);
+// this is a vuelidate instance
+const addressValidation = ref<any>({});
 
-const touchAddressFields = () => {
-  v$.value.addressLine1.$touch();
-  v$.value.addressLine2.$touch();
-  v$.value.cityOrTown.$touch();
-  v$.value.postCode.$touch();
-};
+const informationValidation = useVuelidate(rules, information);
 
-const v$ = useVuelidate(rules, information);
+const hasFormError = computed(
+  () =>
+    // check errors exist in `addressValidation.value`
+    // because it might not exist at first and causes error
+    !!(
+      informationValidation.value.$errors.length ||
+      addressValidation.value.$errors?.length
+    )
+);
 
 const loading = ref(false);
 const isSaved = ref(false);
 
 const submitFormHandler = async () => {
-  const isFormCorrect = await v$.value.$validate();
-  if (!isFormCorrect) return;
+  const isAddressCorrect = await addressValidation.value.$validate();
+  const isInformationCorrect = await informationValidation.value.$validate();
+  if (!isAddressCorrect || !isInformationCorrect) return;
+
   loading.value = true;
   isSaved.value = false;
   updateInformation(information)
@@ -112,7 +81,6 @@ const setInformation = async () => {
   information.emailAddress = informationData.email;
   information.firstName = informationData.firstname;
   information.lastName = informationData.lastname;
-  // for validating form on load
 
   const address = informationData.profile?.deliveryAddress;
   if (address) {
@@ -125,14 +93,14 @@ const setInformation = async () => {
 
 export function useInformation() {
   return {
-    v$,
+    informationValidation,
     errorGenerator,
     information,
     submitFormHandler,
-    touchAddressFields,
     setInformation,
-    isFormInvalid,
     isSaved,
     loading,
+    hasFormError,
+    addressValidation,
   };
 }

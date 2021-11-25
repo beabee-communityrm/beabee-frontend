@@ -14,8 +14,10 @@
             v-model="information.emailAddress"
             input-type="email"
             :label="t('form.email') + '*'"
-            :error-message="errorGenerator(v$, 'emailAddress')"
-            @blur="v$.emailAddress.$touch"
+            :error-message="
+              errorGenerator(informationValidation, 'emailAddress')
+            "
+            @blur="informationValidation.emailAddress.$touch"
           />
         </div>
 
@@ -25,8 +27,8 @@
             input-type="password"
             :label="t('form.password')"
             :info-message="t('form.passwordInfo')"
-            :error-message="errorGenerator(v$, 'password')"
-            @blur="v$.password.$touch"
+            :error-message="errorGenerator(informationValidation, 'password')"
+            @blur="informationValidation.password.$touch"
           />
         </div>
 
@@ -39,8 +41,8 @@
             v-model="information.firstName"
             input-type="text"
             :label="t('form.firstName') + '*'"
-            :error-message="errorGenerator(v$, 'firstName')"
-            @blur="v$.firstName.$touch"
+            :error-message="errorGenerator(informationValidation, 'firstName')"
+            @blur="informationValidation.firstName.$touch"
           />
         </div>
 
@@ -49,60 +51,27 @@
             v-model="information.lastName"
             input-type="text"
             :label="t('form.lastName') + '*'"
-            :error-message="errorGenerator(v$, 'lastName')"
-            @blur="v$.lastName.$touch"
+            :error-message="errorGenerator(informationValidation, 'lastName')"
+            @blur="informationValidation.lastName.$touch"
           />
         </div>
 
-        <div class="mb-5">
-          <AppInput
-            v-model="information.addressLine1"
-            input-type="text"
-            :label="t('form.addressLine1')"
-            :error-message="errorGenerator(v$, 'addressLine1')"
-            @update:modelValue="touchAddressFields"
-          />
-        </div>
+        <AppAddress
+          v-model:line1="information.addressLine1"
+          v-model:line2="information.addressLine2"
+          v-model:postCode="information.postCode"
+          v-model:cityOrTown="information.cityOrTown"
+          v-model:addressValidation="addressValidation"
+        />
 
-        <div class="mb-5">
-          <AppInput
-            v-model="information.addressLine2"
-            input-type="text"
-            :label="t('form.addressLine2')"
-            @update:modelValue="touchAddressFields"
-          />
-        </div>
-
-        <div class="grid grid-cols-6 gap-4">
-          <div class="mb-5 col-span-4">
-            <AppInput
-              v-model="information.cityOrTown"
-              input-type="text"
-              :label="t('form.cityOrTown')"
-              :error-message="errorGenerator(v$, 'cityOrTown')"
-              @update:modelValue="touchAddressFields"
-            />
-          </div>
-
-          <div class="mb-5 col-span-2">
-            <AppInput
-              v-model="information.postCode"
-              input-type="text"
-              :label="t('form.postCode')"
-              :error-message="errorGenerator(v$, 'postCode')"
-              @update:modelValue="touchAddressFields"
-            />
-          </div>
-        </div>
-
-        <MessageBox v-if="isFormInvalid" type="error" class="mt-2" />
+        <MessageBox v-if="hasFormError" type="error" class="mt-2" />
 
         <MessageBox v-if="isSaved" type="success" class="mt-2">
           {{ t('form.saved') }}
         </MessageBox>
 
         <AppButton
-          :disabled="isFormInvalid"
+          :disabled="hasFormError"
           class="mt-5"
           :loading="loading"
           variant="secondary"
@@ -119,20 +88,21 @@ import PageTitle from '../../components/PageTitle.vue';
 import AppInput from '../../components/forms/AppInput.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import MessageBox from '../../components/MessageBox.vue';
+import AppAddress from '../../components/AppAddress.vue';
 import { useI18n } from 'vue-i18n';
 import { useInformation } from './use-information';
 import { onBeforeMount } from '@vue/runtime-core';
 
 const {
-  v$,
+  informationValidation,
   errorGenerator,
   information,
   submitFormHandler,
-  touchAddressFields,
   setInformation,
-  isFormInvalid,
   isSaved,
   loading,
+  hasFormError,
+  addressValidation,
 } = useInformation();
 
 onBeforeMount(() => {

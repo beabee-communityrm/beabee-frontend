@@ -1,7 +1,13 @@
 import { LocationQueryValue } from 'vue-router';
 import axios from '../../../axios';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
-import { MemberData, SignUpData } from './join.interface';
+import {
+  DeliveryAddress,
+  MemberData,
+  MemberRequest,
+  Profile,
+  SignUpData,
+} from './join.interface';
 import { NewsletterStaus } from './newsletter-status.enum';
 
 const fetchJoinContent = (): Promise<any> => {
@@ -38,23 +44,34 @@ const confirmEmail = (id: string | string[]): Promise<any> => {
 const fetchMember = (): Promise<any> => {
   return axios.get('/member/me');
 };
-
 const updateMember = (
   memberData: MemberData,
-  updateNewsletterStatus: boolean
+  showNewsletterOptIn: boolean,
+  showMailOptIn: boolean
 ): Promise<any> => {
-  const params = {
+  const params: MemberRequest = {
     email: memberData.email,
     firstname: memberData.firstName,
     lastname: memberData.lastName,
   };
 
-  if (updateNewsletterStatus) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    params.profile.newsletterStatus = memberData.profile.newsletterStatus
-      ? NewsletterStaus.Subscribed
-      : NewsletterStaus.Unsubscribed;
+  if (showNewsletterOptIn || showMailOptIn) {
+    params.profile = {} as Profile;
+
+    if (showNewsletterOptIn) {
+      params.profile.newsletterStatus = memberData.profile.newsletterStatus
+        ? NewsletterStaus.Subscribed
+        : NewsletterStaus.Unsubscribed;
+    }
+
+    if (showMailOptIn) {
+      params.profile.deliveryOptIn = memberData.profile.deliveryOptIn;
+      params.profile.deliveryAddress = {} as DeliveryAddress;
+      params.profile.deliveryAddress.line1 = memberData.addressLine1;
+      params.profile.deliveryAddress.line2 = memberData.addressLine2;
+      params.profile.deliveryAddress.city = memberData.cityOrTown;
+      params.profile.deliveryAddress.postcode = memberData.postCode;
+    }
   }
 
   return axios.put('/member/me', params);

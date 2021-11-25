@@ -1,6 +1,6 @@
 <template>
   <label class="block mb-1.5 font-semibold" :for="inputType"
-    >{{ label }}
+    >{{ formattedLabel }}
   </label>
   <input
     :id="inputType"
@@ -9,6 +9,7 @@
     :class="dangerClasses"
     :value="modelValue"
     v-bind="$attrs"
+    :required="required"
     @input="$emit('update:modelValue', handleInput($event))"
   />
 
@@ -54,12 +55,20 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  required: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 defineEmits(['update:modelValue']);
 
 const dangerClasses = computed(() => {
   return props.errorMessage ? ['bg-danger-10', 'border-danger-70'] : null;
+});
+
+const formattedLabel = computed(() => {
+  return props.required ? props.label + '*' : props.label;
 });
 </script>
 

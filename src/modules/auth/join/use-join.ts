@@ -5,6 +5,7 @@ import {
   SignUpData,
   JoinContentData,
   SetupContentData,
+  MemberData,
 } from './join.interface';
 import { Periods } from '../../contribution/contribution.interface';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
@@ -14,12 +15,15 @@ import {
   fetchMember,
   fetchJoinContent,
   fetchSetupContent,
+  updateMember,
 } from './join.service';
 import i18n from '../../../i18n';
 import {
   emailValidationRule,
   passwordValidationRule,
 } from '../../../utils/form-validation/rules';
+import { NewsletterStaus } from './newsletter-status.enum';
+import { Router } from 'vue-router';
 
 const { t } = i18n.global;
 
@@ -58,13 +62,18 @@ const setJoinContent = (query: LocationQueryRaw) => {
     .catch((err) => err);
 };
 
-const memberData = reactive({
+const memberData = reactive<MemberData>({
   email: '',
   firstName: '',
   lastName: '',
   profile: {
     newsletterStatus: false,
+    deliveryOptIn: false,
   },
+  addressLine1: '',
+  addressLine2: '',
+  cityOrTown: '',
+  postCode: '',
 });
 
 const fee = computed(() => {
@@ -126,13 +135,34 @@ const submitSignUp = () => {
     .catch((err) => err);
 };
 
-const isSetupFormInvalid = computed(() => {
-  return setupValidation.value.$invalid;
-});
+// this is a vuelidate instance
+const addressValidation = ref<any>({});
 
-const hasSetupError = computed(() => {
-  return setupValidation.value.$errors.length;
-});
+const hasSetupError = computed(
+  () =>
+    // check errors exist in `addressValidation.value`
+    // because it might not exist at first and causes error
+    !!(
+      setupValidation.value.$errors.length ||
+      addressValidation.value.$errors?.length
+    )
+);
+
+const completeSetup = async (router: Router) => {
+  const isAddressCorrect = await addressValidation.value.$validate();
+  const isSetupCorrect = await setupValidation.value.$validate();
+  if (!isAddressCorrect || !isSetupCorrect) return;
+
+  updateMember(
+    memberData,
+    setupContent.value.showNewsletterOptIn,
+    setupContent.value.showMailOptIn
+  )
+    .then(() => {
+      router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
+    })
+    .catch((err) => err);
+};
 
 const definedAmounts = computed(() => {
   const selectedPeriod = joinContent.value.periods.find((period) => {
@@ -160,27 +190,34 @@ const setMemberData = () => {
       memberData.firstName = data.firstname;
       memberData.lastName = data.lastname;
       memberData.email = data.email;
-      memberData.profile.newsletterStatus = data.profile.newsletterStatus;
+      memberData.profile.newsletterStatus =
+        data.profile.newsletterStatus === NewsletterStaus.Subscribed
+          ? true
+          : false;
+      memberData.addressLine1 = data.profile.deliveryAddress.line1;
+      memberData.addressLine2 = data.profile.deliveryAddress.line2;
+      memberData.cityOrTown = data.profile.deliveryAddress.city;
+      memberData.postCode = data.profile.deliveryAddress.postcode;
     })
     .catch((err) => err);
 };
 
-const setupContent = reactive<SetupContentData>({
+const setupContent = ref<SetupContentData>({
   welcome: '',
   newsletterText: '',
   newsletterOptIn: '',
   newsletterTitle: '',
-  showNewsletterOptIn: true,
+  showNewsletterOptIn: false,
+  showMailOptIn: false,
+  mailTitle: '',
+  mailText: '',
+  mailOptIn: '',
 });
 
 const setSetupContent = () => {
   fetchSetupContent()
     .then(({ data }) => {
-      setupContent.welcome = data.welcome;
-      setupContent.newsletterText = data.newsletterText;
-      setupContent.newsletterOptIn = data.newsletterOptIn;
-      setupContent.newsletterTitle = data.newsletterTitle;
-      setupContent.showNewsletterOptIn = data.showNewsletterOptIn;
+      setupContent.value = data;
     })
     .catch((err) => err);
 };
@@ -197,7 +234,6 @@ function useJoin() {
     submitSignUp,
     memberData,
     setupValidation,
-    isSetupFormInvalid,
     hasSetupError,
     joinContent,
     setJoinContent,
@@ -208,6 +244,8 @@ function useJoin() {
     setMemberData,
     setupContent,
     setSetupContent,
+    addressValidation,
+    completeSetup,
   };
 }
 
