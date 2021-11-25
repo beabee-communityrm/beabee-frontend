@@ -6,6 +6,7 @@ export const authRoute: Array<RouteRecordRaw> = [
     component: () => import('./AuthContainer.vue'),
     meta: {
       layout: 'Auth',
+      roles: [],
     },
     children: [
       {

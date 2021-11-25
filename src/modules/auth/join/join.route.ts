@@ -8,6 +8,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./JoinPage.vue'),
     meta: {
       layout: 'Auth',
+      roles: [],
     },
   },
   {
@@ -16,6 +17,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/SetupPage.vue'),
     meta: {
       layout: 'Auth',
+      roles: [],
     },
   },
   {
@@ -26,6 +28,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/CompletePage.vue'),
     meta: {
       layout: 'Auth',
+      roles: [],
     },
     beforeEnter(to, from, next) {
       const redirectFlowId = to.query.redirect_flow_id;
@@ -44,6 +47,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/ConfirmEmailPage.vue'),
     meta: {
       layout: 'Splash',
+      roles: [],
     },
   },
   {
@@ -71,6 +75,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/FailedPage.vue'),
     meta: {
       layout: 'Splash',
+      roles: [],
     },
   },
   {
@@ -79,6 +84,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/DuplicateEmailPage.vue'),
     meta: {
       layout: 'Splash',
+      roles: [],
     },
   },
 ];

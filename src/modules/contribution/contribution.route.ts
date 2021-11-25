@@ -14,11 +14,15 @@ export const contributionRoute: Array<RouteRecordRaw> = [
     component: () => import('./ContributionPage.vue'),
     meta: {
       pageTitle: t('menu.contribution'),
+      roles: [],
     },
+    // these pages are never shown, `beforeEnter` redirects
+    // the user to appropriate page.
+    // there is now `<router-view>` in contribution page
+    // - TODO: currently these pages are shown blank while makning requests
+    // maybe adding a loading indicator?
     children: [
       {
-        // this page is never shown, `beforeEnter` redirects
-        // the user to appropriate page
         path: 'complete',
         name: 'complete contribution',
         component: () => import('./CompleteFlow.vue'),
@@ -32,8 +36,6 @@ export const contributionRoute: Array<RouteRecordRaw> = [
         },
       },
       {
-        // this page is never shown, `beforeEnter` redirects
-        // the user to appropriate page
         path: 'payment-source/complete',
         name: 'complete payment source',
         component: () => import('./CompleteFlow.vue'),
