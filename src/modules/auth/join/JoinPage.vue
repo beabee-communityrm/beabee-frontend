@@ -40,6 +40,7 @@
       <AppButton
         :disabled="isJoinFormInvalid"
         variant="link"
+        type="submit"
         class="mb-4"
         @click="submitSignUp"
       >
