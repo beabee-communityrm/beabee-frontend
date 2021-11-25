@@ -55,6 +55,11 @@
         >
           {{ contributionButtonText }}
         </AppButton>
+
+        <InfoMessage
+          v-if="!isActiveMemberWithGoCardless"
+          :message="t('contribution.changeBankInfo')"
+        />
       </form>
 
       <template v-if="hasPaymentSource">
@@ -92,6 +97,7 @@
 
 <script lang="ts" setup>
 import PageTitle from '../../components/PageTitle.vue';
+import InfoMessage from '../../components/InfoMessage.vue';
 import ContributionBox from './components/ContributionBox.vue';
 import SectionTitle from '../../components/SectionTitle.vue';
 import ContributionPeriod from './components/ContributionPeriod.vue';
