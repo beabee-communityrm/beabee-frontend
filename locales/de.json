@@ -27,7 +27,7 @@
     "manualPayment": "Sie leisten Ihren Beitrag aktuell manuell via Banküberweisung. Richten Sie hier jetzt eine automatische Abbuchung via Lastschrift ein. Dann wird es für Sie leichter, Ihre Beiträge hier direkt zu verwalten. Und wir bekommen einen besseren Überblick darüber, auf welche Beiträge von unseren Leserinnen und Lesern wir uns monatlich verlassen können.",
     "paymentSourceUpdateError": "Sie können Ihre Bankverbindung aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
     "updatePaymentType": "Neuen Zahlungsweg einrichten",
-    "willExpire": "Ihre Mitgliedschaft läuft in (placeholder) ab."
+    "willExpire": "Ihre Mitgliedschaft läuft in {expires} ab."
   },
   "forgotPassword": {
     "description": "Bitte geben Sie Ihre Email-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.",

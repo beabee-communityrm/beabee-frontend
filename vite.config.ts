@@ -9,9 +9,6 @@ export default defineConfig({
     vue(),
     vueI18n({
       include: path.resolve(__dirname, './locales/*'),
-      // for more info check here:
-      // https://github.com/intlify/bundle-tools/tree/main/packages/vite-plugin-vue-i18n#fullinstall
-      fullInstall: false,
     }),
   ],
   server: {

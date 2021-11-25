@@ -28,8 +28,11 @@
     "expiredText": "Please consider renewing, even if at the lowest amount it would help us immensely. Thank you!",
     "manualPayment": "You are paying manually through bank transfer right now. To make it easier for you to manage your contribution and easier for us to know on how much money from our members we can rely on month on month, please update to paying automatically via direct debit.",
     "paymentSourceUpdateError": "You can't update your bank account at the moment as you have a payment pending",
+    "restartContribution": "Restart contribution",
+    "startContribution": "Start contribution",
+    "updateContribution": "Update contribution",
     "updatePaymentType": "Update payment type",
-    "willExpire": "Your contribution will expire in"
+    "willExpire": "Your contribution will expire in {expires}"
   },
   "forgotPassword": {
     "description": "Please enter your email address and we’ll send you password reset instructions.",

@@ -205,9 +205,9 @@ const isExpiredMember = computed(
 
 const contributionButtonText = computed(() => {
   if (hasManualPayment.value) return t('contribution.updatePaymentType');
-  else if (isActiveMember.value) return 'Update contribution';
-  else if (isExpiringMember.value) return 'Restart contribution';
-  return 'Start contribution';
+  else if (isActiveMember.value) return t('contribution.updateContribution');
+  else if (isExpiringMember.value) return t('contribution.restartContribution');
+  return t('contribution.startContribution');
 });
 
 const showContributionForm = computed(() => {
