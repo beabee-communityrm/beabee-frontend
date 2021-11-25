@@ -99,6 +99,7 @@
       <AppButton
         variant="link"
         type="submit"
+        :loading="loading"
         :disabled="hasSetupError"
         @click="completeSetup(router)"
       >
@@ -133,6 +134,7 @@ const {
   setupValidation,
   hasSetupError,
   addressValidation,
+  loading,
   completeSetup,
 } = useJoin();
 
