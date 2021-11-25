@@ -6,6 +6,7 @@ import { authRoute } from '../modules/auth/auth.route';
 import { contributionRoute } from '../modules/contribution/contribution.route';
 import { fetchMember } from '../modules/home/home.service';
 import { Roles } from '../utils/enums/roles.enum';
+import { contactRoute } from '../modules/contact/contact.route';
 
 // routes
 
@@ -15,6 +16,7 @@ const routes: RouteRecordRaw[] = [
   ...homeRoute,
   ...authRoute,
   ...contributionRoute,
+  ...contactRoute,
 ];
 
 const router = createRouter({
