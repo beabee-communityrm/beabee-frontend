@@ -69,6 +69,7 @@
 
         <PaymentSource
           class="mb-7 md:mb-12"
+          :loading="paymentSourceLoading"
           :payment-source="paymentSource"
           :has-error="cantUpdatePaymentSource"
           @update-payment-source="updatePaymentSource"
@@ -128,6 +129,7 @@ const {
   setCurrentContribution,
   showContributionForm,
   contributionButtonText,
+  paymentSourceLoading,
   updatePaymentSource,
   hasManualPayment,
   isActiveMemberWithGoCardless,

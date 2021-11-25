@@ -39,7 +39,9 @@
 
       <AppButton
         :disabled="isJoinFormInvalid"
+        :loading="loading"
         variant="link"
+        type="submit"
         class="mb-4"
         @click="submitSignUp"
       >
@@ -81,6 +83,7 @@ const {
   isMonthly,
   isJoinFormInvalid,
   hasJoinError,
+  loading,
   submitSignUp,
   joinContent,
   setJoinContent,

@@ -127,12 +127,19 @@ const setupRules = computed(() => ({
 const joinValidation = useVuelidate(joinRules, signUpData);
 const setupValidation = useVuelidate(setupRules, memberData);
 
+const loading = ref(false);
+
 const submitSignUp = () => {
+  loading.value = true;
   signUp(signUpData)
     .then(({ data }) => {
       window.location.href = data.redirectUrl;
     })
-    .catch((err) => err);
+    .catch((err) => {
+      // Only revert loading on error as success causes route change
+      loading.value = false;
+      return err;
+    });
 };
 
 // this is a vuelidate instance
@@ -153,6 +160,8 @@ const completeSetup = async (router: Router) => {
   const isSetupCorrect = await setupValidation.value.$validate();
   if (!isAddressCorrect || !isSetupCorrect) return;
 
+  loading.value = true;
+
   updateMember(
     memberData,
     setupContent.value.showNewsletterOptIn,
@@ -161,7 +170,11 @@ const completeSetup = async (router: Router) => {
     .then(() => {
       router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
     })
-    .catch((err) => err);
+    .catch((err) => {
+      // Only revert loading on error as success causes route change
+      loading.value = false;
+      return err;
+    });
 };
 
 const definedAmounts = computed(() => {
@@ -231,6 +244,7 @@ function useJoin() {
     isJoinFormInvalid,
     hasJoinError,
     joinValidation,
+    loading,
     submitSignUp,
     memberData,
     setupValidation,

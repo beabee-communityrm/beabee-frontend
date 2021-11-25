@@ -1,7 +1,7 @@
 <template>
-  <div v-if="notices.length">
+  <section v-if="notices.length">
     <AppNotice v-for="notice in notices" :key="notice.id" :notice="notice" />
-  </div>
+  </section>
 </template>
 
 <script lang="ts" setup>
