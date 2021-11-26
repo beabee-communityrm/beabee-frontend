@@ -127,13 +127,17 @@ const setContributionContent = () => {
 };
 
 const cantUpdatePaymentSource = ref(false);
+const paymentSourceLoading = ref(false);
 
 const updatePaymentSource = () => {
+  paymentSourceLoading.value = true;
   updateBankAccount()
     .then(({ data }) => {
       window.location.href = data.redirectUrl;
     })
     .catch((err) => {
+      // Only revert loading on error as success causes route change
+      paymentSourceLoading.value = false;
       if (
         err.response?.status === 400 &&
         err.response?.data.code === 'cant-update-contribution'
@@ -246,6 +250,7 @@ export function useContribution() {
     submitContribution,
     hasManualPayment,
     contributionButtonText,
+    paymentSourceLoading,
     updatePaymentSource,
     isActiveMemberWithGoCardless,
     hasPaymentSource,

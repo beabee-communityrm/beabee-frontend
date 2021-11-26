@@ -18,9 +18,8 @@
     :sub-title="profileContent.welcomeMessage"
   />
 
-  <section class="mb-10">
+  <section v-if="showWelcomeMessage" class="mb-10">
     <WelcomeMessage
-      v-if="showWelcomeMessage"
       :member-first-name="member.firstName"
       :text="profileContent.introMessage"
       :author-name="profileContent.introMessageAuthorName"
@@ -29,9 +28,7 @@
     />
   </section>
 
-  <section class="mb-10 md:mb-12">
-    <NoticeContainer />
-  </section>
+  <NoticeContainer class="mb-10 md:mb-12" />
 
   <section class="mb-8 md:hidden">
     <QuickActions />
