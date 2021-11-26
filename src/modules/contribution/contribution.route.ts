@@ -55,6 +55,7 @@ export const contributionRoute: Array<RouteRecordRaw> = [
     name: 'cancel contribution',
     component: () => import('./pages/CancelPage.vue'),
     meta: {
+      roles: [],
       pageTitle: t('menu.contribution'),
     },
   },
