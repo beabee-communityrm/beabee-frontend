@@ -152,7 +152,6 @@
     "success": "Well done! Your action was successful."
   },
   "pageTitle": {
-    "completeJoin": "Complete join",
     "confirmEmail": "Confirm email",
     "duplicateEmail": "Duplicate email",
     "failed": "Failed",
