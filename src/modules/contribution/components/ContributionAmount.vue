@@ -34,6 +34,8 @@
             :min="minAmount"
             :class="{ 'bg-danger-10': hasError }"
             @input="$emit('update:modelValue', handleInput($event))"
+            @keyup.up="changeAmount(modelValue + 1)"
+            @keyup.down="changeAmount(modelValue - 1)"
           />
         </div>
 
@@ -138,7 +140,9 @@ const props = defineProps({
 const emits = defineEmits(['update:modelValue']);
 
 const changeAmount = (amount: number) => {
-  emits('update:modelValue', amount);
+  if (amount >= props.minAmount) {
+    emits('update:modelValue', amount);
+  }
 };
 
 const hasError = computed(
