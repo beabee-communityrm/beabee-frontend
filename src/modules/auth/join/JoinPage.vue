@@ -48,7 +48,10 @@
         {{
           t('join.contribute', {
             amount: n(totalAmount, 'currency'),
-            period: signUpData.period,
+            period:
+              signUpData.period === 'monthly'
+                ? t('common.month')
+                : t('common.year'),
           })
         }}
       </AppButton>
