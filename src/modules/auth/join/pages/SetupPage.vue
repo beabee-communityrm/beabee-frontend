@@ -3,7 +3,12 @@
     <form @submit.prevent>
       <JoinHeader
         class="mb-6"
-        :title="t('joinSetup.welcome', { firstName: memberData.firstName })"
+        :title="
+          t('joinSetup.welcome', {
+            firstName: memberData.firstName,
+            lastName: memberData.lastName,
+          })
+        "
         :sub-title="setupContent.welcome"
         :description="t('joinSetup.confirmDetails')"
       />
