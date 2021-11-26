@@ -28,7 +28,7 @@
       />
 
       <ContributionFee
-        v-if="isMonthly"
+        v-if="isMonthly && joinContent.showAbsorbFee"
         v-model="signUpData.payFee"
         :amount="signUpData.amount"
         :fee="fee"

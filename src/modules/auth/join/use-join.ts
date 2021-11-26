@@ -58,6 +58,9 @@ const setJoinContent = (query: LocationQueryRaw) => {
       // for some reasons `signUpData.amount` can't get the value from
       // `joinContent.value.initialAmount`
       signUpData.amount = query.amount ? +query.amount : data.initialAmount;
+      if (!data.showAbsorbFee) {
+        signUpData.payFee = false;
+      }
     })
     .catch((err) => err);
 };
@@ -191,7 +194,11 @@ const changePeriod = (period: ContributionPeriod) => {
 };
 
 const shouldForceFee = computed(() => {
-  return signUpData.amount === 1 && isMonthly.value;
+  return (
+    joinContent.value.showAbsorbFee &&
+    signUpData.amount === 1 &&
+    isMonthly.value
+  );
 });
 watch(shouldForceFee, (force) => {
   if (force) signUpData.payFee = true;
