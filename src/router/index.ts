@@ -32,6 +32,12 @@ router.beforeEach((to, from, next) => {
 
   const redirectTo = isAuthPath ? null : to.path;
 
+  const newsroomName = import.meta.env.VITE_NEWSROOM_NAME as string;
+
+  document.title = to.meta.pageTitle
+    ? to.meta.pageTitle + ' - ' + newsroomName
+    : newsroomName;
+
   if (!isAuthenticated && !isAuthPath) {
     return next({ path: '/auth/login', query: { redirectTo } });
   } else {
@@ -66,12 +72,6 @@ router.beforeEach((to, from, next) => {
       }
     }
   }
-
-  const newsroomName = import.meta.env.VITE_NEWSROOM_NAME as string;
-
-  document.title = to.meta.pageTitle
-    ? to.meta.pageTitle + ' - ' + newsroomName
-    : newsroomName;
 });
 
 export default router;
