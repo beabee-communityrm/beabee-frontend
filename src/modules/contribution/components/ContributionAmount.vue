@@ -13,15 +13,20 @@
       "
       :class="classes"
     >
-      <div class="flex px-6 py-3 items-baseline">
+      <div class="flex flex-1 px-6 py-3 items-baseline overflow-hidden">
         <span class="text-primary-40">{{ currencySign }}</span>
-        <div class="pl-2">
+        <div class="relative mx-1 overflow-hidden">
+          <div class="text-6xl font-semibold">
+            {{ modelValue || '0' }}
+          </div>
           <input
             :value="modelValue"
             class="
-              amount
+              absolute
               text-6xl text-primary
+              inset-0
               w-full
+              h-full
               border-0
               outline-none
               font-semibold
@@ -35,7 +40,7 @@
         <div class="whitespace-nowrap text-primary-40">/ {{ period }}</div>
       </div>
 
-      <div class="flex flex-col h-full text-sm">
+      <div class="flex flex-none flex-col h-full text-sm">
         <button
           class="amount-button border-l border-b"
           type="button"
