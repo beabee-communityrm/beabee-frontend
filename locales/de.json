@@ -20,7 +20,7 @@
     "bankAccount": "Bankverbindung",
     "billing": "Zahlungsart",
     "cancelContribution": "Mitgliedschaft kündigen",
-    "cancelDescription": "Wenn Sie jetzt kündigen, endet Ihre Mitgliedschaft am {day}{month}.",
+    "cancelDescription": "Wenn Sie jetzt kündigen, endet Ihre Mitgliedschaft am {day} {month}.",
     "cancelMessage": "Schade, dass Sie uns verlassen.",
     "changeBank": "Ändern Sie Ihre Bankverbindung.",
     "changeBankInfo": "Im nächsten Schritt können Sie Ihre neue Bankverbindung eingeben.",
@@ -127,7 +127,7 @@
   "joinSetup": {
     "confirmDetails": "Bitte bestätigen Sie Ihre Angaben:",
     "continue": "Weiter",
-    "welcome": "Willkommen {firstname} {lastname}!"
+    "welcome": "Willkommen {firstName} {lastName}!"
   },
   "locale": "de",
   "login": {
