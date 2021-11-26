@@ -4,7 +4,7 @@
       <JoinHeader
         class="mb-3"
         :title="joinContent.title"
-        :sub-title="joinContent.subtitle"
+        :description="joinContent.subtitle"
       />
 
       <ContributionPeriod

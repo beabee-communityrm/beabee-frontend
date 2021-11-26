@@ -19,6 +19,7 @@
       <AppButton
         class="ml-4"
         to="/profile/contribution"
+        variant="danger"
         :loading="cancelContributionLoading"
         @click="submitCancelContribution"
         >{{ t('contribution.cancelContribution') }}</AppButton

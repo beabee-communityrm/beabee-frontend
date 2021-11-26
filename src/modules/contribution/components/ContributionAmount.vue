@@ -6,32 +6,44 @@
         md:col-span-8
         border border-primary-40
         rounded
-        pl-7
         flex
-        items-end
+        items-center
         overflow-hidden
         text-sm
       "
       :class="classes"
     >
-      <span class="mb-6 text-primary-40">{{ currencySign }}</span>
+      <div class="flex flex-1 px-6 py-3 items-baseline overflow-hidden">
+        <span class="text-primary-40">{{ currencySign }}</span>
+        <div class="relative mx-1 overflow-hidden">
+          <div class="text-6xl font-semibold">
+            {{ modelValue || '0' }}
+          </div>
+          <input
+            :value="modelValue"
+            class="
+              absolute
+              text-6xl text-primary
+              inset-0
+              w-full
+              h-full
+              border-0
+              outline-none
+              font-semibold
+            "
+            :min="minAmount"
+            :class="{ 'bg-danger-10': hasError }"
+            @input="$emit('update:modelValue', handleInput($event))"
+            @keydown.up.prevent="0 /* just stop caret moving */"
+            @keyup.up="changeAmount(modelValue + 1)"
+            @keyup.down="changeAmount(modelValue - 1)"
+          />
+        </div>
 
-      <div class="pl-2">
-        <input
-          :value="modelValue"
-          class="amount text-4xl w-full border-0 outline-none text-primary mb-4"
-          :style="dynamicWidth"
-          :min="minAmount"
-          :class="{ 'bg-danger-10': hasError }"
-          @input="$emit('update:modelValue', handleInput($event))"
-        />
+        <div class="whitespace-nowrap text-primary-40">/ {{ period }}</div>
       </div>
 
-      <div class="mr-auto mb-6 whitespace-nowrap text-primary-40">
-        / {{ period }}
-      </div>
-
-      <div class="flex flex-col h-full text-sm">
+      <div class="flex flex-none flex-col h-full text-sm">
         <button
           class="amount-button border-l border-b"
           type="button"
@@ -71,15 +83,16 @@
         :key="index"
         type="button"
         :class="{
-          'bg-secondary-10 text-secondary': amount === modelValue,
+          'bg-link text-white': amount === modelValue,
         }"
         class="
           group-button
-          h-7
+          h-9
           flex
           items-center
           justify-center
-          text-sm text-primary
+          text-primary
+          font-semibold
         "
         @click="changeAmount(amount)"
       >
@@ -128,7 +141,9 @@ const props = defineProps({
 const emits = defineEmits(['update:modelValue']);
 
 const changeAmount = (amount: number) => {
-  emits('update:modelValue', amount);
+  if (amount >= props.minAmount) {
+    emits('update:modelValue', amount);
+  }
 };
 
 const hasError = computed(
@@ -137,14 +152,6 @@ const hasError = computed(
 );
 
 const isButtonDisabled = computed(() => props.modelValue <= props.minAmount);
-
-// dynamic width for input element because of design decision.
-// each character is considered 1.5rem
-const dynamicWidth = computed(() => {
-  return {
-    width: String(props.modelValue).length * 1.5 + 'rem',
-  };
-});
 
 // hacky way to get the currency sign because
 // setting `part` to `true` threw an error:
@@ -178,20 +185,6 @@ const period = computed(() => {
 </script>
 
 <style scoped>
-.amount {
-  font-size: 2.375rem;
-
-  /*
-   These two values are for dynamic width of amount input
-   field and for preventing weird overflow of elements.
-   Each character is considered 1.5 rem, hence min width
-   is equal to one character and the max width is equal to
-   4 character
-   */
-  min-width: 1.5rem;
-  max-width: 6rem;
-}
-
 .disabled {
   @apply text-grey !important;
 }

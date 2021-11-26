@@ -14,7 +14,9 @@
       />
 
       <form v-if="showContributionForm" class="mb-7 md:mb-12" @submit.prevent>
-        <SectionTitle class="mb-2">Billing</SectionTitle>
+        <SectionTitle class="mb-2"
+          >{{ t('contribution.billing') }}
+        </SectionTitle>
 
         <p v-if="hasManualPayment" class="mb-4">
           {{ t('contribution.manualPayment') }}
