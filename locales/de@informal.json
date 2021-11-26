@@ -20,10 +20,10 @@
     "bankAccount": "Bankverbindung",
     "billing": "Zahlungsart",
     "cancelContribution": "Mitgliedschaft kündigen",
-    "cancelDescription": "Wenn du jetzt kündigst, endet deine Mitgliedschaft am {day}.{month}.",
+    "cancelDescription": "Wenn du jetzt kündigst, endet deine Mitgliedschaft am {day}{month}.",
     "cancelMessage": "Schade, dass du uns verlässt.",
     "changeBank": "Ändere deine Bankverbindung.",
-    "changeBankInfo": "Im nächsten Schritt kannst du deine neue Bankverbdindung eingeben.",
+    "changeBankInfo": "Im nächsten Schritt kannst du deine neue Bankverbindung eingeben.",
     "contributing": "Dein Beitrag ist",
     "expired": "Deine Mitgliedschaft ist abgelaufen.",
     "expiredText": "Möchtest du deine Mitgliedschaft verlängern? Selbst kleinste Beträge helfen uns und unserer Arbeit. Danke!",
@@ -125,7 +125,7 @@
     "privacy": "Datenschutzerklärung"
   },
   "joinSetup": {
-    "confirmDetails": "Bitte bestätige deine Angaben",
+    "confirmDetails": "Bitte bestätige deine Angaben:",
     "continue": "Weiter",
     "welcome": "Willkommen {firstname}!"
   },
