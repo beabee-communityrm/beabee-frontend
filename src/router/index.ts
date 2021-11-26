@@ -37,7 +37,7 @@ router.beforeEach((to, from, next) => {
   } else {
     const roles = to.meta.roles;
     // if route has an empty roles array it means it can be accsesed by all users
-    if (!roles.length) return next();
+    if (!roles?.length) return next();
 
     const localStorageUser = localStorage.getItem('user');
     const currentUser = localStorageUser ? JSON.parse(localStorageUser) : null;
