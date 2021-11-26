@@ -18,6 +18,7 @@
   },
   "contribution": {
     "bankAccount": "Bank account",
+    "billing": "Billing",
     "cancelContribution": "Cancel contribution",
     "cancelDescription": "If you cancel your contribution your membership will finish at the end of your current payment cycle, {day} of {month}.",
     "cancelMessage": "We're sorry to see you go.",
@@ -149,6 +150,16 @@
   "notification": {
     "error": "Oops, something went wrong!",
     "success": "Well done! Your action was successful."
+  },
+  "pageTitle": {
+    "confirmEmail": "Confirm email",
+    "duplicateEmail": "Duplicate email",
+    "failed": "Failed",
+    "forgotPassword": "Forgot password",
+    "join": "Join",
+    "login": "Login",
+    "resetPassword": "Reset password",
+    "setup": "Setup"
   },
   "resetPassword": {
     "changePassword": "Change password",

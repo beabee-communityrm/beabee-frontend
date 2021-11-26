@@ -12,21 +12,22 @@
     "monthly": "Monatlich",
     "new": "neu!",
     "participate": "Teilnehmen",
-    "thankYou": "Danke!",
+    "thankYou": "Vielen Dank!",
     "until": "bis",
     "year": "Jahr"
   },
   "contribution": {
     "bankAccount": "Bankverbindung",
+    "billing": "Zahlungsart",
     "cancelContribution": "Mitgliedschaft kündigen",
     "cancelDescription": "Wenn Sie jetzt kündigen, endet Ihre Mitgliedschaft am {day}.{month}.",
     "cancelMessage": "Schade, dass Sie uns verlassen.",
     "changeBank": "Ändern Sie ihre Bankverbindung.",
     "changeBankInfo": "Im nächsten Schritt können Sie ihre neue Bankverbindung eingeben.",
-    "contributing": "Sie sind Mitglied!",
+    "contributing": "Ihr Beitrag ist",
     "expired": "Ihre Mitgliedschaft ist abgelaufen.",
     "expiredText": "Möchten Sie Ihre Mitgliedschaft verlängern? Selbst kleinste Beträge helfen uns und unserer Arbeit. Danke!",
-    "manualPayment": "Sie leisten Ihren Beitrag aktuell manuell via Banküberweisung. Richten Sie hier jetzt eine automatische Abbuchung via Lastschrift ein. Dann wird es für Sie leichter, Ihre Beiträge hier direkt zu verwalten. Und wir bekommen einen besseren Überblick darüber, auf welche Beiträge von unseren Leserinnen und Lesern wir uns monatlich verlassen können.",
+    "manualPayment": "Sie leisten Ihren Beitrag aktuell manuell via Banküberweisung. Richten Sie hier jetzt eine automatische Abbuchung via Lastschrift ein. Dann wird es für Sie leichter, Ihre Beiträge zu verwalten. Und wir bekommen einen besseren Überblick, auf welche Beiträge wir uns monatlich verlassen können.",
     "paymentSourceUpdateError": "Sie können Ihre Bankverbindung aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
     "restartContribution": "Mitgliedschaft erneuern",
     "startContribution": "Mitgliedschaft beginnen",
@@ -35,9 +36,9 @@
     "willExpire": "Ihre Mitgliedschaft läuft in {expires} ab."
   },
   "forgotPassword": {
-    "checkInbox": ", bekommen Sie in Kürze eine Email von uns.<br>Bitte schauen Sie in ihr Emailpostfach und folgen der Anleitung in der Email.",
+    "checkInbox": "Bitte schauen Sie in Ihren Posteingang und befolgen Sie die Anleitung in der Email.",
     "description": "Bitte geben Sie Ihre Email-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.",
-    "message": "Existiert ein Account mit der Adresse",
+    "message": "Gibt es einen Account mit der Email-Adresse {email}, bekommen Sie in Kürze eine Nachricht.",
     "resetPassword": "Passwort zurücksetzen",
     "title": "Passwort vergessen?"
   },
@@ -149,6 +150,16 @@
   "notification": {
     "error": "Da ist etwas schiefgelaufen!",
     "success": "Sehr gut! Das hat funktioniert."
+  },
+  "pageTitle": {
+    "confirmEmail": "Email-Adresse bestätigen",
+    "duplicateEmail": "Email-Adresse duplizieren",
+    "failed": "Fehler",
+    "forgotPassword": "Passwort vergessen",
+    "join": "Mitglied werden",
+    "login": "Login",
+    "resetPassword": "Passwort zurücksetzen",
+    "setup": "Account fertigstellen"
   },
   "resetPassword": {
     "changePassword": "Passwort ändern",
