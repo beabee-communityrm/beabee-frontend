@@ -60,6 +60,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
       const { id } = to.params;
       confirmEmail(id)
         .then(() => {
+          localStorage.setItem('isAuthenticated', 'true');
           next('/join/setup');
         })
         .catch((error) => {
