@@ -1,5 +1,8 @@
 import { RouteRecordRaw } from 'vue-router';
 import { completeSignUp, confirmEmail } from './join.service';
+import i18n from '../../../i18n';
+
+const { t } = i18n.global;
 
 export const joinRoute: Array<RouteRecordRaw> = [
   {
@@ -8,6 +11,8 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./JoinPage.vue'),
     meta: {
       layout: 'Auth',
+      roles: [],
+      pageTitle: t('pageTitle.join'),
     },
   },
   {
@@ -16,6 +21,8 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/SetupPage.vue'),
     meta: {
       layout: 'Auth',
+      roles: [],
+      pageTitle: t('pageTitle.setup'),
     },
   },
   {
@@ -24,9 +31,6 @@ export const joinRoute: Array<RouteRecordRaw> = [
     path: '/join/complete',
     name: 'complete join',
     component: () => import('./pages/CompletePage.vue'),
-    meta: {
-      layout: 'Auth',
-    },
     beforeEnter(to, from, next) {
       const redirectFlowId = to.query.redirect_flow_id;
       completeSignUp(redirectFlowId)
@@ -44,6 +48,8 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/ConfirmEmailPage.vue'),
     meta: {
       layout: 'Splash',
+      roles: [],
+      pageTitle: t('pageTitle.confirmEmail'),
     },
   },
   {
@@ -71,6 +77,8 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/FailedPage.vue'),
     meta: {
       layout: 'Splash',
+      roles: [],
+      pageTitle: t('pageTitle.failed'),
     },
   },
   {
@@ -79,6 +87,8 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/DuplicateEmailPage.vue'),
     meta: {
       layout: 'Splash',
+      roles: [],
+      pageTitle: t('pageTitle.duplicateEmail'),
     },
   },
 ];

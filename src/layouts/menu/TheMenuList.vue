@@ -65,6 +65,7 @@ const itemClassses = (isSubsection: boolean | undefined) => {
 const doLogout = () => {
   logout();
   localStorage.setItem('isAuthenticated', 'false');
+  localStorage.removeItem('user');
   router.push('/auth/login');
 };
 </script>

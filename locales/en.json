@@ -18,6 +18,7 @@
   },
   "contribution": {
     "bankAccount": "Bank account",
+    "billing": "Billing",
     "cancelContribution": "Cancel contribution",
     "cancelDescription": "If you cancel your contribution your membership will finish at the end of your current payment cycle, {day} of {month}.",
     "cancelMessage": "We're sorry to see you go.",
@@ -35,9 +36,9 @@
     "willExpire": "Your contribution will expire in {expires}"
   },
   "forgotPassword": {
+    "checkInbox": "Please check your inbox and follow the instructions in the email.",
     "description": "Please enter your email address and we’ll send you password reset instructions.",
-    "messageFirstPart": "If there is an account associated with",
-    "messageSecondPart": ", you will receive an email shortly.<br>Please check your inbox and follow the instructions in the email.",
+    "message": "If there is an account associated with {email}, you will receive an email shortly.",
     "resetPassword": "Reset your password",
     "title": "Forgot your password?"
   },
@@ -149,6 +150,16 @@
   "notification": {
     "error": "Oops, something went wrong!",
     "success": "Well done! Your action was successful."
+  },
+  "pageTitle": {
+    "confirmEmail": "Confirm email",
+    "duplicateEmail": "Duplicate email",
+    "failed": "Failed",
+    "forgotPassword": "Forgot password",
+    "join": "Join",
+    "login": "Login",
+    "resetPassword": "Reset password",
+    "setup": "Setup"
   },
   "resetPassword": {
     "changePassword": "Change password",
