@@ -55,13 +55,12 @@
 
         <div class="mb-4">
           <input
-            id="deliveryOptIn"
+            id="delivery-opt-in"
             v-model="memberData.profile.deliveryOptIn"
             type="checkbox"
-            name="updates"
           />
 
-          <label for="deliveryOptIn" class="font-bold ml-1">
+          <label for="delivery-opt-in" class="font-bold ml-1">
             {{ setupContent.mailOptIn }}
           </label>
         </div>
@@ -87,13 +86,12 @@
 
         <div class="mb-4">
           <input
-            id="newsletterOptIn"
+            id="newsletter-opt-in"
             v-model="memberData.profile.newsletterStatus"
             type="checkbox"
-            name="updates"
           />
 
-          <label for="newsletterOptIn" class="font-bold ml-1">
+          <label for="newsletter-opt-in" class="font-bold ml-1">
             {{ setupContent.newsletterOptIn }}
           </label>
         </div>
