@@ -20,6 +20,7 @@
         variant="link"
         :disabled="isFormInvalid || loading"
         type="submit"
+        class="w-full"
         @click="submitForgotPassword"
         >{{ t('forgotPassword.resetPassword') }}</AppButton
       >
@@ -37,7 +38,7 @@
         {{ t('forgotPassword.checkInbox') }}
       </p>
 
-      <AppButton variant="link" to="/auth/login" type="submit">{{
+      <AppButton class="w-full" variant="link" to="/auth/login">{{
         t('login.login')
       }}</AppButton>
     </template>

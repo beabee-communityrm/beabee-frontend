@@ -9,7 +9,11 @@
       }}
     </p>
 
-    <AppButton variant="dangerOutlined" to="/profile/contribution/cancel">
+    <AppButton
+      class="w-full"
+      variant="dangerOutlined"
+      to="/profile/contribution/cancel"
+    >
       {{ t('contribution.cancelContribution') }}
     </AppButton>
   </div>

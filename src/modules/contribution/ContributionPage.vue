@@ -51,7 +51,7 @@
           :disabled="isContributionFormInvalid"
           type="submit"
           variant="secondary"
-          class="mb-4"
+          class="mb-4 w-full"
           :loading="updateContributionLoading"
           @click="submitContribution"
         >
