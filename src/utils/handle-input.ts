@@ -1,3 +1,3 @@
-export default (event: Event) => {
-  return (event.target as HTMLInputElement).value;
+export default (event: Event): string => {
+  return (event.target as HTMLInputElement | HTMLTextAreaElement).value;
 };
