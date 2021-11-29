@@ -106,6 +106,7 @@
         type="submit"
         :loading="loading"
         :disabled="hasSetupError"
+        class="w-full"
         @click="completeSetup(router)"
       >
         {{ t('joinSetup.continue') }}

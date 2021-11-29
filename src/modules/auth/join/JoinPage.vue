@@ -42,7 +42,7 @@
         :loading="loading"
         variant="link"
         type="submit"
-        class="mb-4"
+        class="mb-4 w-full"
         @click="submitSignUp"
       >
         {{

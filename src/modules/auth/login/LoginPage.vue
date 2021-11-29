@@ -45,6 +45,7 @@
       variant="link"
       :disabled="isFormInvalid || loading"
       type="submit"
+      class="w-full"
       @click="submitLogin(router, redirectTo)"
       >{{ t('login.login') }}</AppButton
     >

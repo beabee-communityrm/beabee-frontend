@@ -19,7 +19,7 @@
     <AppButton
       :loading="loading"
       variant="subtle"
-      class="mb-2"
+      class="mb-2 w-full"
       @click="$emit('update-payment-source')"
     >
       {{ t('contribution.changeBank') }}
