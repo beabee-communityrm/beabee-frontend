@@ -4,7 +4,13 @@
   </label>
   <input
     :id="inputType"
-    class="p-2 w-full border border-primary-40 rounded focus:outline-none input"
+    class="
+      p-2
+      w-full
+      border border-primary-40
+      rounded
+      focus:outline-none focus:shadow-input
+    "
     :type="inputType"
     :class="dangerClasses"
     :value="modelValue"
@@ -71,9 +77,3 @@ const formattedLabel = computed(() => {
   return props.required ? props.label + '*' : props.label;
 });
 </script>
-
-<style scoped>
-.input:focus {
-  @apply shadow-input;
-}
-</style>
