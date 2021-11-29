@@ -7,7 +7,7 @@ export const contactRoute: Array<RouteRecordRaw> = [
   {
     path: '/contacts/:id/information',
     name: 'contact information',
-    component: () => import('./information/InformationPage.vue'),
+    component: () => import('../information/InformationPage.vue'),
     meta: {
       pageTitle: t('informationPage.title'),
     },
