@@ -6,6 +6,7 @@ import './index.css';
 
 // fontawesome icons imports
 import Icons from './plugins/icons';
+import CanSee from './directives/can-see';
 
 const app = createApp(App);
 
@@ -14,5 +15,7 @@ app.use(i18n);
 
 // icons
 app.use(Icons);
+
+app.use(CanSee);
 
 app.mount('#app');

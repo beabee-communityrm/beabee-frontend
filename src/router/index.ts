@@ -43,10 +43,7 @@ router.beforeEach((to, from, next) => {
   if (!isAuthenticated && !isAuthPath) {
     return next({ path: '/auth/login', query: { redirectTo } });
   } else {
-    const roles = to.meta.roles;
-    // if route has an empty roles array it means it can be accsesed by all users
-    if (!roles?.length) return next();
-
+    // set user to local storage
     const localStorageUser = localStorage.getItem('user');
     const currentUser = localStorageUser ? JSON.parse(localStorageUser) : null;
 
@@ -56,22 +53,25 @@ router.beforeEach((to, from, next) => {
           localStorage.setItem('user', JSON.stringify(data));
         })
         .catch((err) => err);
+    }
+
+    // if route has an empty roles array it means it can be accsesed by all users
+    const roles = to.meta.roles;
+    if (!roles?.length) return next();
+
+    // handle authorization
+    const roleIndex = currentUser.roles.findIndex((role: Roles) => {
+      // `role` has definitly `Roles` type because of the above condition
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      return roles.includes(role);
+    });
+    const isAuthorized = roleIndex > -1;
+    if (isAuthorized) {
+      next();
     } else {
-      const roleIndex = currentUser.roles.findIndex((role: Roles) => {
-        // `role` has definitly `Roles` type because of the above condition
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
-        return roles.includes(role);
-      });
-
-      const isAuthorized = roleIndex > -1;
-
-      if (isAuthorized) {
-        next();
-      } else {
-        // - TODO: What should we do here? -
-        next({ path: '/profile' });
-      }
+      // - TODO: What should we do here? -
+      next({ path: '/profile' });
     }
   }
 });
