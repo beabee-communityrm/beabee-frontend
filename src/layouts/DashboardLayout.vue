@@ -12,11 +12,14 @@
         md:pt-14 md:px-10
       "
     >
-      <router-view />
+      <router-view :key="route.fullPath" />
     </main>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { useRoute } from 'vue-router';
 import TheMenu from './menu/TheMenu.vue';
+
+const route = useRoute();
 </script>
