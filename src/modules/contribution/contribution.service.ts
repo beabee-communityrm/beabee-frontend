@@ -8,31 +8,38 @@ const fetchJoinContent = (): Promise<any> => {
   return axios.get('/content/join');
 };
 
-const fetchContribution = (): Promise<any> => {
-  return axios.get('/member/me/contribution');
+const fetchContribution = (id?: string): Promise<any> => {
+  return axios.get(`/member/${id || 'me'}/contribution`);
 };
 
-const createContribution = (newContribution: NewContribution): Promise<any> => {
-  return axios.post('/member/me/contribution', {
+const createContribution = (
+  newContribution: NewContribution,
+  id?: string
+): Promise<any> => {
+  return axios.post(`/member/${id || 'me'}/contribution`, {
     amount: newContribution.amount,
     period: newContribution.period,
     payFee:
       newContribution.payFee &&
       newContribution.period === ContributionPeriod.Monthly,
     completeUrl:
-      import.meta.env.VITE_APP_BASE_URL + '/profile/contribution/complete',
+      import.meta.env.VITE_APP_BASE_URL + '/contribution/complete/' + id,
   });
 };
 
-const completeContribution = (redirectFlowId: string): Promise<any> => {
-  return axios.post('/member/me/contribution/complete', {
+const completeContribution = (
+  redirectFlowId: string,
+  id?: string
+): Promise<any> => {
+  return axios.post(`/member/${id || 'me'}/contribution/complete`, {
     redirectFlowId,
   });
 };
 const updateContribution = (
-  updateContribution: UpdateContribution
+  updateContribution: UpdateContribution,
+  id?: string
 ): Promise<any> => {
-  return axios.patch('/member/me/contribution', {
+  return axios.patch(`/member/${id || 'me'}/contribution`, {
     amount: updateContribution.amount,
     payFee: updateContribution.payFee,
     // - TODO: always false for now
@@ -40,22 +47,26 @@ const updateContribution = (
   });
 };
 
-const updatePaymentSource = (): Promise<any> => {
-  return axios.put('/member/me/payment-source', {
+const updatePaymentSource = (id?: string): Promise<any> => {
+  return axios.put(`/member/${id || 'me'}/payment-source`, {
     completeUrl:
       import.meta.env.VITE_APP_BASE_URL +
-      '/profile/contribution/payment-source/complete',
+      '/contribution/payment-source/complete/' +
+      id,
   });
 };
 
-const completeUpdatePaymentSource = (redirectFlowId: string): Promise<any> => {
-  return axios.post('/member/me/payment-source/complete', {
+const completeUpdatePaymentSource = (
+  redirectFlowId: string,
+  id?: string
+): Promise<any> => {
+  return axios.post(`/member/${id || 'me'}/payment-source/complete`, {
     redirectFlowId,
   });
 };
 
-const cancelContribution = (): Promise<any> => {
-  return axios.post('/member/me/contribution/cancel');
+const cancelContribution = (id?: string): Promise<any> => {
+  return axios.post(`/member/${id || 'me'}/contribution/cancel`);
 };
 
 export {

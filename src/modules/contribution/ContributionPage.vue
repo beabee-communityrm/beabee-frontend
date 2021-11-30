@@ -51,9 +51,9 @@
           :disabled="isContributionFormInvalid"
           type="submit"
           variant="secondary"
-          class="mb-4 w-full"
-          :loading="updateContributionLoading"
-          @click="submitContribution"
+          class="mb-4"
+          :loading="contributionLoading"
+          @click="submitContribution(id)"
         >
           {{ contributionButtonText }}
         </AppButton>
@@ -74,7 +74,7 @@
           :loading="paymentSourceLoading"
           :payment-source="paymentSource"
           :has-error="cantUpdatePaymentSource"
-          @update-payment-source="updatePaymentSource"
+          @update-payment-source="updatePaymentSource(id)"
         />
       </template>
 
@@ -112,6 +112,7 @@ import AppButton from '../../components/forms/AppButton.vue';
 import { computed, onBeforeMount } from 'vue';
 import { useContribution } from './use-contribution';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 
 const { t } = useI18n();
 
@@ -139,12 +140,14 @@ const {
   showCancelContribution,
   paymentSource,
   cantUpdatePaymentSource,
-  updateContributionLoading,
+  contributionLoading,
 } = useContribution();
 
 const period = computed(() =>
   t(isMonthly.value ? 'common.month' : 'common.year')
 );
+
+const id = useRoute().params.id as string;
 
 onBeforeMount(() => {
   // - TODO: Why component isn't destroyed on route change?

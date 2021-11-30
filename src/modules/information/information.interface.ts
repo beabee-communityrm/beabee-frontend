@@ -1,19 +1,16 @@
 export interface Information {
-  email: string;
-  firstname: string;
-  lastname: string;
-  profile: Profile;
-}
-
-export interface UpdateInformation {
   emailAddress: string;
   firstName: string;
   lastName: string;
+  phone: string;
   password: string;
+  deliveryOptIn: boolean;
   addressLine1: string;
   addressLine2?: string;
   cityOrTown: string;
   postCode: string;
+  description: string;
+  notes: string;
 }
 
 export interface Profile {

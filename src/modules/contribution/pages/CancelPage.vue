@@ -7,20 +7,17 @@
     {{ t('contribution.cancelMessage') }}
   </h3>
 
-  <div class="flex">
-    <AppButton to="/profile/contribution" variant="subtle">{{
-      t('common.goBack')
-    }}</AppButton>
+  <AppButton :to="goBackRoute" variant="subtle">{{
+    t('common.goBack')
+  }}</AppButton>
 
-    <AppButton
-      class="ml-4"
-      to="/profile/contribution"
-      variant="danger"
-      :loading="cancelContributionLoading"
-      @click="submitCancelContribution"
-      >{{ t('contribution.cancelContribution') }}</AppButton
-    >
-  </div>
+  <AppButton
+    class="ml-4"
+    variant="danger"
+    :loading="cancelContributionLoading"
+    @click="submitCancelContribution(router, id)"
+    >{{ t('contribution.cancelContribution') }}</AppButton
+  >
 </template>
 
 <script lang="ts" setup>
@@ -28,6 +25,14 @@ import PageTitle from '../../../components/PageTitle.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import { useI18n } from 'vue-i18n';
 import { useContribution } from '../use-contribution';
+import { useRoute, useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const id = useRoute().params.id as string;
+const goBackRoute = id
+  ? `/contacts/${id}/contribution`
+  : '/profile/contribution';
 
 const { submitCancelContribution, cancelContributionLoading } =
   useContribution();

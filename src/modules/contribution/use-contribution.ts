@@ -18,7 +18,7 @@ import {
   MembershipStatus,
 } from './contribution.interface';
 import i18n from '../../i18n';
-import { useRouter } from 'vue-router';
+import { Router, useRoute } from 'vue-router';
 
 const { t } = i18n.global;
 
@@ -47,7 +47,8 @@ const newContribution = reactive<NewContribution>({
 const hasPaymentSource = computed(() => paymentSource.type);
 
 const setCurrentContribution = () => {
-  fetchContribution()
+  const id = useRoute().params.id as string;
+  fetchContribution(id)
     .then(({ data }) => {
       currentContribution.amount = data.amount;
       currentContribution.period = data.period;
@@ -70,37 +71,41 @@ const setCurrentContribution = () => {
     })
     .catch((err) => err);
 };
+const contributionLoading = ref(false);
 
-const submitCreateContribution = () => {
-  createContribution(newContribution)
+const submitCreateContribution = (id?: string) => {
+  contributionLoading.value = true;
+  createContribution(newContribution, id)
     .then(({ data }) => {
       window.location.href = data.redirectUrl;
     })
-    .catch((err) => err);
+    .catch((err) => err)
+    .finally(() => (contributionLoading.value = false));
 };
 
-const updateContributionLoading = ref(false);
-
-const submitUpdateContribution = () => {
-  updateContributionLoading.value = true;
-  updateContribution({
-    amount: newContribution.amount,
-    payFee: newContribution.payFee,
-  })
+const submitUpdateContribution = (id?: string) => {
+  contributionLoading.value = true;
+  updateContribution(
+    {
+      amount: newContribution.amount,
+      payFee: newContribution.payFee,
+    },
+    id
+  )
     .then(({ data }) => {
       currentContribution.amount = data.amount;
       currentContribution.period = data.period;
       // TODO: to do somthing here, like showing succes message? (ask the design team)
     })
     .catch((err) => err)
-    .finally(() => (updateContributionLoading.value = false));
+    .finally(() => (contributionLoading.value = false));
 };
 
-const submitContribution = () => {
+const submitContribution = (id?: string) => {
   if (isActiveMemberWithGoCardless.value) {
-    submitUpdateContribution();
+    submitUpdateContribution(id);
   } else {
-    submitCreateContribution();
+    submitCreateContribution(id);
   }
 };
 
@@ -129,9 +134,9 @@ const setContributionContent = () => {
 const cantUpdatePaymentSource = ref(false);
 const paymentSourceLoading = ref(false);
 
-const updatePaymentSource = () => {
+const updatePaymentSource = (id?: string) => {
   paymentSourceLoading.value = true;
-  updateBankAccount()
+  updateBankAccount(id)
     .then(({ data }) => {
       window.location.href = data.redirectUrl;
     })
@@ -223,11 +228,15 @@ const showCancelContribution = computed(() => {
 });
 
 const cancelContributionLoading = ref(false);
-const submitCancelContribution = () => {
+const submitCancelContribution = (router: Router, id?: string) => {
   cancelContributionLoading.value = true;
-  cancelContribution()
+  cancelContribution(id)
     .then(() => {
-      useRouter().push('/profile/contribution');
+      if (id) {
+        router.push(`/contacts/${id}/contribution`);
+      } else {
+        router.push('/profile/contribution');
+      }
     })
     .catch((err) => err)
     .finally(() => (cancelContributionLoading.value = false));
@@ -258,7 +267,7 @@ export function useContribution() {
     showCancelContribution,
     paymentSource,
     cantUpdatePaymentSource,
-    updateContributionLoading,
+    contributionLoading,
     submitCancelContribution,
     cancelContributionLoading,
   };

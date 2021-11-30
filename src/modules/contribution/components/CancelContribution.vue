@@ -8,12 +8,7 @@
         })
       }}
     </p>
-
-    <AppButton
-      class="w-full"
-      variant="dangerOutlined"
-      to="/profile/contribution/cancel"
-    >
+    <AppButton variant="dangerOutlined" :to="cancelRoute">
       {{ t('contribution.cancelContribution') }}
     </AppButton>
   </div>
@@ -25,8 +20,14 @@ import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import { parseISO } from 'date-fns';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 
 const { t } = useI18n();
+
+const id = useRoute().params.id;
+const cancelRoute = id
+  ? `/contacts/${id}/contribution/cancel`
+  : '/profile/contribution/cancel';
 
 const props = defineProps({
   expiryDate: {

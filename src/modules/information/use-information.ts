@@ -3,21 +3,26 @@ import { useVuelidate } from '@vuelidate/core';
 import { computed, reactive, ref } from 'vue';
 import i18n from '../../i18n';
 import { fetchInformation, updateInformation } from './information.service';
-import { Information, UpdateInformation } from './information.interface';
+import { Information } from './information.interface';
 import { passwordValidator } from '../../utils/form-validation/validators';
 import { errorGenerator } from '../../utils/form-error-generator';
+import { useRoute } from 'vue-router';
 
 const { t } = i18n.global;
 
-const information = reactive<UpdateInformation>({
+const information = reactive<Information>({
   emailAddress: '',
   password: '',
   firstName: '',
   lastName: '',
+  phone: '',
+  deliveryOptIn: false,
   addressLine1: '',
   addressLine2: '',
   cityOrTown: '',
   postCode: '',
+  description: '',
+  notes: '',
 });
 
 const rules = computed(() => ({
@@ -76,19 +81,23 @@ const submitFormHandler = async () => {
     .finally(() => (loading.value = false));
 };
 
-const setInformation = async () => {
-  const informationData: Information = await fetchInformation();
-  information.emailAddress = informationData.email;
-  information.firstName = informationData.firstname;
-  information.lastName = informationData.lastname;
+const setInformation = () => {
+  const id = useRoute().params.id as string;
+  fetchInformation(id)
+    .then(({ data }) => {
+      information.emailAddress = data.email;
+      information.firstName = data.firstname;
+      information.lastName = data.lastname;
 
-  const address = informationData.profile?.deliveryAddress;
-  if (address) {
-    information.addressLine1 = address?.line1;
-    information.addressLine2 = address?.line2;
-    information.cityOrTown = address?.city;
-    information.postCode = address?.postcode;
-  }
+      const address = data.profile?.deliveryAddress;
+      if (address) {
+        information.addressLine1 = address?.line1;
+        information.addressLine2 = address?.line2;
+        information.cityOrTown = address?.city;
+        information.postCode = address?.postcode;
+      }
+    })
+    .catch((err) => err);
 };
 
 export function useInformation() {

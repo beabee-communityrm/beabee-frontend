@@ -16,39 +16,6 @@ export const contributionRoute: Array<RouteRecordRaw> = [
       pageTitle: t('menu.contribution'),
       roles: [],
     },
-    // these pages are never shown, `beforeEnter` redirects
-    // the user to appropriate page.
-    // there is now `<router-view>` in contribution page
-    // - TODO: currently these pages are shown blank while makning requests
-    // maybe adding a loading indicator?
-    children: [
-      {
-        path: 'complete',
-        name: 'complete contribution',
-        component: () => import('./CompleteFlow.vue'),
-        beforeEnter(to, from, next) {
-          const redirectFlowId = to.query.redirect_flow_id;
-          completeContribution(redirectFlowId as string)
-            .then(() => {
-              next('/profile/contribution');
-            })
-            .catch((err) => err);
-        },
-      },
-      {
-        path: 'payment-source/complete',
-        name: 'complete payment source',
-        component: () => import('./CompleteFlow.vue'),
-        beforeEnter(to, from, next) {
-          const redirectFlowId = to.query.redirect_flow_id;
-          completeUpdatePaymentSource(redirectFlowId as string)
-            .then(() => {
-              next('/profile/contribution');
-            })
-            .catch((err) => err);
-        },
-      },
-    ],
   },
   {
     path: '/profile/contribution/cancel',
@@ -57,6 +24,42 @@ export const contributionRoute: Array<RouteRecordRaw> = [
     meta: {
       roles: [],
       pageTitle: t('menu.contribution'),
+    },
+  },
+  // these next 2 pages are never shown, `beforeEnter` redirects
+  // the user to appropriate page.
+  // - TODO: currently these pages are shown blank while makning requests
+  // maybe adding a loading indicator?
+  {
+    path: '/contribution/complete/:id',
+    name: 'complete contribution',
+    component: () => import('./CompleteFlow.vue'),
+    beforeEnter(to, from, next) {
+      const redirectFlowId = to.query.redirect_flow_id as string;
+      const id = to.params.id as string;
+      completeContribution(redirectFlowId, id)
+        .then(() => {
+          id
+            ? next(`/contacts/${id}/contribution`)
+            : next('/profile/contribution');
+        })
+        .catch((err) => err);
+    },
+  },
+  {
+    path: '/contribution/payment-source/complete/:id',
+    name: 'complete payment source',
+    component: () => import('./CompleteFlow.vue'),
+    beforeEnter(to, from, next) {
+      const redirectFlowId = to.query.redirect_flow_id as string;
+      const id = to.params.id as string;
+      completeUpdatePaymentSource(redirectFlowId, id)
+        .then(() => {
+          id
+            ? next(`/contacts/${id}/contribution`)
+            : next('/profile/contribution');
+        })
+        .catch((err) => err);
     },
   },
 ];
