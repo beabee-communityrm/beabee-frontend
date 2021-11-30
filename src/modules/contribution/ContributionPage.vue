@@ -23,6 +23,25 @@
           {{ t('contribution.manualPayment') }}
         </p>
 
+        <div v-if="true && isContactPage" class="flex mb-4">
+          <div class="mr-8">Expire date</div>
+          <!-- todo: handle expire date after API
+
+                v-model="newContribution.expireDate"
+          -->
+          <div>
+            <div class="mb-2">
+              <input id="expire-date" type="checkbox" />
+
+              <label for="expire-date" class="font-bold ml-1">
+                Never expires
+              </label>
+            </div>
+
+            <DatePicker />
+          </div>
+        </div>
+
         <!-- users can't change period on an active GoCardless contribution -->
         <ContributionPeriod
           v-if="!isActiveMemberWithGoCardless"
@@ -108,6 +127,7 @@
 import PageTitle from '../../components/PageTitle.vue';
 import InfoMessage from '../../components/InfoMessage.vue';
 import MessageBox from '../../components/MessageBox.vue';
+import DatePicker from '../../components/DatePicker.vue';
 import ContributionBox from './components/ContributionBox.vue';
 import SectionTitle from '../../components/SectionTitle.vue';
 import ContributionPeriod from './components/ContributionPeriod.vue';
