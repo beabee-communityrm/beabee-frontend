@@ -1,7 +1,15 @@
 <template>
   <div class="flex rounded h-12" :class="type">
     <div
-      class="flex items-center justify-center w-12 text-white icon-container"
+      class="
+        flex
+        items-center
+        justify-center
+        flex-shrink-0
+        w-12
+        text-white
+        icon-container
+      "
     >
       <font-awesome-icon :icon="['fas', icon]" />
     </div>
@@ -23,12 +31,14 @@ const props = defineProps({
     type: String,
     default: 'error',
     validator(value: string) {
-      return ['error', 'success'].includes(value);
+      return ['error', 'success', 'warning'].includes(value);
     },
   },
 });
 
-const icon = computed(() => (props.type === 'error' ? 'exclamation' : 'check'));
+const icon = computed(() =>
+  props.type === 'success' ? 'check' : 'exclamation'
+);
 </script>
 
 <style scoped>
@@ -46,5 +56,13 @@ const icon = computed(() => (props.type === 'error' ? 'exclamation' : 'check'));
 
 .error .content-container {
   @apply bg-danger-10 text-danger;
+}
+
+.warning .icon-container {
+  @apply bg-warning-70;
+}
+
+.warning .content-container {
+  @apply bg-warning-10 text-primary-80;
 }
 </style>
