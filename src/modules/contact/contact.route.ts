@@ -1,5 +1,6 @@
 import { RouteRecordRaw } from 'vue-router';
 import i18n from '../../i18n';
+import { Roles } from '../../utils/enums/roles.enum';
 
 const { t } = i18n.global;
 
@@ -12,6 +13,7 @@ export const contactRoute: Array<RouteRecordRaw> = [
       // - TODO: replace this with menu.yourInformation and
       // see if you need to remove informationPage.title-
       pageTitle: t('informationPage.title'),
+      roles: [Roles.Admin, Roles.SuperAdmin],
     },
   },
   {
@@ -20,6 +22,7 @@ export const contactRoute: Array<RouteRecordRaw> = [
     component: () => import('../contribution/ContributionPage.vue'),
     meta: {
       pageTitle: t('menu.contribution'),
+      roles: [Roles.Admin, Roles.SuperAdmin],
     },
   },
   {
@@ -28,6 +31,7 @@ export const contactRoute: Array<RouteRecordRaw> = [
     component: () => import('../contribution/pages/CancelPage.vue'),
     meta: {
       pageTitle: t('menu.contribution'),
+      roles: [Roles.Admin, Roles.SuperAdmin],
     },
   },
 ];

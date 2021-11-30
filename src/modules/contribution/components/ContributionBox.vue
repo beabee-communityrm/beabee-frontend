@@ -9,7 +9,14 @@
     </template>
 
     <div v-else class="text-center">
-      <div class="mb-2">{{ t('contribution.contributing') }}</div>
+      <div class="mb-2">
+        <span v-if="isAdmin">
+          <!-- TODO: add i18n -->
+          {{ t('contribution.userContributing', { username }) }}
+        </span>
+
+        <span v-else>{{ t('contribution.contributing') }}</span>
+      </div>
 
       <div class="text-3.5xl font-bold leading-7">
         {{ n(amount, 'currency') }}
@@ -25,7 +32,7 @@
         </i18n-t>
       </div>
 
-      <div v-else>
+      <div v-else-if="!isAdmin">
         <div>{{ t('common.thankYou') }}</div>
       </div>
     </div>
@@ -37,6 +44,7 @@ import { useI18n } from 'vue-i18n';
 import { formatDistanceLocale } from '../../../utils/dates/locale-date-formats';
 import { computed } from '@vue/reactivity';
 import { parseISO } from 'date-fns';
+import { Roles } from '../../../utils/enums/roles.enum';
 
 const { n, t } = useI18n();
 
@@ -57,6 +65,19 @@ const props = defineProps({
     type: String as () => null | string,
     default: '',
   },
+});
+
+const user = computed(() => {
+  return JSON.parse(localStorage.getItem('user') as string);
+});
+
+const isAdmin = computed(() => {
+  return user.value.roles.includes(Roles.Admin);
+});
+
+// - TODO: should we use name of the user or email -
+const username = computed(() => {
+  return user.value.email;
 });
 
 const formattedExpiryDate = computed(() => {

@@ -190,6 +190,10 @@ const isContributionFormInvalid = computed(() => {
 const isMonthly = computed(() => newContribution.period === 'monthly');
 // end of todo
 
+const period = computed(() =>
+  t(isMonthly.value ? 'common.month' : 'common.year')
+);
+
 const hasGoCardlessType = computed(
   () => currentContribution.type === ContributionType.GoCardless
 );
@@ -270,5 +274,6 @@ export function useContribution() {
     contributionLoading,
     submitCancelContribution,
     cancelContributionLoading,
+    period,
   };
 }

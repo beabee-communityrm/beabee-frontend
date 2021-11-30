@@ -141,11 +141,8 @@ const {
   paymentSource,
   cantUpdatePaymentSource,
   contributionLoading,
+  period,
 } = useContribution();
-
-const period = computed(() =>
-  t(isMonthly.value ? 'common.month' : 'common.year')
-);
 
 const id = useRoute().params.id as string;
 
