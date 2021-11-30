@@ -10,6 +10,7 @@
         :amount="currentContribution.amount"
         :period="period"
         :expiry-date="currentContribution.membershipExpiryDate"
+        :is-contact-page="isContactPage"
         class="mb-9"
       />
 
@@ -47,6 +48,10 @@
           :force="shouldForceFee"
         />
 
+        <MessageBox v-if="isContactPage" type="warning" class="mb-4">
+          {{ t('form.warning') }}
+        </MessageBox>
+
         <AppButton
           :disabled="isContributionFormInvalid"
           type="submit"
@@ -74,6 +79,7 @@
           :loading="paymentSourceLoading"
           :payment-source="paymentSource"
           :has-error="cantUpdatePaymentSource"
+          :is-contact-page="isContactPage"
           @update-payment-source="updatePaymentSource(id)"
         />
       </template>
@@ -101,6 +107,7 @@
 <script lang="ts" setup>
 import PageTitle from '../../components/PageTitle.vue';
 import InfoMessage from '../../components/InfoMessage.vue';
+import MessageBox from '../../components/MessageBox.vue';
 import ContributionBox from './components/ContributionBox.vue';
 import SectionTitle from '../../components/SectionTitle.vue';
 import ContributionPeriod from './components/ContributionPeriod.vue';
@@ -109,7 +116,7 @@ import ContributionFee from './components/ContributionFee.vue';
 import PaymentSource from './components/PaymentSource.vue';
 import CancelContribution from './components/CancelContribution.vue';
 import AppButton from '../../components/forms/AppButton.vue';
-import { computed, onBeforeMount } from 'vue';
+import { onBeforeMount } from 'vue';
 import { useContribution } from './use-contribution';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
@@ -142,6 +149,7 @@ const {
   cantUpdatePaymentSource,
   contributionLoading,
   period,
+  isContactPage,
 } = useContribution();
 
 const id = useRoute().params.id as string;

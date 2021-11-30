@@ -10,8 +10,8 @@
 
     <div v-else class="text-center">
       <div class="mb-2">
-        <span v-if="isAdmin">
-          <!-- TODO: add i18n -->
+        <span v-if="isAdmin && isContactPage">
+          <!-- TODO: add i18n: {username} is contributing -->
           {{ t('contribution.userContributing', { username }) }}
         </span>
 
@@ -24,6 +24,7 @@
 
       <div class="font-bold mb-1.5">{{ t('common.every') }} {{ period }}</div>
 
+      <!-- TODO: fix the message if it is contact pgae and show appropriate text for admin -->
       <div v-if="status === 'expiring'">
         <i18n-t keypath="contribution.willExpire">
           <template #expires>
@@ -32,7 +33,7 @@
         </i18n-t>
       </div>
 
-      <div v-else-if="!isAdmin">
+      <div v-else-if="!isContactPage">
         <div>{{ t('common.thankYou') }}</div>
       </div>
     </div>
@@ -64,6 +65,10 @@ const props = defineProps({
   expiryDate: {
     type: String as () => null | string,
     default: '',
+  },
+  isContactPage: {
+    type: Boolean,
+    default: false,
   },
 });
 

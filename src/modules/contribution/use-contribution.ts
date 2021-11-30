@@ -246,6 +246,14 @@ const submitCancelContribution = (router: Router, id?: string) => {
     .finally(() => (cancelContributionLoading.value = false));
 };
 
+const isContactPage = computed(() => {
+  const route = useRoute();
+  return (
+    route.name === 'contact contribution' ||
+    route.name === 'contact cancel contribution'
+  );
+});
+
 export function useContribution() {
   return {
     newContribution,
@@ -275,5 +283,6 @@ export function useContribution() {
     submitCancelContribution,
     cancelContributionLoading,
     period,
+    isContactPage,
   };
 }

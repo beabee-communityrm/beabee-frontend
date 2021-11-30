@@ -7,6 +7,10 @@
     {{ t('contribution.cancelMessage') }}
   </h3>
 
+  <MessageBox v-if="isContactPage" type="warning" class="mb-4">
+    {{ t('form.warning') }}
+  </MessageBox>
+
   <AppButton :to="goBackRoute" variant="subtle">{{
     t('common.goBack')
   }}</AppButton>
@@ -22,6 +26,7 @@
 
 <script lang="ts" setup>
 import PageTitle from '../../../components/PageTitle.vue';
+import MessageBox from '../../../components/MessageBox.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import { useI18n } from 'vue-i18n';
 import { useContribution } from '../use-contribution';
@@ -34,7 +39,7 @@ const goBackRoute = id
   ? `/contacts/${id}/contribution`
   : '/profile/contribution';
 
-const { submitCancelContribution, cancelContributionLoading } =
+const { submitCancelContribution, cancelContributionLoading, isContactPage } =
   useContribution();
 const { t } = useI18n();
 </script>

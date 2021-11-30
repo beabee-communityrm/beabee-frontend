@@ -16,6 +16,10 @@
       {{ t('contribution.paymentSourceUpdateError') }}
     </MessageBox>
 
+    <MessageBox v-if="isContactPage" type="warning" class="mb-4">
+      {{ t('form.warning') }}
+    </MessageBox>
+
     <AppButton
       :loading="loading"
       variant="subtle"
@@ -48,6 +52,10 @@ defineProps({
     default: false,
   },
   loading: {
+    type: Boolean,
+    default: false,
+  },
+  isContactPage: {
     type: Boolean,
     default: false,
   },

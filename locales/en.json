@@ -74,7 +74,8 @@
     "passwordInfo": "Set a secure password: 8+ characters at least one number, one uppercase and one lowercase letters.",
     "postCode": "Postcode",
     "saveChanges": "Save Changes",
-    "saved": "Saved!"
+    "saved": "Saved!",
+    "warning": "Please only make updates to this page with the consent of the user. Changes you make here will also be visible to the user."
   },
   "homePage": {
     "editProfile": "Edit your community profile",
