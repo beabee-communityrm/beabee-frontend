@@ -100,6 +100,10 @@ const setInformation = () => {
     .catch((err) => err);
 };
 
+const isContactPage = computed(() => {
+  return useRoute().name === 'contact information';
+});
+
 export function useInformation() {
   return {
     informationValidation,
@@ -111,5 +115,6 @@ export function useInformation() {
     loading,
     hasFormError,
     addressValidation,
+    isContactPage,
   };
 }

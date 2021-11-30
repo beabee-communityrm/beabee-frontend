@@ -79,12 +79,6 @@
           />
         </div>
 
-        <MessageBox v-if="hasFormError" type="error" class="mb-2" />
-
-        <MessageBox v-if="isSaved" type="success" class="mb-2">
-          {{ t('form.saved') }}
-        </MessageBox>
-
         <div class="mb-4">
           <input
             id="delivery-opt-in"
@@ -93,9 +87,19 @@
           />
 
           <label for="delivery-opt-in" class="font-bold ml-1">
-            {{ t('form.deliverOptIn') }}
+            {{ t('form.deliveryOptIn') }}
           </label>
         </div>
+
+        <MessageBox v-if="hasFormError" type="error" class="mb-4" />
+
+        <MessageBox v-if="isSaved" type="success" class="mb-4">
+          {{ t('form.saved') }}
+        </MessageBox>
+
+        <MessageBox v-if="isContactPage" type="warning" class="mb-4">
+          {{ t('form.warning') }}
+        </MessageBox>
       </div>
 
       <!-- TODO: remove 'member' from array -->
@@ -104,12 +108,12 @@
           <AppInput
             v-model="information.description"
             input-type="text"
-            :label="t('common.description')"
+            :label="t('form.description')"
           />
         </div>
 
         <div>
-          <TextArea v-model="information.notes" :label="t('common.notes')" />
+          <TextArea v-model="information.notes" :label="t('form.notes')" />
         </div>
       </div>
     </div>
@@ -146,6 +150,7 @@ const {
   loading,
   hasFormError,
   addressValidation,
+  isContactPage,
 } = useInformation();
 
 onBeforeMount(() => {
