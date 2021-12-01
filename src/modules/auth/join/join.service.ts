@@ -32,8 +32,8 @@ const completeSignUp = (
 ): Promise<any> => {
   return axios.post('/signup/complete', {
     redirectFlowId,
-    loginUrl: import.meta.env.VITE_API_BASE_URL + '/auth/login',
-    setPasswordUrl: import.meta.env.VITE_API_BASE_URL + '/auth/set-password',
+    loginUrl: import.meta.env.VITE_APP_BASE_URL + '/auth/login',
+    setPasswordUrl: import.meta.env.VITE_APP_BASE_URL + '/auth/set-password',
     confirmUrl: import.meta.env.VITE_APP_BASE_URL + '/join/confirm-email',
   });
 };

@@ -8,6 +8,7 @@ declare module '*.vue' {
 }
 
 interface ImportMetaEnv {
+  VITE_APP_BASE_URL: string;
   VITE_API_BASE_URL: string;
   VITE_CURRENCY: string;
   VITE_NEWSROOM_NAME: string;
