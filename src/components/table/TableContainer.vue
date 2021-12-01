@@ -10,7 +10,9 @@
 
     <tbody>
       <tr v-for="(item, i) in items" :key="i">
-        <td v-for="(data, j) in item" :key="j">{{ data }}</td>
+        <td v-for="(value, key, j) in item" :key="j">
+          <slot :name="key" :item="item">{{ value }}</slot>
+        </td>
       </tr>
     </tbody>
   </table>
