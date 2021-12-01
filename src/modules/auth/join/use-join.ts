@@ -159,7 +159,10 @@ const hasSetupError = computed(
 );
 
 const completeSetup = async (router: Router) => {
-  const isAddressCorrect = await addressValidation.value.$validate();
+  // addressValidation.value won't exist if address fields are hidden
+  const isAddressCorrect =
+    !addressValidation.value.$validate ||
+    (await addressValidation.value.$validate());
   const isSetupCorrect = await setupValidation.value.$validate();
   if (!isAddressCorrect || !isSetupCorrect) return;
 
