@@ -49,7 +49,7 @@ const signUpData = reactive<SignUpData>({
   period: ContributionPeriod.Monthly,
   payFee: true,
   loginUrl: import.meta.env.VITE_API_BASE_URL + '/auth/login',
-  setPasswordUrl: import.meta.env.VITE_API_BASE_URL + '/auth/reset-password',
+  setPasswordUrl: import.meta.env.VITE_API_BASE_URL + '/auth/set-password',
   completeUrl: import.meta.env.VITE_APP_BASE_URL + '/join/complete',
 });
 

@@ -8,6 +8,7 @@
     "hello": "Hello",
     "in": "in",
     "joined": "Joined",
+    "login": "Login",
     "month": "month",
     "monthly": "Monthly",
     "new": "new!",
@@ -168,5 +169,9 @@
     "login": "Login to your account",
     "newPassword": "New password",
     "title": "Reset your password?"
+  },
+  "setPassword": {
+    "description": "Set a new password to login.",
+    "title": "Set a password"
   }
 }

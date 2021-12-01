@@ -8,6 +8,7 @@
     "hello": "Hallo",
     "in": "in",
     "joined": "Mitglied seit",
+    "login": "Login",
     "month": "Monat",
     "monthly": "Monatlich",
     "new": "neu!",
@@ -168,5 +169,8 @@
     "login": "Einloggen",
     "newPassword": "Neues Passwort",
     "title": "Passwort aktualisieren?"
+  },
+  "setPassword": {
+    "description": "Neues Passwort eingeben, um fortzufahren."
   }
 }
