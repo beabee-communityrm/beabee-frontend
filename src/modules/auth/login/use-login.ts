@@ -35,13 +35,14 @@ const loginValidation = useVuelidate(loginRules, loginData);
 
 const hasCredentialError = ref(false);
 
-const submitLogin = async (router: Router, redirectTo: string) => {
+const submitLogin = async (redirectTo?: string) => {
   loading.value = true;
   hasCredentialError.value = false;
   login(loginData)
     .then(() => {
       localStorage.setItem('isAuthenticated', 'true');
-      redirectTo ? router.push(redirectTo) : router.push('/profile');
+      window.location.href =
+        redirectTo && /^\/([^/]|$)/.test(redirectTo) ? redirectTo : '/';
     })
     .catch((err) => {
       if (err.response?.status === 401) hasCredentialError.value = true;

@@ -46,7 +46,7 @@
       :disabled="isFormInvalid || loading"
       type="submit"
       class="w-full"
-      @click="submitLogin(router, redirectTo)"
+      @click="submitLogin(redirectTo)"
       >{{ t('login.login') }}</AppButton
     >
   </form>
@@ -58,14 +58,13 @@ import AppButton from '../../../components/forms/AppButton.vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import { errorGenerator } from '../../../utils/form-error-generator';
 import { useLogin } from './use-login';
-import { useRouter, useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-const router = useRouter();
 const route = useRoute();
-const redirectTo = route.query.redirectTo as string;
+const redirectTo = route.query.next as string | undefined;
 
 const {
   loginData,
