@@ -8,6 +8,8 @@ export interface SignUpData {
   amount: number;
   period: ContributionPeriod;
   payFee: boolean;
+  loginUrl: string;
+  setPasswordUrl: string;
   completeUrl: string;
 }
 
