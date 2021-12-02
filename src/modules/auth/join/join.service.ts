@@ -45,7 +45,7 @@ const confirmEmail = (id: string | string[]): Promise<any> => {
 };
 
 const fetchMember = (): Promise<any> => {
-  return axios.get('/member/me');
+  return axios.get('/member/me?with[]=profile');
 };
 const updateMember = (
   memberData: MemberData,
@@ -77,7 +77,7 @@ const updateMember = (
     }
   }
 
-  return axios.put('/member/me', params);
+  return axios.patch('/member/me', params);
 };
 
 export {

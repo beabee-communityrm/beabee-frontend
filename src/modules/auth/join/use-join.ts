@@ -158,7 +158,10 @@ const hasSetupError = computed(
 );
 
 const completeSetup = async (router: Router) => {
-  const isAddressCorrect = await addressValidation.value.$validate();
+  // addressValidation.value won't exist if address fields are hidden
+  const isAddressCorrect =
+    !addressValidation.value.$validate ||
+    (await addressValidation.value.$validate());
   const isSetupCorrect = await setupValidation.value.$validate();
   if (!isAddressCorrect || !isSetupCorrect) return;
 
@@ -213,6 +216,7 @@ const setMemberData = () => {
         data.profile.newsletterStatus === NewsletterStaus.Subscribed
           ? true
           : false;
+      memberData.profile.deliveryOptIn = data.profile.deliveryOptIn;
       memberData.addressLine1 = data.profile.deliveryAddress.line1;
       memberData.addressLine2 = data.profile.deliveryAddress.line2;
       memberData.cityOrTown = data.profile.deliveryAddress.city;
