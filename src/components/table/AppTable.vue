@@ -16,8 +16,8 @@
             v-if="item.value === sortBy"
             class="absolute ml-2 top-0.5 text-xs"
           >
-            <span v-if="currentSortType === SortType.Asc">&#9660;</span>
-            <span v-else-if="currentSortType === SortType.Desc">&#9650;</span>
+            <span v-if="sortType === SortType.Asc">&#9660;</span>
+            <span v-else-if="sortType === SortType.Desc">&#9650;</span>
           </span>
         </th>
       </tr>
@@ -69,14 +69,11 @@ const props = defineProps({
 
 let localItems = ref([...props.items]);
 
-// 'asc', 'desc', 'none'
-let currentSortType = ref<SortType>(SortType.None);
-let nextSortType = ref<SortType>(SortType.None);
+let sortType = ref<SortType>(SortType.Asc);
 let sortBy = ref('');
 
 const resetSorting = () => {
-  currentSortType.value = SortType.None;
-  nextSortType.value = SortType.Desc;
+  sortType.value = SortType.None;
   localItems.value = [...props.items];
 };
 
@@ -89,15 +86,13 @@ const sort = (item: Header) => {
 
   sortBy.value = item.value;
 
-  if (nextSortType.value === SortType.Desc) {
+  if (sortType.value === SortType.None) {
     localItems.value = orderby(localItems.value, [item.value], [SortType.Desc]);
-    currentSortType.value = SortType.Desc;
-    nextSortType.value = SortType.Asc;
-  } else if (nextSortType.value === SortType.Asc) {
+    sortType.value = SortType.Desc;
+  } else if (sortType.value === SortType.Desc) {
     localItems.value = orderby(localItems.value, [item.value], [SortType.Asc]);
-    currentSortType.value = SortType.Asc;
-    nextSortType.value = SortType.None;
-  } else if (nextSortType.value === SortType.None) {
+    sortType.value = SortType.Asc;
+  } else if (sortType.value === SortType.Asc) {
     // reset to default
     resetSorting();
     return;
