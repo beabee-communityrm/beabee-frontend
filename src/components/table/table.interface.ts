@@ -4,3 +4,9 @@ export interface Header {
   width?: string;
   value: string;
 }
+
+export enum SortType {
+  Desc = 'desc',
+  Asc = 'asc',
+  None = 'none',
+}

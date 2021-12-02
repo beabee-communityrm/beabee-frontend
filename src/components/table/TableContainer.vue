@@ -5,16 +5,20 @@
         <th
           v-for="(item, index) in headers"
           :key="index"
-          class="pb-2"
+          class="pb-2 relative"
           align="left"
           :style="{ width: item.width }"
           @click="sort(item)"
         >
-          {{ item.text }}
-          <template v-if="item.value === sortBy">
+          <slot :name="`header-${item.value}`">{{ item.text }}</slot>
+
+          <span
+            v-if="item.value === sortBy"
+            class="absolute ml-2 top-0.5 text-xs"
+          >
             <span v-if="currentSortType === SortType.Asc">&#9660;</span>
             <span v-else-if="currentSortType === SortType.Desc">&#9650;</span>
-          </template>
+          </span>
         </th>
       </tr>
     </thead>
@@ -34,14 +38,22 @@
 </template>
 
 <script lang="ts" setup>
-// custom tabelcell:
-// `email` should be replaced with the object property name of item
-//     <template #email="{ item }">
-//      <span class="text-secondary">{{ item.email }}</span>
+// TODO: improve typing
+
+// custom header cell usage:
+// `status` should be replaced with header item `value` property
+//    <template #header-status>
+//      <AppBadge>test</AppBadge>
 //    </template>
 
+// custom tabel cell usage:
+// `email` should be replaced with the object property name of item
+//  <template #email="{ item }">
+//    <span class="text-secondary">{{ item.email }}</span>
+//  </template>
+
 import { ref } from 'vue';
-import { Header } from './table.interface';
+import { Header, SortType } from './table.interface';
 import orderby from 'lodash.orderby';
 
 const props = defineProps({
@@ -50,18 +62,13 @@ const props = defineProps({
     default: () => [],
   },
   items: {
-    type: Array as () => any[],
+    type: Array as () => Record<string, unknown>[],
     default: () => [],
   },
 });
 
 let localItems = ref([...props.items]);
 
-enum SortType {
-  Desc = 'desc',
-  Asc = 'asc',
-  None = 'none',
-}
 // 'asc', 'desc', 'none'
 let currentSortType = ref<SortType>(SortType.None);
 let nextSortType = ref<SortType>(SortType.None);
