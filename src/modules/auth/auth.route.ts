@@ -32,7 +32,7 @@ export const authRoute: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: 'reset-password/:id',
+        path: ':type(set|reset)-password/:id',
         name: 'reset password',
         component: () => import('./reset-password/ResetPasswordPage.vue'),
         meta: {

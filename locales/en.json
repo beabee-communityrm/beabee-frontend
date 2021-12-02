@@ -8,6 +8,7 @@
     "hello": "Hello",
     "in": "in",
     "joined": "Joined",
+    "login": "Login",
     "month": "month",
     "monthly": "Monthly",
     "new": "new!",
@@ -46,6 +47,8 @@
     "addressLine1": "Address line 1",
     "addressLine2": "Address line 2",
     "cityOrTown": "City/Town",
+    "deliveryOptIn": "Delivery opt-in",
+    "description": "Description",
     "email": "Email",
     "errors": {
       "address": {
@@ -70,11 +73,14 @@
     },
     "firstName": "First name",
     "lastName": "Last name",
+    "notes": "Notes",
     "password": "Password",
     "passwordInfo": "Set a secure password: 8+ characters at least one number, one uppercase and one lowercase letters.",
+    "phone": "Phone",
     "postCode": "Postcode",
     "saveChanges": "Save Changes",
-    "saved": "Saved!"
+    "saved": "Saved!",
+    "warning": "Please only make updates to this page with the consent of the user. Changes you make here will also be visible to the user."
   },
   "homePage": {
     "editProfile": "Edit your community profile",
@@ -168,5 +174,9 @@
     "login": "Login to your account",
     "newPassword": "New password",
     "title": "Reset your password?"
+  },
+  "setPassword": {
+    "description": "Set a new password to login.",
+    "title": "Set a password"
   }
 }

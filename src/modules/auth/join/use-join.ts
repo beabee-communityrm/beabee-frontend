@@ -48,7 +48,6 @@ const signUpData = reactive<SignUpData>({
   amount: 5,
   period: ContributionPeriod.Monthly,
   payFee: true,
-  completeUrl: import.meta.env.VITE_APP_BASE_URL + '/join/complete',
 });
 
 const setJoinContent = (query: LocationQueryRaw) => {
