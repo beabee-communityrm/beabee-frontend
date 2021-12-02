@@ -14,7 +14,7 @@
 
           <span
             v-if="item.value === sortBy"
-            class="absolute ml-2 top-0.5 text-xs"
+            class="absolute ml-2 top-2 text-xs"
           >
             <span v-if="sortType === SortType.Asc">&#9660;</span>
             <span v-else-if="sortType === SortType.Desc">&#9650;</span>
