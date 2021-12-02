@@ -6,6 +6,7 @@ import { emailValidationRule } from '../../../utils/form-validation/rules';
 import { login } from '../auth.service';
 import { Router } from 'vue-router';
 import i18n from '../../../i18n';
+import isInternalUrl from '../../../utils/is-internal-url';
 
 const { t } = i18n.global;
 
@@ -41,8 +42,8 @@ const submitLogin = async (redirectTo?: string) => {
   login(loginData)
     .then(() => {
       localStorage.setItem('isAuthenticated', 'true');
-      window.location.href =
-        redirectTo && /^\/([^/]|$)/.test(redirectTo) ? redirectTo : '/';
+      // TODO: use router when legacy app is gone
+      window.location.href = isInternalUrl(redirectTo) ? redirectTo : '/';
     })
     .catch((err) => {
       if (err.response?.status === 401) hasCredentialError.value = true;
