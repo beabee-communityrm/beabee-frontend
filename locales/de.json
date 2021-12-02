@@ -47,6 +47,8 @@
     "addressLine1": "Adresse",
     "addressLine2": "Adresse 2",
     "cityOrTown": "Ort",
+    "deliveryOptIn": "Einverständnis zur Postsendung",
+    "description": "Bezeichnung",
     "email": "Email",
     "errors": {
       "address": {
@@ -71,11 +73,14 @@
     },
     "firstName": "Vorname",
     "lastName": "Nachname",
+    "notes": "Anmerkungen",
     "password": "Passwort",
     "passwordInfo": "Das Passwort muss aus mindestens acht Zeichen bestehen und mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten.",
+    "phone": "Telefon",
     "postCode": "Postleitzahl",
     "saveChanges": "Änderungen speichern",
-    "saved": "Gespeichert!"
+    "saved": "Gespeichert!",
+    "warning": "Ändere hier nur etwas, wenn du das Einverständnis hast. Änderungen werden auch den Nutzern angezeigt."
   },
   "homePage": {
     "editProfile": "Profil bearbeiten",
@@ -171,6 +176,7 @@
     "title": "Passwort aktualisieren?"
   },
   "setPassword": {
-    "description": "Neues Passwort eingeben, um fortzufahren."
+    "description": "Neues Passwort eingeben, um fortzufahren.",
+    "title": "Passwort vergeben"
   }
 }
