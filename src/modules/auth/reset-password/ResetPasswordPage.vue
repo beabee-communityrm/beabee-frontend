@@ -42,7 +42,7 @@
       :disabled="isFormInvalid || loading"
       class="mb-4 w-full"
       type="submit"
-      @click="submitResetPassword(resetPasswordFlowId, router)"
+      @click="submitResetPassword(resetPasswordFlowId, router, redirectTo)"
       >{{
         isSetPassword ? t('common.login') : t('resetPassword.changePassword')
       }}</AppButton
@@ -73,6 +73,7 @@ const route = useRoute();
 const router = useRouter();
 
 const isSetPassword = route.params.type === 'set';
+const redirectTo = route.query.next as string | undefined;
 const resetPasswordFlowId = route.params.id as string;
 
 const {
