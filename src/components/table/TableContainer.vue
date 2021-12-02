@@ -42,6 +42,7 @@
 
 import { ref } from 'vue';
 import { Header } from './table.interface';
+import orderby from 'lodash.orderby';
 
 const props = defineProps({
   headers: {
@@ -66,26 +67,6 @@ let currentSortType = ref<SortType>(SortType.None);
 let nextSortType = ref<SortType>(SortType.None);
 let sortBy = ref('');
 
-const sortAscending = (a: any, b: any) => {
-  if (a < b) {
-    return -1;
-  }
-  if (a > b) {
-    return 1;
-  }
-  return 0;
-};
-
-const sortDescending = (a: any, b: any) => {
-  if (a > b) {
-    return -1;
-  }
-  if (a < b) {
-    return 1;
-  }
-  return 0;
-};
-
 const resetSorting = () => {
   currentSortType.value = SortType.None;
   nextSortType.value = SortType.Desc;
@@ -101,14 +82,12 @@ const sort = (item: Header) => {
 
   sortBy.value = item.value;
 
-  let sortFunc: any = null;
-
   if (nextSortType.value === SortType.Desc) {
-    sortFunc = sortAscending;
+    localItems.value = orderby(localItems.value, [item.value], [SortType.Desc]);
     currentSortType.value = SortType.Desc;
     nextSortType.value = SortType.Asc;
   } else if (nextSortType.value === SortType.Asc) {
-    sortFunc = sortDescending;
+    localItems.value = orderby(localItems.value, [item.value], [SortType.Asc]);
     currentSortType.value = SortType.Asc;
     nextSortType.value = SortType.None;
   } else if (nextSortType.value === SortType.None) {
@@ -116,15 +95,5 @@ const sort = (item: Header) => {
     resetSorting();
     return;
   }
-
-  localItems.value.sort((a: any, b: any) => {
-    const first = a[item.value].toUpperCase();
-    const second = b[item.value].toUpperCase();
-    return sortFunc(first, second);
-  });
 };
-
-// todo:
-// consider if the sort data is number the sorting function should
-// be different
 </script>
