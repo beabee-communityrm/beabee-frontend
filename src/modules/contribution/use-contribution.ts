@@ -56,9 +56,11 @@ const setCurrentContribution = () => {
       currentContribution.cancellationDate = data.cancellationDate;
       currentContribution.membershipStatus = data.membershipStatus;
 
-      newContribution.amount = data.amount;
-      newContribution.period = data.period;
-      // TODO: sync payFee too
+      if (currentContribution.type !== ContributionType.None) {
+        newContribution.amount = data.amount;
+        newContribution.period = data.period;
+        // TODO: sync payFee too
+      }
 
       if (data.paymentSource) {
         paymentSource.type = data.paymentSource.type;
@@ -244,6 +246,7 @@ export function useContribution() {
     definedAmounts,
     fee,
     submitContribution,
+    hasNoneType,
     hasManualType,
     contributionButtonText,
     paymentSourceLoading,
