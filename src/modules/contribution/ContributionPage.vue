@@ -18,7 +18,7 @@
           >{{ t('contribution.billing') }}
         </SectionTitle>
 
-        <p v-if="hasManualPayment" class="mb-4">
+        <p v-if="hasManualType" class="mb-4">
           {{ t('contribution.manualPayment') }}
         </p>
 
@@ -78,7 +78,7 @@
         />
       </template>
 
-      <template v-if="showCancelContribution">
+      <template v-if="isActiveMemberWithGoCardless">
         <SectionTitle class="mb-4">{{
           t('contribution.cancelContribution')
         }}</SectionTitle>
@@ -133,10 +133,9 @@ const {
   contributionButtonText,
   paymentSourceLoading,
   updatePaymentSource,
-  hasManualPayment,
+  hasManualType,
   isActiveMemberWithGoCardless,
   hasPaymentSource,
-  showCancelContribution,
   paymentSource,
   cantUpdatePaymentSource,
   updateContributionLoading,
