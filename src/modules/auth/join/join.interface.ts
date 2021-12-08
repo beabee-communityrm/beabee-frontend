@@ -52,6 +52,7 @@ export interface JoinContentData {
   periods: Periods[];
   privacyLink: string;
   showAbsorbFee: boolean;
+  showNoContribution: boolean;
   subtitle: string;
   termsLink: string;
   title: string;

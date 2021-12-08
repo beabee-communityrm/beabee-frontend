@@ -7,7 +7,17 @@
         :description="joinContent.subtitle"
       />
 
+      <h3 class="font-semibold text-lg mb-1">Contribution</h3>
+
+      <div v-if="joinContent.showNoContribution" class="mb-4">
+        <label>
+          <input v-model="noContribution" type="checkbox" />
+          {{ t("I don't want to contribute today") }}
+        </label>
+      </div>
+
       <ContributionPeriod
+        v-if="!noContribution"
         class="mb-6"
         :periods="joinContent.periods"
         :selected-period="signUpData.period"
@@ -15,6 +25,7 @@
       />
 
       <ContributionAmount
+        v-if="!noContribution"
         v-model.number="signUpData.amount"
         :is-monthly="isMonthly"
         :min-amount="minAmount"
@@ -28,7 +39,7 @@
       />
 
       <ContributionFee
-        v-if="isMonthly && joinContent.showAbsorbFee"
+        v-if="!noContribution && isMonthly && joinContent.showAbsorbFee"
         v-model="signUpData.payFee"
         :amount="signUpData.amount"
         :fee="fee"
@@ -46,13 +57,15 @@
         @click="submitSignUp"
       >
         {{
-          t('join.contribute', {
-            amount: n(totalAmount, 'currency'),
-            period:
-              signUpData.period === 'monthly'
-                ? t('common.month')
-                : t('common.year'),
-          })
+          noContribution
+            ? 'Join now'
+            : t('join.contribute', {
+                amount: n(totalAmount, 'currency'),
+                period:
+                  signUpData.period === 'monthly'
+                    ? t('common.month')
+                    : t('common.year'),
+              })
         }}
       </AppButton>
 
@@ -75,8 +88,11 @@ import { onBeforeMount } from '@vue/runtime-core';
 import { useJoin } from './use-join';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
+import { ref } from 'vue';
 
 const { t, n } = useI18n();
+
+const noContribution = ref(false);
 
 const {
   signUpData,
