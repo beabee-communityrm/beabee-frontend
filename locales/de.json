@@ -107,6 +107,7 @@
     "absorbFeeOptIn": "Ja, ich übernehme die {fee} Transaktionskosten.",
     "absorbFeeText": "Bei unserem Zahlungsdienstleister zahlen wir für jede einzelne Transaktion. Das heißt, wir erhalten weniger von Ihrem monatlichen Beitrag. Sie haben die Möglichkeit, die Kosten dafür für uns zu übernehmen. Möchten Sie das? Alternativ können Sie auch jährlich bezahlen.",
     "contribute": "Mit {amount} pro {period} unterstützen.",
+    "contribution": "Beitrag",
     "errors": {
       "confirmEmail": {
         "message": "Fast geschafft! Wir müssen nur noch Ihre Email-Adresse bestätigen, um fortzufahren.",
