@@ -8,6 +8,7 @@ export interface SignUpData {
   amount: number;
   period: ContributionPeriod;
   payFee: boolean;
+  noContribution: boolean;
 }
 
 export interface MemberData {
@@ -52,6 +53,7 @@ export interface JoinContentData {
   periods: Periods[];
   privacyLink: string;
   showAbsorbFee: boolean;
+  showNoContribution: boolean;
   subtitle: string;
   termsLink: string;
   title: string;

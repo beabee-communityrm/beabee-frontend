@@ -35,6 +35,7 @@ const joinContent = ref<JoinContentData>({
   periods: [] as Periods[],
   privacyLink: '',
   showAbsorbFee: true,
+  showNoContribution: false,
   subtitle: '',
   termsLink: '',
   title: '',
@@ -48,6 +49,7 @@ const signUpData = reactive<SignUpData>({
   amount: 5,
   period: ContributionPeriod.Monthly,
   payFee: true,
+  noContribution: false,
 });
 
 const setJoinContent = (query: LocationQueryRaw) => {
@@ -131,11 +133,15 @@ const setupValidation = useVuelidate(setupRules, memberData);
 
 const loading = ref(false);
 
-const submitSignUp = () => {
+const submitSignUp = (router: Router) => {
   loading.value = true;
   signUp(signUpData)
     .then(({ data }) => {
-      window.location.href = data.redirectUrl;
+      if (data.redirectUrl) {
+        window.location.href = data.redirectUrl;
+      } else {
+        router.push({ path: '/join/confirm-email' });
+      }
     })
     .catch((err) => {
       // Only revert loading on error as success causes route change
