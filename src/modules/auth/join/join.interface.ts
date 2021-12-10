@@ -8,6 +8,7 @@ export interface SignUpData {
   amount: number;
   period: ContributionPeriod;
   payFee: boolean;
+  noContribution: boolean;
 }
 
 export interface MemberData {

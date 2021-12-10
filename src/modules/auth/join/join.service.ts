@@ -18,24 +18,35 @@ const fetchSetupContent = (): Promise<any> => {
   return axios.get('/content/join/setup');
 };
 
+const completeUrls = {
+  loginUrl: import.meta.env.VITE_APP_BASE_URL + '/auth/login',
+  setPasswordUrl: import.meta.env.VITE_APP_BASE_URL + '/auth/set-password',
+  confirmUrl: import.meta.env.VITE_APP_BASE_URL + '/join/confirm-email',
+};
+
 const signUp = (signUpData: SignUpData): Promise<any> => {
   return axios.post('/signup', {
-    ...signUpData,
-    payFee:
-      signUpData.payFee && signUpData.period === ContributionPeriod.Monthly,
-    completeUrl: import.meta.env.VITE_APP_BASE_URL + '/join/complete',
+    email: signUpData.email,
+    password: signUpData.password,
+    ...(signUpData.noContribution
+      ? { complete: completeUrls }
+      : {
+          contribution: {
+            amount: signUpData.amount,
+            period: signUpData.period,
+            payFee:
+              signUpData.payFee &&
+              signUpData.period === ContributionPeriod.Monthly,
+            completeUrl: import.meta.env.VITE_APP_BASE_URL + '/join/complete',
+          },
+        }),
   });
 };
 
 const completeSignUp = (
   redirectFlowId: LocationQueryValue | LocationQueryValue[]
 ): Promise<any> => {
-  return axios.post('/signup/complete', {
-    redirectFlowId,
-    loginUrl: import.meta.env.VITE_APP_BASE_URL + '/auth/login',
-    setPasswordUrl: import.meta.env.VITE_APP_BASE_URL + '/auth/set-password',
-    confirmUrl: import.meta.env.VITE_APP_BASE_URL + '/join/confirm-email',
-  });
+  return axios.post('/signup/complete', { redirectFlowId, ...completeUrls });
 };
 
 const confirmEmail = (id: string | string[]): Promise<any> => {
