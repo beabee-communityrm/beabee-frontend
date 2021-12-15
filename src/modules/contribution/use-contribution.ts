@@ -215,6 +215,7 @@ const contributionButtonText = computed(() => {
 
 const showContributionForm = computed(() => {
   return (
+    currentContribution.type === ContributionType.Manual ||
     currentContribution.period !== ContributionPeriod.Annually ||
     currentContribution.membershipStatus === MembershipStatus.Expired
   );
