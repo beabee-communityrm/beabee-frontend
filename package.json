@@ -2,6 +2,7 @@
   "name": "beabee-new-frontend",
   "version": "0.0.0",
   "scripts": {
+    "start": "vite",
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
