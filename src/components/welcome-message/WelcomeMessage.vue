@@ -23,15 +23,10 @@
     <div class="lg:ml-8 flex-grow">
       <WelcomeIcon class="hidden md:block lg:hidden icon float-left mr-4" />
 
-      <h3 class="title mb-2 hidden md:block">
+      <h3 class="title mb-3 hidden md:block">
         {{ t('homePage.welcome', { firstName: memberFirstName }) }}
       </h3>
 
-      <!-- - TODO: what kind of content is gonna be added here is it just <p> element? -->
-      <!-- - TODO: text sizees and line height (leading) is based on 
-             the pragraph type (highlighted, regular, small). Check if
-             if it's necessary to make this reusable
-      -->
       <div
         class="
           welcome-message-content
@@ -44,14 +39,6 @@
         "
         v-html="text"
       />
-
-      <div class="text-sm lg:text-lg font-semibold leading-tight">
-        {{ authorName }}
-      </div>
-
-      <div class="text-xs md:text-sm italic">
-        {{ authorTitle }}
-      </div>
     </div>
 
     <FontAwesomeIcon
@@ -74,14 +61,6 @@ defineProps({
     default: '',
   },
   text: {
-    type: String,
-    default: '',
-  },
-  authorName: {
-    type: String,
-    default: '',
-  },
-  authorTitle: {
     type: String,
     default: '',
   },
@@ -115,9 +94,19 @@ defineEmits(['close']);
 }
 </style>
 
-/* not scoped because `p` is dynamic from the API */
 <style>
-.welcome-message-content p {
-  @apply mb-4;
+/* not scoped because content is dynamic from the API */
+.welcome-message-content p,
+.welcome-message-content ul,
+.welcome-message-content ol {
+  margin: 0;
+}
+
+.welcome-message-content ul {
+  @apply pl-3 list-inside list-disc;
+}
+
+.welcome-message-content ol {
+  @apply pl-3 list-inside list-decimal;
 }
 </style>
