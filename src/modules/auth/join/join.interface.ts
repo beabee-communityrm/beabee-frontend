@@ -16,7 +16,7 @@ export interface MemberData {
   firstName: string;
   lastName: string;
   profile: {
-    newsletterStatus: boolean;
+    newsletterOptIn: boolean;
     deliveryOptIn: boolean;
   };
   addressLine1: string;
@@ -25,16 +25,16 @@ export interface MemberData {
   postCode: string;
 }
 
-export interface MemberRequest {
+export interface UpdateMemberRequest {
   email: string;
   firstname: string;
   lastname: string;
-  profile?: Profile;
+  profile?: UpdateProfile;
 }
 
-export interface Profile {
-  newsletterStatus: NewsletterStaus;
-  deliveryOptIn: boolean;
+export interface UpdateProfile {
+  newsletterStatus?: NewsletterStaus;
+  deliveryOptIn?: boolean;
   deliveryAddress?: DeliveryAddress;
 }
 
