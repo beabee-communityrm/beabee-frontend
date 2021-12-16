@@ -141,9 +141,7 @@ const props = defineProps({
 const emits = defineEmits(['update:modelValue']);
 
 const changeAmount = (amount: number) => {
-  if (amount >= props.minAmount) {
-    emits('update:modelValue', amount);
-  }
+  emits('update:modelValue', Math.max(props.minAmount, amount));
 };
 
 const hasError = computed(

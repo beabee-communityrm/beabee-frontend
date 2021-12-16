@@ -6,6 +6,7 @@
   <div class="grid grid-cols-12">
     <div class="col-span-12 md:col-span-7 lg:col-span-5">
       <ContributionBox
+        v-if="!hasNoneType"
         :status="currentContribution.membershipStatus"
         :amount="currentContribution.amount"
         :period="period"
@@ -18,7 +19,7 @@
           >{{ t('contribution.billing') }}
         </SectionTitle>
 
-        <p v-if="hasManualPayment" class="mb-4">
+        <p v-if="hasManualType" class="mb-4">
           {{ t('contribution.manualPayment') }}
         </p>
 
@@ -78,7 +79,7 @@
         />
       </template>
 
-      <template v-if="showCancelContribution">
+      <template v-if="isActiveMemberWithGoCardless">
         <SectionTitle class="mb-4">{{
           t('contribution.cancelContribution')
         }}</SectionTitle>
@@ -133,10 +134,10 @@ const {
   contributionButtonText,
   paymentSourceLoading,
   updatePaymentSource,
-  hasManualPayment,
+  hasNoneType,
+  hasManualType,
   isActiveMemberWithGoCardless,
   hasPaymentSource,
-  showCancelContribution,
   paymentSource,
   cantUpdatePaymentSource,
   updateContributionLoading,

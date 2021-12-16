@@ -1,12 +1,19 @@
 import axios from '../../axios';
 import { Information } from './information.interface';
 
-const fetchInformation = (id?: string): Promise<any> => {
-  return id ? axios.get(`/member/${id}`) : axios.get('/member/me');
+const fetchInformation = (id?: string): Promise<Information> => {
+  return axios
+    .get(`/member/${id || 'me'}?with[]=profile`)
+    .then(({ data }) => {
+      return data;
+    })
+    .catch((err) => err);
 };
 
-const updateInformation = (updateInformation: Information): Promise<any> => {
-  return axios.put('/member/me', {
+const updateInformation = (
+  updateInformation: Information
+): Promise<Information> => {
+  return axios.patch('/member/me', {
     email: updateInformation.emailAddress,
     firstname: updateInformation.firstName,
     lastname: updateInformation.lastName,

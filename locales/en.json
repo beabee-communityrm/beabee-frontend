@@ -8,6 +8,7 @@
     "hello": "Hello",
     "in": "in",
     "joined": "Joined",
+    "login": "Login",
     "month": "month",
     "monthly": "Monthly",
     "new": "new!",
@@ -106,6 +107,7 @@
     "absorbFeeOptIn": "Yes, I'll absorb the {fee} fee.",
     "absorbFeeText": "Our payment processor charges us per transaction which means we receive less from monthly contributions. Are you happy to absorb the {fee} transaction fee?  Alternatively you could pay annually.",
     "contribute": "Contribute {amount} / {period}",
+    "contribution": "Contribution",
     "errors": {
       "confirmEmail": {
         "message": "Almost there! We just need to confirm your email address to finish setting up your membership.",
@@ -126,7 +128,9 @@
     "memberAccount": "Member account",
     "memberAlready": "Are you a member already?",
     "minimumContribution": "Minimum contribution is",
+    "noContribution": "I don't want to contribute right now",
     "notice": "By proceeding you are accepting the",
+    "now": "Join now!",
     "privacy": "Privacy Policy"
   },
   "joinSetup": {
@@ -173,5 +177,9 @@
     "login": "Login to your account",
     "newPassword": "New password",
     "title": "Reset your password?"
+  },
+  "setPassword": {
+    "description": "Set a new password to login.",
+    "title": "Set a password"
   }
 }

@@ -22,8 +22,6 @@
     <WelcomeMessage
       :member-first-name="member.firstName"
       :text="profileContent.introMessage"
-      :author-name="profileContent.introMessageAuthorName"
-      :author-title="profileContent.introMessageAuthorTitle"
       @close="removeWelcomeMessage"
     />
   </section>

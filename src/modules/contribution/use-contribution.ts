@@ -56,9 +56,11 @@ const setCurrentContribution = () => {
       currentContribution.cancellationDate = data.cancellationDate;
       currentContribution.membershipStatus = data.membershipStatus;
 
-      newContribution.amount = data.amount;
-      newContribution.period = data.period;
-      // TODO: sync payFee too
+      if (currentContribution.type !== ContributionType.None) {
+        newContribution.amount = data.amount;
+        newContribution.period = data.period;
+        // TODO: sync payFee too
+      }
 
       if (data.paymentSource) {
         paymentSource.type = data.paymentSource.type;
@@ -185,41 +187,38 @@ const isContributionFormInvalid = computed(() => {
 const isMonthly = computed(() => newContribution.period === 'monthly');
 // end of todo
 
-const hasGoCardlessType = computed(
-  () => currentContribution.type === ContributionType.GoCardless
+const hasNoneType = computed(
+  () => currentContribution.type === ContributionType.None
 );
-const isActiveMemberWithGoCardless = computed(
-  () => isActiveMember.value && hasGoCardlessType.value
+
+const hasManualType = computed(
+  () => currentContribution.type === ContributionType.Manual
 );
 const isActiveMember = computed(
   () => currentContribution.membershipStatus === MembershipStatus.Active
 );
-const isAnnualMember = computed(
-  () => currentContribution.period === ContributionPeriod.Annually
-);
-const hasManualPayment = computed(
-  () => currentContribution.type === ContributionType.Manual
+const isActiveMemberWithGoCardless = computed(
+  () =>
+    isActiveMember.value &&
+    currentContribution.type === ContributionType.GoCardless
 );
 const isExpiringMember = computed(
   () => currentContribution.membershipStatus === MembershipStatus.Expiring
 );
-const isExpiredMember = computed(
-  () => currentContribution.membershipStatus === MembershipStatus.Expired
-);
 
 const contributionButtonText = computed(() => {
-  if (hasManualPayment.value) return t('contribution.updatePaymentType');
+  if (hasManualType.value) return t('contribution.updatePaymentType');
   else if (isActiveMember.value) return t('contribution.updateContribution');
   else if (isExpiringMember.value) return t('contribution.restartContribution');
   return t('contribution.startContribution');
 });
 
 const showContributionForm = computed(() => {
-  return !isAnnualMember.value || isExpiredMember.value;
-});
-
-const showCancelContribution = computed(() => {
-  return hasGoCardlessType.value && isActiveMember.value;
+  return (
+    currentContribution.type === ContributionType.Manual ||
+    currentContribution.period !== ContributionPeriod.Annually ||
+    currentContribution.membershipStatus === MembershipStatus.Expired
+  );
 });
 
 const cancelContributionLoading = ref(false);
@@ -248,14 +247,14 @@ export function useContribution() {
     definedAmounts,
     fee,
     submitContribution,
-    hasManualPayment,
+    hasNoneType,
+    hasManualType,
     contributionButtonText,
     paymentSourceLoading,
     updatePaymentSource,
     isActiveMemberWithGoCardless,
     hasPaymentSource,
     showContributionForm,
-    showCancelContribution,
     paymentSource,
     cantUpdatePaymentSource,
     updateContributionLoading,

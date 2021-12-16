@@ -7,7 +7,22 @@
         :description="joinContent.subtitle"
       />
 
+      <h3
+        v-if="joinContent.showNoContribution"
+        class="font-semibold text-lg mb-1"
+      >
+        {{ t('join.contribution') }}
+      </h3>
+
+      <div v-if="joinContent.showNoContribution" class="mb-4">
+        <label>
+          <input v-model="signUpData.noContribution" type="checkbox" />
+          {{ t('join.noContribution') }}
+        </label>
+      </div>
+
       <ContributionPeriod
+        v-if="!signUpData.noContribution"
         class="mb-6"
         :periods="joinContent.periods"
         :selected-period="signUpData.period"
@@ -15,6 +30,7 @@
       />
 
       <ContributionAmount
+        v-if="!signUpData.noContribution"
         v-model.number="signUpData.amount"
         :is-monthly="isMonthly"
         :min-amount="minAmount"
@@ -28,7 +44,9 @@
       />
 
       <ContributionFee
-        v-if="isMonthly && joinContent.showAbsorbFee"
+        v-if="
+          !signUpData.noContribution && isMonthly && joinContent.showAbsorbFee
+        "
         v-model="signUpData.payFee"
         :amount="signUpData.amount"
         :fee="fee"
@@ -43,16 +61,18 @@
         variant="link"
         type="submit"
         class="mb-4 w-full"
-        @click="submitSignUp"
+        @click="submitSignUp($router)"
       >
         {{
-          t('join.contribute', {
-            amount: n(totalAmount, 'currency'),
-            period:
-              signUpData.period === 'monthly'
-                ? t('common.month')
-                : t('common.year'),
-          })
+          signUpData.noContribution
+            ? t('join.now')
+            : t('join.contribute', {
+                amount: n(totalAmount, 'currency'),
+                period:
+                  signUpData.period === 'monthly'
+                    ? t('common.month')
+                    : t('common.year'),
+              })
         }}
       </AppButton>
 

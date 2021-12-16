@@ -35,6 +35,7 @@ const joinContent = ref<JoinContentData>({
   periods: [] as Periods[],
   privacyLink: '',
   showAbsorbFee: true,
+  showNoContribution: false,
   subtitle: '',
   termsLink: '',
   title: '',
@@ -48,7 +49,7 @@ const signUpData = reactive<SignUpData>({
   amount: 5,
   period: ContributionPeriod.Monthly,
   payFee: true,
-  completeUrl: import.meta.env.VITE_APP_BASE_URL + '/join/complete',
+  noContribution: false,
 });
 
 const setJoinContent = (query: LocationQueryRaw) => {
@@ -70,7 +71,7 @@ const memberData = reactive<MemberData>({
   firstName: '',
   lastName: '',
   profile: {
-    newsletterStatus: false,
+    newsletterOptIn: false,
     deliveryOptIn: false,
   },
   addressLine1: '',
@@ -132,11 +133,15 @@ const setupValidation = useVuelidate(setupRules, memberData);
 
 const loading = ref(false);
 
-const submitSignUp = () => {
+const submitSignUp = (router: Router) => {
   loading.value = true;
   signUp(signUpData)
     .then(({ data }) => {
-      window.location.href = data.redirectUrl;
+      if (data.redirectUrl) {
+        window.location.href = data.redirectUrl;
+      } else {
+        router.push({ path: '/join/confirm-email' });
+      }
     })
     .catch((err) => {
       // Only revert loading on error as success causes route change
@@ -159,17 +164,16 @@ const hasSetupError = computed(
 );
 
 const completeSetup = async (router: Router) => {
-  const isAddressCorrect = await addressValidation.value.$validate();
+  // addressValidation.value won't exist if address fields are hidden
+  const isAddressCorrect =
+    !addressValidation.value.$validate ||
+    (await addressValidation.value.$validate());
   const isSetupCorrect = await setupValidation.value.$validate();
   if (!isAddressCorrect || !isSetupCorrect) return;
 
   loading.value = true;
 
-  updateMember(
-    memberData,
-    setupContent.value.showNewsletterOptIn,
-    setupContent.value.showMailOptIn
-  )
+  updateMember(memberData, setupContent.value.showMailOptIn)
     .then(() => {
       router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
     })
@@ -210,10 +214,11 @@ const setMemberData = () => {
       memberData.firstName = data.firstname;
       memberData.lastName = data.lastname;
       memberData.email = data.email;
-      memberData.profile.newsletterStatus =
+      memberData.profile.newsletterOptIn =
         data.profile.newsletterStatus === NewsletterStaus.Subscribed
           ? true
           : false;
+      memberData.profile.deliveryOptIn = data.profile.deliveryOptIn;
       memberData.addressLine1 = data.profile.deliveryAddress.line1;
       memberData.addressLine2 = data.profile.deliveryAddress.line2;
       memberData.cityOrTown = data.profile.deliveryAddress.city;
