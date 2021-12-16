@@ -88,7 +88,7 @@
         <div class="mb-4">
           <input
             id="newsletterOptIn"
-            v-model="memberData.profile.newsletterStatus"
+            v-model="memberData.profile.newsletterOptIn"
             type="checkbox"
             name="updates"
           />

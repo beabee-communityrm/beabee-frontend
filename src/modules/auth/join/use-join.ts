@@ -71,7 +71,7 @@ const memberData = reactive<MemberData>({
   firstName: '',
   lastName: '',
   profile: {
-    newsletterStatus: false,
+    newsletterOptIn: false,
     deliveryOptIn: false,
   },
   addressLine1: '',
@@ -173,11 +173,7 @@ const completeSetup = async (router: Router) => {
 
   loading.value = true;
 
-  updateMember(
-    memberData,
-    setupContent.value.showNewsletterOptIn,
-    setupContent.value.showMailOptIn
-  )
+  updateMember(memberData, setupContent.value.showMailOptIn)
     .then(() => {
       router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
     })
@@ -218,7 +214,7 @@ const setMemberData = () => {
       memberData.firstName = data.firstname;
       memberData.lastName = data.lastname;
       memberData.email = data.email;
-      memberData.profile.newsletterStatus =
+      memberData.profile.newsletterOptIn =
         data.profile.newsletterStatus === NewsletterStaus.Subscribed
           ? true
           : false;

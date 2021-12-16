@@ -4,8 +4,8 @@ import { ContributionPeriod } from '../../../utils/enums/contribution-period.enu
 import {
   DeliveryAddress,
   MemberData,
-  MemberRequest,
-  Profile,
+  UpdateMemberRequest,
+  UpdateProfile,
   SignUpData,
 } from './join.interface';
 import { NewsletterStaus } from './newsletter-status.enum';
@@ -60,32 +60,29 @@ const fetchMember = (): Promise<any> => {
 };
 const updateMember = (
   memberData: MemberData,
-  showNewsletterOptIn: boolean,
   showMailOptIn: boolean
 ): Promise<any> => {
-  const params: MemberRequest = {
+  const params: UpdateMemberRequest = {
     email: memberData.email,
     firstname: memberData.firstName,
     lastname: memberData.lastName,
   };
 
-  if (showNewsletterOptIn || showMailOptIn) {
-    params.profile = {} as Profile;
-
-    if (showNewsletterOptIn) {
-      params.profile.newsletterStatus = memberData.profile.newsletterStatus
-        ? NewsletterStaus.Subscribed
-        : NewsletterStaus.Unsubscribed;
-    }
-
-    if (showMailOptIn) {
-      params.profile.deliveryOptIn = memberData.profile.deliveryOptIn;
-      params.profile.deliveryAddress = {} as DeliveryAddress;
-      params.profile.deliveryAddress.line1 = memberData.addressLine1;
-      params.profile.deliveryAddress.line2 = memberData.addressLine2;
-      params.profile.deliveryAddress.city = memberData.cityOrTown;
-      params.profile.deliveryAddress.postcode = memberData.postCode;
-    }
+  if (memberData.profile.newsletterOptIn || showMailOptIn) {
+    params.profile = {
+      ...(memberData.profile.newsletterOptIn && {
+        newsletterStatus: NewsletterStaus.Subscribed,
+      }),
+      ...(showMailOptIn && {
+        deliveryOptIn: memberData.profile.deliveryOptIn,
+        deliveryAddress: {
+          line1: memberData.addressLine1,
+          line2: memberData.addressLine2,
+          city: memberData.cityOrTown,
+          postcode: memberData.postCode,
+        },
+      }),
+    };
   }
 
   return axios.patch('/member/me', params);
