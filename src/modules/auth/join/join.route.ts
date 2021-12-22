@@ -61,7 +61,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
       confirmEmail(id)
         .then(() => {
           localStorage.setItem('isAuthenticated', 'true');
-          next('/join/setup');
+          window.location.href = '/profile/complete';
         })
         .catch((error) => {
           if (error.response?.data?.code === 'duplicate-email') {
