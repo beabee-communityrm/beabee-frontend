@@ -3,3 +3,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.content-message p,
+.content-message ul,
+.content-message ol {
+  margin: 0;
+}
+
+.content-message ul {
+  @apply pl-3 list-inside list-disc;
+}
+
+.content-message ol {
+  @apply pl-3 list-inside list-decimal;
+}
