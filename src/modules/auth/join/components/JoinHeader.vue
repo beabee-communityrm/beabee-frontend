@@ -7,7 +7,7 @@
         class="w-16 flex-none self-start"
       />
       <div class="flex flex-col ml-4">
-        <h1 class="font-semibold text-2xl">
+        <h1 class="font-title font-semibold text-2xl">
           {{ title }}
         </h1>
         <p v-if="subTitle" class="mt-2">
@@ -16,9 +16,7 @@
       </div>
     </div>
 
-    <h2 v-if="description">
-      {{ description }}
-    </h2>
+    <div class="content-message" v-html="description" />
   </header>
 </template>
 
@@ -28,7 +26,7 @@ const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
 defineProps({
   title: {
     type: String,
-    default: '',
+    required: true,
   },
   subTitle: {
     type: String,
@@ -36,7 +34,7 @@ defineProps({
   },
   description: {
     type: String,
-    default: '',
+    required: true,
   },
 });
 </script>

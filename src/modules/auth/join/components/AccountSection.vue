@@ -1,7 +1,5 @@
 <template>
   <section class="mb-6">
-    <h3 class="font-semibold text-lg mb-1">{{ t('join.memberAccount') }}</h3>
-
     <p class="mb-3 text-sm">
       {{ t('join.memberAlready') }}
       <router-link
