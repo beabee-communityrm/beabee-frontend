@@ -29,7 +29,7 @@
 
       <div
         class="
-          welcome-message-content
+          content-message
           text-sm
           leading-5
           md:text-base md:leading-5.5
@@ -91,22 +91,5 @@ defineEmits(['close']);
     width: 17rem;
     height: 19.125rem;
   }
-}
-</style>
-
-<style>
-/* not scoped because content is dynamic from the API */
-.welcome-message-content p,
-.welcome-message-content ul,
-.welcome-message-content ol {
-  margin: 0;
-}
-
-.welcome-message-content ul {
-  @apply pl-3 list-inside list-disc;
-}
-
-.welcome-message-content ol {
-  @apply pl-3 list-inside list-decimal;
 }
 </style>

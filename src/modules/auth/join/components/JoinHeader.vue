@@ -16,9 +16,7 @@
       </div>
     </div>
 
-    <h2 v-if="description">
-      {{ description }}
-    </h2>
+    <div class="content-message" v-html="description" />
   </header>
 </template>
 
@@ -28,7 +26,7 @@ const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
 defineProps({
   title: {
     type: String,
-    default: '',
+    required: true,
   },
   subTitle: {
     type: String,
@@ -36,7 +34,7 @@ defineProps({
   },
   description: {
     type: String,
-    default: '',
+    required: true,
   },
 });
 </script>
