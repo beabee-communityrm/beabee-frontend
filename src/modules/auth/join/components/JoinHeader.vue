@@ -7,7 +7,7 @@
         class="w-16 flex-none self-start"
       />
       <div class="flex flex-col ml-4">
-        <h1 class="font-semibold text-2xl">
+        <h1 class="font-title font-semibold text-2xl">
           {{ title }}
         </h1>
         <p v-if="subTitle" class="mt-2">
