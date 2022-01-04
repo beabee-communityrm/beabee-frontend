@@ -17,3 +17,7 @@
 .content-message ol {
   @apply pl-3 list-inside list-decimal;
 }
+
+.content-message a {
+  @apply text-link underline;
+}
