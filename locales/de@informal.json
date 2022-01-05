@@ -37,7 +37,7 @@
     "willExpire": "Deine Mitgliedschaft läuft in {expires} ab."
   },
   "forgotPassword": {
-    "checkInbox": "Bitte schaue in deinen Posteingang und befolge die Anleitung in der Email.",
+    "checkInbox": "Bitte schaue in deinen Posteingang und befolge die Anleitung in der Email. Sollte die Email nicht auftauchen, checke deinen Spamordner. ",
     "description": "Bitte gib deine Email-Adresse ein. Wir schicken dir dann die Anleitung zum Zurücksetzen deines Passworts.",
     "message": "Gibt es einen Account mit der Email-Adresse {email}, bekommst du in Kürze eine Nachricht.",
     "resetPassword": "Passwort zurücksetzen",
@@ -128,7 +128,9 @@
     "memberAccount": "Mitglieder-Account",
     "memberAlready": "Bist du bereits Mitglied?",
     "minimumContribution": "Der minimale Beitrag ist",
+    "noContribution": "Ich möchte jetzt keinen Beitrag leisten",
     "notice": "Indem du fortfährst, akzeptierst Du unsere",
+    "now": "Jetzt Mitglied werden! ",
     "privacy": "Datenschutzerklärung"
   },
   "joinSetup": {
