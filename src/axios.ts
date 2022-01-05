@@ -11,13 +11,7 @@ const onResponseError = (error: any) => {
   if (!error.response) return notifyError();
 
   const status = error.response.status;
-
-  // - TODO: if we receive more precise erros form
-  // API response we can show more precise erros-
-  if (status === 401) {
-    localStorage.setItem('isAuthenticated', 'false');
-    localStorage.removeItem('user');
-  } else if (status >= 500) {
+  if (status >= 500) {
     notifyError();
   }
 
