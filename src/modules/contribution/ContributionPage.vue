@@ -3,7 +3,7 @@
     <PageTitle :title="t('menu.contribution')" />
   </div>
 
-  <div class="grid grid-cols-12">
+  <div v-if="!isIniting" class="grid grid-cols-12">
     <div class="col-span-12 md:col-span-7 lg:col-span-5">
       <ContributionBox
         v-if="!hasNoneType"
@@ -117,10 +117,11 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
 const {
+  isIniting,
+  initContributionPage,
   currentContribution,
   newContribution,
   contributionContent,
-  setContributionContent,
   isMonthly,
   changePeriod,
   shouldForceFee,
@@ -129,7 +130,6 @@ const {
   fee,
   isContributionFormInvalid,
   submitContribution,
-  setCurrentContribution,
   showContributionForm,
   contributionButtonText,
   paymentSourceLoading,
@@ -148,11 +148,6 @@ const period = computed(() =>
 );
 
 onBeforeMount(() => {
-  // - TODO: Why component isn't destroyed on route change?
-  // It's here because it doesn't return to it's initial value on
-  // route change
-  cantUpdatePaymentSource.value = false;
-  setCurrentContribution();
-  setContributionContent();
+  initContributionPage();
 });
 </script>

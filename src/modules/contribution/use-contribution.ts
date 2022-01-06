@@ -44,33 +44,55 @@ const newContribution = reactive<NewContribution>({
   payFee: true,
 });
 
+const contributionContent = reactive<ContributionContent>({
+  initialAmount: 5,
+  initialPeriod: '',
+  minMonthlyAmount: 5,
+  periods: [],
+  showAbsorbFee: true,
+});
+
 const hasPaymentSource = computed(() => paymentSource.type);
 
-const setCurrentContribution = () => {
-  fetchContribution()
-    .then(({ data }) => {
-      currentContribution.amount = data.amount;
-      currentContribution.period = data.period;
-      currentContribution.type = data.type;
-      currentContribution.membershipExpiryDate = data.membershipExpiryDate;
-      currentContribution.cancellationDate = data.cancellationDate;
-      currentContribution.membershipStatus = data.membershipStatus;
+const isIniting = ref(false);
+const cantUpdatePaymentSource = ref(false);
 
-      if (currentContribution.type !== ContributionType.None) {
-        newContribution.amount = data.amount;
-        newContribution.period = data.period;
-        // TODO: sync payFee too
-      }
+const initContributionPage = async () => {
+  isIniting.value = true;
+  cantUpdatePaymentSource.value = false;
 
-      if (data.paymentSource) {
-        paymentSource.type = data.paymentSource.type;
-        paymentSource.bankName = data.paymentSource.bankName;
-        paymentSource.accountHolderName = data.paymentSource.accountHolderName;
-        paymentSource.accountNumberEnding =
-          data.paymentSource.accountNumberEnding;
-      }
-    })
-    .catch((err) => err);
+  const contrib = (await fetchContribution()).data;
+  currentContribution.amount = contrib.amount;
+  currentContribution.period = contrib.period;
+  currentContribution.type = contrib.type;
+  currentContribution.membershipExpiryDate = contrib.membershipExpiryDate;
+  currentContribution.cancellationDate = contrib.cancellationDate;
+  currentContribution.membershipStatus = contrib.membershipStatus;
+
+  if (currentContribution.type !== ContributionType.None) {
+    newContribution.amount = contrib.amount;
+    newContribution.period = contrib.period;
+    // TODO: sync payFee too
+  }
+
+  if (contrib.paymentSource) {
+    paymentSource.type = contrib.paymentSource.type;
+    paymentSource.bankName = contrib.paymentSource.bankName;
+    paymentSource.accountHolderName = contrib.paymentSource.accountHolderName;
+    paymentSource.accountNumberEnding =
+      contrib.paymentSource.accountNumberEnding;
+  }
+
+  // TODO: currently contribution content is part of
+  // join content API.
+  const content = (await fetchJoinContent()).data;
+  contributionContent.initialAmount = content.initialAmount;
+  contributionContent.initialPeriod = content.initialPeriod;
+  contributionContent.minMonthlyAmount = content.minMonthlyAmount;
+  contributionContent.periods = content.periods;
+  contributionContent.showAbsorbFee = content.showAbsorbFee;
+
+  isIniting.value = false;
 };
 
 const submitCreateContribution = () => {
@@ -106,29 +128,6 @@ const submitContribution = () => {
   }
 };
 
-const contributionContent = reactive<ContributionContent>({
-  initialAmount: 5,
-  initialPeriod: '',
-  minMonthlyAmount: 5,
-  periods: [],
-  showAbsorbFee: true,
-});
-
-const setContributionContent = () => {
-  // TODO: currently contribution content is part of
-  // join content API.
-  fetchJoinContent()
-    .then(({ data }) => {
-      contributionContent.initialAmount = data.initialAmount;
-      contributionContent.initialPeriod = data.initialPeriod;
-      contributionContent.minMonthlyAmount = data.minMonthlyAmount;
-      contributionContent.periods = data.periods;
-      contributionContent.showAbsorbFee = data.showAbsorbFee;
-    })
-    .catch((err) => err);
-};
-
-const cantUpdatePaymentSource = ref(false);
 const paymentSourceLoading = ref(false);
 
 const updatePaymentSource = () => {
@@ -234,11 +233,11 @@ const submitCancelContribution = () => {
 
 export function useContribution() {
   return {
+    isIniting,
+    initContributionPage,
     newContribution,
     currentContribution,
-    setCurrentContribution,
     contributionContent,
-    setContributionContent,
     isContributionFormInvalid,
     isMonthly,
     changePeriod,
