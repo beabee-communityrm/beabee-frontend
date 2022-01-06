@@ -17,7 +17,10 @@
         </li>
       </ul>
     </nav>
-    <nav v-if="currentUserCan(Role.Admin)" class="menu-section is-settings">
+    <nav
+      v-if="currentUserCan(Role.Admin) && false"
+      class="menu-section is-settings"
+    >
       <div class="py-2 border-t border-primary-40">{{ t('menu.admin') }}</div>
       <a href="/members" class="menu-item cursor-pointer">
         <TheMenuListItem
