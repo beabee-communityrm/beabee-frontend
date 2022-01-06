@@ -14,12 +14,12 @@ export default [
         title: t('menu.yourProfile'),
         href: '/profile/edit',
         icon: 'user',
-      },*/
+      },
       {
         title: t('menu.callouts'),
         href: '/callouts',
         icon: 'calendar-check',
-      },
+      },*/
     ],
   },
   {
