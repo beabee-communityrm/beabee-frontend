@@ -17,6 +17,15 @@
         </li>
       </ul>
     </nav>
+    <nav
+      v-if="currentUserCan(Role.SuperAdmin)"
+      class="menu-section is-settings"
+    >
+      <div class="py-2 border-t border-primary-20">Admin</div>
+      <a href="/members" class="menu-item cursor-pointer">
+        <TheMenuListItem :icon="['fa', 'users']" title="Dashboard" />
+      </a>
+    </nav>
   </div>
   <div class="menu-logout">
     <a class="menu-item cursor-pointer" @click="doLogout">
