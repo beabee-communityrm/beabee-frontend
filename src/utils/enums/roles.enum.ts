@@ -1,6 +1,6 @@
 export enum Role {
-  NotLoggedIn = 'not-logged-in',
+  NotLoggedIn = 'notloggedin',
   Member = 'member',
   Admin = 'admin',
-  SuperAdmin = 'super-admin',
+  SuperAdmin = 'superadmin',
 }
