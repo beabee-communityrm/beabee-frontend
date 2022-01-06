@@ -3,6 +3,7 @@ import { homeRoute } from '../modules/home/home.route';
 import { informationRoute } from '../modules/information/information.route';
 import { joinRoute } from '../modules/auth/join/join.route';
 import { authRoute } from '../modules/auth/auth.route';
+import { themeRoute } from '../modules/theme/theme.route';
 import { contributionRoute } from '../modules/contribution/contribution.route';
 import { fetchMember } from '../modules/home/home.service';
 import { Roles } from '../utils/enums/roles.enum';
@@ -14,6 +15,7 @@ const routes: RouteRecordRaw[] = [
   ...joinRoute,
   ...homeRoute,
   ...authRoute,
+  ...themeRoute,
   ...contributionRoute,
 ];
 
