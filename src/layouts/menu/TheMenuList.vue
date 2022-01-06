@@ -17,30 +17,36 @@
         </li>
       </ul>
     </nav>
-    <nav
-      v-if="currentUserCan(Role.SuperAdmin)"
-      class="menu-section is-settings"
-    >
-      <div class="py-2 border-t border-primary-20">Admin</div>
+    <nav v-if="currentUserCan(Role.Admin)" class="menu-section is-settings">
+      <div class="py-2 border-t border-primary-40">{{ t('menu.admin') }}</div>
       <a href="/members" class="menu-item cursor-pointer">
-        <TheMenuListItem :icon="['fa', 'users']" title="Dashboard" />
+        <TheMenuListItem
+          :icon="['fa', 'users']"
+          :title="t('menu.adminDashboard')"
+        />
       </a>
     </nav>
   </div>
   <div class="menu-logout">
     <a class="menu-item cursor-pointer" @click="doLogout">
-      <TheMenuListItem :icon="['fa', 'sign-in-alt']" title="Logout" />
+      <TheMenuListItem
+        :icon="['fa', 'sign-in-alt']"
+        :title="t('menu.logout')"
+      />
     </a>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { logout } from '../../modules/auth/auth.service';
 import { MenuSection } from './menu-list.interface';
 import currentUserCan from '../../utils/currentUserCan';
 import TheMenuListItem from './TheMenuListItem.vue';
 import { Role } from '../../utils/enums/roles.enum';
+
+const { t } = useI18n();
 
 defineProps({
   sections: {

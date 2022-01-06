@@ -149,9 +149,12 @@
     "wrongCredentials": "Wrong password/email combination"
   },
   "menu": {
+    "admin": "Admin",
+    "adminDashboard": "Dashboard",
     "callouts": "Callouts",
     "contribution": "Contribution",
     "home": "Home",
+    "logout": "Log out",
     "settings": "Settings",
     "yourInformation": "Your information",
     "yourProfile": "Your profile"
