@@ -1,4 +1,6 @@
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
+import { Periods } from '../../contribution/contribution.interface';
+import { NewsletterStaus } from './newsletter-status.enum';
 
 export interface SignUpData {
   email: string;
@@ -6,7 +8,7 @@ export interface SignUpData {
   amount: number;
   period: ContributionPeriod;
   payFee: boolean;
-  completeUrl: string;
+  noContribution: boolean;
 }
 
 export interface MemberData {
@@ -14,12 +16,36 @@ export interface MemberData {
   firstName: string;
   lastName: string;
   profile: {
-    newsletterStatus: boolean;
+    newsletterOptIn: boolean;
+    deliveryOptIn: boolean;
   };
+  addressLine1: string;
+  addressLine2: string;
+  cityOrTown: string;
+  postCode: string;
+}
+
+export interface UpdateMemberRequest {
+  email: string;
+  firstname: string;
+  lastname: string;
+  profile?: UpdateProfile;
+}
+
+export interface UpdateProfile {
+  newsletterStatus?: NewsletterStaus;
+  deliveryOptIn?: boolean;
+  deliveryAddress?: DeliveryAddress;
+}
+
+export interface DeliveryAddress {
+  line1: string;
+  line2: string;
+  city: string;
+  postcode: string;
 }
 
 export interface JoinContentData {
-  currencySymbol: string;
   initialAmount: number;
   initialPeriod: string;
   minMonthlyAmount: number;
@@ -27,6 +53,7 @@ export interface JoinContentData {
   periods: Periods[];
   privacyLink: string;
   showAbsorbFee: boolean;
+  showNoContribution: boolean;
   subtitle: string;
   termsLink: string;
   title: string;
@@ -38,9 +65,8 @@ export interface SetupContentData {
   newsletterOptIn: string;
   newsletterTitle: string;
   showNewsletterOptIn: boolean;
-}
-
-export interface Periods {
-  name: string;
-  presetAmounts: number[];
+  showMailOptIn: boolean;
+  mailTitle: string;
+  mailText: string;
+  mailOptIn: string;
 }

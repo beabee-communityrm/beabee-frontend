@@ -1,14 +1,16 @@
 <template>
   <AppLink :to="notice.url">
-    <div class="mb-2 bg-white rounded p-4.5 flex md:items-center shadow">
-      <font-awesome-icon
-        class="text-warning text-xl mr-2"
-        :icon="['fas', 'bullhorn']"
-      />
+    <div class="mb-2 bg-white rounded p-4.5 flex shadow">
+      <div class="flex md:mt-1.5">
+        <font-awesome-icon
+          class="text-warning text-xl md:mt-1 mr-2 self-start"
+          :icon="['fas', 'bullhorn']"
+        />
 
-      <span class="text-sm md:text-lg">
-        {{ notice.text }}
-      </span>
+        <div class="text-sm pr-3 md:text-lg">
+          {{ notice.text }}
+        </div>
+      </div>
 
       <div class="ml-auto hidden md:flex">
         <AppButton :to="notice.url">{{ notice.buttonText }}</AppButton>

@@ -1,6 +1,6 @@
 <template>
   <label class="block mb-1.5 font-semibold" :for="inputType"
-    >{{ label }}
+    >{{ formattedLabel }}
   </label>
   <input
     :id="inputType"
@@ -9,6 +9,7 @@
     :class="dangerClasses"
     :value="modelValue"
     v-bind="$attrs"
+    :required="required"
     @input="$emit('update:modelValue', handleInput($event))"
   />
 
@@ -21,20 +22,14 @@
   </div>
 
   <div v-if="infoMessage" class="mt-2 text-xs">
-    <div class="flex text-primary-80">
-      <font-awesome-icon
-        class="text-xl -mt-0.5"
-        :icon="['fas', 'info-circle']"
-      />
-
-      <span class="ml-1">{{ infoMessage }}</span>
-    </div>
+    <InfoMessage :message="infoMessage" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, Ref } from '@vue/reactivity';
 import handleInput from '../../utils/handle-input';
+import InfoMessage from '../InfoMessage.vue';
 
 const props = defineProps({
   modelValue: {
@@ -60,6 +55,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  required: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 defineEmits(['update:modelValue']);
@@ -67,11 +66,14 @@ defineEmits(['update:modelValue']);
 const dangerClasses = computed(() => {
   return props.errorMessage ? ['bg-danger-10', 'border-danger-70'] : null;
 });
+
+const formattedLabel = computed(() => {
+  return props.required ? props.label + '*' : props.label;
+});
 </script>
 
 <style scoped>
 .input:focus {
-  box-shadow: var(--input-focus-box-shadow-size)
-    var(--input-focus-box-shadow-color);
+  @apply shadow-input;
 }
 </style>

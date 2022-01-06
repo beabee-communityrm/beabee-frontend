@@ -1,8 +1,4 @@
-@import './assets/styles/vars.css';
-@import '@fontsource/open-sans/400.css';
-@import '@fontsource/open-sans/600.css';
-@import '@fontsource/open-sans/700.css';
-@import '@fontsource/open-sans/800.css';
+@import './assets/styles/fonts.css';
 
 @tailwind base;
 @tailwind components;

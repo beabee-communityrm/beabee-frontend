@@ -35,13 +35,18 @@
       </router-link>
     </div>
 
-    <ErrorAggregator v-if="hasLoginError" class="mb-4" />
+    <MessageBox v-if="hasLoginFormError" class="mb-4" />
+
+    <MessageBox v-if="hasCredentialError" class="mb-4">
+      {{ t('login.wrongCredentials') }}
+    </MessageBox>
 
     <AppButton
       variant="link"
       :disabled="isFormInvalid || loading"
       type="submit"
-      @click="submitLogin(router, redirectTo)"
+      class="w-full"
+      @click="submitLogin(redirectTo)"
       >{{ t('login.login') }}</AppButton
     >
   </form>
@@ -50,23 +55,23 @@
 <script lang="ts" setup>
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
-import ErrorAggregator from '../../../components/forms/ErrorAggregator.vue';
+import MessageBox from '../../../components/MessageBox.vue';
 import { errorGenerator } from '../../../utils/form-error-generator';
 import { useLogin } from './use-login';
-import { useRouter, useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-const router = useRouter();
 const route = useRoute();
-const redirectTo = route.query.redirectTo as string;
+const redirectTo = route.query.next as string | undefined;
 
 const {
   loginData,
   loginValidation,
   isFormInvalid,
-  hasLoginError,
+  hasLoginFormError,
+  hasCredentialError,
   submitLogin,
   loading,
 } = useLogin();

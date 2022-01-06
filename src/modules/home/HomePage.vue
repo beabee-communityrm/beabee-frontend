@@ -18,18 +18,22 @@
     :sub-title="profileContent.welcomeMessage"
   />
 
-  <section class="mb-10 md:mb-12">
-    <NoticeContainer />
+  <section v-if="showWelcomeMessage" class="mb-10">
+    <WelcomeMessage
+      :member-first-name="member.firstName"
+      :text="profileContent.introMessage"
+      @close="removeWelcomeMessage"
+    />
   </section>
+
+  <NoticeContainer class="mb-10 md:mb-12" />
 
   <section class="mb-8 md:hidden">
     <QuickActions />
   </section>
 
   <div class="flex flex-col content-container">
-    <section class="mb-8 pr-4">
-      <CalloutContainer />
-    </section>
+    <CalloutContainer class="mb-8 pr-4" />
 
     <!-- your profile section -->
     <section>
@@ -51,7 +55,7 @@
     </section>
   </div>
 
-  <section class="mt-20 max-w-xs md:max-w-sm mx-auto">
+  <section class="pt-20 mt-auto max-w-xs md:max-w-sm mx-auto">
     <ThanksNotice>{{ profileContent.footerMessage }}</ThanksNotice>
   </section>
 </template>
@@ -66,14 +70,24 @@ import SectionTitle from './SectionTitle.vue';
 import PageTitle from '../../components/PageTitle.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import AppAlert from '../../components/AppAlert.vue';
+import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
 import { useHome } from './use-home';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
+import { ref } from '@vue/reactivity';
 
 const { t } = useI18n();
 
 const isPasswordReset = useRoute().query.passwordReset === 'true';
+
+const hasWelcomeMessageQuery = useRoute().query.welcomeMessage === 'true';
+
+const showWelcomeMessage = ref(hasWelcomeMessageQuery);
+
+const removeWelcomeMessage = () => {
+  showWelcomeMessage.value = false;
+};
 
 const {
   member,

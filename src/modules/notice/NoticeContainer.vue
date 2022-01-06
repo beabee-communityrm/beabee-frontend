@@ -1,15 +1,17 @@
 <template>
-  <div v-if="notices.length">
+  <section v-if="notices.length">
     <AppNotice v-for="notice in notices" :key="notice.id" :notice="notice" />
-  </div>
+  </section>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from '@vue/runtime-core';
+import { onBeforeMount } from '@vue/runtime-core';
 import AppNotice from './AppNotice.vue';
 import { useNotice } from './use-notice';
 
 const { setNotices, notices } = useNotice();
 
-onMounted(setNotices);
+onBeforeMount(() => {
+  setNotices();
+});
 </script>

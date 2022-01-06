@@ -4,33 +4,75 @@
       <JoinHeader
         class="mb-3"
         :title="joinContent.title"
-        :sub-title="joinContent.subtitle"
+        :description="joinContent.subtitle"
       />
 
-      <JoinPeriod class="mb-6" @change-period="changePeriod" />
+      <h3
+        v-if="joinContent.showNoContribution"
+        class="font-semibold text-lg mb-1"
+      >
+        {{ t('join.contribution') }}
+      </h3>
 
-      <JoinAmount v-model="signUpData.amount" class="mb-5" />
+      <div v-if="joinContent.showNoContribution" class="mb-4">
+        <label>
+          <input v-model="signUpData.noContribution" type="checkbox" />
+          {{ t('join.noContribution') }}
+        </label>
+      </div>
+
+      <ContributionPeriod
+        v-if="!signUpData.noContribution"
+        class="mb-6"
+        :periods="joinContent.periods"
+        :selected-period="signUpData.period"
+        @change-period="changePeriod"
+      />
+
+      <ContributionAmount
+        v-if="!signUpData.noContribution"
+        v-model.number="signUpData.amount"
+        :is-monthly="isMonthly"
+        :min-amount="minAmount"
+        :defined-amounts="definedAmounts"
+        class="mb-5"
+      />
 
       <AccountSection
         @update-email="signUpData.email = $event"
         @update-password="signUpData.password = $event"
       />
 
-      <PaymentSection v-if="isMonthly" />
+      <ContributionFee
+        v-if="
+          !signUpData.noContribution && isMonthly && joinContent.showAbsorbFee
+        "
+        v-model="signUpData.payFee"
+        :amount="signUpData.amount"
+        :fee="fee"
+        :force="shouldForceFee"
+      />
 
-      <error-aggregator v-if="hasJoinError" class="mb-4" />
+      <MessageBox v-if="hasJoinError" class="mb-4" />
 
       <AppButton
         :disabled="isJoinFormInvalid"
+        :loading="loading"
         variant="link"
-        class="mb-4"
-        @click="submitSignUp"
+        type="submit"
+        class="mb-4 w-full"
+        @click="submitSignUp($router)"
       >
         {{
-          t('join.contribute', {
-            amount: n(totalAmount, 'currency'),
-            period: signUpData.period,
-          })
+          signUpData.noContribution
+            ? t('join.now')
+            : t('join.contribute', {
+                amount: n(totalAmount, 'currency'),
+                period:
+                  signUpData.period === 'monthly'
+                    ? t('common.month')
+                    : t('common.year'),
+              })
         }}
       </AppButton>
 
@@ -41,31 +83,41 @@
 
 <script lang="ts" setup>
 import JoinHeader from './components/JoinHeader.vue';
-import JoinPeriod from './components/JoinPeriod.vue';
-import JoinAmount from './components/JoinAmount.vue';
+import ContributionPeriod from '../../contribution/components/ContributionPeriod.vue';
+import ContributionAmount from '../../contribution/components/ContributionAmount.vue';
 import AuthBox from '../AuthBox.vue';
 import AccountSection from './components/AccountSection.vue';
-import PaymentSection from './components/PaymentSection.vue';
+import ContributionFee from '../../contribution/components/ContributionFee.vue';
 import JoinFooter from './components/JoinFooter.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
-import ErrorAggregator from '../../../components/forms/ErrorAggregator.vue';
+import MessageBox from '../../../components/MessageBox.vue';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useJoin } from './use-join';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 
 const { t, n } = useI18n();
 
 const {
   signUpData,
   totalAmount,
+  definedAmounts,
+  minAmount,
   isMonthly,
   isJoinFormInvalid,
   hasJoinError,
+  loading,
   submitSignUp,
   joinContent,
   setJoinContent,
   changePeriod,
+  shouldForceFee,
+  fee,
 } = useJoin();
 
-onBeforeMount(setJoinContent);
+const route = useRoute();
+
+onBeforeMount(() => {
+  setJoinContent(route.query);
+});
 </script>

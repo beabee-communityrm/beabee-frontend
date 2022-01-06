@@ -1,9 +1,17 @@
 <template>
   <form @submit.prevent>
-    <h1 class="text-2.5xl mb-6">{{ t('resetPassword.title') }}</h1>
+    <h1 class="text-2.5xl mb-6">
+      {{ isSetPassword ? t('setPassword.title') : t('resetPassword.title') }}
+    </h1>
 
     <div class="mb-5">
-      <p class="font-semibold">{{ t('resetPassword.description') }}</p>
+      <p class="font-semibold">
+        {{
+          isSetPassword
+            ? t('setPassword.description')
+            : t('resetPassword.description')
+        }}
+      </p>
     </div>
 
     <div class="mb-5">
@@ -32,13 +40,15 @@
     <AppButton
       variant="link"
       :disabled="isFormInvalid || loading"
-      class="mb-4"
+      class="mb-4 w-full"
       type="submit"
-      @click="submitResetPassword(resetPasswordFlowId, router)"
-      >{{ t('resetPassword.changePassword') }}</AppButton
+      @click="submitResetPassword(resetPasswordFlowId, router, redirectTo)"
+      >{{
+        isSetPassword ? t('common.login') : t('resetPassword.changePassword')
+      }}</AppButton
     >
 
-    <div class="text-center">
+    <div v-if="!isSetPassword" class="text-center">
       <router-link
         variant="link"
         to="/auth/login"
@@ -62,6 +72,8 @@ const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
+const isSetPassword = route.params.type === 'set';
+const redirectTo = route.query.next as string | undefined;
 const resetPasswordFlowId = route.params.id as string;
 
 const {

@@ -14,6 +14,9 @@ function shades(_color, levels = []) {
   );
 }
 
+const fonts = theme.fonts || {};
+const bodyFont = fonts.body || '"Open Sans", sans-serif';
+
 module.exports = {
   purge: {
     content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
@@ -30,6 +33,7 @@ module.exports = {
       success: shades(theme.colors.success || '#86a960', [10, 30, 70]),
       danger: shades(theme.colors.danger || '#ce3d3d', [10, 30, 70]),
       white: shades(theme.colors.white || '#ffffff'),
+      black: shades(theme.colors.black || '#000000'),
       grey: {
         lighter: '#f6f6f6',
         light: '#c7c7c7',
@@ -37,13 +41,10 @@ module.exports = {
         dark: '#5f5f5f',
         darker: '#434343',
       },
-      black: {
-        DEFAULT: '#000000',
-      },
     },
     fontFamily: {
-      body: theme.fonts.body,
-      title: theme.fonts.title || theme.fonts.body,
+      body: bodyFont,
+      title: fonts.title || bodyFont,
     },
     extend: {
       borderRadius: {
@@ -51,6 +52,7 @@ module.exports = {
       },
       lineHeight: {
         tight: '1.3',
+        5.5: '1.375rem',
       },
       screens: {
         xl: '1400px',
@@ -69,9 +71,13 @@ module.exports = {
       },
       boxShadow: {
         DEFAULT: '0 0 8px 0 rgba(0, 0, 0, 0.2)',
+        input:
+          '0 0 0 0.125em ' +
+          Color(theme.colors.secondary).alpha(0.25).rgb().string(),
       },
       fontSize: {
         '2.5xl': '1.75rem',
+        '3.5xl': '2rem',
       },
     },
   },

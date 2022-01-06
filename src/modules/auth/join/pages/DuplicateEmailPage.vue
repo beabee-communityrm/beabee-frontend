@@ -8,7 +8,7 @@
       </template>
 
       <template #footer>
-        <AppButton to="/login" class="mb-2">
+        <AppButton to="/auth/login" class="mb-2 w-full">
           {{ t('join.login') }}
         </AppButton>
 

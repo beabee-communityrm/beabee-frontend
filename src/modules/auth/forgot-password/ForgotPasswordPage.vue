@@ -20,6 +20,7 @@
         variant="link"
         :disabled="isFormInvalid || loading"
         type="submit"
+        class="w-full"
         @click="submitForgotPassword"
         >{{ t('forgotPassword.resetPassword') }}</AppButton
       >
@@ -28,14 +29,16 @@
     <template v-else>
       <!-- TODO: fix by adding appropriate formatting -->
       <p class="mb-5 p-4 bg-primary-10 rounded">
-        <span>
-          {{ t('forgotPassword.messageFirstPart') }}
-          <b>{{ ` ${forgotPasswordData.email} ` }}</b>
-        </span>
-        <span v-html="t('forgotPassword.messageSecondPart')" />
+        <i18n-t keypath="forgotPassword.message">
+          <template #email>
+            <b>{{ forgotPasswordData.email }}</b>
+          </template>
+        </i18n-t>
+        <br />
+        {{ t('forgotPassword.checkInbox') }}
       </p>
 
-      <AppButton variant="link" to="/auth/login" type="submit">{{
+      <AppButton class="w-full" variant="link" to="/auth/login">{{
         t('login.login')
       }}</AppButton>
     </template>

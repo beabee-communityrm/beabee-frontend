@@ -1,5 +1,5 @@
 <template>
-  <div v-if="callouts.length">
+  <section v-if="callouts.length">
     <!-- small screens title -->
     <div class="flex md:hidden justify-center mb-8 relative">
       <span class="absolute w-full h-px bg-white top-1/2" />
@@ -36,6 +36,7 @@
       <CalloutCard class="w-76" :callout="callouts[0]" />
     </div>
 
+    <!-- hide because we don't have a page for all callouts yet
     <div class="text-center md:text-left">
       <router-link
         to="/callouts"
@@ -49,11 +50,12 @@
         >{{ t('homePage.viewAllCallouts') }}</router-link
       >
     </div>
-  </div>
+    -->
+  </section>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from '@vue/runtime-core';
+import { onBeforeMount } from '@vue/runtime-core';
 import CalloutCard from './CalloutCard.vue';
 import { useCallout } from './use-callout';
 import AppBadge from '../../components/AppBadge.vue';
@@ -63,5 +65,7 @@ const { t } = useI18n();
 
 const { setCallouts, callouts } = useCallout();
 
-onMounted(setCallouts);
+onBeforeMount(() => {
+  setCallouts();
+});
 </script>

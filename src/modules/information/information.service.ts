@@ -3,7 +3,7 @@ import { Information, UpdateInformation } from './information.interface';
 
 const fetchInformation = (): Promise<Information> => {
   return axios
-    .get('/member/me')
+    .get('/member/me?with[]=profile')
     .then(({ data }) => {
       return data;
     })
@@ -13,22 +13,20 @@ const fetchInformation = (): Promise<Information> => {
 const updateInformation = (
   updateInformation: UpdateInformation
 ): Promise<Information> => {
-  return axios
-    .put('/member/me', {
-      email: updateInformation.emailAddress,
-      firstname: updateInformation.firstName,
-      lastname: updateInformation.lastName,
-      password: updateInformation.password,
-      profile: {
-        deliveryAddress: {
-          line1: updateInformation.addressLine1,
-          line2: updateInformation.addressLine2,
-          city: updateInformation.cityOrTown,
-          postcode: updateInformation.postCode,
-        },
+  return axios.patch('/member/me', {
+    email: updateInformation.emailAddress,
+    firstname: updateInformation.firstName,
+    lastname: updateInformation.lastName,
+    password: updateInformation.password,
+    profile: {
+      deliveryAddress: {
+        line1: updateInformation.addressLine1,
+        line2: updateInformation.addressLine2,
+        city: updateInformation.cityOrTown,
+        postcode: updateInformation.postCode,
       },
-    })
-    .catch((err) => err);
+    },
+  });
 };
 
 export { fetchInformation, updateInformation };

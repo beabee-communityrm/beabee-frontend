@@ -1,22 +1,45 @@
 {
   "common": {
     "annually": "Jährlich",
+    "backToHome": "Zurück zur Startseite",
     "contributing": "Ihr Beitrag",
     "every": "pro",
+    "goBack": "Zurück",
     "hello": "Hallo",
     "in": "in",
     "joined": "Mitglied seit",
+    "login": "Login",
     "month": "Monat",
     "monthly": "Monatlich",
     "new": "neu!",
     "participate": "Teilnehmen",
+    "thankYou": "Vielen Dank!",
     "until": "bis",
     "year": "Jahr"
   },
+  "contribution": {
+    "bankAccount": "Bankverbindung",
+    "billing": "Zahlungsart",
+    "cancelContribution": "Mitgliedschaft kündigen",
+    "cancelDescription": "Wenn Sie jetzt kündigen, endet Ihre Mitgliedschaft am {day} {month}.",
+    "cancelMessage": "Schade, dass Sie uns verlassen.",
+    "changeBank": "Ändern Sie Ihre Bankverbindung.",
+    "changeBankInfo": "Im nächsten Schritt können Sie Ihre neue Bankverbindung eingeben.",
+    "contributing": "Ihr Beitrag ist",
+    "expired": "Ihre Mitgliedschaft ist abgelaufen.",
+    "expiredText": "Möchten Sie Ihre Mitgliedschaft verlängern? Selbst kleinste Beträge helfen uns und unserer Arbeit. Danke!",
+    "manualPayment": "Sie leisten Ihren Beitrag aktuell manuell via Banküberweisung. Richten Sie hier jetzt eine automatische Abbuchung via Lastschrift ein. Dann wird es für Sie leichter, Ihre Beiträge zu verwalten. Und wir bekommen einen besseren Überblick, auf welche Beiträge wir uns monatlich verlassen können.",
+    "paymentSourceUpdateError": "Sie können Ihre Bankverbindung aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
+    "restartContribution": "Mitgliedschaft erneuern",
+    "startContribution": "Mitgliedschaft beginnen",
+    "updateContribution": "Beitrag aktualisieren",
+    "updatePaymentType": "Neuen Zahlungsweg einrichten",
+    "willExpire": "Ihre Mitgliedschaft läuft in {expires} ab."
+  },
   "forgotPassword": {
-    "description": "Bitte geben Sie Ihre Email-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.  ",
-    "messageFirstPart": "Existiert dieser Account,",
-    "messageSecondPart": "bekommen Sie in Kürze eine Email von uns. <br> Bitte schauen Sie in ihr Mailpostfach und folgen der Anleitung in der Email. ",
+    "checkInbox": "Bitte schauen Sie in Ihren Posteingang und befolgen Sie die Anleitung in der Email. Sollte die Email nicht auftauchen, schauen Sie auch in ihrem Spamordner nach. ",
+    "description": "Bitte geben Sie Ihre Email-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.",
+    "message": "Gibt es einen Account mit der Email-Adresse {email}, bekommen Sie in Kürze eine Nachricht.",
     "resetPassword": "Passwort zurücksetzen",
     "title": "Passwort vergessen?"
   },
@@ -24,12 +47,14 @@
     "addressLine1": "Adresse",
     "addressLine2": "Adresse 2",
     "cityOrTown": "Ort",
+    "deliveryOptIn": "Einverständnis zur Postsendung",
+    "description": "Bezeichnung",
     "email": "Email",
     "errors": {
       "address": {
-        "required": "Dieses Feld wird benötigt, wenn Sie eine Adresse eintragen wollen"
+        "required": "Dieses Feld wird benötigt, wenn Sie eine Adresse eintragen wollen."
       },
-      "aggregator": "Felder mit * müssen ausgefüllt werden. ",
+      "aggregator": "Es fehlt etwas! Bitte kontrollieren Sie die obigen Felder.",
       "email": {
         "invalid": "Ungültige Email-Adresse",
         "required": "Email-Adresse benötigt"
@@ -48,10 +73,14 @@
     },
     "firstName": "Vorname",
     "lastName": "Nachname",
+    "notes": "Anmerkungen",
     "password": "Passwort",
     "passwordInfo": "Das Passwort muss aus mindestens acht Zeichen bestehen und mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten.",
+    "phone": "Telefon",
     "postCode": "Postleitzahl",
-    "saveChanges": "Änderungen speichern"
+    "saveChanges": "Änderungen speichern",
+    "saved": "Gespeichert!",
+    "warning": "Ändere hier nur etwas, wenn du das Einverständnis hast. Änderungen werden auch den Nutzern angezeigt."
   },
   "homePage": {
     "editProfile": "Profil bearbeiten",
@@ -59,23 +88,26 @@
     "manageYourContribution": "Beitrag ändern",
     "newCallout": "Neuer Callout!",
     "openCallouts": "Offene Callouts",
-    "passwordReset": "Ihr Passwort wurde zurückgesetzt.",
+    "passwordReset": "Ihr Passwort wurde aktualisiert.",
     "quickActions": "Schnellaktionen",
     "title": "Home",
     "viewAllCallouts": "Alle Callouts anzeigen",
     "viewOpenCallouts": "Offene Callouts anzeigen",
+    "welcome": "Herzlich willkommen {firstName}!",
     "yourProfile": "Ihr Profil"
   },
   "informationPage": {
     "contactInformation": "Kontaktdaten",
     "loginDetail": "Login-Daten",
-    "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt",
+    "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt.",
     "title": "Ihre Informationen"
   },
   "join": {
+    "absorbFeeForce": "Bei einem Beitrag von {amount}, müssen Sie die {fee} Transaktionskosten übernehmen.",
     "absorbFeeOptIn": "Ja, ich übernehme die {fee} Transaktionskosten.",
-    "absorbFeeText": "Bei unserem Zahlungsdienstleister zahlen wir für jede einzelne Transaktion. Das heißt, wir erhalten weniger von Ihrem monatlichen Beitrag. Sie haben die Möglichkeit, die Kosten dafür für uns zu übernehmen. Möchten Sie das? Alternativ können Sie auch jährlich bezahlen. ",
-    "contribute": "Mit {amount} {period} unterstützen",
+    "absorbFeeText": "Bei unserem Zahlungsdienstleister zahlen wir für jede einzelne Transaktion. Das heißt, wir erhalten weniger von Ihrem monatlichen Beitrag. Sie haben die Möglichkeit, die Kosten dafür für uns zu übernehmen. Möchten Sie das? Alternativ können Sie auch jährlich bezahlen.",
+    "contribute": "Mit {amount} pro {period} unterstützen.",
+    "contribution": "Beitrag",
     "errors": {
       "confirmEmail": {
         "message": "Fast geschafft! Wir müssen nur noch Ihre Email-Adresse bestätigen, um fortzufahren.",
@@ -83,7 +115,7 @@
         "title": "Email-Adresse bestätigen"
       },
       "duplicateEmail": {
-        "message": "Diese Email-Adresse ist bereits registriert. Bitte loggen Sie sich ein, um fortzufahren. ",
+        "message": "Diese Email-Adresse ist bereits registriert. Bitte loggen Sie sich ein, um fortzufahren.",
         "title": "Email-Adresse wiederholen"
       },
       "failed": {
@@ -95,27 +127,30 @@
     "login": "Log in",
     "memberAccount": "Mitglieder-Account",
     "memberAlready": "Sind Sie bereits Mitglied?",
-    "minimumContribution": "Der minimal Beitrag ist",
+    "minimumContribution": "Der minimale Beitrag ist",
+    "noContribution": "Ich möchte jetzt keinen Beitrag leisten",
     "notice": "Indem Sie fortfahren, akzeptieren Sie unsere",
+    "now": "Jetzt Mitglied werden! ",
     "privacy": "Datenschutzerklärung"
   },
   "joinSetup": {
-    "confirmDetails": "Bitte bestätigen Sie Ihre Angaben",
+    "confirmDetails": "Bitte bestätigen Sie Ihre Angaben:",
     "continue": "Weiter",
-    "welcome": "Willkommen {firstname} {lastname}!"
+    "welcome": "Willkommen {firstName} {lastName}!"
   },
   "locale": "de",
   "login": {
     "backTo": "Zurück zu {newsroomName}",
     "forgotPassword": "Passwort vergessen?",
-    "joinNow": "Jetzt Mitglied werden! ",
+    "joinNow": "Jetzt Mitglied werden!",
     "login": "Login",
     "notMember": "Noch kein Mitglied?",
-    "title": "Einloggen"
+    "title": "Einloggen",
+    "wrongCredentials": "Falsche Kombination von Passwort und Email."
   },
   "menu": {
     "callouts": "Callouts",
-    "contribution": "Beiträge",
+    "contribution": "Beitrag",
     "home": "Home",
     "settings": "Einstellungen",
     "yourInformation": "Ihre Informationen",
@@ -125,12 +160,26 @@
     "error": "Da ist etwas schiefgelaufen!",
     "success": "Sehr gut! Das hat funktioniert."
   },
+  "pageTitle": {
+    "confirmEmail": "Email-Adresse bestätigen",
+    "duplicateEmail": "Email-Adresse duplizieren",
+    "failed": "Fehler",
+    "forgotPassword": "Passwort vergessen",
+    "join": "Mitglied werden",
+    "login": "Login",
+    "resetPassword": "Passwort zurücksetzen",
+    "setup": "Account fertigstellen"
+  },
   "resetPassword": {
     "changePassword": "Passwort ändern",
     "confirmPassword": "Passwort bestätigen",
-    "description": "Neues Passwort eingeben um fortzufahren.",
+    "description": "Neues Passwort eingeben, um fortzufahren.",
     "login": "Einloggen",
     "newPassword": "Neues Passwort",
-    "title": "Passwort zurücksetzen?"
+    "title": "Passwort aktualisieren?"
+  },
+  "setPassword": {
+    "description": "Neues Passwort eingeben, um fortzufahren.",
+    "title": "Passwort vergeben"
   }
 }

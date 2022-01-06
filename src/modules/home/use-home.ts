@@ -23,6 +23,7 @@ function setMember(): void {
 const profileContent = reactive<ProfileContent>({
   welcomeMessage: '',
   footerMessage: '',
+  introMessage: '',
 });
 
 function setProfileContent(): void {
@@ -30,6 +31,7 @@ function setProfileContent(): void {
     .then(({ data }) => {
       profileContent.welcomeMessage = data.welcomeMessage;
       profileContent.footerMessage = data.footerMessage;
+      profileContent.introMessage = data.introMessage;
     })
     .catch((err) => err);
 }

@@ -2,8 +2,8 @@
   <span
     class="
       h-7.5
-      bg-link
-      text-white
+      bg-white
+      text-secondary
       rounded
       font-semibold
       px-2

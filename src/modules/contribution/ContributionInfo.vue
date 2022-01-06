@@ -29,7 +29,8 @@ import { computed } from '@vue/reactivity';
 import { useI18n } from 'vue-i18n';
 import { ContributionInfo } from './contribution.interface';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
-import { parseISO, format } from 'date-fns';
+import { parseISO } from 'date-fns';
+import { formatLocale } from '../../utils/dates/locale-date-formats';
 
 const { t, n } = useI18n();
 
@@ -43,20 +44,20 @@ const props = defineProps({
 const period = computed(() => {
   return props.contributionInfo.contributionPeriod ===
     ContributionPeriod.Monthly
-    ? 'month'
-    : 'year';
+    ? t('common.month')
+    : t('common.year');
 });
 
 const formattedJoinedDate = computed(() => {
   if (!props.contributionInfo.joined) return;
   const parsedDate = parseISO(props.contributionInfo.joined);
-  return format(parsedDate, 'do MMMM y').split(' ');
+  return formatLocale(parsedDate, 'do MMMM y').split(' ');
 });
 </script>
 
 <style scoped>
 .title {
-  @apply text-sm text-primary-40 font-semibold -mt-3 mb-3;
+  @apply text-sm text-primary-80 font-semibold -mt-3 mb-3;
 }
 
 .content {
