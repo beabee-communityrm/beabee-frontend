@@ -149,9 +149,12 @@
     "wrongCredentials": "Falsche Kombination von Passwort und Email."
   },
   "menu": {
+    "admin": "Administrator",
+    "adminDashboard": "Dashboard",
     "callouts": "Callouts",
     "contribution": "Beitrag",
     "home": "Home",
+    "logout": "Log out",
     "settings": "Einstellungen",
     "yourInformation": "Deine Informationen",
     "yourProfile": "Dein Profil"
