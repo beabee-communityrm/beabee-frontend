@@ -1,7 +1,11 @@
+export interface MenuSection {
+  title?: string;
+  type?: 'settings';
+  items: MenuItem[];
+}
+
 export interface MenuItem {
   title: string;
   href?: string;
-  icon?: string;
-  divider?: boolean;
-  isSubsection?: boolean;
+  icon: string;
 }
