@@ -17,10 +17,7 @@
         </li>
       </ul>
     </nav>
-    <nav
-      v-if="currentUserCan(Role.Admin) && false"
-      class="menu-section is-settings"
-    >
+    <nav v-if="canAdmin" class="menu-section is-settings">
       <div class="py-2 border-t border-primary-40">{{ t('menu.admin') }}</div>
       <a href="/members" class="menu-item cursor-pointer">
         <TheMenuListItem
@@ -45,9 +42,8 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { logout } from '../../modules/auth/auth.service';
 import { MenuSection } from './menu-list.interface';
-import currentUserCan from '../../utils/currentUserCan';
+import { canAdmin } from '../../utils/currentUserCan';
 import TheMenuListItem from './TheMenuListItem.vue';
-import { Role } from '../../utils/enums/roles.enum';
 
 const { t } = useI18n();
 
