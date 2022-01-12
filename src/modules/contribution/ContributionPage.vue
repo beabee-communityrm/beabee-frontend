@@ -25,12 +25,13 @@
 
         <Contribution
           v-model="newContribution"
+          v-model:isValid="isContributionValid"
           :content="contributionContent"
           :show-period="!isActiveMemberWithGoCardless"
         />
 
         <AppButton
-          :disabled="isContributionFormInvalid"
+          :disabled="!isContributionValid"
           type="submit"
           variant="link"
           class="mb-4 w-full"
@@ -81,19 +82,23 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Contribution from './components/Contribution.vue';
+import { useContribution } from './use-contribution';
+
 import ContributionBox from './components/ContributionBox.vue';
 import CancelContribution from './components/CancelContribution.vue';
-import { useContribution } from './use-contribution';
 import PaymentSource from './components/PaymentSource.vue';
+
 import PageTitle from '../../components/PageTitle.vue';
 import InfoMessage from '../../components/InfoMessage.vue';
 import SectionTitle from '../../components/SectionTitle.vue';
+import Contribution from '../../components/contribution/Contribution.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 
 const { t } = useI18n();
+
+const isContributionValid = ref(false);
 
 const {
   isIniting,
@@ -101,7 +106,6 @@ const {
   currentContribution,
   newContribution,
   contributionContent,
-  isContributionFormInvalid,
   submitContribution,
   showContributionForm,
   contributionButtonText,

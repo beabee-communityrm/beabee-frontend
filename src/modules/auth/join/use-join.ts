@@ -88,15 +88,14 @@ const memberData = reactive<MemberData>({
   postCode: '',
 });
 
-// TODO: const isBelowThreshold = computed(() => signUpData.amount < minAmount.value);
-const isBelowThreshold = computed(() => false);
+const isContributionValid = ref(false);
 
 const isJoinFormInvalid = computed(() => {
-  return isBelowThreshold.value || joinValidation.value.$invalid;
+  return !isContributionValid.value || joinValidation.value.$invalid;
 });
 
 const hasJoinError = computed(() => {
-  return isBelowThreshold.value || joinValidation.value.$errors.length;
+  return !isContributionValid.value || joinValidation.value.$errors.length;
 });
 
 const joinRules = computed(() => ({
@@ -215,6 +214,7 @@ const setSetupContent = () => {
 function useJoin() {
   return {
     signUpData,
+    isContributionValid,
     isJoinFormInvalid,
     hasJoinError,
     joinValidation,

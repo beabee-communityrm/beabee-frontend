@@ -159,11 +159,6 @@ const updatePaymentSource = () => {
     });
 };
 
-// TODO: fix
-const isContributionFormInvalid = computed(() => {
-  return newContribution.amount < 1; //minAmount.value;
-});
-
 const period = computed(() =>
   t(
     newContribution.period === ContributionPeriod.Monthly
@@ -224,7 +219,6 @@ export function useContribution() {
     newContribution,
     currentContribution,
     contributionContent,
-    isContributionFormInvalid,
     submitContribution,
     hasNoneType,
     hasManualType,

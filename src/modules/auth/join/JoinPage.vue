@@ -24,6 +24,7 @@
       <Contribution
         v-if="!signUpData.noContribution"
         v-model="signUpData"
+        v-model:isValid="isContributionValid"
         :content="joinContent"
       >
         <AccountSection
@@ -66,6 +67,7 @@ const { t, n } = useI18n();
 
 const {
   signUpData,
+  isContributionValid,
   isJoinFormInvalid,
   hasJoinError,
   loading,

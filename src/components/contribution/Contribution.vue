@@ -42,12 +42,13 @@ const props = withDefaults(
   defineProps<{
     modelValue: ContributionData;
     content: ContributionContent;
-    showPeriod: boolean;
+    showPeriod?: boolean;
+    isValid?: boolean;
   }>(),
   { showPeriod: true }
 );
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'update:isValid']);
 
 const contribution = computed({
   get: () => props.modelValue,
@@ -86,4 +87,10 @@ const shouldForceFee = computed(() => {
 watch(shouldForceFee, (force) => {
   if (force) contribution.value.payFee = true;
 });
+
+watch(
+  () => contribution.value.amount >= minAmount.value,
+  (isValid) => emit('update:isValid', isValid),
+  { immediate: true }
+);
 </script>
