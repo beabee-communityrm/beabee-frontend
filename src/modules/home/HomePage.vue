@@ -49,9 +49,12 @@
         <ContributionInfo :contribution-info="contributionInfo" />
       </div>
 
-      <AppButton class="mt-6" to="/profile/contribution" variant="subtle">{{
-        t('homePage.manageContribution')
-      }}</AppButton>
+      <AppButton
+        class="mt-6"
+        to="/profile/contribution"
+        variant="primaryOutlined"
+        >{{ t('homePage.manageContribution') }}</AppButton
+      >
     </section>
   </div>
 

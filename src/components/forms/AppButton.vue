@@ -1,5 +1,5 @@
 <template>
-  <app-link v-if="props.to" :class="classes" :to="props.to"><slot /></app-link>
+  <AppLink v-if="props.to" :class="classes" :to="props.to"><slot /></AppLink>
 
   <component
     :is="tag"
@@ -10,12 +10,10 @@
   >
     <slot>Submit</slot>
 
-    <!-- only secondary buttons have loading state, that is
-       why it `text-secondary` is added statically
-    -->
     <FontAwesomeIcon
       v-if="loading"
-      class="text-2xl absolute text-secondary"
+      class="text-2xl absolute"
+      :class="loadingClasses"
       :icon="['fas', 'circle-notch']"
       spin
     />
@@ -26,61 +24,54 @@
 import { computed } from '@vue/reactivity';
 import AppLink from '../AppLink.vue';
 
-const props = defineProps({
-  disabled: {
-    type: Boolean,
-    default: null,
-  },
-  tag: {
-    type: String,
-    default: 'button',
-  },
-  type: {
-    type: String,
-    default: 'button',
-  },
-  to: {
-    type: String,
-    default: '',
-  },
-  variant: {
-    type: String,
-    default: 'primary',
-  },
-  loading: {
-    type: Boolean,
-    default: false,
-  },
-});
-
-const variantStaticClasses = {
+const variantClasses = {
   primary: 'bg-primary-70 text-white hover:bg-primary-80',
-  // - TODO: remove link, to do remove it you need to change all buttons -
-  link: 'bg-link text-white',
-  secondary: 'bg-secondary text-white',
-  // - TODO: change it to `secondaryOutlined`. Check all the places it's been used
-  linkOutlined: 'bg-white text-link border border-link hover:bg-link-light',
-  subtle:
-    'bg-white text-primary-80 border border-primary-70 hover:text-primary hover:border-primary',
-  danger: 'bg-danger-70 text-white hover:bg-danger',
+  link: 'bg-link text-white hover:bg-link-110',
+  danger: 'bg-danger text-white hover:bg-danger-110',
+  primaryOutlined:
+    'bg-white text-primary-80 border border-primary-70 hover:bg-primary-10 hover:text-primary hover:border-primary',
+  linkOutlined: 'bg-white text-link border border-link hover:bg-link-10',
   dangerOutlined:
     'bg-white text-danger border border-danger hover:bg-danger-10',
-};
+} as const;
 
-const variantClasses = computed(() => {
-  return (
-    variantStaticClasses[props.variant as keyof typeof variantStaticClasses] ||
-    variantStaticClasses['primary']
-  );
-});
+const variantLoadingClasses = {
+  primary: 'text-primary',
+  link: 'text-link',
+  danger: 'text-danger',
+  primaryOutlined: 'text-primary',
+  linkOutlined: 'text-link',
+  dangerOutlined: 'text-danger',
+} as const;
+
+const props = withDefaults(
+  defineProps<{
+    disabled?: boolean;
+    tag?: string;
+    type?: string;
+    to?: string;
+    variant?: keyof typeof variantClasses;
+    loading?: boolean;
+  }>(),
+  {
+    disabled: false,
+    tag: 'button',
+    type: 'button',
+    to: '',
+    variant: 'primary',
+    loading: false,
+  }
+);
 
 // - TODO: Fix this. Using scoped style didn't work on `AppLink`
 const baseClasses =
   'h-10 px-2 text-center cursor-pointer inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative';
 
 const classes = computed(() => {
-  return [baseClasses, variantClasses.value, statusClasses.value];
+  return [baseClasses, variantClasses[props.variant], statusClasses.value];
 });
+
+const loadingClasses = computed(() => variantLoadingClasses[props.variant]);
 
 const elementTypeAttribute = computed(() => {
   return props.tag === 'button' ? props.type : null;
