@@ -35,7 +35,7 @@
           type="submit"
           variant="link"
           class="mb-4 w-full"
-          :loading="updateContributionLoading"
+          :loading="submitContributionLoading"
           @click="submitContribution"
         >
           {{ contributionButtonText }}
@@ -118,7 +118,7 @@ const {
   paymentSource,
   period,
   cantUpdatePaymentSource,
-  updateContributionLoading,
+  submitContributionLoading,
 } = useContribution();
 
 onBeforeMount(() => {

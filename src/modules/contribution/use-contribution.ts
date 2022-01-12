@@ -111,33 +111,31 @@ const initContributionPage = async () => {
 };
 
 const submitCreateContribution = () => {
-  createContribution(newContribution)
-    .then(({ data }) => {
-      window.location.href = data.redirectUrl;
-    })
-    .catch((err) => err);
+  return createContribution(newContribution).then(({ data }) => {
+    window.location.href = data.redirectUrl;
+  });
 };
-
-const updateContributionLoading = ref(false);
 
 const submitUpdateContribution = () => {
-  updateContributionLoading.value = true;
-  updateContribution(newContribution)
-    .then(({ data }) => {
-      currentContribution.amount = data.amount;
-      currentContribution.period = data.period;
-      // TODO: to do somthing here, like showing succes message? (ask the design team)
-    })
-    .catch((err) => err)
-    .finally(() => (updateContributionLoading.value = false));
+  return updateContribution(newContribution).then(({ data }) => {
+    currentContribution.amount = data.amount;
+    currentContribution.period = data.period;
+    // TODO: to do somthing here, like showing succes message? (ask the design team)
+  });
 };
 
-const submitContribution = () => {
-  if (isActiveMemberWithGoCardless.value) {
-    submitUpdateContribution();
-  } else {
-    submitCreateContribution();
-  }
+const submitContributionLoading = ref(false);
+
+const submitContribution = async () => {
+  submitContributionLoading.value = true;
+
+  const submitAction = isActiveMemberWithGoCardless.value
+    ? submitUpdateContribution()
+    : submitCreateContribution();
+
+  submitAction
+    .catch((err) => err)
+    .finally(() => (submitContributionLoading.value = false));
 };
 
 const paymentSourceLoading = ref(false);
@@ -221,6 +219,7 @@ export function useContribution() {
     currentContribution,
     contributionContent,
     submitContribution,
+    submitContributionLoading,
     hasNoneType,
     hasManualType,
     contributionButtonText,
@@ -232,7 +231,6 @@ export function useContribution() {
     paymentSource,
     period,
     cantUpdatePaymentSource,
-    updateContributionLoading,
     submitCancelContribution,
     cancelContributionLoading,
   };
