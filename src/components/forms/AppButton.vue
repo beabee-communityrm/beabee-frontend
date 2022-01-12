@@ -46,12 +46,12 @@ const variantLoadingClasses = {
 
 const props = withDefaults(
   defineProps<{
-    disabled: boolean;
-    tag: string;
-    type: string;
-    to: string;
-    variant: keyof typeof variantClasses;
-    loading: boolean;
+    disabled?: boolean;
+    tag?: string;
+    type?: string;
+    to?: string;
+    variant?: keyof typeof variantClasses;
+    loading?: boolean;
   }>(),
   {
     disabled: false,
