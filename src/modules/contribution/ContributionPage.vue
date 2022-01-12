@@ -23,33 +23,15 @@
           {{ t('contribution.manualPayment') }}
         </p>
 
-        <!-- users can't change period on an active GoCardless contribution -->
-        <ContributionPeriod
-          v-if="!isActiveMemberWithGoCardless"
-          class="mb-6"
-          :periods="contributionContent.periods"
-          :selected-period="newContribution.period"
-          @change-period="changePeriod"
-        />
-
-        <ContributionAmount
-          v-model.number="newContribution.amount"
-          :is-monthly="isMonthly"
-          :min-amount="minAmount"
-          :defined-amounts="definedAmounts"
-          class="mb-5"
-        />
-
-        <ContributionFee
-          v-if="isMonthly"
-          v-model="newContribution.payFee"
-          :amount="newContribution.amount"
-          :fee="fee"
-          :force="shouldForceFee"
+        <Contribution
+          v-model="newContribution"
+          v-model:isValid="isContributionValid"
+          :content="contributionContent"
+          :show-period="!isActiveMemberWithGoCardless"
         />
 
         <AppButton
-          :disabled="isContributionFormInvalid"
+          :disabled="!isContributionValid"
           type="submit"
           variant="link"
           class="mb-4 w-full"
@@ -100,21 +82,23 @@
 </template>
 
 <script lang="ts" setup>
+import { onBeforeMount, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useContribution } from './use-contribution';
+
+import ContributionBox from './components/ContributionBox.vue';
+import CancelContribution from './components/CancelContribution.vue';
+import PaymentSource from './components/PaymentSource.vue';
+
 import PageTitle from '../../components/PageTitle.vue';
 import InfoMessage from '../../components/InfoMessage.vue';
-import ContributionBox from './components/ContributionBox.vue';
 import SectionTitle from '../../components/SectionTitle.vue';
-import ContributionPeriod from './components/ContributionPeriod.vue';
-import ContributionAmount from './components/ContributionAmount.vue';
-import ContributionFee from './components/ContributionFee.vue';
-import PaymentSource from './components/PaymentSource.vue';
-import CancelContribution from './components/CancelContribution.vue';
+import Contribution from '../../components/contribution/Contribution.vue';
 import AppButton from '../../components/forms/AppButton.vue';
-import { computed, onBeforeMount } from 'vue';
-import { useContribution } from './use-contribution';
-import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
+
+const isContributionValid = ref(false);
 
 const {
   isIniting,
@@ -122,13 +106,6 @@ const {
   currentContribution,
   newContribution,
   contributionContent,
-  isMonthly,
-  changePeriod,
-  shouldForceFee,
-  minAmount,
-  definedAmounts,
-  fee,
-  isContributionFormInvalid,
   submitContribution,
   showContributionForm,
   contributionButtonText,
@@ -139,13 +116,10 @@ const {
   isActiveMemberWithGoCardless,
   hasPaymentSource,
   paymentSource,
+  period,
   cantUpdatePaymentSource,
   updateContributionLoading,
 } = useContribution();
-
-const period = computed(() =>
-  t(isMonthly.value ? 'common.month' : 'common.year')
-);
 
 onBeforeMount(() => {
   initContributionPage();

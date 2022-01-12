@@ -1,4 +1,4 @@
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import {
   fetchJoinContent,
@@ -9,16 +9,17 @@ import {
   cancelContribution,
 } from './contribution.service';
 import {
-  ContributionContent,
   CurrentContribution,
-  NewContribution,
   PaymentSource,
-  Periods,
   ContributionType,
   MembershipStatus,
 } from './contribution.interface';
 import i18n from '../../i18n';
 import { useRouter } from 'vue-router';
+import {
+  ContributionContent,
+  ContributionData,
+} from '../../components/contribution/contribution.interface';
 
 const { t } = i18n.global;
 
@@ -38,15 +39,25 @@ const paymentSource = reactive<PaymentSource>({
   accountNumberEnding: '',
 });
 
-const newContribution = reactive<NewContribution>({
+const newContribution = reactive<ContributionData>({
   amount: 5,
   period: ContributionPeriod.Monthly,
   payFee: true,
+
+  // TODO: Can we move this?
+  get totalAmount(): number {
+    return this.payFee && this.period === ContributionPeriod.Monthly
+      ? this.amount + this.fee
+      : this.amount;
+  },
+  get fee(): number {
+    return (this.amount + 20) / 100;
+  },
 });
 
 const contributionContent = reactive<ContributionContent>({
   initialAmount: 5,
-  initialPeriod: '',
+  initialPeriod: ContributionPeriod.Monthly,
   minMonthlyAmount: 5,
   periods: [],
   showAbsorbFee: true,
@@ -92,6 +103,10 @@ const initContributionPage = async () => {
   contributionContent.periods = content.periods;
   contributionContent.showAbsorbFee = content.showAbsorbFee;
 
+  if (!contributionContent.showAbsorbFee) {
+    newContribution.payFee = false;
+  }
+
   isIniting.value = false;
 };
 
@@ -107,10 +122,7 @@ const updateContributionLoading = ref(false);
 
 const submitUpdateContribution = () => {
   updateContributionLoading.value = true;
-  updateContribution({
-    amount: newContribution.amount,
-    payFee: newContribution.payFee,
-  })
+  updateContribution(newContribution)
     .then(({ data }) => {
       currentContribution.amount = data.amount;
       currentContribution.period = data.period;
@@ -148,43 +160,13 @@ const updatePaymentSource = () => {
     });
 };
 
-// - TODO: improvement: remove logic duplication between
-// contribution page and join page
-const fee = computed(() => {
-  return (newContribution.amount + 20) / 100;
-});
-
-const minAmount = computed(() => {
-  const { minMonthlyAmount } = contributionContent;
-  return isMonthly.value ? minMonthlyAmount : minMonthlyAmount * 12;
-});
-
-const definedAmounts = computed(() => {
-  const selectedPeriod = contributionContent.periods.find((period: Periods) => {
-    return period.name === newContribution.period;
-  });
-  return selectedPeriod?.presetAmounts as number[];
-});
-
-const changePeriod = (period: ContributionPeriod) => {
-  newContribution.period = period;
-  // reset the selected amount after period change
-  newContribution.amount = definedAmounts.value[0];
-};
-
-const shouldForceFee = computed(() => {
-  return newContribution.amount === 1 && isMonthly.value;
-});
-watch(shouldForceFee, (force) => {
-  if (force) newContribution.payFee = true;
-});
-
-const isContributionFormInvalid = computed(() => {
-  return newContribution.amount < minAmount.value;
-});
-
-const isMonthly = computed(() => newContribution.period === 'monthly');
-// end of todo
+const period = computed(() =>
+  t(
+    newContribution.period === ContributionPeriod.Monthly
+      ? 'common.month'
+      : 'common.year'
+  )
+);
 
 const hasNoneType = computed(
   () => currentContribution.type === ContributionType.None
@@ -238,13 +220,6 @@ export function useContribution() {
     newContribution,
     currentContribution,
     contributionContent,
-    isContributionFormInvalid,
-    isMonthly,
-    changePeriod,
-    shouldForceFee,
-    minAmount,
-    definedAmounts,
-    fee,
     submitContribution,
     hasNoneType,
     hasManualType,
@@ -255,6 +230,7 @@ export function useContribution() {
     hasPaymentSource,
     showContributionForm,
     paymentSource,
+    period,
     cantUpdatePaymentSource,
     updateContributionLoading,
     submitCancelContribution,
