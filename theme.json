@@ -2,9 +2,6 @@
   "colors": {
     "primary": "chocolate",
     "body": "black",
-    "link": "purple",
-    "warning": "yellow",
-    "success": "green",
-    "danger": "red"
+    "link": "purple"
   }
 }
