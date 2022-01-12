@@ -19,7 +19,7 @@
   <slot></slot>
 
   <ContributionFee
-    v-if="isMonthly"
+    v-if="isMonthly && content.showAbsorbFee"
     v-model="contribution.payFee"
     :amount="contribution.amount"
     :fee="contribution.fee"
