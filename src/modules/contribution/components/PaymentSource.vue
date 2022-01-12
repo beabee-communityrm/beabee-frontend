@@ -18,7 +18,7 @@
 
     <AppButton
       :loading="loading"
-      variant="subtle"
+      variant="primaryOutlined"
       class="mb-2 w-full"
       @click="$emit('update-payment-source')"
     >

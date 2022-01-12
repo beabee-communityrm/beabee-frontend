@@ -51,7 +51,7 @@
         <AppButton
           :disabled="isContributionFormInvalid"
           type="submit"
-          variant="secondary"
+          variant="link"
           class="mb-4 w-full"
           :loading="updateContributionLoading"
           @click="submitContribution"

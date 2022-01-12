@@ -23,7 +23,7 @@
               `${t('common.until')} ${formattedExpiresDate}`
             }}</span>
 
-            <span class="text-body-70 text-right">{{
+            <span class="text-body-80 text-right">{{
               `${t('common.in')}  ${expiresIn}`
             }}</span>
           </div>
