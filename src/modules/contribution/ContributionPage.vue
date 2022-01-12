@@ -30,6 +30,12 @@
           :show-period="!isActiveMemberWithGoCardless"
         />
 
+        <ProrateContribution
+          :new-amount="newContribution.amount"
+          :old-amount="currentContribution.amount"
+          :months-left="5"
+        />
+
         <AppButton
           :disabled="!isContributionValid"
           type="submit"
@@ -95,6 +101,7 @@ import InfoMessage from '../../components/InfoMessage.vue';
 import SectionTitle from '../../components/SectionTitle.vue';
 import Contribution from '../../components/contribution/Contribution.vue';
 import AppButton from '../../components/forms/AppButton.vue';
+import ProrateContribution from './components/ProrateContribution.vue';
 
 const { t } = useI18n();
 
