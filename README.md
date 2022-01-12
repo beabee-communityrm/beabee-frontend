@@ -5,6 +5,7 @@
 To set up:
 
 ```sh
+cp .env.example .env
 npm install
 ```
 
