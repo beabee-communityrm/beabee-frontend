@@ -33,6 +33,13 @@
         />
       </Contribution>
 
+      <!-- TODO: clean this up by always having account section above contribution -->
+      <AccountSection
+        v-else
+        @update-email="signUpData.email = $event"
+        @update-password="signUpData.password = $event"
+      />
+
       <MessageBox v-if="hasJoinError" class="mb-4" />
 
       <AppButton
