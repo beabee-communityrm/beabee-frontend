@@ -1,13 +1,12 @@
-import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
-import { Periods } from '../../contribution/contribution.interface';
+import {
+  NewContribution,
+  Periods,
+} from '../../contribution/contribution.interface';
 import { NewsletterStaus } from './newsletter-status.enum';
 
-export interface SignUpData {
+export interface SignUpData extends NewContribution {
   email: string;
   password: string;
-  amount: number;
-  period: ContributionPeriod;
-  payFee: boolean;
   noContribution: boolean;
 }
 

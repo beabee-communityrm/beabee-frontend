@@ -1,4 +1,4 @@
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { LocationQueryRaw } from 'vue-router';
 import useVuelidate from '@vuelidate/core';
 import {
@@ -50,6 +50,15 @@ const signUpData = reactive<SignUpData>({
   period: ContributionPeriod.Monthly,
   payFee: true,
   noContribution: false,
+
+  get totalAmount(): number {
+    return this.payFee && this.period === ContributionPeriod.Monthly
+      ? this.amount + this.fee
+      : this.amount;
+  },
+  get fee(): number {
+    return (this.amount + 20) / 100;
+  },
 });
 
 const setJoinContent = (query: LocationQueryRaw) => {
@@ -80,27 +89,8 @@ const memberData = reactive<MemberData>({
   postCode: '',
 });
 
-const fee = computed(() => {
-  return (signUpData.amount + 20) / 100;
-});
-
-// converts `signUpData.amount` to number because it might be
-// an empty string and cause error (because it might come from an
-// input element)
-const totalAmount = computed(() =>
-  signUpData.payFee && isMonthly.value
-    ? +signUpData.amount + fee.value
-    : +signUpData.amount
-);
-
-const isMonthly = computed(() => signUpData.period === 'monthly');
-
-const minAmount = computed(() => {
-  const { minMonthlyAmount } = joinContent.value;
-  return isMonthly.value ? minMonthlyAmount : minMonthlyAmount * 12;
-});
-
-const isBelowThreshold = computed(() => signUpData.amount < minAmount.value);
+// TODO: const isBelowThreshold = computed(() => signUpData.amount < minAmount.value);
+const isBelowThreshold = computed(() => false);
 
 const isJoinFormInvalid = computed(() => {
   return isBelowThreshold.value || joinValidation.value.$invalid;
@@ -184,30 +174,6 @@ const completeSetup = async (router: Router) => {
     });
 };
 
-const definedAmounts = computed(() => {
-  const selectedPeriod = joinContent.value.periods.find((period) => {
-    return period.name === signUpData.period;
-  });
-  return selectedPeriod?.presetAmounts as number[];
-});
-
-const changePeriod = (period: ContributionPeriod) => {
-  signUpData.period = period;
-  // reset the selected amount after period change
-  signUpData.amount = definedAmounts.value[0];
-};
-
-const shouldForceFee = computed(() => {
-  return (
-    joinContent.value.showAbsorbFee &&
-    signUpData.amount === 1 &&
-    isMonthly.value
-  );
-});
-watch(shouldForceFee, (force) => {
-  if (force) signUpData.payFee = true;
-});
-
 const setMemberData = () => {
   fetchMember()
     .then(({ data }) => {
@@ -250,9 +216,6 @@ const setSetupContent = () => {
 function useJoin() {
   return {
     signUpData,
-    fee,
-    totalAmount,
-    isMonthly,
     isJoinFormInvalid,
     hasJoinError,
     joinValidation,
@@ -263,10 +226,6 @@ function useJoin() {
     hasSetupError,
     joinContent,
     setJoinContent,
-    definedAmounts,
-    changePeriod,
-    shouldForceFee,
-    minAmount,
     setMemberData,
     setupContent,
     setSetupContent,

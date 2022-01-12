@@ -33,7 +33,7 @@
             "
             :min="minAmount"
             :class="{ 'bg-danger-10': hasError }"
-            @input="$emit('update:modelValue', handleInput($event))"
+            @input="$emit('update:modelValue', handleInput($event) || 0)"
             @keydown.up.prevent="0 /* just stop caret moving */"
             @keyup.up="changeAmount(modelValue + 1)"
             @keyup.down="changeAmount(modelValue - 1)"

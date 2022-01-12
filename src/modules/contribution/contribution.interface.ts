@@ -33,6 +33,9 @@ export interface NewContribution {
   amount: number;
   period: string;
   payFee: boolean;
+
+  get totalAmount(): number;
+  get fee(): number;
 }
 
 export interface UpdateContribution {
