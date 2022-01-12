@@ -103,6 +103,10 @@ const initContributionPage = async () => {
   contributionContent.periods = content.periods;
   contributionContent.showAbsorbFee = content.showAbsorbFee;
 
+  if (!contributionContent.showAbsorbFee) {
+    newContribution.payFee = false;
+  }
+
   isIniting.value = false;
 };
 
@@ -118,10 +122,7 @@ const updateContributionLoading = ref(false);
 
 const submitUpdateContribution = () => {
   updateContributionLoading.value = true;
-  updateContribution({
-    amount: newContribution.amount,
-    payFee: newContribution.payFee,
-  })
+  updateContribution(newContribution)
     .then(({ data }) => {
       currentContribution.amount = data.amount;
       currentContribution.period = data.period;

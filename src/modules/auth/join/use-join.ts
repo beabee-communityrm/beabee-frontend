@@ -43,8 +43,6 @@ const joinContent = ref<JoinContentData>({
 const signUpData = reactive<SignUpData>({
   email: '',
   password: '',
-  // for some reasons it can't get the value from
-  // `joinContent.value.initialAmount`
   amount: 5,
   period: ContributionPeriod.Monthly,
   payFee: true,
@@ -64,8 +62,6 @@ const setJoinContent = (query: LocationQueryRaw) => {
   fetchJoinContent()
     .then(({ data }) => {
       joinContent.value = data;
-      // for some reasons `signUpData.amount` can't get the value from
-      // `joinContent.value.initialAmount`
       signUpData.amount = query.amount ? +query.amount : data.initialAmount;
       if (!data.showAbsorbFee) {
         signUpData.payFee = false;

@@ -31,13 +31,14 @@ const completeContribution = (redirectFlowId: string): Promise<any> => {
     redirectFlowId,
   });
 };
-const updateContribution = (updateContribution: {
-  amount: number;
-  payFee: boolean;
-}): Promise<any> => {
+const updateContribution = (
+  updateContribution: ContributionData
+): Promise<any> => {
   return axios.patch('/member/me/contribution', {
     amount: updateContribution.amount,
-    payFee: updateContribution.payFee,
+    payFee:
+      updateContribution.payFee &&
+      updateContribution.period === ContributionPeriod.Monthly,
     // - TODO: always false for now
     prorate: false,
   });
