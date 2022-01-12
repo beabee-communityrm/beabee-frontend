@@ -32,15 +32,15 @@ import { computed, watch } from 'vue';
 import ContributionPeriod_ from './ContributionPeriod.vue';
 import ContributionAmount from './ContributionAmount.vue';
 import ContributionFee from './ContributionFee.vue';
+import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import {
   ContributionContent,
-  NewContribution,
-} from '../contribution.interface';
-import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
+  ContributionData,
+} from './contribution.interface';
 
 const props = withDefaults(
   defineProps<{
-    modelValue: NewContribution;
+    modelValue: ContributionData;
     content: ContributionContent;
     showPeriod: boolean;
   }>(),

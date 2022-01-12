@@ -9,15 +9,17 @@ import {
   cancelContribution,
 } from './contribution.service';
 import {
-  ContributionContent,
   CurrentContribution,
-  NewContribution,
   PaymentSource,
   ContributionType,
   MembershipStatus,
 } from './contribution.interface';
 import i18n from '../../i18n';
 import { useRouter } from 'vue-router';
+import {
+  ContributionContent,
+  ContributionData,
+} from '../../components/contribution/contribution.interface';
 
 const { t } = i18n.global;
 
@@ -37,11 +39,12 @@ const paymentSource = reactive<PaymentSource>({
   accountNumberEnding: '',
 });
 
-const newContribution = reactive<NewContribution>({
+const newContribution = reactive<ContributionData>({
   amount: 5,
   period: ContributionPeriod.Monthly,
   payFee: true,
 
+  // TODO: Can we move this?
   get totalAmount(): number {
     return this.payFee && this.period === ContributionPeriod.Monthly
       ? this.amount + this.fee
@@ -54,7 +57,7 @@ const newContribution = reactive<NewContribution>({
 
 const contributionContent = reactive<ContributionContent>({
   initialAmount: 5,
-  initialPeriod: '',
+  initialPeriod: ContributionPeriod.Monthly,
   minMonthlyAmount: 5,
   periods: [],
   showAbsorbFee: true,

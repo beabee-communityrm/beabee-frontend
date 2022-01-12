@@ -29,33 +29,6 @@ export interface CurrentContribution {
   membershipStatus: MembershipStatus;
 }
 
-export interface NewContribution {
-  amount: number;
-  period: string;
-  payFee: boolean;
-
-  get totalAmount(): number;
-  get fee(): number;
-}
-
-export interface UpdateContribution {
-  amount: number;
-  payFee: boolean;
-}
-
-export interface Periods {
-  name: string;
-  presetAmounts: number[];
-}
-
-export interface ContributionContent {
-  initialAmount: number;
-  initialPeriod: string;
-  minMonthlyAmount: number;
-  periods: Periods[];
-  showAbsorbFee: boolean;
-}
-
 export interface PaymentSource {
   type: string;
   bankName: string;

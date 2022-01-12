@@ -1,6 +1,6 @@
 import axios from '../../axios';
+import { ContributionData } from '../../components/contribution/contribution.interface';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
-import { NewContribution, UpdateContribution } from './contribution.interface';
 
 // TODO: currently we use this because data needed for contribution
 // is included in join content -
@@ -12,7 +12,9 @@ const fetchContribution = (): Promise<any> => {
   return axios.get('/member/me/contribution');
 };
 
-const createContribution = (newContribution: NewContribution): Promise<any> => {
+const createContribution = (
+  newContribution: ContributionData
+): Promise<any> => {
   return axios.post('/member/me/contribution', {
     amount: newContribution.amount,
     period: newContribution.period,
@@ -29,9 +31,10 @@ const completeContribution = (redirectFlowId: string): Promise<any> => {
     redirectFlowId,
   });
 };
-const updateContribution = (
-  updateContribution: UpdateContribution
-): Promise<any> => {
+const updateContribution = (updateContribution: {
+  amount: number;
+  payFee: boolean;
+}): Promise<any> => {
   return axios.patch('/member/me/contribution', {
     amount: updateContribution.amount,
     payFee: updateContribution.payFee,

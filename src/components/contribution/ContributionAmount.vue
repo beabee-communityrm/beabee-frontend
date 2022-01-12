@@ -113,7 +113,7 @@
 
 <script lang="ts" setup>
 import { computed } from '@vue/reactivity';
-import handleInput from '../../../utils/handle-input';
+import handleInput from '../../utils/handle-input';
 import { useI18n } from 'vue-i18n';
 
 const { t, n, getNumberFormat, locale } = useI18n();

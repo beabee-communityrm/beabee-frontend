@@ -54,11 +54,11 @@ import { computed, onBeforeMount } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import JoinHeader from './components/JoinHeader.vue';
-import Contribution from '../../contribution/components/Contribution.vue';
 import AuthBox from '../AuthBox.vue';
 import AccountSection from './components/AccountSection.vue';
 import JoinFooter from './components/JoinFooter.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
+import Contribution from '../../../components/contribution/Contribution.vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import { useJoin } from './use-join';
 

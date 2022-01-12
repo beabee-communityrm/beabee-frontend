@@ -7,7 +7,6 @@ import {
   SetupContentData,
   MemberData,
 } from './join.interface';
-import { Periods } from '../../contribution/contribution.interface';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { helpers, required } from '@vuelidate/validators';
 import {
@@ -29,10 +28,10 @@ const { t } = i18n.global;
 
 const joinContent = ref<JoinContentData>({
   initialAmount: 5,
-  initialPeriod: '',
+  initialPeriod: ContributionPeriod.Monthly,
   minMonthlyAmount: 5,
   name: '',
-  periods: [] as Periods[],
+  periods: [],
   privacyLink: '',
   showAbsorbFee: true,
   showNoContribution: false,
