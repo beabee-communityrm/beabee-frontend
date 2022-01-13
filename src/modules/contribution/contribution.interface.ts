@@ -14,18 +14,21 @@ export enum MembershipStatus {
   None = 'none',
 }
 
-export interface CurrentContribution {
-  amount: number;
-  period: ContributionPeriod;
-  type: ContributionType;
-  membershipExpiryDate: string | null;
-  cancellationDate: string | null;
-  membershipStatus: MembershipStatus;
-}
-
 export interface PaymentSource {
   type: string;
   bankName: string;
   accountHolderName: string;
   accountNumberEnding: string;
+}
+
+export interface CurrentContribution {
+  type: ContributionType;
+  amount?: number;
+  period?: ContributionPeriod;
+  cancellationDate?: string;
+  renewalDate?: string;
+  paymentSource?: PaymentSource;
+  payFee?: boolean;
+  membershipStatus: MembershipStatus;
+  membershipExpiryDate?: string;
 }

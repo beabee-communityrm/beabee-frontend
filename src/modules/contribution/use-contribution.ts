@@ -10,7 +10,6 @@ import {
 } from './contribution.service';
 import {
   CurrentContribution,
-  PaymentSource,
   ContributionType,
   MembershipStatus,
 } from './contribution.interface';
@@ -27,16 +26,9 @@ const currentContribution = reactive<CurrentContribution>({
   amount: 0,
   period: ContributionPeriod.Monthly,
   type: ContributionType.None,
-  membershipExpiryDate: '',
   cancellationDate: '',
+  membershipExpiryDate: '',
   membershipStatus: MembershipStatus.None,
-});
-
-const paymentSource = reactive<PaymentSource>({
-  type: '',
-  bankName: '',
-  accountHolderName: '',
-  accountNumberEnding: '',
 });
 
 const newContribution = reactive<ContributionData>({
@@ -63,8 +55,6 @@ const contributionContent = reactive<ContributionContent>({
   showAbsorbFee: true,
 });
 
-const hasPaymentSource = computed(() => paymentSource.type);
-
 const isIniting = ref(false);
 const cantUpdatePaymentSource = ref(false);
 
@@ -79,19 +69,12 @@ const initContributionPage = async () => {
   currentContribution.membershipExpiryDate = contrib.membershipExpiryDate;
   currentContribution.cancellationDate = contrib.cancellationDate;
   currentContribution.membershipStatus = contrib.membershipStatus;
+  currentContribution.paymentSource = contrib.paymentSource;
 
   if (currentContribution.type !== ContributionType.None) {
     newContribution.amount = contrib.amount;
     newContribution.period = contrib.period;
     // TODO: sync payFee too
-  }
-
-  if (contrib.paymentSource) {
-    paymentSource.type = contrib.paymentSource.type;
-    paymentSource.bankName = contrib.paymentSource.bankName;
-    paymentSource.accountHolderName = contrib.paymentSource.accountHolderName;
-    paymentSource.accountNumberEnding =
-      contrib.paymentSource.accountNumberEnding;
   }
 
   // TODO: currently contribution content is part of
@@ -138,17 +121,17 @@ const submitContribution = async () => {
     .finally(() => (submitContributionLoading.value = false));
 };
 
-const paymentSourceLoading = ref(false);
+const updatePaymentSourceLoading = ref(false);
 
 const updatePaymentSource = () => {
-  paymentSourceLoading.value = true;
+  updatePaymentSourceLoading.value = true;
   updateBankAccount()
     .then(({ data }) => {
       window.location.href = data.redirectUrl;
     })
     .catch((err) => {
       // Only revert loading on error as success causes route change
-      paymentSourceLoading.value = false;
+      updatePaymentSourceLoading.value = false;
       if (
         err.response?.status === 400 &&
         err.response?.data.code === 'cant-update-contribution'
@@ -223,12 +206,10 @@ export function useContribution() {
     hasNoneType,
     hasManualType,
     contributionButtonText,
-    paymentSourceLoading,
+    updatePaymentSourceLoading,
     updatePaymentSource,
     isActiveMemberWithGoCardless,
-    hasPaymentSource,
     showContributionForm,
-    paymentSource,
     period,
     cantUpdatePaymentSource,
     submitCancelContribution,

@@ -53,15 +53,15 @@
         />
       </form>
 
-      <template v-if="hasPaymentSource">
+      <template v-if="currentContribution.paymentSource">
         <SectionTitle class="mb-4">{{
           t('contribution.bankAccount')
         }}</SectionTitle>
 
         <PaymentSource
           class="mb-7 md:mb-12"
-          :loading="paymentSourceLoading"
-          :payment-source="paymentSource"
+          :loading="updatePaymentSourceLoading"
+          :payment-source="currentContribution.paymentSource"
           :has-error="cantUpdatePaymentSource"
           @update-payment-source="updatePaymentSource"
         />
@@ -116,13 +116,11 @@ const {
   submitContribution,
   showContributionForm,
   contributionButtonText,
-  paymentSourceLoading,
+  updatePaymentSourceLoading,
   updatePaymentSource,
   hasNoneType,
   hasManualType,
   isActiveMemberWithGoCardless,
-  hasPaymentSource,
-  paymentSource,
   period,
   cantUpdatePaymentSource,
   submitContributionLoading,
