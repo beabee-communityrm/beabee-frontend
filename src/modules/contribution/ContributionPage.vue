@@ -51,10 +51,7 @@
         </MessageBox>
 
         <AppButton
-          :disabled="
-            currentContribution.amount === newContribution.amount ||
-            !isContributionValid
-          "
+          :disabled="!canSubmitContribution"
           type="submit"
           variant="link"
           class="mb-4 w-full"
@@ -133,6 +130,7 @@ const {
   currentContribution,
   newContribution,
   contributionContent,
+  canSubmitContribution,
   submitContribution,
   submitContributionLoading,
   cantUpdateContribution,

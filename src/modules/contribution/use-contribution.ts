@@ -129,6 +129,12 @@ const submitUpdateContribution = () => {
     });
 };
 
+const canSubmitContribution = computed(
+  () =>
+    !isActiveMemberWithGoCardless.value ||
+    currentContribution.amount != newContribution.amount
+);
+
 const submitContributionLoading = ref(false);
 
 const submitContribution = async () => {
@@ -214,6 +220,7 @@ export function useContribution() {
     newContribution,
     currentContribution,
     contributionContent,
+    canSubmitContribution,
     submitContributionLoading,
     submitContribution,
     cantUpdateContribution,
