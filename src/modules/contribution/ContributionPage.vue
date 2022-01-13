@@ -5,6 +5,13 @@
 
   <div v-if="!isIniting" class="grid grid-cols-12">
     <div class="col-span-12 md:col-span-7 lg:col-span-5">
+      <AppAlert v-if="updatedPaymentSource" class="mb-8">{{
+        t('contribution.updatedPaymentSource')
+      }}</AppAlert>
+      <AppAlert v-if="startedContribution" class="mb-8">{{
+        t('contribution.startedContribution')
+      }}</AppAlert>
+
       <ContributionBox
         v-if="!hasNoneType"
         :contribution="currentContribution"
@@ -104,6 +111,7 @@
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 import { useContribution } from './use-contribution';
 
 import ContributionBox from './components/ContributionBox.vue';
@@ -121,6 +129,10 @@ import { formatLocale } from '../../utils/dates/locale-date-formats';
 import MessageBox from '../../components/MessageBox.vue';
 
 const { t, n } = useI18n();
+
+const route = useRoute();
+const updatedPaymentSource = route.query.updatedPaymentSource !== undefined;
+const startedContribution = route.query.startedContribution !== undefined;
 
 const isContributionValid = ref(false);
 
