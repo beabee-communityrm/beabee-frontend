@@ -4,6 +4,7 @@
       {{
         t('contribution.prorateMessage', {
           monthsLeft: n(monthsLeft),
+          months: t('common.month', monthsLeft),
           oneOffPayment: n(oneOffPayment, 'currency'),
         })
       }}

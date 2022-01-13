@@ -24,9 +24,18 @@
           </template>
         </i18n-t>
       </div>
-
       <div v-else>
-        <div>{{ t('common.thankYou') }}</div>
+        <p>{{ t('common.thankYou') }}</p>
+        <p
+          v-if="contribution.type === ContributionType.GoCardless"
+          class="mt-2"
+        >
+          {{
+            t('contribution.willRenew', {
+              renewalDate: formattedRenewalDate,
+            })
+          }}
+        </p>
       </div>
     </div>
   </div>
@@ -34,9 +43,16 @@
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
-import { formatDistanceLocale } from '../../../utils/dates/locale-date-formats';
+import {
+  formatDistanceLocale,
+  formatLocale,
+} from '../../../utils/dates/locale-date-formats';
 import { computed } from '@vue/reactivity';
-import { ContributionInfo, MembershipStatus } from '../contribution.interface';
+import {
+  ContributionInfo,
+  ContributionType,
+  MembershipStatus,
+} from '../contribution.interface';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 
 const { n, t } = useI18n();
@@ -51,9 +67,15 @@ const period = computed(() =>
     : t('common.year')
 );
 
-const formattedExpiryDate = computed(() => {
-  return props.contribution.membershipExpiryDate
+const formattedRenewalDate = computed(() =>
+  props.contribution.renewalDate
+    ? formatLocale(props.contribution.renewalDate, 'PPP')
+    : undefined
+);
+
+const formattedExpiryDate = computed(() =>
+  props.contribution.membershipExpiryDate
     ? formatDistanceLocale(new Date(), props.contribution.membershipExpiryDate)
-    : '';
-});
+    : undefined
+);
 </script>
