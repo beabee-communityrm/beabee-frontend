@@ -1,11 +1,5 @@
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 
-export interface ContributionInfo {
-  joined: string;
-  contributionPeriod: string;
-  contributionAmount: number;
-}
-
 export enum ContributionType {
   GoCardless = 'GoCardless',
   Manual = 'Manual',

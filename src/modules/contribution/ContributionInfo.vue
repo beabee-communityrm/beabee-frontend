@@ -16,7 +16,7 @@
       <div class="title uppercase">{{ t('common.contributing') }}</div>
 
       <div class="content">
-        {{ n(contributionInfo.contributionAmount, 'currency') }}<br />
+        {{ n(member.contributionAmount, 'currency') }}<br />
         {{ t('common.every') }}<br />
         {{ period }}<br />
       </div>
@@ -27,30 +27,26 @@
 <script lang="ts" setup>
 import { computed } from '@vue/reactivity';
 import { useI18n } from 'vue-i18n';
-import { ContributionInfo } from './contribution.interface';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import { parseISO } from 'date-fns';
 import { formatLocale } from '../../utils/dates/locale-date-formats';
+import { Member } from '../../utils/interfaces/member.interface';
 
 const { t, n } = useI18n();
 
-const props = defineProps({
-  contributionInfo: {
-    type: Object as () => ContributionInfo,
-    default: () => ({}),
-  },
-});
+const props = defineProps<{
+  member: Member;
+}>();
 
 const period = computed(() => {
-  return props.contributionInfo.contributionPeriod ===
-    ContributionPeriod.Monthly
+  return props.member.contributionPeriod === ContributionPeriod.Monthly
     ? t('common.month')
     : t('common.year');
 });
 
 const formattedJoinedDate = computed(() => {
-  if (!props.contributionInfo.joined) return;
-  const parsedDate = parseISO(props.contributionInfo.joined);
+  if (!props.member.joined) return;
+  const parsedDate = parseISO(props.member.joined);
   return formatLocale(parsedDate, 'do MMMM y').split(' ');
 });
 </script>
