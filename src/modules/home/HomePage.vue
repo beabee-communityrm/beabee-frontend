@@ -66,10 +66,10 @@
 <script lang="ts" setup>
 import NoticeContainer from '../notice/NoticeContainer.vue';
 import CalloutContainer from '../callout/CalloutContainer.vue';
-import ContributionInfo from '../contribution/ContributionInfo.vue';
-import QuickActions from './QuickActions.vue';
-import ThanksNotice from './ThanksNotice.vue';
-import SectionTitle from './SectionTitle.vue';
+import ContributionInfo from './components/ContributionInfo.vue';
+import QuickActions from './components/QuickActions.vue';
+import ThanksNotice from './components/ThanksNotice.vue';
+import SectionTitle from './components/SectionTitle.vue';
 import PageTitle from '../../components/PageTitle.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import AppAlert from '../../components/AppAlert.vue';

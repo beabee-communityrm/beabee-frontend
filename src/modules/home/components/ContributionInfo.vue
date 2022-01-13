@@ -27,10 +27,10 @@
 <script lang="ts" setup>
 import { computed } from '@vue/reactivity';
 import { useI18n } from 'vue-i18n';
-import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
+import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { parseISO } from 'date-fns';
-import { formatLocale } from '../../utils/dates/locale-date-formats';
-import { Member } from '../../utils/interfaces/member.interface';
+import { formatLocale } from '../../../utils/dates/locale-date-formats';
+import { Member } from '../../../utils/interfaces/member.interface';
 
 const { t, n } = useI18n();
 
