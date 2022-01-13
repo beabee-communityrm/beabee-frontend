@@ -73,6 +73,7 @@ const initContributionPage = async () => {
   currentContribution.renewalDate = toDate(contrib.renewalDate);
   currentContribution.paymentSource = contrib.paymentSource;
   currentContribution.payFee = contrib.payFee;
+  currentContribution.hasPendingPayment = contrib.hasPendingPayment;
   currentContribution.membershipStatus = contrib.membershipStatus;
   currentContribution.membershipExpiryDate = toDate(
     contrib.membershipExpiryDate

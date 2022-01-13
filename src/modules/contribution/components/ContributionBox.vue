@@ -31,9 +31,11 @@
           class="mt-2 text-body-80 text-sm"
         >
           {{
-            t('contribution.willRenew', {
-              renewalDate: formattedRenewalDate,
-            })
+            contribution.hasPendingPayment
+              ? t('contribution.hasPendingPayment')
+              : t('contribution.willRenew', {
+                  renewalDate: formattedRenewalDate,
+                })
           }}
         </p>
       </div>

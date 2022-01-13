@@ -31,6 +31,7 @@ export interface ContributionInfo {
   renewalDate?: Date;
   paymentSource?: PaymentSource;
   payFee?: boolean;
+  hasPendingPayment?: boolean;
   membershipStatus: MembershipStatus;
   membershipExpiryDate?: Date;
 }
