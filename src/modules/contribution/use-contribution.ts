@@ -1,4 +1,6 @@
+import { parseISO } from 'date-fns';
 import { computed, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import {
   fetchJoinContent,
@@ -9,32 +11,26 @@ import {
   cancelContribution,
 } from './contribution.service';
 import {
-  CurrentContribution,
+  ContributionInfo,
   ContributionType,
   MembershipStatus,
+  UpdateContribution,
 } from './contribution.interface';
 import i18n from '../../i18n';
-import { useRouter } from 'vue-router';
-import {
-  ContributionContent,
-  ContributionData,
-} from '../../components/contribution/contribution.interface';
+import { ContributionContent } from '../../components/contribution/contribution.interface';
 
 const { t } = i18n.global;
 
-const currentContribution = reactive<CurrentContribution>({
-  amount: 0,
-  period: ContributionPeriod.Monthly,
+const currentContribution = reactive<ContributionInfo>({
   type: ContributionType.None,
-  cancellationDate: '',
-  membershipExpiryDate: '',
   membershipStatus: MembershipStatus.None,
 });
 
-const newContribution = reactive<ContributionData>({
+const newContribution = reactive<UpdateContribution>({
   amount: 5,
   period: ContributionPeriod.Monthly,
   payFee: true,
+  prorate: true,
 
   // TODO: Can we move this?
   get totalAmount(): number {
@@ -58,23 +54,31 @@ const contributionContent = reactive<ContributionContent>({
 const isIniting = ref(false);
 const cantUpdatePaymentSource = ref(false);
 
+function toDate(s: string | undefined): Date | undefined {
+  return s ? parseISO(s) : undefined;
+}
+
 const initContributionPage = async () => {
   isIniting.value = true;
   cantUpdatePaymentSource.value = false;
 
   const contrib = (await fetchContribution()).data;
+  currentContribution.type = contrib.type;
   currentContribution.amount = contrib.amount;
   currentContribution.period = contrib.period;
-  currentContribution.type = contrib.type;
-  currentContribution.membershipExpiryDate = contrib.membershipExpiryDate;
-  currentContribution.cancellationDate = contrib.cancellationDate;
-  currentContribution.membershipStatus = contrib.membershipStatus;
+  currentContribution.cancellationDate = toDate(contrib.cancellationDate);
+  currentContribution.renewalDate = toDate(contrib.renewalDate);
   currentContribution.paymentSource = contrib.paymentSource;
+  currentContribution.payFee = contrib.payFee;
+  currentContribution.membershipStatus = contrib.membershipStatus;
+  currentContribution.membershipExpiryDate = toDate(
+    contrib.membershipExpiryDate
+  );
 
   if (currentContribution.type !== ContributionType.None) {
     newContribution.amount = contrib.amount;
     newContribution.period = contrib.period;
-    // TODO: sync payFee too
+    newContribution.payFee = contrib.payFee;
   }
 
   // TODO: currently contribution content is part of
@@ -141,14 +145,6 @@ const updatePaymentSource = () => {
     });
 };
 
-const period = computed(() =>
-  t(
-    newContribution.period === ContributionPeriod.Monthly
-      ? 'common.month'
-      : 'common.year'
-  )
-);
-
 const hasNoneType = computed(
   () => currentContribution.type === ContributionType.None
 );
@@ -175,11 +171,10 @@ const contributionButtonText = computed(() => {
   return t('contribution.startContribution');
 });
 
-const showContributionForm = computed(() => {
+const showProrateOptions = computed(() => {
   return (
-    currentContribution.type === ContributionType.Manual ||
-    currentContribution.period !== ContributionPeriod.Annually ||
-    currentContribution.membershipStatus === MembershipStatus.Expired
+    currentContribution.period === ContributionPeriod.Annually &&
+    currentContribution.amount !== newContribution.amount
   );
 });
 
@@ -209,8 +204,7 @@ export function useContribution() {
     updatePaymentSourceLoading,
     updatePaymentSource,
     isActiveMemberWithGoCardless,
-    showContributionForm,
-    period,
+    showProrateOptions,
     cantUpdatePaymentSource,
     submitCancelContribution,
     cancelContributionLoading,

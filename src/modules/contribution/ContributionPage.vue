@@ -7,14 +7,11 @@
     <div class="col-span-12 md:col-span-7 lg:col-span-5">
       <ContributionBox
         v-if="!hasNoneType"
-        :status="currentContribution.membershipStatus"
-        :amount="currentContribution.amount"
-        :period="period"
-        :expiry-date="currentContribution.membershipExpiryDate"
+        :contribution="currentContribution"
         class="mb-9"
       />
 
-      <form v-if="showContributionForm" class="mb-7 md:mb-12" @submit.prevent>
+      <form class="mb-7 md:mb-12" @submit.prevent>
         <SectionTitle class="mb-2"
           >{{ t('contribution.billing') }}
         </SectionTitle>
@@ -31,13 +28,18 @@
         />
 
         <ProrateContribution
+          v-if="showProrateOptions"
+          v-model="newContribution.prorate"
           :new-amount="newContribution.amount"
-          :old-amount="currentContribution.amount"
-          :months-left="5"
+          :old-amount="currentContribution.amount!"
+          :renewal-date="currentContribution.renewalDate!"
         />
 
         <AppButton
-          :disabled="!isContributionValid"
+          :disabled="
+            currentContribution.amount === newContribution.amount ||
+            !isContributionValid
+          "
           type="submit"
           variant="link"
           class="mb-4 w-full"
@@ -114,14 +116,13 @@ const {
   newContribution,
   contributionContent,
   submitContribution,
-  showContributionForm,
+  showProrateOptions,
   contributionButtonText,
   updatePaymentSourceLoading,
   updatePaymentSource,
   hasNoneType,
   hasManualType,
   isActiveMemberWithGoCardless,
-  period,
   cantUpdatePaymentSource,
   submitContributionLoading,
 } = useContribution();

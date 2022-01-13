@@ -1,3 +1,4 @@
+import { ContributionData } from '../../components/contribution/contribution.interface';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 
 export enum ContributionType {
@@ -21,14 +22,18 @@ export interface PaymentSource {
   accountNumberEnding: string;
 }
 
-export interface CurrentContribution {
+export interface ContributionInfo {
   type: ContributionType;
   amount?: number;
   period?: ContributionPeriod;
-  cancellationDate?: string;
-  renewalDate?: string;
+  cancellationDate?: Date;
+  renewalDate?: Date;
   paymentSource?: PaymentSource;
   payFee?: boolean;
   membershipStatus: MembershipStatus;
-  membershipExpiryDate?: string;
+  membershipExpiryDate?: Date;
+}
+
+export interface UpdateContribution extends ContributionData {
+  prorate: boolean;
 }
