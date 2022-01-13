@@ -108,6 +108,7 @@ const submitUpdateContribution = () => {
   return updateContribution(newContribution).then(({ data }) => {
     currentContribution.amount = data.amount;
     currentContribution.period = data.period;
+    currentContribution.nextAmount = data.nextAmount;
     // TODO: to do somthing here, like showing succes message? (ask the design team)
   });
 };
