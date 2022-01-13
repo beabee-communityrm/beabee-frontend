@@ -29,6 +29,7 @@
     "expired": "Your contribution expired.",
     "expiredText": "Please consider renewing, even if at the lowest amount it would help us immensely. Thank you!",
     "manualPayment": "You are paying manually through bank transfer right now. To make it easier for you to manage your contribution and easier for us to know on how much money from our members we can rely on month on month, please update to paying automatically via direct debit.",
+    "nextAmountChanging": "Your contribution will change to {nextAmount} on {renewalDate}.",
     "paymentSourceUpdateError": "You can't update your bank account at the moment as you have a payment pending",
     "prorateDecreaseMessage": "You have {monthsLeft} {months} left on your current contribution, your new contribution will start on {renewalDate}.",
     "prorateIncreaseMessage": "You have {monthsLeft} {months} left on your current contribution. You can make a one-off payment of {oneOffPayment} to start your new contribution immediately.",

@@ -15,15 +15,12 @@
 import { computed } from '@vue/reactivity';
 import { useSlots } from '@vue/runtime-core';
 
-const props = defineProps({
-  variant: {
-    type: String,
-    default: 'success',
-    validator(value: string) {
-      return ['success', 'warning', 'danger'].includes(value);
-    },
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    variant: 'success' | 'warning' | 'danger';
+  }>(),
+  { variant: 'success' }
+);
 
 const slots = useSlots();
 
