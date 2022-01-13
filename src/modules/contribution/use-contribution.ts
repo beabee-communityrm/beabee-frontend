@@ -59,6 +59,17 @@ function toDate(s: string | undefined): Date | undefined {
   return s ? parseISO(s) : undefined;
 }
 
+const resetNewContribution = () => {
+  newContribution.amount =
+    currentContribution.amount || contributionContent.initialAmount;
+  newContribution.period =
+    currentContribution.period || contributionContent.initialPeriod;
+  newContribution.payFee = contributionContent.showAbsorbFee
+    ? !!currentContribution.payFee
+    : false;
+  newContribution.prorate = true;
+};
+
 const initContributionPage = async () => {
   isIniting.value = true;
   cantUpdateContribution.value = false;
@@ -79,12 +90,6 @@ const initContributionPage = async () => {
     contrib.membershipExpiryDate
   );
 
-  if (currentContribution.type !== ContributionType.None) {
-    newContribution.amount = contrib.amount;
-    newContribution.period = contrib.period;
-    newContribution.payFee = contrib.payFee;
-  }
-
   // TODO: currently contribution content is part of
   // join content API.
   const content = (await fetchJoinContent()).data;
@@ -94,9 +99,7 @@ const initContributionPage = async () => {
   contributionContent.periods = content.periods;
   contributionContent.showAbsorbFee = content.showAbsorbFee;
 
-  if (!contributionContent.showAbsorbFee) {
-    newContribution.payFee = false;
-  }
+  resetNewContribution();
 
   isIniting.value = false;
 };
@@ -113,6 +116,7 @@ const submitUpdateContribution = () => {
       currentContribution.amount = data.amount;
       currentContribution.period = data.period;
       currentContribution.nextAmount = data.nextAmount;
+      resetNewContribution();
       // TODO: to do somthing here, like showing succes message? (ask the design team)
     })
     .catch((err) => {
