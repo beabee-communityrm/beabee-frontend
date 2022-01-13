@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts" setup>
-import { differenceInCalendarMonths } from 'date-fns';
+import { differenceInMonths } from 'date-fns';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
@@ -78,7 +78,7 @@ const prorate = computed({
 });
 
 const monthsLeft = computed(() =>
-  differenceInCalendarMonths(props.renewalDate, new Date())
+  differenceInMonths(props.renewalDate, new Date())
 );
 
 const oneOffPayment = computed(
