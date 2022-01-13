@@ -1,8 +1,19 @@
 <template>
-  <div v-if="oneOffPayment >= 1">
+  <div v-if="oneOffPayment < 0" class="mb-5">
     <p class="mb-3">
       {{
-        t('contribution.prorateMessage', {
+        t('contribution.prorateDecreaseMessage', {
+          monthsLeft: n(monthsLeft),
+          months: t('common.month', monthsLeft),
+          renewalDate: formattedRenewalDate,
+        })
+      }}
+    </p>
+  </div>
+  <div v-if="oneOffPayment >= 1" class="mb-5">
+    <p class="mb-3">
+      {{
+        t('contribution.prorateIncreaseMessage', {
           monthsLeft: n(monthsLeft),
           months: t('common.month', monthsLeft),
           oneOffPayment: n(oneOffPayment, 'currency'),
@@ -24,7 +35,7 @@
         </p>
       </div>
     </label>
-    <label class="flex mb-5">
+    <label class="flex mb-2">
       <div class="flex-none mr-1">
         <input v-model="prorate" type="radio" :value="false" />
       </div>

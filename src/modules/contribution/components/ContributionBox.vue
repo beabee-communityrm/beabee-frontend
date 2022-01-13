@@ -28,7 +28,7 @@
         <p>{{ t('common.thankYou') }}</p>
         <p
           v-if="contribution.type === ContributionType.GoCardless"
-          class="mt-2"
+          class="mt-2 text-body-80 text-sm"
         >
           {{
             t('contribution.willRenew', {
