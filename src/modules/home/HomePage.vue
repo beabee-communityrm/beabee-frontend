@@ -58,6 +58,10 @@
   <section class="pt-20 mt-auto max-w-xs md:max-w-sm mx-auto">
     <ThanksNotice>{{ profileContent.footerMessage }}</ThanksNotice>
   </section>
+
+  <footer>
+    <Footer />
+  </footer>
 </template>
 
 <script lang="ts" setup>
@@ -66,6 +70,7 @@ import CalloutContainer from '../callout/CalloutContainer.vue';
 import ContributionInfo from '../contribution/ContributionInfo.vue';
 import QuickActions from './QuickActions.vue';
 import ThanksNotice from './ThanksNotice.vue';
+import Footer from './Footer.vue';
 import SectionTitle from './SectionTitle.vue';
 import PageTitle from '../../components/PageTitle.vue';
 import AppButton from '../../components/forms/AppButton.vue';
