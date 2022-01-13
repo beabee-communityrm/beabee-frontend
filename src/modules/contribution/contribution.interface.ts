@@ -25,6 +25,7 @@ export interface PaymentSource {
 export interface ContributionInfo {
   type: ContributionType;
   amount?: number;
+  nextAmount?: number;
   period?: ContributionPeriod;
   cancellationDate?: Date;
   renewalDate?: Date;

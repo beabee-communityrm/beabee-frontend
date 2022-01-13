@@ -65,6 +65,7 @@ const initContributionPage = async () => {
   const contrib = (await fetchContribution()).data;
   currentContribution.type = contrib.type;
   currentContribution.amount = contrib.amount;
+  currentContribution.nextAmount = contrib.nextAmount;
   currentContribution.period = contrib.period;
   currentContribution.cancellationDate = toDate(contrib.cancellationDate);
   currentContribution.renewalDate = toDate(contrib.renewalDate);

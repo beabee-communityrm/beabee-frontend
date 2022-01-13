@@ -16,6 +16,17 @@
           >{{ t('contribution.billing') }}
         </SectionTitle>
 
+        <div v-if="currentContribution.nextAmount" class="mb-5">
+          <AppAlert>
+            {{
+              t('contribution.nextAmountChanging', {
+                nextAmount: n(currentContribution.nextAmount, 'currency'),
+                renewalDate: formattedRenewalDate,
+              })
+            }}
+          </AppAlert>
+        </div>
+
         <p v-if="hasManualType" class="mb-4">
           {{ t('contribution.manualPayment') }}
         </p>
@@ -90,7 +101,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useContribution } from './use-contribution';
 
@@ -104,8 +115,10 @@ import SectionTitle from '../../components/SectionTitle.vue';
 import Contribution from '../../components/contribution/Contribution.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import ProrateContribution from './components/ProrateContribution.vue';
+import AppAlert from '../../components/AppAlert.vue';
+import { formatLocale } from '../../utils/dates/locale-date-formats';
 
-const { t } = useI18n();
+const { t, n } = useI18n();
 
 const isContributionValid = ref(false);
 
@@ -126,6 +139,12 @@ const {
   cantUpdatePaymentSource,
   submitContributionLoading,
 } = useContribution();
+
+const formattedRenewalDate = computed(
+  () =>
+    currentContribution.renewalDate &&
+    formatLocale(currentContribution.renewalDate, 'PPP')
+);
 
 onBeforeMount(() => {
   initContributionPage();
