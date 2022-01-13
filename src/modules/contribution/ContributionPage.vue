@@ -46,6 +46,10 @@
           :renewal-date="currentContribution.renewalDate!"
         />
 
+        <MessageBox v-if="cantUpdateContribution" class="mb-4" type="error">
+          {{ t('contribution.contributionUpdateError') }}
+        </MessageBox>
+
         <AppButton
           :disabled="
             currentContribution.amount === newContribution.amount ||
@@ -117,6 +121,7 @@ import AppButton from '../../components/forms/AppButton.vue';
 import ProrateContribution from './components/ProrateContribution.vue';
 import AppAlert from '../../components/AppAlert.vue';
 import { formatLocale } from '../../utils/dates/locale-date-formats';
+import MessageBox from '../../components/MessageBox.vue';
 
 const { t, n } = useI18n();
 
@@ -129,15 +134,16 @@ const {
   newContribution,
   contributionContent,
   submitContribution,
+  submitContributionLoading,
+  cantUpdateContribution,
   showProrateOptions,
   contributionButtonText,
-  updatePaymentSourceLoading,
   updatePaymentSource,
+  updatePaymentSourceLoading,
+  cantUpdatePaymentSource,
   hasNoneType,
   hasManualType,
   isActiveMemberWithGoCardless,
-  cantUpdatePaymentSource,
-  submitContributionLoading,
 } = useContribution();
 
 const formattedRenewalDate = computed(

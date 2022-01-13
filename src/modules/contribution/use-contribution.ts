@@ -52,6 +52,7 @@ const contributionContent = reactive<ContributionContent>({
 });
 
 const isIniting = ref(false);
+const cantUpdateContribution = ref(false);
 const cantUpdatePaymentSource = ref(false);
 
 function toDate(s: string | undefined): Date | undefined {
@@ -60,6 +61,7 @@ function toDate(s: string | undefined): Date | undefined {
 
 const initContributionPage = async () => {
   isIniting.value = true;
+  cantUpdateContribution.value = false;
   cantUpdatePaymentSource.value = false;
 
   const contrib = (await fetchContribution()).data;
@@ -105,12 +107,21 @@ const submitCreateContribution = () => {
 };
 
 const submitUpdateContribution = () => {
-  return updateContribution(newContribution).then(({ data }) => {
-    currentContribution.amount = data.amount;
-    currentContribution.period = data.period;
-    currentContribution.nextAmount = data.nextAmount;
-    // TODO: to do somthing here, like showing succes message? (ask the design team)
-  });
+  return updateContribution(newContribution)
+    .then(({ data }) => {
+      currentContribution.amount = data.amount;
+      currentContribution.period = data.period;
+      currentContribution.nextAmount = data.nextAmount;
+      // TODO: to do somthing here, like showing succes message? (ask the design team)
+    })
+    .catch((err) => {
+      if (
+        err.response?.status === 400 &&
+        err.response.data.code === 'cant-update-contribution'
+      ) {
+        cantUpdateContribution.value = true;
+      }
+    });
 };
 
 const submitContributionLoading = ref(false);
@@ -198,16 +209,17 @@ export function useContribution() {
     newContribution,
     currentContribution,
     contributionContent,
-    submitContribution,
     submitContributionLoading,
+    submitContribution,
+    cantUpdateContribution,
     hasNoneType,
     hasManualType,
     contributionButtonText,
     updatePaymentSourceLoading,
     updatePaymentSource,
+    cantUpdatePaymentSource,
     isActiveMemberWithGoCardless,
     showProrateOptions,
-    cantUpdatePaymentSource,
     submitCancelContribution,
     cancelContributionLoading,
   };
