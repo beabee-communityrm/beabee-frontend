@@ -41,8 +41,11 @@
     "prorateYesTitle": "Update my contribution now",
     "restartContribution": "Restart contribution",
     "startContribution": "Start contribution",
+    "startedContribution": "Your contribution has been started.",
     "updateContribution": "Update contribution",
     "updatePaymentType": "Update payment type",
+    "updatedContribution": "Your contribution has been updated.",
+    "updatedPaymentSource": "Your bank account has been updated.",
     "willExpire": "Your contribution will expire in {expires}.",
     "willRenew": "Your contribution will automatically renew on {renewalDate}."
   },
