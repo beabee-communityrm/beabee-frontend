@@ -78,7 +78,7 @@ const prorate = computed({
 });
 
 const monthsLeft = computed(() =>
-  differenceInMonths(props.renewalDate, new Date())
+  Math.max(0, differenceInMonths(props.renewalDate, new Date()))
 );
 
 const oneOffPayment = computed(
