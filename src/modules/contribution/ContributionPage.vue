@@ -53,6 +53,10 @@
           :renewal-date="currentContribution.renewalDate!"
         />
 
+        <MessageBox v-if="hasUpdatedContribution" class="mb-4" type="success">
+          {{ t('contribution.updatedContribution') }}
+        </MessageBox>
+
         <MessageBox v-if="cantUpdateContribution" class="mb-4" type="error">
           {{ t('contribution.contributionUpdateError') }}
         </MessageBox>
@@ -146,6 +150,7 @@ const {
   submitContribution,
   submitContributionLoading,
   cantUpdateContribution,
+  hasUpdatedContribution,
   showProrateOptions,
   contributionButtonText,
   updatePaymentSource,

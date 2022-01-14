@@ -54,6 +54,7 @@ const contributionContent = reactive<ContributionContent>({
 const isIniting = ref(false);
 const cantUpdateContribution = ref(false);
 const cantUpdatePaymentSource = ref(false);
+const hasUpdatedContribution = ref(false);
 
 function toDate(s: string | undefined): Date | undefined {
   return s ? parseISO(s) : undefined;
@@ -74,6 +75,7 @@ const initContributionPage = async () => {
   isIniting.value = true;
   cantUpdateContribution.value = false;
   cantUpdatePaymentSource.value = false;
+  hasUpdatedContribution.value = false;
 
   const contrib = (await fetchContribution()).data;
   currentContribution.type = contrib.type;
@@ -117,7 +119,8 @@ const submitUpdateContribution = () => {
       currentContribution.period = data.period;
       currentContribution.nextAmount = data.nextAmount;
       resetNewContribution();
-      // TODO: to do somthing here, like showing succes message? (ask the design team)
+
+      hasUpdatedContribution.value = true;
     })
     .catch((err) => {
       if (
@@ -224,6 +227,7 @@ export function useContribution() {
     submitContributionLoading,
     submitContribution,
     cantUpdateContribution,
+    hasUpdatedContribution,
     hasNoneType,
     hasManualType,
     contributionButtonText,
