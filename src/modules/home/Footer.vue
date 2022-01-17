@@ -3,20 +3,24 @@
     <div class="flex-auto">
       <ul>
         <li>
-          <a class="text-primary-80 font-bold" href="">Deine Lokalreporter</a>
+          <a class="text-primary-80 font-bold" :href="newsroomLink">{{
+            newsroomName
+          }}</a>
         </li>
         <li>&mdash;</li>
         <li>Contact us at</li>
         <li>
-          <a class="text-primary-80" href="">support@deinelokalreporter.de</a>
+          <a class="text-primary-80" :href="'mailto:' + newsroomEmail">{{
+            newsroomEmail
+          }}</a>
         </li>
       </ul>
     </div>
     <div class="flex-auto">
       <ul>
-        <li><a class="text-primary-80" href="">Impressum</a></li>
-        <li><a class="text-primary-80" href="">Privacy Policy</a></li>
-        <li><a class="text-primary-80" href="">Terms and Conditions</a></li>
+        <li><a class="text-primary-80" href="#">Impressum</a></li>
+        <li><a class="text-primary-80" href="#">Privacy Policy</a></li>
+        <li><a class="text-primary-80" href="#">Terms and Conditions</a></li>
       </ul>
     </div>
     <div class="flex-auto">
@@ -41,6 +45,8 @@
 
 <script lang="ts" setup>
 const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
+const newsroomLink = import.meta.env.VITE_NEWSROOM_LINK;
+const newsroomEmail = import.meta.env.VITE_NEWSROOM_EMAIL;
 </script>
 
 <style scoped>
