@@ -10,4 +10,5 @@ const currentUserCan = (role: Role): ComputedRef<boolean> => {
 
 export default currentUserCan;
 
-export const canAdmin = currentUserCan(Role.Admin);
+export const canAdmin =
+  currentUserCan(Role.Admin) || currentUserCan(Role.SuperAdmin);
