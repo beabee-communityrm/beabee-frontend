@@ -34,10 +34,17 @@
     <div class="flex-auto">
       <p></p>
     </div>
-    <div class="flex-auto">
+    <div v-if="type === 'user'" class="flex-auto">
       <ul>
         <li><a class="text-primary-80" href="">beabee</a></li>
         <li>powering independent local newsrooms</li>
+      </ul>
+    </div>
+    <div v-if="type === 'admin'" class="flex-auto">
+      <ul>
+        <li><a class="text-primary-80" href="">beabee</a></li>
+        <li><a href="">Join the community</a></li>
+        <li><a href="">Handbook &amp; resources</a></li>
       </ul>
     </div>
   </div>
@@ -47,6 +54,12 @@
 const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
 const newsroomLink = import.meta.env.VITE_NEWSROOM_LINK;
 const newsroomEmail = import.meta.env.VITE_NEWSROOM_EMAIL;
+defineProps({
+  type: {
+    default: 'user',
+    type: String,
+  },
+});
 </script>
 
 <style scoped>

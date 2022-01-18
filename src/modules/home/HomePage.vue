@@ -60,7 +60,7 @@
   </section>
 
   <footer>
-    <Footer />
+    <Footer :type="canAdmin ? 'admin' : 'user'" />
   </footer>
 </template>
 
@@ -70,13 +70,14 @@ import CalloutContainer from '../callout/CalloutContainer.vue';
 import ContributionInfo from '../contribution/ContributionInfo.vue';
 import QuickActions from './QuickActions.vue';
 import ThanksNotice from './ThanksNotice.vue';
-import Footer from './Footer.vue';
+import Footer from '../../components/Footer.vue';
 import SectionTitle from './SectionTitle.vue';
 import PageTitle from '../../components/PageTitle.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import AppAlert from '../../components/AppAlert.vue';
 import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
 import { useHome } from './use-home';
+import { canAdmin } from '../../utils/currentUserCan';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
