@@ -59,7 +59,7 @@
     <ThanksNotice>{{ profileContent.footerMessage }}</ThanksNotice>
   </section>
 
-  <footer>
+  <footer class="mt-8 divide-y">
     <Footer />
   </footer>
 </template>
