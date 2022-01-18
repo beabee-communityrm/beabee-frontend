@@ -3,43 +3,41 @@
     <div class="w-1/5">
       <ul>
         <li>
-          <a class="text-link text-base font-semibold" :href="newsroomLink">{{
+          <a class="text-base font-semibold" :href="newsroomLink">{{
             newsroomName
           }}</a>
         </li>
         <li>&mdash;</li>
         <li>Contact us at</li>
         <li>
-          <a class="text-link" :href="'mailto:' + newsroomEmail">{{
-            newsroomEmail
-          }}</a>
+          <a :href="'mailto:' + newsroomEmail">{{ newsroomEmail }}</a>
         </li>
       </ul>
     </div>
     <div class="w-1/5 ml-4">
       <ul>
-        <li><a class="text-link" href="#">Impressum</a></li>
-        <li><a class="text-link" href="#">Privacy Policy</a></li>
-        <li><a class="text-link" href="#">Terms and Conditions</a></li>
+        <li><a href="#">Impressum</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms and Conditions</a></li>
       </ul>
     </div>
     <div class="w-1/5 ml-4">
       <ul>
-        <li><a class="text-link" href="#">Memberships</a></li>
-        <li><a class="text-link" href="#">Code of Conduct</a></li>
-        <li><a class="text-link" href="#">FAQs</a></li>
-        <li><a class="text-link" href="#">Contacts</a></li>
+        <li><a href="#">Memberships</a></li>
+        <li><a href="#">Code of Conduct</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Contacts</a></li>
       </ul>
     </div>
     <div v-if="type === 'user'" class="w-1/5 ml-auto">
       <ul>
-        <li><a class="text-link font-bold" href="">beabee</a></li>
+        <li><a class="font-bold" href="">beabee</a></li>
         <li>powering independent local newsrooms</li>
       </ul>
     </div>
     <div v-if="type === 'admin'" class="w-1/5 ml-auto">
       <ul>
-        <li><a class="text-primary-80" href="">beabee</a></li>
+        <li><a class="font-bold" href="">beabee</a></li>
         <li><a href="">Join the community</a></li>
         <li><a href="">Handbook &amp; resources</a></li>
       </ul>
@@ -62,5 +60,9 @@ defineProps({
 <style scoped>
 .footer {
   @apply text-sm;
+}
+
+a {
+  @apply text-link;
 }
 </style>
