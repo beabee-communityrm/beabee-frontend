@@ -21,6 +21,9 @@ const createContribution = (
     payFee:
       newContribution.payFee &&
       newContribution.period === ContributionPeriod.Monthly,
+    prorate:
+      newContribution.prorate &&
+      newContribution.period === ContributionPeriod.Annually,
     completeUrl:
       import.meta.env.VITE_APP_BASE_URL + '/profile/contribution/complete',
   });

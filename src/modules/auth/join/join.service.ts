@@ -37,6 +37,7 @@ const signUp = (signUpData: SignUpData): Promise<any> => {
             payFee:
               signUpData.payFee &&
               signUpData.period === ContributionPeriod.Monthly,
+            prorate: false,
             completeUrl: import.meta.env.VITE_APP_BASE_URL + '/join/complete',
           },
         }),
