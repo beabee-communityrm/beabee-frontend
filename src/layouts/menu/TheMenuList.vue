@@ -12,7 +12,7 @@
       <ul class="flex flex-col">
         <li v-for="(item, itemIndex) in section.items" :key="itemIndex">
           <router-link class="menu-item" :to="item.href">
-            <TheMenuListItem :icon="['far', item.icon]" :title="item.title" />
+            <TheMenuListItem :icon="item.icon" :title="item.title" />
           </router-link>
         </li>
       </ul>

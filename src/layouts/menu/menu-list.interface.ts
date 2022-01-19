@@ -7,5 +7,5 @@ export interface MenuSection {
 export interface MenuItem {
   title: string;
   href?: string;
-  icon: string;
+  icon: [string, string];
 }
