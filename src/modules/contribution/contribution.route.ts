@@ -14,7 +14,6 @@ export const contributionRoute: Array<RouteRecordRaw> = [
     component: () => import('./ContributionPage.vue'),
     meta: {
       pageTitle: t('menu.contribution'),
-      roles: [],
     },
     // these pages are never shown, `beforeEnter` redirects
     // the user to appropriate page.
@@ -61,7 +60,6 @@ export const contributionRoute: Array<RouteRecordRaw> = [
     name: 'cancel contribution',
     component: () => import('./pages/CancelPage.vue'),
     meta: {
-      roles: [],
       pageTitle: t('menu.contribution'),
     },
   },

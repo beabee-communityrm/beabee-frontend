@@ -10,7 +10,6 @@ export const informationRoute: Array<RouteRecordRaw> = [
     component: () => import('./InformationPage.vue'),
     meta: {
       pageTitle: t('informationPage.title'),
-      roles: [],
     },
   },
 ];
