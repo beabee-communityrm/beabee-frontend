@@ -5,6 +5,7 @@ import { joinRoute } from '../modules/auth/join/join.route';
 import { authRoute } from '../modules/auth/auth.route';
 import { themeRoute } from '../modules/theme/theme.route';
 import { contributionRoute } from '../modules/contribution/contribution.route';
+import { contactsRoute } from '../modules/contacts/contacts.route';
 import { Role } from '../utils/enums/roles.enum';
 import { currentUser, initialUserPromise } from '../store';
 
@@ -17,6 +18,7 @@ const routes: RouteRecordRaw[] = [
   ...authRoute,
   ...themeRoute,
   ...contributionRoute,
+  ...contactsRoute,
 ];
 
 const router = createRouter({
