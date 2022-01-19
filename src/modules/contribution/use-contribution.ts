@@ -198,6 +198,12 @@ const contributionButtonText = computed(() => {
   return t('contribution.startContribution');
 });
 
+const showChangePeriod = computed(
+  () =>
+    !isActiveMemberWithGoCardless.value &&
+    currentContribution.period !== ContributionPeriod.Annually
+);
+
 const showProrateOptions = computed(() => {
   return (
     currentContribution.period === ContributionPeriod.Annually &&
@@ -235,6 +241,7 @@ export function useContribution() {
     updatePaymentSource,
     cantUpdatePaymentSource,
     isActiveMemberWithGoCardless,
+    showChangePeriod,
     showProrateOptions,
     submitCancelContribution,
     cancelContributionLoading,

@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col p-8 bg-white shadow">
+  <div
+    v-if="contribution.type !== ContributionType.None"
+    class="flex flex-col p-8 bg-white shadow"
+  >
     <template v-if="contribution.membershipStatus === MembershipStatus.Expired">
       <p class="text-lg mb-2 font-semibold">{{ t('contribution.expired') }}</p>
 

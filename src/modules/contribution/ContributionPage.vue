@@ -12,11 +12,7 @@
         t('contribution.startedContribution')
       }}</AppAlert>
 
-      <ContributionBox
-        v-if="!hasNoneType"
-        :contribution="currentContribution"
-        class="mb-9"
-      />
+      <ContributionBox :contribution="currentContribution" class="mb-9" />
 
       <form class="mb-7 md:mb-12" @submit.prevent>
         <SectionTitle class="mb-2"
@@ -31,7 +27,7 @@
           v-model="newContribution"
           v-model:isValid="isContributionValid"
           :content="contributionContent"
-          :show-period="!isActiveMemberWithGoCardless"
+          :show-period="showChangePeriod"
         />
 
         <ProrateContribution
@@ -102,7 +98,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { useContribution } from './use-contribution';
@@ -118,10 +114,9 @@ import Contribution from '../../components/contribution/Contribution.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import ProrateContribution from './components/ProrateContribution.vue';
 import AppAlert from '../../components/AppAlert.vue';
-import { formatLocale } from '../../utils/dates/locale-date-formats';
 import MessageBox from '../../components/MessageBox.vue';
 
-const { t, n } = useI18n();
+const { t } = useI18n();
 
 const route = useRoute();
 const updatedPaymentSource = route.query.updatedPaymentSource !== undefined;
@@ -140,6 +135,7 @@ const {
   submitContributionLoading,
   cantUpdateContribution,
   hasUpdatedContribution,
+  showChangePeriod,
   showProrateOptions,
   contributionButtonText,
   updatePaymentSource,
@@ -149,12 +145,6 @@ const {
   hasManualType,
   isActiveMemberWithGoCardless,
 } = useContribution();
-
-const formattedRenewalDate = computed(
-  () =>
-    currentContribution.renewalDate &&
-    formatLocale(currentContribution.renewalDate, 'PPP')
-);
 
 onBeforeMount(() => {
   initContributionPage();
