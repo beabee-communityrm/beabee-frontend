@@ -41,13 +41,14 @@
     "prorateYesTitle": "Update my contribution now",
     "restartContribution": "Restart contribution",
     "startContribution": "Start contribution",
-    "startedContribution": "Your contribution has been started.",
+    "startedContribution": "Your contribution has started.",
     "updateContribution": "Update contribution",
     "updatePaymentType": "Update payment type",
     "updatedContribution": "Your contribution has been updated.",
     "updatedPaymentSource": "Your bank account has been updated.",
     "willExpire": "Your contribution will expire in {expires}.",
-    "willRenew": "Your contribution will automatically renew on {renewalDate}."
+    "willRenew": "Your contribution will automatically renew on {renewalDate}.",
+    "willRenewWithNewAmount": "Your contribution will automatically renew on {renewalDate} and will change to your chosen amount of {nextAmount}."
   },
   "forgotPassword": {
     "checkInbox": "Please check your inbox and follow the instructions in the email. Check your spam folder if it doesn't appear.",

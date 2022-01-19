@@ -34,7 +34,9 @@
     "startContribution": "Mitgliedschaft beginnen",
     "updateContribution": "Beitrag aktualisieren",
     "updatePaymentType": "Neuen Zahlungsweg einrichten",
-    "willExpire": "Ihre Mitgliedschaft läuft in {expires} ab."
+    "willExpire": "Ihre Mitgliedschaft läuft in {expires} ab.",
+    "willRenew": "Ihre Mitgliedschaft verlängert sich am {renewalDate} automatisch.",
+    "willRenewWithNewAmount": "Ihre Mitgliedschaft verlängert sich am {renewalDate} automatisch."
   },
   "forgotPassword": {
     "checkInbox": "Bitte schauen Sie in Ihren Posteingang und befolgen Sie die Anleitung in der Email. Sollte die Email nicht auftauchen, schauen Sie auch in ihrem Spamordner nach. ",

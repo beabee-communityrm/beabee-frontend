@@ -20,24 +20,37 @@
       <div v-if="contribution.membershipStatus === MembershipStatus.Expiring">
         <i18n-t keypath="contribution.willExpire">
           <template #expires>
-            <span class="text-danger"> {{ formattedExpiryDate }}</span>
+            <b class="text-danger"> {{ formattedExpiryDate }}</b>
           </template>
         </i18n-t>
       </div>
       <div v-else>
         <p>{{ t('common.thankYou') }}</p>
-        <p
+        <div
           v-if="contribution.type === ContributionType.GoCardless"
           class="mt-2 text-body-80 text-sm"
         >
-          {{
-            contribution.hasPendingPayment
-              ? t('contribution.hasPendingPayment')
-              : t('contribution.willRenew', {
-                  renewalDate: formattedRenewalDate,
-                })
-          }}
-        </p>
+          <i18n-t
+            v-if="contribution.hasPendingPayment"
+            keypath="contribution.hasPendingPayment"
+          />
+          <i18n-t
+            v-else-if="contribution.nextAmount"
+            keypath="contribution.willRenewWithNewAmount"
+          >
+            <template #renewalDate>
+              <b>{{ formattedRenewalDate }}</b>
+            </template>
+            <template #nextAmount>
+              <b>{{ n(contribution.nextAmount, 'currency') }}/{{ period }}</b>
+            </template>
+          </i18n-t>
+          <i18n-t v-else keypath="contribution.willRenew">
+            <template #renewalDate>
+              <b>{{ formattedRenewalDate }}</b>
+            </template>
+          </i18n-t>
+        </div>
       </div>
     </div>
   </div>

@@ -23,17 +23,6 @@
           >{{ t('contribution.billing') }}
         </SectionTitle>
 
-        <div v-if="currentContribution.nextAmount" class="mb-5">
-          <AppAlert>
-            {{
-              t('contribution.nextAmountChanging', {
-                nextAmount: n(currentContribution.nextAmount, 'currency'),
-                renewalDate: formattedRenewalDate,
-              })
-            }}
-          </AppAlert>
-        </div>
-
         <p v-if="hasManualType" class="mb-4">
           {{ t('contribution.manualPayment') }}
         </p>
