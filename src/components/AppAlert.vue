@@ -1,13 +1,13 @@
 <template>
   <div
-    class="flex items-center h-14 px-4 text-white font-semibold rounded"
+    class="flex items-center px-4 text-white font-semibold rounded"
     :class="bgColorClass"
   >
     <div v-if="slots.icon" class="mr-4 text-lg">
       <slot name="icon" />
     </div>
 
-    <slot />
+    <div class="py-4"><slot /></div>
   </div>
 </template>
 
@@ -15,15 +15,12 @@
 import { computed } from '@vue/reactivity';
 import { useSlots } from '@vue/runtime-core';
 
-const props = defineProps({
-  variant: {
-    type: String,
-    default: 'success',
-    validator(value: string) {
-      return ['success', 'warning', 'danger'].includes(value);
-    },
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    variant: 'success' | 'warning' | 'danger';
+  }>(),
+  { variant: 'success' }
+);
 
 const slots = useSlots();
 

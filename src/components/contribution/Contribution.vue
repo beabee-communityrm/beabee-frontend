@@ -1,7 +1,7 @@
 <template>
   <ContributionPeriod_
     v-if="showPeriod"
-    class="mb-6"
+    class="mb-5"
     :periods="content.periods"
     :selected-period="contribution.period"
     @change-period="changePeriod"

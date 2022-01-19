@@ -25,14 +25,18 @@ import { computed } from '@vue/reactivity';
 import AppLink from '../AppLink.vue';
 
 const variantClasses = {
-  primary: 'bg-primary-70 text-white hover:bg-primary-80',
-  link: 'bg-link text-white hover:bg-link-110',
-  danger: 'bg-danger text-white hover:bg-danger-110',
-  primaryOutlined:
-    'bg-white text-primary-80 border border-primary-70 hover:bg-primary-10 hover:text-primary hover:border-primary',
-  linkOutlined: 'bg-white text-link border border-link hover:bg-link-10',
-  dangerOutlined:
-    'bg-white text-danger border border-danger hover:bg-danger-10',
+  primary: ['bg-primary-70 text-white', 'hover:bg-primary-80'],
+  link: ['bg-link text-white', 'hover:bg-link-110'],
+  danger: ['bg-danger text-white', 'hover:bg-danger-110'],
+  primaryOutlined: [
+    'bg-white text-primary-80 border border-primary-70i',
+    'hover:bg-primary-10 hover:text-primary hover:border-primary',
+  ],
+  linkOutlined: ['bg-white text-link border border-link', 'hover:bg-link-10'],
+  dangerOutlined: [
+    'bg-white text-danger border border-danger',
+    'hover:bg-danger-10',
+  ],
 } as const;
 
 const variantLoadingClasses = {
@@ -68,7 +72,12 @@ const baseClasses =
   'h-10 px-2 text-center cursor-pointer inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative';
 
 const classes = computed(() => {
-  return [baseClasses, variantClasses[props.variant], statusClasses.value];
+  return [
+    baseClasses,
+    variantClasses[props.variant][0],
+    statusClasses.value,
+    props.disabled ? '' : variantClasses[props.variant][1],
+  ];
 });
 
 const loadingClasses = computed(() => variantLoadingClasses[props.variant]);

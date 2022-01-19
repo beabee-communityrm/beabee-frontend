@@ -1,24 +1,14 @@
-import { computed, reactive } from 'vue';
-import { Member, ProfileContent } from './home.interface';
+import { reactive } from 'vue';
+import { Member } from '../../utils/interfaces/member.interface';
+import { ProfileContent } from './home.interface';
 import { fetchMember, fetchProfileContent } from './home.service';
 
 const member = reactive<Member>({
-  firstName: '',
+  firstname: '',
   joined: '',
   contributionPeriod: '',
   contributionAmount: 0,
 });
-
-function setMember(): void {
-  fetchMember()
-    .then(({ data }) => {
-      member.firstName = data.firstname;
-      member.joined = data.joined;
-      member.contributionPeriod = data.contributionPeriod;
-      member.contributionAmount = data.contributionAmount;
-    })
-    .catch((err) => err);
-}
 
 const profileContent = reactive<ProfileContent>({
   welcomeMessage: '',
@@ -26,27 +16,23 @@ const profileContent = reactive<ProfileContent>({
   introMessage: '',
 });
 
-function setProfileContent(): void {
-  fetchProfileContent()
-    .then(({ data }) => {
-      profileContent.welcomeMessage = data.welcomeMessage;
-      profileContent.footerMessage = data.footerMessage;
-      profileContent.introMessage = data.introMessage;
-    })
-    .catch((err) => err);
-}
+async function initHomePage() {
+  const memberData = (await fetchMember()).data;
+  member.firstname = memberData.firstname;
+  member.joined = memberData.joined;
+  member.contributionPeriod = memberData.contributionPeriod;
+  member.contributionAmount = memberData.contributionAmount;
 
-const contributionInfo = computed(() => {
-  const { joined, contributionAmount, contributionPeriod } = member;
-  return { joined, contributionAmount, contributionPeriod };
-});
+  const profile = (await fetchProfileContent()).data;
+  profileContent.welcomeMessage = profile.welcomeMessage;
+  profileContent.footerMessage = profile.footerMessage;
+  profileContent.introMessage = profile.introMessage;
+}
 
 export function useHome() {
   return {
-    setMember,
+    initHomePage,
     member,
-    contributionInfo,
-    setProfileContent,
     profileContent,
   };
 }
