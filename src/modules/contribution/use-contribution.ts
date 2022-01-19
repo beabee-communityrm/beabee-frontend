@@ -172,10 +172,6 @@ const updatePaymentSource = () => {
     });
 };
 
-const hasNoneType = computed(
-  () => currentContribution.type === ContributionType.None
-);
-
 const hasManualType = computed(
   () => currentContribution.type === ContributionType.Manual
 );
@@ -234,7 +230,6 @@ export function useContribution() {
     submitContribution,
     cantUpdateContribution,
     hasUpdatedContribution,
-    hasNoneType,
     hasManualType,
     contributionButtonText,
     updatePaymentSourceLoading,
