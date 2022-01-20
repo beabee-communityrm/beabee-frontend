@@ -81,6 +81,7 @@ const newsroomEmail = import.meta.env.VITE_NEWSROOM_EMAIL;
 const { t } = useI18n();
 </script>
 
+/* TODO: fix relying on scoped */
 <style scoped>
 .footer {
   @apply text-sm;
