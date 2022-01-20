@@ -13,7 +13,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./JoinPage.vue'),
     meta: {
       layout: 'Auth',
-      roles: [Role.NotLoggedIn],
+      role: Role.NotLoggedIn,
       pageTitle: t('pageTitle.join'),
     },
   },
@@ -34,7 +34,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/CompletePage.vue'),
     meta: {
       pageTitle: t('pageTitle.join'),
-      roles: [Role.NotLoggedIn],
+      role: Role.NotLoggedIn,
     },
     beforeEnter(to, from, next) {
       const redirectFlowId = to.query.redirect_flow_id;
@@ -53,7 +53,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/ConfirmEmailPage.vue'),
     meta: {
       layout: 'Splash',
-      roles: [Role.NotLoggedIn],
+      role: Role.NotLoggedIn,
       pageTitle: t('pageTitle.confirmEmail'),
     },
   },
@@ -62,7 +62,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     name: 'confirm email id',
     component: () => import('./pages/ConfirmEmailPage.vue'),
     meta: {
-      roles: [Role.NotLoggedIn],
+      role: Role.NotLoggedIn,
       pageTitle: t('pageTitle.confirmEmail'),
     },
     beforeEnter(to, from, next) {
@@ -85,7 +85,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/FailedPage.vue'),
     meta: {
       layout: 'Splash',
-      roles: [Role.NotLoggedIn],
+      role: Role.NotLoggedIn,
       pageTitle: t('pageTitle.failed'),
     },
   },
@@ -95,7 +95,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/DuplicateEmailPage.vue'),
     meta: {
       layout: 'Splash',
-      roles: [Role.NotLoggedIn],
+      role: Role.NotLoggedIn,
       pageTitle: t('pageTitle.duplicateEmail'),
     },
   },

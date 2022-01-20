@@ -10,11 +10,13 @@
         {{ section.title }}
       </div>
       <ul class="flex flex-col">
-        <li v-for="(item, itemIndex) in section.items" :key="itemIndex">
-          <router-link class="menu-item" :to="item.href">
-            <TheMenuListItem :icon="['far', item.icon]" :title="item.title" />
-          </router-link>
-        </li>
+        <template v-for="(item, itemIndex) in section.items" :key="itemIndex">
+          <li v-if="!item.role || currentUserCan(item.role).value">
+            <router-link class="menu-item" :to="item.href">
+              <TheMenuListItem :icon="item.icon" :title="item.title" />
+            </router-link>
+          </li>
+        </template>
       </ul>
     </nav>
     <nav v-if="canAdmin" class="menu-section is-settings">
@@ -42,17 +44,14 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { logout } from '../../modules/auth/auth.service';
 import { MenuSection } from './menu-list.interface';
-import { canAdmin } from '../../utils/currentUserCan';
+import currentUserCan, { canAdmin } from '../../utils/currentUserCan';
 import TheMenuListItem from './TheMenuListItem.vue';
 
 const { t } = useI18n();
 
-defineProps({
-  sections: {
-    type: Array as () => MenuSection[],
-    default: () => [],
-  },
-});
+const props = defineProps<{
+  sections: MenuSection[];
+}>();
 
 const router = useRouter();
 const doLogout = () => {

@@ -10,7 +10,7 @@ export const authRoute: Array<RouteRecordRaw> = [
     component: () => import('./AuthContainer.vue'),
     meta: {
       layout: 'Auth',
-      roles: [Role.NotLoggedIn],
+      role: Role.NotLoggedIn,
       pageTitle: '',
     },
     children: [
@@ -19,7 +19,7 @@ export const authRoute: Array<RouteRecordRaw> = [
         name: 'login',
         component: () => import('./login/LoginPage.vue'),
         meta: {
-          roles: [Role.NotLoggedIn],
+          role: Role.NotLoggedIn,
           pageTitle: t('pageTitle.login'),
         },
       },
@@ -28,7 +28,7 @@ export const authRoute: Array<RouteRecordRaw> = [
         name: 'forgot password',
         component: () => import('./forgot-password/ForgotPasswordPage.vue'),
         meta: {
-          roles: [Role.NotLoggedIn],
+          role: Role.NotLoggedIn,
           pageTitle: t('pageTitle.forgotPassword'),
         },
       },
@@ -37,7 +37,7 @@ export const authRoute: Array<RouteRecordRaw> = [
         name: 'reset password',
         component: () => import('./reset-password/ResetPasswordPage.vue'),
         meta: {
-          roles: [Role.NotLoggedIn],
+          role: Role.NotLoggedIn,
           pageTitle: t('pageTitle.resetPassword'),
         },
       },

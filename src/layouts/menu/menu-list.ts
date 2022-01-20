@@ -1,4 +1,5 @@
 import i18n from '../../i18n';
+import { Role } from '../../utils/enums/roles.enum';
 import { MenuSection } from './menu-list.interface';
 const { t } = i18n.global;
 
@@ -8,18 +9,24 @@ export default [
       {
         title: t('menu.home'),
         href: '/profile',
-        icon: 'building',
+        icon: ['far', 'building'],
       },
       /*{
         title: t('menu.yourProfile'),
         href: '/profile/edit',
-        icon: 'user',
+        icon: ['far', 'user'],
       },
       {
         title: t('menu.callouts'),
         href: '/callouts',
-        icon: 'calendar-check',
+        icon: ['far', 'calendar-check'],
       },*/
+      {
+        title: t('menu.community'),
+        href: '/contacts',
+        icon: ['fa', 'users'],
+        role: Role.Admin,
+      },
     ],
   },
   {
@@ -29,12 +36,12 @@ export default [
       {
         title: t('menu.yourInformation'),
         href: '/profile/information',
-        icon: 'address-card',
+        icon: ['far', 'address-card'],
       },
       {
         title: t('menu.contribution'),
         href: '/profile/contribution',
-        icon: 'credit-card',
+        icon: ['far', 'credit-card'],
       },
     ],
   },
