@@ -32,6 +32,11 @@ function toContrib(data: Serial<ContributionInfo>): ContributionInfo {
   };
 }
 
+export async function fetchMembers(): Promise<GetMemberData[]> {
+  const { data } = await axios.get<Serial<GetMemberData>[]>('/member');
+  return data.map(toMember);
+}
+
 export async function fetchMember(): Promise<GetMemberData> {
   const { data } = await axios.get<Serial<GetMemberData>>('/member/me');
   return toMember(data);
