@@ -81,6 +81,10 @@
       </div>
     </div>
   </form>
+
+  <footer class="mt-8 divide-y">
+    <Footer :type="canAdmin ? 'admin' : 'user'" />
+  </footer>
 </template>
 
 <script lang="ts" setup>
@@ -89,6 +93,7 @@ import AppInput from '../../components/forms/AppInput.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import MessageBox from '../../components/MessageBox.vue';
 import AppAddress from '../../components/AppAddress.vue';
+import Footer from '../../components/Footer.vue';
 import { useI18n } from 'vue-i18n';
 import { useInformation } from './use-information';
 import { onBeforeMount } from '@vue/runtime-core';

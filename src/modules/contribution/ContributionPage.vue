@@ -97,6 +97,10 @@
       ←{{ t('common.backToHome') }}
     </router-link>
   </div>
+
+  <footer class="mt-8 divide-y">
+    <Footer :type="canAdmin ? 'admin' : 'user'" />
+  </footer>
 </template>
 
 <script lang="ts" setup>
@@ -110,6 +114,7 @@ import ContributionFee from './components/ContributionFee.vue';
 import PaymentSource from './components/PaymentSource.vue';
 import CancelContribution from './components/CancelContribution.vue';
 import AppButton from '../../components/forms/AppButton.vue';
+import Footer from '../../components/Footer.vue';
 import { computed, onBeforeMount } from 'vue';
 import { useContribution } from './use-contribution';
 import { useI18n } from 'vue-i18n';
