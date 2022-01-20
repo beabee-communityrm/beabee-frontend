@@ -75,7 +75,6 @@ import AppButton from '../../components/forms/AppButton.vue';
 import AppAlert from '../../components/AppAlert.vue';
 import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
 import { useHome } from './use-home';
-import { canAdmin } from '../../utils/currentUserCan';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
