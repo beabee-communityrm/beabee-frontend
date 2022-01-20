@@ -176,7 +176,7 @@ const completeSetup = async (router: Router) => {
       }),
       ...(setupContent.value.showMailOptIn && {
         deliveryOptIn: setupMemberData.profile.deliveryOptIn,
-        address: {
+        deliveryAddress: {
           line1: setupMemberData.addressLine1,
           line2: setupMemberData.addressLine2,
           city: setupMemberData.cityOrTown,
