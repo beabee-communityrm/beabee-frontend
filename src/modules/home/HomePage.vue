@@ -10,17 +10,17 @@
     you might want to improve it
   -->
   <h1 class="md:hidden text-lg font-semibold">
-    {{ `${t('common.hello')} ${member.firstName}!` }}
+    {{ `${t('common.hello')} ${member.firstname}!` }}
   </h1>
 
   <PageTitle
-    :title="`${t('common.hello')} ${member.firstName}!`"
+    :title="`${t('common.hello')} ${member.firstname}!`"
     :sub-title="profileContent.welcomeMessage"
   />
 
   <section v-if="showWelcomeMessage" class="mb-10">
     <WelcomeMessage
-      :member-first-name="member.firstName"
+      :member-first-name="member.firstname"
       :text="profileContent.introMessage"
       @close="removeWelcomeMessage"
     />
@@ -46,12 +46,15 @@
       </div>
 
       <div class="flex justify-center">
-        <ContributionInfo :contribution-info="contributionInfo" />
+        <ContributionInfo :member="member" />
       </div>
 
-      <AppButton class="mt-6" to="/profile/contribution" variant="subtle">{{
-        t('homePage.manageContribution')
-      }}</AppButton>
+      <AppButton
+        class="mt-6"
+        to="/profile/contribution"
+        variant="primaryOutlined"
+        >{{ t('homePage.manageContribution') }}</AppButton
+      >
     </section>
   </div>
 
@@ -67,15 +70,15 @@
 <script lang="ts" setup>
 import NoticeContainer from '../notice/NoticeContainer.vue';
 import CalloutContainer from '../callout/CalloutContainer.vue';
-import ContributionInfo from '../contribution/ContributionInfo.vue';
-import QuickActions from './QuickActions.vue';
-import ThanksNotice from './ThanksNotice.vue';
-import Footer from '../../components/Footer.vue';
-import SectionTitle from './SectionTitle.vue';
+import ContributionInfo from './components/ContributionInfo.vue';
+import QuickActions from './components/QuickActions.vue';
+import ThanksNotice from './components/ThanksNotice.vue';
+import SectionTitle from './components/SectionTitle.vue';
 import PageTitle from '../../components/PageTitle.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import AppAlert from '../../components/AppAlert.vue';
 import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
+import Footer from '../../components/Footer.vue';
 import { useHome } from './use-home';
 import { canAdmin } from '../../utils/currentUserCan';
 import { onBeforeMount } from '@vue/runtime-core';
@@ -95,18 +98,8 @@ const removeWelcomeMessage = () => {
   showWelcomeMessage.value = false;
 };
 
-const {
-  member,
-  setMember,
-  contributionInfo,
-  setProfileContent,
-  profileContent,
-} = useHome();
-
-onBeforeMount(() => {
-  setProfileContent();
-  setMember();
-});
+const { member, profileContent, initHomePage } = useHome();
+onBeforeMount(initHomePage);
 </script>
 
 <style scoped>

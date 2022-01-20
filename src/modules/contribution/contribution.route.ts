@@ -30,7 +30,10 @@ export const contributionRoute: Array<RouteRecordRaw> = [
           const redirectFlowId = to.query.redirect_flow_id;
           completeContribution(redirectFlowId as string)
             .then(() => {
-              next('/profile/contribution');
+              next({
+                path: '/profile/contribution',
+                query: { startedContribution: null },
+              });
             })
             .catch((err) => err);
         },
@@ -43,7 +46,10 @@ export const contributionRoute: Array<RouteRecordRaw> = [
           const redirectFlowId = to.query.redirect_flow_id;
           completeUpdatePaymentSource(redirectFlowId as string)
             .then(() => {
-              next('/profile/contribution');
+              next({
+                path: '/profile/contribution',
+                query: { updatedPaymentSource: null },
+              });
             })
             .catch((err) => err);
         },

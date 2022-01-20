@@ -18,7 +18,7 @@
 
     <AppButton
       :loading="loading"
-      variant="subtle"
+      variant="primaryOutlined"
       class="mb-2 w-full"
       @click="$emit('update-payment-source')"
     >
@@ -38,20 +38,11 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-defineProps({
-  paymentSource: {
-    type: Object as () => PaymentSource,
-    default: () => ({}),
-  },
-  hasError: {
-    type: Boolean,
-    default: false,
-  },
-  loading: {
-    type: Boolean,
-    default: false,
-  },
-});
+defineProps<{
+  paymentSource: PaymentSource;
+  hasError: boolean;
+  loading: boolean;
+}>();
 
 defineEmits(['update-payment-source']);
 </script>

@@ -1,4 +1,6 @@
-import { computed, reactive, ref, watch } from 'vue';
+import { parseISO } from 'date-fns';
+import { computed, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import {
   fetchJoinContent,
@@ -9,79 +11,86 @@ import {
   cancelContribution,
 } from './contribution.service';
 import {
-  ContributionContent,
-  CurrentContribution,
-  NewContribution,
-  PaymentSource,
-  Periods,
+  ContributionInfo,
   ContributionType,
   MembershipStatus,
+  UpdateContribution,
 } from './contribution.interface';
 import i18n from '../../i18n';
-import { useRouter } from 'vue-router';
+import { ContributionContent } from '../../components/contribution/contribution.interface';
 
 const { t } = i18n.global;
 
-const currentContribution = reactive<CurrentContribution>({
-  amount: 0,
-  period: ContributionPeriod.Monthly,
+const currentContribution = reactive<ContributionInfo>({
   type: ContributionType.None,
-  membershipExpiryDate: '',
-  cancellationDate: '',
   membershipStatus: MembershipStatus.None,
 });
 
-const paymentSource = reactive<PaymentSource>({
-  type: '',
-  bankName: '',
-  accountHolderName: '',
-  accountNumberEnding: '',
-});
-
-const newContribution = reactive<NewContribution>({
+const newContribution = reactive<UpdateContribution>({
   amount: 5,
   period: ContributionPeriod.Monthly,
   payFee: true,
+  prorate: true,
+
+  // TODO: Can we move this?
+  get totalAmount(): number {
+    return this.payFee && this.period === ContributionPeriod.Monthly
+      ? this.amount + this.fee
+      : this.amount;
+  },
+  get fee(): number {
+    return (this.amount + 20) / 100;
+  },
 });
 
 const contributionContent = reactive<ContributionContent>({
   initialAmount: 5,
-  initialPeriod: '',
+  initialPeriod: ContributionPeriod.Monthly,
   minMonthlyAmount: 5,
   periods: [],
   showAbsorbFee: true,
 });
 
-const hasPaymentSource = computed(() => paymentSource.type);
-
 const isIniting = ref(false);
+const cantUpdateContribution = ref(false);
 const cantUpdatePaymentSource = ref(false);
+const hasUpdatedContribution = ref(false);
+
+function toDate(s: string | undefined): Date | undefined {
+  return s ? parseISO(s) : undefined;
+}
+
+const resetNewContribution = () => {
+  newContribution.amount =
+    currentContribution.amount || contributionContent.initialAmount;
+  newContribution.period =
+    currentContribution.period || contributionContent.initialPeriod;
+  newContribution.payFee = contributionContent.showAbsorbFee
+    ? !!currentContribution.payFee
+    : false;
+  newContribution.prorate = true;
+};
 
 const initContributionPage = async () => {
   isIniting.value = true;
+  cantUpdateContribution.value = false;
   cantUpdatePaymentSource.value = false;
+  hasUpdatedContribution.value = false;
 
   const contrib = (await fetchContribution()).data;
-  currentContribution.amount = contrib.amount;
-  currentContribution.period = contrib.period;
   currentContribution.type = contrib.type;
-  currentContribution.membershipExpiryDate = contrib.membershipExpiryDate;
-  currentContribution.cancellationDate = contrib.cancellationDate;
+  currentContribution.amount = contrib.amount;
+  currentContribution.nextAmount = contrib.nextAmount;
+  currentContribution.period = contrib.period;
+  currentContribution.cancellationDate = toDate(contrib.cancellationDate);
+  currentContribution.renewalDate = toDate(contrib.renewalDate);
+  currentContribution.paymentSource = contrib.paymentSource;
+  currentContribution.payFee = contrib.payFee;
+  currentContribution.hasPendingPayment = contrib.hasPendingPayment;
   currentContribution.membershipStatus = contrib.membershipStatus;
-
-  if (currentContribution.type !== ContributionType.None) {
-    newContribution.amount = contrib.amount;
-    newContribution.period = contrib.period;
-    // TODO: sync payFee too
-  }
-
-  if (contrib.paymentSource) {
-    paymentSource.type = contrib.paymentSource.type;
-    paymentSource.bankName = contrib.paymentSource.bankName;
-    paymentSource.accountHolderName = contrib.paymentSource.accountHolderName;
-    paymentSource.accountNumberEnding =
-      contrib.paymentSource.accountNumberEnding;
-  }
+  currentContribution.membershipExpiryDate = toDate(
+    contrib.membershipExpiryDate
+  );
 
   // TODO: currently contribution content is part of
   // join content API.
@@ -92,53 +101,68 @@ const initContributionPage = async () => {
   contributionContent.periods = content.periods;
   contributionContent.showAbsorbFee = content.showAbsorbFee;
 
+  resetNewContribution();
+
   isIniting.value = false;
 };
 
 const submitCreateContribution = () => {
-  createContribution(newContribution)
-    .then(({ data }) => {
-      window.location.href = data.redirectUrl;
-    })
-    .catch((err) => err);
+  return createContribution(newContribution).then(({ data }) => {
+    window.location.href = data.redirectUrl;
+  });
 };
 
-const updateContributionLoading = ref(false);
-
 const submitUpdateContribution = () => {
-  updateContributionLoading.value = true;
-  updateContribution({
-    amount: newContribution.amount,
-    payFee: newContribution.payFee,
-  })
+  return updateContribution(newContribution)
     .then(({ data }) => {
       currentContribution.amount = data.amount;
       currentContribution.period = data.period;
-      // TODO: to do somthing here, like showing succes message? (ask the design team)
+      currentContribution.nextAmount = data.nextAmount;
+      resetNewContribution();
+
+      hasUpdatedContribution.value = true;
     })
+    .catch((err) => {
+      if (
+        err.response?.status === 400 &&
+        err.response.data.code === 'cant-update-contribution'
+      ) {
+        cantUpdateContribution.value = true;
+      }
+    });
+};
+
+const canSubmitContribution = computed(
+  () =>
+    !isActiveMemberWithGoCardless.value ||
+    currentContribution.amount != newContribution.amount
+);
+
+const submitContributionLoading = ref(false);
+
+const submitContribution = async () => {
+  submitContributionLoading.value = true;
+
+  const submitAction = isActiveMemberWithGoCardless.value
+    ? submitUpdateContribution()
+    : submitCreateContribution();
+
+  submitAction
     .catch((err) => err)
-    .finally(() => (updateContributionLoading.value = false));
+    .finally(() => (submitContributionLoading.value = false));
 };
 
-const submitContribution = () => {
-  if (isActiveMemberWithGoCardless.value) {
-    submitUpdateContribution();
-  } else {
-    submitCreateContribution();
-  }
-};
-
-const paymentSourceLoading = ref(false);
+const updatePaymentSourceLoading = ref(false);
 
 const updatePaymentSource = () => {
-  paymentSourceLoading.value = true;
+  updatePaymentSourceLoading.value = true;
   updateBankAccount()
     .then(({ data }) => {
       window.location.href = data.redirectUrl;
     })
     .catch((err) => {
       // Only revert loading on error as success causes route change
-      paymentSourceLoading.value = false;
+      updatePaymentSourceLoading.value = false;
       if (
         err.response?.status === 400 &&
         err.response?.data.code === 'cant-update-contribution'
@@ -147,44 +171,6 @@ const updatePaymentSource = () => {
       }
     });
 };
-
-// - TODO: improvement: remove logic duplication between
-// contribution page and join page
-const fee = computed(() => {
-  return (newContribution.amount + 20) / 100;
-});
-
-const minAmount = computed(() => {
-  const { minMonthlyAmount } = contributionContent;
-  return isMonthly.value ? minMonthlyAmount : minMonthlyAmount * 12;
-});
-
-const definedAmounts = computed(() => {
-  const selectedPeriod = contributionContent.periods.find((period: Periods) => {
-    return period.name === newContribution.period;
-  });
-  return selectedPeriod?.presetAmounts as number[];
-});
-
-const changePeriod = (period: ContributionPeriod) => {
-  newContribution.period = period;
-  // reset the selected amount after period change
-  newContribution.amount = definedAmounts.value[0];
-};
-
-const shouldForceFee = computed(() => {
-  return newContribution.amount === 1 && isMonthly.value;
-});
-watch(shouldForceFee, (force) => {
-  if (force) newContribution.payFee = true;
-});
-
-const isContributionFormInvalid = computed(() => {
-  return newContribution.amount < minAmount.value;
-});
-
-const isMonthly = computed(() => newContribution.period === 'monthly');
-// end of todo
 
 const hasNoneType = computed(
   () => currentContribution.type === ContributionType.None
@@ -212,11 +198,16 @@ const contributionButtonText = computed(() => {
   return t('contribution.startContribution');
 });
 
-const showContributionForm = computed(() => {
+const showChangePeriod = computed(
+  () =>
+    !isActiveMemberWithGoCardless.value &&
+    currentContribution.period !== ContributionPeriod.Annually
+);
+
+const showProrateOptions = computed(() => {
   return (
-    currentContribution.type === ContributionType.Manual ||
-    currentContribution.period !== ContributionPeriod.Annually ||
-    currentContribution.membershipStatus === MembershipStatus.Expired
+    currentContribution.period === ContributionPeriod.Annually &&
+    currentContribution.amount !== newContribution.amount
   );
 });
 
@@ -238,25 +229,20 @@ export function useContribution() {
     newContribution,
     currentContribution,
     contributionContent,
-    isContributionFormInvalid,
-    isMonthly,
-    changePeriod,
-    shouldForceFee,
-    minAmount,
-    definedAmounts,
-    fee,
+    canSubmitContribution,
+    submitContributionLoading,
     submitContribution,
+    cantUpdateContribution,
+    hasUpdatedContribution,
     hasNoneType,
     hasManualType,
     contributionButtonText,
-    paymentSourceLoading,
+    updatePaymentSourceLoading,
     updatePaymentSource,
-    isActiveMemberWithGoCardless,
-    hasPaymentSource,
-    showContributionForm,
-    paymentSource,
     cantUpdatePaymentSource,
-    updateContributionLoading,
+    isActiveMemberWithGoCardless,
+    showChangePeriod,
+    showProrateOptions,
     submitCancelContribution,
     cancelContributionLoading,
   };

@@ -1,13 +1,12 @@
-import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
-import { Periods } from '../../contribution/contribution.interface';
+import {
+  ContributionContent,
+  ContributionData,
+} from '../../../components/contribution/contribution.interface';
 import { NewsletterStaus } from './newsletter-status.enum';
 
-export interface SignUpData {
+export interface SignUpData extends ContributionData {
   email: string;
   password: string;
-  amount: number;
-  period: ContributionPeriod;
-  payFee: boolean;
   noContribution: boolean;
 }
 
@@ -45,14 +44,9 @@ export interface DeliveryAddress {
   postcode: string;
 }
 
-export interface JoinContentData {
-  initialAmount: number;
-  initialPeriod: string;
-  minMonthlyAmount: number;
+export interface JoinContentData extends ContributionContent {
   name: string;
-  periods: Periods[];
   privacyLink: string;
-  showAbsorbFee: boolean;
   showNoContribution: boolean;
   subtitle: string;
   termsLink: string;

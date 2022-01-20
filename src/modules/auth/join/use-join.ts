@@ -1,4 +1,4 @@
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { LocationQueryRaw } from 'vue-router';
 import useVuelidate from '@vuelidate/core';
 import {
@@ -7,7 +7,6 @@ import {
   SetupContentData,
   MemberData,
 } from './join.interface';
-import { Periods } from '../../contribution/contribution.interface';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { helpers, required } from '@vuelidate/validators';
 import {
@@ -29,10 +28,10 @@ const { t } = i18n.global;
 
 const joinContent = ref<JoinContentData>({
   initialAmount: 5,
-  initialPeriod: '',
+  initialPeriod: ContributionPeriod.Monthly,
   minMonthlyAmount: 5,
   name: '',
-  periods: [] as Periods[],
+  periods: [],
   privacyLink: '',
   showAbsorbFee: true,
   showNoContribution: false,
@@ -44,20 +43,25 @@ const joinContent = ref<JoinContentData>({
 const signUpData = reactive<SignUpData>({
   email: '',
   password: '',
-  // for some reasons it can't get the value from
-  // `joinContent.value.initialAmount`
   amount: 5,
   period: ContributionPeriod.Monthly,
   payFee: true,
   noContribution: false,
+
+  get totalAmount(): number {
+    return this.payFee && this.period === ContributionPeriod.Monthly
+      ? this.amount + this.fee
+      : this.amount;
+  },
+  get fee(): number {
+    return (this.amount + 20) / 100;
+  },
 });
 
 const setJoinContent = (query: LocationQueryRaw) => {
   fetchJoinContent()
     .then(({ data }) => {
       joinContent.value = data;
-      // for some reasons `signUpData.amount` can't get the value from
-      // `joinContent.value.initialAmount`
       signUpData.amount = query.amount ? +query.amount : data.initialAmount;
       if (!data.showAbsorbFee) {
         signUpData.payFee = false;
@@ -80,34 +84,14 @@ const memberData = reactive<MemberData>({
   postCode: '',
 });
 
-const fee = computed(() => {
-  return (signUpData.amount + 20) / 100;
-});
-
-// converts `signUpData.amount` to number because it might be
-// an empty string and cause error (because it might come from an
-// input element)
-const totalAmount = computed(() =>
-  signUpData.payFee && isMonthly.value
-    ? +signUpData.amount + fee.value
-    : +signUpData.amount
-);
-
-const isMonthly = computed(() => signUpData.period === 'monthly');
-
-const minAmount = computed(() => {
-  const { minMonthlyAmount } = joinContent.value;
-  return isMonthly.value ? minMonthlyAmount : minMonthlyAmount * 12;
-});
-
-const isBelowThreshold = computed(() => signUpData.amount < minAmount.value);
+const isContributionValid = ref(false);
 
 const isJoinFormInvalid = computed(() => {
-  return isBelowThreshold.value || joinValidation.value.$invalid;
+  return !isContributionValid.value || joinValidation.value.$invalid;
 });
 
 const hasJoinError = computed(() => {
-  return isBelowThreshold.value || joinValidation.value.$errors.length;
+  return !isContributionValid.value || joinValidation.value.$errors.length;
 });
 
 const joinRules = computed(() => ({
@@ -184,30 +168,6 @@ const completeSetup = async (router: Router) => {
     });
 };
 
-const definedAmounts = computed(() => {
-  const selectedPeriod = joinContent.value.periods.find((period) => {
-    return period.name === signUpData.period;
-  });
-  return selectedPeriod?.presetAmounts as number[];
-});
-
-const changePeriod = (period: ContributionPeriod) => {
-  signUpData.period = period;
-  // reset the selected amount after period change
-  signUpData.amount = definedAmounts.value[0];
-};
-
-const shouldForceFee = computed(() => {
-  return (
-    joinContent.value.showAbsorbFee &&
-    signUpData.amount === 1 &&
-    isMonthly.value
-  );
-});
-watch(shouldForceFee, (force) => {
-  if (force) signUpData.payFee = true;
-});
-
 const setMemberData = () => {
   fetchMember()
     .then(({ data }) => {
@@ -250,9 +210,7 @@ const setSetupContent = () => {
 function useJoin() {
   return {
     signUpData,
-    fee,
-    totalAmount,
-    isMonthly,
+    isContributionValid,
     isJoinFormInvalid,
     hasJoinError,
     joinValidation,
@@ -263,10 +221,6 @@ function useJoin() {
     hasSetupError,
     joinContent,
     setJoinContent,
-    definedAmounts,
-    changePeriod,
-    shouldForceFee,
-    minAmount,
     setMemberData,
     setupContent,
     setSetupContent,

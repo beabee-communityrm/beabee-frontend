@@ -1,10 +1,5 @@
+import { ContributionData } from '../../components/contribution/contribution.interface';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
-
-export interface ContributionInfo {
-  joined: string;
-  contributionPeriod: string;
-  contributionAmount: number;
-}
 
 export enum ContributionType {
   GoCardless = 'GoCardless',
@@ -20,42 +15,27 @@ export enum MembershipStatus {
   None = 'none',
 }
 
-export interface CurrentContribution {
-  amount: number;
-  period: ContributionPeriod;
-  type: ContributionType;
-  membershipExpiryDate: string | null;
-  cancellationDate: string | null;
-  membershipStatus: MembershipStatus;
-}
-
-export interface NewContribution {
-  amount: number;
-  period: string;
-  payFee: boolean;
-}
-
-export interface UpdateContribution {
-  amount: number;
-  payFee: boolean;
-}
-
-export interface Periods {
-  name: string;
-  presetAmounts: number[];
-}
-
-export interface ContributionContent {
-  initialAmount: number;
-  initialPeriod: string;
-  minMonthlyAmount: number;
-  periods: Periods[];
-  showAbsorbFee: boolean;
-}
-
 export interface PaymentSource {
   type: string;
   bankName: string;
   accountHolderName: string;
   accountNumberEnding: string;
+}
+
+export interface ContributionInfo {
+  type: ContributionType;
+  amount?: number;
+  nextAmount?: number;
+  period?: ContributionPeriod;
+  cancellationDate?: Date;
+  renewalDate?: Date;
+  paymentSource?: PaymentSource;
+  payFee?: boolean;
+  hasPendingPayment?: boolean;
+  membershipStatus: MembershipStatus;
+  membershipExpiryDate?: Date;
+}
+
+export interface UpdateContribution extends ContributionData {
+  prorate: boolean;
 }

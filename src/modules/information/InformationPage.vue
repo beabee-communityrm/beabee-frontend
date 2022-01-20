@@ -74,7 +74,7 @@
           :disabled="hasFormError"
           class="mt-5"
           :loading="loading"
-          variant="secondary"
+          variant="link"
           @click="submitFormHandler"
           >{{ t('form.saveChanges') }}</AppButton
         >

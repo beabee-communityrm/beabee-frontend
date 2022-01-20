@@ -11,22 +11,15 @@
       <Color name="bg-primary-80" shade="80" />
     </div>
     <div class="flex-1">
-      <Color name="bg-secondary" shade="Secondary" />
-      <Color name="bg-secondary-10" shade="10" />
-      <Color name="bg-secondary-30" shade="30" />
-      <Color name="bg-secondary-70" shade="70" />
-    </div>
-    <div class="flex-1">
       <Color name="bg-body" shade="Body" />
-      <Color name="bg-body-10" shade="10" />
-      <Color name="bg-body-70" shade="70" />
+      <Color name="bg-body-40" shade="40" />
       <Color name="bg-body-80" shade="80" />
     </div>
     <div class="flex-1">
       <Color name="bg-link" shade="Link" />
       <Color name="bg-link-10" shade="10" />
       <Color name="bg-link-70" shade="70" />
-      <Color name="bg-link-80" shade="80" />
+      <Color name="bg-link-110" shade="110" />
     </div>
     <div class="flex-1">
       <Color name="bg-warning" shade="Warning" />
@@ -39,12 +32,14 @@
       <Color name="bg-success-10" shade="10" />
       <Color name="bg-success-30" shade="30" />
       <Color name="bg-success-70" shade="70" />
+      <Color name="bg-success-110" shade="110" />
     </div>
     <div class="flex-1">
       <Color name="bg-danger" shade="Danger" />
       <Color name="bg-danger-10" shade="10" />
       <Color name="bg-danger-30" shade="30" />
       <Color name="bg-danger-70" shade="70" />
+      <Color name="bg-danger-110" shade="110" />
     </div>
     <div class="flex-1">
       <Color name="bg-grey" shade="Grey" />

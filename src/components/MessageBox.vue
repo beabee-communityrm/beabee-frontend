@@ -1,5 +1,5 @@
 <template>
-  <div class="flex rounded h-12" :class="type">
+  <div class="flex rounded overflow-hidden" :class="type">
     <div
       class="
         flex
@@ -14,7 +14,17 @@
       <font-awesome-icon :icon="['fas', icon]" />
     </div>
 
-    <div class="flex items-center flex-grow px-2 text-xs content-container">
+    <div
+      class="
+        flex
+        items-center
+        flex-grow
+        p-3
+        text-sm
+        font-semibold
+        content-container
+      "
+    >
       <slot>{{ t('form.errors.aggregator') }}</slot>
     </div>
   </div>
@@ -26,15 +36,12 @@ import { computed } from '@vue/reactivity';
 
 const { t } = useI18n();
 
-const props = defineProps({
-  type: {
-    type: String,
-    default: 'error',
-    validator(value: string) {
-      return ['error', 'success', 'warning'].includes(value);
-    },
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    type: 'success' | 'warning' | 'error';
+  }>(),
+  { type: 'error' }
+);
 
 const icon = computed(() =>
   props.type === 'success' ? 'check' : 'exclamation'
