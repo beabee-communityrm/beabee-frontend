@@ -62,9 +62,7 @@
     <ThanksNotice>{{ profileContent.footerMessage }}</ThanksNotice>
   </section>
 
-  <footer class="mt-8 divide-y">
-    <Footer :type="canAdmin ? 'admin' : 'user'" />
-  </footer>
+  <Footer />
 </template>
 
 <script lang="ts" setup>
