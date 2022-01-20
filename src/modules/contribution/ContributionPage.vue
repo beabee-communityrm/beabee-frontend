@@ -95,8 +95,6 @@
       ←{{ t('common.backToHome') }}
     </router-link>
   </div>
-
-  <Footer />
 </template>
 
 <script lang="ts" setup>
@@ -117,7 +115,6 @@ import AppButton from '../../components/forms/AppButton.vue';
 import ProrateContribution from './components/ProrateContribution.vue';
 import AppAlert from '../../components/AppAlert.vue';
 import MessageBox from '../../components/MessageBox.vue';
-import Footer from '../../components/Footer.vue';
 
 const { t } = useI18n();
 
