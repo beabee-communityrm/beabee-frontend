@@ -10,18 +10,17 @@ import {
   UpdateMemberData,
 } from './api.interface';
 
-async function req<T>(
-  method: 'get' | 'patch' | 'post' | 'put' | 'delete',
-  url: string,
-  data?: any
-): Promise<Serial<T>> {
-  return (await axios[method]<Serial<T>>(url, data)).data;
-}
-
 function toDate(s: string): Date;
 function toDate(s: string | undefined): Date | undefined;
 function toDate(s: string | undefined): Date | undefined {
   return s ? parseISO(s) : undefined;
+}
+
+function toMember(data: Serial<GetMemberData>): GetMemberData {
+  return {
+    ...data,
+    joined: toDate(data.joined),
+  };
 }
 
 function toContrib(data: Serial<ContributionInfo>): ContributionInfo {
@@ -34,18 +33,15 @@ function toContrib(data: Serial<ContributionInfo>): ContributionInfo {
 }
 
 export async function fetchMember(): Promise<GetMemberData> {
-  const data = await req<GetMemberData>('get', '/member/me');
-  return {
-    ...data,
-    joined: toDate(data.joined),
-  };
+  const { data } = await axios.get<Serial<GetMemberData>>('/member/me');
+  return toMember(data);
 }
 
 export async function fetchMemberWithProfile(): Promise<GetMemberDataWithProfile> {
-  const data = await req<GetMemberDataWithProfile>(
-    'get',
+  const { data } = await axios.get<Serial<GetMemberDataWithProfile>>(
     '/member/me?with[]=profile'
   );
+  // TODO: use toMember?
   return {
     ...data,
     joined: toDate(data.joined),
@@ -55,66 +51,67 @@ export async function fetchMemberWithProfile(): Promise<GetMemberDataWithProfile
 export async function updateMember(
   memberData: UpdateMemberData
 ): Promise<GetMemberData> {
-  // TODO: passing memberData directly is not type safe, it could contain extra properties
-  const data = await req<GetMemberData>('patch', '/member/me', memberData);
-  return {
-    ...data,
-    joined: toDate(data.joined),
-  };
+  const { data } = await axios.patch<Serial<GetMemberData>>(
+    '/member/me',
+    // TODO: passing memberData directly is not type safe, it could contain extra properties
+    memberData
+  );
+  return toMember(data);
 }
 
 export async function fetchContribution(): Promise<ContributionInfo> {
-  return toContrib(
-    await req<ContributionInfo>('get', '/member/me/contribution')
+  const { data } = await axios.get<Serial<ContributionInfo>>(
+    '/member/me/contribution'
   );
+  return toContrib(data);
 }
 
 export async function updateContribution(
-  data: SetContributionData
+  dataIn: SetContributionData
 ): Promise<ContributionInfo> {
-  return toContrib(
-    await req<ContributionInfo>('patch', '/member/me/contribution', {
-      amount: data.amount,
-      payFee: data.payFee && data.period === ContributionPeriod.Monthly,
-      prorate: data.prorate && data.period === ContributionPeriod.Annually,
-    })
+  const { data } = await axios.patch<Serial<ContributionInfo>>(
+    '/member/me/contribution',
+    {
+      amount: dataIn.amount,
+      payFee: dataIn.payFee && dataIn.period === ContributionPeriod.Monthly,
+      prorate: dataIn.prorate && dataIn.period === ContributionPeriod.Annually,
+    }
   );
+  return toContrib(data);
 }
 
 export async function startContribution(
-  data: SetContributionData
+  dataIn: SetContributionData
 ): Promise<{ redirectUrl: string }> {
-  return (
-    await axios.post<Serial<{ redirectUrl: string }>>(
-      '/member/me/contribution',
-      {
-        amount: data.amount,
-        period: data.period,
-        payFee: data.payFee && data.period === ContributionPeriod.Monthly,
-        prorate: data.prorate && data.period === ContributionPeriod.Annually,
-        completeUrl:
-          import.meta.env.VITE_APP_BASE_URL + '/profile/contribution/complete',
-      }
-    )
-  ).data;
+  const { data } = await axios.post<Serial<{ redirectUrl: string }>>(
+    '/member/me/contribution',
+    {
+      amount: dataIn.amount,
+      period: dataIn.period,
+      payFee: dataIn.payFee && dataIn.period === ContributionPeriod.Monthly,
+      prorate: dataIn.prorate && dataIn.period === ContributionPeriod.Annually,
+      completeUrl:
+        import.meta.env.VITE_APP_BASE_URL + '/profile/contribution/complete',
+    }
+  );
+  return data;
 }
 
 export async function completeStartContribution(
   redirectFlowId: string
 ): Promise<ContributionInfo> {
-  return toContrib(
-    await req<ContributionInfo>('post', '/member/me/contribution/complete', {
-      redirectFlowId,
-    })
+  const { data } = await axios.post<Serial<ContributionInfo>>(
+    '/member/me/contribution/complete',
+    { redirectFlowId }
   );
+  return toContrib(data);
 }
 export async function cancelContribution(): Promise<void> {
-  await req('post', '/member/me/contribution/cancel');
+  await axios.post('/member/me/contribution/cancel');
 }
 
 export async function updatePaymentSource(): Promise<{ redirectUrl: string }> {
-  return await req<{ redirectUrl: string }>(
-    'put',
+  const { data } = await axios.put<Serial<{ redirectUrl: string }>>(
     '/member/me/payment-source',
     {
       completeUrl:
@@ -122,14 +119,15 @@ export async function updatePaymentSource(): Promise<{ redirectUrl: string }> {
         '/profile/contribution/payment-source/complete',
     }
   );
+  return data;
 }
 
 export async function completeUpdatePaymentSource(
   redirectFlowId: string
 ): Promise<ContributionInfo> {
-  return toContrib(
-    await req<ContributionInfo>('post', '/member/me/payment-source/complete', {
-      redirectFlowId,
-    })
+  const { data } = await axios.post<Serial<ContributionInfo>>(
+    '/member/me/payment-source/complete',
+    { redirectFlowId }
   );
+  return toContrib(data);
 }
