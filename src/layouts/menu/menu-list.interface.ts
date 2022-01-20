@@ -1,4 +1,4 @@
-import { Role } from '../../utils/enums/roles.enum';
+import { PermissionType } from '../../utils/api/api.interface';
 
 export interface MenuSection {
   title?: string;
@@ -10,5 +10,5 @@ export interface MenuItem {
   title: string;
   href?: string;
   icon: [string, string];
-  role?: Role;
+  role?: PermissionType;
 }

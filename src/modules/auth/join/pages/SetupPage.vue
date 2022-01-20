@@ -5,8 +5,8 @@
         class="mb-6"
         :title="
           t('joinSetup.welcome', {
-            firstName: memberData.firstName,
-            lastName: memberData.lastName,
+            firstName: setupMemberData.firstName,
+            lastName: setupMemberData.lastName,
           })
         "
         :sub-title="setupContent.welcome"
@@ -15,7 +15,7 @@
 
       <div class="mb-3">
         <AppInput
-          v-model="memberData.email"
+          v-model="setupMemberData.email"
           input-type="email"
           required
           :label="t('form.email')"
@@ -26,7 +26,7 @@
 
       <div class="mb-3">
         <AppInput
-          v-model="memberData.firstName"
+          v-model="setupMemberData.firstName"
           required
           :label="t('form.firstName')"
           :error-message="errorGenerator(setupValidation, 'firstName')"
@@ -36,7 +36,7 @@
 
       <div class="mb-5">
         <AppInput
-          v-model="memberData.lastName"
+          v-model="setupMemberData.lastName"
           required
           :label="t('form.lastName')"
           :error-message="errorGenerator(setupValidation, 'lastName')"
@@ -56,7 +56,7 @@
         <div class="mb-4">
           <input
             id="deliveryOptIn"
-            v-model="memberData.profile.deliveryOptIn"
+            v-model="setupMemberData.profile.deliveryOptIn"
             type="checkbox"
             name="updates"
           />
@@ -67,12 +67,12 @@
         </div>
 
         <AppAddress
-          v-model:line1="memberData.addressLine1"
-          v-model:line2="memberData.addressLine2"
-          v-model:postCode="memberData.postCode"
-          v-model:cityOrTown="memberData.cityOrTown"
+          v-model:line1="setupMemberData.addressLine1"
+          v-model:line2="setupMemberData.addressLine2"
+          v-model:postCode="setupMemberData.postCode"
+          v-model:cityOrTown="setupMemberData.cityOrTown"
           v-model:addressValidation="addressValidation"
-          :is-address-required="memberData.profile.deliveryOptIn"
+          :is-address-required="setupMemberData.profile.deliveryOptIn"
         />
       </template>
 
@@ -88,7 +88,7 @@
         <div class="mb-4">
           <input
             id="newsletterOptIn"
-            v-model="memberData.profile.newsletterOptIn"
+            v-model="setupMemberData.profile.newsletterOptIn"
             type="checkbox"
             name="updates"
           />
@@ -134,7 +134,7 @@ const router = useRouter();
 
 const {
   setMemberData,
-  memberData,
+  setupMemberData,
   setSetupContent,
   setupContent,
   setupValidation,

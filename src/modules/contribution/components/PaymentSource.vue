@@ -33,8 +33,8 @@
 import InfoMessage from '../../../components/InfoMessage.vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
-import { PaymentSource } from '../contribution.interface';
 import { useI18n } from 'vue-i18n';
+import { PaymentSource } from '../../../utils/api/api.interface';
 
 const { t } = useI18n();
 

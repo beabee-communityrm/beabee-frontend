@@ -3,10 +3,10 @@ import { helpers, sameAs } from '@vuelidate/validators';
 import { computed, reactive, ref } from 'vue';
 import { passwordValidationRule } from '../../../utils/form-validation/rules';
 import isInternalUrl from '../../../utils/is-internal-url';
-import { resetPassword } from '../auth.service';
 import { Router } from 'vue-router';
 import i18n from '../../../i18n';
 import { updateCurrentUser } from '../../../store';
+import { resetPassword } from '../../../utils/api/auth';
 
 const { t } = i18n.global;
 

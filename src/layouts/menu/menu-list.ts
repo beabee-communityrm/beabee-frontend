@@ -25,7 +25,7 @@ export default [
         title: t('menu.community'),
         href: '/contacts',
         icon: ['fa', 'users'],
-        role: Role.Admin,
+        role: 'admin',
       },
     ],
   },

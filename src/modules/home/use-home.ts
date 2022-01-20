@@ -1,32 +1,30 @@
-import { reactive } from 'vue';
-import { Member } from '../../utils/interfaces/member.interface';
-import { ProfileContent } from './home.interface';
-import { fetchMember, fetchProfileContent } from './home.service';
+import { reactive, ref } from 'vue';
+import { GetMemberData, ProfileContent } from '../../utils/api/api.interface';
+import { fetchProfileContent } from '../../utils/api/content';
+import { fetchMember } from '../../utils/api/member';
 
-const member = reactive<Member>({
+const member = reactive<GetMemberData>({
+  email: '',
   firstname: '',
-  joined: '',
-  contributionPeriod: '',
-  contributionAmount: 0,
+  lastname: '',
+  joined: new Date(),
+  roles: [],
 });
 
-const profileContent = reactive<ProfileContent>({
+const profileContent = ref<ProfileContent>({
   welcomeMessage: '',
   footerMessage: '',
   introMessage: '',
 });
 
 async function initHomePage() {
-  const memberData = (await fetchMember()).data;
+  const memberData = await fetchMember();
   member.firstname = memberData.firstname;
   member.joined = memberData.joined;
   member.contributionPeriod = memberData.contributionPeriod;
   member.contributionAmount = memberData.contributionAmount;
 
-  const profile = (await fetchProfileContent()).data;
-  profileContent.welcomeMessage = profile.welcomeMessage;
-  profileContent.footerMessage = profile.footerMessage;
-  profileContent.introMessage = profile.introMessage;
+  profileContent.value = await fetchProfileContent();
 }
 
 export function useHome() {
