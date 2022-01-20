@@ -3,6 +3,13 @@
   <div class="flex">
     <div class="flex-none" :style="{ flexBasis: '200px' }">All contacts</div>
     <div class="flex-auto">
+      <div class="flex justify-between">
+        <div></div>
+        <form class="relative" @submit.prevent>
+          <AppInput :placeholder="t('contacts.search')" />
+          <button class="absolute right-0">Q</button>
+        </form>
+      </div>
       <AppTable
         :headers="headers"
         :items="contacts"
@@ -51,6 +58,7 @@ import AppTable from '../../components/table/AppTable.vue';
 import { Header, SortType } from '../../components/table/table.interface';
 import { formatLocale } from '../../utils/dates/locale-date-formats';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
+import AppInput from '../../components/forms/AppInput.vue';
 
 const { t, n } = useI18n();
 
