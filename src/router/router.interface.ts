@@ -1,10 +1,11 @@
 import 'vue-router';
-import { Role } from '../utils/enums/roles.enum';
+import { PermissionType } from '../utils/api/api.interface';
 
 declare module 'vue-router' {
   interface RouteMeta {
     pageTitle: string;
     layout?: string;
-    role?: Role;
+    noAuth?: boolean;
+    role?: PermissionType;
   }
 }
