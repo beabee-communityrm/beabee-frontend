@@ -17,6 +17,13 @@
     "until": "until",
     "year": "year | years"
   },
+  "contacts": {
+    "contribution": "Contribution",
+    "email": "Email",
+    "joined": "Join date",
+    "name": "Name and description",
+    "tags": "Tags"
+  },
   "contribution": {
     "bankAccount": "Bank account",
     "billing": "Billing",

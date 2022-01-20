@@ -16,7 +16,8 @@ function toDate(s: string | undefined): Date | undefined {
   return s ? parseISO(s) : undefined;
 }
 
-function toMember(data: Serial<GetMemberData>): GetMemberData {
+// TODO: how to make this type safe?
+function toMember(data: any): any {
   return {
     ...data,
     joined: toDate(data.joined),
@@ -32,8 +33,10 @@ function toContrib(data: Serial<ContributionInfo>): ContributionInfo {
   };
 }
 
-export async function fetchMembers(): Promise<GetMemberData[]> {
-  const { data } = await axios.get<Serial<GetMemberData>[]>('/member');
+export async function fetchMembers(): Promise<GetMemberDataWithProfile[]> {
+  const { data } = await axios.get<Serial<GetMemberDataWithProfile>[]>(
+    '/member'
+  );
   return data.map(toMember);
 }
 
@@ -46,11 +49,7 @@ export async function fetchMemberWithProfile(): Promise<GetMemberDataWithProfile
   const { data } = await axios.get<Serial<GetMemberDataWithProfile>>(
     '/member/me?with[]=profile'
   );
-  // TODO: use toMember?
-  return {
-    ...data,
-    joined: toDate(data.joined),
-  };
+  return toMember(data);
 }
 
 export async function updateMember(
