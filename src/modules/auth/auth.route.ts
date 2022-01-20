@@ -1,6 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
 import i18n from '../../i18n';
-import { Role } from '../../utils/enums/roles.enum';
 
 const { t } = i18n.global;
 
@@ -10,7 +9,7 @@ export const authRoute: Array<RouteRecordRaw> = [
     component: () => import('./AuthContainer.vue'),
     meta: {
       layout: 'Auth',
-      role: Role.NotLoggedIn,
+      noAuth: true,
       pageTitle: '',
     },
     children: [
@@ -19,7 +18,7 @@ export const authRoute: Array<RouteRecordRaw> = [
         name: 'login',
         component: () => import('./login/LoginPage.vue'),
         meta: {
-          role: Role.NotLoggedIn,
+          noAuth: true,
           pageTitle: t('pageTitle.login'),
         },
       },
@@ -28,7 +27,7 @@ export const authRoute: Array<RouteRecordRaw> = [
         name: 'forgot password',
         component: () => import('./forgot-password/ForgotPasswordPage.vue'),
         meta: {
-          role: Role.NotLoggedIn,
+          noAuth: true,
           pageTitle: t('pageTitle.forgotPassword'),
         },
       },
@@ -37,7 +36,7 @@ export const authRoute: Array<RouteRecordRaw> = [
         name: 'reset password',
         component: () => import('./reset-password/ResetPasswordPage.vue'),
         meta: {
-          role: Role.NotLoggedIn,
+          noAuth: true,
           pageTitle: t('pageTitle.resetPassword'),
         },
       },

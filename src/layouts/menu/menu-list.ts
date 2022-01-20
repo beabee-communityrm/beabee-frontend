@@ -1,5 +1,4 @@
 import i18n from '../../i18n';
-import { Role } from '../../utils/enums/roles.enum';
 import { MenuSection } from './menu-list.interface';
 const { t } = i18n.global;
 

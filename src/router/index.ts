@@ -6,9 +6,7 @@ import { authRoute } from '../modules/auth/auth.route';
 import { themeRoute } from '../modules/theme/theme.route';
 import { contributionRoute } from '../modules/contribution/contribution.route';
 import { contactsRoute } from '../modules/contacts/contacts.route';
-import { Role } from '../utils/enums/roles.enum';
 import { currentUser, initialUserPromise } from '../store';
-import { PermissionType } from '../utils/api/api.interface2';
 
 // routes
 
@@ -41,12 +39,11 @@ router.beforeEach(async (to, from, next) => {
 
   const user = currentUser.value;
 
-  // Only certain routes don't require authentication
-  if (user == null && to.meta.role !== Role.NotLoggedIn) {
+  if (user == null && !to.meta.noAuth) {
     return next({ path: '/auth/login', query: { next: to.path } });
   }
 
-  if (to.meta.role && !user?.roles.includes(to.meta.role as PermissionType)) {
+  if (to.meta.role && !user?.roles.includes(to.meta.role)) {
     return next({ path: 'profile' });
   }
 
