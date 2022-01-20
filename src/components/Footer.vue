@@ -30,15 +30,13 @@
           <li><a href="#">Contacts</a></li>
         </ul>
       </div>
-      <div v-if="canAdmin" class="w-1/5 ml-auto">
-        <ul>
+      <div class="w-1/5 ml-auto">
+        <ul v-if="canAdmin">
           <li><a class="font-bold" href="">beabee</a></li>
           <li><a href="">Join the community</a></li>
           <li><a href="">Handbook &amp; resources</a></li>
         </ul>
-      </div>
-      <div v-else class="w-1/5 ml-auto">
-        <ul>
+        <ul v-else>
           <li><a class="font-bold" href="">beabee</a></li>
           <li>powering independent local newsrooms</li>
         </ul>
