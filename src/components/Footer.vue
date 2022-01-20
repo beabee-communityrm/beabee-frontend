@@ -1,14 +1,15 @@
 <template>
-  <footer class="mt-8 divide-y">
+  <footer class="mt-auto">
     <div
       class="
         footer
         xs:flex xs:flex-row xs:flex-wrap
         pt-4
+        mt-8
         border-t border-primary-40
       "
     >
-      <div class="w-full sm:w-auto md:flex-1 lg:flex-initial mr-8 mb-6">
+      <div class="w-full lg:w-auto mr-8 mb-6">
         <ul>
           <li>
             <a class="text-base font-semibold" :href="newsroomLink">{{
@@ -37,7 +38,7 @@
           <li><a href="#">Contacts</a></li>
         </ul>
       </div>
-      <div class="flex-1 xs:w-1/4 lg:flex-initial lg:ml-auto mb-6">
+      <div class="xs:w-1/5 xs:ml-auto mb-6">
         <ul v-if="canAdmin">
           <li><a class="font-bold" href="">beabee</a></li>
           <li><a href="">Join the community</a></li>
