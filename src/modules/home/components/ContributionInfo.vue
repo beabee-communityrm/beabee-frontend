@@ -12,7 +12,7 @@
 
     <div class="w-px bg-primary-20" />
 
-    <div class="flex-1 pl-4">
+    <div v-if="member.contributionAmount" class="flex-1 pl-4">
       <div class="title uppercase">{{ t('common.contributing') }}</div>
 
       <div class="content">
@@ -28,14 +28,13 @@
 import { computed } from '@vue/reactivity';
 import { useI18n } from 'vue-i18n';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
-import { parseISO } from 'date-fns';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
-import { Member } from '../../../utils/interfaces/member.interface';
+import { GetMemberData } from '../../../utils/api/api.interface';
 
 const { t, n } = useI18n();
 
 const props = defineProps<{
-  member: Member;
+  member: GetMemberData;
 }>();
 
 const period = computed(() => {
@@ -45,9 +44,7 @@ const period = computed(() => {
 });
 
 const formattedJoinedDate = computed(() => {
-  if (!props.member.joined) return;
-  const parsedDate = parseISO(props.member.joined);
-  return formatLocale(parsedDate, 'do MMMM y').split(' ');
+  return formatLocale(props.member.joined, 'do MMMM y').split(' ');
 });
 </script>
 

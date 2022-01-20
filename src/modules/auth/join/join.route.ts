@@ -1,8 +1,8 @@
 import { RouteRecordRaw } from 'vue-router';
-import { completeSignUp, confirmEmail } from './join.service';
 import i18n from '../../../i18n';
 import { Role } from '../../../utils/enums/roles.enum';
 import { updateCurrentUser } from '../../../store';
+import { completeSignUp, confirmEmail } from '../../../utils/api/signup';
 
 const { t } = i18n.global;
 
@@ -38,7 +38,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     },
     beforeEnter(to, from, next) {
       const redirectFlowId = to.query.redirect_flow_id;
-      completeSignUp(redirectFlowId)
+      completeSignUp(redirectFlowId as string)
         .then(() => {
           next('/join/confirm-email');
         })
@@ -66,8 +66,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
       pageTitle: t('pageTitle.confirmEmail'),
     },
     beforeEnter(to, from, next) {
-      const { id } = to.params;
-      confirmEmail(id)
+      confirmEmail(to.params.id)
         .then(updateCurrentUser)
         .then(() => next('/join/setup'))
         .catch((error) => {

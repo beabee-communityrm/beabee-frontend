@@ -42,14 +42,14 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-import { logout } from '../../modules/auth/auth.service';
 import { MenuSection } from './menu-list.interface';
 import currentUserCan, { canAdmin } from '../../utils/currentUserCan';
 import TheMenuListItem from './TheMenuListItem.vue';
+import { logout } from '../../utils/api/auth';
 
 const { t } = useI18n();
 
-const props = defineProps<{
+defineProps<{
   sections: MenuSection[];
 }>();
 

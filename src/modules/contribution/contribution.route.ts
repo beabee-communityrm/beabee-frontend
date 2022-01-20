@@ -1,9 +1,9 @@
 import { RouteRecordRaw } from 'vue-router';
-import {
-  completeContribution,
-  completeUpdatePaymentSource,
-} from './contribution.service';
 import i18n from '../../i18n';
+import {
+  completeStartContribution,
+  completeUpdatePaymentSource,
+} from '../../utils/api/member';
 
 const { t } = i18n.global;
 
@@ -27,7 +27,7 @@ export const contributionRoute: Array<RouteRecordRaw> = [
         component: () => import('./CompleteFlow.vue'),
         beforeEnter(to, from, next) {
           const redirectFlowId = to.query.redirect_flow_id;
-          completeContribution(redirectFlowId as string)
+          completeStartContribution(redirectFlowId as string)
             .then(() => {
               next({
                 path: '/profile/contribution',

@@ -8,6 +8,7 @@ import { contributionRoute } from '../modules/contribution/contribution.route';
 import { contactsRoute } from '../modules/contacts/contacts.route';
 import { Role } from '../utils/enums/roles.enum';
 import { currentUser, initialUserPromise } from '../store';
+import { PermissionType } from '../utils/api/api.interface2';
 
 // routes
 
@@ -45,7 +46,7 @@ router.beforeEach(async (to, from, next) => {
     return next({ path: '/auth/login', query: { next: to.path } });
   }
 
-  if (to.meta.role && !user?.roles.includes(to.meta.role)) {
+  if (to.meta.role && !user?.roles.includes(to.meta.role as PermissionType)) {
     return next({ path: 'profile' });
   }
 

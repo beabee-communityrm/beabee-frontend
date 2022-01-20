@@ -1,4 +1,4 @@
-export enum NewsletterStaus {
+export enum NewsletterStatus {
   Subscribed = 'subscribed',
   Unsubscribed = 'unsubscribed',
 }

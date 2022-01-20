@@ -22,12 +22,9 @@
 <script lang="ts" setup>
 import AppButton from '../../components/forms/AppButton.vue';
 import AppLink from '../../components/AppLink.vue';
-import { Notice } from './notice.interface';
+import { GetNoticeData } from '../../utils/api/api.interface';
 
-defineProps({
-  notice: {
-    default: () => ({}),
-    type: Object as () => Notice,
-  },
-});
+defineProps<{
+  notice: GetNoticeData;
+}>();
 </script>

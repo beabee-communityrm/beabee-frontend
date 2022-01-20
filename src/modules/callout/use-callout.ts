@@ -1,23 +1,15 @@
 import { ref } from 'vue';
-import { Callout } from './callout.interface';
-import { fetchCallouts } from './callout.service';
+import { BasicCalloutData } from '../../utils/api/api.interface';
+import { fetchCallouts } from '../../utils/api/callout';
 
-const callouts = ref<Callout[]>([]);
+const callouts = ref<BasicCalloutData[]>([]);
 const loading = ref(false);
 
 function setCallouts(): void {
   loading.value = true;
   fetchCallouts()
-    .then(({ data }) => {
-      callouts.value = data.map((callout: Callout) => {
-        return {
-          title: callout.title,
-          slug: callout.slug,
-          expires: callout.expires,
-          excerpt: callout.excerpt,
-          image: callout.image,
-        };
-      });
+    .then((data) => {
+      callouts.value = data;
     })
     .catch((err) => err)
     .finally(() => (loading.value = false));

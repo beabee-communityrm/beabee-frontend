@@ -66,12 +66,10 @@ import {
   formatLocale,
 } from '../../../utils/dates/locale-date-formats';
 import { computed } from '@vue/reactivity';
-import {
-  ContributionInfo,
-  ContributionType,
-  MembershipStatus,
-} from '../contribution.interface';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
+import { ContributionInfo } from '../../../utils/api/api.interface';
+import { MembershipStatus } from '../../../utils/enums/membership-status.enum';
+import { ContributionType } from '../../../utils/enums/contribution-type.enum';
 
 const { n, t } = useI18n();
 
