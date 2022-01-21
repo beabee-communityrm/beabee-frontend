@@ -48,7 +48,8 @@ const submitResetPassword = async (
         // TODO: use router when legacy app is gone
         window.location.href = redirectTo;
       } else {
-        router.push({ path: '/profile', query: { passwordReset: 'true' } });
+        // TODO: Cable: use old profile
+        window.location.href = '/profile';
       }
     })
     .catch((err) => err)

@@ -61,6 +61,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
       confirmEmail(id)
         .then(() => {
           localStorage.setItem('isAuthenticated', 'true');
+          // TODO: Cable: use old complete page
           window.location.href = '/profile/complete';
         })
         .catch((error) => {
