@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
-import { completeSignUp, confirmEmail } from './join.service';
 import i18n from '../../../i18n';
+import { updateCurrentUser } from '../../../store';
+import { completeSignUp, confirmEmail } from '../../../utils/api/signup';
 
 const { t } = i18n.global;
 
@@ -11,7 +12,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./JoinPage.vue'),
     meta: {
       layout: 'Auth',
-      roles: [],
+      noAuth: true,
       pageTitle: t('pageTitle.join'),
     },
   },
@@ -21,7 +22,6 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/SetupPage.vue'),
     meta: {
       layout: 'Auth',
-      roles: [],
       pageTitle: t('pageTitle.setup'),
     },
   },
@@ -31,9 +31,13 @@ export const joinRoute: Array<RouteRecordRaw> = [
     path: '/join/complete',
     name: 'complete join',
     component: () => import('./pages/CompletePage.vue'),
+    meta: {
+      pageTitle: t('pageTitle.join'),
+      noAuth: true,
+    },
     beforeEnter(to, from, next) {
       const redirectFlowId = to.query.redirect_flow_id;
-      completeSignUp(redirectFlowId)
+      completeSignUp(redirectFlowId as string)
         .then(() => {
           next('/join/confirm-email');
         })
@@ -48,7 +52,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/ConfirmEmailPage.vue'),
     meta: {
       layout: 'Splash',
-      roles: [],
+      noAuth: true,
       pageTitle: t('pageTitle.confirmEmail'),
     },
   },
@@ -56,11 +60,14 @@ export const joinRoute: Array<RouteRecordRaw> = [
     path: '/join/confirm-email/:id',
     name: 'confirm email id',
     component: () => import('./pages/ConfirmEmailPage.vue'),
+    meta: {
+      noAuth: true,
+      pageTitle: t('pageTitle.confirmEmail'),
+    },
     beforeEnter(to, from, next) {
-      const { id } = to.params;
-      confirmEmail(id)
+      confirmEmail(to.params.id)
+        .then(updateCurrentUser)
         .then(() => {
-          localStorage.setItem('isAuthenticated', 'true');
           // TODO: Cable: use old complete page
           window.location.href = '/profile/complete';
         })
@@ -79,7 +86,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/FailedPage.vue'),
     meta: {
       layout: 'Splash',
-      roles: [],
+      noAuth: true,
       pageTitle: t('pageTitle.failed'),
     },
   },
@@ -89,7 +96,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/DuplicateEmailPage.vue'),
     meta: {
       layout: 'Splash',
-      roles: [],
+      noAuth: true,
       pageTitle: t('pageTitle.duplicateEmail'),
     },
   },

@@ -24,6 +24,7 @@
     "date-fns": "^2.26.0",
     "lodash.orderby": "^4.6.0",
     "mitt": "^3.0.0",
+    "postcss-nesting": "^10.1.1",
     "vue": "^3.2.6",
     "vue-i18n": "^9.1.7",
     "vue-router": "^4.0.11"

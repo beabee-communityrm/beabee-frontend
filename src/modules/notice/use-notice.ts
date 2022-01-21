@@ -1,22 +1,15 @@
 import { ref } from 'vue';
-import { Notice } from './notice.interface';
-import { fetchNotices } from './notice.service';
+import { GetNoticeData } from '../../utils/api/api.interface';
+import { fetchNotices } from '../../utils/api/notice';
 
-const notices = ref<Notice[]>([]);
+const notices = ref<GetNoticeData[]>([]);
 const loading = ref(false);
 
 function setNotices(): void {
   loading.value = true;
   fetchNotices()
-    .then(({ data }) => {
-      notices.value = data.map((notice: Notice) => {
-        return {
-          id: notice.id,
-          text: notice.text,
-          url: notice.url,
-          buttonText: notice.buttonText,
-        };
-      });
+    .then((data) => {
+      notices.value = data;
     })
     .catch((err) => err)
     .finally(() => (loading.value = false));

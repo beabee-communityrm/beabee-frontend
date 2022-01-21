@@ -22,25 +22,21 @@
 <script lang="ts" setup>
 import AppButton from '../../../components/forms/AppButton.vue';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
-import { parseISO } from 'date-fns';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-const props = defineProps({
-  expiryDate: {
-    type: String as () => null | string,
-    default: '',
-  },
-});
+const props = defineProps<{
+  expiryDate?: Date;
+}>();
 
 const formattedDate = computed(() => {
-  if (!props.expiryDate) return {};
-  const parsedDate = parseISO(props.expiryDate);
-  return {
-    day: formatLocale(parsedDate, 'do'),
-    month: formatLocale(parsedDate, 'LLLL'),
-  };
+  return props.expiryDate
+    ? {
+        day: formatLocale(props.expiryDate, 'do'),
+        month: formatLocale(props.expiryDate, 'LLLL'),
+      }
+    : {};
 });
 </script>

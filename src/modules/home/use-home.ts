@@ -1,52 +1,36 @@
-import { computed, reactive } from 'vue';
-import { Member, ProfileContent } from './home.interface';
-import { fetchMember, fetchProfileContent } from './home.service';
+import { reactive, ref } from 'vue';
+import { GetMemberData, ProfileContent } from '../../utils/api/api.interface';
+import { fetchProfileContent } from '../../utils/api/content';
+import { fetchMember } from '../../utils/api/member';
 
-const member = reactive<Member>({
-  firstName: '',
-  joined: '',
-  contributionPeriod: '',
-  contributionAmount: 0,
+const member = reactive<GetMemberData>({
+  email: '',
+  firstname: '',
+  lastname: '',
+  joined: new Date(),
+  roles: [],
 });
 
-function setMember(): void {
-  fetchMember()
-    .then(({ data }) => {
-      member.firstName = data.firstname;
-      member.joined = data.joined;
-      member.contributionPeriod = data.contributionPeriod;
-      member.contributionAmount = data.contributionAmount;
-    })
-    .catch((err) => err);
-}
-
-const profileContent = reactive<ProfileContent>({
+const profileContent = ref<ProfileContent>({
   welcomeMessage: '',
   footerMessage: '',
   introMessage: '',
 });
 
-function setProfileContent(): void {
-  fetchProfileContent()
-    .then(({ data }) => {
-      profileContent.welcomeMessage = data.welcomeMessage;
-      profileContent.footerMessage = data.footerMessage;
-      profileContent.introMessage = data.introMessage;
-    })
-    .catch((err) => err);
-}
+async function initHomePage() {
+  const memberData = await fetchMember();
+  member.firstname = memberData.firstname;
+  member.joined = memberData.joined;
+  member.contributionPeriod = memberData.contributionPeriod;
+  member.contributionAmount = memberData.contributionAmount;
 
-const contributionInfo = computed(() => {
-  const { joined, contributionAmount, contributionPeriod } = member;
-  return { joined, contributionAmount, contributionPeriod };
-});
+  profileContent.value = await fetchProfileContent();
+}
 
 export function useHome() {
   return {
-    setMember,
+    initHomePage,
     member,
-    contributionInfo,
-    setProfileContent,
     profileContent,
   };
 }

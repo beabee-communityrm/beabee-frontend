@@ -3,7 +3,7 @@
     class="
       h-7.5
       bg-white
-      text-secondary
+      text-link
       rounded
       font-semibold
       px-2

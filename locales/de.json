@@ -9,13 +9,13 @@
     "in": "in",
     "joined": "Mitglied seit",
     "login": "Login",
-    "month": "Monat",
+    "month": "Monat | Monaten",
     "monthly": "Monatlich",
     "new": "neu!",
     "participate": "Teilnehmen",
     "thankYou": "Vielen Dank!",
     "until": "bis",
-    "year": "Jahr"
+    "year": "Jahr | Jahren"
   },
   "contribution": {
     "bankAccount": "Bankverbindung",
@@ -26,18 +26,32 @@
     "changeBank": "Ändern Sie Ihre Bankverbindung.",
     "changeBankInfo": "Im nächsten Schritt können Sie Ihre neue Bankverbindung eingeben.",
     "contributing": "Ihr Beitrag ist",
+    "contributionUpdateError": "Sie können Ihren Beitrag aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
     "expired": "Ihre Mitgliedschaft ist abgelaufen.",
     "expiredText": "Möchten Sie Ihre Mitgliedschaft verlängern? Selbst kleinste Beträge helfen uns und unserer Arbeit. Danke!",
+    "hasPendingPayment": "Ihre Zahlung wird gerade verarbeitet.",
     "manualPayment": "Sie leisten Ihren Beitrag aktuell manuell via Banküberweisung. Richten Sie hier jetzt eine automatische Abbuchung via Lastschrift ein. Dann wird es für Sie leichter, Ihre Beiträge zu verwalten. Und wir bekommen einen besseren Überblick, auf welche Beiträge wir uns monatlich verlassen können.",
+    "nextAmountChanging": "Ab dem {renewalDate} ist Ihr Beitrag {nextAmount}.",
     "paymentSourceUpdateError": "Sie können Ihre Bankverbindung aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
+    "prorateDecreaseMessage": "Ihr Beitrag bleibt noch für {monthsLeft} {months} gleich. Der neue Beitrag wird am {renewalDate} zum ersten Mal eingezogen.",
+    "prorateIncreaseMessage": "Ihre Mitgliedschaft läuft noch {monthsLeft} {months} unter diesem Beitrag. Sie können eine Einmalzahlung in Höhe von {oneOffPayment} leisten um Ihre Mitgliedschaft sofort zu erneuern und den Beitrag zu erhöhen.",
+    "prorateNoText": "Bis dahin bleibt Ihr Beitrag gleich.",
+    "prorateNoTitle": "Ändern Sie meinen Beitrag ab dem {renewalDate}.",
+    "prorateYesText": "Wir buchen eine Einmalzahlung in Höhe von {oneOffPayment} ab und Ihre Mitgliedschaft wird mit ihrem neuen Beitrag sofort verlängert.",
+    "prorateYesTitle": "Meinen Beitrag sofort erhöhen.",
     "restartContribution": "Mitgliedschaft erneuern",
     "startContribution": "Mitgliedschaft beginnen",
+    "startedContribution": "Ihre Mitgliedschaft hat begonnen.",
     "updateContribution": "Beitrag aktualisieren",
     "updatePaymentType": "Neuen Zahlungsweg einrichten",
-    "willExpire": "Ihre Mitgliedschaft läuft in {expires} ab."
+    "updatedContribution": "Ihr Beitrag wurde geändert.",
+    "updatedPaymentSource": "Ihre Bankverbindung wurde geändert.",
+    "willExpire": "Ihre Mitgliedschaft läuft in {expires} ab.",
+    "willRenew": "Ihre Mitgliedschaft verlängert sich am {renewalDate} automatisch.",
+    "willRenewWithNewAmount": "Ihre Mitgliedschaft verlängert sich am {renewalDate} automatisch. Ihr Beitrag ist dann {nextAmount}."
   },
   "forgotPassword": {
-    "checkInbox": "Bitte schauen Sie in Ihren Posteingang und befolgen Sie die Anleitung in der Email.",
+    "checkInbox": "Bitte schauen Sie in Ihren Posteingang und befolgen Sie die Anleitung in der Email. Sollte die Email nicht auftauchen, schauen Sie auch in ihrem Spamordner nach. ",
     "description": "Bitte geben Sie Ihre Email-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.",
     "message": "Gibt es einen Account mit der Email-Adresse {email}, bekommen Sie in Kürze eine Nachricht.",
     "resetPassword": "Passwort zurücksetzen",
@@ -128,7 +142,9 @@
     "memberAccount": "Mitglieder-Account",
     "memberAlready": "Sind Sie bereits Mitglied?",
     "minimumContribution": "Der minimale Beitrag ist",
+    "noContribution": "Ich möchte jetzt keinen Beitrag leisten",
     "notice": "Indem Sie fortfahren, akzeptieren Sie unsere",
+    "now": "Jetzt Mitglied werden! ",
     "privacy": "Datenschutzerklärung"
   },
   "joinSetup": {
@@ -147,9 +163,13 @@
     "wrongCredentials": "Falsche Kombination von Passwort und Email."
   },
   "menu": {
+    "admin": "Administrator",
+    "adminDashboard": "Dashboard",
     "callouts": "Callouts",
+    "community": "Community",
     "contribution": "Beitrag",
     "home": "Home",
+    "logout": "Log out",
     "settings": "Einstellungen",
     "yourInformation": "Ihre Informationen",
     "yourProfile": "Ihr Profil"

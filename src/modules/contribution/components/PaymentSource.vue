@@ -18,7 +18,7 @@
 
     <AppButton
       :loading="loading"
-      variant="subtle"
+      variant="primaryOutlined"
       class="mb-2 w-full"
       @click="$emit('update-payment-source')"
     >
@@ -33,25 +33,16 @@
 import InfoMessage from '../../../components/InfoMessage.vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
-import { PaymentSource } from '../contribution.interface';
 import { useI18n } from 'vue-i18n';
+import { PaymentSource } from '../../../utils/api/api.interface';
 
 const { t } = useI18n();
 
-defineProps({
-  paymentSource: {
-    type: Object as () => PaymentSource,
-    default: () => ({}),
-  },
-  hasError: {
-    type: Boolean,
-    default: false,
-  },
-  loading: {
-    type: Boolean,
-    default: false,
-  },
-});
+defineProps<{
+  paymentSource: PaymentSource;
+  hasError: boolean;
+  loading: boolean;
+}>();
 
 defineEmits(['update-payment-source']);
 </script>

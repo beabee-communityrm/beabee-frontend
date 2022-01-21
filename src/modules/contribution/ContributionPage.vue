@@ -3,18 +3,18 @@
     <PageTitle :title="t('menu.contribution')" />
   </div>
 
-  <div class="grid grid-cols-12">
+  <div v-if="!isIniting" class="grid grid-cols-12">
     <div class="col-span-12 md:col-span-7 lg:col-span-5">
-      <ContributionBox
-        v-if="!hasNoneType"
-        :status="currentContribution.membershipStatus"
-        :amount="currentContribution.amount"
-        :period="period"
-        :expiry-date="currentContribution.membershipExpiryDate"
-        class="mb-9"
-      />
+      <AppAlert v-if="updatedPaymentSource" class="mb-8">{{
+        t('contribution.updatedPaymentSource')
+      }}</AppAlert>
+      <AppAlert v-if="startedContribution" class="mb-8">{{
+        t('contribution.startedContribution')
+      }}</AppAlert>
 
-      <form v-if="showContributionForm" class="mb-7 md:mb-12" @submit.prevent>
+      <ContributionBox :contribution="currentContribution" class="mb-9" />
+
+      <form class="mb-7 md:mb-12" @submit.prevent>
         <SectionTitle class="mb-2"
           >{{ t('contribution.billing') }}
         </SectionTitle>
@@ -23,37 +23,35 @@
           {{ t('contribution.manualPayment') }}
         </p>
 
-        <!-- users can't change period on an active GoCardless contribution -->
-        <ContributionPeriod
-          v-if="!isActiveMemberWithGoCardless"
-          class="mb-6"
-          :periods="contributionContent.periods"
-          :selected-period="newContribution.period"
-          @change-period="changePeriod"
+        <Contribution
+          v-model="newContribution"
+          v-model:isValid="isContributionValid"
+          :content="contributionContent"
+          :show-period="showChangePeriod"
         />
 
-        <ContributionAmount
-          v-model.number="newContribution.amount"
-          :is-monthly="isMonthly"
-          :min-amount="minAmount"
-          :defined-amounts="definedAmounts"
-          class="mb-5"
+        <ProrateContribution
+          v-if="showProrateOptions"
+          v-model="newContribution.prorate"
+          :new-amount="newContribution.amount"
+          :old-amount="currentContribution.amount!"
+          :renewal-date="currentContribution.renewalDate!"
         />
 
-        <ContributionFee
-          v-if="isMonthly"
-          v-model="newContribution.payFee"
-          :amount="newContribution.amount"
-          :fee="fee"
-          :force="shouldForceFee"
-        />
+        <MessageBox v-if="hasUpdatedContribution" class="mb-4" type="success">
+          {{ t('contribution.updatedContribution') }}
+        </MessageBox>
+
+        <MessageBox v-if="cantUpdateContribution" class="mb-4" type="error">
+          {{ t('contribution.contributionUpdateError') }}
+        </MessageBox>
 
         <AppButton
-          :disabled="isContributionFormInvalid"
+          :disabled="!canSubmitContribution"
           type="submit"
-          variant="secondary"
+          variant="link"
           class="mb-4 w-full"
-          :loading="updateContributionLoading"
+          :loading="submitContributionLoading"
           @click="submitContribution"
         >
           {{ contributionButtonText }}
@@ -65,15 +63,15 @@
         />
       </form>
 
-      <template v-if="hasPaymentSource">
+      <template v-if="currentContribution.paymentSource">
         <SectionTitle class="mb-4">{{
           t('contribution.bankAccount')
         }}</SectionTitle>
 
         <PaymentSource
           class="mb-7 md:mb-12"
-          :loading="paymentSourceLoading"
-          :payment-source="paymentSource"
+          :loading="updatePaymentSourceLoading"
+          :payment-source="currentContribution.paymentSource"
           :has-error="cantUpdatePaymentSource"
           @update-payment-source="updatePaymentSource"
         />
@@ -100,59 +98,54 @@
 </template>
 
 <script lang="ts" setup>
+import { onBeforeMount, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
+import { useContribution } from './use-contribution';
+
+import ContributionBox from './components/ContributionBox.vue';
+import CancelContribution from './components/CancelContribution.vue';
+import PaymentSource from './components/PaymentSource.vue';
+
 import PageTitle from '../../components/PageTitle.vue';
 import InfoMessage from '../../components/InfoMessage.vue';
-import ContributionBox from './components/ContributionBox.vue';
 import SectionTitle from '../../components/SectionTitle.vue';
-import ContributionPeriod from './components/ContributionPeriod.vue';
-import ContributionAmount from './components/ContributionAmount.vue';
-import ContributionFee from './components/ContributionFee.vue';
-import PaymentSource from './components/PaymentSource.vue';
-import CancelContribution from './components/CancelContribution.vue';
+import Contribution from '../../components/contribution/Contribution.vue';
 import AppButton from '../../components/forms/AppButton.vue';
-import { computed, onBeforeMount } from 'vue';
-import { useContribution } from './use-contribution';
-import { useI18n } from 'vue-i18n';
+import ProrateContribution from './components/ProrateContribution.vue';
+import AppAlert from '../../components/AppAlert.vue';
+import MessageBox from '../../components/MessageBox.vue';
 
 const { t } = useI18n();
 
+const route = useRoute();
+const updatedPaymentSource = route.query.updatedPaymentSource !== undefined;
+const startedContribution = route.query.startedContribution !== undefined;
+
+const isContributionValid = ref(false);
+
 const {
+  isIniting,
+  initContributionPage,
   currentContribution,
   newContribution,
   contributionContent,
-  setContributionContent,
-  isMonthly,
-  changePeriod,
-  shouldForceFee,
-  minAmount,
-  definedAmounts,
-  fee,
-  isContributionFormInvalid,
+  canSubmitContribution,
   submitContribution,
-  setCurrentContribution,
-  showContributionForm,
+  submitContributionLoading,
+  cantUpdateContribution,
+  hasUpdatedContribution,
+  showChangePeriod,
+  showProrateOptions,
   contributionButtonText,
-  paymentSourceLoading,
   updatePaymentSource,
-  hasNoneType,
+  updatePaymentSourceLoading,
+  cantUpdatePaymentSource,
   hasManualType,
   isActiveMemberWithGoCardless,
-  hasPaymentSource,
-  paymentSource,
-  cantUpdatePaymentSource,
-  updateContributionLoading,
 } = useContribution();
 
-const period = computed(() =>
-  t(isMonthly.value ? 'common.month' : 'common.year')
-);
-
 onBeforeMount(() => {
-  // - TODO: Why component isn't destroyed on route change?
-  // It's here because it doesn't return to it's initial value on
-  // route change
-  cantUpdatePaymentSource.value = false;
-  setCurrentContribution();
-  setContributionContent();
+  initContributionPage();
 });
 </script>

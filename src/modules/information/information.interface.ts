@@ -1,9 +1,4 @@
-export interface Information {
-  email: string;
-  firstname: string;
-  lastname: string;
-  profile: Profile;
-}
+import { Address } from '../../utils/api/api.interface';
 
 export interface UpdateInformation {
   emailAddress: string;
@@ -20,11 +15,4 @@ export interface Profile {
   deliveryOptIn: boolean;
   deliveryAddress: Address | null;
   newsletterStatus: string;
-}
-
-export interface Address {
-  line1: string;
-  line2?: string;
-  city: string;
-  postcode: string;
 }
