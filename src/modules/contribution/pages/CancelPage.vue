@@ -8,7 +8,7 @@
   </h3>
 
   <div class="flex">
-    <AppButton to="/profile/contribution" variant="subtle">{{
+    <AppButton to="/profile/contribution" variant="primaryOutlined">{{
       t('common.goBack')
     }}</AppButton>
 

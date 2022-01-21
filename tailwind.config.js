@@ -3,13 +3,17 @@ const Color = require('color');
 const theme = require('./theme.json');
 
 const white = Color('white');
+const black = Color('black');
 
 function shades(_color, levels = []) {
   const color = Color(_color);
   return Object.assign(
     { DEFAULT: color.hex() },
     ...levels.map((level) => ({
-      [level]: color.mix(white, 1 - level / 100).hex(),
+      [level]:
+        level > 100
+          ? color.mix(black, level / 100 - 1).hex()
+          : color.mix(white, 1 - level / 100).hex(),
     }))
   );
 }
@@ -26,12 +30,11 @@ module.exports = {
   theme: {
     colors: {
       primary: shades(theme.colors.primary, [5, 10, 20, 40, 70, 80]),
-      secondary: shades(theme.colors.secondary, [10, 30, 70]),
-      body: shades(theme.colors.body || theme.colors.primary, [10, 70, 80]),
-      link: shades(theme.colors.link || theme.colors.primary, [10, 70, 80]),
+      body: shades(theme.colors.body || theme.colors.primary, [40, 80]),
+      link: shades(theme.colors.link || theme.colors.primary, [10, 70, 110]),
       warning: shades(theme.colors.warning || '#f5cc5b', [10, 30, 70]),
-      success: shades(theme.colors.success || '#86a960', [10, 30, 70]),
-      danger: shades(theme.colors.danger || '#ce3d3d', [10, 30, 70]),
+      success: shades(theme.colors.success || '#86a960', [10, 30, 70, 110]),
+      danger: shades(theme.colors.danger || '#ce3d3d', [10, 30, 70, 110]),
       white: shades(theme.colors.white || '#ffffff'),
       black: shades(theme.colors.black || '#000000'),
       grey: {
@@ -73,7 +76,7 @@ module.exports = {
         DEFAULT: '0 0 8px 0 rgba(0, 0, 0, 0.2)',
         input:
           '0 0 0 0.125em ' +
-          Color(theme.colors.secondary).alpha(0.25).rgb().string(),
+          Color(theme.colors.link).alpha(0.25).rgb().string(),
       },
       fontSize: {
         '2.5xl': '1.75rem',

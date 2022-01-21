@@ -49,7 +49,7 @@
 // custom tabel cell usage:
 // `email` should be replaced with the object property name of item
 //  <template #email="{ item }">
-//    <span class="text-secondary">{{ item.email }}</span>
+//    <span class="text-link">{{ item.email }}</span>
 //  </template>
 
 import { ref } from 'vue';

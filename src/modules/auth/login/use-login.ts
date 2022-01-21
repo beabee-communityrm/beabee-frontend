@@ -1,12 +1,12 @@
 import useVuelidate from '@vuelidate/core';
 import { helpers, required } from '@vuelidate/validators';
 import { computed, reactive, ref } from 'vue';
-import { LoginData } from '../auth.interface';
 import { emailValidationRule } from '../../../utils/form-validation/rules';
-import { login } from '../auth.service';
-import { Router } from 'vue-router';
 import i18n from '../../../i18n';
 import isInternalUrl from '../../../utils/is-internal-url';
+import { updateCurrentUser } from '../../../store';
+import { LoginData } from '../../../utils/api/api.interface';
+import { login } from '../../../utils/api/auth';
 
 const { t } = i18n.global;
 
@@ -40,8 +40,8 @@ const submitLogin = async (redirectTo?: string) => {
   loading.value = true;
   hasCredentialError.value = false;
   login(loginData)
+    .then(updateCurrentUser)
     .then(() => {
-      localStorage.setItem('isAuthenticated', 'true');
       // TODO: use router when legacy app is gone
       window.location.href = isInternalUrl(redirectTo) ? redirectTo : '/';
     })

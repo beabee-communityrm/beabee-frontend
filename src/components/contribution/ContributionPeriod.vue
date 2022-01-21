@@ -37,24 +37,19 @@
 </template>
 
 <script lang="ts" setup>
-import handleInput from '../../../utils/handle-input';
+import handleInput from '../../utils/handle-input';
 import { useI18n } from 'vue-i18n';
-import { Periods } from '../contribution.interface';
+import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
+import { ContributionContent } from './contribution.interface';
 
 const { t } = useI18n();
 
 const emit = defineEmits(['changePeriod']);
 
-defineProps({
-  periods: {
-    type: Array as () => Periods[],
-    required: true,
-  },
-  selectedPeriod: {
-    type: String,
-    required: true,
-  },
-});
+defineProps<{
+  periods: ContributionContent['periods'];
+  selectedPeriod: ContributionPeriod;
+}>();
 
 const changePeriod = (period: string) => {
   emit('changePeriod', period);

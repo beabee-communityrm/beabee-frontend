@@ -1,11 +1,7 @@
 {
   "colors": {
     "primary": "chocolate",
-    "secondary": "blue",
     "body": "black",
-    "link": "purple",
-    "warning": "yellow",
-    "success": "green",
-    "danger": "red"
+    "link": "purple"
   }
 }

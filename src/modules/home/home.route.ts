@@ -10,7 +10,6 @@ export const homeRoute: Array<RouteRecordRaw> = [
     component: () => import('./HomePage.vue'),
     meta: {
       pageTitle: t('homePage.title'),
-      roles: [],
     },
   },
 ];

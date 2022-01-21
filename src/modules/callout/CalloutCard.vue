@@ -23,7 +23,7 @@
               `${t('common.until')} ${formattedExpiresDate}`
             }}</span>
 
-            <span class="text-body-70 text-right">{{
+            <span class="text-body-80 text-right">{{
               `${t('common.in')}  ${expiresIn}`
             }}</span>
           </div>
@@ -50,35 +50,30 @@
 </template>
 
 <script lang="ts" setup>
-import { Callout } from './callout.interface';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import { ref } from '@vue/reactivity';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useI18n } from 'vue-i18n';
 import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
+import { BasicCalloutData } from '../../utils/api/api.interface';
 
 const { t } = useI18n();
 
-const props = defineProps({
-  callout: {
-    default: () => ({}),
-    type: Object as () => Callout,
-  },
-});
+const props = defineProps<{
+  callout: BasicCalloutData;
+}>();
 
 const formattedExpiresDate = ref('');
 const expiresIn = ref('');
 
 const formatDate = () => {
-  if (!props.callout.expires) return;
-
-  const parsedDate = parseISO(props.callout.expires);
-
-  formattedExpiresDate.value = `${format(parsedDate, 'MMMM')} ${format(
-    parsedDate,
-    'd'
-  )}`;
-  expiresIn.value = formatDistanceLocale(new Date(), parsedDate);
+  if (props.callout.expires) {
+    formattedExpiresDate.value = `${format(
+      props.callout.expires,
+      'MMMM'
+    )} ${format(props.callout.expires, 'd')}`;
+    expiresIn.value = formatDistanceLocale(new Date(), props.callout.expires);
+  }
 };
 
 onBeforeMount(() => {
