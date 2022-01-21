@@ -11,26 +11,24 @@ export const contributionRoute: Array<RouteRecordRaw> = [
     meta: {
       pageTitle: t('menu.contribution'),
     },
-    children: [
-      {
-        path: 'complete',
-        name: 'complete contribution',
-        component: () => import('./pages/ContributionCompletePage.vue'),
-        meta: {
-          pageTitle: t('menu.contribution'),
-          layout: 'Loading',
-        },
-      },
-      {
-        path: 'payment-source/complete',
-        name: 'complete payment source',
-        component: () => import('./pages/PaymentSourceCompletePage.vue'),
-        meta: {
-          pageTitle: t('menu.contribution'),
-          layout: 'Loading',
-        },
-      },
-    ],
+  },
+  {
+    path: '/profile/contribution/complete',
+    name: 'complete contribution',
+    component: () => import('./pages/ContributionCompletePage.vue'),
+    meta: {
+      pageTitle: t('menu.contribution'),
+      layout: 'Loading',
+    },
+  },
+  {
+    path: '/profile/contribution/payment-source/complete',
+    name: 'complete payment source',
+    component: () => import('./pages/PaymentSourceCompletePage.vue'),
+    meta: {
+      pageTitle: t('menu.contribution'),
+      layout: 'Loading',
+    },
   },
   {
     path: '/profile/contribution/cancel',
