@@ -1,7 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
 import i18n from '../../../i18n';
-import { updateCurrentUser } from '../../../store';
-import { completeSignUp, confirmEmail } from '../../../utils/api/signup';
 
 const { t } = i18n.global;
 
@@ -26,24 +24,13 @@ export const joinRoute: Array<RouteRecordRaw> = [
     },
   },
   {
-    // this page is never shown, `beforeEnter` redirects
-    // the user to appropriate page
     path: '/join/complete',
     name: 'complete join',
     component: () => import('./pages/CompletePage.vue'),
     meta: {
+      layout: 'Loading',
       pageTitle: t('pageTitle.join'),
       noAuth: true,
-    },
-    beforeEnter(to, from, next) {
-      const redirectFlowId = to.query.redirect_flow_id;
-      completeSignUp(redirectFlowId as string)
-        .then(() => {
-          next('/join/confirm-email');
-        })
-        .catch(() => {
-          next('/join/failed');
-        });
     },
   },
   {
@@ -51,7 +38,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     name: 'confirm email',
     component: () => import('./pages/ConfirmEmailPage.vue'),
     meta: {
-      layout: 'Splash',
+      layout: 'Auth',
       noAuth: true,
       pageTitle: t('pageTitle.confirmEmail'),
     },
@@ -59,25 +46,11 @@ export const joinRoute: Array<RouteRecordRaw> = [
   {
     path: '/join/confirm-email/:id',
     name: 'confirm email id',
-    component: () => import('./pages/ConfirmEmailPage.vue'),
+    component: () => import('./pages/ConfirmEmailLoadingPage.vue'),
     meta: {
+      layout: 'Loading',
       noAuth: true,
       pageTitle: t('pageTitle.confirmEmail'),
-    },
-    beforeEnter(to, from, next) {
-      confirmEmail(to.params.id)
-        .then(updateCurrentUser)
-        .then(() => {
-          // TODO: Cable: use old complete page
-          window.location.href = '/profile/complete';
-        })
-        .catch((error) => {
-          if (error.response?.data?.code === 'duplicate-email') {
-            next('/join/duplicate-email');
-          } else {
-            next('/join/failed');
-          }
-        });
     },
   },
   {
@@ -85,7 +58,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     name: 'failed',
     component: () => import('./pages/FailedPage.vue'),
     meta: {
-      layout: 'Splash',
+      layout: 'Auth',
       noAuth: true,
       pageTitle: t('pageTitle.failed'),
     },
@@ -95,7 +68,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     name: 'duplicate email',
     component: () => import('./pages/DuplicateEmailPage.vue'),
     meta: {
-      layout: 'Splash',
+      layout: 'Auth',
       noAuth: true,
       pageTitle: t('pageTitle.duplicateEmail'),
     },
