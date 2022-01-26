@@ -7,7 +7,7 @@ export interface Header {
 }
 
 export enum SortType {
-  Desc = 'desc',
-  Asc = 'asc',
-  None = 'none',
+  Desc = 'DESC',
+  Asc = 'ASC',
+  None = 'NONE',
 }

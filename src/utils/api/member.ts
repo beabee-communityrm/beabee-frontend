@@ -5,6 +5,8 @@ import {
   ContributionInfo,
   GetMemberData,
   GetMemberDataWithProfile,
+  GetMembersQuery,
+  GetMembersWithProfileData,
   Serial,
   SetContributionData,
   UpdateMemberData,
@@ -33,11 +35,22 @@ function toContrib(data: Serial<ContributionInfo>): ContributionInfo {
   };
 }
 
-export async function fetchMembers(): Promise<GetMemberDataWithProfile[]> {
-  const { data } = await axios.get<Serial<GetMemberDataWithProfile>[]>(
-    '/member'
+export async function fetchMembers(
+  query: GetMembersQuery = {}
+): Promise<GetMembersWithProfileData> {
+  const { data } = await axios.get<Serial<GetMembersWithProfileData>>(
+    '/member',
+    {
+      params: {
+        with: ['profile'],
+        ...query,
+      },
+    }
   );
-  return data.map(toMember);
+  return {
+    ...data,
+    items: data.items.map(toMember),
+  };
 }
 
 export async function fetchMember(): Promise<GetMemberData> {

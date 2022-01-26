@@ -11,10 +11,11 @@
         </form>
       </div>
       <AppTable
+        v-model:sortBy="currentSort"
+        v-model:sortType="currentSortType"
         :headers="headers"
-        :items="contacts"
+        :items="contactsTable?.items || []"
         class="w-full"
-        @sort="sort"
       >
         <template #name="{ item }">
           <router-link
@@ -23,7 +24,9 @@
           >
             {{ item.firstname }} {{ item.lastname }}
           </router-link>
-          <p v-if="item.profile.description">{{ item.profile.description }}</p>
+          <p v-if="item.profile.description">
+            {{ item.profile.description }}
+          </p>
         </template>
         <template #tags="{ item }">
           <template v-if="item.profile.tags">
@@ -44,44 +47,76 @@
           {{ formatLocale(value, 'PPP') }}
         </template>
       </AppTable>
+      <AppPagination
+        v-model="currentPage"
+        :total-pages="Math.floor((contactsTable?.total || 0) / pageSize)"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import PageTitle from '../../components/PageTitle.vue';
-import { GetMemberDataWithProfile } from '../../utils/api/api.interface';
+import { GetMembersWithProfileData } from '../../utils/api/api.interface';
 import { fetchMembers } from '../../utils/api/member';
 import AppTable from '../../components/table/AppTable.vue';
 import { Header, SortType } from '../../components/table/table.interface';
 import { formatLocale } from '../../utils/dates/locale-date-formats';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import AppInput from '../../components/forms/AppInput.vue';
+import AppPagination from '../../components/AppPagination.vue';
 
 const { t, n } = useI18n();
 
 const headers: Header[] = [
-  { value: 'name', text: t('contacts.name'), sortable: true },
-  { value: 'email', text: t('contacts.email'), sortable: true },
-  { value: 'tags', text: t('contacts.tags') },
-  { value: 'contribution', text: t('contacts.contribution'), align: 'right' },
+  { value: 'name', text: t('contacts.data.name'), sortable: true },
+  { value: 'email', text: t('contacts.data.email'), sortable: true },
+  { value: 'tags', text: t('contacts.data.tags') },
+  {
+    value: 'contribution',
+    text: t('contacts.data.contribution'),
+    align: 'right',
+  },
   {
     value: 'joined',
-    text: t('contacts.joined'),
+    text: t('contacts.data.joined'),
     align: 'right',
     sortable: true,
   },
 ];
 
-const contacts = ref<GetMemberDataWithProfile[]>([]);
+const pageSize = 50;
+const currentPage = ref(0);
+const currentSort = ref<string | null>(null);
+const currentSortType = ref(SortType.None);
 
-async function sort(by: string, type: SortType) {
-  contacts.value = await fetchMembers();
+const contactsTable = ref<GetMembersWithProfileData>();
+
+watchEffect(async () => {
+  contactsTable.value = await fetchMembers({
+    offset: currentPage.value * pageSize,
+    ...(currentSort.value &&
+      currentSortType.value !== SortType.None && {
+        sort: currentSort.value,
+        order: currentSortType.value,
+      }),
+  });
+});
+
+async function sort(by: string | null, type: SortType) {
+  currentSort.value = by;
+  currentSortType.value = type;
 }
 
 onBeforeMount(async () => {
-  contacts.value = await fetchMembers();
+  contacts.value = (await fetchMembers()).items;
 });
+
+function computed(
+  arg0: () => import('../../utils/api/api.interface').GetMembersWithProfileData
+) {
+  throw new Error('Function not implemented.');
+}
 </script>

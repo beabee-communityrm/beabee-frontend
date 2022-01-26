@@ -9,7 +9,7 @@
           :class="{ 'cursor-pointer': header.sortable }"
           align="left"
           :style="{ width: header.width }"
-          @click="sort(header)"
+          @click="header.sortable ? sort(header) : undefined"
         >
           <slot :name="`header-${header.value}`">{{ header.text }}</slot>
 
@@ -68,14 +68,12 @@ defineProps<{
   items: Record<string, unknown>[];
 }>();
 
-const emit = defineEmits(['sort']);
+const emit = defineEmits(['update:sortBy', 'update:sortType']);
 
 let sortType = ref<SortType>(SortType.None);
-let sortBy = ref('');
+let sortBy = ref<null | string>(null);
 
-const sort = (header: Header) => {
-  if (!header.sortable) return;
-
+function sort(header: Header) {
   // if it's null or if clicks on a new column, reset
   if (!sortBy.value || header.value !== sortBy.value) {
     sortType.value = SortType.None;
@@ -89,8 +87,10 @@ const sort = (header: Header) => {
     sortType.value = SortType.Asc;
   } else if (sortType.value === SortType.Asc) {
     sortType.value = SortType.None;
+    sortBy.value = null;
   }
 
-  emit('sort', sortBy.value, sortType.value);
-};
+  emit('update:sortBy', sortBy.value);
+  emit('update:sortType', sortType.value);
+}
 </script>

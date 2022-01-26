@@ -55,6 +55,20 @@ export interface GetMemberDataWithProfile extends GetMemberData {
   profile: MemberProfileData;
 }
 
+export interface GetMembersQuery {
+  limit?: number;
+  offset?: number;
+  sort?: string;
+  order?: 'ASC' | 'DESC';
+}
+
+export interface GetMembersWithProfileData {
+  items: GetMemberDataWithProfile[];
+  offset: number;
+  count: number;
+  total: number;
+}
+
 export type UpdateMemberProfileData = Partial<MemberProfileData>;
 
 export interface UpdateMemberData extends Partial<MemberData> {
