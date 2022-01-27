@@ -18,6 +18,7 @@
     "year": "year | years"
   },
   "contacts": {
+    "advancedSearch": "Advanced",
     "allContacts": "All contacts",
     "data": {
       "contribution": "Contribution",
@@ -26,6 +27,7 @@
       "name": "Name",
       "tags": "Tags"
     },
+    "noResults": "No contacts found",
     "search": "Search contacts...",
     "showingOf": "Showing {start} to {end} contacts out of {total}"
   },

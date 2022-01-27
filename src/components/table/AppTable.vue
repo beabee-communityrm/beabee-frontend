@@ -9,17 +9,15 @@
           :class="{ 'cursor-pointer': header.sortable }"
           align="left"
           :style="{ width: header.width }"
-          @click="header.sortable ? sort(header) : undefined"
+          @click="sortBy(header)"
         >
           <slot :name="`header-${header.value}`">{{ header.text }}</slot>
 
-          <span
-            v-if="header.value === sortBy"
-            class="absolute ml-2 top-2 text-xs"
-          >
-            <span v-if="sortType === SortType.Asc">&#9660;</span>
-            <span v-else-if="sortType === SortType.Desc">&#9650;</span>
-          </span>
+          <font-awesome-icon
+            v-if="header.value === sort.by"
+            class="ml-2"
+            :icon="sort.type === SortType.Asc ? 'caret-down' : 'caret-up'"
+          />
         </th>
       </tr>
     </thead>
@@ -46,36 +44,44 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed } from 'vue';
 import { Header, SortType } from './table.interface';
 
-defineProps<{
+interface Sort {
+  by: string | null;
+  type: SortType;
+}
+
+const props = defineProps<{
+  sort: Sort;
   headers: Header[];
   items: any[]; // TODO: improve typing
 }>();
 
 const emit = defineEmits(['update:sort']);
 
-let sortType = ref<SortType>(SortType.None);
-let sortBy = ref<null | string>(null);
+const sort = computed({
+  get: () => props.sort,
+  set: (value) => emit('update:sort', value),
+});
 
-function sort(header: Header) {
-  // if it's null or if clicks on a new column, reset
-  if (!sortBy.value || header.value !== sortBy.value) {
-    sortType.value = SortType.None;
+function sortBy(header: Header) {
+  if (!header.sortable) return;
+
+  const newSort: Sort = {
+    by: header.value,
+    type: sort.value.by === header.value ? sort.value.type : SortType.None,
+  };
+
+  if (newSort.type === SortType.None) {
+    newSort.type = SortType.Asc;
+  } else if (newSort.type === SortType.Asc) {
+    newSort.type = SortType.Desc;
+  } else if (newSort.type === SortType.Desc) {
+    newSort.by = null;
+    newSort.type = SortType.None;
   }
 
-  sortBy.value = header.value;
-
-  if (sortType.value === SortType.None) {
-    sortType.value = SortType.Asc;
-  } else if (sortType.value === SortType.Asc) {
-    sortType.value = SortType.Desc;
-  } else if (sortType.value === SortType.Desc) {
-    sortType.value = SortType.None;
-    sortBy.value = null;
-  }
-
-  emit('update:sort', { by: sortBy.value, type: sortType.value });
+  sort.value = newSort;
 }
 </script>

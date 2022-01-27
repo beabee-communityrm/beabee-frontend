@@ -67,6 +67,18 @@ export interface GetMembersQuery {
   offset?: number;
   sort?: string;
   order?: 'ASC' | 'DESC';
+  rules?: GetMembersQueryRuleGroup;
+}
+
+export interface GetMembersQueryRuleGroup {
+  condition: 'AND' | 'OR';
+  rules: (GetMembersQueryRuleGroup | GetMembersQueryRule)[];
+}
+
+export interface GetMembersQueryRule {
+  field: 'firstname' | 'lastname' | 'email';
+  operator: 'contains';
+  value: string;
 }
 
 export type UpdateMemberProfileData = Partial<MemberProfileData>;

@@ -1,7 +1,7 @@
 <template>
   <div class="mb-5"><PageTitle :title="t('menu.community')"></PageTitle></div>
   <div class="flex">
-    <div class="flex-none" :style="{ flexBasis: '200px' }">
+    <div class="flex-none" :style="{ flexBasis: '220px' }">
       <ul class="flex flex-col mr-5">
         <li>
           <SegmentItem
@@ -22,23 +22,45 @@
       </ul>
     </div>
     <div class="flex-auto">
-      <div class="flex justify-between">
-        <div></div>
-        <form class="relative" @submit.prevent>
-          <AppInput :placeholder="t('contacts.search')" />
-          <button class="absolute right-0">Q</button>
+      <div class="flex">
+        <div class="flex-1"><!-- actions --></div>
+        <form
+          class="relative"
+          @submit.prevent="currentSearch = basicSearchValue"
+        >
+          <AppInput
+            v-model="basicSearchValue"
+            class="pr-8"
+            :placeholder="t('contacts.search')"
+          />
+          <button class="absolute right-0 w-8 h-full">
+            <font-awesome-icon icon="search" />
+          </button>
         </form>
+        <button
+          class="ml-2 p-2"
+          :class="showAdvancedSearch && 'bg-primary-10'"
+          @click="showAdvancedSearch = !showAdvancedSearch"
+        >
+          {{ t('contacts.advancedSearch') }}
+          <font-awesome-icon
+            :icon="showAdvancedSearch ? 'caret-up' : 'caret-down'"
+          />
+        </button>
+      </div>
+      <div v-if="showAdvancedSearch" class="bg-primary-10 p-3 mt-1">
+        Advanced search
       </div>
       <AppTable
         v-model:sort="currentSort"
         :headers="headers"
         :items="contactsTable.items"
-        class="w-full"
+        class="w-full mt-2 whitespace-nowrap"
       >
-        <template #name="{ item }">
+        <template #firstname="{ item }">
           <router-link
             :to="'/contacts/' + item.id"
-            class="text-base text-link font-bold"
+            class="text-base text-link font-bold whitespace-normal"
           >
             {{ item.firstname }} {{ item.lastname }}
           </router-link>
@@ -65,12 +87,9 @@
           {{ formatLocale(value, 'PPP') }}
         </template>
       </AppTable>
-      <div
-        v-if="contactsTable.total > 0"
-        class="flex mt-4 items-center text-sm"
-      >
+      <div class="flex mt-4 items-center text-sm">
         <p class="flex-1">
-          <i18n-t keypath="contacts.showingOf">
+          <i18n-t v-if="contactsTable.count > 0" keypath="contacts.showingOf">
             <template #start
               ><b>{{ n(contactsTable.offset + 1) }}</b></template
             >
@@ -83,6 +102,7 @@
               ><b>{{ n(contactsTable.total) }}</b></template
             >
           </i18n-t>
+          <i18n-t v-else keypath="contacts.noResults" />
         </p>
         <div class="mx-4">Page size</div>
 
@@ -93,12 +113,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onBeforeMount, ref, watchEffect } from 'vue';
+import { computed, onBeforeMount, ref, watch, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import PageTitle from '../../components/PageTitle.vue';
 import {
   GetMemberDataWithProfile,
+  GetMembersQueryRuleGroup,
   GetSegmentData,
   Paginated,
 } from '../../utils/api/api.interface';
@@ -116,9 +137,10 @@ const { t, n } = useI18n();
 
 const headers: Header[] = [
   {
-    value: 'name',
+    value: 'firstname',
     text: t('contacts.data.name'),
     sortable: true,
+    width: '100%',
   },
   { value: 'email', text: t('contacts.data.email'), sortable: true },
   { value: 'tags', text: t('contacts.data.tags') },
@@ -138,7 +160,11 @@ const headers: Header[] = [
 const route = useRoute();
 const router = useRouter();
 
-const pageSize = 25;
+const currentPageSize = computed({
+  get: () => Number(route.query.limit) || 25,
+  set: (limit) => router.replace({ query: { ...route.query, limit } }),
+});
+
 const currentPage = computed({
   get: () => Number(route.query.page) || 0,
   set: (page) => router.replace({ query: { ...route.query, page } }),
@@ -160,6 +186,11 @@ const currentSort = computed({
   },
 });
 
+const currentSearch = computed({
+  get: () => (route.query.s as string) || '',
+  set: (s) => router.replace({ query: { ...route.query, s } }),
+});
+
 const currentSegment = computed({
   get: () => (route.query.segment as string) || null,
   set: (segment) => router.push({ query: { ...route.query, segment } }),
@@ -172,9 +203,16 @@ const contactsTable = ref<Paginated<GetMemberDataWithProfile>>({
   offset: 0,
   items: [],
 });
+// basicSearchValue should always track currentSearch changes, but
+// can be different when the user hasn't submitted the search
+const basicSearchValue = ref(currentSearch.value);
+watch(currentSearch, (value) => {
+  basicSearchValue.value = value;
+});
+const showAdvancedSearch = ref(false);
 
 const totalPages = computed(() =>
-  Math.ceil(contactsTable.value.total / pageSize)
+  Math.ceil(contactsTable.value.total / currentPageSize.value)
 );
 
 onBeforeMount(async () => {
@@ -182,15 +220,40 @@ onBeforeMount(async () => {
 });
 
 watchEffect(async () => {
+  const rules: GetMembersQueryRuleGroup | undefined = currentSearch.value
+    ? {
+        condition: 'OR',
+        rules: [
+          {
+            field: 'email',
+            operator: 'contains',
+            value: currentSearch.value,
+          },
+          {
+            field: 'firstname',
+            operator: 'contains',
+            value: currentSearch.value,
+          },
+          {
+            field: 'lastname',
+            operator: 'contains',
+            value: currentSearch.value,
+          },
+        ],
+      }
+    : undefined;
+
   const query = {
-    offset: currentPage.value * pageSize,
-    limit: pageSize,
+    offset: currentPage.value * currentPageSize.value,
+    limit: currentPageSize.value,
+    rules,
     ...(currentSort.value.by &&
       currentSort.value.type !== SortType.None && {
         sort: currentSort.value.by,
         order: currentSort.value.type,
       }),
   };
+
   contactsTable.value = currentSegment.value
     ? await fetchSegmentMembers(currentSegment.value, query)
     : await fetchMembers(query);

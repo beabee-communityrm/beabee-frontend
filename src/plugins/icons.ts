@@ -22,6 +22,7 @@ import {
   faCircleNotch,
   faCheck,
   faUsers,
+  faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -44,7 +45,8 @@ library.add(
   faTimes,
   faCircleNotch,
   faCheck,
-  faUsers
+  faUsers,
+  faSearch
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

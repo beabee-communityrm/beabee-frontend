@@ -1,5 +1,5 @@
 <template>
-  <label class="block mb-1.5 font-semibold" :for="inputType"
+  <label v-if="label" class="block mb-1.5 font-semibold" :for="inputType"
     >{{ formattedLabel }}
   </label>
   <input
@@ -31,35 +31,24 @@ import { computed, Ref } from '@vue/reactivity';
 import handleInput from '../../utils/handle-input';
 import InfoMessage from '../InfoMessage.vue';
 
-const props = defineProps({
-  modelValue: {
-    type: String,
-    default: '',
-  },
-  inputType: {
-    type: String,
-    default: 'text',
-    validator(value: string) {
-      return ['password', 'email', 'text'].includes(value);
-    },
-  },
-  label: {
-    type: String,
-    default: '',
-  },
-  errorMessage: {
-    type: String as () => string | Ref<string>,
-    default: '',
-  },
-  infoMessage: {
-    type: String,
-    default: '',
-  },
-  required: {
-    type: Boolean,
-    default: false,
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    modelValue?: string;
+    inputType?: 'password' | 'email' | 'text';
+    label?: string;
+    errorMessage?: string | Ref<string>;
+    infoMessage?: string;
+    required?: boolean;
+  }>(),
+  {
+    modelValue: '',
+    inputType: 'text',
+    label: undefined,
+    errorMessage: undefined,
+    infoMessage: undefined,
+    required: false,
+  }
+);
 
 defineEmits(['update:modelValue']);
 

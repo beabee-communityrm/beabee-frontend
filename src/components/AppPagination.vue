@@ -15,8 +15,9 @@
       <li>
         <button
           :class="page === modelValue && 'text-link bg-white'"
+          :disabled="page === modelValue"
           class="p-2 leading-none border border-primary rounded mx-1"
-          @click="page !== modelValue && emit('update:modelValue', page)"
+          @click="emit('update:modelValue', page)"
         >
           {{ page + 1 }}
         </button>
@@ -46,7 +47,7 @@ const props = defineProps<{
 const emit = defineEmits(['update:modelValue']);
 
 const isFirst = computed(() => props.modelValue === 0);
-const isLast = computed(() => props.modelValue === props.totalPages - 1);
+const isLast = computed(() => props.modelValue >= props.totalPages - 1);
 
 const pages = computed(() => {
   const ret = [0];
