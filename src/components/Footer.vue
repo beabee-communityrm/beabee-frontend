@@ -1,12 +1,7 @@
 <template>
-  <footer class="mt-8 divide-y">
+  <footer class="text-sm mt-8 divide-y">
     <div
-      class="
-        footer
-        xs:flex xs:flex-row xs:flex-wrap
-        pt-4
-        border-t border-primary-40
-      "
+      class="xs:flex xs:flex-row xs:flex-wrap pt-4 border-t border-primary-40"
     >
       <div class="w-full sm:w-auto md:flex-1 lg:flex-initial mr-8 mb-6">
         <ul>
@@ -60,10 +55,6 @@ const newsroomEmail = import.meta.env.VITE_NEWSROOM_EMAIL;
 </script>
 
 <style scoped>
-.footer {
-  @apply text-sm;
-}
-
 a {
   @apply text-link;
 }
