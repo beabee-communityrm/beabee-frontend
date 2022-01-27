@@ -6,7 +6,7 @@
         <li>
           <SegmentItem
             :name="t('contacts.allContacts')"
-            :count="123"
+            :count="allContactsTotal"
             :selected="currentSegment === null"
             to="/contacts"
           />
@@ -196,6 +196,7 @@ const currentSegment = computed({
   set: (segment) => router.push({ query: { ...route.query, segment } }),
 });
 
+const allContactsTotal = ref<number | null>(null);
 const segments = ref<GetSegmentData[]>([]);
 const contactsTable = ref<Paginated<GetMemberDataWithProfile>>({
   total: 0,
@@ -216,6 +217,10 @@ const totalPages = computed(() =>
 );
 
 onBeforeMount(async () => {
+  // Load the total if in a segment, otherwise it will be updated by the query below
+  if (currentSegment.value) {
+    allContactsTotal.value = (await fetchMembers({ limit: 1 })).total;
+  }
   segments.value = await fetchSegments();
 });
 
@@ -257,5 +262,9 @@ watchEffect(async () => {
   contactsTable.value = currentSegment.value
     ? await fetchSegmentMembers(currentSegment.value, query)
     : await fetchMembers(query);
+
+  if (!currentSegment.value) {
+    allContactsTotal.value = contactsTable.value.total;
+  }
 });
 </script>

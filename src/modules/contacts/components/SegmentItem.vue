@@ -22,7 +22,7 @@
       :class="
         selected ? 'text-body-80' : 'text-body-40 group-hover:text-body-80'
       "
-      >{{ count }}</span
+      >{{ count === null ? '???' : count }}</span
     >
   </router-link>
 </template>
@@ -30,7 +30,7 @@
 <script lang="ts" setup>
 defineProps<{
   name: string;
-  count: number;
+  count: number | null;
   selected: boolean;
   to: string;
 }>();
