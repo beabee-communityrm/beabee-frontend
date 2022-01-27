@@ -18,6 +18,7 @@
     "year": "year | years"
   },
   "contacts": {
+    "addContact": "Add contact",
     "advancedSearch": "Advanced",
     "allContacts": "All contacts",
     "data": {

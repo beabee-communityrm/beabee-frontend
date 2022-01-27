@@ -1,5 +1,10 @@
 <template>
-  <div class="mb-5"><PageTitle :title="t('menu.community')"></PageTitle></div>
+  <div class="mb-5 flex justify-between">
+    <PageTitle :title="t('menu.community')"></PageTitle>
+    <div>
+      <AppButton to="/contacts/add">{{ t('contacts.addContact') }}</AppButton>
+    </div>
+  </div>
   <div class="flex">
     <div class="flex-none" :style="{ flexBasis: '220px' }">
       <ul class="flex flex-col mr-5">
@@ -132,6 +137,7 @@ import AppInput from '../../components/forms/AppInput.vue';
 import AppPagination from '../../components/AppPagination.vue';
 import { fetchSegmentMembers, fetchSegments } from '../../utils/api/segments';
 import SegmentItem from './components/SegmentItem.vue';
+import AppButton from '../../components/forms/AppButton.vue';
 
 const { t, n } = useI18n();
 

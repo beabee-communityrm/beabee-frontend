@@ -48,8 +48,8 @@ export async function fetchMembers(
   };
 }
 
-export async function fetchMember(): Promise<GetMemberData> {
-  const { data } = await axios.get<Serial<GetMemberData>>('/member/me');
+export async function fetchMember(id = 'me'): Promise<GetMemberData> {
+  const { data } = await axios.get<Serial<GetMemberData>>(`/member/${id}`);
   return toMember(data);
 }
 

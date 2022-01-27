@@ -14,9 +14,18 @@ export const contactsRoute: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/contacts/add',
+    name: 'addContact',
+    component: () => import('./pages/AddContactPage.vue'),
+    meta: {
+      pageTitle: t('contacts.addContact'),
+      role: 'admin',
+    },
+  },
+  {
     path: '/contacts/:id',
     name: 'contact',
-    component: () => import('./ContactsPage.vue'),
+    component: () => import('./pages/ContactPage.vue'),
     meta: {
       pageTitle: t('menu.community'),
       role: 'admin',
