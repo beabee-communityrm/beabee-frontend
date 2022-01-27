@@ -18,6 +18,7 @@
     "year": "year | years"
   },
   "contacts": {
+    "allContacts": "All contacts",
     "data": {
       "contribution": "Contribution",
       "email": "Email",
@@ -25,7 +26,8 @@
       "name": "Name",
       "tags": "Tags"
     },
-    "search": "Search contacts..."
+    "search": "Search contacts...",
+    "showingOf": "Showing {start} to {end} contacts out of {total}"
   },
   "contribution": {
     "bankAccount": "Bank account",

@@ -46,29 +46,15 @@
 </template>
 
 <script lang="ts" setup>
-// TODO: improve typing
-
-// custom header cell usage:
-// `status` should be replaced with header item `value` property
-//    <template #header-status>
-//      <AppBadge>test</AppBadge>
-//    </template>
-
-// custom tabel cell usage:
-// `email` should be replaced with the object property name of item
-//  <template #email="{ item }">
-//    <span class="text-link">{{ item.email }}</span>
-//  </template>
-
 import { ref } from 'vue';
 import { Header, SortType } from './table.interface';
 
 defineProps<{
   headers: Header[];
-  items: Record<string, unknown>[];
+  items: any[]; // TODO: improve typing
 }>();
 
-const emit = defineEmits(['update:sortBy', 'update:sortType']);
+const emit = defineEmits(['update:sort']);
 
 let sortType = ref<SortType>(SortType.None);
 let sortBy = ref<null | string>(null);
@@ -82,15 +68,14 @@ function sort(header: Header) {
   sortBy.value = header.value;
 
   if (sortType.value === SortType.None) {
-    sortType.value = SortType.Desc;
-  } else if (sortType.value === SortType.Desc) {
     sortType.value = SortType.Asc;
   } else if (sortType.value === SortType.Asc) {
+    sortType.value = SortType.Desc;
+  } else if (sortType.value === SortType.Desc) {
     sortType.value = SortType.None;
     sortBy.value = null;
   }
 
-  emit('update:sortBy', sortBy.value);
-  emit('update:sortType', sortType.value);
+  emit('update:sort', { by: sortBy.value, type: sortType.value });
 }
 </script>

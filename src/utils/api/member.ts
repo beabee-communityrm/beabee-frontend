@@ -6,7 +6,7 @@ import {
   GetMemberData,
   GetMemberDataWithProfile,
   GetMembersQuery,
-  GetMembersWithProfileData,
+  Paginated,
   Serial,
   SetContributionData,
   UpdateMemberData,
@@ -19,7 +19,7 @@ function toDate(s: string | undefined): Date | undefined {
 }
 
 // TODO: how to make this type safe?
-function toMember(data: any): any {
+export function toMember(data: any): any {
   return {
     ...data,
     joined: toDate(data.joined),
@@ -37,16 +37,11 @@ function toContrib(data: Serial<ContributionInfo>): ContributionInfo {
 
 export async function fetchMembers(
   query: GetMembersQuery = {}
-): Promise<GetMembersWithProfileData> {
-  const { data } = await axios.get<Serial<GetMembersWithProfileData>>(
-    '/member',
-    {
-      params: {
-        with: ['profile'],
-        ...query,
-      },
-    }
-  );
+): Promise<Paginated<GetMemberDataWithProfile>> {
+  // TODO: fix type safety
+  const { data } = await axios.get('/member', {
+    params: { with: ['profile'], ...query },
+  });
   return {
     ...data,
     items: data.items.map(toMember),

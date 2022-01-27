@@ -8,6 +8,8 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faSignInAlt,
+  faCaretLeft,
+  faCaretRight,
   faCaretDown,
   faCaretUp,
   faExclamation,
@@ -29,6 +31,8 @@ library.add(
   farAddressCard,
   farCreditCard,
   faSignInAlt,
+  faCaretLeft,
+  faCaretRight,
   faCaretDown,
   faCaretUp,
   faInfoCircle,

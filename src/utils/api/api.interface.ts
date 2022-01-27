@@ -15,6 +15,13 @@ export type ContentId = 'join' | 'join/setup' | 'profile';
 
 export type PermissionType = 'member' | 'admin' | 'superadmin';
 
+export interface Paginated<T> {
+  items: T[];
+  offset: number;
+  count: number;
+  total: number;
+}
+
 export interface Address {
   line1: string;
   line2?: string | undefined;
@@ -60,13 +67,6 @@ export interface GetMembersQuery {
   offset?: number;
   sort?: string;
   order?: 'ASC' | 'DESC';
-}
-
-export interface GetMembersWithProfileData {
-  items: GetMemberDataWithProfile[];
-  offset: number;
-  count: number;
-  total: number;
 }
 
 export type UpdateMemberProfileData = Partial<MemberProfileData>;
@@ -178,4 +178,12 @@ export interface SignupData extends SetContributionData {
   email: string;
   password: string;
   noContribution: boolean;
+}
+
+export interface GetSegmentData {
+  id: string;
+  name: string;
+  ruleGroup: any;
+  order: number;
+  memberCount: number;
 }

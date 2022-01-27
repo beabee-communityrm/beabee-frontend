@@ -4,6 +4,7 @@ import { fetchProfileContent } from '../../utils/api/content';
 import { fetchMember } from '../../utils/api/member';
 
 const member = reactive<GetMemberData>({
+  id: '',
   email: '',
   firstname: '',
   lastname: '',

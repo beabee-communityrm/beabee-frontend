@@ -23,8 +23,8 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior() {
-    return { top: 0 };
+  scrollBehavior(to, from) {
+    return from && to.name === from.name ? undefined : { top: 0 };
   },
 });
 
