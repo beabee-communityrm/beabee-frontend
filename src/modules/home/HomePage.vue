@@ -61,8 +61,6 @@
   <section class="pt-20 mt-auto max-w-xs md:max-w-sm mx-auto">
     <ThanksNotice>{{ profileContent.footerMessage }}</ThanksNotice>
   </section>
-
-  <Footer />
 </template>
 
 <script lang="ts" setup>
@@ -76,9 +74,7 @@ import PageTitle from '../../components/PageTitle.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import AppAlert from '../../components/AppAlert.vue';
 import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
-import Footer from '../../components/Footer.vue';
 import { useHome } from './use-home';
-import { canAdmin } from '../../utils/currentUserCan';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';

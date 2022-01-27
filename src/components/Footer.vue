@@ -1,9 +1,15 @@
 <template>
-  <footer class="text-sm mt-8 divide-y">
+  <footer class="mt-auto">
     <div
-      class="xs:flex xs:flex-row xs:flex-wrap pt-4 border-t border-primary-40"
+      class="
+        text-sm
+        xs:flex xs:flex-row xs:flex-wrap
+        pt-4
+        mt-8
+        border-t border-primary-40
+      "
     >
-      <div class="w-full sm:w-auto md:flex-1 lg:flex-initial mr-8 mb-6">
+      <div class="w-full lg:w-auto mr-8 mb-6">
         <ul>
           <li>
             <a class="text-base font-semibold" :href="newsroomLink">{{
@@ -19,24 +25,42 @@
       </div>
       <div class="mr-8 mb-6">
         <ul>
-          <li><a href="#">Impressum</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms and Conditions</a></li>
+          <li>
+            <a href="#">{{ t('footer.impressum') }}</a>
+          </li>
+          <li>
+            <a href="#">{{ t('footer.privacyPolicy') }}</a>
+          </li>
+          <li>
+            <a href="#">{{ t('footer.terms') }}</a>
+          </li>
         </ul>
       </div>
       <div class="mr-8 mb-6">
         <ul>
-          <li><a href="#">Memberships</a></li>
-          <li><a href="#">Code of Conduct</a></li>
-          <li><a href="#">FAQs</a></li>
-          <li><a href="#">Contacts</a></li>
+          <li>
+            <a href="#">{{ t('footer.memberships') }}</a>
+          </li>
+          <li>
+            <a href="#">{{ t('footer.codeOfConduct') }}</a>
+          </li>
+          <li>
+            <a href="#">{{ t('footer.faq') }}</a>
+          </li>
+          <li>
+            <a href="#">{{ t('footer.contacts') }}</a>
+          </li>
         </ul>
       </div>
-      <div class="flex-1 xs:w-1/4 lg:flex-initial lg:ml-auto mb-6">
+      <div class="xs:w-1/5 xs:ml-auto mb-6">
         <ul v-if="canAdmin">
           <li><a class="font-bold" href="">beabee</a></li>
-          <li><a href="">Join the community</a></li>
-          <li><a href="">Handbook &amp; resources</a></li>
+          <li>
+            <a href="">{{ t('footer.joinCommunity') }}</a>
+          </li>
+          <li>
+            <a href="">{{ t('footer.handbookResources') }}</a>
+          </li>
         </ul>
         <ul v-else>
           <li><a class="font-bold" href="">beabee</a></li>
@@ -49,11 +73,15 @@
 
 <script lang="ts" setup>
 import { canAdmin } from '../utils/currentUserCan';
+import { useI18n } from 'vue-i18n';
 const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
 const newsroomLink = import.meta.env.VITE_NEWSROOM_LINK;
 const newsroomEmail = import.meta.env.VITE_NEWSROOM_EMAIL;
+
+const { t } = useI18n();
 </script>
 
+/* TODO: fix relying on scoped */
 <style scoped>
 a {
   @apply text-link;

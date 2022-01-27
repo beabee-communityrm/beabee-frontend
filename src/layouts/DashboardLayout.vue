@@ -13,10 +13,12 @@
       "
     >
       <router-view />
+      <Footer />
     </main>
   </div>
 </template>
 
 <script lang="ts" setup>
 import TheMenu from './menu/TheMenu.vue';
+import Footer from '../components/Footer.vue';
 </script>
