@@ -138,6 +138,7 @@
   },
   "informationPage": {
     "contactInformation": "Contact information",
+    "deliveryAddress": "Delivery address",
     "loginDetail": "Login details",
     "subTitle": "Required fields are marked with an asterisk. All information submitted here is private.",
     "title": "Your information"

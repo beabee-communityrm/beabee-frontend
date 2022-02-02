@@ -1,10 +1,7 @@
 <template>
-  <PageTitle
-    :title="t('informationPage.title')"
-    :sub-title="t('informationPage.subTitle')"
-  />
-
-  <h2 class="mb-3 text-lg font-bold">{{ t('informationPage.loginDetail') }}</h2>
+  <h2 class="mb-3 text-lg font-bold">
+    {{ t('informationPage.contactInformation') }}
+  </h2>
 
   <form @submit.prevent>
     <div class="grid lg:grid-cols-2 xl:grid-cols-3">
@@ -20,21 +17,6 @@
             @blur="informationValidation.emailAddress.$touch"
           />
         </div>
-
-        <div class="mb-5">
-          <AppInput
-            v-model="information.password"
-            input-type="password"
-            :label="t('form.password')"
-            :info-message="t('form.passwordInfo')"
-            :error-message="errorGenerator(informationValidation, 'password')"
-            @blur="informationValidation.password.$touch"
-          />
-        </div>
-
-        <h2 class="mb-3 text-lg font-bold">
-          {{ t('informationPage.contactInformation') }}
-        </h2>
 
         <div class="mb-5">
           <AppInput
@@ -56,6 +38,10 @@
           />
         </div>
 
+        <h2 class="mb-3 text-lg font-bold">
+          {{ t('informationPage.deliveryAddress') }}
+        </h2>
+
         <AppAddress
           v-model:line1="information.addressLine1"
           v-model:line2="information.addressLine2"
@@ -76,23 +62,24 @@
           class="mt-5"
           :loading="loading"
           variant="link"
-          @click="submitFormHandler('me')"
+          @click="submitFormHandler(route.params.id as string)"
           >{{ t('form.saveChanges') }}</AppButton
         >
       </div>
     </div>
   </form>
 </template>
-
 <script lang="ts" setup>
-import PageTitle from '../../components/PageTitle.vue';
-import AppInput from '../../components/forms/AppInput.vue';
-import AppButton from '../../components/forms/AppButton.vue';
-import MessageBox from '../../components/MessageBox.vue';
-import AppAddress from '../../components/AppAddress.vue';
+import { onBeforeMount } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useInformation } from './use-information';
-import { onBeforeMount } from '@vue/runtime-core';
+import { useRoute } from 'vue-router';
+import { useInformation } from '../../information/use-information';
+import AppButton from '../../../components/forms/AppButton.vue';
+import AppInput from '../../../components/forms/AppInput.vue';
+import MessageBox from '../../../components/MessageBox.vue';
+import AppAddress from '../../../components/AppAddress.vue';
+
+const route = useRoute();
 
 const {
   informationValidation,
@@ -106,7 +93,7 @@ const {
   addressValidation,
 } = useInformation();
 
-onBeforeMount(() => initPage('me'));
+onBeforeMount(() => initPage(route.params.id as string));
 
 const { t } = useI18n();
 </script>

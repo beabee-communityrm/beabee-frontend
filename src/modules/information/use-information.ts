@@ -63,7 +63,25 @@ const hasFormError = computed(
 const loading = ref(false);
 const isSaved = ref(false);
 
-const submitFormHandler = async () => {
+const initPage = async (id: string) => {
+  loading.value = false;
+  isSaved.value = false;
+
+  const member = await fetchMemberWithProfile(id);
+  information.emailAddress = member.email;
+  information.firstName = member.firstname;
+  information.lastName = member.lastname;
+
+  const address = member.profile?.deliveryAddress;
+  if (address) {
+    information.addressLine1 = address?.line1;
+    information.addressLine2 = address?.line2;
+    information.cityOrTown = address?.city;
+    information.postCode = address?.postcode;
+  }
+};
+
+const submitFormHandler = async (id: string) => {
   const isAddressCorrect = await addressValidation.value.$validate();
   const isInformationCorrect = await informationValidation.value.$validate();
   if (!isAddressCorrect || !isInformationCorrect) return;
@@ -71,11 +89,11 @@ const submitFormHandler = async () => {
   loading.value = true;
   isSaved.value = false;
 
-  updateMember({
+  updateMember(id, {
     email: information.emailAddress,
     firstname: information.firstName,
     lastname: information.lastName,
-    password: information.password,
+    ...(information.password && { password: information.password }),
     profile: {
       deliveryAddress: {
         line1: information.addressLine1,
@@ -90,28 +108,13 @@ const submitFormHandler = async () => {
     .finally(() => (loading.value = false));
 };
 
-const setInformation = async () => {
-  const member = await fetchMemberWithProfile();
-  information.emailAddress = member.email;
-  information.firstName = member.firstname;
-  information.lastName = member.lastname;
-
-  const address = member.profile?.deliveryAddress;
-  if (address) {
-    information.addressLine1 = address?.line1;
-    information.addressLine2 = address?.line2;
-    information.cityOrTown = address?.city;
-    information.postCode = address?.postcode;
-  }
-};
-
 export function useInformation() {
   return {
     informationValidation,
     errorGenerator,
     information,
     submitFormHandler,
-    setInformation,
+    initPage,
     isSaved,
     loading,
     hasFormError,

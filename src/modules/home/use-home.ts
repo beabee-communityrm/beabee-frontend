@@ -19,7 +19,7 @@ const profileContent = ref<ProfileContent>({
 });
 
 async function initHomePage() {
-  const memberData = await fetchMember();
+  const memberData = await fetchMember('me');
   member.firstname = memberData.firstname;
   member.joined = memberData.joined;
   member.contributionPeriod = memberData.contributionPeriod;

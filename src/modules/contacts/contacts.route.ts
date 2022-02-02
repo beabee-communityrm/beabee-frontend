@@ -30,5 +30,25 @@ export const contactsRoute: Array<RouteRecordRaw> = [
       pageTitle: t('menu.community'),
       role: 'admin',
     },
+    children: [
+      {
+        path: '',
+        name: 'contactOverview',
+        component: () => import('./pages/ContactOverviewPage.vue'),
+        meta: {
+          pageTitle: t('menu.community'),
+          role: 'admin',
+        },
+      },
+      {
+        path: 'information',
+        name: 'contactInformation',
+        component: () => import('./pages/ContactInformationPage.vue'),
+        meta: {
+          pageTitle: t('menu.community'),
+          role: 'admin',
+        },
+      },
+    ],
   },
 ];

@@ -48,23 +48,26 @@ export async function fetchMembers(
   };
 }
 
-export async function fetchMember(id = 'me'): Promise<GetMemberData> {
+export async function fetchMember(id: string): Promise<GetMemberData> {
   const { data } = await axios.get<Serial<GetMemberData>>(`/member/${id}`);
   return toMember(data);
 }
 
-export async function fetchMemberWithProfile(): Promise<GetMemberDataWithProfile> {
+export async function fetchMemberWithProfile(
+  id: string
+): Promise<GetMemberDataWithProfile> {
   const { data } = await axios.get<Serial<GetMemberDataWithProfile>>(
-    '/member/me?with[]=profile'
+    `/member/${id}?with[]=profile`
   );
   return toMember(data);
 }
 
 export async function updateMember(
+  id: string,
   memberData: UpdateMemberData
 ): Promise<GetMemberData> {
   const { data } = await axios.patch<Serial<GetMemberData>>(
-    '/member/me',
+    `/member/${id}`,
     // TODO: passing memberData directly is not type safe, it could contain extra properties
     memberData
   );
