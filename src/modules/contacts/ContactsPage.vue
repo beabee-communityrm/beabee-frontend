@@ -206,12 +206,12 @@ const router = useRouter();
 
 const currentPageSize = computed({
   get: () => Number(route.query.limit) || 25,
-  set: (limit) => router.replace({ query: { ...route.query, limit } }),
+  set: (limit) => router.push({ query: { ...route.query, limit } }),
 });
 
 const currentPage = computed({
   get: () => Number(route.query.page) || 0,
-  set: (page) => router.replace({ query: { ...route.query, page } }),
+  set: (page) => router.push({ query: { ...route.query, page } }),
 });
 
 const currentSort = computed({
@@ -232,7 +232,7 @@ const currentSort = computed({
 
 const currentSearch = computed({
   get: () => (route.query.s as string) || '',
-  set: (s) => router.replace({ query: { ...route.query, s } }),
+  set: (s) => router.push({ query: { ...route.query, s } }),
 });
 
 const currentSegment = computed({
