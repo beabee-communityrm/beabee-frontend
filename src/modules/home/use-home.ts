@@ -9,7 +9,7 @@ const member = reactive<GetMemberData>({
   firstname: '',
   lastname: '',
   joined: new Date(),
-  roles: [],
+  activeRoles: [],
 });
 
 const profileContent = ref<ProfileContent>({

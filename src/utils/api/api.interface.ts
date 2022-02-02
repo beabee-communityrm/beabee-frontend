@@ -53,9 +53,10 @@ interface MemberProfileData {
 export interface GetMemberData extends MemberData {
   id: string;
   joined: Date;
+  lastSeen?: Date;
   contributionAmount?: number;
   contributionPeriod?: ContributionPeriod;
-  roles: PermissionType[];
+  activeRoles: PermissionType[];
 }
 
 export interface GetMemberDataWithProfile extends GetMemberData {

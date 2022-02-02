@@ -43,7 +43,7 @@ router.beforeEach(async (to, from, next) => {
     return next({ path: '/auth/login', query: { next: to.path } });
   }
 
-  if (to.meta.role && !user?.roles.includes(to.meta.role)) {
+  if (to.meta.role && !user?.activeRoles.includes(to.meta.role)) {
     return next({ path: 'profile' });
   }
 

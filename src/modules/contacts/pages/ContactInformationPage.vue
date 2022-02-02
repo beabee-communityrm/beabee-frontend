@@ -62,7 +62,7 @@
           class="mt-2"
           :loading="loading"
           variant="link"
-          @click="submitFormHandler(route.params.id as string)"
+          @click="submitFormHandler(contact.id)"
           >{{ t('form.saveChanges') }}</AppButton
         >
       </div>
@@ -72,15 +72,17 @@
 <script lang="ts" setup>
 import { onBeforeMount } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute } from 'vue-router';
 import { useInformation } from '../../information/use-information';
 import AppButton from '../../../components/forms/AppButton.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import AppAddress from '../../../components/AppAddress.vue';
 import AppHeading from '../../../components/AppHeading.vue';
+import { GetMemberData } from '../../../utils/api/api.interface';
 
-const route = useRoute();
+const props = defineProps<{
+  contact: GetMemberData;
+}>();
 
 const {
   informationValidation,
@@ -94,7 +96,7 @@ const {
   addressValidation,
 } = useInformation();
 
-onBeforeMount(() => initPage(route.params.id as string));
+onBeforeMount(() => initPage(props.contact.id));
 
 const { t } = useI18n();
 </script>

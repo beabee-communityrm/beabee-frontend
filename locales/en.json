@@ -17,15 +17,30 @@
     "until": "until",
     "year": "year | years"
   },
+  "contactOverview": {
+    "about": "About",
+    "contribution": "Contribution",
+    "information": "Information",
+    "overview": "Overview",
+    "roles": "Roles"
+  },
   "contacts": {
     "addContact": "Add contact",
     "advancedSearch": "Advanced",
     "allContacts": "All contacts",
     "data": {
+      "amount": "Amount",
+      "contribuiontType": "Type",
       "contribution": "Contribution",
+      "deliveryOptIn": "Delivery opt-in?",
+      "description": "Description",
       "email": "Email",
       "joined": "Joined",
+      "lastSeen": "Last seen",
       "name": "Name",
+      "notes": "Notes",
+      "payingFee": "Paying fee?",
+      "period": "Period",
       "tags": "Tags"
     },
     "noResults": "No contacts found",
