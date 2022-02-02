@@ -1,28 +1,51 @@
 <template>
   <div class="mb-5 flex justify-between">
     <PageTitle :title="t('menu.community')"></PageTitle>
-    <div>
+    <div class="flex-1 md:hidden">
+      <select
+        class="
+          p-2
+          w-full
+          border border-primary-40
+          rounded
+          focus:outline-none focus:shadow-input
+          bg-white
+        "
+        @change="currentSegment = handleInput($event)"
+      >
+        <option value="" :selected="!currentSegment">
+          {{ t('contacts.allContacts') }}
+          ({{ contactsTotal ? n(contactsTotal) : '???' }})
+        </option>
+        <option
+          v-for="segment in segments"
+          :key="segment.id"
+          :value="segment.id"
+          :selected="currentSegment === segment.id"
+        >
+          {{ segment.name }} ({{ segment.memberCount }})
+        </option>
+      </select>
+    </div>
+    <div class="flex-0 ml-3">
       <AppButton to="/contacts/add">{{ t('contacts.addContact') }}</AppButton>
     </div>
   </div>
-  <div class="flex">
-    <div class="flex-none" :style="{ flexBasis: '220px' }">
+  <div class="md:flex">
+    <div class="flex-none hidden md:block" :style="{ flexBasis: '220px' }">
       <ul class="flex flex-col mr-5">
         <li>
           <SegmentItem
-            :name="t('contacts.allContacts')"
-            :count="allContactsTotal"
-            :selected="currentSegment === null"
-            to="/contacts"
+            v-model="currentSegment"
+            :segment="{
+              id: '',
+              name: t('contacts.allContacts'),
+              memberCount: contactsTotal,
+            }"
           />
         </li>
         <li v-for="segment in segments" :key="segment.id">
-          <SegmentItem
-            :name="segment.name"
-            :count="segment.memberCount"
-            :selected="currentSegment === segment.id"
-            :to="'/contacts?segment=' + segment.id"
-          />
+          <SegmentItem v-model="currentSegment" :segment="segment" />
         </li>
       </ul>
     </div>
@@ -135,6 +158,7 @@ import AppPagination from '../../components/AppPagination.vue';
 import { fetchSegmentMembers, fetchSegments } from '../../utils/api/segments';
 import SegmentItem from './components/SegmentItem.vue';
 import AppButton from '../../components/forms/AppButton.vue';
+import handleInput from '../../utils/handle-input';
 
 const { t, n } = useI18n();
 
@@ -195,21 +219,21 @@ const currentSearch = computed({
 });
 
 const currentSegment = computed({
-  get: () => (route.query.segment as string) || null,
-  set: (segment) => router.push({ query: { ...route.query, segment } }),
+  get: () => (route.query.segment as string) || '',
+  set: (segment) => router.push({ query: { segment: segment || undefined } }),
 });
 
-const allContactsTotal = ref<number | null>(null);
 const segments = ref<GetSegmentData[]>([]);
+const contactsTotal = ref<number | null>(null);
 const contactsTable = ref<Paginated<GetMemberDataWithProfile>>({
   total: 0,
   count: 0,
   offset: 0,
   items: [],
 });
+const basicSearchValue = ref(currentSearch.value);
 // basicSearchValue should always track currentSearch changes, but
 // can be different when the user hasn't submitted the search
-const basicSearchValue = ref(currentSearch.value);
 watch(currentSearch, (value) => {
   basicSearchValue.value = value;
 });
@@ -220,9 +244,9 @@ const totalPages = computed(() =>
 );
 
 onBeforeMount(async () => {
-  // Load the total if in a segment, otherwise it will be updated by the query below
+  // Load the total if in a segment, otherwise it will be updated automatically below
   if (currentSegment.value) {
-    allContactsTotal.value = (await fetchMembers({ limit: 1 })).total;
+    contactsTotal.value = (await fetchMembers({ limit: 1 })).total;
   }
   segments.value = await fetchSegments();
 });
@@ -266,8 +290,9 @@ watchEffect(async () => {
     ? await fetchSegmentMembers(currentSegment.value, query)
     : await fetchMembers(query);
 
+  // Update all contacts total if no segment
   if (!currentSegment.value) {
-    allContactsTotal.value = contactsTable.value.total;
+    contactsTotal.value = contactsTable.value.total;
   }
 });
 </script>
