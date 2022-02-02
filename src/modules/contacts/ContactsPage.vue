@@ -62,11 +62,11 @@
         <template #firstname="{ item }">
           <router-link
             :to="'/contacts/' + item.id"
-            class="text-base text-link font-bold whitespace-normal"
+            class="text-base text-link font-bold"
           >
             {{ item.firstname }} {{ item.lastname }}
           </router-link>
-          <p v-if="item.profile.description">
+          <p v-if="item.profile.description" class="whitespace-normal">
             {{ item.profile.description }}
           </p>
         </template>
