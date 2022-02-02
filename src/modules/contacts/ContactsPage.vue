@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-5 flex justify-between">
+  <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
     <PageTitle :title="t('menu.community')"></PageTitle>
     <div class="flex-1 md:hidden">
       <select
