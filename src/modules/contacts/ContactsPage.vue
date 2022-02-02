@@ -42,16 +42,13 @@
             <font-awesome-icon icon="search" />
           </button>
         </form>
-        <button
+        <a
+          href="/members?type=advanced"
           class="ml-2 p-2"
           :class="showAdvancedSearch && 'bg-primary-10'"
-          @click="showAdvancedSearch = !showAdvancedSearch"
         >
           {{ t('contacts.advancedSearch') }}
-          <font-awesome-icon
-            :icon="showAdvancedSearch ? 'caret-up' : 'caret-down'"
-          />
-        </button>
+        </a>
       </div>
       <div v-if="showAdvancedSearch" class="bg-primary-10 p-3 mt-1">
         Advanced search
