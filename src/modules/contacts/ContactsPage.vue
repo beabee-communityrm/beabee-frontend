@@ -89,16 +89,31 @@
           >
             {{ item.firstname }} {{ item.lastname }}
           </router-link>
-          <p v-if="item.profile.description" class="whitespace-normal">
+          <p v-if="item.profile.description" class="whitespace-normal mt-1">
             {{ item.profile.description }}
           </p>
         </template>
         <template #tags="{ item }">
-          <template v-if="item.profile.tags">
-            <div v-for="tag in item.profile.tags" :key="tag">
-              <AppBadge>{{ tag }}</AppBadge>
-            </div>
-          </template>
+          <span class="whitespace-normal">
+            <span
+              v-for="tag in item.profile.tags"
+              :key="tag"
+              class="
+                bg-white
+                whitespace-nowrap
+                text-link
+                rounded
+                font-bold
+                inline-block
+                p-1
+                mr-1
+                mb-1
+                text-xs
+              "
+            >
+              {{ tag }}
+            </span>
+          </span>
         </template>
         <template #contribution="{ item }">
           <span v-if="item.contributionAmount">
@@ -161,7 +176,6 @@ import { fetchSegmentMembers, fetchSegments } from '../../utils/api/segments';
 import SegmentItem from './components/SegmentItem.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import handleInput from '../../utils/handle-input';
-import AppBadge from '../../components/AppBadge.vue';
 
 const { t, n } = useI18n();
 
