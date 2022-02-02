@@ -4,11 +4,12 @@
     :sub-title="t('informationPage.subTitle')"
   />
 
-  <h2 class="mb-3 text-lg font-bold">{{ t('informationPage.loginDetail') }}</h2>
-
   <form @submit.prevent>
     <div class="grid lg:grid-cols-2 xl:grid-cols-3">
       <div>
+        <AppHeading class="mb-3">
+          {{ t('informationPage.loginDetail') }}
+        </AppHeading>
         <div class="mb-5">
           <AppInput
             v-model="information.emailAddress"
@@ -32,9 +33,9 @@
           />
         </div>
 
-        <h2 class="mb-3 text-lg font-bold">
+        <AppHeading class="mb-3">
           {{ t('informationPage.contactInformation') }}
-        </h2>
+        </AppHeading>
 
         <div class="mb-5">
           <AppInput
@@ -73,7 +74,7 @@
         <AppButton
           type="submit"
           :disabled="hasFormError"
-          class="mt-5"
+          class="mt-2"
           :loading="loading"
           variant="link"
           @click="submitFormHandler('me')"
@@ -93,6 +94,7 @@ import AppAddress from '../../components/AppAddress.vue';
 import { useI18n } from 'vue-i18n';
 import { useInformation } from './use-information';
 import { onBeforeMount } from '@vue/runtime-core';
+import AppHeading from '../../components/AppHeading.vue';
 
 const {
   informationValidation,

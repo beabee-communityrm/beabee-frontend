@@ -14,7 +14,8 @@ export default defineConfig({
   server: {
     proxy: {
       '^/(api|login)': {
-        target: 'https://dev.beabee.io',
+        //target: 'https://dev.beabee.io',
+        target: 'http://localhost:3001',
         changeOrigin: true,
         cookieDomainRewrite: {
           'dev.beabee.io': 'localhost',
