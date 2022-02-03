@@ -17,6 +17,7 @@
     "until": "bis",
     "year": "Jahr | Jahren"
   },
+  "contacts": {},
   "contribution": {
     "bankAccount": "Bankverbindung",
     "billing": "Zahlungsart",
@@ -50,6 +51,7 @@
     "willRenew": "Deine Mitgliedschaft verlängert sich am {renewalDate} automatisch.",
     "willRenewWithNewAmount": "Deine Mitgliedschaft verlängert sich am {renewalDate} automatisch. Dein Beitrag ist dann {nextAmount}."
   },
+  "footer": {},
   "forgotPassword": {
     "checkInbox": "Bitte schaue in deinen Posteingang und befolge die Anleitung in der Email. Sollte die Email nicht auftauchen, checke deinen Spamordner. ",
     "description": "Bitte gib deine Email-Adresse ein. Wir schicken dir dann die Anleitung zum Zurücksetzen deines Passworts.",

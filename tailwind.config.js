@@ -58,6 +58,7 @@ module.exports = {
         5.5: '1.375rem',
       },
       screens: {
+        xs: '475px',
         xl: '1400px',
       },
       zIndex: {

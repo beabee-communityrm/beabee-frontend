@@ -17,6 +17,13 @@
     "until": "until",
     "year": "year | years"
   },
+  "contacts": {
+    "contribution": "Contribution",
+    "email": "Email",
+    "joined": "Joined",
+    "name": "Name",
+    "tags": "Tags"
+  },
   "contribution": {
     "bankAccount": "Bank account",
     "billing": "Billing",
@@ -49,6 +56,17 @@
     "willExpire": "Your contribution will expire in {expires}.",
     "willRenew": "Your contribution will automatically renew on {renewalDate}.",
     "willRenewWithNewAmount": "Your contribution will automatically renew on {renewalDate} and will change to your chosen amount of {nextAmount}."
+  },
+  "footer": {
+    "codeOfConduct": "Code of Conduct",
+    "contacts": "Contacts",
+    "faq": "FAQs",
+    "handbookResources": "Handbook & Resources",
+    "impressum": "Impressum",
+    "joinCommunity": "Join the Community",
+    "memberships": "Memberships",
+    "privacyPolicy": "Privacy Policy",
+    "terms": "Terms and Conditions"
   },
   "forgotPassword": {
     "checkInbox": "Please check your inbox and follow the instructions in the email. Check your spam folder if it doesn't appear.",

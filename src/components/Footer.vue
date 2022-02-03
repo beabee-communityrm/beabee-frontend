@@ -1,0 +1,89 @@
+<template>
+  <footer class="mt-auto hidden">
+    <div
+      class="
+        text-sm
+        xs:flex xs:flex-row xs:flex-wrap
+        pt-4
+        mt-8
+        border-t border-primary-40
+      "
+    >
+      <div class="w-full lg:w-auto mr-8 mb-6">
+        <ul>
+          <li>
+            <a class="text-base font-semibold" :href="newsroomLink">{{
+              newsroomName
+            }}</a>
+          </li>
+          <li>&mdash;</li>
+          <li>Contact us at</li>
+          <li>
+            <a :href="'mailto:' + newsroomEmail">{{ newsroomEmail }}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="mr-8 mb-6">
+        <ul>
+          <li>
+            <a href="#">{{ t('footer.impressum') }}</a>
+          </li>
+          <li>
+            <a href="#">{{ t('footer.privacyPolicy') }}</a>
+          </li>
+          <li>
+            <a href="#">{{ t('footer.terms') }}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="mr-8 mb-6">
+        <ul>
+          <li>
+            <a href="#">{{ t('footer.memberships') }}</a>
+          </li>
+          <li>
+            <a href="#">{{ t('footer.codeOfConduct') }}</a>
+          </li>
+          <li>
+            <a href="#">{{ t('footer.faq') }}</a>
+          </li>
+          <li>
+            <a href="#">{{ t('footer.contacts') }}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="xs:w-1/5 xs:ml-auto mb-6">
+        <ul v-if="canAdmin">
+          <li><a class="font-bold" href="">beabee</a></li>
+          <li>
+            <a href="">{{ t('footer.joinCommunity') }}</a>
+          </li>
+          <li>
+            <a href="">{{ t('footer.handbookResources') }}</a>
+          </li>
+        </ul>
+        <ul v-else>
+          <li><a class="font-bold" href="">beabee</a></li>
+          <li>powering independent local newsrooms</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</template>
+
+<script lang="ts" setup>
+import { canAdmin } from '../utils/currentUserCan';
+import { useI18n } from 'vue-i18n';
+const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
+const newsroomLink = import.meta.env.VITE_NEWSROOM_LINK;
+const newsroomEmail = import.meta.env.VITE_NEWSROOM_EMAIL;
+
+const { t } = useI18n();
+</script>
+
+/* TODO: fix relying on scoped */
+<style scoped>
+a {
+  @apply text-link;
+}
+</style>
