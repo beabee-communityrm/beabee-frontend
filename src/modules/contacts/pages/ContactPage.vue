@@ -2,7 +2,9 @@
   <template v-if="contact">
     <div class="mb-2">
       <PageTitle
-        :title="`${contact.firstname} ${contact.lastname}`"
+        :title="
+          `${contact.firstname} ${contact.lastname}`.trim() || contact.email
+        "
       ></PageTitle>
     </div>
 
@@ -10,6 +12,7 @@
       <AppTab :to="`/contacts/${contact.id}`">Overview</AppTab>
       <AppTab :to="`/contacts/${contact.id}/information`">Information</AppTab>
       <AppTab :to="`/contact/${contact.id}/roles`">Roles</AppTab>
+      <AppTab :to="`/members/${contact.id}/contribution`">Contribution</AppTab>
     </div>
 
     <router-view :contact="contact"></router-view>

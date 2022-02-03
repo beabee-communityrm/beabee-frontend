@@ -50,32 +50,7 @@
       </ul>
     </div>
     <div class="flex-auto">
-      <div class="flex">
-        <div class="flex-1"><!-- actions --></div>
-        <form
-          class="relative"
-          @submit.prevent="currentSearch = basicSearchValue"
-        >
-          <AppInput
-            v-model="basicSearchValue"
-            class="pr-8"
-            :placeholder="t('contacts.search')"
-          />
-          <button class="absolute right-0 w-8 h-full">
-            <font-awesome-icon icon="search" />
-          </button>
-        </form>
-        <a
-          href="/members?type=advanced"
-          class="ml-2 p-2"
-          :class="showAdvancedSearch && 'bg-primary-10'"
-        >
-          {{ t('contacts.advancedSearch') }}
-        </a>
-      </div>
-      <div v-if="showAdvancedSearch" class="bg-primary-10 p-3 mt-1">
-        Advanced search
-      </div>
+      <SearchBox v-model="currentSearch" />
       <AppTable
         v-model:sort="currentSort"
         :headers="headers"
@@ -87,7 +62,7 @@
             :to="'/contacts/' + item.id"
             class="text-base text-link font-bold"
           >
-            {{ item.firstname }} {{ item.lastname }}
+            {{ `${item.firstname} ${item.lastname}`.trim() || item.email }}
           </router-link>
           <p v-if="item.profile.description" class="whitespace-normal mt-1">
             {{ item.profile.description }}
@@ -117,11 +92,10 @@
         </template>
         <template #contribution="{ item }">
           <span v-if="item.contributionAmount">
-            {{ n(item.contributionAmount, 'currency') }}<br />
-            {{
+            {{ n(item.contributionAmount, 'currency') }}/{{
               item.contributionPeriod === ContributionPeriod.Monthly
-                ? t('common.monthly')
-                : t('common.annually')
+                ? t('common.month')
+                : t('common.year')
             }}
           </span>
         </template>
@@ -155,7 +129,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onBeforeMount, ref, watch, watchEffect } from 'vue';
+import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import PageTitle from '../../components/PageTitle.vue';
@@ -170,12 +144,12 @@ import AppTable from '../../components/table/AppTable.vue';
 import { Header, SortType } from '../../components/table/table.interface';
 import { formatLocale } from '../../utils/dates/locale-date-formats';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
-import AppInput from '../../components/forms/AppInput.vue';
 import AppPagination from '../../components/AppPagination.vue';
 import { fetchSegmentMembers, fetchSegments } from '../../utils/api/segments';
 import SegmentItem from './components/SegmentItem.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import handleInput from '../../utils/handle-input';
+import SearchBox from './components/SearchBox.vue';
 
 const { t, n } = useI18n();
 
@@ -248,14 +222,6 @@ const contactsTable = ref<Paginated<GetMemberDataWithProfile>>({
   offset: 0,
   items: [],
 });
-const basicSearchValue = ref(currentSearch.value);
-// basicSearchValue should always track currentSearch changes, but
-// can be different when the user hasn't submitted the search
-watch(currentSearch, (value) => {
-  basicSearchValue.value = value;
-});
-const showAdvancedSearch = ref(false);
-
 const totalPages = computed(() =>
   Math.ceil(contactsTable.value.total / currentPageSize.value)
 );

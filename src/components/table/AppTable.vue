@@ -22,7 +22,7 @@
       </tr>
     </thead>
 
-    <tbody class="text-xs">
+    <tbody class="text-xs lg:text-sm">
       <tr
         v-for="(item, i) in items"
         :key="i"

@@ -12,18 +12,6 @@
         </AppHeading>
         <div class="mb-5">
           <AppInput
-            v-model="information.emailAddress"
-            input-type="email"
-            :label="t('form.email') + '*'"
-            :error-message="
-              errorGenerator(informationValidation, 'emailAddress')
-            "
-            @blur="informationValidation.emailAddress.$touch"
-          />
-        </div>
-
-        <div class="mb-5">
-          <AppInput
             v-model="information.password"
             input-type="password"
             :label="t('form.password')"
@@ -36,6 +24,18 @@
         <AppHeading class="mb-3">
           {{ t('informationPage.contactInformation') }}
         </AppHeading>
+
+        <div class="mb-5">
+          <AppInput
+            v-model="information.emailAddress"
+            input-type="email"
+            :label="t('form.email') + '*'"
+            :error-message="
+              errorGenerator(informationValidation, 'emailAddress')
+            "
+            @blur="informationValidation.emailAddress.$touch"
+          />
+        </div>
 
         <div class="mb-5">
           <AppInput
@@ -57,12 +57,40 @@
           />
         </div>
 
+        <AppHeading class="mb-3">
+          {{ t('informationPage.deliveryAddress') }}
+        </AppHeading>
+
+        <template v-if="infoContent">
+          <p class="text-lg mb-1">
+            {{ infoContent.mailTitle }}
+          </p>
+
+          <p class="mb-4 text-sm">
+            {{ infoContent.mailText }}
+          </p>
+
+          <div class="mb-4">
+            <input
+              id="deliveryOptIn"
+              v-model="information.deliveryOptIn"
+              type="checkbox"
+              name="updates"
+            />
+
+            <label for="deliveryOptIn" class="font-bold ml-1">
+              {{ infoContent.mailOptIn }}
+            </label>
+          </div>
+        </template>
+
         <AppAddress
           v-model:line1="information.addressLine1"
           v-model:line2="information.addressLine2"
           v-model:postCode="information.postCode"
           v-model:cityOrTown="information.cityOrTown"
           v-model:addressValidation="addressValidation"
+          :is-address-required="information.deliveryOptIn"
         />
 
         <MessageBox v-if="hasFormError" type="error" class="mt-2" />
@@ -104,6 +132,7 @@ const {
   initPage,
   isSaved,
   loading,
+  infoContent,
   hasFormError,
   addressValidation,
 } = useInformation();
