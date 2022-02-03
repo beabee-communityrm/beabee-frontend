@@ -1,7 +1,7 @@
 {
-	"colors": {
-		"primary": "#262453",
-		"secondary": "#43a796",
-		"link": "#43a796"
-	}
+  "colors": {
+    "primary": "chocolate",
+    "body": "black",
+    "link": "purple"
+  }
 }
