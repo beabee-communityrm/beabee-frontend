@@ -5,7 +5,7 @@ import { joinRoute } from '../modules/auth/join/join.route';
 import { authRoute } from '../modules/auth/auth.route';
 import { themeRoute } from '../modules/theme/theme.route';
 import { contributionRoute } from '../modules/contribution/contribution.route';
-import { Role } from '../utils/enums/roles.enum';
+import { contactsRoute } from '../modules/contacts/contacts.route';
 import { currentUser, initialUserPromise } from '../store';
 
 // routes
@@ -17,6 +17,7 @@ const routes: RouteRecordRaw[] = [
   ...authRoute,
   ...themeRoute,
   ...contributionRoute,
+  ...contactsRoute,
 ];
 
 const router = createRouter({
@@ -37,17 +38,12 @@ router.beforeEach(async (to, from, next) => {
   await initialUserPromise;
 
   const user = currentUser.value;
-  const routeRoles = to.meta.roles || [];
 
-  // Only certain routes don't require authentication
-  if (user == null && !routeRoles.includes(Role.NotLoggedIn)) {
+  if (user == null && !to.meta.noAuth) {
     return next({ path: '/auth/login', query: { next: to.path } });
   }
 
-  if (
-    routeRoles.length > 0 &&
-    routeRoles.some((role) => user?.roles.includes(role))
-  ) {
+  if (to.meta.role && !user?.roles.includes(to.meta.role)) {
     return next({ path: 'profile' });
   }
 

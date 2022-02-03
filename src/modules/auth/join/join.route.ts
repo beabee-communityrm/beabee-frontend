@@ -1,8 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
-import { completeSignUp, confirmEmail } from './join.service';
 import i18n from '../../../i18n';
-import { Role } from '../../../utils/enums/roles.enum';
 import { updateCurrentUser } from '../../../store';
+import { completeSignUp, confirmEmail } from '../../../utils/api/signup';
 
 const { t } = i18n.global;
 
@@ -13,7 +12,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./JoinPage.vue'),
     meta: {
       layout: 'Auth',
-      roles: [Role.NotLoggedIn],
+      noAuth: true,
       pageTitle: t('pageTitle.join'),
     },
   },
@@ -34,11 +33,11 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/CompletePage.vue'),
     meta: {
       pageTitle: t('pageTitle.join'),
-      roles: [Role.NotLoggedIn],
+      noAuth: true,
     },
     beforeEnter(to, from, next) {
       const redirectFlowId = to.query.redirect_flow_id;
-      completeSignUp(redirectFlowId)
+      completeSignUp(redirectFlowId as string)
         .then(() => {
           next('/join/confirm-email');
         })
@@ -53,7 +52,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/ConfirmEmailPage.vue'),
     meta: {
       layout: 'Splash',
-      roles: [Role.NotLoggedIn],
+      noAuth: true,
       pageTitle: t('pageTitle.confirmEmail'),
     },
   },
@@ -62,12 +61,11 @@ export const joinRoute: Array<RouteRecordRaw> = [
     name: 'confirm email id',
     component: () => import('./pages/ConfirmEmailPage.vue'),
     meta: {
-      roles: [Role.NotLoggedIn],
+      noAuth: true,
       pageTitle: t('pageTitle.confirmEmail'),
     },
     beforeEnter(to, from, next) {
-      const { id } = to.params;
-      confirmEmail(id)
+      confirmEmail(to.params.id)
         .then(updateCurrentUser)
         .then(() => next('/join/setup'))
         .catch((error) => {
@@ -85,7 +83,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/FailedPage.vue'),
     meta: {
       layout: 'Splash',
-      roles: [Role.NotLoggedIn],
+      noAuth: true,
       pageTitle: t('pageTitle.failed'),
     },
   },
@@ -95,7 +93,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/DuplicateEmailPage.vue'),
     meta: {
       layout: 'Splash',
-      roles: [Role.NotLoggedIn],
+      noAuth: true,
       pageTitle: t('pageTitle.duplicateEmail'),
     },
   },

@@ -141,7 +141,6 @@ const {
   updatePaymentSource,
   updatePaymentSourceLoading,
   cantUpdatePaymentSource,
-  hasNoneType,
   hasManualType,
   isActiveMemberWithGoCardless,
 } = useContribution();

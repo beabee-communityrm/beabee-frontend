@@ -1,11 +1,11 @@
 import 'vue-router';
-import { Role } from '../utils/enums/roles.enum';
+import { PermissionType } from '../utils/api/api.interface';
 
 declare module 'vue-router' {
   interface RouteMeta {
     pageTitle: string;
     layout?: string;
-    // if a route has an empty roles array it means it can be accsesed by all users
-    roles?: Role[] | [];
+    noAuth?: boolean;
+    role?: PermissionType;
   }
 }

@@ -1,3 +1,5 @@
+import { PermissionType } from '../../utils/api/api.interface';
+
 export interface MenuSection {
   title?: string;
   type?: 'settings';
@@ -7,5 +9,6 @@ export interface MenuSection {
 export interface MenuItem {
   title: string;
   href?: string;
-  icon: string;
+  icon: [string, string];
+  role?: PermissionType;
 }

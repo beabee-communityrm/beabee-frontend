@@ -1,32 +1,34 @@
 import { computed, reactive, ref } from 'vue';
 import { LocationQueryRaw } from 'vue-router';
 import useVuelidate from '@vuelidate/core';
-import {
-  SignUpData,
-  JoinContentData,
-  SetupContentData,
-  MemberData,
-} from './join.interface';
+import { SetupMemberData, SignupData } from './join.interface';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { helpers, required } from '@vuelidate/validators';
-import {
-  signUp,
-  fetchMember,
-  fetchJoinContent,
-  fetchSetupContent,
-  updateMember,
-} from './join.service';
 import i18n from '../../../i18n';
 import {
   emailValidationRule,
   passwordValidationRule,
 } from '../../../utils/form-validation/rules';
-import { NewsletterStaus } from './newsletter-status.enum';
 import { Router } from 'vue-router';
+import {
+  fetchJoinContent,
+  fetchJoinSetupContent,
+} from '../../../utils/api/content';
+import { signUp } from '../../../utils/api/signup';
+import {
+  fetchMemberWithProfile,
+  updateMember,
+} from '../../../utils/api/member';
+import { NewsletterStatus } from '../../../utils/enums/newsletter-status.enum';
+import {
+  JoinContent,
+  JoinSetupContent,
+  UpdateMemberData,
+} from '../../../utils/api/api.interface';
 
 const { t } = i18n.global;
 
-const joinContent = ref<JoinContentData>({
+const joinContent = ref<JoinContent>({
   initialAmount: 5,
   initialPeriod: ContributionPeriod.Monthly,
   minMonthlyAmount: 5,
@@ -40,13 +42,14 @@ const joinContent = ref<JoinContentData>({
   title: '',
 });
 
-const signUpData = reactive<SignUpData>({
+const signUpData = reactive<SignupData>({
   email: '',
   password: '',
   amount: 5,
   period: ContributionPeriod.Monthly,
   payFee: true,
   noContribution: false,
+  prorate: false,
 
   get totalAmount(): number {
     return this.payFee && this.period === ContributionPeriod.Monthly
@@ -60,7 +63,7 @@ const signUpData = reactive<SignUpData>({
 
 const setJoinContent = (query: LocationQueryRaw) => {
   fetchJoinContent()
-    .then(({ data }) => {
+    .then((data) => {
       joinContent.value = data;
       signUpData.amount = query.amount ? +query.amount : data.initialAmount;
       if (!data.showAbsorbFee) {
@@ -70,7 +73,7 @@ const setJoinContent = (query: LocationQueryRaw) => {
     .catch((err) => err);
 };
 
-const memberData = reactive<MemberData>({
+const setupMemberData = reactive<SetupMemberData>({
   email: '',
   firstName: '',
   lastName: '',
@@ -113,14 +116,14 @@ const setupRules = computed(() => ({
 }));
 
 const joinValidation = useVuelidate(joinRules, signUpData);
-const setupValidation = useVuelidate(setupRules, memberData);
+const setupValidation = useVuelidate(setupRules, setupMemberData);
 
 const loading = ref(false);
 
 const submitSignUp = (router: Router) => {
   loading.value = true;
   signUp(signUpData)
-    .then(({ data }) => {
+    .then((data) => {
       if (data.redirectUrl) {
         window.location.href = data.redirectUrl;
       } else {
@@ -157,7 +160,33 @@ const completeSetup = async (router: Router) => {
 
   loading.value = true;
 
-  updateMember(memberData, setupContent.value.showMailOptIn)
+  const updateMemberData: UpdateMemberData = {
+    email: setupMemberData.email,
+    firstname: setupMemberData.firstName,
+    lastname: setupMemberData.lastName,
+  };
+
+  if (
+    setupMemberData.profile.newsletterOptIn ||
+    setupContent.value.showMailOptIn
+  ) {
+    updateMemberData.profile = {
+      ...(setupMemberData.profile.newsletterOptIn && {
+        newsletterStatus: NewsletterStatus.Subscribed,
+      }),
+      ...(setupContent.value.showMailOptIn && {
+        deliveryOptIn: setupMemberData.profile.deliveryOptIn,
+        deliveryAddress: {
+          line1: setupMemberData.addressLine1,
+          line2: setupMemberData.addressLine2,
+          city: setupMemberData.cityOrTown,
+          postcode: setupMemberData.postCode,
+        },
+      }),
+    };
+  }
+
+  updateMember(updateMemberData)
     .then(() => {
       router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
     })
@@ -169,25 +198,27 @@ const completeSetup = async (router: Router) => {
 };
 
 const setMemberData = () => {
-  fetchMember()
-    .then(({ data }) => {
-      memberData.firstName = data.firstname;
-      memberData.lastName = data.lastname;
-      memberData.email = data.email;
-      memberData.profile.newsletterOptIn =
-        data.profile.newsletterStatus === NewsletterStaus.Subscribed
+  fetchMemberWithProfile()
+    .then((data) => {
+      setupMemberData.firstName = data.firstname;
+      setupMemberData.lastName = data.lastname;
+      setupMemberData.email = data.email;
+      setupMemberData.profile.newsletterOptIn =
+        data.profile.newsletterStatus === NewsletterStatus.Subscribed
           ? true
           : false;
-      memberData.profile.deliveryOptIn = data.profile.deliveryOptIn;
-      memberData.addressLine1 = data.profile.deliveryAddress.line1;
-      memberData.addressLine2 = data.profile.deliveryAddress.line2;
-      memberData.cityOrTown = data.profile.deliveryAddress.city;
-      memberData.postCode = data.profile.deliveryAddress.postcode;
+      setupMemberData.profile.deliveryOptIn = data.profile.deliveryOptIn;
+      if (data.profile.deliveryAddress) {
+        setupMemberData.addressLine1 = data.profile.deliveryAddress.line1;
+        setupMemberData.addressLine2 = data.profile.deliveryAddress.line2 || '';
+        setupMemberData.cityOrTown = data.profile.deliveryAddress.city;
+        setupMemberData.postCode = data.profile.deliveryAddress.postcode;
+      }
     })
     .catch((err) => err);
 };
 
-const setupContent = ref<SetupContentData>({
+const setupContent = ref<JoinSetupContent>({
   welcome: '',
   newsletterText: '',
   newsletterOptIn: '',
@@ -200,8 +231,8 @@ const setupContent = ref<SetupContentData>({
 });
 
 const setSetupContent = () => {
-  fetchSetupContent()
-    .then(({ data }) => {
+  fetchJoinSetupContent()
+    .then((data) => {
       setupContent.value = data;
     })
     .catch((err) => err);
@@ -216,7 +247,7 @@ function useJoin() {
     joinValidation,
     loading,
     submitSignUp,
-    memberData,
+    setupMemberData,
     setupValidation,
     hasSetupError,
     joinContent,

@@ -1,23 +1,22 @@
-import { parseISO } from 'date-fns';
 import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
+import { ContributionType } from '../../utils/enums/contribution-type.enum';
+import i18n from '../../i18n';
 import {
-  fetchJoinContent,
+  ContributionContent,
+  ContributionData,
+} from '../../components/contribution/contribution.interface';
+import {
+  cancelContribution,
+  startContribution,
   fetchContribution,
-  createContribution,
   updateContribution,
   updatePaymentSource as updateBankAccount,
-  cancelContribution,
-} from './contribution.service';
-import {
-  ContributionInfo,
-  ContributionType,
-  MembershipStatus,
-  UpdateContribution,
-} from './contribution.interface';
-import i18n from '../../i18n';
-import { ContributionContent } from '../../components/contribution/contribution.interface';
+} from '../../utils/api/member';
+import { MembershipStatus } from '../../utils/enums/membership-status.enum';
+import { ContributionInfo } from '../../utils/api/api.interface';
+import { fetchJoinContent } from '../../utils/api/content';
 
 const { t } = i18n.global;
 
@@ -26,7 +25,7 @@ const currentContribution = reactive<ContributionInfo>({
   membershipStatus: MembershipStatus.None,
 });
 
-const newContribution = reactive<UpdateContribution>({
+const newContribution = reactive<ContributionData>({
   amount: 5,
   period: ContributionPeriod.Monthly,
   payFee: true,
@@ -56,10 +55,6 @@ const cantUpdateContribution = ref(false);
 const cantUpdatePaymentSource = ref(false);
 const hasUpdatedContribution = ref(false);
 
-function toDate(s: string | undefined): Date | undefined {
-  return s ? parseISO(s) : undefined;
-}
-
 const resetNewContribution = () => {
   newContribution.amount =
     currentContribution.amount || contributionContent.initialAmount;
@@ -77,24 +72,20 @@ const initContributionPage = async () => {
   cantUpdatePaymentSource.value = false;
   hasUpdatedContribution.value = false;
 
-  const contrib = (await fetchContribution()).data;
+  const contrib = await fetchContribution();
   currentContribution.type = contrib.type;
   currentContribution.amount = contrib.amount;
   currentContribution.nextAmount = contrib.nextAmount;
   currentContribution.period = contrib.period;
-  currentContribution.cancellationDate = toDate(contrib.cancellationDate);
-  currentContribution.renewalDate = toDate(contrib.renewalDate);
+  currentContribution.cancellationDate = contrib.cancellationDate;
+  currentContribution.renewalDate = contrib.renewalDate;
   currentContribution.paymentSource = contrib.paymentSource;
   currentContribution.payFee = contrib.payFee;
   currentContribution.hasPendingPayment = contrib.hasPendingPayment;
   currentContribution.membershipStatus = contrib.membershipStatus;
-  currentContribution.membershipExpiryDate = toDate(
-    contrib.membershipExpiryDate
-  );
+  currentContribution.membershipExpiryDate = contrib.membershipExpiryDate;
 
-  // TODO: currently contribution content is part of
-  // join content API.
-  const content = (await fetchJoinContent()).data;
+  const content = await fetchJoinContent();
   contributionContent.initialAmount = content.initialAmount;
   contributionContent.initialPeriod = content.initialPeriod;
   contributionContent.minMonthlyAmount = content.minMonthlyAmount;
@@ -107,14 +98,14 @@ const initContributionPage = async () => {
 };
 
 const submitCreateContribution = () => {
-  return createContribution(newContribution).then(({ data }) => {
+  return startContribution(newContribution).then((data) => {
     window.location.href = data.redirectUrl;
   });
 };
 
 const submitUpdateContribution = () => {
   return updateContribution(newContribution)
-    .then(({ data }) => {
+    .then((data) => {
       currentContribution.amount = data.amount;
       currentContribution.period = data.period;
       currentContribution.nextAmount = data.nextAmount;
@@ -157,7 +148,7 @@ const updatePaymentSourceLoading = ref(false);
 const updatePaymentSource = () => {
   updatePaymentSourceLoading.value = true;
   updateBankAccount()
-    .then(({ data }) => {
+    .then((data) => {
       window.location.href = data.redirectUrl;
     })
     .catch((err) => {
@@ -171,10 +162,6 @@ const updatePaymentSource = () => {
       }
     });
 };
-
-const hasNoneType = computed(
-  () => currentContribution.type === ContributionType.None
-);
 
 const hasManualType = computed(
   () => currentContribution.type === ContributionType.Manual
@@ -234,7 +221,6 @@ export function useContribution() {
     submitContribution,
     cantUpdateContribution,
     hasUpdatedContribution,
-    hasNoneType,
     hasManualType,
     contributionButtonText,
     updatePaymentSourceLoading,

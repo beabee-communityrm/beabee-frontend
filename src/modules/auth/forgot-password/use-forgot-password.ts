@@ -1,15 +1,13 @@
 import useVuelidate from '@vuelidate/core';
 import { computed, reactive, ref } from 'vue';
+import { forgotPassword } from '../../../utils/api/auth';
 import { emailValidationRule } from '../../../utils/form-validation/rules';
-import { ForgotPasswordData } from '../auth.interface';
-import { forgotPassword } from '../auth.service';
 
 const loading = ref(false);
 const isRequestSuccessful = ref(false);
 
-const forgotPasswordData = reactive<ForgotPasswordData>({
+const forgotPasswordData = reactive({
   email: '',
-  resetUrl: import.meta.env.VITE_APP_BASE_URL + '/auth/reset-password',
 });
 
 const forgotPasswordValidationRules = computed(() => ({
@@ -27,7 +25,7 @@ const isFormInvalid = computed(() => {
 
 const submitForgotPassword = async () => {
   loading.value = true;
-  forgotPassword(forgotPasswordData)
+  forgotPassword(forgotPasswordData.email)
     .then(() => {
       isRequestSuccessful.value = true;
     })

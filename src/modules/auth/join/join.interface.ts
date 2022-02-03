@@ -1,16 +1,9 @@
-import {
-  ContributionContent,
-  ContributionData,
-} from '../../../components/contribution/contribution.interface';
-import { NewsletterStaus } from './newsletter-status.enum';
+import { ContributionData } from '../../../components/contribution/contribution.interface';
+import { SignupData as ApiSignupData } from '../../../utils/api/api.interface';
 
-export interface SignUpData extends ContributionData {
-  email: string;
-  password: string;
-  noContribution: boolean;
-}
+export interface SignupData extends ApiSignupData, ContributionData {}
 
-export interface MemberData {
+export interface SetupMemberData {
   email: string;
   firstName: string;
   lastName: string;
@@ -22,45 +15,4 @@ export interface MemberData {
   addressLine2: string;
   cityOrTown: string;
   postCode: string;
-}
-
-export interface UpdateMemberRequest {
-  email: string;
-  firstname: string;
-  lastname: string;
-  profile?: UpdateProfile;
-}
-
-export interface UpdateProfile {
-  newsletterStatus?: NewsletterStaus;
-  deliveryOptIn?: boolean;
-  deliveryAddress?: DeliveryAddress;
-}
-
-export interface DeliveryAddress {
-  line1: string;
-  line2: string;
-  city: string;
-  postcode: string;
-}
-
-export interface JoinContentData extends ContributionContent {
-  name: string;
-  privacyLink: string;
-  showNoContribution: boolean;
-  subtitle: string;
-  termsLink: string;
-  title: string;
-}
-
-export interface SetupContentData {
-  welcome: string;
-  newsletterText: string;
-  newsletterOptIn: string;
-  newsletterTitle: string;
-  showNewsletterOptIn: boolean;
-  showMailOptIn: boolean;
-  mailTitle: string;
-  mailText: string;
-  mailOptIn: string;
 }

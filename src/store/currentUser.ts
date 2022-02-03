@@ -1,21 +1,17 @@
 import axios from '../axios';
 import { ref } from 'vue';
-import { Role } from '../utils/enums/roles.enum';
-
-interface Member {
-  roles: Role[];
-}
+import { fetchMember } from '../utils/api/member';
+import { GetMemberData } from '../utils/api/api.interface';
 
 async function updateCurrentUser(): Promise<void> {
   try {
-    const resp = await axios.get('/member/me');
-    currentUser.value = resp.data as Member;
+    currentUser.value = await fetchMember();
   } catch (err) {
     currentUser.value = null;
   }
 }
 
-const currentUser = ref<Member | null>(null);
+const currentUser = ref<GetMemberData | null>(null);
 const initialUserPromise = updateCurrentUser();
 
 axios.interceptors.response.use(
