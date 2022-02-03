@@ -3,7 +3,6 @@ import { useVuelidate } from '@vuelidate/core';
 import { computed, reactive, ref } from 'vue';
 import i18n from '../../i18n';
 import { UpdateInformation } from './information.interface';
-import { passwordValidator } from '../../utils/form-validation/validators';
 import { errorGenerator } from '../../utils/form-error-generator';
 import { fetchMemberWithProfile, updateMember } from '../../utils/api/member';
 import { fetchJoinSetupContent } from '../../utils/api/content';
@@ -13,7 +12,6 @@ const { t } = i18n.global;
 
 const information = reactive<UpdateInformation>({
   emailAddress: '',
-  password: '',
   firstName: '',
   lastName: '',
   deliveryOptIn: false,
@@ -27,13 +25,6 @@ const rules = computed(() => ({
   emailAddress: {
     required: helpers.withMessage(t('form.errors.email.required'), required),
     email: helpers.withMessage(t('form.errors.email.invalid'), email),
-  },
-
-  password: {
-    validPassword: helpers.withMessage(
-      t('form.errors.password.invalid'),
-      passwordValidator
-    ),
   },
 
   firstName: {
@@ -110,7 +101,6 @@ const submitFormHandler = async (id: string) => {
     email: information.emailAddress,
     firstname: information.firstName,
     lastname: information.lastName,
-    ...(information.password && { password: information.password }),
     profile: {
       ...(infoContent.value.showMailOptIn && {
         deliveryOptIn: information.deliveryOptIn,

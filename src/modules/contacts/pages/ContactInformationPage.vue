@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent>
+  <form @submit.prevent="submitFormHandler(contact.id)">
     <div class="grid lg:grid-cols-2 xl:grid-cols-3">
       <div>
         <AppHeading class="mb-3">
@@ -86,7 +86,6 @@
           class="mt-2"
           :loading="loading"
           variant="link"
-          @click="submitFormHandler(contact.id)"
           >{{ t('form.saveChanges') }}</AppButton
         >
       </div>

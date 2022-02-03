@@ -4,23 +4,14 @@
     :sub-title="t('informationPage.subTitle')"
   />
 
-  <form @submit.prevent>
-    <div class="grid lg:grid-cols-2 xl:grid-cols-3">
-      <div>
-        <AppHeading class="mb-3">
-          {{ t('informationPage.loginDetail') }}
-        </AppHeading>
-        <div class="mb-5">
-          <AppInput
-            v-model="information.password"
-            input-type="password"
-            :label="t('form.password')"
-            :info-message="t('form.passwordInfo')"
-            :error-message="errorGenerator(informationValidation, 'password')"
-            @blur="informationValidation.password.$touch"
-          />
-        </div>
+  <div class="grid lg:grid-cols-2 xl:grid-cols-3">
+    <div>
+      <AppHeading class="mb-3">
+        {{ t('informationPage.loginDetail') }}
+      </AppHeading>
+      <ChangePassword />
 
+      <form class="mt-5" @submit.prevent="submitFormHandler('me')">
         <AppHeading class="mb-3">
           {{ t('informationPage.contactInformation') }}
         </AppHeading>
@@ -105,12 +96,11 @@
           class="mt-2"
           :loading="loading"
           variant="link"
-          @click="submitFormHandler('me')"
           >{{ t('form.saveChanges') }}</AppButton
         >
-      </div>
+      </form>
     </div>
-  </form>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -123,6 +113,9 @@ import { useI18n } from 'vue-i18n';
 import { useInformation } from './use-information';
 import { onBeforeMount } from '@vue/runtime-core';
 import AppHeading from '../../components/AppHeading.vue';
+import ChangePassword from './components/ChangePassword.vue';
+
+const { t } = useI18n();
 
 const {
   informationValidation,
@@ -138,6 +131,4 @@ const {
 } = useInformation();
 
 onBeforeMount(() => initPage('me'));
-
-const { t } = useI18n();
 </script>

@@ -101,6 +101,7 @@
   "form": {
     "addressLine1": "Address line 1",
     "addressLine2": "Address line 2",
+    "cancel": "Cancel",
     "cityOrTown": "City/Town",
     "deliveryOptIn": "Delivery opt-in",
     "description": "Description",
@@ -128,6 +129,8 @@
     },
     "firstName": "First name",
     "lastName": "Last name",
+    "newPassword": "New password",
+    "newPasswordConfirm": "Confirm new password",
     "notes": "Notes",
     "password": "Password",
     "passwordInfo": "Set a secure password: 8+ characters at least one number, one uppercase and one lowercase letters.",
@@ -152,9 +155,11 @@
     "yourProfile": "Your profile"
   },
   "informationPage": {
+    "changePassword": "Change password",
     "contactInformation": "Contact information",
     "deliveryAddress": "Delivery address",
     "loginDetail": "Login details",
+    "savedPassword": "New password saved",
     "subTitle": "Required fields are marked with an asterisk. All information submitted here is private.",
     "title": "Your information"
   },
