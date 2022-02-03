@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="to" class="tab text-sm p-2 hover:font-bold"
+  <router-link :to="to" class="tab text-sm p-2 hover:bg-white"
     ><slot
   /></router-link>
 </template>
