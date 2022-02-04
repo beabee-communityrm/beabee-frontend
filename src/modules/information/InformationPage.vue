@@ -52,7 +52,7 @@
           {{ t('informationPage.deliveryAddress') }}
         </AppHeading>
 
-        <template v-if="infoContent">
+        <template v-if="infoContent.showMailOptIn">
           <p class="text-lg mb-1">
             {{ infoContent.mailTitle }}
           </p>
