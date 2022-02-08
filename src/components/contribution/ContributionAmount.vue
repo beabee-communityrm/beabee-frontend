@@ -82,9 +82,6 @@
         v-for="(amount, index) in definedAmounts"
         :key="index"
         type="button"
-        :class="{
-          'bg-link text-white': amount === modelValue,
-        }"
         class="
           group-button
           h-9
@@ -93,7 +90,11 @@
           justify-center
           text-primary
           font-semibold
+          hover:bg-link-10
         "
+        :class="{
+          'bg-link text-white hover:bg-link-110': amount === modelValue,
+        }"
         @click="changeAmount(amount)"
       >
         {{ n(amount, 'currency') }}

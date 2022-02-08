@@ -23,9 +23,10 @@
           font-semibold
           h-10
           cursor-pointer
+          hover:bg-link-10
         "
         :class="{
-          'bg-link text-white': period.name === selectedPeriod,
+          'bg-link text-white hover:bg-link': period.name === selectedPeriod,
         }"
       >
         {{
