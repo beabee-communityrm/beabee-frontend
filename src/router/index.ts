@@ -6,7 +6,7 @@ import { authRoute } from '../modules/auth/auth.route';
 import { themeRoute } from '../modules/theme/theme.route';
 import { contributionRoute } from '../modules/contribution/contribution.route';
 import { contactsRoute } from '../modules/contacts/contacts.route';
-import { currentUser, initialUserPromise } from '../store';
+import { currentUser, initStore, generalContent } from '../store';
 
 // routes
 
@@ -29,13 +29,12 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
-  document.title = to.meta.pageTitle
-    ? to.meta.pageTitle + ' - ' + newsroomName
-    : newsroomName;
+  // Block route for initial store load, this will only happen once
+  await initStore;
 
-  // Block route for initial user load, this will only happen once
-  await initialUserPromise;
+  document.title = to.meta.pageTitle
+    ? to.meta.pageTitle + ' - ' + generalContent.value.name
+    : generalContent.value.name;
 
   const user = currentUser.value;
 

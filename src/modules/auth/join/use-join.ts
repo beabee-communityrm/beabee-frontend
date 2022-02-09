@@ -32,13 +32,10 @@ const joinContent = ref<JoinContent>({
   initialAmount: 5,
   initialPeriod: ContributionPeriod.Monthly,
   minMonthlyAmount: 5,
-  name: '',
   periods: [],
-  privacyLink: '',
   showAbsorbFee: true,
   showNoContribution: false,
   subtitle: '',
-  termsLink: '',
   title: '',
 });
 

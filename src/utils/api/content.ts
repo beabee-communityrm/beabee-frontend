@@ -1,12 +1,20 @@
 import axios from '../../axios';
-import { JoinContent, JoinSetupContent, ProfileContent } from './api.interface';
+import {
+  GeneralContent,
+  JoinContent,
+  JoinSetupContent,
+  ProfileContent,
+} from './api.interface';
 
-type ContentId = 'join' | 'join/setup' | 'profile';
+type ContentId = 'join' | 'join/setup' | 'profile' | 'general';
 
 async function fetchContent<T>(id: ContentId): Promise<T> {
   return (await axios.get<T>('/content/' + id)).data;
 }
 
+export async function fetchGeneralContent(): Promise<GeneralContent> {
+  return await fetchContent('general');
+}
 export async function fetchJoinContent(): Promise<JoinContent> {
   return await fetchContent('join');
 }

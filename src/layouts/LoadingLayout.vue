@@ -4,7 +4,7 @@
       <img
         class="w-28 inline-block mb-5"
         src="../assets/images/logo.png"
-        :alt="newsroomName"
+        :alt="generalContent.name"
       />
       <h1 class="text-2.5xl mb-5">Loading...</h1>
 
@@ -21,9 +21,7 @@
 
 <script lang="ts" setup>
 import AuthBox from '../modules/auth/AuthBox.vue';
-import AuthLayout from './AuthLayout.vue';
-
-const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
+import { generalContent } from '../store';
 </script>
 
 <style scoped>

@@ -32,7 +32,11 @@
     </div>
 
     <!-- logo on small screens -->
-    <img class="w-11" src="../../assets/images/logo.png" :alt="newsroomName" />
+    <img
+      class="w-11"
+      src="../../assets/images/logo.png"
+      :alt="generalContent.name"
+    />
   </div>
 
   <div
@@ -57,7 +61,7 @@
       <img
         class="w-20 md:inline-block"
         src="../../assets/images/logo.png"
-        :alt="newsroomName"
+        :alt="generalContent.name"
       />
     </div>
 
@@ -68,6 +72,7 @@
 <script lang="ts" setup>
 import { ref } from '@vue/reactivity';
 import { useRoute, useRouter } from 'vue-router';
+import { generalContent } from '../../store';
 
 import menuSections from './menu-list';
 import TheMenuList from './TheMenuList.vue';
@@ -79,8 +84,6 @@ const isMenuVisible = ref(false);
 useRouter().afterEach(() => {
   isMenuVisible.value = false;
 });
-
-const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
 
 function toggleMenu() {
   isMenuVisible.value = !isMenuVisible.value;

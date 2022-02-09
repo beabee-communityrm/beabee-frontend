@@ -3,7 +3,7 @@
     <img
       class="w-16 mr-3"
       src="../../../assets/images/logo.png"
-      :alt="newsroomName"
+      :alt="generalContent.name"
     />
 
     <slot />
@@ -11,5 +11,5 @@
 </template>
 
 <script lang="ts" setup>
-const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
+import { generalContent } from '../../../store';
 </script>

@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { fetchMember } from '../utils/api/member';
 import { GetMemberData } from '../utils/api/api.interface';
 
-async function updateCurrentUser(): Promise<void> {
+export async function updateCurrentUser(): Promise<void> {
   try {
     currentUser.value = await fetchMember();
   } catch (err) {
@@ -11,8 +11,8 @@ async function updateCurrentUser(): Promise<void> {
   }
 }
 
-const currentUser = ref<GetMemberData | null>(null);
-const initialUserPromise = updateCurrentUser();
+export const currentUser = ref<GetMemberData | null>(null);
+export const initCurrentUser = updateCurrentUser();
 
 axios.interceptors.response.use(
   (response) => response,
@@ -23,5 +23,3 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-export { currentUser, initialUserPromise, updateCurrentUser };
