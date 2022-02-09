@@ -12,10 +12,15 @@
     "month": "month | months",
     "monthly": "Monthly",
     "new": "new!",
+    "no": "No",
     "participate": "Participate",
     "thankYou": "Thank you!",
     "until": "until",
-    "year": "year | years"
+    "year": "year | years",
+    "yes": "Yes"
+  },
+  "contactInformation": {
+    "deliveryOptIn": "Delivery opt-in"
   },
   "contactOverview": {
     "about": "About",

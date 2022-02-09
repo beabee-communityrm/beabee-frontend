@@ -43,24 +43,25 @@
         </AppHeading>
 
         <template v-if="infoContent.showMailOptIn">
-          <p class="text-lg mb-1">
-            {{ infoContent.mailTitle }}
-          </p>
-
-          <p class="mb-4 text-sm">
-            {{ infoContent.mailText }}
-          </p>
-
-          <div class="mb-4">
-            <input
-              id="deliveryOptIn"
-              v-model="information.deliveryOptIn"
-              type="checkbox"
-              name="updates"
-            />
-
-            <label for="deliveryOptIn" class="font-bold ml-1">
-              {{ infoContent.mailOptIn }}
+          <h4 class="font-semibold mb-1.5">
+            {{ t('contactInformation.deliveryOptIn') }}
+          </h4>
+          <div class="flex mb-4">
+            <label class="mr-3">
+              <input
+                v-model="information.deliveryOptIn"
+                type="radio"
+                :value="true"
+              />
+              {{ t('common.yes') }}
+            </label>
+            <label>
+              <input
+                v-model="information.deliveryOptIn"
+                type="radio"
+                :value="false"
+              />
+              {{ t('common.no') }}
             </label>
           </div>
         </template>
