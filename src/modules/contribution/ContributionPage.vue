@@ -3,8 +3,8 @@
     <PageTitle :title="t('menu.contribution')" />
   </div>
 
-  <div v-if="!isIniting" class="grid grid-cols-12">
-    <div class="col-span-12 md:col-span-7 lg:col-span-5">
+  <div v-if="!isIniting" class="grid lg:grid-cols-2 xl:grid-cols-3">
+    <div>
       <AppAlert v-if="updatedPaymentSource" class="mb-8">{{
         t('contribution.updatedPaymentSource')
       }}</AppAlert>

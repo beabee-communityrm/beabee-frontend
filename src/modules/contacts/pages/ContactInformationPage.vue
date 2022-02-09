@@ -1,17 +1,7 @@
 <template>
-  <PageTitle
-    :title="t('informationPage.title')"
-    :sub-title="t('informationPage.subTitle')"
-  />
-
-  <div class="grid lg:grid-cols-2 xl:grid-cols-3">
-    <div>
-      <AppHeading class="mb-3">
-        {{ t('informationPage.loginDetail') }}
-      </AppHeading>
-      <ChangePassword />
-
-      <form class="mt-5" @submit.prevent="submitFormHandler('me')">
+  <form @submit.prevent="submitFormHandler(contact.id)">
+    <div class="grid lg:grid-cols-2 xl:grid-cols-3">
+      <div>
         <AppHeading class="mb-3">
           {{ t('informationPage.contactInformation') }}
         </AppHeading>
@@ -53,24 +43,25 @@
         </AppHeading>
 
         <template v-if="infoContent.showMailOptIn">
-          <p class="text-lg mb-1">
-            {{ infoContent.mailTitle }}
-          </p>
-
-          <p class="mb-4 text-sm">
-            {{ infoContent.mailText }}
-          </p>
-
-          <div class="mb-4">
-            <input
-              id="deliveryOptIn"
-              v-model="information.deliveryOptIn"
-              type="checkbox"
-              name="updates"
-            />
-
-            <label for="deliveryOptIn" class="font-bold ml-1">
-              {{ infoContent.mailOptIn }}
+          <h4 class="font-semibold mb-1.5">
+            {{ t('contactInformation.deliveryOptIn') }}
+          </h4>
+          <div class="flex mb-4">
+            <label class="mr-3">
+              <input
+                v-model="information.deliveryOptIn"
+                type="radio"
+                :value="true"
+              />
+              {{ t('common.yes') }}
+            </label>
+            <label>
+              <input
+                v-model="information.deliveryOptIn"
+                type="radio"
+                :value="false"
+              />
+              {{ t('common.no') }}
             </label>
           </div>
         </template>
@@ -98,24 +89,24 @@
           variant="link"
           >{{ t('form.saveChanges') }}</AppButton
         >
-      </form>
+      </div>
     </div>
-  </div>
+  </form>
 </template>
-
 <script lang="ts" setup>
-import PageTitle from '../../components/PageTitle.vue';
-import AppInput from '../../components/forms/AppInput.vue';
-import AppButton from '../../components/forms/AppButton.vue';
-import MessageBox from '../../components/MessageBox.vue';
-import AppAddress from '../../components/AppAddress.vue';
+import { onBeforeMount } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useInformation } from './use-information';
-import { onBeforeMount } from '@vue/runtime-core';
-import AppHeading from '../../components/AppHeading.vue';
-import ChangePassword from './components/ChangePassword.vue';
+import { useInformation } from '../../information/use-information';
+import AppButton from '../../../components/forms/AppButton.vue';
+import AppInput from '../../../components/forms/AppInput.vue';
+import MessageBox from '../../../components/MessageBox.vue';
+import AppAddress from '../../../components/AppAddress.vue';
+import AppHeading from '../../../components/AppHeading.vue';
+import { GetMemberData } from '../../../utils/api/api.interface';
 
-const { t } = useI18n();
+const props = defineProps<{
+  contact: GetMemberData;
+}>();
 
 const {
   informationValidation,
@@ -130,5 +121,7 @@ const {
   addressValidation,
 } = useInformation();
 
-onBeforeMount(() => initPage('me'));
+onBeforeMount(() => initPage(props.contact.id));
+
+const { t } = useI18n();
 </script>

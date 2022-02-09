@@ -4,11 +4,12 @@ import { fetchProfileContent } from '../../utils/api/content';
 import { fetchMember } from '../../utils/api/member';
 
 const member = reactive<GetMemberData>({
+  id: '',
   email: '',
   firstname: '',
   lastname: '',
   joined: new Date(),
-  roles: [],
+  activeRoles: [],
 });
 
 const profileContent = ref<ProfileContent>({
@@ -18,7 +19,7 @@ const profileContent = ref<ProfileContent>({
 });
 
 async function initHomePage() {
-  const memberData = await fetchMember();
+  const memberData = await fetchMember('me');
   member.firstname = memberData.firstname;
   member.joined = memberData.joined;
   member.contributionPeriod = memberData.contributionPeriod;

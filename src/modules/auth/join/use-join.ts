@@ -186,7 +186,7 @@ const completeSetup = async (router: Router) => {
     };
   }
 
-  updateMember(updateMemberData)
+  updateMember('me', updateMemberData)
     .then(() => {
       router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
     })
@@ -198,7 +198,7 @@ const completeSetup = async (router: Router) => {
 };
 
 const setMemberData = () => {
-  fetchMemberWithProfile()
+  fetchMemberWithProfile('me')
     .then((data) => {
       setupMemberData.firstName = data.firstname;
       setupMemberData.lastName = data.lastname;

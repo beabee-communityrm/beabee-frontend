@@ -8,6 +8,8 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faSignInAlt,
+  faCaretLeft,
+  faCaretRight,
   faCaretDown,
   faCaretUp,
   faExclamation,
@@ -20,6 +22,7 @@ import {
   faCircleNotch,
   faCheck,
   faUsers,
+  faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -29,6 +32,8 @@ library.add(
   farAddressCard,
   farCreditCard,
   faSignInAlt,
+  faCaretLeft,
+  faCaretRight,
   faCaretDown,
   faCaretUp,
   faInfoCircle,
@@ -40,7 +45,8 @@ library.add(
   faTimes,
   faCircleNotch,
   faCheck,
-  faUsers
+  faUsers,
+  faSearch
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

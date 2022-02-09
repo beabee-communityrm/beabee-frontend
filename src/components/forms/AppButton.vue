@@ -1,5 +1,7 @@
 <template>
-  <AppLink v-if="props.to" :class="classes" :to="props.to"><slot /></AppLink>
+  <AppLink v-if="props.to" :class="classes" :to="props.to"
+    ><font-awesome-icon v-if="icon" :icon="icon" class="mr-2" /><slot
+  /></AppLink>
 
   <component
     :is="tag"
@@ -8,9 +10,11 @@
     :class="classes"
     :type="elementTypeAttribute"
   >
-    <slot>Submit</slot>
+    <font-awesome-icon v-if="icon" :icon="icon" class="mr-2" /><slot
+      >Submit</slot
+    >
 
-    <FontAwesomeIcon
+    <font-awesome-icon
       v-if="loading"
       class="text-2xl absolute"
       :class="loadingClasses"
@@ -37,6 +41,7 @@ const variantClasses = {
     'bg-white text-danger border border-danger',
     'hover:bg-danger-10',
   ],
+  text: ['underline', ''],
 } as const;
 
 const variantLoadingClasses = {
@@ -46,6 +51,7 @@ const variantLoadingClasses = {
   primaryOutlined: 'text-primary',
   linkOutlined: 'text-link',
   dangerOutlined: 'text-danger',
+  text: '',
 } as const;
 
 const props = withDefaults(
@@ -56,6 +62,7 @@ const props = withDefaults(
     to?: string;
     variant?: keyof typeof variantClasses;
     loading?: boolean;
+    icon?: string;
   }>(),
   {
     disabled: false,
@@ -64,6 +71,7 @@ const props = withDefaults(
     to: '',
     variant: 'primary',
     loading: false,
+    icon: undefined,
   }
 );
 

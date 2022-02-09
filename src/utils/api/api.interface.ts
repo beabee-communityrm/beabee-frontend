@@ -15,6 +15,13 @@ export type ContentId = 'join' | 'join/setup' | 'profile';
 
 export type PermissionType = 'member' | 'admin' | 'superadmin';
 
+export interface Paginated<T> {
+  items: T[];
+  offset: number;
+  count: number;
+  total: number;
+}
+
 export interface Address {
   line1: string;
   line2?: string | undefined;
@@ -44,14 +51,35 @@ interface MemberProfileData {
 }
 
 export interface GetMemberData extends MemberData {
+  id: string;
   joined: Date;
+  lastSeen?: Date;
   contributionAmount?: number;
   contributionPeriod?: ContributionPeriod;
-  roles: PermissionType[];
+  activeRoles: PermissionType[];
 }
 
 export interface GetMemberDataWithProfile extends GetMemberData {
   profile: MemberProfileData;
+}
+
+export interface GetMembersQuery {
+  limit?: number;
+  offset?: number;
+  sort?: string;
+  order?: 'ASC' | 'DESC';
+  rules?: GetMembersQueryRuleGroup;
+}
+
+export interface GetMembersQueryRuleGroup {
+  condition: 'AND' | 'OR';
+  rules: (GetMembersQueryRuleGroup | GetMembersQueryRule)[];
+}
+
+export interface GetMembersQueryRule {
+  field: 'firstname' | 'lastname' | 'email';
+  operator: 'contains';
+  value: string;
 }
 
 export type UpdateMemberProfileData = Partial<MemberProfileData>;
@@ -163,4 +191,12 @@ export interface SignupData extends SetContributionData {
   email: string;
   password: string;
   noContribution: boolean;
+}
+
+export interface GetSegmentData {
+  id: string;
+  name: string;
+  ruleGroup: any;
+  order: number;
+  memberCount: number;
 }
