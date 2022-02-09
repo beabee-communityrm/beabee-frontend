@@ -23,6 +23,7 @@ export function toMember(data: any): any {
   return {
     ...data,
     joined: toDate(data.joined),
+    lastSeen: toDate(data.lastSeen),
   };
 }
 
