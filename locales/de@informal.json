@@ -12,15 +12,45 @@
     "month": "Monat | Monaten",
     "monthly": "Monatlich",
     "new": "neu!",
+    "no": "Nein",
     "participate": "Teilnehmen",
     "thankYou": "Vielen Dank!",
     "until": "bis",
-    "year": "Jahr | Jahren"
+    "year": "Jahr | Jahren",
+    "yes": "Ja"
   },
-  "contactInformation": {},
-  "contactOverview": {},
+  "contactInformation": {
+    "deliveryOptIn": "Postsendung"
+  },
+  "contactOverview": {
+    "about": "Über",
+    "contribution": "Beitrag",
+    "information": "Information",
+    "overview": "Überblick",
+    "roles": "Rolle"
+  },
   "contacts": {
-    "data": {}
+    "addContact": "Kontakt hinzufügen",
+    "advancedSearch": "Erweiterte Suche",
+    "allContacts": "Alle Kontakte",
+    "data": {
+      "amount": "Betrag",
+      "contribuiontType": "Zahlungsart",
+      "contribution": "Beitrag",
+      "deliveryOptIn": "Postsendung",
+      "description": "Beschreibung",
+      "email": "E-Mail",
+      "joined": "Mitglied seit",
+      "lastSeen": "Zuletzt angemeldet",
+      "name": "Name",
+      "notes": "Notizen",
+      "payingFee": "Übernimmt Transaktionskosten?",
+      "period": "Zeitraum",
+      "tags": "Tags"
+    },
+    "noResults": "Keine Kontakte gefunden",
+    "search": "Kontakte durchsuchen...",
+    "showingOf": "{start} to {end} von {total} Kontakten werden angezeigt."
   },
   "contribution": {
     "bankAccount": "Bankverbindung",
@@ -55,7 +85,17 @@
     "willRenew": "Deine Mitgliedschaft verlängert sich am {renewalDate} automatisch.",
     "willRenewWithNewAmount": "Deine Mitgliedschaft verlängert sich am {renewalDate} automatisch. Dein Beitrag ist dann {nextAmount}."
   },
-  "footer": {},
+  "footer": {
+    "codeOfConduct": "Verhaltenskodex",
+    "contacts": "Kontakte",
+    "faq": "FAQs",
+    "handbookResources": "Handbuch & Ressourcen",
+    "impressum": "Impressum",
+    "joinCommunity": "Mitglied werden",
+    "memberships": "Mitgliedschaften",
+    "privacyPolicy": "Datenschutzerklärung",
+    "terms": "Allgemeine Geschäftsbedingungen"
+  },
   "forgotPassword": {
     "checkInbox": "Bitte schaue in deinen Posteingang und befolge die Anleitung in der Email. Sollte die Email nicht auftauchen, checke deinen Spamordner. ",
     "description": "Bitte gib deine Email-Adresse ein. Wir schicken dir dann die Anleitung zum Zurücksetzen deines Passworts.",
@@ -66,6 +106,7 @@
   "form": {
     "addressLine1": "Adresse",
     "addressLine2": "Adresse 2",
+    "cancel": "Abbrechen",
     "cityOrTown": "Ort",
     "deliveryOptIn": "Einverständnis zur Postsendung",
     "description": "Bezeichnung",
@@ -93,6 +134,8 @@
     },
     "firstName": "Vorname",
     "lastName": "Nachname",
+    "newPassword": "Neues Passwort",
+    "newPasswordConfirm": "Neues Passwort bestätigen",
     "notes": "Anmerkungen",
     "password": "Passwort",
     "passwordInfo": "Das Passwort muss aus mindestens acht Zeichen bestehen und mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten.",
@@ -117,8 +160,11 @@
     "yourProfile": "Dein Profil"
   },
   "informationPage": {
+    "changePassword": "Passwort ändern",
     "contactInformation": "Kontaktdaten",
+    "deliveryAddress": "Adresse",
     "loginDetail": "Login-Daten",
+    "savedPassword": "Das neue Passwort wurde gespeichert. ",
     "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt.",
     "title": "Deine Informationen"
   },
