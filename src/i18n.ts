@@ -9,21 +9,11 @@ import { generalContent, initGeneralContent } from './store/generalContent';
 // https://github.com/intlify/vite-plugin-vue-i18n#static-bundle-importing
 const locale = (messages.locale as any)({ normalize: (s: string[]) => s[0] });
 
-/*const numberFormats = {
-  [locale]: {
-    currency: {
-      style: 'currency',
-      currency: 'EUR',
-    },
-  },
-};*/
-
 const i18n = createI18n({
   locale,
   messages: {
     [locale]: messages,
   },
-  //numberFormats,
 });
 
 initGeneralContent.then(() => {
