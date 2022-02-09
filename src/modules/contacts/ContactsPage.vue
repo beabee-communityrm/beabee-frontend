@@ -2,30 +2,7 @@
   <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
     <PageTitle :title="t('menu.community')"></PageTitle>
     <div class="flex-1 md:hidden">
-      <select
-        class="
-          p-2
-          w-full
-          border border-primary-40
-          rounded
-          focus:outline-none focus:shadow-input
-          bg-white
-        "
-        @change="currentSegment = handleInput($event)"
-      >
-        <option value="" :selected="!currentSegment">
-          {{ t('contacts.allContacts') }}
-          ({{ contactsTotal ? n(contactsTotal) : '???' }})
-        </option>
-        <option
-          v-for="segment in segments"
-          :key="segment.id"
-          :value="segment.id"
-          :selected="currentSegment === segment.id"
-        >
-          {{ segment.name }} ({{ segment.memberCount }})
-        </option>
-      </select>
+      <AppSelect v-model="currentSegment" :items="segmentItems" />
     </div>
     <div class="flex-0 ml-3">
       <AppButton to="/contacts/add">{{ t('contacts.addContact') }}</AppButton>
@@ -33,21 +10,7 @@
   </div>
   <div class="md:flex">
     <div class="flex-none hidden md:block" :style="{ flexBasis: '220px' }">
-      <ul class="flex flex-col mr-5">
-        <li>
-          <SegmentItem
-            v-model="currentSegment"
-            :segment="{
-              id: '',
-              name: t('contacts.allContacts'),
-              memberCount: contactsTotal,
-            }"
-          />
-        </li>
-        <li v-for="segment in segments" :key="segment.id">
-          <SegmentItem v-model="currentSegment" :segment="segment" />
-        </li>
-      </ul>
+      <AppVTabs v-model="currentSegment" :items="segmentItems" />
     </div>
     <div class="flex-auto">
       <SearchBox v-model="currentSearch" />
@@ -146,10 +109,10 @@ import { formatLocale } from '../../utils/dates/locale-date-formats';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import AppPagination from '../../components/AppPagination.vue';
 import { fetchSegmentMembers, fetchSegments } from '../../utils/api/segments';
-import SegmentItem from './components/SegmentItem.vue';
 import AppButton from '../../components/forms/AppButton.vue';
-import handleInput from '../../utils/handle-input';
 import SearchBox from './components/SearchBox.vue';
+import AppSelect from '../../components/forms/AppSelect.vue';
+import AppVTabs from '../../components/tabs/AppVTabs.vue';
 
 const { t, n } = useI18n();
 
@@ -225,6 +188,21 @@ const contactsTable = ref<Paginated<GetMemberDataWithProfile>>({
 const totalPages = computed(() =>
   Math.ceil(contactsTable.value.total / currentPageSize.value)
 );
+
+const segmentItems = computed(() => [
+  {
+    id: '',
+    label: t('contacts.allContacts'),
+    count: contactsTotal.value === null ? '???' : n(contactsTotal.value),
+    to: '/contacts',
+  },
+  ...segments.value.map((segment) => ({
+    id: segment.id,
+    label: segment.name,
+    count: n(segment.memberCount),
+    to: '/contacts?segment=' + segment.id,
+  })),
+]);
 
 onBeforeMount(async () => {
   // Load the total if in a segment, otherwise it will be updated automatically below
