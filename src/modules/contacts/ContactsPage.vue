@@ -5,7 +5,9 @@
       <AppSelect v-model="currentSegment" :items="segmentItems" />
     </div>
     <div class="flex-0 ml-3">
-      <AppButton to="/contacts/add">{{ t('contacts.addContact') }}</AppButton>
+      <AppButton :to="appUrl + '/members/add'">{{
+        t('contacts.addContact')
+      }}</AppButton>
     </div>
   </div>
   <div class="md:flex">
@@ -113,6 +115,9 @@ import AppButton from '../../components/forms/AppButton.vue';
 import SearchBox from './components/SearchBox.vue';
 import AppSelect from '../../components/forms/AppSelect.vue';
 import AppVTabs from '../../components/tabs/AppVTabs.vue';
+
+// TODO: remove once contact add link points to new app
+const appUrl = import.meta.env.VITE_APP_BASE_URL;
 
 const { t, n } = useI18n();
 
