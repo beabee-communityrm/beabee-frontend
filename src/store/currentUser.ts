@@ -5,7 +5,7 @@ import { GetMemberData } from '../utils/api/api.interface';
 
 export async function updateCurrentUser(): Promise<void> {
   try {
-    currentUser.value = await fetchMember();
+    currentUser.value = await fetchMember('me');
   } catch (err) {
     currentUser.value = null;
   }

@@ -4,7 +4,9 @@ import { PermissionType } from './api/api.interface';
 
 const currentUserCan = (role: PermissionType): ComputedRef<boolean> => {
   return computed(() => {
-    return currentUser.value != null && currentUser.value.roles.includes(role);
+    return (
+      currentUser.value != null && currentUser.value.activeRoles.includes(role)
+    );
   });
 };
 
