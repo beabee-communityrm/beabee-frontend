@@ -3,7 +3,7 @@ import { GeneralContent } from '../utils/api/api.interface';
 import { fetchGeneralContent } from '../utils/api/content';
 
 export const generalContent = ref<GeneralContent>({
-  name: '',
+  organisationName: '',
   siteUrl: '',
   supportEmail: '',
   privacyLink: '',

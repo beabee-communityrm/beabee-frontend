@@ -33,8 +33,8 @@ router.beforeEach(async (to, from, next) => {
   await initStore;
 
   document.title = to.meta.pageTitle
-    ? to.meta.pageTitle + ' - ' + generalContent.value.name
-    : generalContent.value.name;
+    ? to.meta.pageTitle + ' - ' + generalContent.value.organisationName
+    : generalContent.value.organisationName;
 
   const user = currentUser.value;
 

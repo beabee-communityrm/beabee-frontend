@@ -13,7 +13,7 @@
         <ul>
           <li>
             <a class="text-base font-semibold" :href="generalContent.siteUrl">{{
-              generalContent.name
+              generalContent.organisationName
             }}</a>
           </li>
           <li>&mdash;</li>

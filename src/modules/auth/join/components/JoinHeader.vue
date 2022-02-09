@@ -3,7 +3,7 @@
     <div class="flex mb-4">
       <img
         src="../../../../assets/images/logo.png"
-        :alt="generalContent.name"
+        :alt="generalContent.organisationName"
         class="w-16 flex-none self-start"
       />
       <div class="flex flex-col ml-4">

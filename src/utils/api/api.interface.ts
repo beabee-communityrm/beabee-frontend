@@ -96,7 +96,7 @@ export interface LoginData {
 }
 
 export interface GeneralContent {
-  name: string;
+  organisationName: string;
   siteUrl: string;
   supportEmail: string;
   privacyLink: string;

@@ -4,7 +4,7 @@
       <img
         class="w-28 inline-block mb-5"
         src="../assets/images/logo.png"
-        :alt="generalContent.name"
+        :alt="generalContent.organisationName"
       />
       <h1 class="text-2.5xl mb-5">Loading...</h1>
 

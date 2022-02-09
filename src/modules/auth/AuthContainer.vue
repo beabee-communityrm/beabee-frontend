@@ -14,7 +14,8 @@
         inline-block
       "
     >
-      ← {{ t('login.backTo', { newsroomName: generalContent.name }) }}
+      ←
+      {{ t('login.backTo', { newsroomName: generalContent.organisationName }) }}
     </AppLink>
   </div>
 
@@ -23,7 +24,7 @@
       <img
         class="logo"
         src="../../assets/images/logo.png"
-        :alt="generalContent.name"
+        :alt="generalContent.organisationName"
       />
     </div>
 

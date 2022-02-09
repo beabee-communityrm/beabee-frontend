@@ -35,7 +35,7 @@
     <img
       class="w-11"
       src="../../assets/images/logo.png"
-      :alt="generalContent.name"
+      :alt="generalContent.organisationName"
     />
   </div>
 
@@ -61,7 +61,7 @@
       <img
         class="w-20 md:inline-block"
         src="../../assets/images/logo.png"
-        :alt="generalContent.name"
+        :alt="generalContent.organisationName"
       />
     </div>
 

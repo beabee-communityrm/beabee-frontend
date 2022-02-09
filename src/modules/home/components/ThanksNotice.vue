@@ -3,7 +3,7 @@
     <img
       class="w-16 mr-3"
       src="../../../assets/images/logo.png"
-      :alt="generalContent.name"
+      :alt="generalContent.organisationName"
     />
 
     <slot />
