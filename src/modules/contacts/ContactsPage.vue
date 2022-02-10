@@ -5,9 +5,7 @@
       <AppSelect v-model="currentSegment" :items="segmentItems" />
     </div>
     <div class="flex-0 ml-3">
-      <AppButton :to="appUrl + '/members/add'">{{
-        t('contacts.addContact')
-      }}</AppButton>
+      <AppButton href="/members/add">{{ t('contacts.addContact') }}</AppButton>
     </div>
   </div>
   <div class="md:flex">
