@@ -57,15 +57,17 @@ const props = withDefaults(
     href?: string;
     to?: string;
     variant?: keyof typeof variantClasses;
+    size?: 'sm';
     loading?: boolean;
     icon?: string;
   }>(),
   {
     disabled: false,
     type: 'button',
-    href: '',
-    to: '',
+    href: undefined,
+    to: undefined,
     variant: 'primary',
+    size: undefined,
     loading: false,
     icon: undefined,
   }
@@ -73,7 +75,8 @@ const props = withDefaults(
 
 const buttonClasses = computed(() => {
   return [
-    'h-10 px-2 text-center cursor-pointer inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative',
+    'px-2 text-center cursor-pointer inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative',
+    props.size === 'sm' ? 'h-8 text-sm' : 'h-10',
     variantClasses[props.variant][0],
     props.disabled
       ? 'cursor-not-allowed opacity-50'
