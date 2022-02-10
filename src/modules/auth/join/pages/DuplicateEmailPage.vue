@@ -12,10 +12,10 @@
           {{ t('join.login') }}
         </AppButton>
 
-        <div class="text-center">
-          <AppLink to="/join" class="text-sm text-link text-center underline">
+        <div class="text-center text-sm">
+          <AppButton to="/join" variant="text">
             {{ t('join.errors.failed.backToJoin') }}
-          </AppLink>
+          </AppButton>
         </div>
       </template>
     </JoinNotice>
@@ -26,7 +26,6 @@
 import AuthBox from '../../AuthBox.vue';
 import JoinNotice from '../components/JoinNotice.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
-import AppLink from '../../../../components/AppLink.vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
