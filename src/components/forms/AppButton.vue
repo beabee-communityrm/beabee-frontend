@@ -3,12 +3,11 @@
     ><font-awesome-icon v-if="icon" :icon="icon" class="mr-2" /><slot
   /></AppLink>
 
-  <component
-    :is="tag"
+  <button
     v-else
     :disabled="disabled || loading"
     :class="buttonClasses"
-    :type="elementTypeAttribute"
+    :type="type"
   >
     <font-awesome-icon v-if="icon" :icon="icon" class="mr-2" /><slot />
     <span v-if="loading" class="absolute inset-0 bg-white opacity-30" />
@@ -19,7 +18,7 @@
       :icon="['fas', 'circle-notch']"
       spin
     />
-  </component>
+  </button>
 </template>
 
 <script lang="ts" setup>
@@ -52,8 +51,7 @@ const variantClasses = {
 const props = withDefaults(
   defineProps<{
     disabled?: boolean;
-    tag?: string;
-    type?: string;
+    type?: 'button' | 'submit';
     to?: string;
     variant?: keyof typeof variantClasses;
     loading?: boolean;
@@ -61,7 +59,6 @@ const props = withDefaults(
   }>(),
   {
     disabled: false,
-    tag: 'button',
     type: 'button',
     to: '',
     variant: 'primary',
@@ -81,8 +78,4 @@ const buttonClasses = computed(() => {
 });
 
 const loadingIconClasses = computed(() => variantClasses[props.variant][2]);
-
-const elementTypeAttribute = computed(() => {
-  return props.tag === 'button' ? props.type : null;
-});
 </script>
