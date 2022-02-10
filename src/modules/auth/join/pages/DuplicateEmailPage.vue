@@ -12,8 +12,8 @@
           {{ t('join.login') }}
         </AppButton>
 
-        <div class="text-center text-sm">
-          <AppButton to="/join" variant="text">
+        <div class="text-center">
+          <AppButton to="/join" variant="text" size="sm">
             {{ t('join.errors.failed.backToJoin') }}
           </AppButton>
         </div>
