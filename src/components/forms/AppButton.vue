@@ -1,7 +1,10 @@
 <template>
-  <AppLink v-if="props.to" :class="buttonClasses" :to="props.to"
-    ><font-awesome-icon v-if="icon" :icon="icon" class="mr-2" /><slot
-  /></AppLink>
+  <a v-if="href" :href="href" :class="buttonClasses">
+    <font-awesome-icon v-if="icon" :icon="icon" class="mr-2" /><slot />
+  </a>
+  <router-link v-else-if="to" :to="to" :class="buttonClasses">
+    <font-awesome-icon v-if="icon" :icon="icon" class="mr-2" /><slot />
+  </router-link>
 
   <button
     v-else
@@ -23,7 +26,6 @@
 
 <script lang="ts" setup>
 import { computed } from '@vue/reactivity';
-import AppLink from '../AppLink.vue';
 
 // Variant classes for [base, hover, loading icon]
 const variantClasses = {
@@ -45,13 +47,14 @@ const variantClasses = {
     'hover:bg-danger-10',
     'text-danger',
   ],
-  text: ['underline', '', ''],
+  text: ['underline text-link', '', ''],
 } as const;
 
 const props = withDefaults(
   defineProps<{
     disabled?: boolean;
     type?: 'button' | 'submit';
+    href?: string;
     to?: string;
     variant?: keyof typeof variantClasses;
     loading?: boolean;
@@ -60,6 +63,7 @@ const props = withDefaults(
   {
     disabled: false,
     type: 'button',
+    href: '',
     to: '',
     variant: 'primary',
     loading: false,
