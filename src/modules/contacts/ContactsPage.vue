@@ -156,15 +156,15 @@ const currentPage = computed({
 
 const currentSort = computed({
   get: () => ({
-    by: (route.query.sortBy as string) || null,
-    type: (route.query.sortType as SortType) || SortType.None,
+    by: (route.query.sortBy as string) || 'joined',
+    type: (route.query.sortType as SortType) || SortType.Desc,
   }),
   set: ({ by, type }) => {
     router.replace({
       query: {
         ...route.query,
         sortBy: by || undefined,
-        sortType: type === SortType.None ? undefined : type,
+        sortType: type,
       },
     });
   },
@@ -243,11 +243,10 @@ watchEffect(async () => {
     offset: currentPage.value * currentPageSize.value,
     limit: currentPageSize.value,
     rules,
-    ...(currentSort.value.by &&
-      currentSort.value.type !== SortType.None && {
-        sort: currentSort.value.by,
-        order: currentSort.value.type,
-      }),
+    ...(currentSort.value.by && {
+      sort: currentSort.value.by,
+      order: currentSort.value.type,
+    }),
   };
 
   contactsTable.value = currentSegment.value
