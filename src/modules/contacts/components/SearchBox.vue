@@ -1,19 +1,7 @@
 <template>
   <div class="flex">
     <!--<div class="flex-1">actions</div>-->
-    <form
-      class="relative"
-      @submit.prevent="emit('update:modelValue', basicSearchValue)"
-    >
-      <AppInput
-        v-model="basicSearchValue"
-        class="pr-8"
-        :placeholder="t('contacts.search')"
-      />
-      <button class="absolute right-0 w-8 h-full">
-        <font-awesome-icon icon="search" />
-      </button>
-    </form>
+    <AppSearchInput v-model="searchText" :placeholder="t('contacts.search')" />
     <a
       href="/members?type=advanced"
       class="ml-2 p-2"
@@ -28,9 +16,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppInput from '../../../components/forms/AppInput.vue';
+import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 
 const { t } = useI18n();
 
@@ -39,12 +27,9 @@ const props = defineProps<{
   modelValue: string;
 }>();
 
-const basicSearchValue = ref(props.modelValue);
-watch(
-  () => props.modelValue,
-  (value) => {
-    basicSearchValue.value = value;
-  }
-);
+const searchText = computed({
+  get: () => props.modelValue,
+  set: (text) => emit('update:modelValue', text),
+});
 const showAdvancedSearch = ref(false);
 </script>
