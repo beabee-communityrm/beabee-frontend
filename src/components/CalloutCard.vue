@@ -1,8 +1,6 @@
 <template>
-  <div
-    class="rounded overflow-hidden bg-white cursor-pointer shadow callout-card"
-  >
-    <router-link :to="`/polls/${callout.slug}`">
+  <div class="rounded overflow-hidden bg-white cursor-pointer shadow group">
+    <router-link :to="`/callouts/${callout.slug}`">
       <div class="bg-primary-40 mb-2 h-36">
         <img
           v-if="callout.image"
@@ -38,7 +36,7 @@
           h-11
           flex
           items-center
-          participate
+          group-hover:bg-primary-20 group-hover:text-primary
         "
       >
         <span class="mary-80 ml-auto font-semibold">{{
@@ -54,8 +52,8 @@ import { format } from 'date-fns';
 import { ref } from '@vue/reactivity';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useI18n } from 'vue-i18n';
-import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
-import { BasicCalloutData } from '../../utils/api/api.interface';
+import { formatDistanceLocale } from '../utils/dates/locale-date-formats';
+import { BasicCalloutData } from '../utils/api/api.interface';
 
 const { t } = useI18n();
 
@@ -80,9 +78,3 @@ onBeforeMount(() => {
   formatDate();
 });
 </script>
-
-<style scoped>
-.callout-card:hover .participate {
-  @apply bg-primary-20 text-primary;
-}
-</style>
