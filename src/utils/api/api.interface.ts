@@ -11,9 +11,14 @@ export type Serial<T> = {
     : T[P];
 };
 
-export type ContentId = 'join' | 'join/setup' | 'profile';
-
 export type PermissionType = 'member' | 'admin' | 'superadmin';
+
+export interface Paginated<T> {
+  items: T[];
+  offset: number;
+  count: number;
+  total: number;
+}
 
 export interface Address {
   line1: string;
@@ -44,14 +49,35 @@ interface MemberProfileData {
 }
 
 export interface GetMemberData extends MemberData {
+  id: string;
   joined: Date;
+  lastSeen?: Date;
   contributionAmount?: number;
   contributionPeriod?: ContributionPeriod;
-  roles: PermissionType[];
+  activeRoles: PermissionType[];
 }
 
 export interface GetMemberDataWithProfile extends GetMemberData {
   profile: MemberProfileData;
+}
+
+export interface GetMembersQuery {
+  limit?: number;
+  offset?: number;
+  sort?: string;
+  order?: 'ASC' | 'DESC';
+  rules?: GetMembersQueryRuleGroup;
+}
+
+export interface GetMembersQueryRuleGroup {
+  condition: 'AND' | 'OR';
+  rules: (GetMembersQueryRuleGroup | GetMembersQueryRule)[];
+}
+
+export interface GetMembersQueryRule {
+  field: 'firstname' | 'lastname' | 'email';
+  operator: 'contains';
+  value: string;
 }
 
 export type UpdateMemberProfileData = Partial<MemberProfileData>;
@@ -97,13 +123,19 @@ export interface LoginData {
   password: string;
 }
 
-export interface JoinContent {
-  name: string;
+export interface GeneralContent {
+  organisationName: string;
+  siteUrl: string;
+  supportEmail: string;
   privacyLink: string;
-  showNoContribution: boolean;
-  subtitle: string;
   termsLink: string;
+  currencyCode: string;
+  footerLinks: { text: string; url: string }[];
+}
+
+export interface JoinContent {
   title: string;
+  subtitle: string;
   initialAmount: number;
   initialPeriod: ContributionPeriod;
   minMonthlyAmount: number;
@@ -112,6 +144,7 @@ export interface JoinContent {
     presetAmounts: number[];
   }[];
   showAbsorbFee: boolean;
+  showNoContribution: boolean;
 }
 
 export interface JoinSetupContent {
@@ -163,4 +196,12 @@ export interface SignupData extends SetContributionData {
   email: string;
   password: string;
   noContribution: boolean;
+}
+
+export interface GetSegmentData {
+  id: string;
+  name: string;
+  ruleGroup: any;
+  order: number;
+  memberCount: number;
 }

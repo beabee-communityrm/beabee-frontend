@@ -42,7 +42,7 @@
       }}</SectionTitle>
 
       <div class="hidden mb-2 items-center md:flex">
-        <h2 class="text-lg font-bold mr-10">{{ t('homePage.yourProfile') }}</h2>
+        <AppHeading class="mr-10">{{ t('homePage.yourProfile') }}</AppHeading>
       </div>
 
       <div class="flex justify-center">
@@ -79,6 +79,7 @@ import { onBeforeMount } from '@vue/runtime-core';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { ref } from '@vue/reactivity';
+import AppHeading from '../../components/AppHeading.vue';
 
 const { t } = useI18n();
 

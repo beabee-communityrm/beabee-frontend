@@ -1,103 +1,88 @@
 <template>
-  <AppLink v-if="props.to" :class="classes" :to="props.to"><slot /></AppLink>
+  <a v-if="href" :href="href" :class="buttonClasses">
+    <font-awesome-icon v-if="icon" :icon="icon" class="mr-2" /><slot />
+  </a>
+  <router-link v-else-if="to" :to="to" :class="buttonClasses">
+    <font-awesome-icon v-if="icon" :icon="icon" class="mr-2" /><slot />
+  </router-link>
 
-  <component
-    :is="tag"
+  <button
     v-else
     :disabled="disabled || loading"
-    :class="classes"
-    :type="elementTypeAttribute"
+    :class="buttonClasses"
+    :type="type"
   >
-    <slot>Submit</slot>
-
-    <FontAwesomeIcon
+    <font-awesome-icon v-if="icon" :icon="icon" class="mr-2" /><slot />
+    <span v-if="loading" class="absolute inset-0 bg-white opacity-30" />
+    <font-awesome-icon
       v-if="loading"
       class="text-2xl absolute"
-      :class="loadingClasses"
+      :class="loadingIconClasses"
       :icon="['fas', 'circle-notch']"
       spin
     />
-  </component>
+  </button>
 </template>
 
 <script lang="ts" setup>
 import { computed } from '@vue/reactivity';
-import AppLink from '../AppLink.vue';
 
+// Variant classes for [base, hover, loading icon]
 const variantClasses = {
-  primary: ['bg-primary-70 text-white', 'hover:bg-primary-80'],
-  link: ['bg-link text-white', 'hover:bg-link-110'],
-  danger: ['bg-danger text-white', 'hover:bg-danger-110'],
+  primary: ['bg-primary-70 text-white', 'hover:bg-primary-80', 'text-primary'],
+  link: ['bg-link text-white', 'hover:bg-link-110', 'text-link'],
+  danger: ['bg-danger text-white', 'hover:bg-danger-110', 'text-danger'],
   primaryOutlined: [
     'bg-white text-primary-80 border border-primary-70i',
     'hover:bg-primary-10 hover:text-primary hover:border-primary',
+    'text-primary',
   ],
-  linkOutlined: ['bg-white text-link border border-link', 'hover:bg-link-10'],
+  linkOutlined: [
+    'bg-white text-link border border-link',
+    'hover:bg-link-10',
+    'text-link',
+  ],
   dangerOutlined: [
     'bg-white text-danger border border-danger',
     'hover:bg-danger-10',
+    'text-danger',
   ],
-} as const;
-
-const variantLoadingClasses = {
-  primary: 'text-primary',
-  link: 'text-link',
-  danger: 'text-danger',
-  primaryOutlined: 'text-primary',
-  linkOutlined: 'text-link',
-  dangerOutlined: 'text-danger',
+  text: ['underline text-link', '', ''],
 } as const;
 
 const props = withDefaults(
   defineProps<{
     disabled?: boolean;
-    tag?: string;
-    type?: string;
+    type?: 'button' | 'submit';
+    href?: string;
     to?: string;
     variant?: keyof typeof variantClasses;
+    size?: 'sm';
     loading?: boolean;
+    icon?: string;
   }>(),
   {
     disabled: false,
-    tag: 'button',
     type: 'button',
-    to: '',
+    href: undefined,
+    to: undefined,
     variant: 'primary',
+    size: undefined,
     loading: false,
+    icon: undefined,
   }
 );
 
-// - TODO: Fix this. Using scoped style didn't work on `AppLink`
-const baseClasses =
-  'h-10 px-2 text-center cursor-pointer inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative';
-
-const classes = computed(() => {
+const buttonClasses = computed(() => {
   return [
-    baseClasses,
+    'px-2 text-center cursor-pointer inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative',
+    props.size === 'sm' ? 'h-8 text-sm' : 'h-10',
     variantClasses[props.variant][0],
-    statusClasses.value,
-    props.disabled ? '' : variantClasses[props.variant][1],
+    props.disabled
+      ? 'cursor-not-allowed opacity-50'
+      : variantClasses[props.variant][1],
   ];
 });
 
-const loadingClasses = computed(() => variantLoadingClasses[props.variant]);
-
-const elementTypeAttribute = computed(() => {
-  return props.tag === 'button' ? props.type : null;
-});
-
-const statusClasses = computed(() => {
-  return {
-    'cursor-not-allowed opacity-50': props.disabled,
-    loading: props.loading,
-  };
-});
+const loadingIconClasses = computed(() => variantClasses[props.variant][2]);
 </script>
-
-<style scoped>
-.loading::before {
-  content: '';
-
-  @apply absolute top-0 left-0 h-full w-full bg-white opacity-30;
-}
-</style>

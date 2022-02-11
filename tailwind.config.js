@@ -21,6 +21,8 @@ function shades(_color, levels = []) {
 const fonts = theme.fonts || {};
 const bodyFont = fonts.body || '"Open Sans", sans-serif';
 
+const linkColor = theme.colors.link || theme.colors.primary;
+
 module.exports = {
   purge: {
     content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
@@ -31,7 +33,7 @@ module.exports = {
     colors: {
       primary: shades(theme.colors.primary, [5, 10, 20, 40, 70, 80]),
       body: shades(theme.colors.body || theme.colors.primary, [40, 80]),
-      link: shades(theme.colors.link || theme.colors.primary, [10, 70, 110]),
+      link: shades(linkColor, [10, 70, 110]),
       warning: shades(theme.colors.warning || '#f5cc5b', [10, 30, 70]),
       success: shades(theme.colors.success || '#86a960', [10, 30, 70, 110]),
       danger: shades(theme.colors.danger || '#ce3d3d', [10, 30, 70, 110]),
@@ -75,9 +77,7 @@ module.exports = {
       },
       boxShadow: {
         DEFAULT: '0 0 8px 0 rgba(0, 0, 0, 0.2)',
-        input:
-          '0 0 0 0.125em ' +
-          Color(theme.colors.link).alpha(0.25).rgb().string(),
+        input: '0 0 0 0.125em ' + Color(linkColor).alpha(0.25).rgb().string(),
       },
       fontSize: {
         '2.5xl': '1.75rem',
@@ -86,7 +86,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      fontWeight: ['hover'],
+    },
   },
   plugins: [],
 };

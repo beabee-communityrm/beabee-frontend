@@ -6,7 +6,7 @@ import { authRoute } from '../modules/auth/auth.route';
 import { themeRoute } from '../modules/theme/theme.route';
 import { contributionRoute } from '../modules/contribution/contribution.route';
 import { contactsRoute } from '../modules/contacts/contacts.route';
-import { currentUser, initialUserPromise } from '../store';
+import { currentUser, initStore, generalContent } from '../store';
 
 // routes
 
@@ -23,19 +23,18 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior() {
-    return { top: 0 };
+  scrollBehavior(to, from) {
+    return from && to.name === from.name ? undefined : { top: 0 };
   },
 });
 
 router.beforeEach(async (to, from, next) => {
-  const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
-  document.title = to.meta.pageTitle
-    ? to.meta.pageTitle + ' - ' + newsroomName
-    : newsroomName;
+  // Block route for initial store load, this will only happen once
+  await initStore;
 
-  // Block route for initial user load, this will only happen once
-  await initialUserPromise;
+  document.title = to.meta.pageTitle
+    ? to.meta.pageTitle + ' - ' + generalContent.value.organisationName
+    : generalContent.value.organisationName;
 
   const user = currentUser.value;
 
@@ -43,7 +42,7 @@ router.beforeEach(async (to, from, next) => {
     return next({ path: '/auth/login', query: { next: to.path } });
   }
 
-  if (to.meta.role && !user?.roles.includes(to.meta.role)) {
+  if (to.meta.role && !user?.activeRoles.includes(to.meta.role)) {
     return next({ path: 'profile' });
   }
 
