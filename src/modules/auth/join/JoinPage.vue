@@ -52,7 +52,7 @@
         >{{ buttonText }}</AppButton
       >
 
-      <JoinFooter :privacy-link="joinContent.privacyLink" />
+      <JoinFooter :privacy-link="generalContent.privacyLink" />
     </form>
   </AuthBox>
 </template>
@@ -69,6 +69,7 @@ import AppButton from '../../../components/forms/AppButton.vue';
 import Contribution from '../../../components/contribution/Contribution.vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import { useJoin } from './use-join';
+import { generalContent } from '../../../store';
 
 const { t, n } = useI18n();
 

@@ -12,14 +12,16 @@
       <div class="w-full lg:w-auto mr-8 mb-6">
         <ul>
           <li>
-            <a class="text-base font-semibold" :href="newsroomLink">{{
-              newsroomName
+            <a class="text-base font-semibold" :href="generalContent.siteUrl">{{
+              generalContent.organisationName
             }}</a>
           </li>
           <li>&mdash;</li>
           <li>Contact us at</li>
           <li>
-            <a :href="'mailto:' + newsroomEmail">{{ newsroomEmail }}</a>
+            <a :href="'mailto:' + generalContent.supportEmail">{{
+              generalContent.supportEmail
+            }}</a>
           </li>
         </ul>
       </div>
@@ -74,9 +76,7 @@
 <script lang="ts" setup>
 import { canAdmin } from '../utils/currentUserCan';
 import { useI18n } from 'vue-i18n';
-const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
-const newsroomLink = import.meta.env.VITE_NEWSROOM_LINK;
-const newsroomEmail = import.meta.env.VITE_NEWSROOM_EMAIL;
+import { generalContent } from '../store';
 
 const { t } = useI18n();
 </script>

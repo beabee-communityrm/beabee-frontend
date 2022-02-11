@@ -11,8 +11,6 @@ export type Serial<T> = {
     : T[P];
 };
 
-export type ContentId = 'join' | 'join/setup' | 'profile';
-
 export type PermissionType = 'member' | 'admin' | 'superadmin';
 
 export interface Paginated<T> {
@@ -125,13 +123,19 @@ export interface LoginData {
   password: string;
 }
 
-export interface JoinContent {
-  name: string;
+export interface GeneralContent {
+  organisationName: string;
+  siteUrl: string;
+  supportEmail: string;
   privacyLink: string;
-  showNoContribution: boolean;
-  subtitle: string;
   termsLink: string;
+  currencyCode: string;
+  footerLinks: { text: string; url: string }[];
+}
+
+export interface JoinContent {
   title: string;
+  subtitle: string;
   initialAmount: number;
   initialPeriod: ContributionPeriod;
   minMonthlyAmount: number;
@@ -140,6 +144,7 @@ export interface JoinContent {
     presetAmounts: number[];
   }[];
   showAbsorbFee: boolean;
+  showNoContribution: boolean;
 }
 
 export interface JoinSetupContent {
