@@ -4,7 +4,7 @@
       <font-awesome-icon class="transform -rotate-90" :icon="['fas', 'key']" />
     </template>
 
-    {{ `${t('homePage.passwordReset')}` }}
+    {{ t('homePage.passwordReset') }}
   </AppAlert>
   <!-- TODO: check page title implementation, after implementing other pages
     you might want to improve it
