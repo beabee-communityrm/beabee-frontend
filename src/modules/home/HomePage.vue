@@ -32,7 +32,7 @@
     <QuickActions />
   </section>
 
-  <div class="flex flex-col content-container">
+  <div class="flex flex-col">
     <CalloutContainer class="mb-8 pr-4" />
 
     <!-- your profile section -->
@@ -45,7 +45,7 @@
         <AppHeading class="mr-10">{{ t('homePage.yourProfile') }}</AppHeading>
       </div>
 
-      <div class="flex justify-center">
+      <div class="flex">
         <ContributionInfo :member="member" />
       </div>
 
@@ -96,11 +96,3 @@ const removeWelcomeMessage = () => {
 const { member, profileContent, initHomePage } = useHome();
 onBeforeMount(initHomePage);
 </script>
-
-<style scoped>
-@media screen and (min-width: 656px) {
-  .content-container {
-    @apply sm:flex-row sm:flex-wrap sm:justify-between;
-  }
-}
-</style>
