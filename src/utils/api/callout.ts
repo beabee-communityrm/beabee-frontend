@@ -1,6 +1,11 @@
 import { parseISO } from 'date-fns';
 import axios from '../../axios';
-import { BasicCalloutData, Serial } from './api.interface';
+import {
+  GetBasicCalloutData,
+  GetCalloutsQuery,
+  Paginated,
+  Serial,
+} from './api.interface';
 
 // TODO: dedupe from member
 function toDate(s: string): Date;
@@ -9,13 +14,25 @@ function toDate(s: string | undefined): Date | undefined {
   return s ? parseISO(s) : undefined;
 }
 
-export async function fetchCallouts(): Promise<BasicCalloutData[]> {
-  const { data } = await axios.get<Serial<BasicCalloutData>[]>('/callout', {
-    params: { status: 'open' },
+export function toCallout(
+  data: Serial<GetBasicCalloutData>
+): GetBasicCalloutData {
+  return {
+    ...data,
+    starts: toDate(data.starts),
+    expires: toDate(data.expires),
+  };
+}
+
+export async function fetchCallouts(
+  query?: GetCalloutsQuery
+): Promise<Paginated<GetBasicCalloutData>> {
+  const { data } = await axios.get('/callout', {
+    params: query,
   });
-  return data.map((callout) => ({
-    ...callout,
-    starts: toDate(callout.starts),
-    expires: toDate(callout.expires),
-  }));
+
+  return {
+    ...data,
+    items: data.items.map(toCallout),
+  };
 }

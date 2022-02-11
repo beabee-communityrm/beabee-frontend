@@ -53,12 +53,12 @@ import { ref } from '@vue/reactivity';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useI18n } from 'vue-i18n';
 import { formatDistanceLocale } from '../utils/dates/locale-date-formats';
-import { BasicCalloutData } from '../utils/api/api.interface';
+import { GetBasicCalloutData } from '../utils/api/api.interface';
 
 const { t } = useI18n();
 
 const props = defineProps<{
-  callout: BasicCalloutData;
+  callout: GetBasicCalloutData;
 }>();
 
 const formattedExpiresDate = ref('');

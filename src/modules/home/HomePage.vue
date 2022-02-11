@@ -87,7 +87,8 @@ import CalloutCard from '../../components/CalloutCard.vue';
 import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
 import AppHeading from '../../components/AppHeading.vue';
 import {
-  BasicCalloutData,
+  CalloutStatus,
+  GetBasicCalloutData,
   GetMemberData,
   ProfileContent,
 } from '../../utils/api/api.interface';
@@ -113,7 +114,7 @@ const profileContent = ref<ProfileContent>({
   introMessage: '',
 });
 
-const callouts = ref<BasicCalloutData[]>([]);
+const callouts = ref<GetBasicCalloutData[]>([]);
 
 // This page is behind auth so currentUser can't be null
 // TODO: is there a nicer way to handle this?
@@ -121,6 +122,6 @@ const user = currentUser as Ref<GetMemberData>;
 
 onBeforeMount(async () => {
   profileContent.value = await fetchProfileContent();
-  callouts.value = await fetchCallouts();
+  callouts.value = (await fetchCallouts({ status: CalloutStatus.Open })).items;
 });
 </script>

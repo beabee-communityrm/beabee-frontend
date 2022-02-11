@@ -98,7 +98,7 @@ import { useRoute, useRouter } from 'vue-router';
 import PageTitle from '../../components/PageTitle.vue';
 import {
   GetMemberDataWithProfile,
-  GetMembersQueryRuleGroup,
+  GetMembersQuery,
   GetSegmentData,
   Paginated,
 } from '../../utils/api/api.interface';
@@ -113,9 +113,6 @@ import AppButton from '../../components/forms/AppButton.vue';
 import SearchBox from './components/SearchBox.vue';
 import AppSelect from '../../components/forms/AppSelect.vue';
 import AppVTabs from '../../components/tabs/AppVTabs.vue';
-
-// TODO: remove once contact add link points to new app
-const appUrl = import.meta.env.VITE_APP_BASE_URL;
 
 const { t, n } = useI18n();
 
@@ -216,7 +213,7 @@ onBeforeMount(async () => {
 });
 
 watchEffect(async () => {
-  const rules: GetMembersQueryRuleGroup | undefined = currentSearch.value
+  const rules: GetMembersQuery['rules'] | undefined = currentSearch.value
     ? {
         condition: 'OR',
         rules: [
