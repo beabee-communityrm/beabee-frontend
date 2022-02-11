@@ -5,9 +5,7 @@
       <AppSelect v-model="currentSegment" :items="segmentItems" />
     </div>
     <div class="flex-0 ml-3">
-      <AppButton :to="appUrl + '/members/add'">{{
-        t('contacts.addContact')
-      }}</AppButton>
+      <AppButton href="/members/add">{{ t('contacts.addContact') }}</AppButton>
     </div>
   </div>
   <div class="md:flex">
@@ -23,12 +21,12 @@
         class="w-full mt-2 whitespace-nowrap"
       >
         <template #firstname="{ item }">
-          <router-link
-            :to="'/contacts/' + item.id"
+          <a
+            :href="'/members/' + item.id"
             class="text-base text-link font-bold"
           >
             {{ `${item.firstname} ${item.lastname}`.trim() || item.email }}
-          </router-link>
+          </a>
           <p v-if="item.profile.description" class="whitespace-normal mt-1">
             {{ item.profile.description }}
           </p>
@@ -158,15 +156,15 @@ const currentPage = computed({
 
 const currentSort = computed({
   get: () => ({
-    by: (route.query.sortBy as string) || null,
-    type: (route.query.sortType as SortType) || SortType.None,
+    by: (route.query.sortBy as string) || 'joined',
+    type: (route.query.sortType as SortType) || SortType.Desc,
   }),
   set: ({ by, type }) => {
     router.replace({
       query: {
         ...route.query,
         sortBy: by || undefined,
-        sortType: type === SortType.None ? undefined : type,
+        sortType: type,
       },
     });
   },
@@ -245,11 +243,10 @@ watchEffect(async () => {
     offset: currentPage.value * currentPageSize.value,
     limit: currentPageSize.value,
     rules,
-    ...(currentSort.value.by &&
-      currentSort.value.type !== SortType.None && {
-        sort: currentSort.value.by,
-        order: currentSort.value.type,
-      }),
+    ...(currentSort.value.by && {
+      sort: currentSort.value.by,
+      order: currentSort.value.type,
+    }),
   };
 
   contactsTable.value = currentSegment.value

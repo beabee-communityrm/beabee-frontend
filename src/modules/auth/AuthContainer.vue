@@ -1,22 +1,9 @@
 <template>
   <div v-if="isAuthPath" class="px-4 mb-5">
-    <AppLink
-      :to="generalContent.siteUrl"
-      class="
-        bg-primary-80
-        rounded
-        text-white
-        font-semibold
-        text-sm
-        px-2
-        py-1.5
-        md:ml-12
-        inline-block
-      "
-    >
+    <AppButton :href="generalContent.siteUrl" size="sm">
       ←
       {{ t('login.backTo', { newsroomName: generalContent.organisationName }) }}
-    </AppLink>
+    </AppButton>
   </div>
 
   <AuthBox>
@@ -34,11 +21,11 @@
 
 <script lang="ts" setup>
 import AuthBox from './AuthBox.vue';
-import AppLink from '../../components/AppLink.vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { computed } from '@vue/reactivity';
 import { generalContent } from '../../store';
+import AppButton from '../../components/forms/AppButton.vue';
 
 const { t } = useI18n();
 const route = useRoute();

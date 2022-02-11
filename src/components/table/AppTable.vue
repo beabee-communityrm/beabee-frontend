@@ -68,20 +68,12 @@ const sort = computed({
 function sortBy(header: Header) {
   if (!header.sortable) return;
 
-  const newSort: Sort = {
+  sort.value = {
     by: header.value,
-    type: sort.value.by === header.value ? sort.value.type : SortType.None,
+    type:
+      sort.value.by === header.value && sort.value.type === SortType.Asc
+        ? SortType.Desc
+        : SortType.Asc,
   };
-
-  if (newSort.type === SortType.None) {
-    newSort.type = SortType.Asc;
-  } else if (newSort.type === SortType.Asc) {
-    newSort.type = SortType.Desc;
-  } else if (newSort.type === SortType.Desc) {
-    newSort.by = null;
-    newSort.type = SortType.None;
-  }
-
-  sort.value = newSort;
 }
 </script>

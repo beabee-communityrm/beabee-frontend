@@ -9,5 +9,4 @@ export interface Header {
 export enum SortType {
   Desc = 'DESC',
   Asc = 'ASC',
-  None = 'NONE',
 }
