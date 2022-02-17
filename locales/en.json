@@ -1,5 +1,6 @@
 {
   "callouts": {
+    "all": "All",
     "answered": "Answered",
     "archive": "Archive",
     "data": {
@@ -25,6 +26,8 @@
     "no": "No",
     "participate": "Participate",
     "thankYou": "Thank you!",
+    "timeAgo": "{time} ago",
+    "timeIn": "in {time}",
     "until": "until",
     "year": "year | years",
     "yes": "Yes"

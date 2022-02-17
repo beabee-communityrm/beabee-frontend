@@ -31,7 +31,7 @@
       <tr
         v-for="callout in archivedCallouts.items"
         :key="callout.slug"
-        class="border-t border-primary"
+        class="border-t border-primary-20"
       >
         <td class="py-4 w-full">
           <router-link
@@ -43,7 +43,9 @@
         <td class="py-4 px-5 whitespace-nowrap">
           {{
             callout.expires
-              ? formatDistanceLocale(new Date(), callout.expires)
+              ? t('common.timeAgo', {
+                  time: formatDistanceLocale(new Date(), callout.expires),
+                })
               : '-'
           }}
         </td>
@@ -137,7 +139,7 @@ watchEffect(async () => {
       ],
     },
     status: CalloutStatus.Finished,
-    sort: 'starts',
+    sort: 'expires',
     order: 'DESC',
     hasAnswered: 'me',
   };

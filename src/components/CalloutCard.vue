@@ -27,7 +27,7 @@
             }}</span>
 
             <span class="text-body-80 text-right">{{
-              `${t('common.in')}  ${expiresIn}`
+              `${t('common.timeIn', { time: expiresIn })}`
             }}</span>
           </div>
         </div>
