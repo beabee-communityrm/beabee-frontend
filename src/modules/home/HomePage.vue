@@ -40,7 +40,7 @@
 
       <div class="flex mb-4">
         <!-- just show the first callout for now (design decision) -->
-        <CalloutCard class="w-76" :callout="callouts[0]" />
+        <CalloutCard :callout="callouts[0]" />
       </div>
 
       <AppButton to="/callouts" variant="primaryOutlined">{{

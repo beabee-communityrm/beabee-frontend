@@ -13,23 +13,23 @@ export type Serial<T> = {
 
 export type PermissionType = 'member' | 'admin' | 'superadmin';
 
+interface GetPaginatedQueryRuleGroup<T> {
+  condition: 'AND' | 'OR';
+  rules: (GetPaginatedQueryRuleGroup<T> | GetPaginatedQueryRule<T>)[];
+}
+
+interface GetPaginatedQueryRule<T> {
+  field: T;
+  operator: string;
+  value: string;
+}
+
 export interface GetPaginatedQuery<T> {
   limit?: number;
   offset?: number;
   sort?: string;
   order?: 'ASC' | 'DESC';
   rules?: GetPaginatedQueryRuleGroup<T>;
-}
-
-export interface GetPaginatedQueryRuleGroup<T> {
-  condition: 'AND' | 'OR';
-  rules: (GetPaginatedQueryRuleGroup<T> | GetPaginatedQueryRule<T>)[];
-}
-
-export interface GetPaginatedQueryRule<T> {
-  field: T;
-  operator: 'contains';
-  value: string;
 }
 
 export interface Paginated<T> {
@@ -176,6 +176,7 @@ export interface GetBasicCalloutData {
   image?: string;
   starts?: Date;
   expires?: Date;
+  hasAnswered?: boolean;
 }
 
 export enum CalloutStatus {
@@ -185,7 +186,7 @@ export enum CalloutStatus {
 
 export interface GetCalloutsQuery extends GetPaginatedQuery<'title'> {
   status?: CalloutStatus;
-  answered?: boolean;
+  hasAnswered?: string;
 }
 
 export enum NoticeStatus {

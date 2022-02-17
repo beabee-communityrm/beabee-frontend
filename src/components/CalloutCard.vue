@@ -1,6 +1,9 @@
 <template>
-  <div class="rounded overflow-hidden bg-white cursor-pointer shadow group">
-    <router-link :to="`/callouts/${callout.slug}`">
+  <div
+    class="rounded overflow-hidden bg-white cursor-pointer shadow group"
+    style="max-width: 19rem"
+  >
+    <router-link :to="`/callouts/${callout.slug}`" class="flex flex-col h-full">
       <div class="bg-primary-40 mb-2 h-36">
         <img
           v-if="callout.image"
@@ -10,10 +13,12 @@
         />
       </div>
 
-      <div class="pl-4 pr-5">
-        <h3 class="text-2xl font-semibold mb-1">{{ callout.title }}</h3>
+      <div class="px-4 flex-grow">
+        <h3 class="text-2xl leading-tight font-semibold mb-2">
+          {{ callout.title }}
+        </h3>
 
-        <p class="text-sm leading-tight">{{ callout.excerpt }}</p>
+        <p class="text-sm leading-tight mb-2">{{ callout.excerpt }}</p>
 
         <div class="flex items-end text-sm mb-3">
           <div v-if="callout.expires" class="flex flex-col ml-auto">
