@@ -1,14 +1,14 @@
 {
   "callouts": {
-    "all": "All",
-    "answered": "Answered",
     "archive": "Archive",
     "data": {
       "callout": "Callout",
       "endDate": "End date"
     },
     "search": "Search callouts...",
-    "show": "Show"
+    "show": "Show",
+    "showAll": "All",
+    "showAnswered": "Answered"
   },
   "common": {
     "annually": "Annually",

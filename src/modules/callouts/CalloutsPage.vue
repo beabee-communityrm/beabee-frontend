@@ -14,9 +14,15 @@
       v-model="currentSearch"
       :placeholder="t('callouts.search')"
     />
-    <div>
-      {{ t('callouts.show') }}:
-      {{ t('callouts.answered') }}
+    <div class="text-sm font-semibold text-primary-80 uppercase">
+      <span>{{ t('callouts.show') }}</span>
+      <AppToggle
+        v-model="currentShow"
+        :items="[
+          { id: 'all', label: t('callouts.showAll') },
+          { id: 'answered', label: t('callouts.showAnswered') },
+        ]"
+      />
     </div>
   </div>
   <table>
@@ -54,7 +60,7 @@
           class="py-4 text-success font-bold text-sm whitespace-nowrap"
         >
           <font-awesome-icon icon="check-circle" />
-          {{ t('callouts.answered') }}
+          {{ t('callouts.showAnswered') }}
         </td>
       </tr>
     </tbody>
@@ -80,6 +86,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { fetchCallouts } from '../../utils/api/callout';
 import AppPagination from '../../components/AppPagination.vue';
 import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
+import AppToggle from '../../components/forms/AppToggle.vue';
 
 formatDistanceLocale;
 
@@ -94,7 +101,14 @@ const currentPage = computed({
 });
 const currentSearch = computed({
   get: () => (route.query.s as string) || '',
-  set: (s) => router.push({ query: { s } }),
+  set: (s) => router.push({ query: { ...route.query, s, page: undefined } }),
+});
+const currentShow = computed({
+  get: () => (route.query.show === 'answered' ? 'answered' : 'all'),
+  set: (show) =>
+    router.push({
+      query: { ...route.query, show, page: undefined },
+    }),
 });
 
 const activeCallouts = ref<Paginated<GetBasicCalloutData>>({
@@ -116,9 +130,18 @@ const totalPages = computed(() =>
 
 onBeforeMount(async () => {
   activeCallouts.value = await fetchCallouts({
-    status: CalloutStatus.Open,
     sort: 'starts',
     order: 'DESC',
+    rules: {
+      condition: 'AND',
+      rules: [
+        {
+          field: 'status',
+          operator: 'equal',
+          value: CalloutStatus.Open,
+        },
+      ],
+    },
   });
 });
 
@@ -128,19 +151,32 @@ watchEffect(async () => {
   const query: GetCalloutsQuery = {
     offset: currentPage.value * pageSize,
     limit: pageSize,
+    sort: 'expires',
+    order: 'DESC',
     rules: {
-      condition: 'OR',
+      condition: 'AND',
       rules: [
         {
           field: 'title',
           operator: 'contains',
           value: currentSearch.value,
         },
+        {
+          field: 'status',
+          operator: 'equal',
+          value: CalloutStatus.Finished,
+        },
+        ...(currentShow.value === 'answered'
+          ? [
+              {
+                field: 'answeredBy',
+                operator: 'equal',
+                value: 'me',
+              } as const,
+            ]
+          : []),
       ],
     },
-    status: CalloutStatus.Finished,
-    sort: 'expires',
-    order: 'DESC',
     hasAnswered: 'me',
   };
 

@@ -13,6 +13,8 @@ export type Serial<T> = {
 
 export type PermissionType = 'member' | 'admin' | 'superadmin';
 
+type GetPaginatedQueryRuleOperator = 'equal' | 'contains';
+
 interface GetPaginatedQueryRuleGroup<T> {
   condition: 'AND' | 'OR';
   rules: (GetPaginatedQueryRuleGroup<T> | GetPaginatedQueryRule<T>)[];
@@ -20,7 +22,7 @@ interface GetPaginatedQueryRuleGroup<T> {
 
 interface GetPaginatedQueryRule<T> {
   field: T;
-  operator: string;
+  operator: GetPaginatedQueryRuleOperator;
   value: string;
 }
 
@@ -184,8 +186,8 @@ export enum CalloutStatus {
   Finished = 'finished',
 }
 
-export interface GetCalloutsQuery extends GetPaginatedQuery<'title'> {
-  status?: CalloutStatus;
+export interface GetCalloutsQuery
+  extends GetPaginatedQuery<'title' | 'status' | 'answeredBy'> {
   hasAnswered?: string;
 }
 
