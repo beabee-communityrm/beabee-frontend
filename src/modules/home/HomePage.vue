@@ -122,6 +122,19 @@ const user = currentUser as Ref<GetMemberData>;
 
 onBeforeMount(async () => {
   profileContent.value = await fetchProfileContent();
-  callouts.value = (await fetchCallouts({ status: CalloutStatus.Open })).items;
+  callouts.value = (
+    await fetchCallouts({
+      rules: {
+        condition: 'AND',
+        rules: [
+          {
+            field: 'status',
+            operator: 'equal',
+            value: CalloutStatus.Open,
+          },
+        ],
+      },
+    })
+  ).items;
 });
 </script>
