@@ -18,15 +18,30 @@
     <div>
       <AppHeading>{{ t('contactOverview.information') }}</AppHeading>
       <AppInfoList>
-        <AppInfoListItem :name="'Preferred channel'" :value="'-'" />
-        <AppInfoListItem :name="t('contacts.data.email')" :value="'-'" />
-        <AppInfoListItem :name="t('contacts.data.phone')" :value="'-'" />
+        <AppInfoListItem
+          :name="'Preferred channel'"
+          :value="contact.profile.preferredContact"
+        />
+        <AppInfoListItem
+          :name="t('contacts.data.email')"
+          :value="contact.email"
+        />
+        <AppInfoListItem
+          :name="t('contacts.data.phone')"
+          :value="contact.profile.telephone"
+        />
         <AppInfoListItem
           :name="t('contacts.data.deliveryOptIn')"
-          :value="'-'"
+          :value="contact.profile.deliveryOptIn"
         />
-        <AppInfoListItem :name="t('contacts.data.newsletter')" :value="'-'" />
-        <AppInfoListItem :name="t('contacts.data.groups')" :value="'-'" />
+        <AppInfoListItem
+          :name="t('contacts.data.newsletter')"
+          :value="contact.profile.newsletterStatus"
+        />
+        <AppInfoListItem
+          :name="t('contacts.data.groups')"
+          :value="contact.profile.newsletterGroups.join(',')"
+        />
       </AppInfoList>
     </div>
   </div>
@@ -35,8 +50,14 @@
     <div>
       <AppHeading>{{ t('contactOverview.contribution') }}</AppHeading>
       <AppInfoList>
-        <AppInfoListItem :name="t('contacts.data.amount')" :value="'xxx'" />
-        <AppInfoListItem :name="t('contacts.data.period')" :value="'xxx'" />
+        <AppInfoListItem
+          :name="t('contacts.data.amount')"
+          :value="contact.contributionAmount"
+        />
+        <AppInfoListItem
+          :name="t('contacts.data.period')"
+          :value="contact.contributionPeriod"
+        />
         <AppInfoListItem :name="t('contacts.data.payingFee')" :value="'xxx'" />
         <AppInfoListItem
           :name="t('contacts.data.contributionType')"
