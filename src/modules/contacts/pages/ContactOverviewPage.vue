@@ -72,87 +72,15 @@
         <b>visible for admins only.</b> Members will never see these in their
         profile or member area.
       </p>
+      <!-- @submit.prevents="" -->
       <form class="w-full max-w-lg">
-        <div class="flex flex-wrap -mx-3 mb-1">
-          <div class="w-full px-3">
-            <label
-              class="block tracking-wide text-gray-700 text-sm font-bold mb-2"
-              for="grid-description"
-            >
-              Description
-            </label>
-            <input
-              id="grid-description"
-              class="
-                appearance-none
-                block
-                w-full
-                border border-gray-200
-                rounded
-                py-3
-                px-4
-                mb-3
-                focus:outline-none focus:bg-white focus:border-gray-500
-              "
-              type="text"
-              placeholder=""
-            />
-          </div>
-        </div>
-        <div class="flex flex-wrap -mx-3 mb-3">
-          <div class="w-full px-3">
-            <label
-              class="block tracking-wide text-gray-700 text-sm font-bold mb-2"
-              for="grid-description"
-            >
-              Notes
-            </label>
-            <textarea
-              id="grid-description"
-              class="
-                appearance-none
-                block
-                w-full
-                border border-gray-200
-                rounded
-                py-3
-                px-4
-                mb-3
-                focus:outline-none focus:bg-white focus:border-gray-500
-              "
-              type="textarea"
-              placeholder=""
-            />
-          </div>
-        </div>
-        <div class="md:flex md:items-center">
-          <div class="md:w-1/3">
-            <button
-              class="
-                px-2
-                text-center
-                cursor-pointer
-                inline-flex
-                justify-center
-                items-center
-                font-bold
-                rounded
-                whitespace-nowrap
-                relative
-                h-10
-                bg-link
-                text-white
-                opacity-60
-                mb-4
-                w-full
-                hover:bg-link-20 hover:opacity-80
-              "
-              type="submit"
-            >
-              Save
-            </button>
-          </div>
-        </div>
+        <h4 class="font-semibold mb-1.5">Description</h4>
+        <AppInput v-model="notesStub" input-type="text" :label="''" />
+        <h4 class="font-semibold mb-1.5">Description (textarea)</h4>
+        <AppInput v-model="notesStub" input-type="text" :label="''" />
+        <AppButton type="submit" class="mt-2" variant="link">{{
+          t('form.saveChanges')
+        }}</AppButton>
       </form>
     </div>
   </div>
@@ -174,6 +102,8 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
+import AppInput from '../../../components/forms/AppInput.vue';
+import AppButton from '../../../components/forms/AppButton.vue';
 import { onBeforeMount, ref } from 'vue';
 import {
   GetMemberData,
@@ -193,6 +123,8 @@ const props = defineProps<{
 }>();
 
 const contact = ref<GetMemberDataWithProfile | null>(null);
+
+let notesStub = '';
 
 onBeforeMount(async () => {
   contact.value = await fetchMemberWithProfile(props.contact.id);
