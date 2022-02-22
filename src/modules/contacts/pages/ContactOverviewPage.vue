@@ -65,6 +65,109 @@
         />
       </AppInfoList>
     </div>
+    <div>
+      <AppHeading>{{ t('contactOverview.about') }}</AppHeading>
+      <p class="mb-5">
+        All information added in this section is
+        <b>visible for admins only.</b> Members will never see these in their
+        profile or member area.
+      </p>
+      <form class="w-full max-w-lg">
+        <div class="flex flex-wrap -mx-3 mb-1">
+          <div class="w-full px-3">
+            <label
+              class="block tracking-wide text-gray-700 text-sm font-bold mb-2"
+              for="grid-description"
+            >
+              Description
+            </label>
+            <input
+              id="grid-description"
+              class="
+                appearance-none
+                block
+                w-full
+                border border-gray-200
+                rounded
+                py-3
+                px-4
+                mb-3
+                focus:outline-none focus:bg-white focus:border-gray-500
+              "
+              type="text"
+              placeholder=""
+            />
+          </div>
+        </div>
+        <div class="flex flex-wrap -mx-3 mb-3">
+          <div class="w-full px-3">
+            <label
+              class="block tracking-wide text-gray-700 text-sm font-bold mb-2"
+              for="grid-description"
+            >
+              Notes
+            </label>
+            <textarea
+              id="grid-description"
+              class="
+                appearance-none
+                block
+                w-full
+                border border-gray-200
+                rounded
+                py-3
+                px-4
+                mb-3
+                focus:outline-none focus:bg-white focus:border-gray-500
+              "
+              type="textarea"
+              placeholder=""
+            />
+          </div>
+        </div>
+        <div class="md:flex md:items-center">
+          <div class="md:w-1/3">
+            <button
+              class="
+                px-2
+                text-center
+                cursor-pointer
+                inline-flex
+                justify-center
+                items-center
+                font-bold
+                rounded
+                whitespace-nowrap
+                relative
+                h-10
+                bg-link
+                text-white
+                opacity-60
+                mb-4
+                w-full
+                hover:bg-link-20 hover:opacity-80
+              "
+              type="submit"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div v-if="contact" class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
+    <div>
+      <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
+      <AppInfoList>
+        <AppInfoListItem :name="'Roles'" :value="'xxx or array'" />
+        <AppInfoListItem :name="'Roles'" :value="'xxx or array'" />
+      </AppInfoList>
+    </div>
+  </div>
+  <div v-if="contact" class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
+    <AppHeading>{{ t('contactOverview.security') }}</AppHeading>
   </div>
 </template>
 

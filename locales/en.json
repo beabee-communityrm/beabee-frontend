@@ -40,7 +40,8 @@
     "contribution": "Contribution",
     "information": "Information",
     "overview": "Overview",
-    "roles": "Roles"
+    "roles": "Roles",
+    "security": "Security"
   },
   "contacts": {
     "addContact": "Add contact",
@@ -62,6 +63,7 @@
       "payingFee": "Paying fee?",
       "period": "Period",
       "phone": "Phone",
+      "roles": "Roles",
       "tags": "Tags"
     },
     "noResults": "No contacts found",
