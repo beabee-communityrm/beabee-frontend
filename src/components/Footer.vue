@@ -32,7 +32,7 @@
               t('footer.privacyPolicy')
             }}</a>
           </li>
-          <li>
+          <li v-if="generalContent.termsLink">
             <a :href="generalContent.termsLink">{{ t('footer.terms') }}</a>
           </li>
         </ul>
