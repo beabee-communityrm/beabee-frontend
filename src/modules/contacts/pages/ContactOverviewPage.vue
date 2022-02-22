@@ -73,11 +73,13 @@
         profile or member area.
       </p>
       <!-- @submit.prevents="" -->
-      <form class="w-full max-w-lg">
-        <h4 class="font-semibold mb-1.5">Description</h4>
-        <AppInput v-model="notesStub" input-type="text" :label="''" />
-        <h4 class="font-semibold mb-1.5">Description (textarea)</h4>
-        <AppInput v-model="notesStub" input-type="text" :label="''" />
+      <form>
+        <AppInput v-model="notesStub" input-type="text" :label="'Notes'" />
+        <AppTextArea
+          v-model="notesStub"
+          input-type="text"
+          :label="'Description'"
+        />
         <AppButton type="submit" class="mt-2" variant="link">{{
           t('form.saveChanges')
         }}</AppButton>
@@ -103,6 +105,7 @@
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
+import AppTextArea from '../../../components/forms/AppTextArea.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import { onBeforeMount, ref } from 'vue';
 import {
