@@ -9,12 +9,12 @@
     />
   </div>
   <AppHeading>{{ t('callouts.archive') }}</AppHeading>
-  <div class="flex justify-between items-center my-2">
+  <div class="md:flex justify-between items-center my-2">
     <AppSearchInput
       v-model="currentSearch"
       :placeholder="t('callouts.search')"
     />
-    <div class="text-sm font-semibold text-primary-80 uppercase">
+    <div class="text-sm font-semibold text-primary-80 uppercase my-2 md:my-0">
       <span>{{ t('callouts.show') }}</span>
       <AppToggle
         v-model="currentShow"
@@ -26,7 +26,7 @@
     </div>
   </div>
   <table>
-    <thead class="text-left whitespace-nowrap">
+    <thead class="text-left whitespace-nowrap hidden md:table-header-group">
       <tr>
         <th class="py-2">{{ t('callouts.data.callout') }}</th>
         <th class="py-2 px-5">{{ t('callouts.data.endDate') }}</th>
@@ -37,16 +37,22 @@
       <tr
         v-for="callout in archivedCallouts.items"
         :key="callout.slug"
-        class="border-t border-primary-20"
+        class="
+          flex flex-wrap
+          justify-between
+          py-3
+          md:table-row
+          border-t border-primary-20
+        "
       >
-        <td class="py-4 w-full">
+        <td class="pb-2 md:py-4 w-full">
           <router-link
             :to="`/callouts/${callout.slug}`"
             class="text-link font-semibold underline"
             >{{ callout.title }}</router-link
           >
         </td>
-        <td class="py-4 px-5 whitespace-nowrap">
+        <td class="md:py-4 md:px-5 whitespace-nowrap text-body-80 md:text-body">
           {{
             callout.expires
               ? t('common.timeAgo', {
@@ -57,7 +63,7 @@
         </td>
         <td
           v-if="callout.hasAnswered"
-          class="py-4 text-success font-bold text-sm whitespace-nowrap"
+          class="md:py-4 text-success font-bold text-sm whitespace-nowrap"
         >
           <font-awesome-icon icon="check-circle" />
           {{ t('callouts.showAnswered') }}
@@ -153,6 +159,7 @@ watchEffect(async () => {
     limit: pageSize,
     sort: 'expires',
     order: 'DESC',
+    hasAnswered: 'me',
     rules: {
       condition: 'AND',
       rules: [
@@ -177,7 +184,6 @@ watchEffect(async () => {
           : []),
       ],
     },
-    hasAnswered: 'me',
   };
 
   archivedCallouts.value = await fetchCallouts(query);

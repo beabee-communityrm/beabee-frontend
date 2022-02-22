@@ -1,7 +1,15 @@
 <template>
   <div
-    class="rounded overflow-hidden bg-white cursor-pointer shadow group"
-    style="max-width: 19rem"
+    class="
+      callout-card
+      rounded
+      overflow-hidden
+      bg-white
+      cursor-pointer
+      shadow
+      group
+      w-full
+    "
   >
     <router-link :to="`/callouts/${callout.slug}`" class="flex flex-col h-full">
       <div class="bg-primary-40 mb-2 h-36">
@@ -83,3 +91,10 @@ onBeforeMount(() => {
   formatDate();
 });
 </script>
+<style scoped>
+@media (min-width: theme('screens.md')) {
+  .callout-card {
+    max-width: 19rem;
+  }
+}
+</style>
