@@ -1,5 +1,5 @@
 <template>
-  <div v-if="contact" class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
+  <div v-if="contact" class="grid lg:grid-cols-2 gap-8">
     <div>
       <AppHeading>{{ t('contactOverview.overview') }}</AppHeading>
       <AppInfoList>
@@ -44,9 +44,7 @@
         />
       </AppInfoList>
     </div>
-  </div>
 
-  <div v-if="contact" class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
     <div>
       <AppHeading>{{ t('contactOverview.contribution') }}</AppHeading>
       <AppInfoList>
@@ -65,7 +63,7 @@
         />
       </AppInfoList>
     </div>
-    <div>
+    <div class="row-span-3">
       <AppHeading>{{ t('contactOverview.about') }}</AppHeading>
       <p class="mb-5">
         All information added in this section is
@@ -74,20 +72,23 @@
       </p>
       <!-- @submit.prevents="" -->
       <form>
-        <AppInput v-model="notesStub" input-type="text" :label="'Notes'" />
+        <AppInput
+          v-model="notesStub"
+          input-type="text"
+          :label="'Notes'"
+          class="mb-4"
+        />
         <AppTextArea
           v-model="notesStub"
           input-type="text"
           :label="'Description'"
         />
-        <AppButton type="submit" class="mt-2" variant="link">{{
+        <AppButton type="submit" class="mt-4" variant="link">{{
           t('form.saveChanges')
         }}</AppButton>
       </form>
     </div>
-  </div>
 
-  <div v-if="contact" class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
     <div>
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
       <AppInfoList>
