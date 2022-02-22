@@ -1,4 +1,7 @@
 {
+  "callouts": {
+    "data": {}
+  },
   "common": {
     "annually": "Jährlich",
     "backToHome": "Zurück zur Startseite",
@@ -15,6 +18,7 @@
     "no": "Nein",
     "participate": "Teilnehmen",
     "thankYou": "Vielen Dank!",
+    "timeIn": "in {time}",
     "until": "bis",
     "year": "Jahr | Jahren",
     "yes": "Ja"
@@ -35,17 +39,20 @@
     "allContacts": "Alle Kontakte",
     "data": {
       "amount": "Betrag",
-      "contribuiontType": "Zahlungsart",
       "contribution": "Beitrag",
+      "contributionType": "Zahlungsart",
       "deliveryOptIn": "Postsendung",
       "description": "Beschreibung",
       "email": "E-Mail",
+      "groups": "Gruppe",
       "joined": "Mitglied seit",
       "lastSeen": "Zuletzt angemeldet",
       "name": "Name",
+      "newsletter": "Newsletter",
       "notes": "Notizen",
       "payingFee": "Übernimmt Transaktionskosten?",
       "period": "Zeitraum",
+      "phone": "Telefon",
       "tags": "Tags"
     },
     "noResults": "Keine Kontakte gefunden",

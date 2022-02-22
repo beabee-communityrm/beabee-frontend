@@ -1,4 +1,15 @@
 {
+  "callouts": {
+    "archive": "Archive",
+    "data": {
+      "callout": "Callout",
+      "endDate": "End date"
+    },
+    "search": "Search callouts...",
+    "show": "Show",
+    "showAll": "All",
+    "showAnswered": "Answered"
+  },
   "common": {
     "annually": "Annually",
     "backToHome": "Back to home",
@@ -15,6 +26,8 @@
     "no": "No",
     "participate": "Participate",
     "thankYou": "Thank you!",
+    "timeAgo": "{time} ago",
+    "timeIn": "in {time}",
     "until": "until",
     "year": "year | years",
     "yes": "Yes"
@@ -35,17 +48,20 @@
     "allContacts": "All contacts",
     "data": {
       "amount": "Amount",
-      "contribuiontType": "Type",
       "contribution": "Contribution",
+      "contributionType": "Type",
       "deliveryOptIn": "Delivery opt-in?",
       "description": "Description",
       "email": "Email",
+      "groups": "Groups",
       "joined": "Joined",
       "lastSeen": "Last seen",
       "name": "Name",
+      "newsletter": "Newsletter",
       "notes": "Notes",
       "payingFee": "Paying fee?",
       "period": "Period",
+      "phone": "Phone",
       "tags": "Tags"
     },
     "noResults": "No contacts found",
