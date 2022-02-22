@@ -1,4 +1,15 @@
 {
+  "callouts": {
+    "archive": "Archive",
+    "data": {
+      "callout": "Callout",
+      "endDate": "End date"
+    },
+    "search": "Search callouts...",
+    "show": "Show",
+    "showAll": "All",
+    "showAnswered": "Answered"
+  },
   "common": {
     "annually": "Annually",
     "backToHome": "Back to home",
@@ -15,6 +26,8 @@
     "no": "No",
     "participate": "Participate",
     "thankYou": "Thank you!",
+    "timeAgo": "{time} ago",
+    "timeIn": "in {time}",
     "until": "until",
     "year": "year | years",
     "yes": "Yes"
@@ -27,7 +40,8 @@
     "contribution": "Contribution",
     "information": "Information",
     "overview": "Overview",
-    "roles": "Roles"
+    "roles": "Roles",
+    "security": "Security"
   },
   "contacts": {
     "addContact": "Add contact",
@@ -35,17 +49,21 @@
     "allContacts": "All contacts",
     "data": {
       "amount": "Amount",
-      "contribuiontType": "Type",
       "contribution": "Contribution",
+      "contributionType": "Type",
       "deliveryOptIn": "Delivery opt-in?",
       "description": "Description",
       "email": "Email",
+      "groups": "Groups",
       "joined": "Joined",
       "lastSeen": "Last seen",
       "name": "Name",
+      "newsletter": "Newsletter",
       "notes": "Notes",
       "payingFee": "Paying fee?",
       "period": "Period",
+      "phone": "Phone",
+      "roles": "Roles",
       "tags": "Tags"
     },
     "noResults": "No contacts found",
@@ -86,13 +104,10 @@
     "willRenewWithNewAmount": "Your contribution will automatically renew on {renewalDate} and will change to your chosen amount of {nextAmount}."
   },
   "footer": {
-    "codeOfConduct": "Code of Conduct",
+    "contactUs": "Contact us at",
     "contacts": "Contacts",
-    "faq": "FAQs",
     "handbookResources": "Handbook & Resources",
-    "impressum": "Impressum",
     "joinCommunity": "Join the Community",
-    "memberships": "Memberships",
     "privacyPolicy": "Privacy Policy",
     "terms": "Terms and Conditions"
   },
