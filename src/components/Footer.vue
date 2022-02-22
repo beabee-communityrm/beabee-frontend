@@ -17,7 +17,7 @@
             }}</a>
           </li>
           <li>&mdash;</li>
-          <li>Contact us at</li>
+          <li>{{ t('footer.contactUs') }}</li>
           <li>
             <a :href="'mailto:' + generalContent.supportEmail">{{
               generalContent.supportEmail
