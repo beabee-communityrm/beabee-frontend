@@ -9,12 +9,12 @@
     />
   </div>
   <AppHeading>{{ t('callouts.archive') }}</AppHeading>
-  <div class="md:flex justify-between items-center my-2">
+  <div class="lg:flex justify-between items-center my-2">
     <AppSearchInput
       v-model="currentSearch"
       :placeholder="t('callouts.search')"
     />
-    <div class="text-sm font-semibold text-primary-80 uppercase my-2 md:my-0">
+    <div class="text-sm font-semibold text-primary-80 uppercase my-2 lg:my-0">
       <span>{{ t('callouts.show') }}</span>
       <AppToggle
         v-model="currentShow"
