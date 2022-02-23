@@ -21,12 +21,12 @@
         class="w-full mt-2 whitespace-nowrap"
       >
         <template #firstname="{ item }">
-          <a
-            :href="'/contacts/' + item.id"
+          <router-link
+            :to="'/contacts/' + item.id"
             class="text-base text-link font-bold"
           >
             {{ `${item.firstname} ${item.lastname}`.trim() || item.email }}
-          </a>
+          </router-link>
           <p v-if="item.profile.description" class="whitespace-normal mt-1">
             {{ item.profile.description }}
           </p>
