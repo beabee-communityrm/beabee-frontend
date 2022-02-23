@@ -50,7 +50,11 @@
       <AppInfoList>
         <AppInfoListItem
           :name="t('contacts.data.amount')"
-          :value="contact.contributionAmount"
+          :value="
+            contact.contributionAmount
+              ? n(contact.contributionAmount, 'currency')
+              : '-'
+          "
         />
         <AppInfoListItem
           :name="t('contacts.data.period')"
@@ -124,7 +128,7 @@ import { formatLocale } from '../../../utils/dates/locale-date-formats';
 
 formatLocale;
 
-const { t } = useI18n();
+const { t, n } = useI18n();
 
 const props = defineProps<{
   contact: GetMemberData;
