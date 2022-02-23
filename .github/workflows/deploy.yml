@@ -1,9 +1,12 @@
 name: Deploy
 
 on:
+  # a push to these branches will trigger the workflow
   push:
-    branches:
-      - main
+    branches: [main]
+  # a pull request targetting main will trigger the workflow
+  pull_request:
+    branches: [main]
   workflow_dispatch:
     inputs:
       stage:
