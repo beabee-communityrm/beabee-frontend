@@ -22,7 +22,7 @@
       >
         <template #firstname="{ item }">
           <a
-            :href="'/members/' + item.id"
+            :href="'/contacts/' + item.id"
             class="text-base text-link font-bold"
           >
             {{ `${item.firstname} ${item.lastname}`.trim() || item.email }}
