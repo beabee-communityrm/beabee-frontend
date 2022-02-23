@@ -104,12 +104,15 @@
     <div>
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
       <AppInfoList v-for="role in contact.roles" :key="role.role">
-        <!-- @TODO: localise -->
-        <AppInfoListItem :name="role.role">
+        <AppInfoListItem :name="t(`common.role.${role.role}`)">
           <!-- @TODO: make component -->
           <span class="inline-block w-2 h-2 bg-success rounded-full"></span>
-          {{ formatLocale(role.dateAdded, 'P') }} →
-          {{ role.dateExpires ? formatLocale(role.dateExpires, 'P') : '' }}
+          {{ formatLocale(role.dateAdded, 'P') }}
+          {{
+            role.dateExpires
+              ? ' → ' + formatLocale(role.dateExpires, 'P')
+              : ' onwards'
+          }}
         </AppInfoListItem>
       </AppInfoList>
     </div>

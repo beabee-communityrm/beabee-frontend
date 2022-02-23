@@ -17,6 +17,11 @@
     "new": "neu!",
     "no": "Nein",
     "participate": "Teilnehmen",
+    "role": {
+      "admin": "Admin",
+      "member": "Mitglied",
+      "superadmin": "Überadmin"
+    },
     "thankYou": "Vielen Dank!",
     "timeIn": "in {time}",
     "until": "bis",
