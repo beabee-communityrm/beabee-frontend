@@ -1,4 +1,7 @@
 {
+  "callouts": {
+    "data": {}
+  },
   "common": {
     "annually": "Jährlich",
     "backToHome": "Zurück zur Startseite",
@@ -15,6 +18,7 @@
     "no": "Nein",
     "participate": "Teilnehmen",
     "thankYou": "Vielen Dank!",
+    "timeIn": "in {time}",
     "until": "bis",
     "year": "Jahr | Jahren",
     "yes": "Ja"
@@ -35,17 +39,21 @@
     "allContacts": "Alle Kontakte",
     "data": {
       "amount": "Betrag",
-      "contribuiontType": "Zahlungsart",
       "contribution": "Beitrag",
+      "contributionType": "Zahlungsart",
       "deliveryOptIn": "Postsendung",
       "description": "Beschreibung",
       "email": "E-Mail",
+      "groups": "Grupper",
       "joined": "Mitglied seit",
       "lastSeen": "Zuletzt angemeldet",
       "name": "Name",
+      "newsletter": "Newsletter",
       "notes": "Notizen",
       "payingFee": "Übernimmt Transaktionskosten?",
       "period": "Zeitraum",
+      "phone": "Telefon",
+      "roles": "Rolle",
       "tags": "Tags"
     },
     "noResults": "Keine Kontakte gefunden",
@@ -86,13 +94,9 @@
     "willRenewWithNewAmount": "Deine Mitgliedschaft verlängert sich am {renewalDate} automatisch. Dein Beitrag ist dann {nextAmount}."
   },
   "footer": {
-    "codeOfConduct": "Verhaltenskodex",
     "contacts": "Kontakte",
-    "faq": "FAQs",
     "handbookResources": "Handbuch & Ressourcen",
-    "impressum": "Impressum",
     "joinCommunity": "Mitglied werden",
-    "memberships": "Mitgliedschaften",
     "privacyPolicy": "Datenschutzerklärung",
     "terms": "Allgemeine Geschäftsbedingungen"
   },
