@@ -66,9 +66,9 @@
     <div class="row-span-3">
       <AppHeading>{{ t('contactOverview.about') }}</AppHeading>
       <p class="mb-5">
-        All information added in this section is
-        <b>visible for admins only.</b> Members will never see these in their
-        profile or member area.
+        {{ t('contactOverview.annotation.copy.begin') }}
+        <b>{{ t('contactOverview.annotation.copy.bold') }}</b>
+        {{ t('contactOverview.annotation.copy.end') }}
       </p>
       <!-- @submit.prevents="" -->
       <form>

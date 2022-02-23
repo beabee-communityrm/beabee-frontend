@@ -37,6 +37,13 @@
   },
   "contactOverview": {
     "about": "About",
+    "annotation": {
+      "copy": {
+        "begin": "All information added in this section is",
+        "bold": "visible for admins only.",
+        "end": "Members will never see these in their profile or member area."
+      }
+    },
     "contribution": "Contribution",
     "information": "Information",
     "overview": "Overview",
@@ -104,13 +111,10 @@
     "willRenewWithNewAmount": "Your contribution will automatically renew on {renewalDate} and will change to your chosen amount of {nextAmount}."
   },
   "footer": {
-    "codeOfConduct": "Code of Conduct",
+    "contactUs": "Contact us at",
     "contacts": "Contacts",
-    "faq": "FAQs",
     "handbookResources": "Handbook & Resources",
-    "impressum": "Impressum",
     "joinCommunity": "Join the Community",
-    "memberships": "Memberships",
     "privacyPolicy": "Privacy Policy",
     "terms": "Terms and Conditions"
   },

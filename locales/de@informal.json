@@ -28,6 +28,9 @@
   },
   "contactOverview": {
     "about": "Über",
+    "annotation": {
+      "copy": {}
+    },
     "contribution": "Beitrag",
     "information": "Information",
     "overview": "Überblick",
@@ -94,13 +97,9 @@
     "willRenewWithNewAmount": "Deine Mitgliedschaft verlängert sich am {renewalDate} automatisch. Dein Beitrag ist dann {nextAmount}."
   },
   "footer": {
-    "codeOfConduct": "Verhaltenskodex",
     "contacts": "Kontakte",
-    "faq": "FAQs",
     "handbookResources": "Handbuch & Ressourcen",
-    "impressum": "Impressum",
     "joinCommunity": "Mitglied werden",
-    "memberships": "Mitgliedschaften",
     "privacyPolicy": "Datenschutzerklärung",
     "terms": "Allgemeine Geschäftsbedingungen"
   },
