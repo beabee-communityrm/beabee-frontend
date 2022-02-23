@@ -103,10 +103,17 @@
 
     <div>
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
-      <AppInfoList>
-        <AppInfoListItem :name="'Roles'" :value="'xxx or array'" />
-        <AppInfoListItem :name="'Roles'" :value="'xxx or array'" />
-      </AppInfoList>
+      <div v-for="role in contact.roles" :key="role.role">
+        <AppInfoList>
+          <!-- @TODO: localise -->
+          <AppInfoListItem :name="role.role">
+            <!-- @TODO: make component -->
+            <span class="inline-block w-2 h-2 bg-success rounded-full"></span>
+            {{ formatLocale(role.dateAdded, 'P') }} →
+            {{ role.dateExpires ? formatLocale(role.dateExpires, 'P') : '' }}
+          </AppInfoListItem>
+        </AppInfoList>
+      </div>
     </div>
   </div>
   <div v-if="contact" class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
