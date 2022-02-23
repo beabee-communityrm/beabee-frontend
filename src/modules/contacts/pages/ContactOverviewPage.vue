@@ -71,7 +71,7 @@
         />
       </AppInfoList>
     </div>
-    <div class="row-span-3">
+    <div class="row-span-3 max-w-xl">
       <AppHeading>{{ t('contactOverview.about') }}</AppHeading>
       <p class="mb-5">
         {{ t('contactOverview.annotation.copy.begin') }}
@@ -105,8 +105,7 @@
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
       <AppInfoList v-for="role in contact.roles" :key="role.role">
         <AppInfoListItem :name="t(`common.role.${role.role}`)">
-          <!-- @TODO: make component -->
-          <span class="inline-block w-2 h-2 bg-success rounded-full"></span>
+          <AppRoundBadge :type="role.dateExpires ? 'warning' : 'success'" />
           {{ formatLocale(role.dateAdded, 'P') }}
           {{
             role.dateExpires
@@ -151,6 +150,7 @@ import AppHeading from '../../../components/AppHeading.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
+import AppRoundBadge from '../../../components/AppRoundBadge.vue';
 import { onBeforeMount, ref, reactive } from 'vue';
 import { ContributionType } from '../../../utils/enums/contribution-type.enum';
 import {
