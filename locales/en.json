@@ -53,7 +53,13 @@
     "information": "Information",
     "overview": "Overview",
     "roles": "Roles",
-    "security": "Security"
+    "security": {
+      "instructions": "Copy and share this link:",
+      "loginOverride": "Login override",
+      "resetPassword": "Reset password",
+      "title": "Security",
+      "whatDoTheButtonsDo": "Click the button to generate an emergency link:"
+    }
   },
   "contacts": {
     "addContact": "Add contact",

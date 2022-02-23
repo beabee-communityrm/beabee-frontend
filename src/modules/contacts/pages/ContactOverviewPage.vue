@@ -116,9 +116,32 @@
         </AppInfoListItem>
       </AppInfoList>
     </div>
-  </div>
-  <div v-if="contact" class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
-    <AppHeading>{{ t('contactOverview.security') }}</AppHeading>
+    <div>
+      <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
+      <p>{{ t('contactOverview.security.whatDoTheButtonsDo') }}</p>
+      <form @submit.prevent="handleSecurityAction">
+        <AppButton
+          type="submit"
+          variant="link"
+          :disabled="!securityButtonsEnabled"
+          :loading="loading"
+          class="mt-2"
+          >{{ t('contactOverview.security.loginOverride') }}</AppButton
+        >
+        <AppButton
+          type="submit"
+          variant="link"
+          :disabled="!securityButtonsEnabled"
+          :loading="loading"
+          class="mt-2 ml-6"
+          >{{ t('contactOverview.security.resetPassword') }}</AppButton
+        >
+      </form>
+      <div v-if="securityLink" class="mt-4">
+        <p class="mt-4">{{ t('contactOverview.security.instructions') }}</p>
+        <AppInput readonly :value="securityLink" class="mt-2"></AppInput>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -151,7 +174,9 @@ const contact = ref<GetMemberDataWith<
   'profile' | 'contribution' | 'roles'
 > | null>(null);
 const loading = ref(false);
+const securityButtonsEnabled = ref(true);
 const contactAnnotations = reactive({ notes: '', description: '' });
+const securityLink = ref('');
 
 async function handleFormSubmit() {
   loading.value = true;
@@ -164,6 +189,17 @@ async function handleFormSubmit() {
   }
 }
 
+async function handleSecurityAction() {
+  securityButtonsEnabled.value = false;
+  loading.value = true;
+  try {
+    const response = await (() => 'https://reset-link.com')();
+    securityLink.value = response;
+  } finally {
+    loading.value = false;
+  }
+}
+
 onBeforeMount(async () => {
   contact.value = await fetchMember(props.contact.id, [
     'profile',
@@ -171,5 +207,6 @@ onBeforeMount(async () => {
     'roles',
   ]);
   loading.value = false;
+  securityButtonsEnabled.value = true;
 });
 </script>

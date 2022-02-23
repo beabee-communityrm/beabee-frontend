@@ -39,7 +39,8 @@
     "contribution": "Beitrag",
     "information": "Information",
     "overview": "Überblick",
-    "roles": "Rolle"
+    "roles": "Rolle",
+    "security": {}
   },
   "contacts": {
     "addContact": "Kontakt hinzufügen",
