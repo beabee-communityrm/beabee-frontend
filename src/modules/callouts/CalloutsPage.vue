@@ -53,13 +53,18 @@
           >
         </td>
         <td class="md:py-4 md:px-5 whitespace-nowrap text-body-80 md:text-body">
-          {{
-            callout.expires
-              ? t('common.timeAgo', {
-                  time: formatDistanceLocale(new Date(), callout.expires),
-                })
-              : '-'
-          }}
+          <time
+            v-if="callout.expires"
+            :datetime="callout.expires.toISOString()"
+            :title="formatLocale(callout.expires, 'PPPppp')"
+          >
+            {{
+              t('common.timeAgo', {
+                time: formatDistanceLocale(new Date(), callout.expires),
+              })
+            }}
+          </time>
+          <span v-else>-</span>
         </td>
         <td
           v-if="callout.hasAnswered"
@@ -91,10 +96,14 @@ import AppSearchInput from '../../components/forms/AppSearchInput.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { fetchCallouts } from '../../utils/api/callout';
 import AppPagination from '../../components/AppPagination.vue';
-import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
+import {
+  formatDistanceLocale,
+  formatLocale,
+} from '../../utils/dates/locale-date-formats';
 import AppToggle from '../../components/forms/AppToggle.vue';
 
 formatDistanceLocale;
+formatLocale;
 
 const { t } = useI18n();
 
