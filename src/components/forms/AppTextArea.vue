@@ -1,9 +1,8 @@
 <template>
-  <label v-if="label" class="block mb-1.5 font-semibold" :for="inputType"
+  <label v-if="label" class="block mb-1.5 font-semibold"
     >{{ formattedLabel }}
   </label>
   <textarea
-    :id="inputType"
     class="
       p-2
       w-full
@@ -11,7 +10,6 @@
       rounded
       focus:outline-none focus:shadow-input
     "
-    :type="inputType"
     :class="dangerClasses"
     :value="modelValue"
     v-bind="$attrs"
@@ -40,7 +38,6 @@ import InfoMessage from '../InfoMessage.vue';
 const props = withDefaults(
   defineProps<{
     modelValue?: string;
-    inputType?: 'text';
     label?: string;
     errorMessage?: string | Ref<string>;
     infoMessage?: string;
@@ -48,7 +45,6 @@ const props = withDefaults(
   }>(),
   {
     modelValue: '',
-    inputType: 'text',
     label: undefined,
     errorMessage: undefined,
     infoMessage: undefined,

@@ -32,7 +32,9 @@
         />
         <AppInfoListItem
           :name="t('contacts.data.deliveryOptIn')"
-          :value="contact.profile.deliveryOptIn"
+          :value="
+            contact.profile.deliveryOptIn ? t('common.yes') : t('common.no')
+          "
         />
         <AppInfoListItem
           :name="t('contacts.data.newsletter')"
@@ -40,7 +42,7 @@
         />
         <AppInfoListItem
           :name="t('contacts.data.groups')"
-          :value="contact.profile.newsletterGroups.join(',')"
+          :value="contact.profile.newsletterGroups.join(', ')"
         />
       </AppInfoList>
     </div>
@@ -63,7 +65,9 @@
         <AppInfoListItem
           v-if="contact.contribution.type === ContributionType.GoCardless"
           :name="t('contacts.data.payingFee')"
-          :value="contact.contribution.payFee"
+          :value="
+            contact.contribution.payFee ? t('common.yes') : t('common.no')
+          "
         />
         <AppInfoListItem
           :name="t('contacts.data.contributionType')"
@@ -122,7 +126,7 @@
         <AppButton
           type="submit"
           variant="link"
-          :disabled="!securityButtonsEnabled"
+          :disabled="securityButtonsDisabled"
           :loading="loading"
           class="mt-2"
           >{{ t('contactOverview.security.loginOverride') }}</AppButton
@@ -130,7 +134,7 @@
         <AppButton
           type="submit"
           variant="link"
-          :disabled="!securityButtonsEnabled"
+          :disabled="securityButtonsDisabled"
           :loading="loading"
           class="mt-2 ml-6"
           >{{ t('contactOverview.security.resetPassword') }}</AppButton
@@ -174,7 +178,7 @@ const contact = ref<GetMemberDataWith<
   'profile' | 'contribution' | 'roles'
 > | null>(null);
 const loading = ref(false);
-const securityButtonsEnabled = ref(true);
+const securityButtonsDisabled = ref(false);
 const contactAnnotations = reactive({ notes: '', description: '' });
 const securityLink = ref('');
 
@@ -190,7 +194,7 @@ async function handleFormSubmit() {
 }
 
 async function handleSecurityAction() {
-  securityButtonsEnabled.value = false;
+  securityButtonsDisabled.value = true;
   loading.value = true;
   try {
     const response = await (() => 'https://reset-link.com')();
@@ -207,6 +211,6 @@ onBeforeMount(async () => {
     'roles',
   ]);
   loading.value = false;
-  securityButtonsEnabled.value = true;
+  securityButtonsDisabled.value = false;
 });
 </script>
