@@ -4,8 +4,9 @@ import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import {
   ContributionInfo,
   GetMemberData,
-  GetMemberDataWithProfile,
+  GetMemberDataWith,
   GetMembersQuery,
+  GetMemberWith,
   Paginated,
   Serial,
   SetContributionData,
@@ -24,6 +25,16 @@ export function toMember(data: any): any {
     ...data,
     joined: toDate(data.joined),
     lastSeen: toDate(data.lastSeen),
+    ...(data.contribution && {
+      contribution: toContrib(data.contribution),
+    }),
+    ...(data.roles && {
+      roles: data.roles.map((role: any) => ({
+        role: role.role,
+        dateAdded: toDate(role.dateAdded),
+        dateExpires: toDate(role.dateExpires),
+      })),
+    }),
   };
 }
 
@@ -38,7 +49,7 @@ function toContrib(data: Serial<ContributionInfo>): ContributionInfo {
 
 export async function fetchMembers(
   query: GetMembersQuery = {}
-): Promise<Paginated<GetMemberDataWithProfile>> {
+): Promise<Paginated<GetMemberDataWith<'profile'>>> {
   // TODO: fix type safety
   const { data } = await axios.get('/member', {
     params: { with: ['profile'], ...query },
@@ -48,18 +59,18 @@ export async function fetchMembers(
     items: data.items.map(toMember),
   };
 }
-
-export async function fetchMember(id: string): Promise<GetMemberData> {
-  const { data } = await axios.get<Serial<GetMemberData>>(`/member/${id}`);
-  return toMember(data);
-}
-
-export async function fetchMemberWithProfile(
-  id: string
-): Promise<GetMemberDataWithProfile> {
-  const { data } = await axios.get<Serial<GetMemberDataWithProfile>>(
-    `/member/${id}?with[]=profile`
-  );
+export async function fetchMember(id: string): Promise<GetMemberData>;
+export async function fetchMember<With extends GetMemberWith>(
+  id: string,
+  _with: readonly With[]
+): Promise<GetMemberDataWith<With>>;
+export async function fetchMember<With extends GetMemberWith>(
+  id: string,
+  _with?: readonly With[]
+): Promise<GetMemberDataWith<With>> {
+  const { data } = await axios.get<Serial<GetMemberData>>(`/member/${id}`, {
+    params: { with: _with },
+  });
   return toMember(data);
 }
 

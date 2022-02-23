@@ -97,7 +97,7 @@ import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import PageTitle from '../../components/PageTitle.vue';
 import {
-  GetMemberDataWithProfile,
+  GetMemberDataWith,
   GetMembersQueryRuleGroup,
   GetSegmentData,
   Paginated,
@@ -182,7 +182,7 @@ const currentSegment = computed({
 
 const segments = ref<GetSegmentData[]>([]);
 const contactsTotal = ref<number | null>(null);
-const contactsTable = ref<Paginated<GetMemberDataWithProfile>>({
+const contactsTable = ref<Paginated<GetMemberDataWith<'profile'>>>({
   total: 0,
   count: 0,
   offset: 0,

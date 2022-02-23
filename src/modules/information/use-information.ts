@@ -4,7 +4,7 @@ import { computed, reactive, ref } from 'vue';
 import i18n from '../../i18n';
 import { UpdateInformation } from './information.interface';
 import { errorGenerator } from '../../utils/form-error-generator';
-import { fetchMemberWithProfile, updateMember } from '../../utils/api/member';
+import { fetchMember, updateMember } from '../../utils/api/member';
 import { fetchJoinSetupContent } from '../../utils/api/content';
 import { JoinSetupContent } from '../../utils/api/api.interface';
 
@@ -74,7 +74,7 @@ const initPage = async (id: string) => {
 
   infoContent.value = await fetchJoinSetupContent();
 
-  const member = await fetchMemberWithProfile(id);
+  const member = await fetchMember(id, ['profile']);
   information.emailAddress = member.email;
   information.firstName = member.firstname;
   information.lastName = member.lastname;

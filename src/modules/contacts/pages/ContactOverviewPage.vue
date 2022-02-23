@@ -115,12 +115,9 @@ import AppButton from '../../../components/forms/AppButton.vue';
 import { onBeforeMount, ref, reactive } from 'vue';
 import {
   GetMemberData,
-  GetMemberDataWithProfile,
+  GetMemberDataWith,
 } from '../../../utils/api/api.interface';
-import {
-  fetchMemberWithProfile,
-  updateMember,
-} from '../../../utils/api/member';
+import { fetchMember, updateMember } from '../../../utils/api/member';
 import AppInfoList from '../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
@@ -133,7 +130,7 @@ const props = defineProps<{
   contact: GetMemberData;
 }>();
 
-const contact = ref<GetMemberDataWithProfile | null>(null);
+const contact = ref<GetMemberDataWith<'profile'> | null>(null);
 const loading = ref(false);
 const contactAnnotations = reactive({ notes: '', description: '' });
 
@@ -149,7 +146,7 @@ async function handleFormSubmit() {
 }
 
 onBeforeMount(async () => {
-  contact.value = await fetchMemberWithProfile(props.contact.id);
+  contact.value = await fetchMember(props.contact.id, ['profile']);
   loading.value = false;
 });
 </script>
