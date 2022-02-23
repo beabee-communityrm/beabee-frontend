@@ -70,22 +70,26 @@
         <b>{{ t('contactOverview.annotation.copy.bold') }}</b>
         {{ t('contactOverview.annotation.copy.end') }}
       </p>
-      <!-- @submit.prevents="" -->
-      <form>
+
+      <form @submit.prevent="handleFormSubmit">
         <AppInput
-          v-model="notesStub"
+          v-model="contactAnnotations.notes"
           input-type="text"
           :label="'Notes'"
           class="mb-4"
         />
         <AppTextArea
-          v-model="notesStub"
+          v-model="contactAnnotations.description"
           input-type="text"
           :label="'Description'"
         />
-        <AppButton type="submit" class="mt-4" variant="link">{{
-          t('form.saveChanges')
-        }}</AppButton>
+        <AppButton
+          type="submit"
+          variant="link"
+          class="mt-4"
+          :loading="loading"
+          >{{ t('form.saveChanges') }}</AppButton
+        >
       </form>
     </div>
 
@@ -108,12 +112,15 @@ import AppHeading from '../../../components/AppHeading.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, reactive } from 'vue';
 import {
   GetMemberData,
   GetMemberDataWithProfile,
 } from '../../../utils/api/api.interface';
-import { fetchMemberWithProfile } from '../../../utils/api/member';
+import {
+  fetchMemberWithProfile,
+  updateMember,
+} from '../../../utils/api/member';
 import AppInfoList from '../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
@@ -127,10 +134,22 @@ const props = defineProps<{
 }>();
 
 const contact = ref<GetMemberDataWithProfile | null>(null);
+const loading = ref(false);
+const contactAnnotations = reactive({ notes: '', description: '' });
 
-let notesStub = '';
+async function handleFormSubmit() {
+  loading.value = true;
+  try {
+    await updateMember(props.contact.id, {
+      profile: { tags: [], ...contactAnnotations },
+    });
+  } finally {
+    loading.value = false;
+  }
+}
 
 onBeforeMount(async () => {
   contact.value = await fetchMemberWithProfile(props.contact.id);
+  loading.value = false;
 });
 </script>
