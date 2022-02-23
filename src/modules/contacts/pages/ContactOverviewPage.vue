@@ -60,10 +60,14 @@
           :name="t('contacts.data.period')"
           :value="contact.contributionPeriod"
         />
-        <AppInfoListItem :name="t('contacts.data.payingFee')" :value="'xxx'" />
+        <AppInfoListItem
+          v-if="contact.contribution.type === ContributionType.GoCardless"
+          :name="t('contacts.data.payingFee')"
+          :value="contact.contribution.payFee"
+        />
         <AppInfoListItem
           :name="t('contacts.data.contributionType')"
-          :value="'xxx'"
+          :value="contact.contribution.type"
         />
       </AppInfoList>
     </div>
@@ -117,6 +121,7 @@ import AppInput from '../../../components/forms/AppInput.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import { onBeforeMount, ref, reactive } from 'vue';
+import { ContributionType } from '../../../utils/enums/contribution-type.enum';
 import {
   GetMemberData,
   GetMemberDataWith,
@@ -134,7 +139,9 @@ const props = defineProps<{
   contact: GetMemberData;
 }>();
 
-const contact = ref<GetMemberDataWith<'profile'> | null>(null);
+const contact = ref<GetMemberDataWith<
+  'profile' | 'contribution' | 'roles'
+> | null>(null);
 const loading = ref(false);
 const contactAnnotations = reactive({ notes: '', description: '' });
 
@@ -150,7 +157,11 @@ async function handleFormSubmit() {
 }
 
 onBeforeMount(async () => {
-  contact.value = await fetchMember(props.contact.id, ['profile']);
+  contact.value = await fetchMember(props.contact.id, [
+    'profile',
+    'contribution',
+    'roles',
+  ]);
   loading.value = false;
 });
 </script>
