@@ -12,43 +12,35 @@
       <div class="w-full lg:w-auto mr-8 mb-6">
         <ul>
           <li>
-            <a class="text-base font-semibold" :href="newsroomLink">{{
-              newsroomName
+            <a class="text-base font-semibold" :href="generalContent.siteUrl">{{
+              generalContent.organisationName
             }}</a>
           </li>
           <li>&mdash;</li>
-          <li>Contact us at</li>
+          <li>{{ t('footer.contactUs') }}</li>
           <li>
-            <a :href="'mailto:' + newsroomEmail">{{ newsroomEmail }}</a>
+            <a :href="'mailto:' + generalContent.supportEmail">{{
+              generalContent.supportEmail
+            }}</a>
           </li>
         </ul>
       </div>
       <div class="mr-8 mb-6">
         <ul>
           <li>
-            <a href="#">{{ t('footer.impressum') }}</a>
+            <a :href="generalContent.privacyLink">{{
+              t('footer.privacyPolicy')
+            }}</a>
           </li>
-          <li>
-            <a href="#">{{ t('footer.privacyPolicy') }}</a>
-          </li>
-          <li>
-            <a href="#">{{ t('footer.terms') }}</a>
+          <li v-if="generalContent.termsLink">
+            <a :href="generalContent.termsLink">{{ t('footer.terms') }}</a>
           </li>
         </ul>
       </div>
       <div class="mr-8 mb-6">
         <ul>
-          <li>
-            <a href="#">{{ t('footer.memberships') }}</a>
-          </li>
-          <li>
-            <a href="#">{{ t('footer.codeOfConduct') }}</a>
-          </li>
-          <li>
-            <a href="#">{{ t('footer.faq') }}</a>
-          </li>
-          <li>
-            <a href="#">{{ t('footer.contacts') }}</a>
+          <li v-for="item in generalContent.footerLinks" :key="item.url">
+            <a :href="item.url">{{ item.text }}</a>
           </li>
         </ul>
       </div>
@@ -74,9 +66,7 @@
 <script lang="ts" setup>
 import { canAdmin } from '../utils/currentUserCan';
 import { useI18n } from 'vue-i18n';
-const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
-const newsroomLink = import.meta.env.VITE_NEWSROOM_LINK;
-const newsroomEmail = import.meta.env.VITE_NEWSROOM_EMAIL;
+import { generalContent } from '../store';
 
 const { t } = useI18n();
 </script>

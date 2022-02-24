@@ -24,9 +24,11 @@
           h-10
           cursor-pointer
         "
-        :class="{
-          'bg-link text-white': period.name === selectedPeriod,
-        }"
+        :class="
+          period.name === selectedPeriod
+            ? 'bg-link text-white'
+            : 'hover:bg-link-10'
+        "
       >
         {{
           period.name === 'monthly' ? t('common.monthly') : t('common.annually')

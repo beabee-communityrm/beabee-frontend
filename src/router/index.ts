@@ -6,7 +6,8 @@ import { authRoute } from '../modules/auth/auth.route';
 import { themeRoute } from '../modules/theme/theme.route';
 import { contributionRoute } from '../modules/contribution/contribution.route';
 import { contactsRoute } from '../modules/contacts/contacts.route';
-import { currentUser, initialUserPromise } from '../store';
+import { currentUser, initStore, generalContent } from '../store';
+import { calloutsRoute } from '../modules/callouts/callouts.route';
 
 // routes
 
@@ -18,6 +19,7 @@ const routes: RouteRecordRaw[] = [
   ...themeRoute,
   ...contributionRoute,
   ...contactsRoute,
+  ...calloutsRoute,
 ];
 
 const router = createRouter({
@@ -29,13 +31,12 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
-  document.title = to.meta.pageTitle
-    ? to.meta.pageTitle + ' - ' + newsroomName
-    : newsroomName;
+  // Block route for initial store load, this will only happen once
+  await initStore;
 
-  // Block route for initial user load, this will only happen once
-  await initialUserPromise;
+  document.title = to.meta.pageTitle
+    ? to.meta.pageTitle + ' - ' + generalContent.value.organisationName
+    : generalContent.value.organisationName;
 
   const user = currentUser.value;
 
