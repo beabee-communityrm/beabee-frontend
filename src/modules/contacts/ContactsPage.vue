@@ -21,12 +21,12 @@
         class="w-full mt-2 whitespace-nowrap"
       >
         <template #firstname="{ item }">
-          <a
-            :href="'/members/' + item.id"
+          <router-link
+            :to="'/contacts/' + item.id"
             class="text-base text-link font-bold"
           >
             {{ `${item.firstname} ${item.lastname}`.trim() || item.email }}
-          </a>
+          </router-link>
           <p v-if="item.profile.description" class="whitespace-normal mt-1">
             {{ item.profile.description }}
           </p>
@@ -97,8 +97,8 @@ import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import PageTitle from '../../components/PageTitle.vue';
 import {
-  GetMemberDataWithProfile,
   GetMembersQuery,
+  GetMemberDataWith,
   GetSegmentData,
   Paginated,
 } from '../../utils/api/api.interface';
@@ -179,7 +179,7 @@ const currentSegment = computed({
 
 const segments = ref<GetSegmentData[]>([]);
 const contactsTotal = ref<number | null>(null);
-const contactsTable = ref<Paginated<GetMemberDataWithProfile>>({
+const contactsTable = ref<Paginated<GetMemberDataWith<'profile'>>>({
   total: 0,
   count: 0,
   offset: 0,

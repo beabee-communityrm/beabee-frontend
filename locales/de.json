@@ -17,6 +17,11 @@
     "new": "neu!",
     "no": "Nein",
     "participate": "Teilnehmen",
+    "role": {
+      "admin": "Admin",
+      "member": "Mitglied",
+      "superadmin": "Überadmin"
+    },
     "thankYou": "Vielen Dank!",
     "timeIn": "in {time}",
     "until": "bis",
@@ -28,10 +33,14 @@
   },
   "contactOverview": {
     "about": "Über",
+    "annotation": {
+      "copy": {}
+    },
     "contribution": "Beitrag",
     "information": "Information",
     "overview": "Überblick",
-    "roles": "Rolle"
+    "roles": "Rolle",
+    "security": {}
   },
   "contacts": {
     "addContact": "Kontakt hinzufügen",
@@ -39,17 +48,24 @@
     "allContacts": "Alle Kontakte",
     "data": {
       "amount": "Betrag",
-      "contribuiontType": "Zahlungsart",
       "contribution": "Beitrag",
+      "contributionType": "Zahlungsart",
       "deliveryOptIn": "Postsendung",
       "description": "Beschreibung",
       "email": "E-Mail",
+      "groups": "Gruppe",
       "joined": "Mitglied seit",
       "lastSeen": "Zuletzt angemeldet",
       "name": "Name",
+      "newsletter": "Newsletter",
       "notes": "Notizen",
       "payingFee": "Übernimmt Transaktionskosten?",
       "period": "Zeitraum",
+      "phone": "Telefon",
+      "roles": "Rolle",
+      "rolesCopy": {
+        "today": "heute"
+      },
       "tags": "Tags"
     },
     "noResults": "Keine Kontakte gefunden",
@@ -90,13 +106,9 @@
     "willRenewWithNewAmount": "Ihre Mitgliedschaft verlängert sich am {renewalDate} automatisch. Ihr Beitrag ist dann {nextAmount}."
   },
   "footer": {
-    "codeOfConduct": "Verhaltenskodex",
     "contacts": "Kontakte",
-    "faq": "FAQs",
     "handbookResources": "Handbuch & Ressourcen",
-    "impressum": "Impressum",
     "joinCommunity": "Mitglied werden",
-    "memberships": "Mitgliedschaften",
     "privacyPolicy": "Datenschutzerklärung",
     "terms": "Allgemeine Geschäftsbedingungen"
   },
