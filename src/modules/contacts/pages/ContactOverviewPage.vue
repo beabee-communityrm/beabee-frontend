@@ -110,11 +110,11 @@
       <AppInfoList v-for="role in contact.roles" :key="role.role">
         <AppInfoListItem :name="t(`common.role.${role.role}`)">
           <AppRoundBadge :type="role.dateExpires ? 'warning' : 'success'" />
-          {{ formatLocale(role.dateAdded, 'P') }}
+          {{ formatLocale(role.dateAdded, 'P') + ' → ' }}
           {{
             role.dateExpires
-              ? ' → ' + formatLocale(role.dateExpires, 'P')
-              : ' onwards'
+              ? formatLocale(role.dateExpires, 'P')
+              : t('contacts.data.rolesCopy.today')
           }}
         </AppInfoListItem>
       </AppInfoList>

@@ -82,6 +82,9 @@
       "period": "Period",
       "phone": "Phone",
       "roles": "Roles",
+      "rolesCopy": {
+        "today": "present"
+      },
       "tags": "Tags"
     },
     "noResults": "No contacts found",
