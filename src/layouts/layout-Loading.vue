@@ -21,7 +21,6 @@
 
 <script lang="ts" setup>
 import AuthBox from '../modules/auth/AuthBox.vue';
-import AuthLayout from './AuthLayout.vue';
 
 const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
 </script>
