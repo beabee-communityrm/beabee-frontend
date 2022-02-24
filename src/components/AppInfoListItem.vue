@@ -1,10 +1,16 @@
 <template>
   <dd class="text-right text-sm">{{ name }}</dd>
-  <dt class="font-bold">{{ value }}</dt>
+  <dt class="font-bold">
+    <slot>
+      {{ valueWithDefault }}
+    </slot>
+  </dt>
 </template>
 <script lang="ts" setup>
-defineProps<{
+import { computed } from '@vue/reactivity';
+const props = defineProps<{
   name: string;
-  value: any;
+  value?: unknown;
 }>();
+const valueWithDefault = computed(() => (props.value ? `${props.value}` : '-'));
 </script>

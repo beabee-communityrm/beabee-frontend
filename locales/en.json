@@ -25,6 +25,11 @@
     "new": "new!",
     "no": "No",
     "participate": "Participate",
+    "role": {
+      "admin": "Admin",
+      "member": "Member",
+      "superadmin": "Super Admin"
+    },
     "thankYou": "Thank you!",
     "timeAgo": "{time} ago",
     "timeIn": "in {time}",
@@ -37,11 +42,24 @@
   },
   "contactOverview": {
     "about": "About",
+    "annotation": {
+      "copy": {
+        "begin": "All information added in this section is",
+        "bold": "visible for admins only.",
+        "end": "Members will never see these in their profile or member area."
+      }
+    },
     "contribution": "Contribution",
     "information": "Information",
     "overview": "Overview",
     "roles": "Roles",
-    "security": "Security"
+    "security": {
+      "instructions": "Copy and share this link:",
+      "loginOverride": "Login override",
+      "resetPassword": "Reset password",
+      "title": "Security",
+      "whatDoTheButtonsDo": "Click the button to generate an emergency link:"
+    }
   },
   "contacts": {
     "addContact": "Add contact",
@@ -64,6 +82,9 @@
       "period": "Period",
       "phone": "Phone",
       "roles": "Roles",
+      "rolesCopy": {
+        "today": "present"
+      },
       "tags": "Tags"
     },
     "noResults": "No contacts found",
