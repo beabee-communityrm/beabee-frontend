@@ -17,7 +17,7 @@
             }}</a>
           </li>
           <li>&mdash;</li>
-          <li>Contact us at</li>
+          <li>{{ t('footer.contactUs') }}</li>
           <li>
             <a :href="'mailto:' + generalContent.supportEmail">{{
               generalContent.supportEmail
@@ -28,29 +28,19 @@
       <div class="mr-8 mb-6">
         <ul>
           <li>
-            <a href="#">{{ t('footer.impressum') }}</a>
+            <a :href="generalContent.privacyLink">{{
+              t('footer.privacyPolicy')
+            }}</a>
           </li>
-          <li>
-            <a href="#">{{ t('footer.privacyPolicy') }}</a>
-          </li>
-          <li>
-            <a href="#">{{ t('footer.terms') }}</a>
+          <li v-if="generalContent.termsLink">
+            <a :href="generalContent.termsLink">{{ t('footer.terms') }}</a>
           </li>
         </ul>
       </div>
       <div class="mr-8 mb-6">
         <ul>
-          <li>
-            <a href="#">{{ t('footer.memberships') }}</a>
-          </li>
-          <li>
-            <a href="#">{{ t('footer.codeOfConduct') }}</a>
-          </li>
-          <li>
-            <a href="#">{{ t('footer.faq') }}</a>
-          </li>
-          <li>
-            <a href="#">{{ t('footer.contacts') }}</a>
+          <li v-for="item in generalContent.footerLinks" :key="item.url">
+            <a :href="item.url">{{ item.text }}</a>
           </li>
         </ul>
       </div>
