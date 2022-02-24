@@ -136,6 +136,14 @@ export interface SetContributionData extends UpdateContributionData {
   period: ContributionPeriod;
 }
 
+export interface GetPaymentData {
+  chargeDate: string;
+  amount: number;
+  status: string;
+}
+
+export type GetPaymentsQuery = GetPaginatedQuery<'chargeDate'>;
+
 export interface LoginData {
   email: string;
   password: string;

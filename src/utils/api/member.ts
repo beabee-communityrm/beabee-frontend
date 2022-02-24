@@ -7,6 +7,8 @@ import {
   GetMemberDataWith,
   GetMembersQuery,
   GetMemberWith,
+  GetPaymentData,
+  GetPaymentsQuery,
   Paginated,
   Serial,
   SetContributionData,
@@ -157,4 +159,18 @@ export async function completeUpdatePaymentSource(
     { redirectFlowId }
   );
   return toContrib(data);
+}
+
+export async function fetchPayments(
+  query: GetPaymentsQuery
+): Promise<Paginated<GetPaymentData>> {
+  const { data } = await axios.get('/member/me/payment', { params: query });
+  return {
+    ...data,
+    items: data.items.map((item: any) => ({
+      chargeDate: toDate(item.chargeDate),
+      amount: item.amount,
+      status: item.status,
+    })),
+  };
 }
