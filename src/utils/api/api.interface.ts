@@ -16,6 +16,27 @@ export type Serial<T> = {
 
 export type PermissionType = 'member' | 'admin' | 'superadmin';
 
+type GetPaginatedQueryRuleOperator = 'equal' | 'contains';
+
+interface GetPaginatedQueryRuleGroup<T> {
+  condition: 'AND' | 'OR';
+  rules: (GetPaginatedQueryRuleGroup<T> | GetPaginatedQueryRule<T>)[];
+}
+
+interface GetPaginatedQueryRule<T> {
+  field: T;
+  operator: GetPaginatedQueryRuleOperator;
+  value: string;
+}
+
+export interface GetPaginatedQuery<T> {
+  limit?: number;
+  offset?: number;
+  sort?: string;
+  order?: 'ASC' | 'DESC';
+  rules?: GetPaginatedQueryRuleGroup<T>;
+}
+
 export interface Paginated<T> {
   items: T[];
   offset: number;
@@ -73,24 +94,9 @@ export type GetMemberDataWith<With extends GetMemberWith> = GetMemberData &
   ('contribution' extends With ? { contribution: ContributionInfo } : Noop) &
   ('roles' extends With ? { roles: MemberRoleData[] } : Noop);
 
-export interface GetMembersQuery {
-  limit?: number;
-  offset?: number;
-  sort?: string;
-  order?: 'ASC' | 'DESC';
-  rules?: GetMembersQueryRuleGroup;
-}
-
-export interface GetMembersQueryRuleGroup {
-  condition: 'AND' | 'OR';
-  rules: (GetMembersQueryRuleGroup | GetMembersQueryRule)[];
-}
-
-export interface GetMembersQueryRule {
-  field: 'firstname' | 'lastname' | 'email';
-  operator: 'contains';
-  value: string;
-}
+export type GetMembersQuery = GetPaginatedQuery<
+  'firstname' | 'lastname' | 'email'
+>;
 
 export type UpdateMemberProfileData = Partial<MemberProfileData>;
 
@@ -177,13 +183,24 @@ export interface ProfileContent {
   introMessage: string;
 }
 
-export interface BasicCalloutData {
+export interface GetBasicCalloutData {
   slug: string;
   title: string;
   excerpt: string;
   image?: string;
   starts?: Date;
   expires?: Date;
+  hasAnswered?: boolean;
+}
+
+export enum CalloutStatus {
+  Open = 'open',
+  Finished = 'finished',
+}
+
+export interface GetCalloutsQuery
+  extends GetPaginatedQuery<'title' | 'status' | 'answeredBy'> {
+  hasAnswered?: string;
 }
 
 export enum NoticeStatus {
