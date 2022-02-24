@@ -109,7 +109,7 @@
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
       <AppInfoList v-for="role in contact.roles" :key="role.role">
         <AppInfoListItem :name="t(`common.role.${role.role}`)">
-          <AppRoundBadge :type="role.dateExpires ? 'warning' : 'success'" />
+          <AppRoundBadge :type="isRoleCurrent(role) ? 'success' : 'warning'" />
           {{ formatLocale(role.dateAdded, 'P') + ' → ' }}
           {{
             role.dateExpires
@@ -160,6 +160,7 @@ import { ContributionType } from '../../../utils/enums/contribution-type.enum';
 import {
   GetMemberData,
   GetMemberDataWith,
+  MemberRoleData,
 } from '../../../utils/api/api.interface';
 import { fetchMember, updateMember } from '../../../utils/api/member';
 import AppInfoList from '../../../components/AppInfoList.vue';
@@ -203,6 +204,19 @@ async function handleSecurityAction() {
     loading.value = false;
   }
 }
+
+const isRoleCurrent = (role: MemberRoleData): boolean => {
+  const now = new Date();
+  const roleWasAddedInThePast = role.dateAdded < now;
+  const roleHasNoExpiryDate = !role.dateExpires;
+  const roleExpiryDateInTheFuture = role.dateExpires
+    ? role.dateExpires > now
+    : false;
+  return roleWasAddedInThePast &&
+    (roleHasNoExpiryDate || roleExpiryDateInTheFuture)
+    ? true
+    : false;
+};
 
 onBeforeMount(async () => {
   contact.value = await fetchMember(props.contact.id, [
