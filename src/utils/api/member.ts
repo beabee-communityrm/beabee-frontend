@@ -162,9 +162,10 @@ export async function completeUpdatePaymentSource(
 }
 
 export async function fetchPayments(
+  id: string,
   query: GetPaymentsQuery
 ): Promise<Paginated<GetPaymentData>> {
-  const { data } = await axios.get('/member/me/payment', { params: query });
+  const { data } = await axios.get(`/member/${id}/payment`, { params: query });
   return {
     ...data,
     items: data.items.map((item: any) => ({
