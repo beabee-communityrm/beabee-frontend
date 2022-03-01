@@ -1,6 +1,6 @@
 <template>
   <table class="font-semibold">
-    <thead class="text-sm border-b border-primary-20">
+    <thead v-if="!hideHeaders" class="text-sm border-b border-primary-20">
       <tr>
         <th
           v-for="(header, i) in headers"
@@ -56,6 +56,7 @@ const props = defineProps<{
   sort: Sort;
   headers: Header[];
   items: any[]; // TODO: improve typing
+  hideHeaders: boolean;
 }>();
 
 const emit = defineEmits(['update:sort']);

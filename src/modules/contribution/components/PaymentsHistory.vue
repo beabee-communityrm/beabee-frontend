@@ -5,6 +5,7 @@
       :sort="{ by: 'chargeDate', type: SortType.Desc }"
       :headers="headers"
       :items="paymentsHistoryTable.items"
+      :hide-headers="true"
       class="w-full"
     >
       <template #chargeDate="{ value }">
