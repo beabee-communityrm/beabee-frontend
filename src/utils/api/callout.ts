@@ -4,6 +4,7 @@ import {
   GetBasicCalloutData,
   GetCalloutsQuery,
   Paginated,
+  GetMoreCalloutData,
   Serial,
 } from './api.interface';
 
@@ -14,25 +15,39 @@ function toDate(s: string | undefined): Date | undefined {
   return s ? parseISO(s) : undefined;
 }
 
-export function toCallout(
-  data: Serial<GetBasicCalloutData>
-): GetBasicCalloutData {
+function toCallout<
+  S extends Serial<any>,
+  T extends S extends Serial<infer U>
+    ? U extends GetBasicCalloutData
+      ? U
+      : never
+    : never
+>(callout: S): T {
   return {
-    ...data,
-    starts: toDate(data.starts),
-    expires: toDate(data.expires),
+    ...callout,
+    starts: toDate(callout.starts),
+    expires: toDate(callout.expires),
   };
 }
 
 export async function fetchCallouts(
   query?: GetCalloutsQuery
 ): Promise<Paginated<GetBasicCalloutData>> {
-  const { data } = await axios.get('/callout', {
-    params: query,
-  });
-
+  const { data } = await axios.get<Paginated<Serial<GetBasicCalloutData>>>(
+    '/callout',
+    {
+      params: query,
+    }
+  );
   return {
     ...data,
     items: data.items.map(toCallout),
   };
+}
+
+export async function fetchCallout(id: string): Promise<GetMoreCalloutData> {
+  const { data } = await axios.get<Serial<GetMoreCalloutData>>(
+    '/callout/' + id
+  );
+  return toCallout(data);
 }
