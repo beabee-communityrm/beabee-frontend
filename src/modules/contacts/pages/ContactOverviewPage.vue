@@ -226,8 +226,8 @@ onBeforeMount(async () => {
     'contribution',
     'roles',
   ]);
-  contactAnnotations.notes = contact.value.profile.notes as string;
-  contactAnnotations.description = contact.value.profile.description as string;
+  contactAnnotations.notes = contact.value.profile.notes || '';
+  contactAnnotations.description = contact.value.profile.description || '';
   loading.value = false;
   securityButtonsDisabled.value = false;
 });
