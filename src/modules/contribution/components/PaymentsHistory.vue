@@ -51,7 +51,7 @@ const paymentsHistoryTable = ref<Paginated<GetPaymentData>>({
   count: 0,
   total: 0,
 });
-const pageSize = 3;
+const pageSize = 10;
 const currentPage = ref(0);
 const totalPages = computed(() =>
   Math.ceil(paymentsHistoryTable.value.total / pageSize)

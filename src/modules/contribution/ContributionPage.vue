@@ -88,7 +88,7 @@
         />
       </template>
     </div>
-    <PaymentsHistory id="me" />
+    <PaymentsHistory id="me" class="lg:ml-10" />
   </div>
 
   <div class="text-center md:hidden">
