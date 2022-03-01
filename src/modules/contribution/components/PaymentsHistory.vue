@@ -14,11 +14,13 @@
         ><b>{{ n(value, 'currency') }}</b></template
       >
     </AppTable>
-    <AppPagination
-      v-model="currentPage"
-      :total-pages="totalPages"
-      class="mt-6"
-    />
+    <div class="flex w-full justify-center">
+      <AppPagination
+        v-model="currentPage"
+        :total-pages="totalPages"
+        class="mt-6"
+      />
+    </div>
   </div>
 </template>
 
