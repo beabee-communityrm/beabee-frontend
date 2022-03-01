@@ -1,6 +1,8 @@
 <template>
   <div>
-    <SectionTitle class="mb-2">Payment history </SectionTitle>
+    <SectionTitle class="mb-2">{{
+      t('contribution.paymentHistory.title')
+    }}</SectionTitle>
     <AppTable
       :sort="{ by: 'chargeDate', type: SortType.Desc }"
       :headers="headers"

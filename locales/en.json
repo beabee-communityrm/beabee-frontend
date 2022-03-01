@@ -108,7 +108,8 @@
     "nextAmountChanging": "Your contribution will change to {nextAmount} on {renewalDate}.",
     "paymentHistory": {
       "amount": "Amount",
-      "date": "Date"
+      "date": "Date",
+      "title": "Payment history"
     },
     "paymentSourceUpdateError": "You can't update your bank account at the moment as you have a payment pending",
     "prorateDecreaseMessage": "You have {monthsLeft} {months} left on your current contribution, your new contribution will start on {renewalDate}.",
