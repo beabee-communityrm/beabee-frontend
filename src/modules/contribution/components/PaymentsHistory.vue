@@ -36,7 +36,7 @@ import { Paginated } from '../../../utils/api/api.interface';
 import { GetPaymentData } from '../../../utils/api/api.interface';
 import { Header, SortType } from '../../../components/table/table.interface';
 
-const { n } = useI18n();
+const { t, n } = useI18n();
 
 const props = defineProps<{
   id: string;
@@ -55,8 +55,12 @@ const totalPages = computed(() =>
 );
 
 const headers: Header[] = [
-  { value: 'chargeDate', text: 'Date' },
-  { value: 'amount', text: 'Amount', align: 'right' },
+  { value: 'chargeDate', text: t('contribution.paymentHistory.date') },
+  {
+    value: 'amount',
+    text: t('contribution.paymentHistory.amount'),
+    align: 'right',
+  },
 ];
 
 watchEffect(async () => {
