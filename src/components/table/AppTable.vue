@@ -7,7 +7,7 @@
           :key="i"
           class="p-2 relative"
           :class="{ 'cursor-pointer': header.sortable }"
-          align="left"
+          :align="header.align || 'left'"
           :style="{ width: header.width }"
           @click="sortBy(header)"
         >

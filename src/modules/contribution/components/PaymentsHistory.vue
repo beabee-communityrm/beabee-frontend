@@ -1,0 +1,71 @@
+<template>
+  <div>
+    <SectionTitle class="mb-2">Payment history </SectionTitle>
+    <AppTable
+      :sort="{ by: 'chargeDate', type: SortType.Desc }"
+      :headers="headers"
+      :items="paymentsHistoryTable.items"
+      class="w-full"
+    >
+      <template #chargeDate="{ value }">
+        {{ formatLocale(value, 'PPP') }}
+      </template>
+      <template #amount="{ value }"
+        ><b>{{ n(value, 'currency') }}</b></template
+      >
+    </AppTable>
+    <AppPagination
+      v-model="currentPage"
+      :total-pages="totalPages"
+      class="mt-6"
+    />
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
+import { computed, ref, watchEffect } from 'vue';
+
+import AppTable from '../../../components/table/AppTable.vue';
+import SectionTitle from '../../../components/SectionTitle.vue';
+import AppPagination from '../../../components/AppPagination.vue';
+import { formatLocale } from '../../../utils/dates/locale-date-formats';
+
+import { fetchPayments } from '../../../utils/api/member';
+import { Paginated } from '../../../utils/api/api.interface';
+import { GetPaymentData } from '../../../utils/api/api.interface';
+import { Header, SortType } from '../../../components/table/table.interface';
+
+const { n } = useI18n();
+
+const props = defineProps<{
+  id: string;
+}>();
+
+const paymentsHistoryTable = ref<Paginated<GetPaymentData>>({
+  items: [],
+  offset: 0,
+  count: 0,
+  total: 0,
+});
+const pageSize = 3;
+const currentPage = ref(0);
+const totalPages = computed(() =>
+  Math.ceil(paymentsHistoryTable.value.total / pageSize)
+);
+
+const headers: Header[] = [
+  { value: 'chargeDate', text: 'Date' },
+  { value: 'amount', text: 'Amount', align: 'right' },
+];
+
+watchEffect(async () => {
+  const query = {
+    offset: currentPage.value * pageSize,
+    limit: pageSize,
+    sort: 'chargeDate',
+    order: SortType.Desc,
+  };
+  paymentsHistoryTable.value = await fetchPayments(props.id, query);
+});
+</script>

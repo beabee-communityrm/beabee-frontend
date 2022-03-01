@@ -88,25 +88,7 @@
         />
       </template>
     </div>
-    <div>
-      <SectionTitle class="mb-2">Payment history </SectionTitle>
-      <AppTable
-        :sort="{ by: 'chargeDate', type: SortType.Desc }"
-        :headers="[
-          { value: 'chargeDate', text: 'date' },
-          { value: 'amount', text: 'amt', align: 'right' },
-        ]"
-        :items="[
-          { chargeDate: 'Feb 2022', amount: 10 },
-          { chargeDate: 'Jan 2022', amount: 11 },
-        ]"
-        class="w-full"
-      >
-        <template #amount="{ value }"
-          ><b>{{ n(value, 'currency') }}</b></template
-        >
-      </AppTable>
-    </div>
+    <PaymentsHistory id="me" />
   </div>
 
   <div class="text-center md:hidden">
@@ -134,11 +116,9 @@ import AppButton from '../../components/forms/AppButton.vue';
 import ProrateContribution from './components/ProrateContribution.vue';
 import AppAlert from '../../components/AppAlert.vue';
 import MessageBox from '../../components/MessageBox.vue';
+import PaymentsHistory from './components/PaymentsHistory.vue';
 
-import AppTable from '../../components/table/AppTable.vue';
-import { SortType } from '../../components/table/table.interface';
-
-const { t, n } = useI18n();
+const { t } = useI18n();
 
 const route = useRoute();
 const updatedPaymentSource = route.query.updatedPaymentSource !== undefined;
