@@ -3,6 +3,9 @@ import { ContributionType } from '../enums/contribution-type.enum';
 import { MembershipStatus } from '../enums/membership-status.enum';
 import { NewsletterStatus } from '../enums/newsletter-status.enum';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface Noop {}
+
 export type Serial<T> = {
   [P in keyof T]: T[P] extends Date
     ? string
@@ -12,6 +15,27 @@ export type Serial<T> = {
 };
 
 export type PermissionType = 'member' | 'admin' | 'superadmin';
+
+type GetPaginatedQueryRuleOperator = 'equal' | 'contains';
+
+interface GetPaginatedQueryRuleGroup<T> {
+  condition: 'AND' | 'OR';
+  rules: (GetPaginatedQueryRuleGroup<T> | GetPaginatedQueryRule<T>)[];
+}
+
+interface GetPaginatedQueryRule<T> {
+  field: T;
+  operator: GetPaginatedQueryRuleOperator;
+  value: string;
+}
+
+export interface GetPaginatedQuery<T> {
+  limit?: number;
+  offset?: number;
+  sort?: string;
+  order?: 'ASC' | 'DESC';
+  rules?: GetPaginatedQueryRuleGroup<T>;
+}
 
 export interface Paginated<T> {
   items: T[];
@@ -48,6 +72,14 @@ interface MemberProfileData {
   description?: string;
 }
 
+export interface MemberRoleData {
+  role: PermissionType;
+  dateAdded: Date;
+  dateExpires: Date | null;
+}
+
+export type GetMemberWith = 'profile' | 'contribution' | 'roles';
+
 export interface GetMemberData extends MemberData {
   id: string;
   joined: Date;
@@ -57,28 +89,14 @@ export interface GetMemberData extends MemberData {
   activeRoles: PermissionType[];
 }
 
-export interface GetMemberDataWithProfile extends GetMemberData {
-  profile: MemberProfileData;
-}
+export type GetMemberDataWith<With extends GetMemberWith> = GetMemberData &
+  ('profile' extends With ? { profile: MemberProfileData } : Noop) &
+  ('contribution' extends With ? { contribution: ContributionInfo } : Noop) &
+  ('roles' extends With ? { roles: MemberRoleData[] } : Noop);
 
-export interface GetMembersQuery {
-  limit?: number;
-  offset?: number;
-  sort?: string;
-  order?: 'ASC' | 'DESC';
-  rules?: GetMembersQueryRuleGroup;
-}
-
-export interface GetMembersQueryRuleGroup {
-  condition: 'AND' | 'OR';
-  rules: (GetMembersQueryRuleGroup | GetMembersQueryRule)[];
-}
-
-export interface GetMembersQueryRule {
-  field: 'firstname' | 'lastname' | 'email';
-  operator: 'contains';
-  value: string;
-}
+export type GetMembersQuery = GetPaginatedQuery<
+  'firstname' | 'lastname' | 'email'
+>;
 
 export type UpdateMemberProfileData = Partial<MemberProfileData>;
 
@@ -117,6 +135,14 @@ export interface UpdateContributionData {
 export interface SetContributionData extends UpdateContributionData {
   period: ContributionPeriod;
 }
+
+export interface GetPaymentData {
+  chargeDate: string;
+  amount: number;
+  status: string;
+}
+
+export type GetPaymentsQuery = GetPaginatedQuery<'chargeDate'>;
 
 export interface LoginData {
   email: string;
@@ -165,13 +191,24 @@ export interface ProfileContent {
   introMessage: string;
 }
 
-export interface BasicCalloutData {
+export interface GetBasicCalloutData {
   slug: string;
   title: string;
   excerpt: string;
   image?: string;
   starts?: Date;
   expires?: Date;
+  hasAnswered?: boolean;
+}
+
+export enum CalloutStatus {
+  Open = 'open',
+  Finished = 'finished',
+}
+
+export interface GetCalloutsQuery
+  extends GetPaginatedQuery<'title' | 'status' | 'answeredBy'> {
+  hasAnswered?: string;
 }
 
 export enum NoticeStatus {
