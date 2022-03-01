@@ -86,12 +86,14 @@
       <form @submit.prevent="handleFormSubmit">
         <AppInput
           v-model="contactAnnotations.notes"
+          :model-value="contactAnnotations.notes"
           input-type="text"
           :label="'Notes'"
           class="mb-4"
         />
         <AppTextArea
           v-model="contactAnnotations.description"
+          :model-value="contactAnnotations.description"
           input-type="text"
           :label="'Description'"
         />
@@ -224,6 +226,8 @@ onBeforeMount(async () => {
     'contribution',
     'roles',
   ]);
+  contactAnnotations.notes = contact.value.profile.notes as string;
+  contactAnnotations.description = contact.value.profile.description as string;
   loading.value = false;
   securityButtonsDisabled.value = false;
 });
