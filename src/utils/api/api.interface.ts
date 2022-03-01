@@ -211,6 +211,15 @@ export interface GetCalloutsQuery
   hasAnswered?: string;
 }
 
+export interface GetMoreCalloutData extends GetBasicCalloutData {
+  templateSchema: {
+    formSchema: any;
+    intro: string;
+    thanksText: string;
+    thanksTitle: string;
+  };
+}
+
 export enum NoticeStatus {
   Open = 'open',
   Finished = 'finished',
