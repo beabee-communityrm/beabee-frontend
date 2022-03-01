@@ -62,6 +62,10 @@ onBeforeMount(async () => {
 
   & .form-control {
     @apply p-2 w-full bg-white border border-primary-40 rounded focus:outline-none focus:shadow-input;
+
+    &.is-invalid {
+      @apply bg-danger-10 border-danger-70;
+    }
   }
 
   & .form-check-input {
@@ -90,6 +94,14 @@ onBeforeMount(async () => {
 
   & .formio-select-autocomplete-input {
     @apply opacity-0 absolute -z-1;
+  }
+
+  & .formio-errors {
+    @apply text-sm font-semibold mt-1.5;
+
+    & .form-text {
+      @apply text-danger;
+    }
   }
 
   & .field-required::after {
