@@ -1,5 +1,5 @@
 <template>
-  <footer class="mt-auto hidden">
+  <footer class="mt-auto">
     <div
       class="
         text-sm
@@ -45,18 +45,21 @@
         </ul>
       </div>
       <div class="xs:w-1/5 xs:ml-auto mb-6">
-        <ul v-if="canAdmin">
-          <li><a class="font-bold" href="">beabee</a></li>
-          <li>
-            <a href="">{{ t('footer.joinCommunity') }}</a>
-          </li>
-          <li>
-            <a href="">{{ t('footer.handbookResources') }}</a>
-          </li>
-        </ul>
-        <ul v-else>
-          <li><a class="font-bold" href="">beabee</a></li>
-          <li>powering independent local newsrooms</li>
+        <ul>
+          <li><a class="font-bold" href="https://beabee.io">beabee</a></li>
+          <template v-if="canAdmin">
+            <li>
+              <a href="https://beabee.io/#Newsletter">{{
+                t('footer.joinCommunity')
+              }}</a>
+            </li>
+            <li class="hidden">
+              <a href="">{{ t('footer.handbookResources') }}</a>
+            </li>
+          </template>
+          <template v-else>
+            <li>{{ t('footer.poweredBy') }}</li>
+          </template>
         </ul>
       </div>
     </div>
