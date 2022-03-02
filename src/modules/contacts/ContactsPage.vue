@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="md:flex">
-    <div class="flex-none hidden md:block" :style="{ flexBasis: '220px' }">
+    <div class="flex-none hidden md:block basis-[220px]">
       <AppVTabs v-model="currentSegment" :items="segmentItems" />
     </div>
     <div class="flex-auto">
