@@ -154,7 +154,8 @@ export interface GeneralContent {
   siteUrl: string;
   supportEmail: string;
   privacyLink: string;
-  termsLink: string;
+  termsLink?: string;
+  impressumLink?: string;
   currencyCode: string;
   footerLinks: { text: string; url: string }[];
 }

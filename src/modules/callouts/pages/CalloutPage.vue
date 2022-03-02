@@ -93,7 +93,7 @@ onBeforeMount(async () => {
   }
 
   & .formio-select-autocomplete-input {
-    @apply opacity-0 absolute -z-1;
+    @apply opacity-0 absolute -z-10;
   }
 
   & .formio-errors {
