@@ -196,6 +196,9 @@ export interface GetBasicCalloutData {
   slug: string;
   title: string;
   excerpt: string;
+  status: CalloutStatus;
+  allowUpdate: boolean;
+  allowMultiple: boolean;
   image?: string;
   starts?: Date;
   expires?: Date;

@@ -37,9 +37,7 @@ export async function fetchCallouts(
 ): Promise<Paginated<GetBasicCalloutData>> {
   const { data } = await axios.get<Paginated<Serial<GetBasicCalloutData>>>(
     '/callout',
-    {
-      params: query,
-    }
+    { params: query }
   );
   return {
     ...data,
