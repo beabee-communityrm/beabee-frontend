@@ -21,3 +21,80 @@
 .content-message a {
   @apply text-link underline;
 }
+
+.callout-form {
+  & .form-group {
+    @apply mb-8 flex flex-col;
+
+    &.formio-component-button {
+      @apply block;
+    }
+  }
+
+  & .col-form-label {
+    @apply block text-xl font-semibold mb-2;
+
+    order: -2;
+  }
+
+  & .form-text {
+    @apply mb-2 text-body-80;
+
+    order: -1;
+  }
+
+  & .formio-editor-read-only-content,
+  & .form-control {
+    @apply p-2 w-full bg-white border border-primary-40 rounded focus:outline-none focus:shadow-input;
+
+    &.is-invalid {
+      @apply bg-danger-10 border-danger-70;
+    }
+  }
+
+  & .form-check-input {
+    accent-color: theme('colors.link.DEFAULT');
+  }
+
+  & .form-check-inline {
+    @apply inline-block mr-4;
+  }
+
+  & .form-check-label {
+    @apply flex align-baseline mb-2;
+
+    & .form-check-input {
+      @apply flex-none mr-2;
+    }
+  }
+
+  & .btn {
+    @apply px-4 text-center cursor-pointer inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative h-10 bg-link text-white;
+
+    &[disabled] {
+      @apply opacity-50 cursor-not-allowed;
+    }
+
+    &:not([disabled]):hover {
+      @apply hover:bg-link-110;
+    }
+  }
+
+  & .formio-select-autocomplete-input {
+    @apply opacity-0 absolute -z-10;
+  }
+
+  & .formio-errors {
+    @apply text-sm font-semibold mt-1.5;
+
+    & .form-text {
+      @apply text-danger;
+    }
+  }
+
+  & .field-required::after {
+    @apply text-danger;
+
+    content: '*';
+  }
+}
