@@ -1,5 +1,5 @@
 <template>
-  <footer class="mt-auto hidden">
+  <footer class="mt-auto">
     <div
       class="
         text-sm
