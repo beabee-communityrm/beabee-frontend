@@ -14,8 +14,8 @@
         right-0
         opacity-30
         bg-black
+        left-[240px]
       "
-      style="left: 240px"
       :class="isMenuVisible ? 'block' : 'hidden'"
       @click="isMenuVisible = false"
     />
@@ -52,9 +52,10 @@
       transition-transform
       -translate-x-full
       md:transform-none
-      menu-container
+      flex-none
+      w-[240px]
     "
-    :class="{ 'is-visible': isMenuVisible }"
+    :class="{ 'top-[68px] translate-x-0': isMenuVisible }"
   >
     <div class="hidden my-12 text-center md:block">
       <!-- logo on bigger screens -->
@@ -89,16 +90,3 @@ function toggleMenu() {
   isMenuVisible.value = !isMenuVisible.value;
 }
 </script>
-
-<style scoped>
-.menu-container {
-  @apply flex-none;
-
-  width: 240px;
-}
-
-.menu-container.is-visible {
-  top: 68px;
-  transform: translateX(0);
-}
-</style>
