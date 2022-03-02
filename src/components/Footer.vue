@@ -35,6 +35,11 @@
           <li v-if="generalContent.termsLink">
             <a :href="generalContent.termsLink">{{ t('footer.terms') }}</a>
           </li>
+          <li v-if="generalContent.impressumLink">
+            <a :href="generalContent.impressumLink">{{
+              t('footer.impressum')
+            }}</a>
+          </li>
         </ul>
       </div>
       <div class="mr-8 mb-6">
