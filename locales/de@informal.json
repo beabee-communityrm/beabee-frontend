@@ -94,9 +94,11 @@
     "willRenewWithNewAmount": "Deine Mitgliedschaft verlängert sich am {renewalDate} automatisch. Dein Beitrag ist dann {nextAmount}."
   },
   "footer": {
+    "contactUs": "Kontaktiere uns unter",
     "contacts": "Kontakte",
     "handbookResources": "Handbuch & Ressourcen",
     "joinCommunity": "Mitglied werden",
+    "poweredBy": "Wir stärken unabhängige Lokalredaktionen.",
     "privacyPolicy": "Datenschutzerklärung",
     "terms": "Allgemeine Geschäftsbedingungen"
   },
