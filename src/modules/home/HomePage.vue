@@ -66,7 +66,7 @@
     </section>
   </div>
 
-  <section class="pt-20 mt-auto max-w-xs md:max-w-sm mx-auto">
+  <section class="hidden pt-20 mt-auto max-w-xs md:max-w-sm mx-auto">
     <ThanksNotice>{{ profileContent.footerMessage }}</ThanksNotice>
   </section>
 </template>
