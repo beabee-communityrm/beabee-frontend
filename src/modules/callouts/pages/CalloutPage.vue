@@ -1,40 +1,95 @@
 <template>
-  <div v-if="callout">
-    <div class="mb-5">
-      <PageTitle :title="callout.title" />
+  <div v-if="callout" class="md:max-w-2xl">
+    <h1 class="text-4xl font-bold mb-8">{{ callout.title }}</h1>
+    <div class="flex justify-between items-center mb-8">
+      <div class="flex items-center text-sm text-body-40 font-semibold">
+        <div>
+          <p class="font-bold uppercase">
+            <span v-if="isOpen" class="text-success">
+              {{ t('callout.status.open') }}
+            </span>
+            <span v-else>{{ t('callout.status.ended') }}</span>
+          </p>
+          <p>
+            {{ isOpen ? 'Ends' : 'On' }}
+            {{
+              callout.expires
+                ? formatDistanceLocale(callout.expires, new Date())
+                : 'xxx'
+            }}
+          </p>
+        </div>
+        <div v-if="hasResponded" class="border-body-40 border-l ml-3 pl-3 w-32">
+          {{ t('callout.youResponded') }}
+        </div>
+      </div>
+      <AppButton v-if="isOpen" icon="share" variant="primaryOutlined">{{
+        t('common.share')
+      }}</AppButton>
     </div>
-    <div class="md:max-w-xl">
-      <div>
-        <div class="relative mb-4 pb-[56.25%]">
-          <img
-            class="absolute w-full h-full object-cover"
-            :src="callout.image"
-          />
-        </div>
-        <div
-          class="mb-4 text-lg pb-4 border-primary-40 border-b"
-          v-html="callout.templateSchema.intro"
+    <div>
+      <div class="relative mb-6 pb-[56.25%]">
+        <img class="absolute w-full h-full object-cover" :src="callout.image" />
+      </div>
+      <div
+        class="text-lg content-message"
+        v-html="callout.templateSchema.intro"
+      />
+      <div
+        v-if="isOpen || hasResponded"
+        class="callout-form mt-10 pt-10 border-primary-40 border-t"
+      >
+        <Form
+          :form="callout.templateSchema.formSchema"
+          :submission="
+            !callout.allowMultiple && hasResponded
+              ? { data: responses.items[0].answers }
+              : undefined
+          "
+          :options="{ readOnly: hasResponded && !callout.allowUpdate }"
         />
-        <div class="callout-form">
-          <Form :form="callout.templateSchema.formSchema" />
-        </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { Form } from 'vue-formio';
+import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import { GetMoreCalloutData } from '../../../utils/api/api.interface';
-import { fetchCallout } from '../../../utils/api/callout';
-import PageTitle from '../../../components/PageTitle.vue';
+import {
+  CalloutStatus,
+  GetCalloutResponseData,
+  GetMoreCalloutData,
+  Paginated,
+} from '../../../utils/api/api.interface';
+import { fetchCallout, fetchResponses } from '../../../utils/api/callout';
+import { formatDistanceLocale } from '../../../utils/dates/locale-date-formats';
+import AppButton from '../../../components/forms/AppButton.vue';
 
 const route = useRoute();
 
+const { t } = useI18n();
+
 const callout = ref<GetMoreCalloutData>();
+const responses = ref<Paginated<GetCalloutResponseData>>();
+
+const isOpen = computed(() => callout.value?.status === CalloutStatus.Open);
+
+const hasResponded = computed(
+  () => !!responses.value && responses.value.count > 0
+);
 
 onBeforeMount(async () => {
-  callout.value = await fetchCallout(route.params.id as string);
+  const calloutId = route.params.id as string;
+  callout.value = await fetchCallout(calloutId);
+  responses.value = await fetchResponses(calloutId, {
+    rules: {
+      condition: 'AND',
+      rules: [{ field: 'member', operator: 'equal', value: 'me' }],
+    },
+    sort: 'createdAt',
+    order: 'DESC',
+  });
 });
 </script>
