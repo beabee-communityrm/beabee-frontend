@@ -5,7 +5,7 @@
     </div>
     <div class="md:max-w-xl">
       <div>
-        <div class="relative mb-4" style="padding-bottom: 56.25%">
+        <div class="relative mb-4 pb-[56.25%]">
           <img
             class="absolute w-full h-full object-cover"
             :src="callout.image"
