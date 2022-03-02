@@ -221,6 +221,23 @@ export interface GetMoreCalloutData extends GetBasicCalloutData {
   };
 }
 
+export type GetCalloutResponsesQuery = GetPaginatedQuery<'member'>;
+
+type CalloutResponseAnswer =
+  | string
+  | boolean
+  | number
+  | null
+  | undefined
+  | Record<string, boolean>;
+type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
+
+export interface GetCalloutResponseData {
+  answers: CalloutResponseAnswers;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export enum NoticeStatus {
   Open = 'open',
   Finished = 'finished',

@@ -6,6 +6,8 @@ import {
   Paginated,
   GetMoreCalloutData,
   Serial,
+  GetCalloutResponseData,
+  GetCalloutResponsesQuery,
 } from './api.interface';
 
 // TODO: dedupe from member
@@ -50,4 +52,22 @@ export async function fetchCallout(id: string): Promise<GetMoreCalloutData> {
     '/callout/' + id
   );
   return toCallout(data);
+}
+
+export async function fetchResponses(
+  id: string,
+  query?: GetCalloutResponsesQuery
+): Promise<Paginated<GetCalloutResponseData>> {
+  const { data } = await axios.get<Paginated<Serial<GetCalloutResponseData>>>(
+    `/callout/${id}/responses`,
+    { params: query }
+  );
+  return {
+    ...data,
+    items: data.items.map((item) => ({
+      ...item,
+      createdAt: toDate(item.createdAt),
+      updatedAt: toDate(item.updatedAt),
+    })),
+  };
 }
