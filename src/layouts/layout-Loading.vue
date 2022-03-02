@@ -9,7 +9,7 @@
       <h1 class="text-2.5xl mb-5">Loading...</h1>
 
       <font-awesome-icon
-        :style="{ fontSize: '60px' }"
+        class="text-[60px]"
         :icon="['fas', 'circle-notch']"
         spin
       />

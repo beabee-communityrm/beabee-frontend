@@ -9,6 +9,7 @@
       shadow
       group
       w-full
+      md:max-w-[19rem]
     "
   >
     <router-link :to="`/callouts/${callout.slug}`" class="flex flex-col h-full">
@@ -91,10 +92,3 @@ onBeforeMount(() => {
   formatDate();
 });
 </script>
-<style scoped>
-@media (min-width: theme('screens.md')) {
-  .callout-card {
-    max-width: 19rem;
-  }
-}
-</style>

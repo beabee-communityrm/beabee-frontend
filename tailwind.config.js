@@ -24,11 +24,8 @@ const bodyFont = fonts.body || '"Open Sans", sans-serif';
 const linkColor = theme.colors.link || theme.colors.primary;
 
 module.exports = {
-  purge: {
-    content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-    safelist: ['bg-success', 'bg-warning', 'bg-danger'],
-  },
-  darkMode: false, // or 'media' or 'class'
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  safelist: ['bg-success', 'bg-warning', 'bg-danger'],
   theme: {
     colors: {
       primary: shades(theme.colors.primary, [5, 10, 20, 40, 70, 80]),
@@ -63,9 +60,6 @@ module.exports = {
         xs: '475px',
         xl: '1400px',
       },
-      zIndex: {
-        '-1': '-1',
-      },
       padding: {
         4.5: '1.125rem',
       },
@@ -80,11 +74,6 @@ module.exports = {
         '2.5xl': '1.75rem',
         '3.5xl': '2rem',
       },
-    },
-  },
-  variants: {
-    extend: {
-      fontWeight: ['hover'],
     },
   },
   plugins: [],

@@ -1,7 +1,7 @@
 <template>
   <div :class="{ relative: showPattern }" class="px-1 md:px-7">
     <template v-if="showPattern">
-      <NoticeBg class="notice-bg absolute w-1/3 right-5 top-2 md:-top-4" />
+      <NoticeBg class="absolute w-1/3 right-5 top-2 md:-top-4" />
     </template>
 
     <header>
@@ -30,9 +30,3 @@ defineProps({
   },
 });
 </script>
-
-<style scoped>
-.notice-bg {
-  max-width: 130px;
-}
-</style>
