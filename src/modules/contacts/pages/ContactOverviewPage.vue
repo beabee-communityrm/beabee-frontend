@@ -121,13 +121,13 @@
         </AppInfoListItem>
       </AppInfoList>
     </div>
-    <div class="hidden">
+    <div class="">
       <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
       <p>{{ t('contactOverview.security.whatDoTheButtonsDo') }}</p>
       <form @submit.prevent="handleSecurityAction">
         <AppButton
           type="submit"
-          variant="link"
+          variant="primaryOutlined"
           :disabled="securityButtonsDisabled"
           :loading="loading"
           class="mt-2"
@@ -135,7 +135,7 @@
         >
         <AppButton
           type="submit"
-          variant="link"
+          variant="primaryOutlined"
           :disabled="securityButtonsDisabled"
           :loading="loading"
           class="mt-2 ml-6"
