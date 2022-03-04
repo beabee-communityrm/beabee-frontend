@@ -1,6 +1,21 @@
 {
+  "callout": {
+    "status": {
+      "ended": "Geschlossen",
+      "open": "Öffnen"
+    },
+    "youResponded": "Sie haben geantwortet ♥"
+  },
   "callouts": {
-    "data": {}
+    "archive": "Archiv",
+    "data": {
+      "callout": "Callout",
+      "endDate": "Enddatum"
+    },
+    "search": "Callouts durchsuchen",
+    "show": "Anzeigen",
+    "showAll": "Alle",
+    "showAnswered": "Beantwortet"
   },
   "common": {
     "annually": "Jährlich",
@@ -22,7 +37,9 @@
       "member": "Mitglied",
       "superadmin": "Überadmin"
     },
+    "share": "Teilen",
     "thankYou": "Vielen Dank!",
+    "timeAgo": "vor {time}",
     "timeIn": "in {time}",
     "until": "bis",
     "year": "Jahr | Jahren",
@@ -34,13 +51,23 @@
   "contactOverview": {
     "about": "Über",
     "annotation": {
-      "copy": {}
+      "copy": {
+        "begin": "Alle hier eingegebenen Information sind",
+        "bold": "nur für Admins sichtbar.",
+        "end": "Mitglieder bekommen das nicht angezeigt."
+      }
     },
     "contribution": "Beitrag",
     "information": "Information",
     "overview": "Überblick",
     "roles": "Rolle",
-    "security": {}
+    "security": {
+      "instructions": "Link kopieren und teilen:",
+      "loginOverride": "Automatischer Login",
+      "resetPassword": "Passwort zurücksetzen",
+      "title": "Sicherheit",
+      "whatDoTheButtonsDo": "Auf den Button klicken, um Link zu erzeugen:"
+    }
   },
   "contacts": {
     "addContact": "Kontakt hinzufügen",
@@ -87,6 +114,11 @@
     "hasPendingPayment": "Ihre Zahlung wird gerade verarbeitet.",
     "manualPayment": "Sie leisten Ihren Beitrag aktuell manuell via Banküberweisung. Richten Sie hier jetzt eine automatische Abbuchung via Lastschrift ein. Dann wird es für Sie leichter, Ihre Beiträge zu verwalten. Und wir bekommen einen besseren Überblick, auf welche Beiträge wir uns monatlich verlassen können.",
     "nextAmountChanging": "Ab dem {renewalDate} ist Ihr Beitrag {nextAmount}.",
+    "paymentHistory": {
+      "amount": "Betrag",
+      "date": "Datum",
+      "title": "Ihre bisherigen Beiträge."
+    },
     "paymentSourceUpdateError": "Sie können Ihre Bankverbindung aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
     "prorateDecreaseMessage": "Ihr Beitrag bleibt noch für {monthsLeft} {months} gleich. Der neue Beitrag wird am {renewalDate} zum ersten Mal eingezogen.",
     "prorateIncreaseMessage": "Ihre Mitgliedschaft läuft noch {monthsLeft} {months} unter diesem Beitrag. Sie können eine Einmalzahlung in Höhe von {oneOffPayment} leisten um Ihre Mitgliedschaft sofort zu erneuern und den Beitrag zu erhöhen.",
