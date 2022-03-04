@@ -1,4 +1,11 @@
 {
+  "callout": {
+    "status": {
+      "ended": "Ended",
+      "open": "Open"
+    },
+    "youResponded": "You replied to this callout ♥"
+  },
   "callouts": {
     "archive": "Archive",
     "data": {
@@ -30,6 +37,7 @@
       "member": "Member",
       "superadmin": "Super Admin"
     },
+    "share": "Share",
     "thankYou": "Thank you!",
     "timeAgo": "{time} ago",
     "timeIn": "in {time}",
