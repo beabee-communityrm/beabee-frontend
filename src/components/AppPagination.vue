@@ -2,10 +2,7 @@
   <ul class="flex items-center -mx-2">
     <li>
       <button
-        :class="
-          isFirst &&
-          'opacity-25 p-2 bg-primary hover:bg-white hover:font-bold hover:border-link'
-        "
+        :class="isFirst && 'opacity-25 p-2'"
         :disabled="isFirst"
         @click="emit('update:modelValue', modelValue - 1)"
       >
@@ -34,10 +31,7 @@
     </template>
     <li>
       <button
-        :class="
-          isLast &&
-          'opacity-25 p-2 bg-primary hover:bg-white hover:font-bold hover:border-link'
-        "
+        :class="isLast && 'opacity-25 p-2'"
         :disabled="isLast"
         @click="emit('update:modelValue', modelValue + 1)"
       >
