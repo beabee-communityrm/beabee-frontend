@@ -5,7 +5,11 @@
       <AppButton to="/notices/add">{{ t('notices.addNotice') }}</AppButton>
     </div>
   </div>
-  <AppTable :headers="headers" :items="noticesTable.items"> </AppTable>
+  <AppTable :headers="headers" :items="noticesTable.items">
+    <template #createdAt="{ value }">
+      <span class="whitespace-nowrap">{{ formatLocale(value, 'PPP') }}</span>
+    </template>
+  </AppTable>
   <div class="mt-4 ml-auto">
     <AppPagination v-model="currentPage" :total-pages="totalPages" />
   </div>
@@ -20,6 +24,8 @@ import { Paginated, GetNoticeData } from '../../utils/api/api.interface';
 import AppTable from '../../components/table/AppTable.vue';
 import AppPagination from '../../components/AppPagination.vue';
 import { Header } from '../../components/table/table.interface';
+import { fetchNotices } from '../../utils/api/notice';
+import { formatLocale } from '../../utils/dates/locale-date-formats';
 
 const { t } = useI18n();
 
@@ -62,5 +68,10 @@ const totalPages = computed(() =>
   Math.ceil(noticesTable.value.total / currentPageSize.value)
 );
 
-//watchEffect(async () => {});
+watchEffect(async () => {
+  noticesTable.value = await fetchNotices({
+    limit: currentPageSize.value,
+    offset: currentPage.value * currentPageSize.value,
+  });
+});
 </script>
