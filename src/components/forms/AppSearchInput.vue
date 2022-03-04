@@ -3,7 +3,7 @@
     class="relative"
     @submit.prevent="emit('update:modelValue', searchText)"
   >
-    <AppInput v-model="searchText" class="pr-8" :placeholder="placeholder" />
+    <AppInput v-model="searchText" class="pr-12" :placeholder="placeholder" />
     <button
       v-if="searchText.length > 0"
       class="
@@ -15,7 +15,7 @@
         text-primary-70
         hover:text-primary-40
       "
-      @click="clearField"
+      @click="emit('update:modelValue', '')"
     >
       <font-awesome-icon icon="times" />
     </button>
@@ -38,8 +38,6 @@ const props = defineProps<{
 }>();
 
 const searchText = ref(props.modelValue);
-
-const clearField = () => (searchText.value = '');
 
 watch(
   () => props.modelValue,
