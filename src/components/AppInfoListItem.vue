@@ -12,5 +12,5 @@ const props = defineProps<{
   name: string;
   value?: unknown;
 }>();
-const valueWithDefault = computed(() => (props.value ? `${props.value}` : '-'));
+const valueWithDefault = computed(() => (props.value ? `${props.value}` : '–'));
 </script>

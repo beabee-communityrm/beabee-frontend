@@ -10,7 +10,7 @@
         <AppInfoListItem
           :name="t('contacts.data.lastSeen')"
           :value="
-            contact.lastSeen ? formatLocale(contact.lastSeen, 'PPP') : '-'
+            contact.lastSeen ? formatLocale(contact.lastSeen, 'PPP') : '–'
           "
         />
       </AppInfoList>
@@ -55,7 +55,7 @@
           :value="
             contact.contributionAmount
               ? n(contact.contributionAmount, 'currency')
-              : '-'
+              : '–'
           "
         />
         <AppInfoListItem
