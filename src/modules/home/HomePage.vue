@@ -43,9 +43,9 @@
         <CalloutCard :callout="callouts[0]" />
       </div>
 
-      <AppButton to="/callouts" variant="primaryOutlined">{{
+      <!--<AppButton to="/callouts" variant="primaryOutlined">{{
         t('homePage.viewAllCallouts')
-      }}</AppButton>
+      }}</AppButton>-->
     </section>
 
     <section>

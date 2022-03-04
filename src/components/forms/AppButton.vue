@@ -33,7 +33,7 @@ const variantClasses = {
   link: ['bg-link text-white', 'hover:bg-link-110', 'text-link'],
   danger: ['bg-danger text-white', 'hover:bg-danger-110', 'text-danger'],
   primaryOutlined: [
-    'bg-white text-primary-80 border border-primary-70i',
+    'bg-white text-primary-80 border border-primary-70',
     'hover:bg-primary-10 hover:text-primary hover:border-primary',
     'text-primary',
   ],

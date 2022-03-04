@@ -14,7 +14,7 @@
           <slot :name="`header-${header.value}`">{{ header.text }}</slot>
 
           <font-awesome-icon
-            v-if="header.value === sort.by"
+            v-if="header.value === sort?.by"
             class="ml-2"
             :icon="sort.type === SortType.Asc ? 'caret-down' : 'caret-up'"
           />
@@ -53,7 +53,7 @@ interface Sort {
 }
 
 const props = defineProps<{
-  sort: Sort;
+  sort?: Sort;
   headers: Header[];
   items: any[]; // TODO: improve typing
   hideHeaders: boolean;
@@ -72,7 +72,7 @@ function sortBy(header: Header) {
   sort.value = {
     by: header.value,
     type:
-      sort.value.by === header.value && sort.value.type === SortType.Asc
+      sort.value?.by === header.value && sort.value.type === SortType.Asc
         ? SortType.Desc
         : SortType.Asc,
   };

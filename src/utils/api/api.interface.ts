@@ -226,6 +226,10 @@ export enum NoticeStatus {
   Finished = 'finished',
 }
 
+export type GetNoticesQuery = GetPaginatedQuery<
+  'name' | 'status' | 'createdAt' | 'updatedAt'
+>;
+
 export interface GetNoticeData {
   id: string;
   createdAt: Date;
