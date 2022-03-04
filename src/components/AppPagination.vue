@@ -2,8 +2,10 @@
   <ul class="flex items-center -mx-2">
     <li>
       <button
-        class="p-2"
-        :class="isFirst && 'opacity-25'"
+        :class="
+          isFirst &&
+          'opacity-25 p-2 bg-primary hover:bg-white hover:font-bold hover:border-link'
+        "
         :disabled="isFirst"
         @click="emit('update:modelValue', modelValue - 1)"
       >
@@ -16,7 +18,14 @@
         <button
           :class="page === modelValue && 'text-link bg-white'"
           :disabled="page === modelValue"
-          class="p-2 leading-none border border-primary rounded mx-1"
+          class="
+            leading-none
+            border border-primary
+            rounded
+            mx-1
+            p-2
+            hover:font-bold hover:border-link
+          "
           @click="emit('update:modelValue', page)"
         >
           {{ page + 1 }}
@@ -25,8 +34,10 @@
     </template>
     <li>
       <button
-        class="p-2"
-        :class="isLast && 'opacity-25'"
+        :class="
+          isLast &&
+          'opacity-25 p-2 bg-primary hover:bg-white hover:font-bold hover:border-link'
+        "
         :disabled="isLast"
         @click="emit('update:modelValue', modelValue + 1)"
       >
