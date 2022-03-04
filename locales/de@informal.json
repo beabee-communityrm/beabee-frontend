@@ -277,6 +277,9 @@
     "yourInformation": "Deine Informationen",
     "yourProfile": "Dein Profil"
   },
+  "notices": {
+    "data": {}
+  },
   "notification": {
     "error": "Da ist etwas schiefgelaufen!",
     "success": "Sehr gut! Das hat funktioniert."

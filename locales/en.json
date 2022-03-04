@@ -273,9 +273,17 @@
     "contribution": "Contribution",
     "home": "Home",
     "logout": "Log out",
+    "notices": "Notices",
     "settings": "Settings",
     "yourInformation": "Your information",
     "yourProfile": "Your profile"
+  },
+  "notices": {
+    "addNotice": "Add notice",
+    "data": {
+      "createdAt": "Created",
+      "name": "Name"
+    }
   },
   "notification": {
     "error": "Oops, something went wrong!",
