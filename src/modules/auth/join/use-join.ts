@@ -15,10 +15,7 @@ import {
   fetchJoinSetupContent,
 } from '../../../utils/api/content';
 import { signUp } from '../../../utils/api/signup';
-import {
-  fetchMemberWithProfile,
-  updateMember,
-} from '../../../utils/api/member';
+import { fetchMember, updateMember } from '../../../utils/api/member';
 import { NewsletterStatus } from '../../../utils/enums/newsletter-status.enum';
 import {
   JoinContent,
@@ -195,7 +192,7 @@ const completeSetup = async (router: Router) => {
 };
 
 const setMemberData = () => {
-  fetchMemberWithProfile('me')
+  fetchMember('me', ['profile'])
     .then((data) => {
       setupMemberData.firstName = data.firstname;
       setupMemberData.lastName = data.lastname;

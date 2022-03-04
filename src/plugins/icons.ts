@@ -21,6 +21,7 @@ import {
   faTimes,
   faCircleNotch,
   faCheck,
+  faCheckCircle,
   faUsers,
   faSearch,
 } from '@fortawesome/free-solid-svg-icons';
@@ -45,6 +46,7 @@ library.add(
   faTimes,
   faCircleNotch,
   faCheck,
+  faCheckCircle,
   faUsers,
   faSearch
 );
