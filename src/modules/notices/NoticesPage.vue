@@ -1,0 +1,66 @@
+<template>
+  <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
+    <PageTitle :title="t('menu.notices')"></PageTitle>
+    <div class="flex-0 ml-3">
+      <AppButton to="/notices/add">{{ t('notices.addNotice') }}</AppButton>
+    </div>
+  </div>
+  <AppTable :headers="headers" :items="noticesTable.items"> </AppTable>
+  <div class="mt-4 ml-auto">
+    <AppPagination v-model="currentPage" :total-pages="totalPages" />
+  </div>
+</template>
+<script lang="ts" setup>
+import { computed, ref, watchEffect } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRoute, useRouter } from 'vue-router';
+import AppButton from '../../components/forms/AppButton.vue';
+import PageTitle from '../../components/PageTitle.vue';
+import { Paginated, GetNoticeData } from '../../utils/api/api.interface';
+import AppTable from '../../components/table/AppTable.vue';
+import AppPagination from '../../components/AppPagination.vue';
+import { Header } from '../../components/table/table.interface';
+
+const { t } = useI18n();
+
+const headers: Header[] = [
+  {
+    value: 'name',
+    text: t('notices.data.name'),
+    sortable: true,
+    width: '100%',
+  },
+  {
+    value: 'createdAt',
+    text: t('notices.data.createdAt'),
+    align: 'right',
+    sortable: true,
+  },
+];
+
+const route = useRoute();
+const router = useRouter();
+
+const currentPageSize = computed({
+  get: () => Number(route.query.limit) || 25,
+  set: (limit) => router.push({ query: { ...route.query, limit } }),
+});
+
+const currentPage = computed({
+  get: () => Number(route.query.page) || 0,
+  set: (page) => router.push({ query: { ...route.query, page } }),
+});
+
+const noticesTable = ref<Paginated<GetNoticeData>>({
+  total: 0,
+  count: 0,
+  offset: 0,
+  items: [],
+});
+
+const totalPages = computed(() =>
+  Math.ceil(noticesTable.value.total / currentPageSize.value)
+);
+
+//watchEffect(async () => {});
+</script>
