@@ -4,16 +4,17 @@
       {{ t('join.absorbFeeText', { fee: n(fee, 'currency') }) }}
     </p>
 
-    <label class="mb-4">
+    <div class="mb-4 flex flex-row items-baseline">
       <input v-model="payFee" type="checkbox" :disabled="force" />
-
-      {{
-        t(force ? 'join.absorbFeeForce' : 'join.absorbFeeOptIn', {
-          fee: n(fee, 'currency'),
-          amount: n(amount, 'currency'),
-        })
-      }}
-    </label>
+      <p class="ml-2">
+        {{
+          t(force ? 'join.absorbFeeForce' : 'join.absorbFeeOptIn', {
+            fee: n(fee, 'currency'),
+            amount: n(amount, 'currency'),
+          })
+        }}
+      </p>
+    </div>
   </section>
 </template>
 
