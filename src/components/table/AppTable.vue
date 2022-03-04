@@ -56,7 +56,7 @@ const props = defineProps<{
   sort: Sort;
   headers: Header[];
   items: any[]; // TODO: improve typing
-  hideHeaders: boolean;
+  hideHeaders?: boolean;
 }>();
 
 const emit = defineEmits(['update:sort']);
