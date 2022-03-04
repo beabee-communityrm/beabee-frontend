@@ -5,7 +5,12 @@
       <AppButton to="/notices/add">{{ t('notices.addNotice') }}</AppButton>
     </div>
   </div>
-  <AppTable :headers="headers" :items="noticesTable.items">
+  <AppTable
+    v-model:sort="currentSort"
+    :headers="headers"
+    :items="noticesTable.items"
+    class="w-full"
+  >
     <template #status="{ value }">
       <AppItemStatus :status="value" />
     </template>
@@ -34,7 +39,7 @@ import PageTitle from '../../components/PageTitle.vue';
 import { Paginated, GetNoticeData } from '../../utils/api/api.interface';
 import AppTable from '../../components/table/AppTable.vue';
 import AppPagination from '../../components/AppPagination.vue';
-import { Header } from '../../components/table/table.interface';
+import { Header, SortType } from '../../components/table/table.interface';
 import { fetchNotices } from '../../utils/api/notice';
 import { formatLocale } from '../../utils/dates/locale-date-formats';
 import AppItemStatus from '../../components/AppItemStatus.vue';
@@ -73,6 +78,22 @@ const currentPage = computed({
   set: (page) => router.push({ query: { ...route.query, page } }),
 });
 
+const currentSort = computed({
+  get: () => ({
+    by: (route.query.sortBy as string) || 'createdAt',
+    type: (route.query.sortType as SortType) || SortType.Desc,
+  }),
+  set: ({ by, type }) => {
+    router.replace({
+      query: {
+        ...route.query,
+        sortBy: by,
+        sortType: type,
+      },
+    });
+  },
+});
+
 const noticesTable = ref<Paginated<GetNoticeData>>({
   total: 0,
   count: 0,
@@ -88,6 +109,8 @@ watchEffect(async () => {
   noticesTable.value = await fetchNotices({
     limit: currentPageSize.value,
     offset: currentPage.value * currentPageSize.value,
+    sort: currentSort.value.by,
+    order: currentSort.value.type,
   });
 });
 </script>
