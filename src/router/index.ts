@@ -8,6 +8,7 @@ import { contributionRoute } from '../modules/contribution/contribution.route';
 import { contactsRoute } from '../modules/contacts/contacts.route';
 import { currentUser, initStore, generalContent } from '../store';
 import { calloutsRoute } from '../modules/callouts/callouts.route';
+import { noticesRoute } from '../modules/notices/notices.route';
 
 // routes
 
@@ -20,6 +21,7 @@ const routes: RouteRecordRaw[] = [
   ...contributionRoute,
   ...contactsRoute,
   ...calloutsRoute,
+  ...noticesRoute,
 ];
 
 const router = createRouter({
