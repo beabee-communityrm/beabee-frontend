@@ -38,6 +38,10 @@
       "superadmin": "Super Admin"
     },
     "share": "Share",
+    "status": {
+      "finished": "Ended",
+      "open": "Open"
+    },
     "thankYou": "Thank you!",
     "timeAgo": "{time} ago",
     "timeIn": "in {time}",
@@ -273,9 +277,18 @@
     "contribution": "Contribution",
     "home": "Home",
     "logout": "Log out",
+    "notices": "Notices",
     "settings": "Settings",
     "yourInformation": "Your information",
     "yourProfile": "Your profile"
+  },
+  "notices": {
+    "addNotice": "Add notice",
+    "data": {
+      "createdAt": "Created",
+      "name": "Name",
+      "status": "Status"
+    }
   },
   "notification": {
     "error": "Oops, something went wrong!",

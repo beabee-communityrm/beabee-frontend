@@ -1,9 +1,21 @@
 {
   "callout": {
-    "status": {}
+    "status": {
+      "ended": "Geschlossen",
+      "open": "Öffnen"
+    },
+    "youResponded": "Du hast geantwortet ♥"
   },
   "callouts": {
-    "data": {}
+    "archive": "Archiv",
+    "data": {
+      "callout": "Callout",
+      "endDate": "Enddatum"
+    },
+    "search": "Callouts durchsuchen",
+    "show": "Anzeigen",
+    "showAll": "Alle",
+    "showAnswered": "Beantwortet"
   },
   "common": {
     "annually": "Jährlich",
@@ -25,7 +37,10 @@
       "member": "Mitglied",
       "superadmin": "Überadmin"
     },
+    "share": "Teilen",
+    "status": {},
     "thankYou": "Vielen Dank!",
+    "timeAgo": "vor {time}",
     "timeIn": "in {time}",
     "until": "bis",
     "year": "Jahr | Jahren",
@@ -37,13 +52,23 @@
   "contactOverview": {
     "about": "Über",
     "annotation": {
-      "copy": {}
+      "copy": {
+        "begin": "Alle hier eingegebenen Information sind",
+        "bold": "nur für Admins sichtbar.",
+        "end": "Mitglieder bekommen das nicht angezeigt."
+      }
     },
     "contribution": "Beitrag",
     "information": "Information",
     "overview": "Überblick",
     "roles": "Rolle",
-    "security": {}
+    "security": {
+      "instructions": "Link kopieren und teilen:",
+      "loginOverride": "Automatischer Login",
+      "resetPassword": "Passwort zurücksetzen",
+      "title": "Sicherheit",
+      "whatDoTheButtonsDo": "Auf den Button klicken, um Link zu erzeugen:"
+    }
   },
   "contacts": {
     "addContact": "Kontakt hinzufügen",
@@ -92,7 +117,8 @@
     "nextAmountChanging": "Ab dem {renewalDate} ist dein Beitrag {nextAmount}.",
     "paymentHistory": {
       "amount": "Betrag",
-      "date": "Datum"
+      "date": "Datum",
+      "title": "Deine bisherigen Beiträge."
     },
     "paymentSourceUpdateError": "Du kannst deine Bankverbindung aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
     "prorateDecreaseMessage": "Dein Beitrag bleibt noch für {monthsLeft} {months} gleich. Der neue Beitrag wird am {renewalDate} zum ersten Mal eingezogen.",
@@ -251,6 +277,9 @@
     "settings": "Einstellungen",
     "yourInformation": "Deine Informationen",
     "yourProfile": "Dein Profil"
+  },
+  "notices": {
+    "data": {}
   },
   "notification": {
     "error": "Da ist etwas schiefgelaufen!",

@@ -1,6 +1,6 @@
 <template>
-  <dd class="text-right text-sm">{{ name }}</dd>
-  <dt class="font-bold">
+  <dd class="md:text-right text-sm">{{ name }}</dd>
+  <dt class="text-right md:text-left font-bold">
     <slot>
       {{ valueWithDefault }}
     </slot>
@@ -12,5 +12,5 @@ const props = defineProps<{
   name: string;
   value?: unknown;
 }>();
-const valueWithDefault = computed(() => (props.value ? `${props.value}` : '-'));
+const valueWithDefault = computed(() => (props.value ? `${props.value}` : '–'));
 </script>

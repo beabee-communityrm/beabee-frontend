@@ -10,7 +10,7 @@
         <AppInfoListItem
           :name="t('contacts.data.lastSeen')"
           :value="
-            contact.lastSeen ? formatLocale(contact.lastSeen, 'PPP') : '-'
+            contact.lastSeen ? formatLocale(contact.lastSeen, 'PPP') : '–'
           "
         />
       </AppInfoList>
@@ -55,7 +55,7 @@
           :value="
             contact.contributionAmount
               ? n(contact.contributionAmount, 'currency')
-              : '-'
+              : '–'
           "
         />
         <AppInfoListItem
@@ -86,12 +86,14 @@
       <form @submit.prevent="handleFormSubmit">
         <AppInput
           v-model="contactAnnotations.notes"
+          :model-value="contactAnnotations.notes"
           input-type="text"
           :label="'Notes'"
           class="mb-4"
         />
         <AppTextArea
           v-model="contactAnnotations.description"
+          :model-value="contactAnnotations.description"
           input-type="text"
           :label="'Description'"
         />
@@ -125,7 +127,7 @@
       <form @submit.prevent="handleSecurityAction">
         <AppButton
           type="submit"
-          variant="link"
+          variant="primaryOutlined"
           :disabled="securityButtonsDisabled"
           :loading="loading"
           class="mt-2"
@@ -133,7 +135,7 @@
         >
         <AppButton
           type="submit"
-          variant="link"
+          variant="primaryOutlined"
           :disabled="securityButtonsDisabled"
           :loading="loading"
           class="mt-2 ml-6"
@@ -224,6 +226,8 @@ onBeforeMount(async () => {
     'contribution',
     'roles',
   ]);
+  contactAnnotations.notes = contact.value.profile.notes || '';
+  contactAnnotations.description = contact.value.profile.description || '';
   loading.value = false;
   securityButtonsDisabled.value = false;
 });

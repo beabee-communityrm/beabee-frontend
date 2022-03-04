@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { GetNoticeData } from '../../utils/api/api.interface';
+import { CalloutStatus, GetNoticeData } from '../../utils/api/api.interface';
 import { fetchNotices } from '../../utils/api/notice';
 
 const notices = ref<GetNoticeData[]>([]);
@@ -7,9 +7,16 @@ const loading = ref(false);
 
 function setNotices(): void {
   loading.value = true;
-  fetchNotices()
+  fetchNotices({
+    rules: {
+      condition: 'AND',
+      rules: [
+        { field: 'status', operator: 'equal', value: CalloutStatus.Open },
+      ],
+    },
+  })
     .then((data) => {
-      notices.value = data;
+      notices.value = data.items;
     })
     .catch((err) => err)
     .finally(() => (loading.value = false));
