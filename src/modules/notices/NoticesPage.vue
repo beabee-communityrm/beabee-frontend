@@ -6,6 +6,14 @@
     </div>
   </div>
   <AppTable :headers="headers" :items="noticesTable.items">
+    <template #name="{ item, value }">
+      <router-link
+        :to="'/notices/' + item.id"
+        class="text-base text-link font-bold"
+      >
+        {{ value }}
+      </router-link>
+    </template>
     <template #createdAt="{ value }">
       <span class="whitespace-nowrap">{{ formatLocale(value, 'PPP') }}</span>
     </template>
