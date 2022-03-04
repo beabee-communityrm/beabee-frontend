@@ -4,7 +4,24 @@
     @submit.prevent="emit('update:modelValue', searchText)"
   >
     <AppInput v-model="searchText" class="pr-8" :placeholder="placeholder" />
-    <button class="absolute right-0 w-8 h-full">
+    <button
+      v-if="searchText.length > 0"
+      class="
+        absolute
+        right-5
+        w-8
+        h-full
+        color-red
+        text-primary-70
+        hover:text-primary-40
+      "
+      @click="clearField"
+    >
+      <font-awesome-icon icon="times" />
+    </button>
+    <button
+      class="absolute right-0 w-8 h-full text-primary hover:text-primary-70"
+    >
       <font-awesome-icon icon="search" />
     </button>
   </form>
@@ -21,6 +38,8 @@ const props = defineProps<{
 }>();
 
 const searchText = ref(props.modelValue);
+
+const clearField = () => (searchText.value = '');
 
 watch(
   () => props.modelValue,
