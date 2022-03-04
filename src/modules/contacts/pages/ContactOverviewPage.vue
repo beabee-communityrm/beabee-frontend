@@ -121,7 +121,7 @@
         </AppInfoListItem>
       </AppInfoList>
     </div>
-    <div class="">
+    <div class="hidden">
       <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
       <p>{{ t('contactOverview.security.whatDoTheButtonsDo') }}</p>
       <form @submit.prevent="handleSecurityAction">
