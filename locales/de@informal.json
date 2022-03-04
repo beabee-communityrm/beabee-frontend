@@ -92,7 +92,8 @@
     "nextAmountChanging": "Ab dem {renewalDate} ist dein Beitrag {nextAmount}.",
     "paymentHistory": {
       "amount": "Betrag",
-      "date": "Datum"
+      "date": "Datum",
+      "title": "Deine bisherigen Beiträge."
     },
     "paymentSourceUpdateError": "Du kannst deine Bankverbindung aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
     "prorateDecreaseMessage": "Dein Beitrag bleibt noch für {monthsLeft} {months} gleich. Der neue Beitrag wird am {renewalDate} zum ersten Mal eingezogen.",
