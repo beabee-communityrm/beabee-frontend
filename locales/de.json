@@ -38,6 +38,7 @@
       "superadmin": "Überadmin"
     },
     "share": "Teilen",
+    "status": {},
     "thankYou": "Vielen Dank!",
     "timeAgo": "vor {time}",
     "timeIn": "in {time}",

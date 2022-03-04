@@ -6,6 +6,9 @@
     </div>
   </div>
   <AppTable :headers="headers" :items="noticesTable.items">
+    <template #status="{ value }">
+      <AppItemStatus :status="value" />
+    </template>
     <template #name="{ item, value }">
       <router-link
         :to="'/notices/' + item.id"
@@ -34,10 +37,15 @@ import AppPagination from '../../components/AppPagination.vue';
 import { Header } from '../../components/table/table.interface';
 import { fetchNotices } from '../../utils/api/notice';
 import { formatLocale } from '../../utils/dates/locale-date-formats';
+import AppItemStatus from '../../components/AppItemStatus.vue';
 
 const { t } = useI18n();
 
 const headers: Header[] = [
+  {
+    value: 'status',
+    text: t('notices.data.status'),
+  },
   {
     value: 'name',
     text: t('notices.data.name'),

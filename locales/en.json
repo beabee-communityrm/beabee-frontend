@@ -38,6 +38,10 @@
       "superadmin": "Super Admin"
     },
     "share": "Share",
+    "status": {
+      "finished": "Ended",
+      "open": "Open"
+    },
     "thankYou": "Thank you!",
     "timeAgo": "{time} ago",
     "timeIn": "in {time}",
@@ -282,7 +286,8 @@
     "addNotice": "Add notice",
     "data": {
       "createdAt": "Created",
-      "name": "Name"
+      "name": "Name",
+      "status": "Status"
     }
   },
   "notification": {
