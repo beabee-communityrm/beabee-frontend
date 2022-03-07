@@ -61,7 +61,7 @@
         <Form
           :form="callout.templateSchema.formSchema"
           :submission="
-            !callout.allowMultiple && hasResponded
+            !callout.allowMultiple && hasResponded && responses
               ? { data: responses.items[0].answers }
               : undefined
           "
