@@ -5,18 +5,7 @@
       <div class="flex items-center text-sm text-body-40 font-semibold">
         <div>
           <p class="font-bold uppercase">
-            <span v-if="isOpen" class="text-success">
-              {{ t('callout.status.open') }}
-            </span>
-            <span v-else>{{ t('callout.status.ended') }}</span>
-          </p>
-          <p>
-            {{ isOpen ? 'Ends' : 'On' }}
-            {{
-              callout.expires
-                ? formatDistanceLocale(callout.expires, new Date())
-                : 'xxx'
-            }}
+            <AppItemStatus :status="callout.status" />
           </p>
         </div>
         <div v-if="hasResponded" class="border-body-40 border-l ml-3 pl-3 w-32">
@@ -66,6 +55,7 @@ import {
 import { fetchCallout, fetchResponses } from '../../../utils/api/callout';
 import { formatDistanceLocale } from '../../../utils/dates/locale-date-formats';
 import AppButton from '../../../components/forms/AppButton.vue';
+import AppItemStatus from '../../../components/AppItemStatus.vue';
 
 const route = useRoute();
 

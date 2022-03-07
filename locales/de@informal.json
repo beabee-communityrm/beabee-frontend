@@ -1,9 +1,6 @@
 {
   "callout": {
-    "status": {
-      "ended": "Geschlossen",
-      "open": "Öffnen"
-    },
+    "status": {},
     "youResponded": "Du hast geantwortet ♥"
   },
   "callouts": {
@@ -38,7 +35,10 @@
       "superadmin": "Überadmin"
     },
     "share": "Teilen",
-    "status": {},
+    "status": {
+      "ended": "Geschlossen",
+      "open": "Öffnen"
+    },
     "thankYou": "Vielen Dank!",
     "timeAgo": "vor {time}",
     "timeIn": "in {time}",
