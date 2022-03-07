@@ -8,6 +8,7 @@ import {
   Serial,
   GetCalloutResponseData,
   GetCalloutResponsesQuery,
+  CreateCalloutResponseData,
 } from './api.interface';
 
 // TODO: dedupe from member
@@ -68,4 +69,13 @@ export async function fetchResponses(
       updatedAt: toDate(item.updatedAt),
     })),
   };
+}
+
+export async function createResponse(
+  id: string,
+  data: CreateCalloutResponseData
+): Promise<void> {
+  await axios.post(`/callout/${id}/responses`, {
+    answers: data.answers,
+  });
 }

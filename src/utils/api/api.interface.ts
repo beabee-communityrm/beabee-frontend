@@ -204,6 +204,7 @@ export interface GetBasicCalloutData {
   title: string;
   excerpt: string;
   status: ItemStatus;
+  access: 'member' | 'guest' | 'anonymous' | 'only-anonymous';
   allowUpdate: boolean;
   allowMultiple: boolean;
   image?: string;
@@ -235,12 +236,18 @@ type CalloutResponseAnswer =
   | null
   | undefined
   | Record<string, boolean>;
-type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
+export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
 
 export interface GetCalloutResponseData {
   answers: CalloutResponseAnswers;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface CreateCalloutResponseData {
+  guestName?: string;
+  guestEmail?: string;
+  answers: CalloutResponseAnswers;
 }
 
 export type GetNoticesQuery = GetPaginatedQuery<

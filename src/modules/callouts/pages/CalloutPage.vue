@@ -11,7 +11,7 @@
             >
               {{
                 t('callout.status.startsIn', {
-                  distance: formatDistanceLocale(callout.starts, new Date()),
+                  duration: formatDistanceLocale(callout.starts, new Date()),
                 })
               }}
             </span>
@@ -20,7 +20,7 @@
             >
               {{
                 t('callout.status.endsIn', {
-                  distance: formatDistanceLocale(callout.expires, new Date()),
+                  duration: formatDistanceLocale(callout.expires, new Date()),
                 })
               }}
             </span>
@@ -54,19 +54,31 @@
         class="text-lg content-message"
         v-html="callout.templateSchema.intro"
       />
-      <div
-        v-if="callout.status === ItemStatus.Open || hasResponded"
-        class="callout-form mt-10 pt-10 border-primary-40 border-t"
-      >
-        <Form
-          :form="callout.templateSchema.formSchema"
-          :submission="
-            !callout.allowMultiple && hasResponded && responses
-              ? { data: responses.items[0].answers }
-              : undefined
-          "
-          :options="{ readOnly: hasResponded && !callout.allowUpdate }"
-        />
+      <div v-if="responses" class="mt-10 pt-10 border-primary-40 border-t">
+        <form v-if="showResponseForm" class="callout-form" @submit.prevent>
+          <GuestFields
+            v-if="showGuestFields"
+            v-model:name="guestName"
+            v-model:email="guestEmail"
+          />
+          <Form
+            :form="callout.templateSchema.formSchema"
+            :submission="
+              hasResponded && !callout.allowMultiple
+                ? { data: responses.items[0].answers }
+                : undefined
+            "
+            :options="{
+              readOnly: hasResponded && !callout.allowUpdate,
+              noAlerts: true,
+            }"
+            @submit="handleSubmitResponse"
+          />
+          <MessageBox v-if="hasResponseError" class="mt-4" type="error">
+            {{ t('callout.submittingResponseError') }}
+          </MessageBox>
+        </form>
+        <div v-if="!canRespond" class="">Login</div>
       </div>
     </div>
   </div>
@@ -77,18 +89,27 @@ import { Form } from 'vue-formio';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import {
+  CalloutResponseAnswers,
   GetCalloutResponseData,
   GetMoreCalloutData,
   ItemStatus,
   Paginated,
 } from '../../../utils/api/api.interface';
-import { fetchCallout, fetchResponses } from '../../../utils/api/callout';
+import {
+  createResponse,
+  fetchCallout,
+  fetchResponses,
+} from '../../../utils/api/callout';
 import {
   formatLocale,
   formatDistanceLocale,
 } from '../../../utils/dates/locale-date-formats';
 import AppButton from '../../../components/forms/AppButton.vue';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
+import MessageBox from '../../../components/MessageBox.vue';
+import { currentUser } from '../../../store';
+import GuestFields from '../components/GuestFields.vue';
+import axios from '../../../axios';
 
 const route = useRoute();
 
@@ -97,20 +118,64 @@ const { t } = useI18n();
 const callout = ref<GetMoreCalloutData>();
 const responses = ref<Paginated<GetCalloutResponseData>>();
 
+const guestName = ref('');
+const guestEmail = ref('');
+
 const hasResponded = computed(
   () => !!responses.value && responses.value.count > 0
 );
 
+const canRespond = computed(
+  () => callout.value?.access !== 'member' || currentUser.value
+);
+
+const showResponseForm = computed(
+  () =>
+    (callout.value?.status === ItemStatus.Open && canRespond.value) ||
+    hasResponded.value
+);
+
+const showGuestFields = computed(
+  () => callout.value?.access === 'guest' && !currentUser.value
+);
+
+const hasResponseError = ref(false);
+
+async function handleSubmitResponse(event: { data: CalloutResponseAnswers }) {
+  hasResponseError.value = false;
+  try {
+    await createResponse(route.params.id as string, {
+      ...(!currentUser.value && {
+        guestName: guestName.value,
+        guestEmail: guestEmail.value,
+      }),
+      answers: event.data,
+    });
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response?.status === 400) {
+      hasResponseError.value = true;
+    } else {
+      throw err;
+    }
+  }
+}
+
 onBeforeMount(async () => {
+  hasResponseError.value = false;
+
   const calloutId = route.params.id as string;
+
   callout.value = await fetchCallout(calloutId);
-  responses.value = await fetchResponses(calloutId, {
-    rules: {
-      condition: 'AND',
-      rules: [{ field: 'member', operator: 'equal', value: 'me' }],
-    },
-    sort: 'createdAt',
-    order: 'DESC',
-  });
+
+  responses.value = currentUser.value
+    ? await fetchResponses(calloutId, {
+        rules: {
+          condition: 'AND',
+          rules: [{ field: 'member', operator: 'equal', value: 'me' }],
+        },
+        sort: 'createdAt',
+        order: 'DESC',
+      })
+    : { total: 0, count: 0, offset: 0, items: [] };
 });
 </script>
