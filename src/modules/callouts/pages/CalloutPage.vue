@@ -4,17 +4,47 @@
     <div class="flex justify-between items-center mb-8">
       <div class="flex items-center text-sm text-body-40 font-semibold">
         <div>
-          <p class="font-bold uppercase">
+          <div class="flex flex-col">
             <AppItemStatus :status="callout.status" />
-          </p>
+            <span
+              v-if="callout.status === ItemStatus.Scheduled && callout.starts"
+            >
+              {{
+                t('callout.status.startsIn', {
+                  distance: formatDistanceLocale(callout.starts, new Date()),
+                })
+              }}
+            </span>
+            <span
+              v-else-if="callout.status === ItemStatus.Open && callout.expires"
+            >
+              {{
+                t('callout.status.endsIn', {
+                  distance: formatDistanceLocale(callout.expires, new Date()),
+                })
+              }}
+            </span>
+            <span
+              v-else-if="callout.status === ItemStatus.Ended && callout.expires"
+            >
+              {{
+                t('callout.status.endedOn', {
+                  date: formatLocale(callout.expires, 'P'),
+                })
+              }}
+            </span>
+          </div>
         </div>
         <div v-if="hasResponded" class="border-body-40 border-l ml-3 pl-3 w-32">
           {{ t('callout.youResponded') }}
         </div>
       </div>
-      <AppButton v-if="isOpen" icon="share" variant="primaryOutlined">{{
-        t('common.share')
-      }}</AppButton>
+      <AppButton
+        v-if="callout.status === ItemStatus.Open"
+        icon="share"
+        variant="primaryOutlined"
+        >{{ t('common.share') }}</AppButton
+      >
     </div>
     <div>
       <div class="relative mb-6 pb-[56.25%]">
@@ -25,7 +55,7 @@
         v-html="callout.templateSchema.intro"
       />
       <div
-        v-if="isOpen || hasResponded"
+        v-if="callout.status === ItemStatus.Open || hasResponded"
         class="callout-form mt-10 pt-10 border-primary-40 border-t"
       >
         <Form
@@ -53,7 +83,10 @@ import {
   Paginated,
 } from '../../../utils/api/api.interface';
 import { fetchCallout, fetchResponses } from '../../../utils/api/callout';
-import { formatDistanceLocale } from '../../../utils/dates/locale-date-formats';
+import {
+  formatLocale,
+  formatDistanceLocale,
+} from '../../../utils/dates/locale-date-formats';
 import AppButton from '../../../components/forms/AppButton.vue';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
 
@@ -63,8 +96,6 @@ const { t } = useI18n();
 
 const callout = ref<GetMoreCalloutData>();
 const responses = ref<Paginated<GetCalloutResponseData>>();
-
-const isOpen = computed(() => callout.value?.status === ItemStatus.Open);
 
 const hasResponded = computed(
   () => !!responses.value && responses.value.count > 0
