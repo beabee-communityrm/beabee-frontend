@@ -87,9 +87,9 @@ import CalloutCard from '../../components/CalloutCard.vue';
 import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
 import AppHeading from '../../components/AppHeading.vue';
 import {
-  CalloutStatus,
   GetBasicCalloutData,
   GetMemberData,
+  ItemStatus,
   ProfileContent,
 } from '../../utils/api/api.interface';
 import { fetchProfileContent } from '../../utils/api/content';
@@ -130,7 +130,12 @@ onBeforeMount(async () => {
           {
             field: 'status',
             operator: 'equal',
-            value: CalloutStatus.Open,
+            value: ItemStatus.Open,
+          },
+          {
+            field: 'hidden',
+            operator: 'equal',
+            value: false,
           },
         ],
       },

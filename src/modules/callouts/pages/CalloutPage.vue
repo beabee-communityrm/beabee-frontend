@@ -58,9 +58,9 @@ import { Form } from 'vue-formio';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import {
-  CalloutStatus,
   GetCalloutResponseData,
   GetMoreCalloutData,
+  ItemStatus,
   Paginated,
 } from '../../../utils/api/api.interface';
 import { fetchCallout, fetchResponses } from '../../../utils/api/callout';
@@ -74,7 +74,7 @@ const { t } = useI18n();
 const callout = ref<GetMoreCalloutData>();
 const responses = ref<Paginated<GetCalloutResponseData>>();
 
-const isOpen = computed(() => callout.value?.status === CalloutStatus.Open);
+const isOpen = computed(() => callout.value?.status === ItemStatus.Open);
 
 const hasResponded = computed(
   () => !!responses.value && responses.value.count > 0
