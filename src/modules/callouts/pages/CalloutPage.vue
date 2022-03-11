@@ -46,40 +46,41 @@
         >{{ t('common.share') }}</AppButton
       >
     </div>
-    <div>
-      <div class="relative mb-6 pb-[56.25%]">
-        <img class="absolute w-full h-full object-cover" :src="callout.image" />
-      </div>
-      <div
-        class="text-lg content-message"
-        v-html="callout.templateSchema.intro"
-      />
-      <div v-if="responses" class="mt-10 pt-10 border-primary-40 border-t">
-        <form v-if="showResponseForm" class="callout-form" @submit.prevent>
-          <GuestFields
-            v-if="showGuestFields"
-            v-model:name="guestName"
-            v-model:email="guestEmail"
-          />
-          <Form
-            :form="callout.templateSchema.formSchema"
-            :submission="
-              hasResponded && !callout.allowMultiple
-                ? { data: responses.items[0].answers }
-                : undefined
-            "
-            :options="{
-              readOnly: hasResponded && !callout.allowUpdate,
-              noAlerts: true,
-            }"
-            @submit="handleSubmitResponse"
-          />
-          <MessageBox v-if="hasResponseError" class="mt-4" type="error">
-            {{ t('callout.submittingResponseError') }}
-          </MessageBox>
-        </form>
-        <div v-if="!canRespond" class="">Login</div>
-      </div>
+    <figure class="relative mb-6 pb-[56.25%]">
+      <img class="absolute w-full h-full object-cover" :src="callout.image" />
+    </figure>
+    <div
+      class="text-lg content-message"
+      v-html="callout.templateSchema.intro"
+    />
+    <div
+      v-if="responses && !hasResponseSuccess"
+      class="mt-10 pt-10 border-primary-40 border-t"
+    >
+      <form v-if="showResponseForm" class="callout-form" @submit.prevent>
+        <GuestFields
+          v-if="showGuestFields"
+          v-model:name="guestName"
+          v-model:email="guestEmail"
+        />
+        <Form
+          :form="callout.templateSchema.formSchema"
+          :submission="
+            hasResponded && !callout.allowMultiple
+              ? { data: responses.items[0].answers }
+              : undefined
+          "
+          :options="{
+            readOnly: hasResponded && !callout.allowUpdate,
+            noAlerts: true,
+          }"
+          @submit="handleSubmitResponse"
+        />
+        <MessageBox v-if="hasResponseError" class="mt-4" type="error">
+          {{ t('callout.submittingResponseError') }}
+        </MessageBox>
+      </form>
+      <div v-if="!canRespond" class="">Login</div>
     </div>
   </div>
 </template>
