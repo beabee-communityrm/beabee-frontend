@@ -77,5 +77,7 @@ export async function createResponse(
 ): Promise<void> {
   await axios.post(`/callout/${id}/responses`, {
     answers: data.answers,
+    guestName: data.guestName,
+    guestEmail: data.guestEmail,
   });
 }
