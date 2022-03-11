@@ -46,6 +46,9 @@
         >{{ t('common.share') }}</AppButton
       >
     </div>
+    <MessageBox v-if="hasResponseSuccess" type="success" class="mb-6">
+      {{ callout.templateSchema.thanksTitle }}
+    </MessageBox>
     <figure class="relative mb-6 pb-[56.25%]">
       <img class="absolute w-full h-full object-cover" :src="callout.image" />
     </figure>
@@ -140,6 +143,7 @@ const showGuestFields = computed(
   () => callout.value?.access === 'guest' && !currentUser.value
 );
 
+const hasResponseSuccess = ref(false);
 const hasResponseError = ref(false);
 
 async function handleSubmitResponse(event: { data: CalloutResponseAnswers }) {
@@ -152,6 +156,7 @@ async function handleSubmitResponse(event: { data: CalloutResponseAnswers }) {
       }),
       answers: event.data,
     });
+    hasResponseSuccess.value = true;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response?.status === 400) {
       hasResponseError.value = true;
@@ -163,6 +168,7 @@ async function handleSubmitResponse(event: { data: CalloutResponseAnswers }) {
 
 onBeforeMount(async () => {
   hasResponseError.value = false;
+  hasResponseSuccess.value = false;
 
   const calloutId = route.params.id as string;
 
