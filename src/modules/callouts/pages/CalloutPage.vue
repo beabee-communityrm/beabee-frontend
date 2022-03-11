@@ -130,7 +130,9 @@ const hasResponded = computed(
 );
 
 const canRespond = computed(
-  () => callout.value?.access !== 'member' || currentUser.value
+  () =>
+    callout.value?.access !== 'member' ||
+    currentUser.value?.activeRoles.includes('member')
 );
 
 const showResponseForm = computed(
