@@ -1,8 +1,9 @@
 {
   "callout": {
     "status": {
-      "ended": "Ended",
-      "open": "Open"
+      "endedOn": "on {date}",
+      "endsIn": "Ends in {duration}",
+      "startsIn": "starts in {duration}"
     },
     "youResponded": "You replied to this callout ♥"
   },
@@ -38,6 +39,12 @@
       "superadmin": "Super Admin"
     },
     "share": "Share",
+    "status": {
+      "draft": "Draft",
+      "ended": "Ended",
+      "open": "Open",
+      "scheduled": "Scheduled"
+    },
     "thankYou": "Thank you!",
     "timeAgo": "{time} ago",
     "timeIn": "in {time}",
@@ -89,6 +96,7 @@
       "payingFee": "Paying fee?",
       "period": "Period",
       "phone": "Phone",
+      "preferredChannel": "Preferred channel",
       "roles": "Roles",
       "rolesCopy": {
         "today": "present"
@@ -273,9 +281,18 @@
     "contribution": "Contribution",
     "home": "Home",
     "logout": "Log out",
+    "notices": "Notices",
     "settings": "Settings",
     "yourInformation": "Your information",
     "yourProfile": "Your profile"
+  },
+  "notices": {
+    "addNotice": "Add notice",
+    "data": {
+      "createdAt": "Created",
+      "name": "Name",
+      "status": "Status"
+    }
   },
   "notification": {
     "error": "Oops, something went wrong!",
