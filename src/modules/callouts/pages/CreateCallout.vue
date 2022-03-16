@@ -5,7 +5,8 @@
       <Stepper :steps="steps" />
     </div>
     <div class="col-span-2">
-      <CreateTitle :calloutTitle="model.title" />
+      <CreateTitle v-model="model.title" />
+      <p>{{ model.title }}</p>
     </div>
   </div>
 </template>
