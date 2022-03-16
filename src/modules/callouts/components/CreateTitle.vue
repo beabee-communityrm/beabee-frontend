@@ -1,22 +1,24 @@
 <template>
   <h4 class="font-semibold">Callout title</h4>
-  <AppInput :model-value="calloutTitle" :required="true"></AppInput>
-  <AppButton
-    :disabled="!valid"
-    @click="emit('update:modelValue', calloutTitle)"
-    class="mt-2"
+  <AppInput v-model="calloutTitle" :required="true"></AppInput>
+  <AppButton :disabled="!valid" @click="handleClick" class="mt-2"
     >Continue</AppButton
   >
 </template>
 
 <script lang="ts" setup>
+import { ref, computed } from 'vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 
-const props = defineProps<{ modelValue: string }>();
-const emit = defineEmits(['update:modelValue']);
+const props = defineProps<{ data: { title: string } }>();
+const calloutTitle = ref(props.data.title);
 
-// does not appear to be updated by AppInput
-const calloutTitle = '';
-const valid = (): boolean => calloutTitle.length > 0;
+const valid = computed((): boolean => calloutTitle.value.length > 0);
+
+const emit = defineEmits(['update:data', 'update:validated']);
+const handleClick = () => {
+  emit('update:data', { title: calloutTitle });
+  emit('update:validated', true);
+};
 </script>

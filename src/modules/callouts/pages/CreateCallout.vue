@@ -5,13 +5,17 @@
       <Stepper :steps="steps" />
     </div>
     <div class="col-span-2">
-      <CreateTitle v-model="model.title" />
-      <p>{{ model.title }}</p>
+      <component
+        :is="step.component"
+        v-model:data="step.data"
+        v-model:validated="step.validated"
+      ></component>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { reactive, computed } from 'vue';
 import Stepper from '../components/Stepper.vue';
 import CreateTitle from '../components/CreateTitle.vue';
 
@@ -20,34 +24,20 @@ export type Step = {
   name: string;
   description: string;
   validated: boolean;
+  component: any;
+  data: {};
 };
 export type Steps = Array<Step>;
 
-type Callout = {
-  title: string;
-  url: string;
-};
-
-const model: Callout = {
-  title: '',
-  url: '',
-};
-
-const hasTitle = (obj: Callout): boolean => obj.title.length > 0;
-const hasURL = (obj: Callout): boolean => obj.url.length > 0;
-
-const steps: Steps = [
+const steps: Steps = reactive([
   {
     id: 'first',
     name: 'Callout title',
     description: 'Set a title',
-    validated: hasTitle(model),
+    validated: false,
+    component: CreateTitle,
+    data: { title: '' },
   },
-  {
-    id: 'second',
-    name: 'Callout URL',
-    description: 'Set a URL',
-    validated: hasURL(model),
-  },
-];
+]);
+const step = steps[0];
 </script>
