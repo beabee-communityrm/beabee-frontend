@@ -51,6 +51,13 @@ export interface Address {
   postcode: string;
 }
 
+export enum ItemStatus {
+  Draft = 'draft',
+  Scheduled = 'scheduled',
+  Open = 'open',
+  Ended = 'ended',
+}
+
 interface MemberData {
   email: string;
   firstname: string;
@@ -200,11 +207,6 @@ export interface GetBasicCalloutData {
   starts?: Date;
   expires?: Date;
   hasAnswered?: boolean;
-}
-
-export enum CalloutStatus {
-  Open = 'open',
-  Finished = 'finished',
 }
 
 export interface GetCalloutsQuery

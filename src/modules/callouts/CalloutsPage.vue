@@ -86,7 +86,7 @@ import PageTitle from '../../components/PageTitle.vue';
 import AppHeading from '../../components/AppHeading.vue';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import {
-  CalloutStatus,
+  ItemStatus,
   GetBasicCalloutData,
   GetCalloutsQuery,
   Paginated,
@@ -153,7 +153,7 @@ onBeforeMount(async () => {
         {
           field: 'status',
           operator: 'equal',
-          value: CalloutStatus.Open,
+          value: ItemStatus.Open,
         },
       ],
     },
@@ -180,7 +180,7 @@ watchEffect(async () => {
         {
           field: 'status',
           operator: 'equal',
-          value: CalloutStatus.Finished,
+          value: ItemStatus.Ended,
         },
         ...(currentShow.value === 'answered'
           ? [
