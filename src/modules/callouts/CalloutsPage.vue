@@ -155,6 +155,11 @@ onBeforeMount(async () => {
           operator: 'equal',
           value: ItemStatus.Open,
         },
+        {
+          field: 'hidden',
+          operator: 'equal',
+          value: false,
+        },
       ],
     },
   });
