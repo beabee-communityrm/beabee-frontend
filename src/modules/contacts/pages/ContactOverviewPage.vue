@@ -19,7 +19,7 @@
       <AppHeading>{{ t('contactOverview.information') }}</AppHeading>
       <AppInfoList>
         <AppInfoListItem
-          :name="'Preferred channel'"
+          :name="t('contacts.data.preferredChannel')"
           :value="contact.profile.preferredContact"
         />
         <AppInfoListItem
@@ -88,14 +88,14 @@
           v-model="contactAnnotations.notes"
           :model-value="contactAnnotations.notes"
           input-type="text"
-          :label="'Notes'"
+          :label="t('contacts.data.notes')"
           class="mb-4"
         />
         <AppTextArea
           v-model="contactAnnotations.description"
           :model-value="contactAnnotations.description"
           input-type="text"
-          :label="'Description'"
+          :label="t('contacts.data.description')"
         />
         <AppButton
           type="submit"

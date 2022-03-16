@@ -1,9 +1,6 @@
 {
   "callout": {
-    "status": {
-      "ended": "Geschlossen",
-      "open": "Öffnen"
-    },
+    "status": {},
     "youResponded": "Sie haben geantwortet ♥"
   },
   "callouts": {
@@ -38,7 +35,10 @@
       "superadmin": "Überadmin"
     },
     "share": "Teilen",
-    "status": {},
+    "status": {
+      "ended": "Geschlossen",
+      "open": "Öffnen"
+    },
     "thankYou": "Vielen Dank!",
     "timeAgo": "vor {time}",
     "timeIn": "in {time}",
@@ -54,8 +54,8 @@
     "annotation": {
       "copy": {
         "begin": "Alle hier eingegebenen Information sind",
-        "bold": "nur für Admins sichtbar.",
-        "end": "Mitglieder bekommen das nicht angezeigt."
+        "bold": "nur für Administratoren sichtbar.",
+        "end": "Nutzer bekommen das nicht angezeigt."
       }
     },
     "contribution": "Beitrag",
@@ -90,6 +90,7 @@
       "payingFee": "Übernimmt Transaktionskosten?",
       "period": "Zeitraum",
       "phone": "Telefon",
+      "preferredChannel": "Bevorzugter Kanal",
       "roles": "Rolle",
       "rolesCopy": {
         "today": "heute"

@@ -1,8 +1,9 @@
 {
   "callout": {
     "status": {
-      "ended": "Ended",
-      "open": "Open"
+      "endedOn": "on {date}",
+      "endsIn": "Ends in {duration}",
+      "startsIn": "starts in {duration}"
     },
     "youResponded": "You replied to this callout ♥"
   },
@@ -39,8 +40,10 @@
     },
     "share": "Share",
     "status": {
-      "finished": "Ended",
-      "open": "Open"
+      "draft": "Draft",
+      "ended": "Ended",
+      "open": "Open",
+      "scheduled": "Scheduled"
     },
     "thankYou": "Thank you!",
     "timeAgo": "{time} ago",
@@ -93,6 +96,7 @@
       "payingFee": "Paying fee?",
       "period": "Period",
       "phone": "Phone",
+      "preferredChannel": "Preferred channel",
       "roles": "Roles",
       "rolesCopy": {
         "today": "present"
