@@ -26,7 +26,7 @@ interface GetPaginatedQueryRuleGroup<T> {
 interface GetPaginatedQueryRule<T> {
   field: T;
   operator: GetPaginatedQueryRuleOperator;
-  value: string;
+  value: string | number | boolean;
 }
 
 export interface GetPaginatedQuery<T> {
@@ -210,7 +210,7 @@ export interface GetBasicCalloutData {
 }
 
 export interface GetCalloutsQuery
-  extends GetPaginatedQuery<'title' | 'status' | 'answeredBy'> {
+  extends GetPaginatedQuery<'title' | 'status' | 'answeredBy' | 'hidden'> {
   hasAnswered?: string;
 }
 
