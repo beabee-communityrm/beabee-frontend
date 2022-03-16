@@ -5,12 +5,15 @@
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
+import { ItemStatus } from '../utils/api/api.interface';
 const { t } = useI18n();
 const color = {
+  draft: 'text-body-40',
+  scheduled: 'text-warning',
   open: 'text-success',
-  finished: 'text-body',
+  ended: 'text-body',
 };
 defineProps<{
-  status: 'open' | 'finished';
+  status: ItemStatus;
 }>();
 </script>
