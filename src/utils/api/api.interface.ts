@@ -214,11 +214,6 @@ export interface GetCalloutsQuery
   hasAnswered?: string;
 }
 
-export enum NoticeStatus {
-  Open = 'open',
-  Finished = 'finished',
-}
-
 export type GetNoticesQuery = GetPaginatedQuery<
   'name' | 'status' | 'createdAt' | 'updatedAt'
 >;
@@ -227,7 +222,7 @@ export interface GetNoticeData {
   id: string;
   createdAt: Date;
   updatedAt: Date;
-  status: NoticeStatus;
+  status: ItemStatus;
   name: string;
   expires?: Date;
   enabled: boolean;
