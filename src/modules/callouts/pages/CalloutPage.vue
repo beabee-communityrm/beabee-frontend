@@ -144,6 +144,8 @@ const showLoginPrompt = computed(
   () => callout.value?.access === 'member' && !currentUser.value
 );
 
+const showThanksMessage = ref(false);
+
 const formSubmission = computed(() =>
   callout.value &&
   !callout.value.allowMultiple &&
@@ -169,8 +171,6 @@ const formOpts = computed(() => ({
 }));
 
 const formError = ref('');
-
-const showThanksMessage = ref(false);
 
 async function handleSubmitResponse(submission: FormSubmission) {
   formError.value = '';
