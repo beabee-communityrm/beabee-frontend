@@ -96,6 +96,7 @@
       "payingFee": "Paying fee?",
       "period": "Period",
       "phone": "Phone",
+      "preferredChannel": "Preferred channel",
       "roles": "Roles",
       "rolesCopy": {
         "today": "present"
