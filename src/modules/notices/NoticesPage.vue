@@ -2,7 +2,7 @@
   <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
     <PageTitle :title="t('menu.notices')"></PageTitle>
     <div class="flex-0 ml-3">
-      <AppButton to="/notices/add">{{ t('notices.addNotice') }}</AppButton>
+      <AppButton href="/tools/notices">{{ t('notices.addNotice') }}</AppButton>
     </div>
   </div>
   <AppTable
@@ -15,12 +15,12 @@
       <AppItemStatus :status="value" />
     </template>
     <template #name="{ item, value }">
-      <router-link
-        :to="'/notices/' + item.id"
+      <a
+        :href="'/tools/notices/' + item.id"
         class="text-base text-link font-bold"
       >
         {{ value }}
-      </router-link>
+      </a>
     </template>
     <template #createdAt="{ value }">
       <span class="whitespace-nowrap">{{ formatLocale(value, 'PPP') }}</span>
