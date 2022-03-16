@@ -1,5 +1,6 @@
 {
   "callout": {
+    "form": {},
     "status": {
       "endedOn": "am {date}",
       "endsIn": "Endet in {duration}",
@@ -185,6 +186,7 @@
       "lastName": {
         "required": "Nachname benötigt"
       },
+      "name": {},
       "password": {
         "invalid": "Passwort ungültig",
         "required": "Passwort benötigt",

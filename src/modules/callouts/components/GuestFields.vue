@@ -1,22 +1,35 @@
 <template>
-  <div class="mb-4">
-    <AppInput
-      v-model="nameProxy"
-      label="Your name"
-      required
-      :error-message="errorGenerator(validation, 'name')"
-      @blur="validation.name.$touch"
-    />
-  </div>
-  <div class="mb-4">
-    <AppInput
-      v-model="emailProxy"
-      input-type="email"
-      label="Your email"
-      required
-      :error-message="errorGenerator(validation, 'email')"
-      @blur="validation.email.$touch"
-    />
+  <h3 class="block text-xl font-semibold mb-2">
+    {{ t('callout.contactDetails') }}
+  </h3>
+  <div class="rounded bg-primary-10 p-4 mb-8">
+    <p class="mb-3 text-sm">
+      {{ t('join.memberAlready') }}
+      <router-link
+        to="/auth/login"
+        class="text-link hover:text-primary underline"
+        >{{ t('join.login') }}</router-link
+      >
+    </p>
+    <div class="mb-4">
+      <AppInput
+        v-model="nameProxy"
+        :label="t('callout.form.name')"
+        required
+        :error-message="errorGenerator(validation, 'name')"
+        @blur="validation.name.$touch"
+      />
+    </div>
+    <div>
+      <AppInput
+        v-model="emailProxy"
+        input-type="email"
+        :label="t('callout.form.email')"
+        required
+        :error-message="errorGenerator(validation, 'email')"
+        @blur="validation.email.$touch"
+      />
+    </div>
   </div>
 </template>
 

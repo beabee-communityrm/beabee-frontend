@@ -46,7 +46,7 @@
         >{{ t('common.share') }}</AppButton
       >
     </div>
-    <MessageBox v-if="hasResponseSuccess" type="success" class="mb-6">
+    <MessageBox v-if="showThanksMessage" type="success" class="mb-6">
       {{ callout.templateSchema.thanksTitle }}
     </MessageBox>
     <figure class="relative mb-6 pb-[56.25%]">
@@ -57,7 +57,7 @@
       v-html="callout.templateSchema.intro"
     />
     <div
-      v-if="responses && !hasResponseSuccess"
+      v-if="responses && !showThanksMessage"
       class="mt-10 pt-10 border-primary-40 border-t"
     >
       <form v-if="showResponseForm" class="callout-form" @submit.prevent>
@@ -68,22 +68,15 @@
         />
         <Form
           :form="callout.templateSchema.formSchema"
-          :submission="
-            hasResponded && !callout.allowMultiple
-              ? { data: responses.items[0].answers }
-              : undefined
-          "
-          :options="{
-            readOnly: hasResponded && !callout.allowUpdate,
-            noAlerts: true,
-          }"
-          @submit="handleSubmitResponse"
+          :submission="formSubmission"
+          :options="formOpts"
+          @submit="(handleSubmitResponse as any)"
         />
-        <MessageBox v-if="hasResponseError" class="mt-4" type="error">
-          {{ t('callout.submittingResponseError') }}
+        <MessageBox v-if="formError" class="mt-4" type="error">
+          {{ formError }}
         </MessageBox>
       </form>
-      <div v-if="!canRespond" class="">Login</div>
+      <div v-if="showLoginPrompt" class="">Login</div>
     </div>
   </div>
 </template>
@@ -115,6 +108,8 @@ import { currentUser } from '../../../store';
 import GuestFields from '../components/GuestFields.vue';
 import axios from '../../../axios';
 
+type FormSubmission = { data: CalloutResponseAnswers };
+
 const route = useRoute();
 
 const { t } = useI18n();
@@ -145,23 +140,52 @@ const showGuestFields = computed(
   () => callout.value?.access === 'guest' && !currentUser.value
 );
 
-const hasResponseSuccess = ref(false);
-const hasResponseError = ref(false);
+const showLoginPrompt = computed(
+  () => callout.value?.access === 'member' && !currentUser.value
+);
 
-async function handleSubmitResponse(event: { data: CalloutResponseAnswers }) {
-  hasResponseError.value = false;
+const formSubmission = computed(() =>
+  callout.value &&
+  !callout.value.allowMultiple &&
+  // Should use `hasResponded` but type narrowing fails
+  !!responses.value &&
+  responses.value.count > 0
+    ? { data: responses.value.items[0].answers }
+    : undefined
+);
+
+const formOpts = computed(() => ({
+  readOnly: hasResponded.value && !callout.value?.allowUpdate,
+  noAlerts: true,
+  hooks: {
+    beforeSubmit: (submission: FormSubmission, next: () => void) => {
+      if (!showGuestFields.value || (guestName.value && guestEmail.value)) {
+        next();
+      } else {
+        formError.value = t('callout.form.guestFieldsMissing');
+      }
+    },
+  },
+}));
+
+const formError = ref('');
+
+const showThanksMessage = ref(false);
+
+async function handleSubmitResponse(submission: FormSubmission) {
+  formError.value = '';
   try {
     await createResponse(route.params.id as string, {
       ...(!currentUser.value && {
         guestName: guestName.value,
         guestEmail: guestEmail.value,
       }),
-      answers: event.data,
+      answers: submission.data,
     });
-    hasResponseSuccess.value = true;
+    showThanksMessage.value = true;
   } catch (err) {
     if (axios.isAxiosError(err) && err.response?.status === 400) {
-      hasResponseError.value = true;
+      formError.value = t('callout.form.submittingResponseError');
     } else {
       throw err;
     }
@@ -169,8 +193,8 @@ async function handleSubmitResponse(event: { data: CalloutResponseAnswers }) {
 }
 
 onBeforeMount(async () => {
-  hasResponseError.value = false;
-  hasResponseSuccess.value = false;
+  formError.value = '';
+  showThanksMessage.value = false;
 
   const calloutId = route.params.id as string;
 
