@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 import { reactive, computed } from 'vue';
 import Stepper from '../components/Stepper.vue';
-import CreateTitle from '../components/CreateTitle.vue';
+import TitleAndImage from '../components/TitleAndImage.vue';
 
 export type Step = {
   id: string;
@@ -32,11 +32,11 @@ export type Steps = Array<Step>;
 const steps: Steps = reactive([
   {
     id: 'first',
-    name: 'Callout title',
-    description: 'Set a title',
+    name: 'Title and image',
+    description: 'Set a title, description and image for the callout',
     validated: false,
-    component: CreateTitle,
-    data: { title: '' },
+    component: TitleAndImage,
+    data: { title: '', description: '' },
   },
 ]);
 const step = steps[0];
