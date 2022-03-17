@@ -11,6 +11,9 @@
     </p>
   </div>
 
+  <AppButton :disabled="!valid" @click="handleClick" class="bg-grey-light mr-2"
+    >Back</AppButton
+  >
   <AppButton :disabled="!valid" @click="handleClick" class=""
     >Continue</AppButton
   >
