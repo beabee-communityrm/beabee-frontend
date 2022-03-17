@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import Stepper from '../components/Stepper.vue';
 import TitleAndImage from '../components/TitleAndImage.vue';
 import Visibility from '../components/Visibility.vue';
@@ -50,4 +50,17 @@ const steps: Steps = reactive([
 ]);
 
 const selectedStep = ref(steps[0]);
+
+// when "continue" button event bubbles up,
+// move to the next step, as long as there is one
+watch(selectedStep.value, () => {
+  const stepHasUpdated = selectedStep.value;
+  const currentStepIndex = steps.map((e) => e.id).indexOf(stepHasUpdated.id);
+  const maxIndex = steps.length - 1;
+
+  if (maxIndex >= currentStepIndex + 1) {
+    const nextStep = steps[currentStepIndex + 1];
+    selectedStep.value = nextStep;
+  }
+});
 </script>
