@@ -45,13 +45,9 @@ const steps: Steps = reactive([
     description: 'Specify callout visibility and other details',
     validated: false,
     component: Visibility,
-    data: { title: '', description: '' },
+    data: { foo: '' },
   },
 ]);
 
-//
-const findStepFromID = (steps: Steps, id: string): Step =>
-  steps.find((e) => e.id === id) || steps[0];
-const firstStep = findStepFromID(steps, 'first');
-const selectedStep = ref(firstStep);
+const selectedStep = ref(steps[0]);
 </script>
