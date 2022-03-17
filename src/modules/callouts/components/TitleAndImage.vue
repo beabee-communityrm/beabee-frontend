@@ -39,9 +39,10 @@ const props = defineProps<{ data: { title: string; description: string } }>();
 const calloutTitle = ref(props.data.title);
 const calloutDescription = ref(props.data.description);
 
-const keyNotEmpty = (obj: { value: string }) => obj.value.length > 0;
+const isNotEmptyString = (obj: { value: string }) => obj.value.length > 0;
 const valid = computed(
-  (): boolean => keyNotEmpty(calloutTitle) && keyNotEmpty(calloutDescription)
+  (): boolean =>
+    isNotEmptyString(calloutTitle) && isNotEmptyString(calloutDescription)
 );
 
 const emit = defineEmits(['update:data', 'update:validated']);
