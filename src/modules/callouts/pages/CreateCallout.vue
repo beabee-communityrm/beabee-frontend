@@ -2,22 +2,23 @@
   <h4>Create a new callout</h4>
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-1">
-      <Stepper :steps="steps" />
+      <Stepper :steps="steps" v-model:selectedStep="selectedStep" />
     </div>
     <div class="col-span-2">
       <component
-        :is="step.component"
-        v-model:data="step.data"
-        v-model:validated="step.validated"
+        :is="selectedStep.component"
+        v-model:data="selectedStep.data"
+        v-model:validated="selectedStep.validated"
       ></component>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive, computed } from 'vue';
+import { reactive, ref } from 'vue';
 import Stepper from '../components/Stepper.vue';
 import TitleAndImage from '../components/TitleAndImage.vue';
+import Visibility from '../components/Visibility.vue';
 
 export type Step = {
   id: string;
@@ -38,6 +39,19 @@ const steps: Steps = reactive([
     component: TitleAndImage,
     data: { title: '', description: '' },
   },
+  {
+    id: 'second',
+    name: 'Visibility settings',
+    description: 'Specify callout visibility and other details',
+    validated: false,
+    component: Visibility,
+    data: { title: '', description: '' },
+  },
 ]);
-const step = steps[0];
+
+//
+const findStepFromID = (steps: Steps, id: string): Step =>
+  steps.find((e) => e.id === id) || steps[0];
+const firstStep = findStepFromID(steps, 'first');
+const selectedStep = ref(firstStep);
 </script>
