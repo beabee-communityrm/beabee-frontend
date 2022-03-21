@@ -11,7 +11,7 @@
         type="radio"
         :name="period.name"
         :value="period.name"
-        class="absolute opacity-0 -z-1"
+        class="absolute opacity-0 -z-10"
         :checked="period.name === selectedPeriod"
         @change="changePeriod(handleInput($event))"
       />
