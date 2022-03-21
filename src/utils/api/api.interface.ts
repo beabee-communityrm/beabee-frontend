@@ -203,6 +203,10 @@ export interface GetBasicCalloutData {
   slug: string;
   title: string;
   excerpt: string;
+  status: ItemStatus;
+  access: 'member' | 'guest' | 'anonymous' | 'only-anonymous';
+  allowUpdate: boolean;
+  allowMultiple: boolean;
   image?: string;
   starts?: Date;
   expires?: Date;
@@ -212,6 +216,38 @@ export interface GetBasicCalloutData {
 export interface GetCalloutsQuery
   extends GetPaginatedQuery<'title' | 'status' | 'answeredBy' | 'hidden'> {
   hasAnswered?: string;
+}
+
+export interface GetMoreCalloutData extends GetBasicCalloutData {
+  templateSchema: {
+    formSchema: any;
+    intro: string;
+    thanksText: string;
+    thanksTitle: string;
+  };
+}
+
+export type GetCalloutResponsesQuery = GetPaginatedQuery<'member'>;
+
+type CalloutResponseAnswer =
+  | string
+  | boolean
+  | number
+  | null
+  | undefined
+  | Record<string, boolean>;
+export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
+
+export interface GetCalloutResponseData {
+  answers: CalloutResponseAnswers;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CreateCalloutResponseData {
+  guestName?: string;
+  guestEmail?: string;
+  answers: CalloutResponseAnswers;
 }
 
 export type GetNoticesQuery = GetPaginatedQuery<

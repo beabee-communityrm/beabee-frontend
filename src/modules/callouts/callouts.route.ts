@@ -18,6 +18,7 @@ export const calloutsRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/CalloutPage.vue'),
     meta: {
       pageTitle: t('menu.callouts'),
+      noAuth: true,
     },
   },
 ];
