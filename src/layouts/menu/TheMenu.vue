@@ -66,14 +66,14 @@
       />
     </div>
 
-    <TheMenuList :sections="menuSections" />
+    <TheMenuList v-if="currentUser" :sections="menuSections" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from '@vue/reactivity';
 import { useRoute, useRouter } from 'vue-router';
-import { generalContent } from '../../store';
+import { currentUser, generalContent } from '../../store';
 
 import menuSections from './menu-list';
 import TheMenuList from './TheMenuList.vue';
