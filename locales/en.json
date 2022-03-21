@@ -1,5 +1,15 @@
 {
   "callout": {
+    "contactDetails": "Contact details",
+    "form": {
+      "email": "Your email",
+      "guestFieldsMissing": "Please tell us your contact details",
+      "name": "Your name",
+      "submittingResponseError": "There was a problem submitting your response, please try again"
+    },
+    "joinNow": "Join now",
+    "loginToYourAccount": "Login to your account",
+    "membersOnly": "This callout is open to members only. To participate",
     "status": {
       "endedOn": "on {date}",
       "endsIn": "Ends in {duration}",
@@ -184,6 +194,9 @@
       },
       "lastName": {
         "required": "Last name is required"
+      },
+      "name": {
+        "required": "Name is required"
       },
       "password": {
         "invalid": "Invalid password",
