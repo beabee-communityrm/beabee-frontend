@@ -70,27 +70,38 @@
       class="text-lg content-message"
       v-html="callout.templateSchema.intro"
     />
-    <div
-      v-if="responses && !showThanksMessage"
-      class="mt-10 pt-10 border-primary-40 border-t"
+    <form
+      v-if="showResponseForm"
+      class="callout-form mt-10 pt-10 border-primary-40 border-t"
+      @submit.prevent
     >
-      <form v-if="showResponseForm" class="callout-form" @submit.prevent>
-        <GuestFields
-          v-if="showGuestFields"
-          v-model:name="guestName"
-          v-model:email="guestEmail"
-        />
-        <Form
-          :form="callout.templateSchema.formSchema"
-          :submission="formSubmission"
-          :options="formOpts"
-          @submit="(handleSubmitResponse as any)"
-        />
-        <MessageBox v-if="formError" class="mt-4" type="error">
-          {{ formError }}
-        </MessageBox>
-      </form>
-      <div v-if="showLoginPrompt" class="">Login</div>
+      <GuestFields
+        v-if="showGuestFields"
+        v-model:name="guestName"
+        v-model:email="guestEmail"
+      />
+      <Form
+        :form="callout.templateSchema.formSchema"
+        :submission="formSubmission"
+        :options="formOpts"
+        @submit="(handleSubmitResponse as any)"
+      />
+      <MessageBox v-if="formError" class="mt-4" type="error">
+        {{ formError }}
+      </MessageBox>
+    </form>
+    <div v-if="showLoginPrompt" class="my-12">
+      <p class="text-center">
+        {{ t('callout.membersOnly') }}
+      </p>
+      <div class="flex gap-4 mt-6">
+        <AppButton class="w-full" variant="link" to="/join">
+          {{ t('callout.joinNow') }}
+        </AppButton>
+        <AppButton class="w-full" variant="linkOutlined" to="/auth/login">
+          {{ t('callout.loginToYourAccount') }}
+        </AppButton>
+      </div>
     </div>
   </div>
 </template>
@@ -146,8 +157,10 @@ const canRespond = computed(
 
 const showResponseForm = computed(
   () =>
-    (callout.value?.status === ItemStatus.Open && canRespond.value) ||
-    hasResponded.value
+    responses.value &&
+    !showThanksMessage.value &&
+    ((callout.value?.status === ItemStatus.Open && canRespond.value) ||
+      hasResponded.value)
 );
 
 const showGuestFields = computed(

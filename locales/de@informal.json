@@ -1,6 +1,12 @@
 {
   "callout": {
-    "form": {},
+    "contactDetails": "Kontaktdaten",
+    "form": {
+      "email": "Deine E-Mail-Adresse",
+      "guestFieldsMissing": "Bitte gib' uns Deine Kontaktdaten. ",
+      "name": "Dein Name",
+      "submittingResponseError": "Es gab ein Problem bei der Übermittlung deiner Antworten. Bitte versuche es erneut."
+    },
     "status": {
       "endedOn": "am {date}",
       "endsIn": "Endet in {duration}",
@@ -186,7 +192,9 @@
       "lastName": {
         "required": "Nachname benötigt"
       },
-      "name": {},
+      "name": {
+        "required": "Name benötigt"
+      },
       "password": {
         "invalid": "Passwort ungültig",
         "required": "Passwort benötigt",
