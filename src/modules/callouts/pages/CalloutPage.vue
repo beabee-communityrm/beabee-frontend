@@ -46,9 +46,23 @@
         >{{ t('common.share') }}</AppButton
       >
     </div>
-    <MessageBox v-if="showThanksMessage" type="success" class="mb-6">
-      {{ callout.templateSchema.thanksTitle }}
-    </MessageBox>
+    <div
+      v-if="showThanksMessage"
+      class="flex mb-6 bg-white rounded p-6 text-lg text-success"
+    >
+      <div class="flex-0 mr-4 text-2xl">
+        <font-awesome-icon icon="thumbs-up" />
+      </div>
+      <div>
+        <h3 class="font-semibold">
+          {{ callout.templateSchema.thanksTitle }}
+        </h3>
+        <div
+          class="font-normal text-body-80"
+          v-html="callout.templateSchema.thanksText"
+        />
+      </div>
+    </div>
     <figure class="relative mb-6 pb-[56.25%]">
       <img class="absolute w-full h-full object-cover" :src="callout.image" />
     </figure>

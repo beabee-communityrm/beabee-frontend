@@ -25,6 +25,7 @@ import {
   faUsers,
   faSearch,
   faShare,
+  faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -50,7 +51,8 @@ library.add(
   faCheckCircle,
   faUsers,
   faSearch,
-  faShare
+  faShare,
+  faThumbsUp
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
