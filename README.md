@@ -42,7 +42,6 @@ node scripts/i18n.js
 git add -A locales/ && git commit locales/ -m 'chore: updated locales'
 ```
 
-
 ### Using the localisation strings
 
 In Vue files:
