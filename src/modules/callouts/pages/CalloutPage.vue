@@ -73,6 +73,7 @@
     <form
       v-if="showResponseForm"
       class="callout-form mt-10 pt-10 border-primary-40 border-t"
+      :class="{ 'opacity-50': isFormReadOnly }"
       @submit.prevent
     >
       <GuestFields
@@ -173,6 +174,10 @@ const showLoginPrompt = computed(
 
 const showThanksMessage = ref(false);
 
+const isFormReadOnly = computed(
+  () => hasResponded.value && !callout.value?.allowUpdate
+);
+
 const formSubmission = computed(() =>
   callout.value &&
   !callout.value.allowMultiple &&
@@ -184,7 +189,7 @@ const formSubmission = computed(() =>
 );
 
 const formOpts = computed(() => ({
-  readOnly: hasResponded.value && !callout.value?.allowUpdate,
+  readOnly: isFormReadOnly.value,
   noAlerts: true,
   hooks: {
     beforeSubmit: (submission: FormSubmission, next: () => void) => {
@@ -203,10 +208,11 @@ async function handleSubmitResponse(submission: FormSubmission) {
   formError.value = '';
   try {
     await createResponse(route.params.id as string, {
-      ...(!currentUser.value && {
-        guestName: guestName.value,
-        guestEmail: guestEmail.value,
-      }),
+      ...(!currentUser.value &&
+        callout.value?.access === 'guest' && {
+          guestName: guestName.value,
+          guestEmail: guestEmail.value,
+        }),
       answers: submission.data,
     });
     showThanksMessage.value = true;
