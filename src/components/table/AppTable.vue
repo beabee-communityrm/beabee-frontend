@@ -1,5 +1,5 @@
 <template>
-  <table class="font-semibold">
+  <table class="">
     <thead v-if="!hideHeaders" class="text-sm border-b border-primary-20">
       <tr>
         <th
