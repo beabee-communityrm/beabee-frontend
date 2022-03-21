@@ -95,7 +95,7 @@
       <p class="text-center">
         {{ t('callout.membersOnly') }}
       </p>
-      <div class="flex gap-4 mt-6">
+      <div class="flex flex-col sm:flex-row gap-4 mt-6">
         <AppButton class="w-full" variant="link" to="/join">
           {{ t('callout.joinNow') }}
         </AppButton>
