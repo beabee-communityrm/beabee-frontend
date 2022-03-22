@@ -12,7 +12,10 @@ const router = useRouter();
 onBeforeMount(() => {
   confirmEmail(route.params.id)
     .then(updateCurrentUser)
-    .then(() => router.replace('/join/setup'))
+    .then(() => {
+      // TODO: Cable: use old complete page
+      window.location.href = '/profile/complete';
+    })
     .catch((error) => {
       if (error.response?.data?.code === 'duplicate-email') {
         router.replace('/join/duplicate-email');

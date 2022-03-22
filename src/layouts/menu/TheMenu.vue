@@ -57,7 +57,7 @@
     "
     :class="{ 'top-[68px] translate-x-0': isMenuVisible }"
   >
-    <div class="hidden my-12 text-center md:block">
+    <div class="hidden my-10 text-center md:block">
       <!-- logo on bigger screens -->
       <img
         class="w-20 md:inline-block"
