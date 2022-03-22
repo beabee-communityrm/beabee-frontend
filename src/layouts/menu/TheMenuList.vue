@@ -66,7 +66,7 @@ const doLogout = () => {
 }
 
 .menu-title {
-  @apply py-1.5 border-t border-primary-40
+  @apply py-1.5 border-t border-primary-40;
 }
 
 .menu-item {
