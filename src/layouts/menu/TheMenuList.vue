@@ -6,7 +6,7 @@
       class="menu-section"
       :class="{ 'is-settings': section.type === 'settings' }"
     >
-      <div v-if="index !== 0" class="py-2 border-t border-primary-40">
+      <div v-if="index !== 0" class="menu-title">
         {{ section.title }}
       </div>
       <ul class="flex flex-col">
@@ -20,7 +20,7 @@
       </ul>
     </nav>
     <nav v-if="canAdmin" class="menu-section is-settings">
-      <div class="py-2 border-t border-primary-40">{{ t('menu.admin') }}</div>
+      <div class="menu-title">{{ t('menu.admin') }}</div>
       <a href="/members" class="menu-item cursor-pointer">
         <TheMenuListItem
           :icon="['fa', 'users']"
@@ -65,8 +65,12 @@ const doLogout = () => {
   @apply text-primary-80;
 }
 
+.menu-title {
+  @apply py-1.5 border-t border-primary-40
+}
+
 .menu-item {
-  @apply px-4 py-1.5 mb-2 rounded flex items-center hover:bg-primary-5 font-semibold;
+  @apply px-1 py-1.5 mb-1.5 rounded flex items-center hover:bg-primary-5 font-semibold;
 
   &.router-link-active {
     @apply bg-primary-20;
