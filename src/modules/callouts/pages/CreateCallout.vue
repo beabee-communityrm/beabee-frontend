@@ -42,6 +42,7 @@ import { reactive, ref, computed } from 'vue';
 import Stepper from '../components/Stepper.vue';
 import Visibility from '../components/Visibility.vue';
 import TitleAndImage from '../components/TitleAndImage.vue';
+import EndMessage from '../components/EndMessage.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 
 export type Step = {
@@ -74,6 +75,18 @@ const steps: Steps = reactive([
       allowAnonymousResponses: '',
       showOnUserDashboards: '',
       usersCanEditAnswers: '',
+    },
+  },
+  {
+    id: 'third',
+    name: 'End message',
+    description: 'Set a final thank you message or page to redirect',
+    validated: false,
+    component: EndMessage,
+    data: {
+      whenFinished: '',
+      thankYouTitle: '',
+      thankYouText: '',
     },
   },
 ]);
