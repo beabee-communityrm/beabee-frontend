@@ -11,7 +11,7 @@
         v-model:validated="selectedStep.validated"
       ></component>
 
-      <div class="flex">
+      <div class="flex mt-5">
         <AppButton
           variant="linkOutlined"
           :disabled="selectedStep === steps[0]"
@@ -69,7 +69,12 @@ const steps: Steps = reactive([
     description: 'Specify callout visibility and other details',
     validated: false,
     component: Visibility,
-    data: { foo: '' },
+    data: {
+      whoCanTakePart: '',
+      allowAnonymousResponses: '',
+      showOnUserDashboards: '',
+      usersCanEditAnswers: '',
+    },
   },
 ]);
 
