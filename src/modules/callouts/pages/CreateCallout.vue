@@ -87,6 +87,7 @@ const steps: Steps = reactive([
       whenFinished: '',
       thankYouTitle: '',
       thankYouText: '',
+      URLRedirect: '',
     },
   },
 ]);
