@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, computed } from 'vue';
+import { reactive, ref, computed, markRaw } from 'vue';
 import Stepper from '../components/Stepper.vue';
 import Visibility from '../components/Visibility.vue';
 import TitleAndImage from '../components/TitleAndImage.vue';
@@ -47,6 +47,7 @@ import AppButton from '../../../components/forms/AppButton.vue';
 import UrlAndSharing from '../components/UrlAndSharing.vue';
 import MailchimpSync from '../components/MailchimpSync.vue';
 import DatesAndDurationVue from '../components/DatesAndDuration.vue';
+import ContentStep from '../components/ContentStep.vue';
 
 export type Step = {
   id: string;
@@ -59,6 +60,14 @@ export type Step = {
 export type Steps = Array<Step>;
 
 const steps: Steps = reactive([
+  {
+    id: 'content',
+    name: 'Callout content',
+    description: 'Build your callout with questions and prompts',
+    validated: false,
+    component: markRaw(ContentStep),
+    data: { introText: '', formSchema: {} },
+  },
   {
     id: 'first',
     name: 'Title and image',
