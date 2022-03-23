@@ -2,7 +2,7 @@
   <AppHeading class="mb-3">Title and image</AppHeading>
   <div class="grid grid-cols-2 gap-6">
     <div class="col-span-1">
-      <AppInput v-model="calloutTitle" :label="'Title'"></AppInput>
+      <AppInput v-model="dataProxy.title" :label="'Title'"></AppInput>
     </div>
     <p class="col-span-1 text-sm text-grey mt-6">
       The <b>Title</b> will appear on all the mentions of this callout. It's
@@ -13,7 +13,7 @@
   <div class="grid grid-cols-2 gap-6">
     <div class="col-span-1">
       <AppInput
-        v-model="calloutDescription"
+        v-model="dataProxy.description"
         :label="'Short description'"
       ></AppInput>
     </div>
@@ -26,26 +26,21 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch } from 'vue';
+import { ref, watch } from 'vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppHeading from '../../../components/AppHeading.vue';
 
-const props = defineProps<{ data: { title: string; description: string } }>();
-const calloutTitle = ref(props.data.title);
-const calloutDescription = ref(props.data.description);
-
-const isNotEmptyString = (obj: { value: string }) => obj.value.length > 0;
-const valid = computed(
-  (): boolean =>
-    isNotEmptyString(calloutTitle) && isNotEmptyString(calloutDescription)
-);
-
 const emit = defineEmits(['update:data', 'update:validated']);
-watch(valid, () => {
-  emit('update:data', {
-    title: calloutTitle,
-    description: calloutDescription,
-  });
-  emit('update:validated', valid.value);
-});
+const props = defineProps<{ data: { title: string; description: string } }>();
+
+const isNotEmptyString = (s: string) => s.length > 0;
+
+const dataProxy = ref(props.data);
+
+watch(
+  () =>
+    isNotEmptyString(props.data.title) &&
+    isNotEmptyString(props.data.description),
+  (valid) => emit('update:validated', valid)
+);
 </script>
