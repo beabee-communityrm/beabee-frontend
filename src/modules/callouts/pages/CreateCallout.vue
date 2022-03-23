@@ -2,7 +2,7 @@
   <h4>Create a new callout</h4>
   <div class="grid grid-cols-3 gap-8">
     <div class="col-span-1">
-      <Stepper :steps="steps" v-model:selectedStep="selectedStep" />
+      <Stepper :steps="steps" v-model:selectedStepIndex="selectedStepIndex" />
     </div>
     <div class="col-span-2">
       <component
@@ -10,15 +10,39 @@
         v-model:data="selectedStep.data"
         v-model:validated="selectedStep.validated"
       ></component>
+
+      <div class="flex">
+        <AppButton
+          variant="linkOutlined"
+          :disabled="selectedStep === steps[0]"
+          @click="selectedStepIndex--"
+          >Back</AppButton
+        >
+        <AppButton
+          class="ml-2"
+          v-show="selectedStepIndex != steps.length - 1"
+          :disabled="!selectedStep.validated"
+          @click="selectedStepIndex++"
+          >Continue</AppButton
+        >
+        <AppButton
+          class="ml-2"
+          v-show="selectedStepIndex === steps.length - 1"
+          :disabled="!selectedStep.validated"
+          @click="submitForm"
+          >Submit</AppButton
+        >
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, watch } from 'vue';
+import { reactive, ref, computed } from 'vue';
 import Stepper from '../components/Stepper.vue';
-import TitleAndImage from '../components/TitleAndImage.vue';
 import Visibility from '../components/Visibility.vue';
+import TitleAndImage from '../components/TitleAndImage.vue';
+import AppButton from '../../../components/forms/AppButton.vue';
 
 export type Step = {
   id: string;
@@ -49,18 +73,8 @@ const steps: Steps = reactive([
   },
 ]);
 
-const selectedStep = ref(steps[0]);
+const submitForm = () => true;
 
-// when "continue" button event bubbles up,
-// move to the next step, as long as there is one
-watch(selectedStep.value, () => {
-  const stepHasUpdated = selectedStep.value;
-  const currentStepIndex = steps.map((e) => e.id).indexOf(stepHasUpdated.id);
-  const maxIndex = steps.length - 1;
-
-  if (maxIndex >= currentStepIndex + 1) {
-    const nextStep = steps[currentStepIndex + 1];
-    selectedStep.value = nextStep;
-  }
-});
+const selectedStepIndex = ref(0);
+const selectedStep = computed(() => steps[selectedStepIndex.value]);
 </script>

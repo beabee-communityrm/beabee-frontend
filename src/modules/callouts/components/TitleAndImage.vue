@@ -23,15 +23,10 @@
       in a few words.
     </p>
   </div>
-
-  <AppButton :disabled="!valid" @click="handleClick" class=""
-    >Continue</AppButton
-  >
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
-import AppButton from '../../../components/forms/AppButton.vue';
+import { ref, computed, watch } from 'vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppHeading from '../../../components/AppHeading.vue';
 
@@ -46,8 +41,11 @@ const valid = computed(
 );
 
 const emit = defineEmits(['update:data', 'update:validated']);
-const handleClick = () => {
-  emit('update:data', { title: calloutTitle, description: calloutDescription });
-  emit('update:validated', true);
-};
+watch(valid, () => {
+  emit('update:data', {
+    title: calloutTitle,
+    description: calloutDescription,
+  });
+  emit('update:validated', valid.value);
+});
 </script>

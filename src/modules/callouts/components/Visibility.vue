@@ -10,20 +10,12 @@
       interested.
     </p>
   </div>
-
-  <AppButton :disabled="!valid" @click="handleClick" class="bg-grey-light mr-2"
-    >Back</AppButton
-  >
-  <AppButton :disabled="!valid" @click="handleClick" class=""
-    >Continue</AppButton
-  >
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
-import AppButton from '../../../components/forms/AppButton.vue';
 
 const props = defineProps<{ data: { foo: string } }>();
 const fooInput = ref(props.data.foo);
@@ -32,8 +24,10 @@ const isNotEmptyString = (obj: { value: string }) => obj.value.length > 0;
 const valid = computed((): boolean => isNotEmptyString(fooInput));
 
 const emit = defineEmits(['update:data', 'update:validated']);
-const handleClick = () => {
-  emit('update:data', { foo: fooInput });
-  emit('update:validated', true);
-};
+watch(valid, () => {
+  emit('update:data', {
+    foo: fooInput.value,
+  });
+  emit('update:validated', valid.value);
+});
 </script>
