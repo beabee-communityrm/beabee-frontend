@@ -44,6 +44,8 @@ import Visibility from '../components/Visibility.vue';
 import TitleAndImage from '../components/TitleAndImage.vue';
 import EndMessage from '../components/EndMessage.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
+import UrlAndSharing from '../components/UrlAndSharing.vue';
+import MailchimpSync from '../components/MailchimpSync.vue';
 
 export type Step = {
   id: string;
@@ -88,6 +90,28 @@ const steps: Steps = reactive([
       thankYouTitle: '',
       thankYouText: '',
       URLRedirect: '',
+    },
+  },
+  {
+    id: 'Fourth',
+    name: 'URL and sharing',
+    description: 'Adjust how the callout will appear and how to access it',
+    validated: false,
+    component: UrlAndSharing,
+    data: {
+      slug: '',
+      meta_title: '',
+      meta_description: '',
+    },
+  },
+  {
+    id: 'Fifth',
+    name: 'Mailchimp sync',
+    description: 'Set up Mailchimp integrations',
+    validated: false,
+    component: MailchimpSync,
+    data: {
+      useMailchimpSync: '',
     },
   },
 ]);
