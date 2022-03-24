@@ -179,10 +179,14 @@ onBeforeMount(() => {
   .table {
     @apply w-full border-collapse;
     thead {
-      @apply text-sm border-b border-primary-20 text-left;
+      @apply text-sm border-b border-primary-20;
     }
+    th {
+      @apply text-left;
+    }
+    th,
     td {
-      @apply py-1;
+      @apply p-1;
     }
     .form-group {
       @apply mb-0;
