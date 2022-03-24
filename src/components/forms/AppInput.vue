@@ -12,6 +12,7 @@
       focus:outline-none focus:shadow-input
     "
     :type="inputType"
+    :placeholder="placeholder"
     :class="dangerClasses"
     :value="modelValue"
     v-bind="$attrs"
@@ -45,6 +46,7 @@ const props = withDefaults(
     errorMessage?: string | Ref<string>;
     infoMessage?: string;
     required?: boolean;
+    placeholder?: string;
   }>(),
   {
     modelValue: '',
