@@ -46,6 +46,7 @@ import EndMessage from '../components/EndMessage.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import UrlAndSharing from '../components/UrlAndSharing.vue';
 import MailchimpSync from '../components/MailchimpSync.vue';
+import DatesAndDurationVue from '../components/DatesAndDuration.vue';
 
 export type Step = {
   id: string;
@@ -112,6 +113,18 @@ const steps: Steps = reactive([
     component: MailchimpSync,
     data: {
       useMailchimpSync: '',
+    },
+  },
+  {
+    id: 'Sixth',
+    name: 'Dates and duration',
+    description: 'Schedule your callout and for how long it will be live',
+    validated: false,
+    component: DatesAndDurationVue,
+    data: {
+      calloutHasEndDate: '',
+      callout_start_date: '',
+      callout_end_date: '',
     },
   },
 ]);
