@@ -10,7 +10,13 @@
       @click="emit('update:selectedStepIndex', stepIndex)"
     >
       <h4 class="font-semibold">
-        {{ step.validated === true ? '✅' : '❌' }} {{ step.name }}
+        <!-- {{ step.validated === true ? '✅' : '❌' }} {{ step.name }} -->
+        <AppRoundBadge
+          :type="step.validated === true ? 'success' : 'warning'"
+          :size="'4'"
+          class="mr-1"
+        />
+        {{ step.name }}
       </h4>
       <p class="text-sm text-grey mt-1">{{ step.description }}</p>
     </div>
@@ -19,6 +25,7 @@
 
 <script lang="ts" setup>
 import type { Step, Steps } from '../pages/CreateCallout.vue';
+import AppRoundBadge from '../../../components/AppRoundBadge.vue';
 defineProps<{ steps: Steps; selectedStepIndex: number }>();
 const emit = defineEmits(['update:selectedStepIndex']);
 </script>
