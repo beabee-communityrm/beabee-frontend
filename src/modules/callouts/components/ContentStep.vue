@@ -7,6 +7,8 @@
           v-model="dataProxy.introText"
           label="Introduction text"
           required
+          :error-message="validation.introText.$errors[0]?.$message"
+          @blur="validation.introText.$touch"
         />
       </div>
       <div></div>
@@ -22,14 +24,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-// import useVuelidate from '@vuelidate/core';
-// import { helpers, required } from '@vuelidate/validators';
+import useVuelidate from '@vuelidate/core';
+import { helpers, required } from '@vuelidate/validators';
 import { onBeforeMount, ref, watch } from 'vue';
 import { FormBuilder as FormBuilderVue } from 'vue-formio';
 import { FormBuilder } from 'formiojs';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
-import { errorGenerator } from '../../../utils/form-error-generator';
 import {
   faQuestionCircle,
   faTerminal,
@@ -55,12 +56,26 @@ import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import 'formiojs/dist/formio.builder.css';
 
 const emit = defineEmits(['update:data', 'update:validated']);
-const props = defineProps<{ data: { introText: string; formSchema: any } }>();
+const props = defineProps<{
+  data: { introText: string; formSchema: { components: unknown[] } };
+}>();
 
 const dataProxy = ref(props.data);
-//const validation = useVuelidate({
-//   introText: helpers.withMessage('Introduction text is required', required),
-// }, props.data);
+const validation = useVuelidate(
+  {
+    introText: {
+      required: helpers.withMessage('Introduction text is required', required),
+    },
+  },
+  dataProxy
+);
+
+watch([validation, props.data.formSchema], () => {
+  emit(
+    'update:validated',
+    !validation.value.$invalid && props.data.formSchema.components.length > 1
+  );
+});
 
 const formOpts = {
   builder: {
@@ -102,13 +117,6 @@ onBeforeMount(() => {
   // This will automatically replace all <i> tags with the icons above
   dom.watch();
 });
-
-/*watch(
-  () => validation.value.$errors.length > 0,
-  (valid) => {
-    emit('update:validated', valid);
-  }
-);*/
 </script>
 <style>
 .callout-form-builder {
