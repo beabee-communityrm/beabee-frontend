@@ -1,28 +1,28 @@
 <template>
-  <label :for="item" v-for="item in options" class="block">
+  <label v-for="item in options" class="block">
     <input
       type="radio"
-      :id="item"
       :name="name"
       :value="item"
       v-model="selected"
-      :checked="modelValue === item ? true : false"
+      :checked="modelValue === item"
     />
     {{ item }}
   </label>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { computed } from 'vue';
 const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps<{
   modelValue: string | null;
   options: Array<string>;
-  default?: string;
-  name?: string;
+  name: string;
 }>();
 
-const selected = ref(props.default ? props.default : '');
-watch(selected, () => emit('update:modelValue', selected.value));
+const selected = computed({
+  get: () => props.modelValue,
+  set: (new_value) => emit('update:modelValue', new_value),
+});
 </script>
