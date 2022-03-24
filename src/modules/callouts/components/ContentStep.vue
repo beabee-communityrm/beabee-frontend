@@ -11,14 +11,20 @@
     <div></div>
   </div>
   <div class="callout-form-builder mt-8">
-    <FormBuilder :options="formOpts" />
+    <FormBuilderVue
+      ref="formBuilderRef"
+      :form="data.formSchema"
+      :options="formOpts"
+      @change="handleFormChange"
+    />
   </div>
 </template>
 <script lang="ts" setup>
 // import useVuelidate from '@vuelidate/core';
 // import { helpers, required } from '@vuelidate/validators';
 import { onBeforeMount, ref, watch } from 'vue';
-import { FormBuilder } from 'vue-formio';
+import { FormBuilder as FormBuilderVue } from 'vue-formio';
+import { FormBuilder } from 'formiojs';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
 import { errorGenerator } from '../../../utils/form-error-generator';
@@ -63,6 +69,11 @@ const formOpts = {
     premium: false,
   },
 };
+const formBuilderRef = ref<FormBuilder>();
+
+function handleFormChange() {
+  dataProxy.value.formSchema = formBuilderRef.value?.form;
+}
 
 onBeforeMount(() => {
   library.add(
