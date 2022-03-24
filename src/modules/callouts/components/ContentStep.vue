@@ -1,22 +1,24 @@
 <template>
-  <AppHeading>Callout content</AppHeading>
-  <div class="grid grid-cols-2 gap-6">
-    <div class="col-span-1">
-      <AppTextArea
-        v-model="dataProxy.introText"
-        label="Introduction text"
-        required
+  <div>
+    <AppHeading>Callout content</AppHeading>
+    <div class="grid grid-cols-2 gap-6">
+      <div class="col-span-1">
+        <AppTextArea
+          v-model="dataProxy.introText"
+          label="Introduction text"
+          required
+        />
+      </div>
+      <div></div>
+    </div>
+    <div class="callout-form-builder mt-8">
+      <FormBuilderVue
+        ref="formBuilderRef"
+        :form="data.formSchema"
+        :options="formOpts"
+        @change="handleFormChange"
       />
     </div>
-    <div></div>
-  </div>
-  <div class="callout-form-builder mt-8">
-    <FormBuilderVue
-      ref="formBuilderRef"
-      :form="data.formSchema"
-      :options="formOpts"
-      @change="handleFormChange"
-    />
   </div>
 </template>
 <script lang="ts" setup>
