@@ -1,6 +1,17 @@
 {
   "callout": {
-    "status": {},
+    "contactDetails": "Kontaktdaten",
+    "form": {
+      "email": "Deine E-Mail-Adresse",
+      "guestFieldsMissing": "Bitte gib' uns Deine Kontaktdaten. ",
+      "name": "Dein Name",
+      "submittingResponseError": "Es gab ein Problem bei der Übermittlung deiner Antworten. Bitte versuche es erneut."
+    },
+    "status": {
+      "endedOn": "am {date}",
+      "endsIn": "Endet in {duration}",
+      "startsIn": "startet in {duration}"
+    },
     "youResponded": "Du hast geantwortet ♥"
   },
   "callouts": {
@@ -36,8 +47,10 @@
     },
     "share": "Teilen",
     "status": {
+      "draft": "Entwurf",
       "ended": "Geschlossen",
-      "open": "Öffnen"
+      "open": "Öffnen",
+      "scheduled": "Geplant"
     },
     "thankYou": "Vielen Dank!",
     "timeAgo": "vor {time}",
@@ -179,6 +192,9 @@
       "lastName": {
         "required": "Nachname benötigt"
       },
+      "name": {
+        "required": "Name benötigt"
+      },
       "password": {
         "invalid": "Passwort ungültig",
         "required": "Passwort benötigt",
@@ -275,12 +291,18 @@
     "contribution": "Beitrag",
     "home": "Home",
     "logout": "Log out",
+    "notices": "Hinweise",
     "settings": "Einstellungen",
     "yourInformation": "Deine Informationen",
     "yourProfile": "Dein Profil"
   },
   "notices": {
-    "data": {}
+    "addNotice": "Hinweis hinzufügen",
+    "data": {
+      "createdAt": "Erstellt",
+      "name": "Name",
+      "status": "Status"
+    }
   },
   "notification": {
     "error": "Da ist etwas schiefgelaufen!",

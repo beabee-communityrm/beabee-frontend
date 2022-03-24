@@ -86,9 +86,9 @@ import PageTitle from '../../components/PageTitle.vue';
 import AppHeading from '../../components/AppHeading.vue';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import {
-  CalloutStatus,
   GetBasicCalloutData,
   GetCalloutsQuery,
+  ItemStatus,
   Paginated,
 } from '../../utils/api/api.interface';
 import CalloutCard from '../../components/CalloutCard.vue';
@@ -153,7 +153,12 @@ onBeforeMount(async () => {
         {
           field: 'status',
           operator: 'equal',
-          value: CalloutStatus.Open,
+          value: ItemStatus.Open,
+        },
+        {
+          field: 'hidden',
+          operator: 'equal',
+          value: false,
         },
       ],
     },
@@ -178,9 +183,14 @@ watchEffect(async () => {
           value: currentSearch.value,
         },
         {
+          field: 'hidden',
+          operator: 'equal',
+          value: false,
+        },
+        {
           field: 'status',
           operator: 'equal',
-          value: CalloutStatus.Finished,
+          value: ItemStatus.Ended,
         },
         ...(currentShow.value === 'answered'
           ? [

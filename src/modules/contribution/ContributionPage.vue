@@ -3,7 +3,7 @@
     <PageTitle :title="t('menu.contribution')" />
   </div>
 
-  <div v-if="!isIniting" class="grid lg:grid-cols-2 xl:grid-cols-3">
+  <div v-if="!isIniting" class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
     <div>
       <AppAlert v-if="updatedPaymentSource" class="mb-8">{{
         t('contribution.updatedPaymentSource')
@@ -88,6 +88,7 @@
         />
       </template>
     </div>
+    <PaymentsHistory id="me" class="lg:ml-10" />
   </div>
 
   <div class="text-center md:hidden">
@@ -115,6 +116,7 @@ import AppButton from '../../components/forms/AppButton.vue';
 import ProrateContribution from './components/ProrateContribution.vue';
 import AppAlert from '../../components/AppAlert.vue';
 import MessageBox from '../../components/MessageBox.vue';
+import PaymentsHistory from './components/PaymentsHistory.vue';
 
 const { t } = useI18n();
 

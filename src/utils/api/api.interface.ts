@@ -26,7 +26,7 @@ interface GetPaginatedQueryRuleGroup<T> {
 interface GetPaginatedQueryRule<T> {
   field: T;
   operator: GetPaginatedQueryRuleOperator;
-  value: string;
+  value: string | number | boolean;
 }
 
 export interface GetPaginatedQuery<T> {
@@ -49,6 +49,13 @@ export interface Address {
   line2?: string | undefined;
   city: string;
   postcode: string;
+}
+
+export enum ItemStatus {
+  Draft = 'draft',
+  Scheduled = 'scheduled',
+  Open = 'open',
+  Ended = 'ended',
 }
 
 interface MemberData {
@@ -196,25 +203,51 @@ export interface GetBasicCalloutData {
   slug: string;
   title: string;
   excerpt: string;
+  status: ItemStatus;
+  access: 'member' | 'guest' | 'anonymous' | 'only-anonymous';
+  allowUpdate: boolean;
+  allowMultiple: boolean;
   image?: string;
   starts?: Date;
   expires?: Date;
   hasAnswered?: boolean;
 }
 
-export enum CalloutStatus {
-  Open = 'open',
-  Finished = 'finished',
-}
-
 export interface GetCalloutsQuery
-  extends GetPaginatedQuery<'title' | 'status' | 'answeredBy'> {
+  extends GetPaginatedQuery<'title' | 'status' | 'answeredBy' | 'hidden'> {
   hasAnswered?: string;
 }
 
-export enum NoticeStatus {
-  Open = 'open',
-  Finished = 'finished',
+export interface GetMoreCalloutData extends GetBasicCalloutData {
+  templateSchema: {
+    formSchema: any;
+    intro: string;
+    thanksText: string;
+    thanksTitle: string;
+  };
+}
+
+export type GetCalloutResponsesQuery = GetPaginatedQuery<'member'>;
+
+type CalloutResponseAnswer =
+  | string
+  | boolean
+  | number
+  | null
+  | undefined
+  | Record<string, boolean>;
+export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
+
+export interface GetCalloutResponseData {
+  answers: CalloutResponseAnswers;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CreateCalloutResponseData {
+  guestName?: string;
+  guestEmail?: string;
+  answers: CalloutResponseAnswers;
 }
 
 export type GetNoticesQuery = GetPaginatedQuery<
@@ -225,7 +258,7 @@ export interface GetNoticeData {
   id: string;
   createdAt: Date;
   updatedAt: Date;
-  status: NoticeStatus;
+  status: ItemStatus;
   name: string;
   expires?: Date;
   enabled: boolean;
