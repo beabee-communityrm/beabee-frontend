@@ -65,7 +65,7 @@ const steps: Steps = reactive([
     description: 'Set a title, description and image for the callout',
     validated: false,
     component: TitleAndImage,
-    data: { title: '', description: '' },
+    data: { title: '', description: '', coverImageURL: '' },
   },
   {
     id: 'second',
