@@ -66,7 +66,7 @@ const steps: Steps = reactive([
     description: 'Build your callout with questions and prompts',
     validated: false,
     component: markRaw(ContentStep),
-    data: { introText: '', formSchema: {} },
+    data: { introText: '', formSchema: { components: [] } },
   },
   {
     id: 'first',
