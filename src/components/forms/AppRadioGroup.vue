@@ -1,5 +1,5 @@
 <template>
-  <label v-for="item in options" class="block">
+  <label v-for="item in options" class="block mb-1 font-semibold">
     <input
       type="radio"
       :name="name"

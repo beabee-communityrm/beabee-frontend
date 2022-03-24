@@ -15,7 +15,7 @@
   </div>
   <div class="grid grid-cols-2 gap-6 mt-5">
     <div class="col-span-1">
-      <AppHeading>When should this callout end?</AppHeading>
+      <p class="font-semibold mb-1">When should this callout end?</p>
       <AppRadioGroup
         name="calloutHasEndDate"
         :options="['Never, unless manually closed', 'Schedule an end date']"

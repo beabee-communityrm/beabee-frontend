@@ -2,7 +2,7 @@
   <AppHeading class="mb-3">Sync with Mailchimp (optional)</AppHeading>
   <div class="grid grid-cols-2 gap-6">
     <div class="col-span-1">
-      <AppHeading>Use Mailchimp sync</AppHeading>
+      <p class="font-semibold">Use Mailchimp sync</p>
       <AppRadioGroup
         name="useMailchimpSync"
         :options="['Yes', 'No']"

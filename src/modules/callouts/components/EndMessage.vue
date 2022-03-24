@@ -2,7 +2,9 @@
   <AppHeading class="mb-3"> End message </AppHeading>
   <div class="grid grid-cols-2 gap-6">
     <div class="col-span-1">
-      <p class="font-semibold">When the user finishes answering the callout:</p>
+      <p class="font-semibold mb-1">
+        When the user finishes answering the callout:
+      </p>
       <AppRadioGroup
         name="whenFinished"
         :options="['Show a thank you message', 'Redirect them to another page']"
@@ -14,10 +16,11 @@
     class="grid grid-cols-2 gap-6 mt-5"
     v-show="showThankYouSection === true"
   >
-    <div class="col-span-1">
+    <div class="col-span-1 mb-5">
       <AppInput
         v-model="dataProxy.thankYouTitle"
         :label="'Thank you title'"
+        placeholder="Thank you!"
       ></AppInput>
     </div>
     <p class="col-span-1 text-sm text-grey mt-6">
@@ -27,10 +30,11 @@
   </div>
   <div class="grid grid-cols-2 gap-6" v-show="showThankYouSection === true">
     <div class="col-span-1">
-      <AppInput
+      <AppTextArea
         v-model="dataProxy.thankYouText"
         :label="'Thank you text'"
-      ></AppInput>
+        placeholder="Include more details about how valuable their input is..."
+      ></AppTextArea>
     </div>
     <p class="col-span-1 text-sm text-grey mt-6">
       Here you can thank them in more detail, ask them to share the callout. Let
@@ -45,6 +49,7 @@
       <AppInput
         v-model="dataProxy.URLRedirect"
         :label="'URL for redirect'"
+        placeholder="https://"
       ></AppInput>
     </div>
     <p class="col-span-1 text-sm text-grey mt-6">
@@ -59,6 +64,7 @@ import { ref, watch, computed } from 'vue';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
+import AppTextArea from '../../../components/forms/AppTextArea.vue';
 
 const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{

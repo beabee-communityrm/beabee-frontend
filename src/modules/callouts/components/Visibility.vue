@@ -1,8 +1,8 @@
 <template>
   <AppHeading class="mb-3"> Visibility settings </AppHeading>
-  <div class="grid grid-cols-2 gap-6">
+  <div class="grid grid-cols-2 gap-6 mt-5">
     <div class="col-span-1">
-      <AppHeading>Who can take part?</AppHeading>
+      <p class="font-semibold mb-1">Who can take part?</p>
       <AppRadioGroup
         name="whoCanTakePart"
         :options="['Members only', 'Everyone']"
@@ -14,9 +14,9 @@
       <b>Members only</b> participation.
     </p>
   </div>
-  <div class="grid grid-cols-2 gap-6">
+  <div class="grid grid-cols-2 gap-6 mt-5">
     <div class="col-span-1">
-      <AppHeading>Allow anonymous responses?</AppHeading>
+      <p class="font-semibold mb-1">Allow anonymous responses?</p>
       <AppRadioGroup
         name="allowAnonymousResponses"
         :options="[
@@ -33,9 +33,11 @@
       field is set to No.
     </p>
   </div>
-  <div class="grid grid-cols-2 gap-6">
+  <div class="grid grid-cols-2 gap-6 mt-5">
     <div class="col-span-1">
-      <AppHeading>Should it be visible in users' dashboards?</AppHeading>
+      <p class="font-semibold mb-1">
+        Should it be visible in users' dashboards?
+      </p>
       <AppRadioGroup
         name="showOnUserDashboards"
         :options="['Yes', 'No, accessed through link only']"
@@ -47,12 +49,11 @@
       users while you are still reviewing it before making it public.
     </p>
   </div>
-  <div class="grid grid-cols-2 gap-6">
+  <div class="grid grid-cols-2 gap-6 mt-5">
     <div class="col-span-1">
-      <AppHeading
-        >Should people be able to change their answers before the callout
-        ends?</AppHeading
-      >
+      <p class="font-semibold mb-1">
+        Should people be able to change their answers before the callout ends?
+      </p>
       <AppRadioGroup
         name="usersCanEditAnswers"
         :options="['Yes', 'No, answers are final']"

@@ -1,10 +1,10 @@
 <template>
   <h4>Create a new callout</h4>
-  <div class="grid grid-cols-3 gap-8">
+  <div class="grid grid-cols-4 gap-8">
     <div class="col-span-1">
       <Stepper :steps="steps" v-model:selectedStepIndex="selectedStepIndex" />
     </div>
-    <div class="col-span-2">
+    <div class="col-span-3">
       <component
         :is="selectedStep.component"
         v-model:data="selectedStep.data"
