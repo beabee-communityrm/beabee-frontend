@@ -40,7 +40,7 @@ import InfoMessage from '../InfoMessage.vue';
 const props = withDefaults(
   defineProps<{
     modelValue?: string;
-    inputType?: 'password' | 'email' | 'text';
+    inputType?: 'password' | 'email' | 'text' | 'date';
     label?: string;
     errorMessage?: string | Ref<string>;
     infoMessage?: string;
