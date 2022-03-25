@@ -6,21 +6,18 @@
 
     {{ t('homePage.passwordReset') }}
   </AppAlert>
-  <!-- TODO: check page title implementation, after implementing other pages
-    you might want to improve it
-  -->
   <h1 class="md:hidden text-lg font-semibold">
-    {{ `${t('common.hello')} ${member.firstname}!` }}
+    {{ `${t('common.hello')} ${user.firstname}!` }}
   </h1>
 
   <PageTitle
-    :title="`${t('common.hello')} ${member.firstname}!`"
+    :title="`${t('common.hello')} ${user.firstname}!`"
     :sub-title="profileContent.welcomeMessage"
   />
 
   <section v-if="showWelcomeMessage" class="mb-10">
     <WelcomeMessage
-      :member-first-name="member.firstname"
+      :member-first-name="user.firstname"
       :text="profileContent.introMessage"
       @close="removeWelcomeMessage"
     />
@@ -32,40 +29,53 @@
     <QuickActions />
   </section>
 
-  <div class="flex flex-col content-container">
-    <CalloutContainer class="mb-8 pr-4" />
+  <div class="lg:flex justify-between">
+    <section v-if="callouts.length" class="mb-6 lg:mr-6">
+      <SectionTitle class="mb-6 md:hidden">{{
+        t('homePage.openCallouts')
+      }}</SectionTitle>
+      <AppHeading class="mb-2 hidden md:block">{{
+        t('homePage.openCallouts')
+      }}</AppHeading>
 
-    <!-- your profile section -->
+      <div class="flex mb-4">
+        <!-- just show the first callout for now (design decision) -->
+        <CalloutCard :callout="callouts[0]" />
+      </div>
+
+      <!--<AppButton to="/callouts" variant="primaryOutlined">{{
+        t('homePage.viewAllCallouts')
+      }}</AppButton>-->
+    </section>
+
     <section>
       <SectionTitle class="mb-6 md:hidden">{{
         t('homePage.yourProfile')
       }}</SectionTitle>
+      <AppHeading class="mb-2 hidden md:block">{{
+        t('homePage.yourProfile')
+      }}</AppHeading>
 
-      <div class="hidden mb-2 items-center md:flex">
-        <h2 class="text-lg font-bold mr-10">{{ t('homePage.yourProfile') }}</h2>
+      <div class="flex mb-4">
+        <ContributionInfo :member="user" />
       </div>
 
-      <div class="flex justify-center">
-        <ContributionInfo :member="member" />
-      </div>
-
-      <AppButton
-        class="mt-6"
-        to="/profile/contribution"
-        variant="primaryOutlined"
-        >{{ t('homePage.manageContribution') }}</AppButton
-      >
+      <AppButton to="/profile/contribution" variant="primaryOutlined">{{
+        t('homePage.manageContribution')
+      }}</AppButton>
     </section>
   </div>
 
-  <section class="pt-20 mt-auto max-w-xs md:max-w-sm mx-auto">
+  <section class="hidden pt-20 mt-auto max-w-xs md:max-w-sm mx-auto">
     <ThanksNotice>{{ profileContent.footerMessage }}</ThanksNotice>
   </section>
 </template>
 
 <script lang="ts" setup>
+import { ref, onBeforeMount, Ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 import NoticeContainer from '../notice/NoticeContainer.vue';
-import CalloutContainer from '../callout/CalloutContainer.vue';
 import ContributionInfo from './components/ContributionInfo.vue';
 import QuickActions from './components/QuickActions.vue';
 import ThanksNotice from './components/ThanksNotice.vue';
@@ -73,12 +83,18 @@ import SectionTitle from './components/SectionTitle.vue';
 import PageTitle from '../../components/PageTitle.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import AppAlert from '../../components/AppAlert.vue';
+import CalloutCard from '../../components/CalloutCard.vue';
 import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
-import { useHome } from './use-home';
-import { onBeforeMount } from '@vue/runtime-core';
-import { useI18n } from 'vue-i18n';
-import { useRoute } from 'vue-router';
-import { ref } from '@vue/reactivity';
+import AppHeading from '../../components/AppHeading.vue';
+import {
+  GetBasicCalloutData,
+  GetMemberData,
+  ItemStatus,
+  ProfileContent,
+} from '../../utils/api/api.interface';
+import { fetchProfileContent } from '../../utils/api/content';
+import { fetchCallouts } from '../../utils/api/callout';
+import { currentUser } from '../../store';
 
 const { t } = useI18n();
 
@@ -92,14 +108,38 @@ const removeWelcomeMessage = () => {
   showWelcomeMessage.value = false;
 };
 
-const { member, profileContent, initHomePage } = useHome();
-onBeforeMount(initHomePage);
-</script>
+const profileContent = ref<ProfileContent>({
+  welcomeMessage: '',
+  footerMessage: '',
+  introMessage: '',
+});
 
-<style scoped>
-@media screen and (min-width: 656px) {
-  .content-container {
-    @apply sm:flex-row sm:flex-wrap sm:justify-between;
-  }
-}
-</style>
+const callouts = ref<GetBasicCalloutData[]>([]);
+
+// This page is behind auth so currentUser can't be null
+// TODO: is there a nicer way to handle this?
+const user = currentUser as Ref<GetMemberData>;
+
+onBeforeMount(async () => {
+  profileContent.value = await fetchProfileContent();
+  callouts.value = (
+    await fetchCallouts({
+      rules: {
+        condition: 'AND',
+        rules: [
+          {
+            field: 'status',
+            operator: 'equal',
+            value: ItemStatus.Open,
+          },
+          {
+            field: 'hidden',
+            operator: 'equal',
+            value: false,
+          },
+        ],
+      },
+    })
+  ).items;
+});
+</script>

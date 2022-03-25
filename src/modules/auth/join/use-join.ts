@@ -15,10 +15,7 @@ import {
   fetchJoinSetupContent,
 } from '../../../utils/api/content';
 import { signUp } from '../../../utils/api/signup';
-import {
-  fetchMemberWithProfile,
-  updateMember,
-} from '../../../utils/api/member';
+import { fetchMember, updateMember } from '../../../utils/api/member';
 import { NewsletterStatus } from '../../../utils/enums/newsletter-status.enum';
 import {
   JoinContent,
@@ -32,13 +29,10 @@ const joinContent = ref<JoinContent>({
   initialAmount: 5,
   initialPeriod: ContributionPeriod.Monthly,
   minMonthlyAmount: 5,
-  name: '',
   periods: [],
-  privacyLink: '',
   showAbsorbFee: true,
   showNoContribution: false,
   subtitle: '',
-  termsLink: '',
   title: '',
 });
 
@@ -186,7 +180,7 @@ const completeSetup = async (router: Router) => {
     };
   }
 
-  updateMember(updateMemberData)
+  updateMember('me', updateMemberData)
     .then(() => {
       router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
     })
@@ -198,7 +192,7 @@ const completeSetup = async (router: Router) => {
 };
 
 const setMemberData = () => {
-  fetchMemberWithProfile()
+  fetchMember('me', ['profile'])
     .then((data) => {
       setupMemberData.firstName = data.firstname;
       setupMemberData.lastName = data.lastname;

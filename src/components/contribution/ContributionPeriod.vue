@@ -11,7 +11,7 @@
         type="radio"
         :name="period.name"
         :value="period.name"
-        class="absolute opacity-0 -z-1"
+        class="absolute opacity-0 -z-10"
         :checked="period.name === selectedPeriod"
         @change="changePeriod(handleInput($event))"
       />
@@ -24,9 +24,11 @@
           h-10
           cursor-pointer
         "
-        :class="{
-          'bg-link text-white': period.name === selectedPeriod,
-        }"
+        :class="
+          period.name === selectedPeriod
+            ? 'bg-link text-white'
+            : 'hover:bg-link-10'
+        "
       >
         {{
           period.name === 'monthly' ? t('common.monthly') : t('common.annually')

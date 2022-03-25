@@ -14,8 +14,8 @@
         right-0
         opacity-30
         bg-black
+        left-[240px]
       "
-      style="left: 240px"
       :class="isMenuVisible ? 'block' : 'hidden'"
       @click="isMenuVisible = false"
     />
@@ -32,7 +32,11 @@
     </div>
 
     <!-- logo on small screens -->
-    <img class="w-11" src="../../assets/images/logo.png" :alt="newsroomName" />
+    <img
+      class="w-11"
+      src="../../assets/images/logo.png"
+      :alt="generalContent.organisationName"
+    />
   </div>
 
   <div
@@ -48,26 +52,28 @@
       transition-transform
       -translate-x-full
       md:transform-none
-      menu-container
+      flex-none
+      w-[240px]
     "
-    :class="{ 'is-visible': isMenuVisible }"
+    :class="{ 'top-[68px] translate-x-0': isMenuVisible }"
   >
-    <div class="hidden my-12 text-center md:block">
+    <div class="hidden my-10 text-center md:block">
       <!-- logo on bigger screens -->
       <img
         class="w-20 md:inline-block"
         src="../../assets/images/logo.png"
-        :alt="newsroomName"
+        :alt="generalContent.organisationName"
       />
     </div>
 
-    <TheMenuList :sections="menuSections" />
+    <TheMenuList v-if="currentUser" :sections="menuSections" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from '@vue/reactivity';
 import { useRoute, useRouter } from 'vue-router';
+import { currentUser, generalContent } from '../../store';
 
 import menuSections from './menu-list';
 import TheMenuList from './TheMenuList.vue';
@@ -80,22 +86,7 @@ useRouter().afterEach(() => {
   isMenuVisible.value = false;
 });
 
-const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
-
 function toggleMenu() {
   isMenuVisible.value = !isMenuVisible.value;
 }
 </script>
-
-<style scoped>
-.menu-container {
-  @apply flex-none;
-
-  width: 240px;
-}
-
-.menu-container.is-visible {
-  top: 68px;
-  transform: translateX(0);
-}
-</style>

@@ -3,7 +3,7 @@
     <div class="flex mb-4">
       <img
         src="../../../../assets/images/logo.png"
-        :alt="newsroomName"
+        :alt="generalContent.organisationName"
         class="w-16 flex-none self-start"
       />
       <div class="flex flex-col ml-4">
@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
+import { generalContent } from '../../../../store';
 
 defineProps({
   title: {

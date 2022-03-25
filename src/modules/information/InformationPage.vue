@@ -4,11 +4,18 @@
     :sub-title="t('informationPage.subTitle')"
   />
 
-  <h2 class="mb-3 text-lg font-bold">{{ t('informationPage.loginDetail') }}</h2>
+  <div class="grid lg:grid-cols-2 xl:grid-cols-3">
+    <div>
+      <AppHeading class="mb-3">
+        {{ t('informationPage.loginDetail') }}
+      </AppHeading>
+      <ChangePassword />
 
-  <form @submit.prevent>
-    <div class="grid lg:grid-cols-2 xl:grid-cols-3">
-      <div>
+      <form class="mt-5" @submit.prevent="submitFormHandler('me')">
+        <AppHeading class="mb-3">
+          {{ t('informationPage.contactInformation') }}
+        </AppHeading>
+
         <div class="mb-5">
           <AppInput
             v-model="information.emailAddress"
@@ -20,21 +27,6 @@
             @blur="informationValidation.emailAddress.$touch"
           />
         </div>
-
-        <div class="mb-5">
-          <AppInput
-            v-model="information.password"
-            input-type="password"
-            :label="t('form.password')"
-            :info-message="t('form.passwordInfo')"
-            :error-message="errorGenerator(informationValidation, 'password')"
-            @blur="informationValidation.password.$touch"
-          />
-        </div>
-
-        <h2 class="mb-3 text-lg font-bold">
-          {{ t('informationPage.contactInformation') }}
-        </h2>
 
         <div class="mb-5">
           <AppInput
@@ -56,12 +48,40 @@
           />
         </div>
 
+        <AppHeading class="mb-3">
+          {{ t('informationPage.deliveryAddress') }}
+        </AppHeading>
+
+        <template v-if="infoContent.showMailOptIn">
+          <p class="text-lg mb-1">
+            {{ infoContent.mailTitle }}
+          </p>
+
+          <p class="mb-4 text-sm">
+            {{ infoContent.mailText }}
+          </p>
+
+          <div class="mb-4">
+            <input
+              id="deliveryOptIn"
+              v-model="information.deliveryOptIn"
+              type="checkbox"
+              name="updates"
+            />
+
+            <label for="deliveryOptIn" class="font-bold ml-1">
+              {{ infoContent.mailOptIn }}
+            </label>
+          </div>
+        </template>
+
         <AppAddress
           v-model:line1="information.addressLine1"
           v-model:line2="information.addressLine2"
           v-model:postCode="information.postCode"
           v-model:cityOrTown="information.cityOrTown"
           v-model:addressValidation="addressValidation"
+          :is-address-required="information.deliveryOptIn"
         />
 
         <MessageBox v-if="hasFormError" type="error" class="mt-2" />
@@ -71,16 +91,16 @@
         </MessageBox>
 
         <AppButton
+          type="submit"
           :disabled="hasFormError"
-          class="mt-5"
+          class="mt-2"
           :loading="loading"
           variant="link"
-          @click="submitFormHandler"
           >{{ t('form.saveChanges') }}</AppButton
         >
-      </div>
+      </form>
     </div>
-  </form>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -92,27 +112,23 @@ import AppAddress from '../../components/AppAddress.vue';
 import { useI18n } from 'vue-i18n';
 import { useInformation } from './use-information';
 import { onBeforeMount } from '@vue/runtime-core';
+import AppHeading from '../../components/AppHeading.vue';
+import ChangePassword from './components/ChangePassword.vue';
+
+const { t } = useI18n();
 
 const {
   informationValidation,
   errorGenerator,
   information,
   submitFormHandler,
-  setInformation,
+  initPage,
   isSaved,
   loading,
+  infoContent,
   hasFormError,
   addressValidation,
 } = useInformation();
 
-onBeforeMount(() => {
-  setInformation();
-  // - TODO: Why component isn't destroyed on route change?
-  // It's here because when you saved the information and showed the succes message,
-  // if you went to other pages and come back, you still saw the success
-  // message because isSaved remained true.
-  isSaved.value = false;
-});
-
-const { t } = useI18n();
+onBeforeMount(() => initPage('me'));
 </script>

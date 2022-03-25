@@ -1,4 +1,33 @@
 {
+  "callout": {
+    "contactDetails": "Contact details",
+    "form": {
+      "email": "Your email",
+      "guestFieldsMissing": "Please tell us your contact details",
+      "name": "Your name",
+      "submittingResponseError": "There was a problem submitting your response, please try again"
+    },
+    "joinNow": "Join now",
+    "loginToYourAccount": "Login to your account",
+    "membersOnly": "This callout is open to members only. To participate",
+    "status": {
+      "endedOn": "on {date}",
+      "endsIn": "Ends in {duration}",
+      "startsIn": "starts in {duration}"
+    },
+    "youResponded": "You replied to this callout ♥"
+  },
+  "callouts": {
+    "archive": "Archive",
+    "data": {
+      "callout": "Callout",
+      "endDate": "End date"
+    },
+    "search": "Search callouts...",
+    "show": "Show",
+    "showAll": "All",
+    "showAnswered": "Answered"
+  },
   "common": {
     "annually": "Annually",
     "backToHome": "Back to home",
@@ -12,10 +41,81 @@
     "month": "month | months",
     "monthly": "Monthly",
     "new": "new!",
+    "no": "No",
     "participate": "Participate",
+    "role": {
+      "admin": "Admin",
+      "member": "Member",
+      "superadmin": "Super Admin"
+    },
+    "share": "Share",
+    "status": {
+      "draft": "Draft",
+      "ended": "Ended",
+      "open": "Open",
+      "scheduled": "Scheduled"
+    },
     "thankYou": "Thank you!",
+    "timeAgo": "{time} ago",
+    "timeIn": "in {time}",
     "until": "until",
-    "year": "year | years"
+    "year": "year | years",
+    "yes": "Yes"
+  },
+  "contactInformation": {
+    "deliveryOptIn": "Delivery opt-in"
+  },
+  "contactOverview": {
+    "about": "About",
+    "annotation": {
+      "copy": {
+        "begin": "All information added in this section is",
+        "bold": "visible for admins only.",
+        "end": "Members will never see these in their profile or member area."
+      }
+    },
+    "contribution": "Contribution",
+    "information": "Information",
+    "overview": "Overview",
+    "roles": "Roles",
+    "security": {
+      "instructions": "Copy and share this link:",
+      "loginOverride": "Login override",
+      "resetPassword": "Reset password",
+      "title": "Security",
+      "whatDoTheButtonsDo": "Click the button to generate an emergency link:"
+    }
+  },
+  "contacts": {
+    "addContact": "Add contact",
+    "advancedSearch": "Advanced",
+    "allContacts": "All contacts",
+    "data": {
+      "amount": "Amount",
+      "contribution": "Contribution",
+      "contributionType": "Type",
+      "deliveryOptIn": "Delivery opt-in?",
+      "description": "Description",
+      "email": "Email",
+      "groups": "Groups",
+      "joined": "Joined",
+      "lastSeen": "Last seen",
+      "name": "Name",
+      "newsletter": "Newsletter",
+      "notes": "Notes",
+      "payingFee": "Paying fee?",
+      "period": "Period",
+      "phone": "Phone",
+      "preferredChannel": "Preferred channel",
+      "roles": "Roles",
+      "rolesCopy": {
+        "today": "present"
+      },
+      "tags": "Tags"
+    },
+    "noResults": "No contacts found",
+    "search": "Search contacts...",
+    "showingOf": "Showing {start} to {end} contacts out of {total}"
   },
   "contribution": {
     "bankAccount": "Bank account",
@@ -32,6 +132,11 @@
     "hasPendingPayment": "Your payment is currently being processed.",
     "manualPayment": "You are paying manually through bank transfer right now. To make it easier for you to manage your contribution and easier for us to know on how much money from our members we can rely on month on month, please update to paying automatically via direct debit.",
     "nextAmountChanging": "Your contribution will change to {nextAmount} on {renewalDate}.",
+    "paymentHistory": {
+      "amount": "Amount",
+      "date": "Date",
+      "title": "Payment history"
+    },
     "paymentSourceUpdateError": "You can't update your bank account at the moment as you have a payment pending",
     "prorateDecreaseMessage": "You have {monthsLeft} {months} left on your current contribution, your new contribution will start on {renewalDate}.",
     "prorateIncreaseMessage": "You have {monthsLeft} {months} left on your current contribution. You can make a one-off payment of {oneOffPayment} to start your new contribution immediately.",
@@ -50,6 +155,16 @@
     "willRenew": "Your contribution will automatically renew on {renewalDate}.",
     "willRenewWithNewAmount": "Your contribution will automatically renew on {renewalDate} and will change to your chosen amount of {nextAmount}."
   },
+  "footer": {
+    "contactUs": "Contact us at",
+    "contacts": "Contacts",
+    "handbookResources": "Handbook & Resources",
+    "impressum": "Impressum",
+    "joinCommunity": "Join the Community",
+    "poweredBy": "powering independent local newsrooms",
+    "privacyPolicy": "Privacy Policy",
+    "terms": "Terms and Conditions"
+  },
   "forgotPassword": {
     "checkInbox": "Please check your inbox and follow the instructions in the email. Check your spam folder if it doesn't appear.",
     "description": "Please enter your email address and we’ll send you password reset instructions.",
@@ -60,6 +175,7 @@
   "form": {
     "addressLine1": "Address line 1",
     "addressLine2": "Address line 2",
+    "cancel": "Cancel",
     "cityOrTown": "City/Town",
     "deliveryOptIn": "Delivery opt-in",
     "description": "Description",
@@ -79,6 +195,9 @@
       "lastName": {
         "required": "Last name is required"
       },
+      "name": {
+        "required": "Name is required"
+      },
       "password": {
         "invalid": "Invalid password",
         "required": "Password is required",
@@ -87,6 +206,8 @@
     },
     "firstName": "First name",
     "lastName": "Last name",
+    "newPassword": "New password",
+    "newPasswordConfirm": "Confirm new password",
     "notes": "Notes",
     "password": "Password",
     "passwordInfo": "Set a secure password: 8+ characters at least one number, one uppercase and one lowercase letters.",
@@ -111,8 +232,11 @@
     "yourProfile": "Your profile"
   },
   "informationPage": {
+    "changePassword": "Change password",
     "contactInformation": "Contact information",
+    "deliveryAddress": "Delivery address",
     "loginDetail": "Login details",
+    "savedPassword": "New password saved",
     "subTitle": "Required fields are marked with an asterisk. All information submitted here is private.",
     "title": "Your information"
   },
@@ -170,9 +294,18 @@
     "contribution": "Contribution",
     "home": "Home",
     "logout": "Log out",
+    "notices": "Notices",
     "settings": "Settings",
     "yourInformation": "Your information",
     "yourProfile": "Your profile"
+  },
+  "notices": {
+    "addNotice": "Add notice",
+    "data": {
+      "createdAt": "Created",
+      "name": "Name",
+      "status": "Status"
+    }
   },
   "notification": {
     "error": "Oops, something went wrong!",

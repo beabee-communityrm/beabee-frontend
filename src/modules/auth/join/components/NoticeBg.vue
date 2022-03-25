@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="otice-bg opacity-30 stroke-current text-success"
+    class="opacity-30 stroke-current text-success max-w-[130px]"
     viewBox="0 0 44.327 53.536"
   >
     <g

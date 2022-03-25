@@ -3,6 +3,9 @@ import { ContributionType } from '../enums/contribution-type.enum';
 import { MembershipStatus } from '../enums/membership-status.enum';
 import { NewsletterStatus } from '../enums/newsletter-status.enum';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface Noop {}
+
 export type Serial<T> = {
   [P in keyof T]: T[P] extends Date
     ? string
@@ -11,15 +14,48 @@ export type Serial<T> = {
     : T[P];
 };
 
-export type ContentId = 'join' | 'join/setup' | 'profile';
-
 export type PermissionType = 'member' | 'admin' | 'superadmin';
+
+type GetPaginatedQueryRuleOperator = 'equal' | 'contains';
+
+interface GetPaginatedQueryRuleGroup<T> {
+  condition: 'AND' | 'OR';
+  rules: (GetPaginatedQueryRuleGroup<T> | GetPaginatedQueryRule<T>)[];
+}
+
+interface GetPaginatedQueryRule<T> {
+  field: T;
+  operator: GetPaginatedQueryRuleOperator;
+  value: string | number | boolean;
+}
+
+export interface GetPaginatedQuery<T> {
+  limit?: number;
+  offset?: number;
+  sort?: string;
+  order?: 'ASC' | 'DESC';
+  rules?: GetPaginatedQueryRuleGroup<T>;
+}
+
+export interface Paginated<T> {
+  items: T[];
+  offset: number;
+  count: number;
+  total: number;
+}
 
 export interface Address {
   line1: string;
   line2?: string | undefined;
   city: string;
   postcode: string;
+}
+
+export enum ItemStatus {
+  Draft = 'draft',
+  Scheduled = 'scheduled',
+  Open = 'open',
+  Ended = 'ended',
 }
 
 interface MemberData {
@@ -43,16 +79,31 @@ interface MemberProfileData {
   description?: string;
 }
 
-export interface GetMemberData extends MemberData {
-  joined: Date;
-  contributionAmount?: number;
-  contributionPeriod?: ContributionPeriod;
-  roles: PermissionType[];
+export interface MemberRoleData {
+  role: PermissionType;
+  dateAdded: Date;
+  dateExpires: Date | null;
 }
 
-export interface GetMemberDataWithProfile extends GetMemberData {
-  profile: MemberProfileData;
+export type GetMemberWith = 'profile' | 'contribution' | 'roles';
+
+export interface GetMemberData extends MemberData {
+  id: string;
+  joined: Date;
+  lastSeen?: Date;
+  contributionAmount?: number;
+  contributionPeriod?: ContributionPeriod;
+  activeRoles: PermissionType[];
 }
+
+export type GetMemberDataWith<With extends GetMemberWith> = GetMemberData &
+  ('profile' extends With ? { profile: MemberProfileData } : Noop) &
+  ('contribution' extends With ? { contribution: ContributionInfo } : Noop) &
+  ('roles' extends With ? { roles: MemberRoleData[] } : Noop);
+
+export type GetMembersQuery = GetPaginatedQuery<
+  'firstname' | 'lastname' | 'email'
+>;
 
 export type UpdateMemberProfileData = Partial<MemberProfileData>;
 
@@ -92,18 +143,33 @@ export interface SetContributionData extends UpdateContributionData {
   period: ContributionPeriod;
 }
 
+export interface GetPaymentData {
+  chargeDate: string;
+  amount: number;
+  status: string;
+}
+
+export type GetPaymentsQuery = GetPaginatedQuery<'chargeDate'>;
+
 export interface LoginData {
   email: string;
   password: string;
 }
 
-export interface JoinContent {
-  name: string;
+export interface GeneralContent {
+  organisationName: string;
+  siteUrl: string;
+  supportEmail: string;
   privacyLink: string;
-  showNoContribution: boolean;
-  subtitle: string;
-  termsLink: string;
+  termsLink?: string;
+  impressumLink?: string;
+  currencyCode: string;
+  footerLinks: { text: string; url: string }[];
+}
+
+export interface JoinContent {
   title: string;
+  subtitle: string;
   initialAmount: number;
   initialPeriod: ContributionPeriod;
   minMonthlyAmount: number;
@@ -112,6 +178,7 @@ export interface JoinContent {
     presetAmounts: number[];
   }[];
   showAbsorbFee: boolean;
+  showNoContribution: boolean;
 }
 
 export interface JoinSetupContent {
@@ -132,25 +199,66 @@ export interface ProfileContent {
   introMessage: string;
 }
 
-export interface BasicCalloutData {
+export interface GetBasicCalloutData {
   slug: string;
   title: string;
   excerpt: string;
+  status: ItemStatus;
+  access: 'member' | 'guest' | 'anonymous' | 'only-anonymous';
+  allowUpdate: boolean;
+  allowMultiple: boolean;
   image?: string;
   starts?: Date;
   expires?: Date;
+  hasAnswered?: boolean;
 }
 
-export enum NoticeStatus {
-  Open = 'open',
-  Finished = 'finished',
+export interface GetCalloutsQuery
+  extends GetPaginatedQuery<'title' | 'status' | 'answeredBy' | 'hidden'> {
+  hasAnswered?: string;
 }
+
+export interface GetMoreCalloutData extends GetBasicCalloutData {
+  templateSchema: {
+    formSchema: any;
+    intro: string;
+    thanksText: string;
+    thanksTitle: string;
+  };
+}
+
+export type GetCalloutResponsesQuery = GetPaginatedQuery<'member'>;
+
+type CalloutResponseAnswer =
+  | string
+  | boolean
+  | number
+  | null
+  | undefined
+  | Record<string, boolean>;
+export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
+
+export interface GetCalloutResponseData {
+  answers: CalloutResponseAnswers;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CreateCalloutResponseData {
+  guestName?: string;
+  guestEmail?: string;
+  answers: CalloutResponseAnswers;
+}
+
+export type GetNoticesQuery = GetPaginatedQuery<
+  'name' | 'status' | 'createdAt' | 'updatedAt'
+>;
 
 export interface GetNoticeData {
   id: string;
   createdAt: Date;
   updatedAt: Date;
-  status: NoticeStatus;
+  status: ItemStatus;
   name: string;
   expires?: Date;
   enabled: boolean;
@@ -163,4 +271,12 @@ export interface SignupData extends SetContributionData {
   email: string;
   password: string;
   noContribution: boolean;
+}
+
+export interface GetSegmentData {
+  id: string;
+  name: string;
+  ruleGroup: any;
+  order: number;
+  memberCount: number;
 }

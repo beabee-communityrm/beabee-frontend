@@ -16,7 +16,7 @@ watch(
   async (meta) => {
     try {
       const layoutName = meta.layout ? meta.layout : 'Dashboard';
-      const component = await import(`./${layoutName}Layout.vue`);
+      const component = await import(`./layout-${layoutName}.vue`);
       layout.value = component.default;
     } catch (e) {}
   }
