@@ -1,49 +1,49 @@
 <template>
-  <AppHeading class="mb-3">URL and social sharing</AppHeading>
+  <AppHeading class="mb-3">{{ t('createCallout.steps.url.title') }}</AppHeading>
   <div class="grid grid-cols-2 gap-6">
     <div class="col-span-1">
       <AppInput
         v-model="dataProxy.slug"
-        :label="'URL slug'"
-        placeholder="slug-looks-like-this"
+        :label="inputT('slug.label')"
+        :placeholder="inputT('slug.placeholder')"
       ></AppInput>
     </div>
-    <p class="col-span-1 text-sm text-grey mt-6">
-      The <b>URL slug</b> will be used to construct the web address for this
-      callout.
-    </p>
+    <div
+      class="col-span-1 text-sm text-grey mt-6"
+      v-html="inputT('slug.help')"
+    />
   </div>
   <div class="grid grid-cols-2 gap-6 mt-5">
     <div class="col-span-1">
       <AppInput
         v-model="dataProxy.meta_title"
-        :label="'Meta title'"
-        placeholder="The name of your callout"
+        :label="inputT('title.label')"
+        :placeholder="inputT('title.placeholder')"
       ></AppInput>
     </div>
-    <p class="col-span-1 text-sm text-grey mt-6">
-      The <b>Meta title</b> field sets the title as it should appear on social
-      media cards. This will not affect the original callout title.
-    </p>
+    <div
+      class="col-span-1 text-sm text-grey mt-6"
+      v-html="inputT('title.help')"
+    />
   </div>
   <div class="grid grid-cols-2 gap-6 mt-5">
     <div class="col-span-1">
       <AppTextArea
         v-model="dataProxy.meta_description"
-        :label="'Meta description'"
-        placeholder="Quickly explain why people should enter this callout"
+        :label="inputT('description.label')"
+        :placeholder="inputT('description.placeholder')"
       ></AppTextArea>
     </div>
-    <p class="col-span-1 text-sm text-grey mt-6">
-      The <b>Meta description</b> field sets the short description as it should
-      appear on social media cards. This will not affect the original callout
-      description.
-    </p>
+    <div
+      class="col-span-1 text-sm text-grey mt-6"
+      v-html="inputT('description.help')"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
@@ -52,6 +52,9 @@ const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{
   data: { slug: string; meta_title: string; meta_description: string };
 }>();
+
+const { t } = useI18n();
+const inputT = (key: string) => t('createCallout.steps.url.inputs.' + key);
 
 const isNotEmptyString = (s: string) => s.length > 0;
 

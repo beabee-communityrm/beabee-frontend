@@ -57,7 +57,6 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
-
 const inputT = (key: string) =>
   t('createCallout.steps.titleAndImage.inputs.' + key);
 
