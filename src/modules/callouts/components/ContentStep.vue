@@ -1,11 +1,11 @@
 <template>
   <div>
-    <AppHeading>Callout content</AppHeading>
+    <AppHeading>{{ t('createCallout.steps.content.title') }}</AppHeading>
     <div class="grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <AppTextArea
           v-model="dataProxy.introText"
-          label="Introduction text"
+          :label="inputT('intro.label')"
           required
           :error-message="validation.introText.$errors[0]?.$message"
           @blur="validation.introText.$touch"
@@ -54,11 +54,16 @@ import {
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
 
 import 'formiojs/dist/formio.builder.css';
+import { useI18n } from 'vue-i18n';
 
 const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{
   data: { introText: string; formSchema: { components: unknown[] } };
 }>();
+
+const { t } = useI18n();
+
+const inputT = (key: string) => t('createCallout.steps.content.inputs.' + key);
 
 const dataProxy = ref(props.data);
 const validation = useVuelidate(
