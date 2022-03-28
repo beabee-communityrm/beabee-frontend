@@ -50,6 +50,9 @@ const sheets = google.sheets({ version: 'v4', auth });
         }
         localeDataPart = localeDataPart[part];
       }
+      if (localeDataPart[lastKeyPart] !== undefined) {
+        console.log('Duplicate key ' + row.key);
+      }
       localeDataPart[lastKeyPart] = keyOpts.reduce(
         (data, opt) => optHandlers[opt](data),
         row[locale] || ''
