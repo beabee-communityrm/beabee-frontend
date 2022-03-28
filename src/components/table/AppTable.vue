@@ -5,7 +5,7 @@
         <th
           v-for="(header, i) in headers"
           :key="i"
-          class="p-2 relative"
+          class="p-2 relative whitespace-nowrap"
           :class="{ 'cursor-pointer': header.sortable }"
           :align="header.align || 'left'"
           :style="{ width: header.width }"

@@ -25,6 +25,12 @@
     "showAll": "Alle",
     "showAnswered": "Beantwortet"
   },
+  "calloutsAdmin": {
+    "data": {
+      "status": "Status"
+    },
+    "filter": {}
+  },
   "common": {
     "annually": "Jährlich",
     "backToHome": "Zurück zur Startseite",
