@@ -157,26 +157,34 @@
   },
   "createCallout": {
     "steps": {
+      "content": {
+        "description": "Build your callout with questions and prompts",
+        "inputs": {
+          "intro": {
+            "help": "",
+            "label": "Introduction text",
+            "placeholder": ""
+          }
+        },
+        "title": "Callout content"
+      },
       "titleAndImage": {
         "description": "Set a title, description and image for the callout",
         "inputs": {
           "description": {
-            "title": "Short description"
+            "help": "<p>The <strong>Short description</strong> expands on the title to explain what the callout is about. It is meant to quickly inform people what is inside in a few words.</p>\n",
+            "label": "Short description",
+            "placeholder": "Quickly explain why people should do this callout."
           },
           "image": {
             "help": "<p>The <strong>Cover image</strong> will serve as an illustration for the callout on menus and forms.</p>\n",
-            "placeholder": "https://",
-            "title": "Cover image"
-          },
-          "intro": {
-            "help": "",
-            "placeholder": "",
-            "title": "Introduction text"
+            "label": "Cover image",
+            "placeholder": "https://"
           },
           "title": {
-            "help": "<p>The <strong>Short description</strong> expands on the title to explain what the callout is about. It is meant to quickly inform people what is inside in a few words.</p>\n",
-            "placeholder": "Quickly explain why people should do this callout.",
-            "title": "Title"
+            "help": "<p>The <strong>Title</strong> will appear on all the mentions of this callout. It's worth spending a while coming up with the right name to get people interested.</p>\n",
+            "label": "Title",
+            "placeholder": "The name of your callout."
           }
         },
         "title": "Title and image"
@@ -186,35 +194,35 @@
         "inputs": {
           "anonymous": {
             "help": "<p>If you allow <strong>anonymous responses</strong>, guests will be not asked for their contact information. This does not affect members.</p>\n",
+            "label": "Allow anonymous responses?",
             "opts": {
               "no": "No, require contact details",
               "yes": "Yes, contact info is optional"
-            },
-            "title": "Allow anonymous responses?"
+            }
           },
           "editable": {
             "help": "<p>If yes, the users will be able to <strong>update their answers</strong> until the callout reaches its end date.</p>\n",
+            "label": "Should people be able to change their answers before the callout ends?",
             "opts": {
               "no": "No, answers are final",
               "yes": "Yes"
-            },
-            "title": "Should people be able to change their answers before the callout ends?"
+            }
           },
           "visible": {
             "help": "<p>You can make the callout <strong>not appear</strong> to users if you only want it to be answered by people who you share the link with.</p>\n",
+            "label": "Should it be visible in the users' dashboards?",
             "opts": {
               "no": "No, it can only be access through its link",
               "yes": "Yes, show it to users"
-            },
-            "title": "Should it be visible in the users' dashboards?"
+            }
           },
           "who": {
             "help": "<p>Callouts can be presented to <strong>Everyone</strong> or restricted to <strong>Members only</strong> participation</p>\n",
+            "label": "Who can take part?",
             "opts": {
               "everyone": "Everyone",
               "members": "Members only"
-            },
-            "title": "Who can take part?"
+            }
           }
         },
         "title": "Visibility settings"
