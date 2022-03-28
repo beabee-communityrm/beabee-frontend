@@ -168,6 +168,54 @@
         },
         "title": "Callout content"
       },
+      "dates": {
+        "description": "Schedule when your callout will go live and how long for",
+        "inputs": {
+          "expires": {
+            "label": "When should this callout end?",
+            "opts": {
+              "never": "Never, unless manually closed",
+              "schedule": "Schedule an end date"
+            }
+          },
+          "starts": {
+            "label": "When should this callout start?",
+            "opts": {
+              "now": "Now",
+              "schedule": "Schedule a start date"
+            }
+          }
+        },
+        "title": "Dates and duration"
+      },
+      "endMessage": {
+        "description": "Set a final thank you message or page to redirect to",
+        "inputs": {
+          "action": {
+            "label": "When the user finishes answering the callout",
+            "opts": {
+              "redirect": "Redirect them to another page",
+              "showMessage": "Show a thank you message"
+            }
+          },
+          "text": {
+            "help": "<p>Here you can thank them in more detail, let them know if and when they can expect updates or follow-ups.</p>\n",
+            "label": "Thank you text",
+            "placeholder": "Include more details about how valuable their input was..."
+          },
+          "title": {
+            "help": "<p>You readers will see the <strong>Thank you title</strong> when they finish answering the callout.</p>\n",
+            "label": "Thank you title",
+            "placeholder": "Thank you!"
+          },
+          "url": {
+            "help": "",
+            "label": "URL for redirect",
+            "placeholder": "https://example.com"
+          }
+        },
+        "title": "End message"
+      },
       "titleAndImage": {
         "description": "Set a title, description and image for the callout",
         "inputs": {
@@ -188,6 +236,27 @@
           }
         },
         "title": "Title and image"
+      },
+      "url": {
+        "description": "Adjust how the URL will appear and how to access it",
+        "inputs": {
+          "description": {
+            "help": "<p>The <strong>Share description</strong> field sets the short description as it should appear on social media cards. This will not affect the original callout description.</p>\n",
+            "label": "Share description",
+            "placeholder": "Quickly explain why people should respond to this callout."
+          },
+          "slug": {
+            "help": "<p>The URL slug will be used to construct the web address for this callout.</p>\n",
+            "label": "URL slug",
+            "placeholder": ""
+          },
+          "title": {
+            "help": "<p>The <strong>Share title</strong> field sets the title as it should appear on social media cards. This will not affect the original callout title.</p>\n",
+            "label": "Share title",
+            "placeholder": "The name of your callout"
+          }
+        },
+        "title": "URL and sharing"
       },
       "visibility": {
         "description": "Choose who will see your callout",

@@ -168,6 +168,54 @@
         },
         "title": ""
       },
+      "dates": {
+        "description": "",
+        "inputs": {
+          "expires": {
+            "label": "",
+            "opts": {
+              "never": "",
+              "schedule": ""
+            }
+          },
+          "starts": {
+            "label": "",
+            "opts": {
+              "now": "",
+              "schedule": ""
+            }
+          }
+        },
+        "title": ""
+      },
+      "endMessage": {
+        "description": "",
+        "inputs": {
+          "action": {
+            "label": "",
+            "opts": {
+              "redirect": "",
+              "showMessage": ""
+            }
+          },
+          "text": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          },
+          "title": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          },
+          "url": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          }
+        },
+        "title": ""
+      },
       "titleAndImage": {
         "description": "",
         "inputs": {
@@ -177,6 +225,27 @@
             "placeholder": ""
           },
           "image": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          },
+          "title": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          }
+        },
+        "title": ""
+      },
+      "url": {
+        "description": "",
+        "inputs": {
+          "description": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          },
+          "slug": {
             "help": "",
             "label": "",
             "placeholder": ""
