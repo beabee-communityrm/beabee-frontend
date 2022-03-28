@@ -44,6 +44,7 @@
     "googleapis": "^91.0.0",
     "husky": "^7.0.4",
     "lint-staged": "^11.1.2",
+    "markdown-it": "^12.3.2",
     "postcss": "^8.4.0",
     "prettier": "^2.4.1",
     "stylelint": "^13.13.0",
