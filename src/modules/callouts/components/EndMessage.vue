@@ -1,13 +1,16 @@
 <template>
-  <AppHeading class="mb-3"> End message </AppHeading>
+  <AppHeading class="mb-3">{{
+    t('createCallout.steps.endMessage.title')
+  }}</AppHeading>
   <div class="grid grid-cols-2 gap-6">
     <div class="col-span-1">
-      <p class="font-semibold mb-1">
-        When the user finishes answering the callout:
-      </p>
+      <p class="font-semibold mb-1">{{ inputT('action.label') }}</p>
       <AppRadioGroup
         name="whenFinished"
-        :options="['Show a thank you message', 'Redirect them to another page']"
+        :options="[
+          inputT('action.opts.showMessage'),
+          inputT('action.opts.redirect'),
+        ]"
         v-model="dataProxy.whenFinished"
       />
     </div>
@@ -19,27 +22,27 @@
     <div class="col-span-1 mb-5">
       <AppInput
         v-model="dataProxy.thankYouTitle"
-        :label="'Thank you title'"
-        placeholder="Thank you!"
+        :label="inputT('title.label')"
+        :placeholder="inputT('title.placeholder')"
       ></AppInput>
     </div>
-    <p class="col-span-1 text-sm text-grey mt-6">
-      Your readers will see the <b>Thank you title</b> when they finish
-      answering the callout.
-    </p>
+    <div
+      class="col-span-1 text-sm text-grey mt-6"
+      v-html="inputT('title.help')"
+    />
   </div>
   <div class="grid grid-cols-2 gap-6" v-show="showThankYouSection === true">
     <div class="col-span-1">
       <AppTextArea
         v-model="dataProxy.thankYouText"
-        :label="'Thank you text'"
-        placeholder="Include more details about how valuable their input is..."
+        :label="inputT('text.label')"
+        :placeholder="inputT('text.placeholder')"
       ></AppTextArea>
     </div>
-    <p class="col-span-1 text-sm text-grey mt-6">
-      Here you can thank them in more detail, ask them to share the callout. Let
-      them know if and when they can expect updates or follow-ups.
-    </p>
+    <div
+      class="col-span-1 text-sm text-grey mt-6"
+      v-html="inputT('text.help')"
+    />
   </div>
   <div
     class="grid grid-cols-2 gap-6 mt-5"
@@ -48,19 +51,20 @@
     <div class="col-span-1">
       <AppInput
         v-model="dataProxy.URLRedirect"
-        :label="'URL for redirect'"
-        placeholder="https://"
+        :label="inputT('url.label')"
+        :placeholder="inputT('url.placeholder')"
       ></AppInput>
     </div>
-    <p class="col-span-1 text-sm text-grey mt-6">
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex culpa, natus
-      quidem sed quis.
-    </p>
+    <div
+      class="col-span-1 text-sm text-grey mt-6"
+      v-html="inputT('url.help')"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, watch, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
@@ -75,6 +79,10 @@ const props = defineProps<{
     URLRedirect: string;
   };
 }>();
+
+const { t } = useI18n();
+const inputT = (key: string) =>
+  t('createCallout.steps.endMessage.inputs.' + key);
 
 const isNotEmptyString = (s: string) => s.length > 0;
 
