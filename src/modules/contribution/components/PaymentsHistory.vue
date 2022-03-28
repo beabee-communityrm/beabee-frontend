@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="paymentsHistoryTable.total > 0">
     <SectionTitle class="mb-2">{{
       t('contribution.paymentHistory.title')
     }}</SectionTitle>
