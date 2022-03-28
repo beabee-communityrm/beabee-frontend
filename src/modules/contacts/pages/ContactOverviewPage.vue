@@ -77,11 +77,7 @@
     </div>
     <div class="row-span-3 max-w-xl">
       <AppHeading>{{ t('contactOverview.about') }}</AppHeading>
-      <p class="mb-5">
-        {{ t('contactOverview.annotation.copy.begin') }}
-        <b>{{ t('contactOverview.annotation.copy.bold') }}</b>
-        {{ t('contactOverview.annotation.copy.end') }}
-      </p>
+      <div class="mb-5" v-html="t('contactOverview.annotation.copy')" />
 
       <form @submit.prevent="handleFormSubmit">
         <AppInput
