@@ -155,6 +155,72 @@
     "willRenew": "Your contribution will automatically renew on {renewalDate}.",
     "willRenewWithNewAmount": "Your contribution will automatically renew on {renewalDate} and will change to your chosen amount of {nextAmount}."
   },
+  "createCallout": {
+    "steps": {
+      "titleAndImage": {
+        "description": "Set a title, description and image for the callout",
+        "inputs": {
+          "description": {
+            "title": "Short description"
+          },
+          "image": {
+            "help": "<p>The <strong>Cover image</strong> will serve as an illustration for the callout on menus and forms.</p>\n",
+            "placeholder": "https://",
+            "title": "Cover image"
+          },
+          "intro": {
+            "help": "",
+            "placeholder": "",
+            "title": "Introduction text"
+          },
+          "title": {
+            "help": "<p>The <strong>Short description</strong> expands on the title to explain what the callout is about. It is meant to quickly inform people what is inside in a few words.</p>\n",
+            "placeholder": "Quickly explain why people should do this callout.",
+            "title": "Title"
+          }
+        },
+        "title": "Title and image"
+      },
+      "visibility": {
+        "description": "Choose who will see your callout",
+        "inputs": {
+          "anonymous": {
+            "help": "<p>If you allow <strong>anonymous responses</strong>, guests will be not asked for their contact information. This does not affect members.</p>\n",
+            "opts": {
+              "no": "No, require contact details",
+              "yes": "Yes, contact info is optional"
+            },
+            "title": "Allow anonymous responses?"
+          },
+          "editable": {
+            "help": "<p>If yes, the users will be able to <strong>update their answers</strong> until the callout reaches its end date.</p>\n",
+            "opts": {
+              "no": "No, answers are final",
+              "yes": "Yes"
+            },
+            "title": "Should people be able to change their answers before the callout ends?"
+          },
+          "visible": {
+            "help": "<p>You can make the callout <strong>not appear</strong> to users if you only want it to be answered by people who you share the link with.</p>\n",
+            "opts": {
+              "no": "No, it can only be access through its link",
+              "yes": "Yes, show it to users"
+            },
+            "title": "Should it be visible in the users' dashboards?"
+          },
+          "who": {
+            "help": "<p>Callouts can be presented to <strong>Everyone</strong> or restricted to <strong>Members only</strong> participation</p>\n",
+            "opts": {
+              "everyone": "Everyone",
+              "members": "Members only"
+            },
+            "title": "Who can take part?"
+          }
+        },
+        "title": "Visibility settings"
+      }
+    }
+  },
   "footer": {
     "contactUs": "Contact us at",
     "contacts": "Contacts",

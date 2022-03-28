@@ -7,6 +7,9 @@
       "name": "Dein Name",
       "submittingResponseError": "Es gab ein Problem bei der Übermittlung deiner Antworten. Bitte versuche es erneut."
     },
+    "joinNow": "",
+    "loginToYourAccount": "",
+    "membersOnly": "",
     "status": {
       "endedOn": "am {date}",
       "endsIn": "Endet in {duration}",
@@ -151,6 +154,72 @@
     "willExpire": "Deine Mitgliedschaft läuft in {expires} ab.",
     "willRenew": "Deine Mitgliedschaft verlängert sich am {renewalDate} automatisch.",
     "willRenewWithNewAmount": "Deine Mitgliedschaft verlängert sich am {renewalDate} automatisch. Dein Beitrag ist dann {nextAmount}."
+  },
+  "createCallout": {
+    "steps": {
+      "titleAndImage": {
+        "description": "",
+        "inputs": {
+          "description": {
+            "title": ""
+          },
+          "image": {
+            "help": "",
+            "placeholder": "",
+            "title": ""
+          },
+          "intro": {
+            "help": "",
+            "placeholder": "",
+            "title": ""
+          },
+          "title": {
+            "help": "",
+            "placeholder": "",
+            "title": ""
+          }
+        },
+        "title": ""
+      },
+      "visibility": {
+        "description": "",
+        "inputs": {
+          "anonymous": {
+            "help": "",
+            "opts": {
+              "no": "",
+              "yes": ""
+            },
+            "title": ""
+          },
+          "editable": {
+            "help": "",
+            "opts": {
+              "no": "",
+              "yes": ""
+            },
+            "title": ""
+          },
+          "visible": {
+            "help": "",
+            "opts": {
+              "no": "",
+              "yes": ""
+            },
+            "title": ""
+          },
+          "who": {
+            "help": "",
+            "opts": {
+              "everyone": "",
+              "members": ""
+            },
+            "title": ""
+          }
+        },
+        "title": ""
+      }
+    }
   },
   "footer": {
     "contactUs": "Kontaktiere uns unter",
