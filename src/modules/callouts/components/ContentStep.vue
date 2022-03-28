@@ -62,7 +62,6 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
-
 const inputT = (key: string) => t('createCallout.steps.content.inputs.' + key);
 
 const dataProxy = ref(props.data);
