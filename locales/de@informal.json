@@ -157,26 +157,34 @@
   },
   "createCallout": {
     "steps": {
+      "content": {
+        "description": "",
+        "inputs": {
+          "intro": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          }
+        },
+        "title": ""
+      },
       "titleAndImage": {
         "description": "",
         "inputs": {
           "description": {
-            "title": ""
+            "help": "",
+            "label": "",
+            "placeholder": ""
           },
           "image": {
             "help": "",
-            "placeholder": "",
-            "title": ""
-          },
-          "intro": {
-            "help": "",
-            "placeholder": "",
-            "title": ""
+            "label": "",
+            "placeholder": ""
           },
           "title": {
             "help": "",
-            "placeholder": "",
-            "title": ""
+            "label": "",
+            "placeholder": ""
           }
         },
         "title": ""
@@ -186,35 +194,35 @@
         "inputs": {
           "anonymous": {
             "help": "",
+            "label": "",
             "opts": {
               "no": "",
               "yes": ""
-            },
-            "title": ""
+            }
           },
           "editable": {
             "help": "",
+            "label": "",
             "opts": {
               "no": "",
               "yes": ""
-            },
-            "title": ""
+            }
           },
           "visible": {
             "help": "",
+            "label": "",
             "opts": {
               "no": "",
               "yes": ""
-            },
-            "title": ""
+            }
           },
           "who": {
             "help": "",
+            "label": "",
             "opts": {
               "everyone": "",
               "members": ""
-            },
-            "title": ""
+            }
           }
         },
         "title": ""
