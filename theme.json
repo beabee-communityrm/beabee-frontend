@@ -3,5 +3,8 @@
     "primary": "chocolate",
     "body": "black",
     "link": "purple"
+  },
+  "fonts": {
+    "body": "ubuntu"
   }
 }
