@@ -1,7 +1,7 @@
 <template>
   <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
     <PageTitle :title="t('menu.callouts')"></PageTitle>
-    <div class="flex-1 md:hidden">
+    <div class="flex-1 block lg:hidden">
       <AppSelect v-model="currentStatus" :items="statusItems" />
     </div>
     <div class="flex-0 ml-3">
@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="md:flex">
-    <div class="flex-none hidden md:block basis-[220px]">
+    <div class="flex-none hidden lg:block basis-[220px]">
       <AppVTabs v-model="currentStatus" :items="statusItems" />
     </div>
     <div class="flex-auto">
@@ -47,12 +47,12 @@
         </template>
         <template #starts="{ value }">
           <span class="whitespace-nowrap">{{
-            value && formatLocale(value, 'PPP')
+            value && formatLocale(value, 'PP')
           }}</span>
         </template>
         <template #expires="{ value }">
           <span class="whitespace-nowrap">{{
-            value && formatLocale(value, 'PPP')
+            value && formatLocale(value, 'PP')
           }}</span>
         </template>
       </AppTable>
