@@ -31,7 +31,7 @@
         <td
           v-for="(header, j) in headers"
           :key="j"
-          class="p-2 align-top"
+          class="p-2 align-bottom"
           :align="header.align || undefined"
         >
           <slot :name="header.value" :item="item" :value="item[header.value]">{{
