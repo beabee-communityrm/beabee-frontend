@@ -41,7 +41,7 @@
         </template>
         <template #hidden="{ value }">
           <font-awesome-icon
-            :class="!value && 'text-body-40'"
+            :class="value ? 'text-body-80' : 'text-body-40'"
             :icon="value ? 'eye-slash' : 'eye'"
           />
         </template>
