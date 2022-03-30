@@ -85,11 +85,7 @@
   "contactOverview": {
     "about": "About",
     "annotation": {
-      "copy": {
-        "begin": "All information added in this section is",
-        "bold": "visible for admins only.",
-        "end": "Members will never see these in their profile or member area."
-      }
+      "copy": "<p>All information added in this section is <strong>visible for admins only</strong>. Members will never see these in their profile or member area.</p>\n"
     },
     "contribution": "Contribution",
     "information": "Information",
