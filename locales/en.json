@@ -28,6 +28,23 @@
     "showAll": "All",
     "showAnswered": "Answered"
   },
+  "calloutsAdmin": {
+    "addCallout": "Create callout",
+    "data": {
+      "expires": "Expiry date",
+      "responses": "Responses",
+      "starts": "Start date",
+      "status": "Status",
+      "title": "Title"
+    },
+    "filter": {
+      "all": "All callouts",
+      "draft": "Draft callouts",
+      "ended": "Ended callouts",
+      "open": "Open callouts",
+      "scheduled": "Scheduled callouts"
+    }
+  },
   "common": {
     "annually": "Annually",
     "backToHome": "Back to home",

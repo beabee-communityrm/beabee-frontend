@@ -23,7 +23,7 @@
       </a>
     </template>
     <template #createdAt="{ value }">
-      <span class="whitespace-nowrap">{{ formatLocale(value, 'PPP') }}</span>
+      <span class="whitespace-nowrap">{{ formatLocale(value, 'PP') }}</span>
     </template>
   </AppTable>
   <div class="mt-4 ml-auto">
