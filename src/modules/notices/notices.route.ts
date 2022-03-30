@@ -5,7 +5,7 @@ const { t } = i18n.global;
 
 export const noticesRoute: Array<RouteRecordRaw> = [
   {
-    path: '/notices',
+    path: '/admin/notices',
     component: () => import('./NoticesPage.vue'),
     meta: {
       layout: 'Dashboard',
