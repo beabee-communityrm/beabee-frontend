@@ -29,6 +29,11 @@ import {
   faEye,
   faEyeSlash,
   faCogs,
+  faExternalLinkAlt,
+  faPencilAlt,
+  faNewspaper,
+  faClone,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -58,7 +63,12 @@ library.add(
   faThumbsUp,
   faEye,
   faEyeSlash,
-  faCogs
+  faCogs,
+  faExternalLinkAlt,
+  faPencilAlt,
+  faNewspaper,
+  faClone,
+  faTrash
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

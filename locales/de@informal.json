@@ -19,17 +19,24 @@
     "responses": ""
   },
   "calloutAdminOverview": {
+    "actions": {
+      "delete": "",
+      "edit": "",
+      "replicate": "",
+      "unpublish": "",
+      "view": ""
+    },
     "dates": {
       "endsOn": "",
-      "startsOn": "",
-      "title": ""
+      "label": "",
+      "startsOn": ""
     },
     "settings": {
       "answers": "",
       "contactInfo": "",
       "endsWith": "",
-      "openTo": "",
-      "title": ""
+      "label": "",
+      "openTo": ""
     },
     "summary": ""
   },

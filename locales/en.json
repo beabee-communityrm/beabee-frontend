@@ -22,17 +22,24 @@
     "responses": "Responses"
   },
   "calloutAdminOverview": {
+    "actions": {
+      "delete": "Delete",
+      "edit": "Edit",
+      "replicate": "Replicate",
+      "unpublish": "Unpublish",
+      "view": "View"
+    },
     "dates": {
       "endsOn": "Ends on",
-      "startsOn": "Starts on",
-      "title": "Dates"
+      "label": "Dates",
+      "startsOn": "Starts on"
     },
     "settings": {
       "answers": "Answers",
       "contactInfo": "Contact info",
       "endsWith": "Ends with",
-      "openTo": "Open to",
-      "title": "Settings"
+      "label": "Settings",
+      "openTo": "Open to"
     },
     "summary": "Summary"
   },
