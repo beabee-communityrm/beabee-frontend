@@ -28,6 +28,7 @@ import {
   faThumbsUp,
   faEye,
   faEyeSlash,
+  faCogs,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -56,7 +57,8 @@ library.add(
   faShare,
   faThumbsUp,
   faEye,
-  faEyeSlash
+  faEyeSlash,
+  faCogs
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

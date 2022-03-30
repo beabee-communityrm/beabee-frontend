@@ -286,7 +286,7 @@
     "wrongCredentials": "Falsche Kombination von Passwort und Email."
   },
   "menu": {
-    "admin": "Administrator",
+    "admin": "Administration",
     "adminDashboard": "Dashboard",
     "callouts": "Callouts",
     "community": "Community",

@@ -63,6 +63,9 @@ module.exports = {
       padding: {
         4.5: '1.125rem',
       },
+      spacing: {
+        menu: '240px',
+      },
       height: {
         7.5: '1.875rem',
       },
