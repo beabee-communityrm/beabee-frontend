@@ -17,6 +17,25 @@
     },
     "youResponded": "You replied to this callout ♥"
   },
+  "calloutAdmin": {
+    "overview": "Overview",
+    "responses": "Responses"
+  },
+  "calloutAdminOverview": {
+    "dates": {
+      "endsOn": "Ends on",
+      "startsOn": "Starts on",
+      "title": "Dates"
+    },
+    "settings": {
+      "answers": "Answers",
+      "contactInfo": "Contact info",
+      "endsWith": "Ends with",
+      "openTo": "Open to",
+      "title": "Settings"
+    },
+    "summary": "Summary"
+  },
   "callouts": {
     "archive": "Archive",
     "data": {
