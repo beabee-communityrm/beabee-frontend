@@ -29,42 +29,40 @@
     <QuickActions />
   </section>
 
-  <div class="lg:flex justify-between">
-    <section v-if="callouts.length" class="mb-6 lg:mr-6">
-      <SectionTitle class="mb-6 md:hidden">{{
-        t('homePage.openCallouts')
-      }}</SectionTitle>
-      <AppHeading class="mb-2 hidden md:block">{{
-        t('homePage.openCallouts')
-      }}</AppHeading>
+  <section v-if="callouts.length" class="mb-6 lg:mr-6">
+    <SectionTitle class="mb-6 md:hidden">{{
+      t('homePage.openCallouts')
+    }}</SectionTitle>
+    <AppHeading class="mb-2 hidden md:block">{{
+      t('homePage.openCallouts')
+    }}</AppHeading>
 
-      <div class="flex mb-4">
-        <!-- just show the first callout for now (design decision) -->
-        <CalloutCard :callout="callouts[0]" />
-      </div>
+    <div class="flex mb-4">
+      <!-- just show the first callout for now (design decision) -->
+      <CalloutCard :callout="callouts[0]" />
+    </div>
 
-      <!--<AppButton to="/callouts" variant="primaryOutlined">{{
+    <!--<AppButton to="/callouts" variant="primaryOutlined">{{
         t('homePage.viewAllCallouts')
       }}</AppButton>-->
-    </section>
+  </section>
 
-    <section>
-      <SectionTitle class="mb-6 md:hidden">{{
-        t('homePage.yourProfile')
-      }}</SectionTitle>
-      <AppHeading class="mb-2 hidden md:block">{{
-        t('homePage.yourProfile')
-      }}</AppHeading>
+  <section>
+    <SectionTitle class="mb-6 md:hidden">{{
+      t('homePage.yourProfile')
+    }}</SectionTitle>
+    <AppHeading class="mb-2 hidden md:block">{{
+      t('homePage.yourProfile')
+    }}</AppHeading>
 
-      <div class="flex mb-4">
-        <ContributionInfo :member="user" />
-      </div>
+    <div class="flex mb-4">
+      <ContributionInfo :member="user" />
+    </div>
 
-      <AppButton to="/profile/contribution" variant="primaryOutlined">{{
-        t('homePage.manageContribution')
-      }}</AppButton>
-    </section>
-  </div>
+    <AppButton to="/profile/contribution" variant="primaryOutlined">{{
+      t('homePage.manageContribution')
+    }}</AppButton>
+  </section>
 
   <section class="hidden pt-20 mt-auto max-w-xs md:max-w-sm mx-auto">
     <ThanksNotice>{{ profileContent.footerMessage }}</ThanksNotice>

@@ -2,10 +2,8 @@
   <ul class="flex items-center -mx-2">
     <li>
       <button
-        :class="
-          isFirst &&
-          'opacity-25 p-2 bg-primary hover:bg-white hover:font-bold hover:border-link'
-        "
+        class="p-2"
+        :class="isFirst && 'opacity-25 hover:font-bold hover:border-link'"
         :disabled="isFirst"
         @click="emit('update:modelValue', modelValue - 1)"
       >
@@ -16,7 +14,9 @@
       <li v-if="index > 0 && pages[index - 1] !== page - 1">&hellip;</li>
       <li>
         <button
-          :class="page === modelValue && 'text-link bg-white'"
+          :class="
+            page === modelValue && 'text-link bg-white font-bold border-link'
+          "
           :disabled="page === modelValue"
           class="
             leading-none
@@ -34,10 +34,8 @@
     </template>
     <li>
       <button
-        :class="
-          isLast &&
-          'opacity-25 p-2 bg-primary hover:bg-white hover:font-bold hover:border-link'
-        "
+        class="p-2"
+        :class="isLast && 'opacity-25 hover:font-bold hover:border-link'"
         :disabled="isLast"
         @click="emit('update:modelValue', modelValue + 1)"
       >

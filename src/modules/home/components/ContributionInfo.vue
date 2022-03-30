@@ -1,5 +1,5 @@
 <template>
-  <div class="flex pt-3 w-76">
+  <div class="flex pt-3 w-[17rem]">
     <div class="flex-1">
       <div class="title uppercase">{{ t('common.joined') }}</div>
 
