@@ -33,20 +33,33 @@
       <AppHeading>{{ t('calloutAdminOverview.settings.label') }}</AppHeading>
       <AppInfoList>
         <AppInfoListItem
-          :name="t('calloutAdminOverview.settings.openTo')"
-          value="Members only"
+          :name="t('calloutAdminOverview.settings.openTo.label')"
+          :value="
+            callout.access === 'member'
+              ? t('calloutAdminOverview.settings.openTo.membersOnly')
+              : t('calloutAdminOverview.settings.openTo.everyone')
+          "
         />
         <AppInfoListItem
-          :name="t('calloutAdminOverview.settings.contactInfo')"
-          value="Members only"
+          v-if="callout.access !== 'member'"
+          :name="t('calloutAdminOverview.settings.contactInfo.label')"
+          :value="
+            callout.access === 'guest'
+              ? t('calloutAdminOverview.settings.contactInfo.required')
+              : t('calloutAdminOverview.settings.contactInfo.optional')
+          "
         />
         <AppInfoListItem
-          :name="t('calloutAdminOverview.settings.answers')"
-          value="Members only"
+          :name="t('calloutAdminOverview.settings.answers.label')"
+          :value="
+            callout.allowUpdate
+              ? t('calloutAdminOverview.settings.answers.editable')
+              : t('calloutAdminOverview.settings.answers.final')
+          "
         />
         <AppInfoListItem
-          :name="t('calloutAdminOverview.settings.endsWith')"
-          value="Members only"
+          :name="t('calloutAdminOverview.settings.endsWith.label')"
+          value="To do"
         />
       </AppInfoList>
     </div>

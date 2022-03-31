@@ -35,11 +35,27 @@
       "startsOn": "Starts on"
     },
     "settings": {
-      "answers": "Answers",
-      "contactInfo": "Contact info",
-      "endsWith": "Ends with",
+      "answers": {
+        "editable": "Can be updated",
+        "final": "Can't be updated",
+        "label": "Answers"
+      },
+      "contactInfo": {
+        "label": "Contact info",
+        "optional": "Optional",
+        "required": "Required"
+      },
+      "endsWith": {
+        "label": "Ends with",
+        "message": "Thank you message",
+        "redirect": "Redirect to {url}"
+      },
       "label": "Settings",
-      "openTo": "Open to"
+      "openTo": {
+        "everyone": "Everyone",
+        "label": "Open to",
+        "membersOnly": "Members only"
+      }
     },
     "summary": "Summary"
   },
