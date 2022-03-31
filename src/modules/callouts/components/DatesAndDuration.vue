@@ -5,8 +5,8 @@
   <div class="grid grid-cols-2 gap-6">
     <div class="col-span-1">
       <AppInput
-        inputType="date"
         v-model="dataProxy.callout_start_date"
+        inputType="date"
         :label="inputT('starts.label')"
       ></AppInput>
     </div>
@@ -16,17 +16,17 @@
     <div class="col-span-1">
       <p class="font-semibold mb-1">{{ inputT('expires.label') }}</p>
       <AppRadioGroup
+        v-model="dataProxy.calloutHasEndDate"
         name="calloutHasEndDate"
         :options="[
-          inputT('expires.opts.never'),
-          inputT('expires.opts.schedule'),
+          [false, inputT('expires.opts.never')],
+          [true, inputT('expires.opts.schedule')],
         ]"
-        v-model="dataProxy.calloutHasEndDate"
       />
-      <div v-show="showEndDateScheduler === true">
+      <div v-show="dataProxy.calloutHasEndDate">
         <AppInput
-          inputType="date"
           v-model="dataProxy.callout_end_date"
+          inputType="date"
           :label="''"
         ></AppInput>
       </div>
@@ -40,15 +40,10 @@ import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
+import { DateAndDurationStepProps } from '../create-callout.interface';
 
 const emit = defineEmits(['update:data', 'update:validated']);
-const props = defineProps<{
-  data: {
-    calloutHasEndDate: string;
-    callout_start_date: string;
-    callout_end_date: string;
-  };
-}>();
+const props = defineProps<{ data: DateAndDurationStepProps }>();
 
 const { t } = useI18n();
 const inputT = (key: string) => t('createCallout.steps.dates.inputs.' + key);
@@ -59,10 +54,6 @@ const isEndDateAfterStartDate = (start: string, end: string): boolean => {
   return start_date < end_date ? true : false;
 };
 const dataProxy = ref(props.data);
-
-const showEndDateScheduler = computed(
-  () => dataProxy.value.calloutHasEndDate === inputT('expires.opts.schedule')
-);
 
 watch(
   () =>

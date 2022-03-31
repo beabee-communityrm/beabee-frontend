@@ -4,9 +4,12 @@
     <div class="col-span-1">
       <p class="font-semibold">Use Mailchimp sync</p>
       <AppRadioGroup
-        name="useMailchimpSync"
-        :options="['Yes', 'No']"
         v-model="dataProxy.useMailchimpSync"
+        name="useMailchimpSync"
+        :options="[
+          [true, 'Yes'],
+          [false, 'No'],
+        ]"
       />
     </div>
     <p class="col-span-1 text-sm text-grey mt-6">
@@ -14,10 +17,7 @@
       cross data from the answers with your newsletter subscriber profiles.
     </p>
   </div>
-  <div
-    class="grid grid-cols-2 gap-6"
-    v-show="dataProxy.useMailchimpSync === 'Yes'"
-  >
+  <div class="grid grid-cols-2 gap-6" v-show="dataProxy.useMailchimpSync">
     <p>
       To do so select which fields of the callout you want to sync with
       Mailchimp, making use of a feature called Merge Tags.
@@ -29,8 +29,7 @@
 import { ref, watch } from 'vue';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
-const props = defineProps<{
-  data: { useMailchimpSync: string };
-}>();
+import { MailchimpSyncStepProps } from '../create-callout.interface';
+const props = defineProps<{ data: MailchimpSyncStepProps }>();
 const dataProxy = ref(props.data);
 </script>

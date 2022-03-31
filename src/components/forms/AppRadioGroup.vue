@@ -1,13 +1,17 @@
 <template>
-  <label v-for="item in options" class="block mb-1 font-semibold">
+  <label
+    v-for="[value, label] in options"
+    :key="value.toString()"
+    class="block mb-1 font-semibold"
+  >
     <input
+      v-model="selected"
       type="radio"
       :name="name"
-      :value="item"
-      v-model="selected"
-      :checked="modelValue === item"
+      :value="value"
+      :checked="modelValue === value"
     />
-    {{ item }}
+    {{ label }}
   </label>
 </template>
 
@@ -16,13 +20,13 @@ import { computed } from 'vue';
 const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps<{
-  modelValue: string | null;
-  options: Array<string>;
+  modelValue: string | boolean | number | null;
+  options: [string | boolean | number, string][];
   name: string;
 }>();
 
 const selected = computed({
   get: () => props.modelValue,
-  set: (new_value) => emit('update:modelValue', new_value),
+  set: (newValue) => emit('update:modelValue', newValue),
 });
 </script>

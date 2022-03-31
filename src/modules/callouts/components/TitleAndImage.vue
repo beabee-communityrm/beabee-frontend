@@ -8,7 +8,9 @@
         v-model="dataProxy.title"
         :label="inputT('title.label')"
         :placeholder="inputT('title.placeholder')"
+        :error-message="validation.title.$errors[0]?.$message"
         required
+        @blur="validation.title.$touch"
       />
     </div>
     <div
@@ -22,6 +24,9 @@
         v-model="dataProxy.description"
         :label="inputT('description.label')"
         :placeholder="inputT('description.placeholder')"
+        :error-message="validation.description.$errors[0]?.$message"
+        required
+        @blur="validation.description.$touch"
       />
     </div>
     <div
@@ -35,6 +40,9 @@
         v-model="dataProxy.coverImageURL"
         :label="inputT('image.label')"
         :placeholder="inputT('image.placeholder')"
+        :error-message="validation.coverImageURL.$errors[0]?.$message"
+        required
+        @blur="validation.coverImageURL.$touch"
       ></AppInput>
     </div>
     <div
@@ -50,25 +58,27 @@ import { useI18n } from 'vue-i18n';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
+import useVuelidate from '@vuelidate/core';
+import { required, url } from '@vuelidate/validators';
+import { TitleAndImageStepProps } from '../create-callout.interface';
 
 const emit = defineEmits(['update:data', 'update:validated']);
-const props = defineProps<{
-  data: { title: string; description: string; coverImageURL: string };
-}>();
+const props = defineProps<{ data: TitleAndImageStepProps }>();
 
 const { t } = useI18n();
 const inputT = (key: string) =>
   t('createCallout.steps.titleAndImage.inputs.' + key);
 
-const isNotEmptyString = (s: string) => s.length > 0;
-
 const dataProxy = ref(props.data);
 
-watch(
-  () =>
-    isNotEmptyString(props.data.title) &&
-    isNotEmptyString(props.data.description) &&
-    isNotEmptyString(props.data.coverImageURL),
-  (valid) => emit('update:validated', valid)
+const validation = useVuelidate(
+  {
+    title: { required },
+    description: { required },
+    coverImageURL: { required, url },
+  },
+  dataProxy
 );
+
+watch(validation, () => emit('update:validated', !validation.value.$invalid));
 </script>

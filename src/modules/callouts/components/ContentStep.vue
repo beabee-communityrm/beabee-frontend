@@ -55,10 +55,11 @@ import { dom, library } from '@fortawesome/fontawesome-svg-core';
 
 import 'formiojs/dist/formio.builder.css';
 import { useI18n } from 'vue-i18n';
+import { ContentStepProps } from '../create-callout.interface';
 
 const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{
-  data: { introText: string; formSchema: { components: unknown[] } };
+  data: ContentStepProps;
 }>();
 
 const { t } = useI18n();
