@@ -12,10 +12,10 @@
         <div class="flex-0 ml-4"><img class="w-28" :src="callout.image" /></div>
       </div>
       <p class="mb-8">
-        <a :href="calloutLink">
+        <router-link :to="calloutLink">
           <font-awesome-icon icon="external-link-alt" />
-          <span class="text-link ml-2">{{ calloutLink }}</span>
-        </a>
+          <span class="text-link ml-2">{{ baseUrl }}{{ calloutLink }}</span>
+        </router-link>
       </p>
 
       <AppHeading>{{ t('calloutAdminOverview.dates.label') }}</AppHeading>
@@ -86,5 +86,5 @@ const props = defineProps<{
 }>();
 const { t } = useI18n();
 
-const calloutLink = computed(() => `${baseUrl}/callouts/${props.callout.slug}`);
+const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
 </script>
