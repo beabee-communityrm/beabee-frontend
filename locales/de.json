@@ -27,16 +27,32 @@
       "view": ""
     },
     "dates": {
-      "endsOn": "",
+      "ends": "",
       "label": "",
-      "startsOn": ""
+      "starts": ""
     },
     "settings": {
-      "answers": "",
-      "contactInfo": "",
-      "endsWith": "",
+      "answers": {
+        "editable": "",
+        "final": "",
+        "label": ""
+      },
+      "contactInfo": {
+        "label": "",
+        "optional": "",
+        "required": ""
+      },
+      "endsWith": {
+        "label": "",
+        "message": "",
+        "redirect": ""
+      },
       "label": "",
-      "openTo": ""
+      "openTo": {
+        "everyone": "",
+        "label": "",
+        "membersOnly": ""
+      }
     },
     "summary": ""
   },

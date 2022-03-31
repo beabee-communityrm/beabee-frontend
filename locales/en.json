@@ -30,9 +30,9 @@
       "view": "View"
     },
     "dates": {
-      "endsOn": "Ends on",
+      "ends": "Ends",
       "label": "Dates",
-      "startsOn": "Starts on"
+      "starts": "Starts"
     },
     "settings": {
       "answers": {

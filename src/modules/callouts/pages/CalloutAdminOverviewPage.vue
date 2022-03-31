@@ -20,12 +20,20 @@
 
       <AppHeading>{{ t('calloutAdminOverview.dates.label') }}</AppHeading>
       <AppInfoList class="mb-8">
+        <AppInfoListItem :name="t('calloutAdminOverview.dates.starts')">
+          <span v-if="callout.starts">
+            {{ formatLocale(callout.starts, 'PPP') }}
+            <span
+              v-if="callout.status === ItemStatus.Scheduled"
+              class="font-normal"
+              >({{ t('common.in') }}
+              {{ formatDistanceLocale(new Date(), callout.starts) }})</span
+            >
+          </span>
+          <span v-else>–</span>
+        </AppInfoListItem>
         <AppInfoListItem
-          :name="t('calloutAdminOverview.dates.startsOn')"
-          :value="callout.starts && formatLocale(callout.starts, 'PPP')"
-        />
-        <AppInfoListItem
-          :name="t('calloutAdminOverview.dates.endsOn')"
+          :name="t('calloutAdminOverview.dates.ends')"
           :value="callout.expires && formatLocale(callout.expires, 'PPP')"
         />
       </AppInfoList>
@@ -81,12 +89,17 @@
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
-import { GetBasicCalloutData } from '../../../utils/api/api.interface';
+import {
+  GetBasicCalloutData,
+  ItemStatus,
+} from '../../../utils/api/api.interface';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppInfoList from '../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../components/AppInfoListItem.vue';
-import AppButton from '../../../components/forms/AppButton.vue';
-import { formatLocale } from '../../../utils/dates/locale-date-formats';
+import {
+  formatLocale,
+  formatDistanceLocale,
+} from '../../../utils/dates/locale-date-formats';
 import { computed } from 'vue';
 import ActionButton from '../components/ActionButton.vue';
 
