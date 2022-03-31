@@ -38,8 +38,8 @@
         :label="inputT('text.label')"
         :placeholder="inputT('text.placeholder')"
         required
-        :error-message="validation.thankYouMessage.$errors[0]?.$message"
-        @blur="validation.thankYouMessage.$touch"
+        :error-message="validation.thankYouText.$errors[0]?.$message"
+        @blur="validation.thankYouText.$touch"
       />
     </div>
     <div
@@ -91,8 +91,8 @@ const showThankYouSection = computed(
 
 const rules = computed(() => ({
   thankYouTitle: { required: requiredIf(showThankYouSection.value) },
-  thankYouMessage: { required: requiredIf(showThankYouSection.value) },
-  URLRedirect: { required: requiredIf(!showThankYouSection.value) },
+  thankYouText: { required: requiredIf(showThankYouSection.value) },
+  URLRedirect: { required: requiredIf(!showThankYouSection.value), url },
 }));
 
 const validation = useVuelidate(rules, dataProxy);

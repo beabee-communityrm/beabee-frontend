@@ -26,10 +26,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { onMounted, ref } from 'vue';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
 import { MailchimpSyncStepProps } from '../create-callout.interface';
+
+const emit = defineEmits(['update:validated']);
 const props = defineProps<{ data: MailchimpSyncStepProps }>();
 const dataProxy = ref(props.data);
+
+onMounted(() => emit('update:validated', true));
 </script>
