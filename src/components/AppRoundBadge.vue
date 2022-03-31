@@ -10,11 +10,11 @@ import { computed } from 'vue';
 const props = withDefaults(
   defineProps<{
     type: 'success' | 'warning' | 'error';
-    size?: string;
+    size?: 'large';
   }>(),
-  { type: 'success', size: '2' }
+  { type: 'success', size: 'large' }
 );
 
-const iconSize = props.size ? ` w-${props.size} h-${props.size}` : `w-2 h-2`;
+const iconSize = props.size === 'large' ? `w-4 h-4` : `w-2 h-2`;
 const iconColor = computed(() => `bg-${props.type}`);
 </script>

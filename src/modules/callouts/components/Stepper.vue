@@ -13,7 +13,7 @@
         <!-- {{ step.validated === true ? '✅' : '❌' }} {{ step.name }} -->
         <AppRoundBadge
           :type="step.validated === true ? 'success' : 'warning'"
-          :size="'4'"
+          size="large"
           class="mr-1"
         />
         {{ step.name }}
