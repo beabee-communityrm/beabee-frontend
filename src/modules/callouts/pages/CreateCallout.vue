@@ -50,16 +50,7 @@ import UrlAndSharing from '../components/UrlAndSharing.vue';
 import MailchimpSync from '../components/MailchimpSync.vue';
 import DatesAndDurationVue from '../components/DatesAndDuration.vue';
 import ContentStep from '../components/ContentStep.vue';
-
-export type Step = {
-  id: string;
-  name: string;
-  description: string;
-  validated: boolean;
-  component: any;
-  data: {};
-};
-export type Steps = Array<Step>;
+import { Steps } from '../create-callout.interface';
 
 const steps: Steps = reactive([
   {
@@ -75,7 +66,7 @@ const steps: Steps = reactive([
     name: 'Title and image',
     description: 'Set a title, description and image for the callout',
     validated: false,
-    component: TitleAndImage,
+    component: markRaw(TitleAndImage),
     data: { title: '', description: '', coverImageURL: '' },
   },
   {
@@ -83,12 +74,12 @@ const steps: Steps = reactive([
     name: 'Visibility settings',
     description: 'Specify callout visibility and other details',
     validated: false,
-    component: Visibility,
+    component: markRaw(Visibility),
     data: {
-      whoCanTakePart: '',
-      allowAnonymousResponses: '',
-      showOnUserDashboards: '',
-      usersCanEditAnswers: '',
+      whoCanTakePart: 'members',
+      allowAnonymousResponses: false,
+      showOnUserDashboards: true,
+      usersCanEditAnswers: false,
     },
   },
   {
@@ -96,9 +87,9 @@ const steps: Steps = reactive([
     name: 'End message',
     description: 'Set a final thank you message or page to redirect',
     validated: false,
-    component: EndMessage,
+    component: markRaw(EndMessage),
     data: {
-      whenFinished: '',
+      whenFinished: 'message',
       thankYouTitle: '',
       thankYouText: '',
       URLRedirect: '',
@@ -109,7 +100,7 @@ const steps: Steps = reactive([
     name: 'URL and sharing',
     description: 'Adjust how the callout will appear and how to access it',
     validated: false,
-    component: UrlAndSharing,
+    component: markRaw(UrlAndSharing),
     data: {
       slug: '',
       meta_title: '',
@@ -121,9 +112,9 @@ const steps: Steps = reactive([
     name: 'Mailchimp sync',
     description: 'Set up Mailchimp integrations',
     validated: false,
-    component: MailchimpSync,
+    component: markRaw(MailchimpSync),
     data: {
-      useMailchimpSync: '',
+      useMailchimpSync: false,
     },
   },
   {
@@ -131,9 +122,9 @@ const steps: Steps = reactive([
     name: 'Dates and duration',
     description: 'Schedule your callout and for how long it will be live',
     validated: false,
-    component: DatesAndDurationVue,
+    component: markRaw(DatesAndDurationVue),
     data: {
-      calloutHasEndDate: '',
+      calloutHasEndDate: false,
       callout_start_date: '',
       callout_end_date: '',
     },
