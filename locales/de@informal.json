@@ -28,6 +28,12 @@
     "showAll": "Alle",
     "showAnswered": "Beantwortet"
   },
+  "calloutsAdmin": {
+    "data": {
+      "status": "Status"
+    },
+    "filter": {}
+  },
   "common": {
     "annually": "Jährlich",
     "backToHome": "Zurück zur Startseite",
@@ -68,11 +74,7 @@
   "contactOverview": {
     "about": "Über",
     "annotation": {
-      "copy": {
-        "begin": "Alle hier eingegebenen Information sind",
-        "bold": "nur für Administratoren sichtbar.",
-        "end": "Nutzer bekommen das nicht angezeigt."
-      }
+      "copy": "<p>Alle hier eingegebenen Information sind <strong>nur für Administratoren sichtbar</strong>.\nNutzer bekommen das nicht angezeigt.</p>\n"
     },
     "contribution": "Beitrag",
     "information": "Information",
@@ -430,7 +432,7 @@
     "wrongCredentials": "Falsche Kombination von Passwort und Email."
   },
   "menu": {
-    "admin": "Administrator",
+    "admin": "Administration",
     "adminDashboard": "Dashboard",
     "callouts": "Callouts",
     "community": "Community",

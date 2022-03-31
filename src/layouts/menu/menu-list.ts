@@ -2,8 +2,9 @@ import i18n from '../../i18n';
 import { MenuSection } from './menu-list.interface';
 const { t } = i18n.global;
 
-export default [
+export const menu: MenuSection[] = [
   {
+    type: 'main',
     items: [
       {
         title: t('menu.home'),
@@ -19,13 +20,8 @@ export default [
         title: t('menu.callouts'),
         href: '/callouts',
         icon: ['far', 'calendar-check'],
+        isActive: /^\/callouts/,
       },*/
-      {
-        title: t('menu.community'),
-        href: '/contacts',
-        icon: ['fa', 'users'],
-        role: 'admin',
-      },
     ],
   },
   {
@@ -44,4 +40,31 @@ export default [
       },
     ],
   },
-] as MenuSection[];
+];
+
+export const adminMenu: MenuSection[] = [
+  {
+    type: 'main',
+    title: t('menu.admin'),
+    items: [
+      {
+        title: t('menu.community'),
+        href: '/contacts',
+        icon: ['fa', 'users'],
+        isActive: /^\/contacts.*/,
+      },
+      {
+        title: t('menu.callouts'),
+        href: '/admin/callouts',
+        icon: ['far', 'calendar-check'],
+        isActive: /^\/admin\/callouts.*/,
+      },
+      {
+        title: t('menu.notices'),
+        href: '/admin/notices',
+        icon: ['fa', 'bullhorn'],
+        isActive: /^\/admin\/notices.*/,
+      },
+    ],
+  },
+];

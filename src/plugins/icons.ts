@@ -26,6 +26,9 @@ import {
   faSearch,
   faShare,
   faThumbsUp,
+  faEye,
+  faEyeSlash,
+  faCogs,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -52,7 +55,10 @@ library.add(
   faUsers,
   faSearch,
   faShare,
-  faThumbsUp
+  faThumbsUp,
+  faEye,
+  faEyeSlash,
+  faCogs
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

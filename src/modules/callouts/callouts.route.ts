@@ -26,4 +26,13 @@ export const calloutsRoute: Array<RouteRecordRaw> = [
       noAuth: true,
     },
   },
+  {
+    path: '/admin/callouts',
+    name: 'calloutsAdmin',
+    component: () => import('./pages/CalloutsAdminPage.vue'),
+    meta: {
+      pageTitle: t('menu.callouts'),
+      role: 'admin',
+    },
+  },
 ];

@@ -28,6 +28,23 @@
     "showAll": "All",
     "showAnswered": "Answered"
   },
+  "calloutsAdmin": {
+    "addCallout": "Create callout",
+    "data": {
+      "expires": "Expiry date",
+      "responses": "Responses",
+      "starts": "Start date",
+      "status": "Status",
+      "title": "Title"
+    },
+    "filter": {
+      "all": "All callouts",
+      "draft": "Draft callouts",
+      "ended": "Ended callouts",
+      "open": "Open callouts",
+      "scheduled": "Scheduled callouts"
+    }
+  },
   "common": {
     "annually": "Annually",
     "backToHome": "Back to home",
@@ -68,11 +85,7 @@
   "contactOverview": {
     "about": "About",
     "annotation": {
-      "copy": {
-        "begin": "All information added in this section is",
-        "bold": "visible for admins only.",
-        "end": "Members will never see these in their profile or member area."
-      }
+      "copy": "<p>All information added in this section is <strong>visible for admins only</strong>. Members will never see these in their profile or member area.</p>\n"
     },
     "contribution": "Contribution",
     "information": "Information",
@@ -430,7 +443,7 @@
     "wrongCredentials": "Wrong password/email combination"
   },
   "menu": {
-    "admin": "Admin",
+    "admin": "Administration",
     "adminDashboard": "Dashboard",
     "callouts": "Callouts",
     "community": "Community",

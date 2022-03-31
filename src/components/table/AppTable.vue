@@ -5,8 +5,11 @@
         <th
           v-for="(header, i) in headers"
           :key="i"
-          class="p-2 relative"
-          :class="{ 'cursor-pointer': header.sortable }"
+          class="p-2 relative whitespace-nowrap font-semibold text-body-80"
+          :class="{
+            'cursor-pointer': header.sortable,
+            'font-bold text-primary': header.value === sort?.by,
+          }"
           :align="header.align || 'left'"
           :style="{ width: header.width }"
           @click="sortBy(header)"
@@ -31,7 +34,7 @@
         <td
           v-for="(header, j) in headers"
           :key="j"
-          class="p-2 align-top"
+          class="p-2 align-bottom"
           :align="header.align || undefined"
         >
           <slot :name="header.value" :item="item" :value="item[header.value]">{{
