@@ -45,8 +45,6 @@ import { logout } from '../../utils/api/auth';
 
 import { menu, adminMenu } from './menu-list';
 
-adminMenu;
-
 const { t } = useI18n();
 
 const router = useRouter();
