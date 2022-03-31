@@ -300,7 +300,7 @@
     "wrongCredentials": "Wrong password/email combination"
   },
   "menu": {
-    "admin": "Admin",
+    "admin": "Administration",
     "adminDashboard": "Dashboard",
     "callouts": "Callouts",
     "community": "Community",

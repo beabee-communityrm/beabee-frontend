@@ -14,7 +14,7 @@
         right-0
         opacity-30
         bg-black
-        left-[240px]
+        left-menu
       "
       :class="isMenuVisible ? 'block' : 'hidden'"
       @click="isMenuVisible = false"
@@ -45,7 +45,6 @@
       z-40
       md:static
       flex flex-col
-      px-4
       bottom-0
       bg-white
       transform
@@ -53,7 +52,7 @@
       -translate-x-full
       md:transform-none
       flex-none
-      w-[240px]
+      w-menu
     "
     :class="{ 'top-[68px] translate-x-0': isMenuVisible }"
   >
@@ -66,7 +65,7 @@
       />
     </div>
 
-    <TheMenuList v-if="currentUser" :sections="menuSections" />
+    <TheMenuList v-if="currentUser" />
   </div>
 </template>
 
@@ -74,8 +73,6 @@
 import { ref } from '@vue/reactivity';
 import { useRoute, useRouter } from 'vue-router';
 import { currentUser, generalContent } from '../../store';
-
-import menuSections from './menu-list';
 import TheMenuList from './TheMenuList.vue';
 
 const route = useRoute();
