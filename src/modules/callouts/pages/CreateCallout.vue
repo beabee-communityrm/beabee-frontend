@@ -39,6 +39,8 @@
 
 <script lang="ts" setup>
 import { reactive, ref, computed, markRaw } from 'vue';
+import { createCallout } from '../../../utils/api/callout';
+import type { CreateCalloutData } from '../../../utils/api/api.interface';
 import Stepper from '../components/Stepper.vue';
 import Visibility from '../components/Visibility.vue';
 import TitleAndImage from '../components/TitleAndImage.vue';
@@ -138,7 +140,22 @@ const steps: Steps = reactive([
   },
 ]);
 
-const submitForm = () => true;
+const makeCalloutData = (creationData: Steps): CreateCalloutData => ({
+  // slug: creationData.find(e => e.name === "URL and sharing")?.data.slug,
+  slug: '',
+  title: '',
+  intro: '',
+  formSchema: { components: [] },
+  excerpt: '',
+  access: 'member',
+  allowUpdate: true,
+  allowMultiple: true,
+  image: 'string',
+  starts: new Date(),
+  expires: new Date(),
+});
+
+const submitForm = () => createCallout(makeCalloutData(steps));
 
 const selectedStepIndex = ref(0);
 const selectedStep = computed(() => steps[selectedStepIndex.value]);
