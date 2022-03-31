@@ -10,11 +10,14 @@
         pb-10
         bg-primary-5
         md:pt-14 md:px-10
+        w-full
+        max-w-[1400px]
       "
     >
       <router-view />
       <Footer />
     </main>
+    <div class="flex-1 bg-primary-5" />
   </div>
 </template>
 
