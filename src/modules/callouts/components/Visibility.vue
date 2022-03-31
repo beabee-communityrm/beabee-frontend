@@ -6,9 +6,12 @@
     <div class="col-span-1">
       <p class="font-semibold mb-1">{{ inputT('who.label') }}</p>
       <AppRadioGroup
-        name="whoCanTakePart"
-        :options="[inputT('who.opts.members'), inputT('who.opts.everyone')]"
         v-model="dataProxy.whoCanTakePart"
+        name="whoCanTakePart"
+        :options="[
+          ['members', inputT('who.opts.members')],
+          ['everyone', inputT('who.opts.everyone')],
+        ]"
       />
     </div>
     <div
@@ -16,13 +19,19 @@
       v-html="inputT('who.help')"
     />
   </div>
-  <div class="grid grid-cols-2 gap-6 mt-5">
+  <div
+    v-if="dataProxy.whoCanTakePart === 'everyone'"
+    class="grid grid-cols-2 gap-6 mt-5"
+  >
     <div class="col-span-1">
       <p class="font-semibold mb-1">{{ inputT('anonymous.label') }}</p>
       <AppRadioGroup
-        name="allowAnonymousResponses"
-        :options="[inputT('anonymous.opts.yes'), inputT('anonymous.opts.no')]"
         v-model="dataProxy.allowAnonymousResponses"
+        name="allowAnonymousResponses"
+        :options="[
+          [true, inputT('anonymous.opts.yes')],
+          [false, inputT('anonymous.opts.no')],
+        ]"
       />
     </div>
     <div
@@ -34,9 +43,12 @@
     <div class="col-span-1">
       <p class="font-semibold mb-1">{{ inputT('visible.label') }}</p>
       <AppRadioGroup
-        name="showOnUserDashboards"
-        :options="[inputT('visible.opts.yes'), inputT('visible.opts.no')]"
         v-model="dataProxy.showOnUserDashboards"
+        name="showOnUserDashboards"
+        :options="[
+          [true, inputT('visible.opts.yes')],
+          [false, inputT('visible.opts.no')],
+        ]"
       />
     </div>
     <div
@@ -48,9 +60,12 @@
     <div class="col-span-1">
       <p class="font-semibold mb-1">{{ inputT('editable.label') }}</p>
       <AppRadioGroup
-        name="usersCanEditAnswers"
-        :options="[inputT('editable.opts.yes'), inputT('editable.opts.no')]"
         v-model="dataProxy.usersCanEditAnswers"
+        name="usersCanEditAnswers"
+        :options="[
+          [true, inputT('editable.opts.yes')],
+          [false, inputT('editable.opts.no')],
+        ]"
       />
     </div>
     <div
@@ -61,35 +76,38 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import useVuelidate from '@vuelidate/core';
+import { helpers, required } from '@vuelidate/validators';
+import { onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
+import { VisibilityStepProps } from '../create-callout.interface';
 
 const emit = defineEmits(['update:data', 'update:validated']);
-const props = defineProps<{
-  data: {
-    whoCanTakePart: string;
-    allowAnonymousResponses: string;
-    showOnUserDashboards: string;
-    usersCanEditAnswers: string;
-  };
-}>();
+const props = defineProps<{ data: VisibilityStepProps }>();
 
 const { t } = useI18n();
 const inputT = (key: string) =>
   t('createCallout.steps.visibility.inputs.' + key);
 
-const isNotEmptyString = (s: string) => s.length > 0;
-
 const dataProxy = ref(props.data);
 
-watch(
-  () =>
-    isNotEmptyString(props.data.whoCanTakePart) &&
-    isNotEmptyString(props.data.allowAnonymousResponses) &&
-    isNotEmptyString(props.data.showOnUserDashboards) &&
-    isNotEmptyString(props.data.usersCanEditAnswers),
-  (valid) => emit('update:validated', valid)
+const validate = useVuelidate(
+  {
+    whoCanTakePart: {
+      required: helpers.withMessage('Required', required),
+    },
+    allowAnonymousResponses: {
+      required: helpers.withMessage('Required', required),
+    },
+    showOnUserDashboards: {
+      required: helpers.withMessage('Required', required),
+    },
+  },
+  dataProxy
 );
+
+watch(validate, () => emit('update:validated', !validate.value.$invalid));
+onMounted(() => validate.value.$touch());
 </script>

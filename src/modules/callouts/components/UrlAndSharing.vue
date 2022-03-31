@@ -47,11 +47,10 @@ import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
+import { UrlAndSharingStepProps } from '../create-callout.interface';
 
 const emit = defineEmits(['update:data', 'update:validated']);
-const props = defineProps<{
-  data: { slug: string; meta_title: string; meta_description: string };
-}>();
+const props = defineProps<{ data: UrlAndSharingStepProps }>();
 
 const { t } = useI18n();
 const inputT = (key: string) => t('createCallout.steps.url.inputs.' + key);

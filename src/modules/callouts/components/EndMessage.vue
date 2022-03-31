@@ -6,54 +6,57 @@
     <div class="col-span-1">
       <p class="font-semibold mb-1">{{ inputT('action.label') }}</p>
       <AppRadioGroup
+        v-model="dataProxy.whenFinished"
         name="whenFinished"
         :options="[
-          inputT('action.opts.showMessage'),
-          inputT('action.opts.redirect'),
+          ['message', inputT('action.opts.showMessage')],
+          ['redirect', inputT('action.opts.redirect')],
         ]"
-        v-model="dataProxy.whenFinished"
       />
     </div>
   </div>
-  <div
-    class="grid grid-cols-2 gap-6 mt-5"
-    v-show="showThankYouSection === true"
-  >
+  <div class="grid grid-cols-2 gap-6 mt-5" v-show="showThankYouSection">
     <div class="col-span-1 mb-5">
       <AppInput
         v-model="dataProxy.thankYouTitle"
         :label="inputT('title.label')"
         :placeholder="inputT('title.placeholder')"
-      ></AppInput>
+        required
+        :error-message="validation.thankYouTitle.$errors[0]?.$message"
+        @blur="validation.thankYouTitle.$touch"
+      />
     </div>
     <div
       class="col-span-1 text-sm text-grey mt-6"
       v-html="inputT('title.help')"
     />
   </div>
-  <div class="grid grid-cols-2 gap-6" v-show="showThankYouSection === true">
+  <div class="grid grid-cols-2 gap-6" v-show="showThankYouSection">
     <div class="col-span-1">
       <AppTextArea
         v-model="dataProxy.thankYouText"
         :label="inputT('text.label')"
         :placeholder="inputT('text.placeholder')"
-      ></AppTextArea>
+        required
+        :error-message="validation.thankYouMessage.$errors[0]?.$message"
+        @blur="validation.thankYouMessage.$touch"
+      />
     </div>
     <div
       class="col-span-1 text-sm text-grey mt-6"
       v-html="inputT('text.help')"
     />
   </div>
-  <div
-    class="grid grid-cols-2 gap-6 mt-5"
-    v-show="showRedirectSection === true"
-  >
+  <div class="grid grid-cols-2 gap-6 mt-5" v-show="!showThankYouSection">
     <div class="col-span-1">
       <AppInput
         v-model="dataProxy.URLRedirect"
         :label="inputT('url.label')"
         :placeholder="inputT('url.placeholder')"
-      ></AppInput>
+        required
+        :error-message="validation.URLRedirect.$errors[0]?.$message"
+        @blur="validation.URLRedirect.$touch"
+      />
     </div>
     <div
       class="col-span-1 text-sm text-grey mt-6"
@@ -63,44 +66,36 @@
 </template>
 
 <script lang="ts" setup>
+import useVuelidate from '@vuelidate/core';
+import { requiredIf, url } from '@vuelidate/validators';
 import { ref, watch, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
+import { EndMessageStepProps } from '../create-callout.interface';
 
 const emit = defineEmits(['update:data', 'update:validated']);
-const props = defineProps<{
-  data: {
-    whenFinished: string;
-    thankYouTitle: string;
-    thankYouText: string;
-    URLRedirect: string;
-  };
-}>();
+const props = defineProps<{ data: EndMessageStepProps; validated: boolean }>();
 
 const { t } = useI18n();
 const inputT = (key: string) =>
   t('createCallout.steps.endMessage.inputs.' + key);
 
-const isNotEmptyString = (s: string) => s.length > 0;
-
 const dataProxy = ref(props.data);
+
 const showThankYouSection = computed(
-  () => dataProxy.value.whenFinished === 'Show a thank you message'
-);
-const showRedirectSection = computed(
-  () => dataProxy.value.whenFinished === 'Redirect them to another page'
+  () => dataProxy.value.whenFinished === 'message'
 );
 
-watch(
-  () =>
-    (isNotEmptyString(props.data.whenFinished) &&
-      isNotEmptyString(props.data.thankYouTitle) &&
-      isNotEmptyString(props.data.thankYouText)) ||
-    (isNotEmptyString(props.data.whenFinished) &&
-      isNotEmptyString(props.data.URLRedirect)),
-  (valid) => emit('update:validated', valid)
-);
+const rules = computed(() => ({
+  thankYouTitle: { required: requiredIf(showThankYouSection.value) },
+  thankYouMessage: { required: requiredIf(showThankYouSection.value) },
+  URLRedirect: { required: requiredIf(!showThankYouSection.value) },
+}));
+
+const validation = useVuelidate(rules, dataProxy);
+
+watch(validation, () => emit('update:validated', !validation.value.$invalid));
 </script>

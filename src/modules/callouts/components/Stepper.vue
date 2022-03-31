@@ -24,8 +24,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { Step, Steps } from '../pages/CreateCallout.vue';
 import AppRoundBadge from '../../../components/AppRoundBadge.vue';
+import { Steps } from '../create-callout.interface';
 defineProps<{ steps: Steps; selectedStepIndex: number }>();
 const emit = defineEmits(['update:selectedStepIndex']);
 </script>
