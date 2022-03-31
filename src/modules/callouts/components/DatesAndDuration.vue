@@ -8,6 +8,9 @@
         v-model="dataProxy.callout_start_date"
         inputType="date"
         :label="inputT('starts.label')"
+        required
+        :error-message="validation.callout_start_date.$errors[0]?.$message"
+        @blur="validation.callout_start_date.$touch"
       ></AppInput>
     </div>
     <div class="col-span-1 text-sm text-grey mt-6" />
@@ -28,6 +31,9 @@
           v-model="dataProxy.callout_end_date"
           inputType="date"
           :label="''"
+          required
+          :error-message="validation.callout_end_date.$errors[0]?.$message"
+          @blur="validation.callout_end_date.$touch"
         ></AppInput>
       </div>
     </div>
@@ -35,6 +41,8 @@
 </template>
 
 <script lang="ts" setup>
+import useVuelidate from '@vuelidate/core';
+import { minValue, required, requiredIf } from '@vuelidate/validators';
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
@@ -48,19 +56,17 @@ const props = defineProps<{ data: DateAndDurationStepProps }>();
 const { t } = useI18n();
 const inputT = (key: string) => t('createCallout.steps.dates.inputs.' + key);
 
-const isEndDateAfterStartDate = (start: string, end: string): boolean => {
-  const start_date = Date.parse(start);
-  const end_date = Date.parse(end);
-  return start_date < end_date ? true : false;
-};
+const rules = computed(() => ({
+  callout_start_date: { required },
+  callout_end_date: {
+    required: requiredIf(dataProxy.value.calloutHasEndDate),
+    minValue: minValue(dataProxy.value.callout_start_date),
+  },
+}));
+
 const dataProxy = ref(props.data);
 
-watch(
-  () =>
-    isEndDateAfterStartDate(
-      dataProxy.value.callout_start_date,
-      dataProxy.value.callout_end_date
-    ),
-  (valid) => emit('update:validated', valid)
-);
+const validation = useVuelidate(rules, dataProxy);
+
+watch(validation, () => emit('update:validated', !validation.value.$invalid));
 </script>
