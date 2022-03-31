@@ -42,7 +42,7 @@
 
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { minValue, required, requiredIf } from '@vuelidate/validators';
+import { helpers, required, requiredIf } from '@vuelidate/validators';
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
@@ -59,8 +59,12 @@ const inputT = (key: string) => t('createCallout.steps.dates.inputs.' + key);
 const rules = computed(() => ({
   callout_start_date: { required },
   callout_end_date: {
-    required: requiredIf(dataProxy.value.calloutHasEndDate),
-    minValue: minValue(dataProxy.value.callout_start_date),
+    minValue: (value: string) => {
+      return (
+        !dataProxy.value.calloutHasEndDate ||
+        value >= dataProxy.value.callout_start_date
+      );
+    },
   },
 }));
 
