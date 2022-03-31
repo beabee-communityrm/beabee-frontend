@@ -6,7 +6,10 @@
         v-model="dataProxy.slug"
         :label="inputT('slug.label')"
         :placeholder="inputT('slug.placeholder')"
-      ></AppInput>
+        required
+        :error-message="validation.slug.$errors[0]?.$message"
+        @blur="validation.slug.$touch"
+      />
     </div>
     <div
       class="col-span-1 text-sm text-grey mt-6"
@@ -19,7 +22,10 @@
         v-model="dataProxy.meta_title"
         :label="inputT('title.label')"
         :placeholder="inputT('title.placeholder')"
-      ></AppInput>
+        required
+        :error-message="validation.meta_title.$errors[0]?.$message"
+        @blur="validation.meta_title.$touch"
+      />
     </div>
     <div
       class="col-span-1 text-sm text-grey mt-6"
@@ -32,6 +38,9 @@
         v-model="dataProxy.meta_description"
         :label="inputT('description.label')"
         :placeholder="inputT('description.placeholder')"
+        required
+        :error-message="validation.meta_description.$errors[0]?.$message"
+        @blur="validation.meta_description.$touch"
       ></AppTextArea>
     </div>
     <div
@@ -42,6 +51,8 @@
 </template>
 
 <script lang="ts" setup>
+import useVuelidate from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
@@ -55,15 +66,16 @@ const props = defineProps<{ data: UrlAndSharingStepProps }>();
 const { t } = useI18n();
 const inputT = (key: string) => t('createCallout.steps.url.inputs.' + key);
 
-const isNotEmptyString = (s: string) => s.length > 0;
-
 const dataProxy = ref(props.data);
 
-watch(
-  () =>
-    isNotEmptyString(props.data.slug) &&
-    isNotEmptyString(props.data.meta_title) &&
-    isNotEmptyString(props.data.meta_description),
-  (valid) => emit('update:validated', valid)
+const validation = useVuelidate(
+  {
+    slug: { required },
+    meta_title: { required },
+    meta_description: { required },
+  },
+  dataProxy
 );
+
+watch(validation, () => emit('update:validated', !validation.value.$invalid));
 </script>
