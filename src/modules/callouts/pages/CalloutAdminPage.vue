@@ -18,7 +18,7 @@ import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import AppTabs from '../../../components/tabs/AppTabs.vue';
-import { GetBasicCalloutData } from '../../../utils/api/api.interface';
+import { GetMoreCalloutData } from '../../../utils/api/api.interface';
 import { fetchCallout } from '../../../utils/api/callout';
 
 const route = useRoute();
@@ -42,7 +42,7 @@ const tabs = computed(() =>
     : []
 );
 
-const callout = ref<GetBasicCalloutData>();
+const callout = ref<GetMoreCalloutData>();
 
 onBeforeMount(async () => {
   callout.value = await fetchCallout(route.params.id as string);

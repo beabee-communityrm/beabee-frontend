@@ -67,7 +67,11 @@
         />
         <AppInfoListItem
           :name="t('calloutAdminOverview.settings.endsWith.label')"
-          value="To do"
+          :value="
+            callout.thanksRedirect
+              ? t('calloutAdminOverview.settings.endsWith.redirect')
+              : t('calloutAdminOverview.settings.endsWith.message')
+          "
         />
       </AppInfoList>
     </div>
@@ -90,7 +94,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import {
-  GetBasicCalloutData,
+  GetMoreCalloutData,
   ItemStatus,
 } from '../../../utils/api/api.interface';
 import AppHeading from '../../../components/AppHeading.vue';
@@ -106,7 +110,7 @@ import ActionButton from '../components/ActionButton.vue';
 const baseUrl = import.meta.env.VITE_APP_BASE_URL;
 
 const props = defineProps<{
-  callout: GetBasicCalloutData;
+  callout: GetMoreCalloutData;
 }>();
 const { t } = useI18n();
 

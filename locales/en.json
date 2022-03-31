@@ -48,7 +48,7 @@
       "endsWith": {
         "label": "Ends with",
         "message": "Thank you message",
-        "redirect": "Redirect to {url}"
+        "redirect": "Redirect"
       },
       "label": "Settings",
       "openTo": {
