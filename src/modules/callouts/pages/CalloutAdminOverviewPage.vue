@@ -1,15 +1,15 @@
 <template>
-  <div
-    class="flex flex-wrap flex-col-reverse lg:flex-row lg:justify-between gap-8"
-  >
-    <div>
+  <div class="flex flex-col-reverse lg:flex-row lg:justify-between gap-8">
+    <div class="flex-initial basis-1/2">
       <AppHeading>{{ t('calloutAdminOverview.summary') }}</AppHeading>
-      <div class="flex">
+      <div class="flex mb-4">
         <div class="flex-1">
           <h3 class="font-semibold text-lg">{{ callout.title }}</h3>
           <p>{{ callout.excerpt }}</p>
         </div>
-        <div class="flex-0 ml-4"><img class="w-28" :src="callout.image" /></div>
+        <div class="flex-0 ml-4">
+          <img class="w-[150px]" :src="callout.image" />
+        </div>
       </div>
       <p class="mb-8">
         <router-link :to="calloutLink">
@@ -50,21 +50,19 @@
         />
       </AppInfoList>
     </div>
-    <div>
-      <div class="flex lg:flex-col gap-2">
-        <ActionButton icon="eye">{{
-          t('calloutAdminOverview.actions.view')
-        }}</ActionButton>
-        <ActionButton icon="pencil-alt">{{
-          t('calloutAdminOverview.actions.edit')
-        }}</ActionButton>
-        <ActionButton icon="clone">{{
-          t('calloutAdminOverview.actions.replicate')
-        }}</ActionButton>
-        <ActionButton icon="trash">{{
-          t('calloutAdminOverview.actions.delete')
-        }}</ActionButton>
-      </div>
+    <div class="flex-0 flex flex-wrap lg:flex-col gap-2">
+      <ActionButton icon="eye">{{
+        t('calloutAdminOverview.actions.view')
+      }}</ActionButton>
+      <ActionButton icon="pencil-alt">{{
+        t('calloutAdminOverview.actions.edit')
+      }}</ActionButton>
+      <ActionButton icon="clone">{{
+        t('calloutAdminOverview.actions.replicate')
+      }}</ActionButton>
+      <ActionButton icon="trash">{{
+        t('calloutAdminOverview.actions.delete')
+      }}</ActionButton>
     </div>
   </div>
 </template>
