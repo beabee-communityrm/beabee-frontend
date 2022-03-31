@@ -76,7 +76,7 @@
       </AppInfoList>
     </div>
     <div class="flex-0 flex flex-wrap lg:flex-col gap-2">
-      <ActionButton icon="eye">{{
+      <ActionButton icon="eye" :to="calloutLink">{{
         t('calloutAdminOverview.actions.view')
       }}</ActionButton>
       <ActionButton icon="pencil-alt">{{
