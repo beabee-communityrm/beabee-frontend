@@ -55,21 +55,15 @@
       </div>
       <div>
         <h3 class="font-semibold">
-          {{ callout.templateSchema.thanksTitle }}
+          {{ callout.thanksTitle }}
         </h3>
-        <div
-          class="font-normal text-body-80"
-          v-html="callout.templateSchema.thanksText"
-        />
+        <div class="font-normal text-body-80" v-html="callout.thanksText" />
       </div>
     </div>
     <figure class="relative mb-6 pb-[56.25%]">
       <img class="absolute w-full h-full object-cover" :src="callout.image" />
     </figure>
-    <div
-      class="text-lg content-message"
-      v-html="callout.templateSchema.intro"
-    />
+    <div class="text-lg content-message" v-html="callout.intro" />
     <form
       v-if="showResponseForm"
       class="callout-form mt-10 pt-10 border-primary-40 border-t"
@@ -82,7 +76,7 @@
         v-model:email="guestEmail"
       />
       <Form
-        :form="callout.templateSchema.formSchema"
+        :form="callout.formSchema"
         :submission="formSubmission"
         :options="formOpts"
         @submit="(handleSubmitResponse as any)"

@@ -219,12 +219,11 @@ export interface GetCalloutsQuery
 }
 
 export interface GetMoreCalloutData extends GetBasicCalloutData {
-  templateSchema: {
-    formSchema: any;
-    intro: string;
-    thanksText: string;
-    thanksTitle: string;
-  };
+  formSchema: any;
+  intro: string;
+  thanksText: string;
+  thanksTitle: string;
+  thanksRedirect?: string;
 }
 
 export type GetCalloutResponsesQuery = GetPaginatedQuery<'member'>;
