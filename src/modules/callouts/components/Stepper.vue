@@ -7,17 +7,22 @@
     <div
       :class="
         stepIndex === modelValue
-          ? 'bg-primary-20'
+          ? 'bg-white'
           : 'bg-primary-5 hover:bg-primary-10 cursor-pointer'
       "
       class="p-4 my-1 rounded"
       @click="emit('update:modelValue', stepIndex)"
     >
-      <h4 class="flex items-center font-semibold">
-        <AppRoundBadge
-          :type="step.validated === true ? 'success' : 'warning'"
-          size="large"
-          class="mr-2"
+      <h4
+        class="flex items-center font-semibold"
+        :class="{ 'text-link': stepIndex === modelValue }"
+      >
+        <span
+          class="inline-block w-4 h-4 border-2 rounded-full align-middle mr-2"
+          :class="{
+            'bg-link': step.validated,
+            'border-link': step.validated || stepIndex === modelValue,
+          }"
         />
         {{ step.name }}
       </h4>
@@ -27,8 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-import AppRoundBadge from '../../../components/AppRoundBadge.vue';
-import { Step, Steps } from '../create-callout.interface';
+import { Step } from '../create-callout.interface';
 defineProps<{ steps: Step<unknown>[]; modelValue: number }>();
 const emit = defineEmits(['update:modelValue']);
 </script>
