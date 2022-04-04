@@ -2,10 +2,10 @@
   <div>
     <div class="grid grid-cols-2 gap-6 mt-5">
       <div class="col-span-1">
-        <p class="font-semibold mb-1">{{ inputT('who.label') }}</p>
         <AppRadioGroup
           v-model="dataProxy.whoCanTakePart"
           name="whoCanTakePart"
+          :label="inputT('who.label')"
           :options="[
             ['members', inputT('who.opts.members')],
             ['everyone', inputT('who.opts.everyone')],
@@ -22,10 +22,10 @@
       class="grid grid-cols-2 gap-6 mt-5"
     >
       <div class="col-span-1">
-        <p class="font-semibold mb-1">{{ inputT('anonymous.label') }}</p>
         <AppRadioGroup
           v-model="dataProxy.allowAnonymousResponses"
           name="allowAnonymousResponses"
+          :label="inputT('anonymous.label')"
           :options="[
             [true, inputT('anonymous.opts.yes')],
             [false, inputT('anonymous.opts.no')],
@@ -39,10 +39,10 @@
     </div>
     <div class="grid grid-cols-2 gap-6 mt-5">
       <div class="col-span-1">
-        <p class="font-semibold mb-1">{{ inputT('visible.label') }}</p>
         <AppRadioGroup
           v-model="dataProxy.showOnUserDashboards"
           name="showOnUserDashboards"
+          :label="inputT('visible.label')"
           :options="[
             [true, inputT('visible.opts.yes')],
             [false, inputT('visible.opts.no')],
@@ -56,10 +56,10 @@
     </div>
     <div class="grid grid-cols-2 gap-6 mt-5">
       <div class="col-span-1">
-        <p class="font-semibold mb-1">{{ inputT('editable.label') }}</p>
         <AppRadioGroup
           v-model="dataProxy.usersCanEditAnswers"
           name="usersCanEditAnswers"
+          :label="inputT('editable.label')"
           :options="[
             [true, inputT('editable.opts.yes')],
             [false, inputT('editable.opts.no')],

@@ -2,10 +2,10 @@
   <div>
     <div class="grid grid-cols-2 gap-6">
       <div class="col-span-1">
-        <p class="font-semibold mb-1">Use Mailchimp sync</p>
         <AppRadioGroup
           v-model="dataProxy.useMailchimpSync"
           name="useMailchimpSync"
+          label="Use Mailchimp sync"
           :options="[
             [true, 'Yes'],
             [false, 'No'],

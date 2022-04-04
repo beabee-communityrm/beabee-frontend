@@ -10,7 +10,7 @@
           ? 'bg-primary-20'
           : 'bg-primary-5 hover:bg-primary-10 cursor-pointer'
       "
-      class="p-4 mt-2 mb-2 rounded"
+      class="p-4 my-1 rounded"
       @click="emit('update:modelValue', stepIndex)"
     >
       <h4 class="flex items-center font-semibold">

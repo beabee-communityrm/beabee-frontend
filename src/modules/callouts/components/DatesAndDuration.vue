@@ -2,10 +2,10 @@
   <div>
     <div class="grid grid-cols-2 gap-6">
       <div class="col-span-1">
-        <p class="font-semibold mb-1">{{ inputT('starts.label') }}</p>
         <AppRadioGroup
           v-model="dataProxy.startNow"
           name="calloutStartDate"
+          :label="inputT('starts.label')"
           :options="[
             [true, inputT('starts.opts.now')],
             [false, inputT('starts.opts.schedule')],
@@ -15,7 +15,6 @@
           v-if="!dataProxy.startNow"
           v-model="dataProxy.startDate"
           inputType="date"
-          :label="''"
           required
           :error-message="validation.startDate.$errors[0]?.$message"
           @blur="validation.startDate.$touch"
@@ -25,10 +24,10 @@
     </div>
     <div class="grid grid-cols-2 gap-6 mt-5">
       <div class="col-span-1">
-        <p class="font-semibold mb-1">{{ inputT('expires.label') }}</p>
         <AppRadioGroup
           v-model="dataProxy.hasEndDate"
           name="calloutEndDate"
+          :label="inputT('expires.label')"
           :options="[
             [false, inputT('expires.opts.never')],
             [true, inputT('expires.opts.schedule')],
@@ -38,7 +37,6 @@
           v-if="dataProxy.hasEndDate"
           v-model="dataProxy.endDate"
           inputType="date"
-          :label="''"
           required
           :error-message="validation.endDate.$errors[0]?.$message"
           @blur="validation.endDate.$touch"

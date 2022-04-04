@@ -2,10 +2,10 @@
   <div>
     <div class="grid grid-cols-2 gap-6">
       <div class="col-span-1">
-        <p class="font-semibold mb-1">{{ inputT('action.label') }}</p>
         <AppRadioGroup
           v-model="dataProxy.whenFinished"
           name="whenFinished"
+          :label="inputT('action.label')"
           :options="[
             ['message', inputT('action.opts.showMessage')],
             ['redirect', inputT('action.opts.redirect')],

@@ -1,4 +1,5 @@
 <template>
+  <p v-if="label" class="mb-1.5 font-semibold">{{ label }}</p>
   <label
     v-for="[value, label] in options"
     :key="value.toString()"
@@ -24,6 +25,7 @@ const props = defineProps<{
   modelValue: string | boolean | number | null;
   options: [string | boolean | number, string][];
   name: string;
+  label?: string;
 }>();
 
 const selected = computed({
