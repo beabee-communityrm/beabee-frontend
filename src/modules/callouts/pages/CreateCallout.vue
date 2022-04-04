@@ -2,11 +2,11 @@
   <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
     <PageTitle :title="t('createCallout.title')" />
   </div>
-  <div class="grid grid-cols-4 gap-8">
-    <div class="col-span-1">
+  <div class="flex gap-8">
+    <div class="flex-0 basis-[240px]">
       <Stepper :steps="steps" v-model:selectedStepIndex="selectedStepIndex" />
     </div>
-    <div class="col-span-3">
+    <div class="flex-1">
       <component
         :is="selectedStep.component"
         v-model:data="selectedStep.data"

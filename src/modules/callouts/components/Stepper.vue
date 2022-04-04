@@ -4,17 +4,16 @@
       :class="
         stepIndex === selectedStepIndex
           ? 'bg-primary-20'
-          : 'bg-primary-5 hover:bg-primary-10'
+          : 'bg-primary-5 hover:bg-primary-10 cursor-pointer'
       "
-      class="p-4 mt-2 mb-2"
+      class="p-4 mt-2 mb-2 rounded"
       @click="emit('update:selectedStepIndex', stepIndex)"
     >
-      <h4 class="font-semibold">
-        <!-- {{ step.validated === true ? '✅' : '❌' }} {{ step.name }} -->
+      <h4 class="flex items-center font-semibold">
         <AppRoundBadge
           :type="step.validated === true ? 'success' : 'warning'"
           size="large"
-          class="mr-1"
+          class="mr-2"
         />
         {{ step.name }}
       </h4>
