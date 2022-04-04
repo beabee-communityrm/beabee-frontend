@@ -7,6 +7,7 @@
       <Stepper :steps="steps" v-model:selectedStepIndex="selectedStepIndex" />
     </div>
     <div class="flex-1">
+      <AppHeading class="mb-5">{{ selectedStep.name }}</AppHeading>
       <component
         :is="selectedStep.component"
         v-model:data="selectedStep.data"
@@ -55,6 +56,7 @@ import ContentStep from '../components/ContentStep.vue';
 import { Steps } from '../create-callout.interface';
 import PageTitle from '../../../components/PageTitle.vue';
 import { useI18n } from 'vue-i18n';
+import AppHeading from '../../../components/AppHeading.vue';
 
 const { t } = useI18n();
 

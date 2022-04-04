@@ -1,54 +1,53 @@
 <template>
-  <AppHeading class="mb-5">{{
-    t('createCallout.steps.titleAndImage.title')
-  }}</AppHeading>
-  <div class="grid grid-cols-2 gap-6 mt-5">
-    <div class="col-span-1">
-      <AppInput
-        v-model="dataProxy.title"
-        :label="inputT('title.label')"
-        :placeholder="inputT('title.placeholder')"
-        :error-message="validation.title.$errors[0]?.$message"
-        required
-        @blur="validation.title.$touch"
+  <div>
+    <div class="grid grid-cols-2 gap-6 mt-5">
+      <div class="col-span-1">
+        <AppInput
+          v-model="dataProxy.title"
+          :label="inputT('title.label')"
+          :placeholder="inputT('title.placeholder')"
+          :error-message="validation.title.$errors[0]?.$message"
+          required
+          @blur="validation.title.$touch"
+        />
+      </div>
+      <div
+        class="col-span-1 text-sm text-grey mt-6"
+        v-html="inputT('title.help')"
       />
     </div>
-    <div
-      class="col-span-1 text-sm text-grey mt-6"
-      v-html="inputT('title.help')"
-    />
-  </div>
-  <div class="grid grid-cols-2 gap-6 mt-5">
-    <div class="col-span-1">
-      <AppTextArea
-        v-model="dataProxy.description"
-        :label="inputT('description.label')"
-        :placeholder="inputT('description.placeholder')"
-        :error-message="validation.description.$errors[0]?.$message"
-        required
-        @blur="validation.description.$touch"
+    <div class="grid grid-cols-2 gap-6 mt-5">
+      <div class="col-span-1">
+        <AppTextArea
+          v-model="dataProxy.description"
+          :label="inputT('description.label')"
+          :placeholder="inputT('description.placeholder')"
+          :error-message="validation.description.$errors[0]?.$message"
+          required
+          @blur="validation.description.$touch"
+        />
+      </div>
+      <div
+        class="col-span-1 text-sm text-grey mt-6"
+        v-html="inputT('description.help')"
       />
     </div>
-    <div
-      class="col-span-1 text-sm text-grey mt-6"
-      v-html="inputT('description.help')"
-    />
-  </div>
-  <div class="grid grid-cols-2 gap-6 mt-5">
-    <div class="col-span-1">
-      <AppInput
-        v-model="dataProxy.coverImageURL"
-        :label="inputT('image.label')"
-        :placeholder="inputT('image.placeholder')"
-        :error-message="validation.coverImageURL.$errors[0]?.$message"
-        required
-        @blur="validation.coverImageURL.$touch"
-      ></AppInput>
+    <div class="grid grid-cols-2 gap-6 mt-5">
+      <div class="col-span-1">
+        <AppInput
+          v-model="dataProxy.coverImageURL"
+          :label="inputT('image.label')"
+          :placeholder="inputT('image.placeholder')"
+          :error-message="validation.coverImageURL.$errors[0]?.$message"
+          required
+          @blur="validation.coverImageURL.$touch"
+        ></AppInput>
+      </div>
+      <div
+        class="col-span-1 text-sm text-grey mt-6"
+        v-html="inputT('image.help')"
+      />
     </div>
-    <div
-      class="col-span-1 text-sm text-grey mt-6"
-      v-html="inputT('image.help')"
-    />
   </div>
 </template>
 
@@ -56,7 +55,6 @@
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../components/forms/AppInput.vue';
-import AppHeading from '../../../components/AppHeading.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
 import useVuelidate from '@vuelidate/core';
 import { required, url } from '@vuelidate/validators';

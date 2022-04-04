@@ -1,26 +1,23 @@
 <template>
-  <div>
-    <AppHeading>{{ t('createCallout.steps.content.title') }}</AppHeading>
-    <div class="grid grid-cols-2 gap-6">
-      <div class="col-span-1">
-        <AppTextArea
-          v-model="dataProxy.introText"
-          :label="inputT('intro.label')"
-          required
-          :error-message="validation.introText.$errors[0]?.$message"
-          @blur="validation.introText.$touch"
-        />
-      </div>
-      <div></div>
-    </div>
-    <div class="callout-form-builder mt-8">
-      <FormBuilderVue
-        ref="formBuilderRef"
-        :form="data.formSchema"
-        :options="formOpts"
-        @change="handleFormChange"
+  <div class="grid grid-cols-2 gap-6">
+    <div class="col-span-1">
+      <AppTextArea
+        v-model="dataProxy.introText"
+        :label="inputT('intro.label')"
+        required
+        :error-message="validation.introText.$errors[0]?.$message"
+        @blur="validation.introText.$touch"
       />
     </div>
+    <div></div>
+  </div>
+  <div class="callout-form-builder mt-8">
+    <FormBuilderVue
+      ref="formBuilderRef"
+      :form="data.formSchema"
+      :options="formOpts"
+      @change="handleFormChange"
+    />
   </div>
 </template>
 <script lang="ts" setup>
@@ -29,7 +26,6 @@ import { helpers, required } from '@vuelidate/validators';
 import { onBeforeMount, ref, watch } from 'vue';
 import { FormBuilder as FormBuilderVue } from 'vue-formio';
 import { FormBuilder } from 'formiojs';
-import AppHeading from '../../../components/AppHeading.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
 import {
   faQuestionCircle,

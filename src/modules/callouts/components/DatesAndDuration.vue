@@ -1,40 +1,39 @@
 <template>
-  <AppHeading class="mb-3">{{
-    t('createCallout.steps.dates.title')
-  }}</AppHeading>
-  <div class="grid grid-cols-2 gap-6">
-    <div class="col-span-1">
-      <AppInput
-        v-model="dataProxy.callout_start_date"
-        inputType="date"
-        :label="inputT('starts.label')"
-        required
-        :error-message="validation.callout_start_date.$errors[0]?.$message"
-        @blur="validation.callout_start_date.$touch"
-      ></AppInput>
-    </div>
-    <div class="col-span-1 text-sm text-grey mt-6" />
-  </div>
-  <div class="grid grid-cols-2 gap-6 mt-5">
-    <div class="col-span-1">
-      <p class="font-semibold mb-1">{{ inputT('expires.label') }}</p>
-      <AppRadioGroup
-        v-model="dataProxy.calloutHasEndDate"
-        name="calloutHasEndDate"
-        :options="[
-          [false, inputT('expires.opts.never')],
-          [true, inputT('expires.opts.schedule')],
-        ]"
-      />
-      <div v-show="dataProxy.calloutHasEndDate">
+  <div>
+    <div class="grid grid-cols-2 gap-6">
+      <div class="col-span-1">
         <AppInput
-          v-model="dataProxy.callout_end_date"
+          v-model="dataProxy.callout_start_date"
           inputType="date"
-          :label="''"
+          :label="inputT('starts.label')"
           required
-          :error-message="validation.callout_end_date.$errors[0]?.$message"
-          @blur="validation.callout_end_date.$touch"
+          :error-message="validation.callout_start_date.$errors[0]?.$message"
+          @blur="validation.callout_start_date.$touch"
         ></AppInput>
+      </div>
+      <div class="col-span-1 text-sm text-grey mt-6" />
+    </div>
+    <div class="grid grid-cols-2 gap-6 mt-5">
+      <div class="col-span-1">
+        <p class="font-semibold mb-1">{{ inputT('expires.label') }}</p>
+        <AppRadioGroup
+          v-model="dataProxy.calloutHasEndDate"
+          name="calloutHasEndDate"
+          :options="[
+            [false, inputT('expires.opts.never')],
+            [true, inputT('expires.opts.schedule')],
+          ]"
+        />
+        <div v-show="dataProxy.calloutHasEndDate">
+          <AppInput
+            v-model="dataProxy.callout_end_date"
+            inputType="date"
+            :label="''"
+            required
+            :error-message="validation.callout_end_date.$errors[0]?.$message"
+            @blur="validation.callout_end_date.$touch"
+          ></AppInput>
+        </div>
       </div>
     </div>
   </div>
@@ -45,7 +44,6 @@ import useVuelidate from '@vuelidate/core';
 import { helpers, required, requiredIf } from '@vuelidate/validators';
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppHeading from '../../../components/AppHeading.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
 import { DateAndDurationStepProps } from '../create-callout.interface';
