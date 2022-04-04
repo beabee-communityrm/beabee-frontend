@@ -1,4 +1,20 @@
 {
+  "adminDashboard": {
+    "latestCallout": {
+      "title": "Latest callout"
+    },
+    "mostRecentMembers": {
+      "title": "Most recently joined members"
+    },
+    "numbers": {
+      "averageContribution": "Average monthly contribution",
+      "newMembers": "New members",
+      "revenue": "Revenue",
+      "title": "Numbers for the last 30 days"
+    },
+    "supportInbox": "Need help? Our support inbox is always open:",
+    "welcomeBack": "Welcome back {firstName}!"
+  },
   "callout": {
     "contactDetails": "Contact details",
     "form": {
@@ -343,11 +359,12 @@
   },
   "menu": {
     "admin": "Administration",
-    "adminDashboard": "Dashboard",
     "callouts": "Callouts",
     "community": "Community",
     "contribution": "Contribution",
+    "dashboard": "Dashboard",
     "home": "Home",
+    "legacyApp": "Old admin",
     "logout": "Log out",
     "notices": "Notices",
     "settings": "Settings",

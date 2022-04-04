@@ -17,7 +17,7 @@
         <a href="/members">
           <TheMenuListItem
             :icon="['fa', 'cogs']"
-            :title="t('menu.adminDashboard')"
+            :title="t('menu.legacyApp')"
           />
         </a>
       </div>

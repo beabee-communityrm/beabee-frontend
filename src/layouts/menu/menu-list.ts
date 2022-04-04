@@ -48,6 +48,11 @@ export const adminMenu: MenuSection[] = [
     title: t('menu.admin'),
     items: [
       {
+        title: t('menu.dashboard'),
+        href: '/admin',
+        icon: ['far', 'building'],
+      },
+      {
         title: t('menu.community'),
         href: '/contacts',
         icon: ['fa', 'users'],
