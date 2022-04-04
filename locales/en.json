@@ -229,6 +229,10 @@
         },
         "title": "End message"
       },
+      "mailchimp": {
+        "description": "Set up Mailchimp integration",
+        "title": "Mailchimp sync"
+      },
       "titleAndImage": {
         "description": "Set a title, description and image for the callout",
         "inputs": {
@@ -309,7 +313,8 @@
         },
         "title": "Visibility settings"
       }
-    }
+    },
+    "title": "Create a callout"
   },
   "footer": {
     "contactUs": "Contact us at",

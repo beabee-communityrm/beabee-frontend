@@ -1,5 +1,7 @@
 <template>
-  <h4>Create a new callout</h4>
+  <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
+    <PageTitle :title="t('createCallout.title')" />
+  </div>
   <div class="grid grid-cols-4 gap-8">
     <div class="col-span-1">
       <Stepper :steps="steps" v-model:selectedStepIndex="selectedStepIndex" />
@@ -51,28 +53,32 @@ import MailchimpSync from '../components/MailchimpSync.vue';
 import DatesAndDurationVue from '../components/DatesAndDuration.vue';
 import ContentStep from '../components/ContentStep.vue';
 import { Steps } from '../create-callout.interface';
+import PageTitle from '../../../components/PageTitle.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const steps: Steps = reactive([
   {
     id: 'content',
-    name: 'Callout content',
-    description: 'Build your callout with questions and prompts',
+    name: t('createCallout.steps.content.title'),
+    description: t('createCallout.steps.content.description'),
     validated: false,
     component: markRaw(ContentStep),
     data: { introText: '', formSchema: { components: [] } },
   },
   {
     id: 'first',
-    name: 'Title and image',
-    description: 'Set a title, description and image for the callout',
+    name: t('createCallout.steps.titleAndImage.title'),
+    description: t('createCallout.steps.titleAndImage.description'),
     validated: false,
     component: markRaw(TitleAndImage),
     data: { title: '', description: '', coverImageURL: '' },
   },
   {
     id: 'second',
-    name: 'Visibility settings',
-    description: 'Specify callout visibility and other details',
+    name: t('createCallout.steps.visibility.title'),
+    description: t('createCallout.steps.visibility.description'),
     validated: false,
     component: markRaw(Visibility),
     data: {
@@ -97,8 +103,8 @@ const steps: Steps = reactive([
   },
   {
     id: 'Fourth',
-    name: 'URL and sharing',
-    description: 'Adjust how the callout will appear and how to access it',
+    name: t('createCallout.steps.url.title'),
+    description: t('createCallout.steps.url.description'),
     validated: false,
     component: markRaw(UrlAndSharing),
     data: {
@@ -109,8 +115,8 @@ const steps: Steps = reactive([
   },
   {
     id: 'Fifth',
-    name: 'Mailchimp sync',
-    description: 'Set up Mailchimp integrations',
+    name: t('createCallout.steps.mailchimp.title'),
+    description: t('createCallout.steps.mailchimp.description'),
     validated: false,
     component: markRaw(MailchimpSync),
     data: {
@@ -119,8 +125,8 @@ const steps: Steps = reactive([
   },
   {
     id: 'Sixth',
-    name: 'Dates and duration',
-    description: 'Schedule your callout and for how long it will be live',
+    name: t('createCallout.steps.dates.title'),
+    description: t('createCallout.steps.dates.description'),
     validated: false,
     component: markRaw(DatesAndDurationVue),
     data: {
