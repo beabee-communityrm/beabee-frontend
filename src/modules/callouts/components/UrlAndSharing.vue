@@ -2,29 +2,54 @@
   <div>
     <div class="grid grid-cols-2 gap-6">
       <div class="col-span-1">
-        <AppInput
-          v-model="dataProxy.slug"
+        <AppRadioGroup
+          v-model="dataProxy.useCustomSlug"
+          name="useCustomSlug"
           :label="inputT('slug.label')"
-          :placeholder="inputT('slug.placeholder')"
+          :options="[
+            [false, inputT('slug.opts.auto')],
+            [true, inputT('slug.opts.manual')],
+          ]"
+        />
+        <AppInput
+          v-if="dataProxy.useCustomSlug"
+          v-model="dataProxy.slug"
           required
           :error-message="validation.slug.$errors[0]?.$message"
           @blur="validation.slug.$touch"
         />
+        <p class="mt-2 text-sm">
+          URL will be {{ baseUrl }}/callouts/{{ slug || '???' }}
+        </p>
       </div>
       <div
         class="col-span-1 text-sm text-grey mt-6"
         v-html="inputT('slug.help')"
       />
     </div>
-    <div class="grid grid-cols-2 gap-6 mt-5">
+    <div class="grid grid-cols-2 gap-6 mt-6">
+      <div class="col-span-1">
+        <AppRadioGroup
+          v-model="dataProxy.overrideShare"
+          name="overrideShare"
+          :label="inputT('overrideShare.label')"
+          :options="[
+            [false, inputT('overrideShare.opts.yes')],
+            [true, inputT('overrideShare.opts.no')],
+          ]"
+        />
+      </div>
+      <div class="col-span-1 text-sm text-grey mt-6" />
+    </div>
+    <div v-if="dataProxy.overrideShare" class="grid grid-cols-2 gap-6 mt-5">
       <div class="col-span-1">
         <AppInput
-          v-model="dataProxy.metaTitle"
+          v-model="dataProxy.shareTitle"
           :label="inputT('title.label')"
           :placeholder="inputT('title.placeholder')"
           required
-          :error-message="validation.metaTitle.$errors[0]?.$message"
-          @blur="validation.metaTitle.$touch"
+          :error-message="validation.shareTitle.$errors[0]?.$message"
+          @blur="validation.shareTitle.$touch"
         />
       </div>
       <div
@@ -32,15 +57,15 @@
         v-html="inputT('title.help')"
       />
     </div>
-    <div class="grid grid-cols-2 gap-6 mt-5">
+    <div v-if="dataProxy.overrideShare" class="grid grid-cols-2 gap-6 mt-5">
       <div class="col-span-1">
         <AppTextArea
-          v-model="dataProxy.metaDescription"
+          v-model="dataProxy.shareDescription"
           :label="inputT('description.label')"
           :placeholder="inputT('description.placeholder')"
           required
-          :error-message="validation.metaDescription.$errors[0]?.$message"
-          @blur="validation.metaDescription.$touch"
+          :error-message="validation.shareDescription.$errors[0]?.$message"
+          @blur="validation.shareDescription.$touch"
         ></AppTextArea>
       </div>
       <div
@@ -52,11 +77,13 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from '@vue/reactivity';
 import useVuelidate from '@vuelidate/core';
-import { required } from '@vuelidate/validators';
-import { ref, watch } from 'vue';
+import { requiredIf } from '@vuelidate/validators';
+import { onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../components/forms/AppInput.vue';
+import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
 import { UrlAndSharingStepProps } from '../create-callout.interface';
 
@@ -66,16 +93,25 @@ const props = defineProps<{ data: UrlAndSharingStepProps }>();
 const { t } = useI18n();
 const inputT = (key: string) => t('createCallout.steps.url.inputs.' + key);
 
+const baseUrl = import.meta.env.VITE_APP_BASE_URL;
+
 const dataProxy = ref(props.data);
 
-const validation = useVuelidate(
-  {
-    slug: { required },
-    metaTitle: { required },
-    metaDescription: { required },
-  },
-  dataProxy
+const slug = computed(() =>
+  dataProxy.value.useCustomSlug
+    ? dataProxy.value.slug
+    : dataProxy.value.autoSlug
 );
 
-watch(validation, () => emit('update:validated', !validation.value.$invalid));
+const rules = computed(() => ({
+  slug: { required: requiredIf(dataProxy.value.useCustomSlug) },
+  shareTitle: { required: requiredIf(dataProxy.value.overrideShare) },
+  shareDescription: { required: requiredIf(dataProxy.value.overrideShare) },
+}));
+
+const validation = useVuelidate(rules, dataProxy);
+
+watch(validation, () => emit('update:validated', !validation.value.$invalid), {
+  immediate: true,
+});
 </script>

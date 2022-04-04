@@ -25,9 +25,12 @@ export interface EndMessageStepProps {
   URLRedirect: string;
 }
 export interface UrlAndSharingStepProps {
+  autoSlug: string;
+  useCustomSlug: boolean;
   slug: string;
-  metaTitle: string;
-  metaDescription: string;
+  overrideShare: boolean;
+  shareTitle: string;
+  shareDescription: string;
 }
 
 export interface MailchimpSyncStepProps {

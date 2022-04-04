@@ -305,6 +305,13 @@
       "url": {
         "description": "Adjust how the URL will appear and how to access it",
         "inputs": {
+          "overrideShare": {
+            "label": "Use callout title and description for sharing?",
+            "opts": {
+              "yes": "Yes",
+              "no": "No, set a custom title and description"
+            }
+          },
           "description": {
             "help": "<p>The <strong>Share description</strong> field sets the short description as it should appear on social media cards. This will not affect the original callout description.</p>\n",
             "label": "Share description",
@@ -313,7 +320,10 @@
           "slug": {
             "help": "<p>The URL slug will be used to construct the web address for this callout.</p>\n",
             "label": "URL slug",
-            "placeholder": ""
+            "opts": {
+              "auto": "Auto-generate from title",
+              "manual": "Set custom URL"
+            }
           },
           "title": {
             "help": "<p>The <strong>Share title</strong> field sets the title as it should appear on social media cards. This will not affect the original callout title.</p>\n",

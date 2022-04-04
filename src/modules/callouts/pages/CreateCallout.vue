@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, computed, markRaw } from 'vue';
+import { reactive, ref, computed, markRaw, watch } from 'vue';
 import { createCallout } from '../../../utils/api/callout';
 import type { CreateCalloutData } from '../../../utils/api/api.interface';
 import Stepper from '../components/Stepper.vue';
@@ -113,9 +113,12 @@ const steps: Steps = reactive({
     validated: false,
     component: markRaw(UrlAndSharing),
     data: {
+      useCustomSlug: false,
+      autoSlug: '',
       slug: '',
-      metaTitle: '',
-      metaDescription: '',
+      overrideShare: false,
+      shareTitle: '',
+      shareDescription: '',
     },
   },
   mailchimp: {
@@ -140,6 +143,13 @@ const steps: Steps = reactive({
     },
   },
 });
+
+watch(
+  () => steps.titleAndImage.data.title,
+  (title) => {
+    steps.url.data.autoSlug = title.toLowerCase();
+  }
+);
 
 const stepsInOrder = computed(() => [
   steps.content,
