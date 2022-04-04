@@ -45,7 +45,11 @@
 </template>
 
 <script lang="ts" setup>
+import { parseISO } from 'date-fns';
+import slugify from 'slugify';
 import { reactive, ref, computed, markRaw, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 import { createCallout } from '../../../utils/api/callout';
 import type { CreateCalloutData } from '../../../utils/api/api.interface';
 import Stepper from '../components/Stepper.vue';
@@ -59,10 +63,7 @@ import DatesAndDurationVue from '../components/DatesAndDuration.vue';
 import ContentStep from '../components/ContentStep.vue';
 import { Steps } from '../create-callout.interface';
 import PageTitle from '../../../components/PageTitle.vue';
-import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
-import { parseISO } from 'date-fns';
-import { useRouter } from 'vue-router';
 
 const { t } = useI18n();
 
@@ -144,10 +145,11 @@ const steps: Steps = reactive({
   },
 });
 
+// TODO: should just be a computed
 watch(
   () => steps.titleAndImage.data.title,
   (title) => {
-    steps.url.data.autoSlug = title.toLowerCase();
+    steps.url.data.autoSlug = slugify(title);
   }
 );
 

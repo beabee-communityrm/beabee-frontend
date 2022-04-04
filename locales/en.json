@@ -321,7 +321,7 @@
             "help": "<p>The URL slug will be used to construct the web address for this callout.</p>\n",
             "label": "URL slug",
             "opts": {
-              "auto": "Auto-generate from title",
+              "auto": "Auto-generate from callout title",
               "manual": "Set custom URL"
             }
           },
