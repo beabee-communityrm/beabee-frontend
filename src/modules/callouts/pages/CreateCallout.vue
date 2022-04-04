@@ -111,8 +111,8 @@ const steps: Steps = reactive([
     component: markRaw(UrlAndSharing),
     data: {
       slug: '',
-      meta_title: '',
-      meta_description: '',
+      metaTitle: '',
+      metaDescription: '',
     },
   },
   {
@@ -132,9 +132,10 @@ const steps: Steps = reactive([
     validated: false,
     component: markRaw(DatesAndDurationVue),
     data: {
-      calloutHasEndDate: false,
-      callout_start_date: '',
-      callout_end_date: '',
+      startNow: true,
+      hasEndDate: false,
+      startDate: '',
+      endDate: '',
     },
   },
 ]);

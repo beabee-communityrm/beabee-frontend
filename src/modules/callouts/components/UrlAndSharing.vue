@@ -19,12 +19,12 @@
     <div class="grid grid-cols-2 gap-6 mt-5">
       <div class="col-span-1">
         <AppInput
-          v-model="dataProxy.meta_title"
+          v-model="dataProxy.metaTitle"
           :label="inputT('title.label')"
           :placeholder="inputT('title.placeholder')"
           required
-          :error-message="validation.meta_title.$errors[0]?.$message"
-          @blur="validation.meta_title.$touch"
+          :error-message="validation.metaTitle.$errors[0]?.$message"
+          @blur="validation.metaTitle.$touch"
         />
       </div>
       <div
@@ -35,12 +35,12 @@
     <div class="grid grid-cols-2 gap-6 mt-5">
       <div class="col-span-1">
         <AppTextArea
-          v-model="dataProxy.meta_description"
+          v-model="dataProxy.metaDescription"
           :label="inputT('description.label')"
           :placeholder="inputT('description.placeholder')"
           required
-          :error-message="validation.meta_description.$errors[0]?.$message"
-          @blur="validation.meta_description.$touch"
+          :error-message="validation.metaDescription.$errors[0]?.$message"
+          @blur="validation.metaDescription.$touch"
         ></AppTextArea>
       </div>
       <div
@@ -71,8 +71,8 @@ const dataProxy = ref(props.data);
 const validation = useVuelidate(
   {
     slug: { required },
-    meta_title: { required },
-    meta_description: { required },
+    metaTitle: { required },
+    metaDescription: { required },
   },
   dataProxy
 );

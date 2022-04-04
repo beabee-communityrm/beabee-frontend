@@ -2,14 +2,24 @@
   <div>
     <div class="grid grid-cols-2 gap-6">
       <div class="col-span-1">
+        <p class="font-semibold mb-1">{{ inputT('starts.label') }}</p>
+        <AppRadioGroup
+          v-model="dataProxy.startNow"
+          name="calloutStartDate"
+          :options="[
+            [true, inputT('starts.opts.now')],
+            [false, inputT('starts.opts.schedule')],
+          ]"
+        />
         <AppInput
-          v-model="dataProxy.callout_start_date"
+          v-if="!dataProxy.startNow"
+          v-model="dataProxy.startDate"
           inputType="date"
-          :label="inputT('starts.label')"
+          :label="''"
           required
-          :error-message="validation.callout_start_date.$errors[0]?.$message"
-          @blur="validation.callout_start_date.$touch"
-        ></AppInput>
+          :error-message="validation.startDate.$errors[0]?.$message"
+          @blur="validation.startDate.$touch"
+        />
       </div>
       <div class="col-span-1 text-sm text-grey mt-6" />
     </div>
@@ -17,23 +27,22 @@
       <div class="col-span-1">
         <p class="font-semibold mb-1">{{ inputT('expires.label') }}</p>
         <AppRadioGroup
-          v-model="dataProxy.calloutHasEndDate"
-          name="calloutHasEndDate"
+          v-model="dataProxy.hasEndDate"
+          name="calloutEndDate"
           :options="[
             [false, inputT('expires.opts.never')],
             [true, inputT('expires.opts.schedule')],
           ]"
         />
-        <div v-show="dataProxy.calloutHasEndDate">
-          <AppInput
-            v-model="dataProxy.callout_end_date"
-            inputType="date"
-            :label="''"
-            required
-            :error-message="validation.callout_end_date.$errors[0]?.$message"
-            @blur="validation.callout_end_date.$touch"
-          ></AppInput>
-        </div>
+        <AppInput
+          v-if="dataProxy.hasEndDate"
+          v-model="dataProxy.endDate"
+          inputType="date"
+          :label="''"
+          required
+          :error-message="validation.endDate.$errors[0]?.$message"
+          @blur="validation.endDate.$touch"
+        />
       </div>
     </div>
   </div>
@@ -41,8 +50,8 @@
 
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { helpers, required, requiredIf } from '@vuelidate/validators';
-import { computed, ref, watch } from 'vue';
+import { helpers, requiredIf } from '@vuelidate/validators';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
@@ -54,16 +63,16 @@ const props = defineProps<{ data: DateAndDurationStepProps }>();
 const { t } = useI18n();
 const inputT = (key: string) => t('createCallout.steps.dates.inputs.' + key);
 
+const isAfterStartDate = helpers.withMessage(
+  'End date must be after start date',
+  (value: string) => {
+    return !dataProxy.value.hasEndDate || value >= dataProxy.value.startDate;
+  }
+);
+
 const rules = computed(() => ({
-  callout_start_date: { required },
-  callout_end_date: {
-    minValue: (value: string) => {
-      return (
-        !dataProxy.value.calloutHasEndDate ||
-        value >= dataProxy.value.callout_start_date
-      );
-    },
-  },
+  startDate: { required: requiredIf(!dataProxy.value.startNow) },
+  endDate: { minValue: isAfterStartDate },
 }));
 
 const dataProxy = ref(props.data);
@@ -71,4 +80,5 @@ const dataProxy = ref(props.data);
 const validation = useVuelidate(rules, dataProxy);
 
 watch(validation, () => emit('update:validated', !validation.value.$invalid));
+onMounted(() => validation.value.$touch());
 </script>

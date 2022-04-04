@@ -26,8 +26,8 @@ export interface EndMessageStepProps {
 }
 export interface UrlAndSharingStepProps {
   slug: string;
-  meta_title: string;
-  meta_description: string;
+  metaTitle: string;
+  metaDescription: string;
 }
 
 export interface MailchimpSyncStepProps {
@@ -35,9 +35,10 @@ export interface MailchimpSyncStepProps {
 }
 
 export interface DateAndDurationStepProps {
-  calloutHasEndDate: boolean;
-  callout_start_date: string;
-  callout_end_date: string;
+  hasEndDate: boolean;
+  startNow: boolean;
+  startDate: string;
+  endDate: string;
 }
 
 export interface Step<T> {
