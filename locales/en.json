@@ -17,6 +17,48 @@
     },
     "youResponded": "You replied to this callout ♥"
   },
+  "calloutAdmin": {
+    "overview": "Overview",
+    "responses": "Responses"
+  },
+  "calloutAdminOverview": {
+    "actions": {
+      "delete": "Delete",
+      "edit": "Edit",
+      "replicate": "Replicate",
+      "unpublish": "Unpublish",
+      "view": "View"
+    },
+    "dates": {
+      "ends": "Ends",
+      "label": "Dates",
+      "starts": "Starts"
+    },
+    "settings": {
+      "answers": {
+        "editable": "Can be updated",
+        "final": "Can't be updated",
+        "label": "Answers"
+      },
+      "contactInfo": {
+        "label": "Contact info",
+        "optional": "Optional",
+        "required": "Required"
+      },
+      "endsWith": {
+        "label": "Ends with",
+        "message": "Thank you message",
+        "redirect": "Redirect"
+      },
+      "label": "Settings",
+      "openTo": {
+        "everyone": "Everyone",
+        "label": "Open to",
+        "membersOnly": "Members only"
+      }
+    },
+    "summary": "Summary"
+  },
   "callouts": {
     "archive": "Archive",
     "data": {
