@@ -39,7 +39,15 @@
       </div>
     </div>
     <div class="flex-1 basis-2/3">
-      <AppHeading>{{ t('adminDashboard.latestCallout.title') }}</AppHeading>
+      <template v-if="latestCallout">
+        <AppHeading>{{ t('adminDashboard.latestCallout.title') }}</AppHeading>
+        <a class="block bg-white p-4 mt-4 mb-8 rounded">
+          <CalloutSummary :callout="latestCallout" />
+        </a>
+      </template>
+      <div class="p-4 bg-white text-link font-bold text-xl text-center rounded">
+        {{ t('adminDashboard.joinSlack') }}
+      </div>
     </div>
   </div>
   <div class="lg:flex gap-12 mt-8">
@@ -62,7 +70,10 @@
       </p>
     </Hint>
   </div>
-  <p class="text-center text-sm">{{ t('adminDashboard.supportInbox') }}</p>
+  <p class="text-center text-sm mt-8">
+    {{ t('adminDashboard.supportInbox') }}
+    <a class="text-link" href="mailto:support@beabee.io">support@beabee.io</a>
+  </p>
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
@@ -71,14 +82,20 @@ import { currentUser } from '../../store';
 import AppHeading from '../../components/AppHeading.vue';
 import KeyStat from './components/KeyStat.vue';
 import { onBeforeMount, ref } from 'vue';
-import { GetMemberData } from '../../utils/api/api.interface';
+import {
+  GetBasicCalloutData,
+  GetMemberData,
+} from '../../utils/api/api.interface';
 import { fetchMembers } from '../../utils/api/member';
 import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
 import Hint from './components/Hint.vue';
+import { fetchCallouts } from '../../utils/api/callout';
+import CalloutSummary from '../../components/CalloutSummary.vue';
 
 const { t } = useI18n();
 
 const recentMembers = ref<GetMemberData[]>([]);
+const latestCallout = ref<GetBasicCalloutData>();
 
 onBeforeMount(async () => {
   fetchMembers({
@@ -86,5 +103,15 @@ onBeforeMount(async () => {
     sort: 'joined',
     order: 'DESC',
   }).then((results) => (recentMembers.value = results.items));
+
+  fetchCallouts({
+    limit: 1,
+    sort: 'starts',
+    order: 'DESC',
+  }).then((results) => {
+    if (results.count > 0) {
+      latestCallout.value = results.items[0];
+    }
+  });
 });
 </script>

@@ -2,21 +2,7 @@
   <div class="flex flex-col-reverse lg:flex-row lg:justify-between gap-8">
     <div class="flex-initial basis-1/2">
       <AppHeading>{{ t('calloutAdminOverview.summary') }}</AppHeading>
-      <div class="flex mb-4">
-        <div class="flex-1">
-          <h3 class="font-semibold text-lg">{{ callout.title }}</h3>
-          <p>{{ callout.excerpt }}</p>
-        </div>
-        <div class="flex-0 ml-4">
-          <img class="w-[150px]" :src="callout.image" />
-        </div>
-      </div>
-      <p class="mb-8">
-        <router-link :to="calloutLink">
-          <font-awesome-icon icon="external-link-alt" />
-          <span class="text-link ml-2">{{ baseUrl }}{{ calloutLink }}</span>
-        </router-link>
-      </p>
+      <CalloutSummary :callout="callout" class="mb-8" />
 
       <AppHeading>{{ t('calloutAdminOverview.dates.label') }}</AppHeading>
       <AppInfoList class="mb-8">
@@ -106,8 +92,7 @@ import {
 } from '../../../utils/dates/locale-date-formats';
 import { computed } from 'vue';
 import ActionButton from '../components/ActionButton.vue';
-
-const baseUrl = import.meta.env.VITE_APP_BASE_URL;
+import CalloutSummary from '../../../components/CalloutSummary.vue';
 
 const props = defineProps<{
   callout: GetMoreCalloutData;

@@ -1,5 +1,6 @@
 {
   "adminDashboard": {
+    "joinSlack": "Join the beabee community on Slack!",
     "latestCallout": {
       "title": "Latest callout"
     },
