@@ -77,7 +77,7 @@
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
 import { helpers, required } from '@vuelidate/validators';
-import { onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
 import { VisibilityStepProps } from '../create-callout.interface';
@@ -106,6 +106,7 @@ const validate = useVuelidate(
   dataProxy
 );
 
-watch(validate, () => emit('update:validated', !validate.value.$invalid));
-onMounted(() => validate.value.$touch());
+watch(validate, () => emit('update:validated', !validate.value.$invalid), {
+  immediate: true,
+});
 </script>

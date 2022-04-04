@@ -49,7 +49,7 @@
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
 import { helpers, requiredIf } from '@vuelidate/validators';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
@@ -80,6 +80,7 @@ const dataProxy = ref(props.data);
 
 const validation = useVuelidate(rules, dataProxy);
 
-watch(validation, () => emit('update:validated', !validation.value.$invalid));
-onMounted(() => validation.value.$touch());
+watch(validation, () => emit('update:validated', !validation.value.$invalid), {
+  immediate: true,
+});
 </script>
