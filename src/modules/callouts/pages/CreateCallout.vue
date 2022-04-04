@@ -17,7 +17,7 @@
       <div class="flex mt-5">
         <AppButton
           variant="linkOutlined"
-          :disabled="selectedStep === stepsInOrder[0]"
+          :disabled="selectedStepIndex === 0"
           @click="selectedStepIndex--"
           >{{ t('createCallout.actions.back') }}</AppButton
         >
@@ -61,8 +61,12 @@ import { Steps } from '../create-callout.interface';
 import PageTitle from '../../../components/PageTitle.vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
+import { parseISO } from 'date-fns';
+import { useRouter } from 'vue-router';
 
 const { t } = useI18n();
+
+const router = useRouter();
 
 const steps: Steps = reactive({
   content: {
@@ -158,22 +162,42 @@ const isAllValid = computed(() =>
   stepsInOrder.value.every((step) => step.validated)
 );
 
-const makeCalloutData = (creationData: Steps): CreateCalloutData => ({
-  // slug: creationData.find(e => e.name === "URL and sharing")?.data.slug,
-  slug: '',
-  title: '',
-  intro: '',
-  formSchema: { components: [] },
-  excerpt: '',
-  access: 'member',
-  allowUpdate: true,
-  allowMultiple: true,
-  image: 'string',
-  starts: new Date(),
-  expires: new Date(),
-});
+async function submitForm() {
+  const callout: CreateCalloutData = {
+    slug: steps.url.data.slug,
+    title: steps.titleAndImage.data.title,
+    excerpt: steps.titleAndImage.data.description,
+    image: steps.titleAndImage.data.coverImageURL,
+    intro: steps.content.data.introText,
+    formSchema: steps.content.data.formSchema,
+    starts: steps.dates.data.startNow
+      ? new Date()
+      : parseISO(steps.dates.data.startDate),
+    ...(steps.dates.data.hasEndDate && {
+      expires: parseISO(steps.dates.data.endDate),
+    }),
+    allowUpdate: steps.visibility.data.usersCanEditAnswers,
+    allowMultiple: false, // TODO: add multiple option
+    hidden: steps.visibility.data.showOnUserDashboards,
+    access:
+      steps.visibility.data.whoCanTakePart === 'members'
+        ? 'member'
+        : steps.visibility.data.allowAnonymousResponses
+        ? 'anonymous'
+        : 'guest',
+    ...(steps.endMessage.data.whenFinished === 'message'
+      ? {
+          thanksText: steps.endMessage.data.thankYouText,
+          thanksTitle: steps.endMessage.data.thankYouTitle,
+        }
+      : {
+          thanksText: '',
+          thanksTitle: '',
+          thanksRedirect: steps.endMessage.data.URLRedirect,
+        }),
+  };
 
-const submitForm = () => {
-  createCallout(makeCalloutData(steps));
-};
+  const newCallout = await createCallout(callout);
+  router.push('/admin/callouts/' + newCallout.slug);
+}
 </script>
