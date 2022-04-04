@@ -149,7 +149,7 @@ const steps: Steps = reactive({
 watch(
   () => steps.titleAndImage.data.title,
   (title) => {
-    steps.url.data.autoSlug = slugify(title);
+    steps.url.data.autoSlug = slugify(title, { lower: true });
   }
 );
 
@@ -176,7 +176,9 @@ const isAllValid = computed(() =>
 
 async function submitForm() {
   const callout: CreateCalloutData = {
-    slug: steps.url.data.slug,
+    slug: steps.url.data.useCustomSlug
+      ? steps.url.data.slug
+      : steps.url.data.autoSlug,
     title: steps.titleAndImage.data.title,
     excerpt: steps.titleAndImage.data.description,
     image: steps.titleAndImage.data.coverImageURL,
