@@ -32,12 +32,12 @@
           <AppItemStatus :status="value" />
         </template>
         <template #title="{ item, value }">
-          <a
-            :href="'/tools/polls/' + item.slug"
+          <router-link
+            :to="'/admin/callouts/edit/' + item.slug"
             class="text-base text-link font-bold"
           >
             {{ value }}
-          </a>
+          </router-link>
         </template>
         <template #hidden="{ value }">
           <font-awesome-icon

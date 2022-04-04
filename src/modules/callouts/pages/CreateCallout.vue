@@ -177,7 +177,7 @@ async function submitForm() {
       expires: parseISO(steps.dates.data.endDate),
     }),
     allowUpdate: steps.visibility.data.usersCanEditAnswers,
-    allowMultiple: false, // TODO: add multiple option
+    allowMultiple: false,
     hidden: steps.visibility.data.showOnUserDashboards,
     access:
       steps.visibility.data.whoCanTakePart === 'members'

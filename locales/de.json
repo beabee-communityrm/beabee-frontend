@@ -17,6 +17,48 @@
     },
     "youResponded": "Sie haben geantwortet ♥"
   },
+  "calloutAdmin": {
+    "overview": "",
+    "responses": ""
+  },
+  "calloutAdminOverview": {
+    "actions": {
+      "delete": "",
+      "edit": "",
+      "replicate": "",
+      "unpublish": "",
+      "view": ""
+    },
+    "dates": {
+      "ends": "",
+      "label": "",
+      "starts": ""
+    },
+    "settings": {
+      "answers": {
+        "editable": "",
+        "final": "",
+        "label": ""
+      },
+      "contactInfo": {
+        "label": "",
+        "optional": "",
+        "required": ""
+      },
+      "endsWith": {
+        "label": "",
+        "message": "",
+        "redirect": ""
+      },
+      "label": "",
+      "openTo": {
+        "everyone": "",
+        "label": "",
+        "membersOnly": ""
+      }
+    },
+    "summary": ""
+  },
   "callouts": {
     "archive": "Archiv",
     "data": {
