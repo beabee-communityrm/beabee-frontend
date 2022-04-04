@@ -72,7 +72,10 @@ const isAfterStartDate = helpers.withMessage(
 
 const rules = computed(() => ({
   startDate: { required: requiredIf(!dataProxy.value.startNow) },
-  endDate: { minValue: isAfterStartDate },
+  endDate: {
+    required: requiredIf(dataProxy.value.hasEndDate),
+    minValue: isAfterStartDate,
+  },
 }));
 
 const dataProxy = ref(props.data);

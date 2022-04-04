@@ -42,7 +42,6 @@ export interface DateAndDurationStepProps {
 }
 
 export interface Step<T> {
-  id: string;
   name: string;
   description: string;
   validated: boolean;
@@ -50,12 +49,12 @@ export interface Step<T> {
   data: T;
 }
 
-export type Steps = [
-  Step<ContentStepProps>,
-  Step<TitleAndImageStepProps>,
-  Step<VisibilityStepProps>,
-  Step<EndMessageStepProps>,
-  Step<UrlAndSharingStepProps>,
-  Step<MailchimpSyncStepProps>,
-  Step<DateAndDurationStepProps>
-];
+export interface Steps {
+  content: Step<ContentStepProps>;
+  titleAndImage: Step<TitleAndImageStepProps>;
+  visibility: Step<VisibilityStepProps>;
+  endMessage: Step<EndMessageStepProps>;
+  url: Step<UrlAndSharingStepProps>;
+  mailchimp: Step<MailchimpSyncStepProps>;
+  dates: Step<DateAndDurationStepProps>;
+}

@@ -4,7 +4,7 @@
   </div>
   <div class="flex gap-8">
     <div class="flex-0 basis-[240px]">
-      <Stepper :steps="steps" v-model:selectedStepIndex="selectedStepIndex" />
+      <Stepper v-model="selectedStepIndex" :steps="stepsInOrder" />
     </div>
     <div class="flex-1">
       <AppHeading class="mb-5">{{ selectedStep.name }}</AppHeading>
@@ -17,23 +17,27 @@
       <div class="flex mt-5">
         <AppButton
           variant="linkOutlined"
-          :disabled="selectedStep === steps[0]"
+          :disabled="selectedStep === stepsInOrder[0]"
           @click="selectedStepIndex--"
-          >Back</AppButton
+          >{{ t('createCallout.actions.back') }}</AppButton
         >
         <AppButton
+          v-show="!isLastStep"
           class="ml-2"
-          v-show="selectedStepIndex != steps.length - 1"
           :disabled="!selectedStep.validated"
           @click="selectedStepIndex++"
-          >Continue</AppButton
+          >{{ t('createCallout.actions.continue') }}</AppButton
         >
         <AppButton
+          v-show="isLastStep"
           class="ml-2"
-          v-show="selectedStepIndex === steps.length - 1"
-          :disabled="!selectedStep.validated"
+          :disabled="!isAllValid"
           @click="submitForm"
-          >Submit</AppButton
+          >{{
+            steps.dates.data.startNow
+              ? t('createCallout.actions.publish')
+              : t('createCallout.actions.schedule')
+          }}</AppButton
         >
       </div>
     </div>
@@ -60,25 +64,22 @@ import AppHeading from '../../../components/AppHeading.vue';
 
 const { t } = useI18n();
 
-const steps: Steps = reactive([
-  {
-    id: 'content',
+const steps: Steps = reactive({
+  content: {
     name: t('createCallout.steps.content.title'),
     description: t('createCallout.steps.content.description'),
     validated: false,
     component: markRaw(ContentStep),
     data: { introText: '', formSchema: { components: [] } },
   },
-  {
-    id: 'first',
+  titleAndImage: {
     name: t('createCallout.steps.titleAndImage.title'),
     description: t('createCallout.steps.titleAndImage.description'),
     validated: false,
     component: markRaw(TitleAndImage),
     data: { title: '', description: '', coverImageURL: '' },
   },
-  {
-    id: 'second',
+  visibility: {
     name: t('createCallout.steps.visibility.title'),
     description: t('createCallout.steps.visibility.description'),
     validated: false,
@@ -90,8 +91,7 @@ const steps: Steps = reactive([
       usersCanEditAnswers: false,
     },
   },
-  {
-    id: 'third',
+  endMessage: {
     name: 'End message',
     description: 'Set a final thank you message or page to redirect',
     validated: false,
@@ -103,8 +103,7 @@ const steps: Steps = reactive([
       URLRedirect: '',
     },
   },
-  {
-    id: 'Fourth',
+  url: {
     name: t('createCallout.steps.url.title'),
     description: t('createCallout.steps.url.description'),
     validated: false,
@@ -115,8 +114,7 @@ const steps: Steps = reactive([
       metaDescription: '',
     },
   },
-  {
-    id: 'Fifth',
+  mailchimp: {
     name: t('createCallout.steps.mailchimp.title'),
     description: t('createCallout.steps.mailchimp.description'),
     validated: false,
@@ -125,8 +123,7 @@ const steps: Steps = reactive([
       useMailchimpSync: false,
     },
   },
-  {
-    id: 'Sixth',
+  dates: {
     name: t('createCallout.steps.dates.title'),
     description: t('createCallout.steps.dates.description'),
     validated: false,
@@ -138,7 +135,28 @@ const steps: Steps = reactive([
       endDate: '',
     },
   },
+});
+
+const stepsInOrder = computed(() => [
+  steps.content,
+  steps.titleAndImage,
+  steps.visibility,
+  steps.endMessage,
+  steps.url,
+  steps.mailchimp,
+  steps.dates,
 ]);
+
+const selectedStepIndex = ref(0);
+const selectedStep = computed(
+  () => stepsInOrder.value[selectedStepIndex.value]
+);
+const isLastStep = computed(
+  () => selectedStepIndex.value === stepsInOrder.value.length - 1
+);
+const isAllValid = computed(() =>
+  stepsInOrder.value.every((step) => step.validated)
+);
 
 const makeCalloutData = (creationData: Steps): CreateCalloutData => ({
   // slug: creationData.find(e => e.name === "URL and sharing")?.data.slug,
@@ -155,8 +173,7 @@ const makeCalloutData = (creationData: Steps): CreateCalloutData => ({
   expires: new Date(),
 });
 
-const submitForm = () => createCallout(makeCalloutData(steps));
-
-const selectedStepIndex = ref(0);
-const selectedStep = computed(() => steps[selectedStepIndex.value]);
+const submitForm = () => {
+  createCallout(makeCalloutData(steps));
+};
 </script>

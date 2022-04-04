@@ -1,13 +1,17 @@
 <template>
-  <div v-for="(step, stepIndex) in steps" :key="step.id" class="flex flex-col">
+  <div
+    v-for="(step, stepIndex) in steps"
+    :key="stepIndex"
+    class="flex flex-col"
+  >
     <div
       :class="
-        stepIndex === selectedStepIndex
+        stepIndex === modelValue
           ? 'bg-primary-20'
           : 'bg-primary-5 hover:bg-primary-10 cursor-pointer'
       "
       class="p-4 mt-2 mb-2 rounded"
-      @click="emit('update:selectedStepIndex', stepIndex)"
+      @click="emit('update:modelValue', stepIndex)"
     >
       <h4 class="flex items-center font-semibold">
         <AppRoundBadge
@@ -24,7 +28,7 @@
 
 <script lang="ts" setup>
 import AppRoundBadge from '../../../components/AppRoundBadge.vue';
-import { Steps } from '../create-callout.interface';
-defineProps<{ steps: Steps; selectedStepIndex: number }>();
-const emit = defineEmits(['update:selectedStepIndex']);
+import { Step, Steps } from '../create-callout.interface';
+defineProps<{ steps: Step<unknown>[]; modelValue: number }>();
+const emit = defineEmits(['update:modelValue']);
 </script>
