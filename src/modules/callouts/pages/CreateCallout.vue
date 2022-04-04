@@ -104,7 +104,7 @@ const steps: Steps = reactive({
       whenFinished: 'message',
       thankYouTitle: '',
       thankYouText: '',
-      URLRedirect: '',
+      thankYouRedirect: '',
     },
   },
   url: {
@@ -203,7 +203,7 @@ async function submitForm() {
       : {
           thanksText: '',
           thanksTitle: '',
-          thanksRedirect: steps.endMessage.data.URLRedirect,
+          thanksRedirect: steps.endMessage.data.thankYouRedirect,
         }),
   };
 

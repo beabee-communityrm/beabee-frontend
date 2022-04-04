@@ -48,12 +48,12 @@
     <div class="grid grid-cols-2 gap-6 mt-5" v-show="!showThankYouSection">
       <div class="col-span-1">
         <AppInput
-          v-model="dataProxy.URLRedirect"
+          v-model="dataProxy.thankYouRedirect"
           :label="inputT('url.label')"
           :placeholder="inputT('url.placeholder')"
           required
-          :error-message="validation.URLRedirect.$errors[0]?.$message"
-          @blur="validation.URLRedirect.$touch"
+          :error-message="validation.thankYouRedirect.$errors[0]?.$message"
+          @blur="validation.thankYouRedirect.$touch"
         />
       </div>
       <div
@@ -90,7 +90,7 @@ const showThankYouSection = computed(
 const rules = computed(() => ({
   thankYouTitle: { required: requiredIf(showThankYouSection.value) },
   thankYouText: { required: requiredIf(showThankYouSection.value) },
-  URLRedirect: { required: requiredIf(!showThankYouSection.value), url },
+  thankYouRedirect: { required: requiredIf(!showThankYouSection.value), url },
 }));
 
 const validation = useVuelidate(rules, dataProxy);

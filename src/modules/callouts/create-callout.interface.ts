@@ -22,7 +22,7 @@ export interface EndMessageStepProps {
   whenFinished: 'message' | 'redirect';
   thankYouTitle: string;
   thankYouText: string;
-  URLRedirect: string;
+  thankYouRedirect: string;
 }
 export interface UrlAndSharingStepProps {
   autoSlug: string;
