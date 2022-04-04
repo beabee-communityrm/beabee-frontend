@@ -29,6 +29,7 @@
       "unpublish": "Unpublish",
       "view": "View"
     },
+    "created": "Well done! Your callout was successfully created.",
     "dates": {
       "ends": "Ends",
       "label": "Dates",
