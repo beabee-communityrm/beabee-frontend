@@ -5,7 +5,7 @@
       <AppSelect v-model="currentStatus" :items="statusItems" />
     </div>
     <div class="flex-0 ml-3">
-      <AppButton href="/tools/polls">{{
+      <AppButton to="/admin/callouts/new">{{
         t('calloutsAdmin.addCallout')
       }}</AppButton>
     </div>
