@@ -31,12 +31,12 @@ const tabs = computed(() =>
         {
           id: 'calloutAdminOverview',
           label: t('calloutAdmin.overview'),
-          to: `/admin/callouts/${callout.value.slug}`,
+          to: `/admin/callouts/edit/${callout.value.slug}`,
         },
         {
           id: 'calloutAdminResponses',
           label: t('calloutAdmin.responses'),
-          to: `/admin/callouts/${callout.value.slug}/responses`,
+          to: `/admin/callouts/edit/${callout.value.slug}/responses`,
         },
       ]
     : []

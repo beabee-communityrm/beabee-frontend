@@ -208,6 +208,9 @@ async function submitForm() {
   };
 
   const newCallout = await createCallout(callout);
-  router.push('/admin/callouts/' + newCallout.slug);
+  router.push({
+    path: '/admin/callouts/edit/' + newCallout.slug,
+    params: { created: null },
+  });
 }
 </script>
