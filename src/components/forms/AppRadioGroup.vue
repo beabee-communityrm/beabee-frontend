@@ -2,7 +2,7 @@
   <label
     v-for="[value, label] in options"
     :key="value.toString()"
-    class="block mb-1 font-semibold"
+    class="flex items-center mb-1"
   >
     <input
       v-model="selected"
@@ -10,6 +10,7 @@
       :name="name"
       :value="value"
       :checked="modelValue === value"
+      class="mr-1"
     />
     {{ label }}
   </label>
