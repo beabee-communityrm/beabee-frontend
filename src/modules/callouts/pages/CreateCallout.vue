@@ -190,7 +190,7 @@ async function submitForm() {
     }),
     allowUpdate: steps.visibility.data.usersCanEditAnswers,
     allowMultiple: false,
-    hidden: steps.visibility.data.showOnUserDashboards,
+    hidden: !steps.visibility.data.showOnUserDashboards,
     access:
       steps.visibility.data.whoCanTakePart === 'members'
         ? 'member'
