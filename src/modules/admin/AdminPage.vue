@@ -9,12 +9,12 @@
     <div class="flex-1 basis-5/12">
       <AppHeading>{{ t('adminDashboard.numbers.title') }}</AppHeading>
       <div class="flex gap-4 mt-4 mb-8">
-        <KeyStat :label="t('adminDashboard.numbers.revenue')" stat="€721" />
+        <KeyStat :label="t('adminDashboard.numbers.revenue')" stat="721€" />
         <KeyStat
           :label="t('adminDashboard.numbers.averageContribution')"
-          stat="€721"
+          stat="4.5€"
         />
-        <KeyStat :label="t('adminDashboard.numbers.newMembers')" stat="€721" />
+        <KeyStat :label="t('adminDashboard.numbers.newMembers')" stat="+4" />
       </div>
       <AppHeading>{{ t('adminDashboard.mostRecentMembers.title') }}</AppHeading>
       <div class="mt-1 mb-5">
