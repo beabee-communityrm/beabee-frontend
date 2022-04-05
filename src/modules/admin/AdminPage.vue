@@ -5,7 +5,7 @@
   <p class="mb-8">
     {{ t('adminDashboard.welcomeBack', { firstName: currentUser?.firstname }) }}
   </p>
-  <div class="flex gap-8">
+  <div class="flex flex-col lg:flex-row gap-8">
     <div class="flex-1 basis-5/12">
       <AppHeading>{{ t('adminDashboard.numbers.title') }}</AppHeading>
       <div class="flex gap-4 mt-4 mb-8">
