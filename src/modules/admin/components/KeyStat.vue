@@ -1,15 +1,15 @@
 <template>
   <div
     class="
-      flex flex-col flex-1
+      flex flex-col flex-1 flex-col-reverse
       justify-between
       text-body-80
       border-l border-primary-40
       pl-2
     "
   >
-    <p class="text-sm font-semibold mb-4">{{ label }}</p>
-    <p class="text-4xl font-bold">{{ stat }}</p>
+    <p class="text-sm font-semibold">{{ label }}</p>
+    <p class="text-4xl font-bold mb-4">{{ stat }}</p>
   </div>
 </template>
 <script lang="ts" setup>
