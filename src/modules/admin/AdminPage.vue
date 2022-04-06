@@ -8,13 +8,19 @@
   <div class="flex flex-col lg:flex-row gap-8">
     <div class="flex-1 basis-5/12">
       <AppHeading>{{ t('adminDashboard.numbers.title') }}</AppHeading>
-      <div class="flex gap-4 mt-4 mb-8">
-        <KeyStat :label="t('adminDashboard.numbers.revenue')" stat="721€" />
+      <div v-if="stats" class="flex gap-4 mt-4 mb-8">
+        <KeyStat
+          :label="t('adminDashboard.numbers.revenue')"
+          :stat="n(stats.totalRevenue, 'currency')"
+        />
         <KeyStat
           :label="t('adminDashboard.numbers.averageContribution')"
-          stat="4.5€"
+          :stat="n(stats.averageContribution, 'currency')"
         />
-        <KeyStat :label="t('adminDashboard.numbers.newMembers')" stat="+4" />
+        <KeyStat
+          :label="t('adminDashboard.numbers.newMembers')"
+          :stat="'+' + n(stats.newMembers)"
+        />
       </div>
       <AppHeading>{{ t('adminDashboard.mostRecentMembers.title') }}</AppHeading>
       <div class="mt-1 mb-5">
@@ -121,19 +127,28 @@ import { onBeforeMount, ref } from 'vue';
 import {
   GetBasicCalloutData,
   GetMemberData,
+  GetStatsData,
 } from '../../utils/api/api.interface';
 import { fetchMembers } from '../../utils/api/member';
 import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
 import Hint from './components/Hint.vue';
 import { fetchCallouts } from '../../utils/api/callout';
 import CalloutSummary from '../../components/CalloutSummary.vue';
+import { fetchStats } from '../../utils/api/stats';
+import { subDays } from 'date-fns';
 
-const { t } = useI18n();
+const { n, t } = useI18n();
 
+const stats = ref<GetStatsData>();
 const recentMembers = ref<GetMemberData[]>([]);
 const latestCallout = ref<GetBasicCalloutData>();
 
 onBeforeMount(async () => {
+  fetchStats({
+    from: subDays(new Date(), 30),
+    to: new Date(),
+  }).then((results) => (stats.value = results));
+
   fetchMembers({
     limit: 5,
     sort: 'joined',

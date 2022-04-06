@@ -9,7 +9,7 @@
     "
   >
     <p class="text-sm font-semibold">{{ label }}</p>
-    <p class="text-4xl font-bold mb-4">{{ stat }}</p>
+    <p class="text-3xl font-bold mb-3">{{ stat }}</p>
   </div>
 </template>
 <script lang="ts" setup>
