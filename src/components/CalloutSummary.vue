@@ -28,8 +28,13 @@
           <p class="text-body-40">
             <AppItemStatus status="open" /> - Ends in <b>5</b> days
           </p>
-          <font-awesome-icon :icon="['far', 'calendar']" class="mr-2" /><slot />
-          12 Apr - 22 May 2022
+          <font-awesome-icon :icon="['far', 'calendar']" class="mr-2" />
+          {{
+            callout.starts
+              ? formatLocale(callout.starts, 'PP') + ' - '
+              : t('common.until')
+          }}
+          {{ callout.expires && formatLocale(callout.expires, 'PP') }}
         </div>
         <AppButton class="ml-2">Edit</AppButton>
       </div>
@@ -37,16 +42,21 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
 import { GetBasicCalloutData } from '../utils/api/api.interface';
 import AppButton from './forms/AppButton.vue';
 import AppItemStatus from './AppItemStatus.vue';
+import { formatLocale } from '../utils/dates/locale-date-formats';
 
 const baseUrl = import.meta.env.VITE_APP_BASE_URL;
+const { t } = useI18n();
 
 const props = defineProps<{
   callout: GetBasicCalloutData;
 }>();
+
+console.log(props.callout);
 
 const calloutLink = computed(() => `/admin/callouts/${props.callout.slug}`);
 const calloutResponsesLink = computed(() => `${calloutLink.value}/responses`);
