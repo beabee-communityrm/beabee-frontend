@@ -66,8 +66,6 @@ const props = defineProps<{
   callout: GetBasicCalloutData;
 }>();
 
-console.log(props.callout);
-
 const calloutLink = computed(() => `/admin/callouts/${props.callout.slug}`);
 const calloutResponsesLink = computed(() => `${calloutLink.value}/responses`);
 </script>
