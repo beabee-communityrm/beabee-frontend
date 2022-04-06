@@ -2,6 +2,7 @@ import { Library, library } from '@fortawesome/fontawesome-svg-core';
 import {
   faAddressCard as farAddressCard,
   faBuilding as farBuilding,
+  faCalendar as farCalendar,
   faCalendarCheck as farCalendarCheck,
   faCreditCard as farCreditCard,
   faUser as farUser,
@@ -39,6 +40,7 @@ import {
 library.add(
   farBuilding,
   farUser,
+  farCalendar,
   farCalendarCheck,
   farAddressCard,
   farCreditCard,

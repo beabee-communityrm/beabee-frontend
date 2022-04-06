@@ -24,8 +24,11 @@
         </router-link>
       </div>
       <div class="flex flex-row flex-nowrap">
-        <div class="flex-col">
-          <p><b>OPEN</b> - ends in <b>5</b> days</p>
+        <div class="flex-col text-sm">
+          <p class="text-body-40">
+            <AppItemStatus status="open" /> - Ends in <b>5</b> days
+          </p>
+          <font-awesome-icon :icon="['far', 'calendar']" class="mr-2" /><slot />
           12 Apr - 22 May 2022
         </div>
         <AppButton class="ml-2">Edit</AppButton>
@@ -37,6 +40,7 @@
 import { computed } from 'vue';
 import { GetBasicCalloutData } from '../utils/api/api.interface';
 import AppButton from './forms/AppButton.vue';
+import AppItemStatus from './AppItemStatus.vue';
 
 const baseUrl = import.meta.env.VITE_APP_BASE_URL;
 
