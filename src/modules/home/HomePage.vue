@@ -37,9 +37,13 @@
       t('homePage.openCallouts')
     }}</AppHeading>
 
-    <div class="flex mb-4">
-      <!-- just show the first callout for now (design decision) -->
-      <CalloutCard :callout="callouts[0]" />
+    <div class="flex -mx-3 my-6 flex-wrap">
+      <CalloutCard
+        v-for="callout in callouts"
+        :key="callout.slug"
+        :callout="callout"
+        class="mb-5 mx-3"
+      />
     </div>
 
     <!--<AppButton to="/callouts" variant="primaryOutlined">{{
@@ -122,6 +126,8 @@ onBeforeMount(async () => {
   profileContent.value = await fetchProfileContent();
   callouts.value = (
     await fetchCallouts({
+      order: 'DESC',
+      sort: 'starts',
       rules: {
         condition: 'AND',
         rules: [
