@@ -13,14 +13,6 @@
         :section="section"
         :is-first="index === 0"
       />
-      <div class="mx-4">
-        <a href="/members">
-          <TheMenuListItem
-            :icon="['fa', 'cogs']"
-            :title="t('menu.legacyApp')"
-          />
-        </a>
-      </div>
     </div>
   </div>
   <div

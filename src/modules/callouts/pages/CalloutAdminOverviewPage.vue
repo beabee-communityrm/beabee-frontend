@@ -62,18 +62,18 @@
       </AppInfoList>
     </div>
     <div class="flex-0 flex flex-wrap lg:flex-col gap-2">
-      <ActionButton icon="eye" :to="calloutLink">{{
-        t('calloutAdminOverview.actions.view')
-      }}</ActionButton>
-      <ActionButton icon="pencil-alt">{{
-        t('calloutAdminOverview.actions.edit')
-      }}</ActionButton>
-      <ActionButton icon="clone">{{
-        t('calloutAdminOverview.actions.replicate')
-      }}</ActionButton>
-      <ActionButton icon="trash">{{
-        t('calloutAdminOverview.actions.delete')
-      }}</ActionButton>
+      <ActionButton icon="eye" :to="calloutLink">
+        {{ t('calloutAdminOverview.actions.view') }}
+      </ActionButton>
+      <ActionButton icon="pencil-alt" :href="'/tools/polls/' + callout.slug">
+        {{ t('calloutAdminOverview.actions.edit') }}
+      </ActionButton>
+      <ActionButton icon="clone" :href="'/tools/polls/' + callout.slug">
+        {{ t('calloutAdminOverview.actions.replicate') }}
+      </ActionButton>
+      <ActionButton icon="trash" :href="'/tools/polls/' + callout.slug">
+        {{ t('calloutAdminOverview.actions.delete') }}
+      </ActionButton>
     </div>
   </div>
 </template>

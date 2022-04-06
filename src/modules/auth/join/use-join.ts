@@ -55,13 +55,16 @@ const signUpData = reactive<SignupData>({
   },
 });
 
-const setJoinContent = (query: LocationQueryRaw) => {
+const setJoinContent = (query: LocationQueryRaw, hideContribution: boolean) => {
   fetchJoinContent()
     .then((data) => {
       joinContent.value = data;
       signUpData.amount = query.amount ? +query.amount : data.initialAmount;
       if (!data.showAbsorbFee) {
         signUpData.payFee = false;
+      }
+      if (hideContribution) {
+        signUpData.noContribution = true;
       }
     })
     .catch((err) => err);
@@ -81,7 +84,7 @@ const setupMemberData = reactive<SetupMemberData>({
   postCode: '',
 });
 
-const isContributionValid = ref(false);
+const isContributionValid = ref(true);
 
 const isJoinFormInvalid = computed(() => {
   return !isContributionValid.value || joinValidation.value.$invalid;
