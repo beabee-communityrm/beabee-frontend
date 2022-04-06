@@ -29,7 +29,7 @@
           :key="member.id"
           class="flex justify-between my-3 gap-4"
         >
-          <router-link :to="'/contacts/' + member.id" class="text-link">
+          <router-link :to="'/admin/contacts/' + member.id" class="text-link">
             {{
               `${member.firstname} ${member.lastname}`.trim() || member.email
             }}
