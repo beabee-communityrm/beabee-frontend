@@ -8,11 +8,13 @@
       "title": "Most recently joined members"
     },
     "numbers": {
-      "averageContribution": "Average monthly contribution",
+      "averageContribution": "Avg. monthly contribution",
       "newMembers": "New members",
       "revenue": "Revenue",
       "title": "Numbers for the last 30 days"
     },
+    "responsesSoFar": "responses so far",
+    "seeAllResponses": "See all responses",
     "supportInbox": "Need help? Our support inbox is always open:",
     "welcomeBack": "Welcome back {firstName}!"
   },
@@ -46,6 +48,7 @@
       "unpublish": "Unpublish",
       "view": "View"
     },
+    "created": "Well done! Your callout was successfully created.",
     "dates": {
       "ends": "Ends",
       "label": "Dates",
@@ -226,6 +229,170 @@
     "willExpire": "Your contribution will expire in {expires}.",
     "willRenew": "Your contribution will automatically renew on {renewalDate}.",
     "willRenewWithNewAmount": "Your contribution will automatically renew on {renewalDate} and will change to your chosen amount of {nextAmount}."
+  },
+  "createCallout": {
+    "actions": {
+      "back": "Back",
+      "continue": "Continue",
+      "publish": "Publish",
+      "schedule": "Schedule"
+    },
+    "steps": {
+      "content": {
+        "description": "Build your callout with questions and prompts",
+        "inputs": {
+          "intro": {
+            "help": "",
+            "label": "Introduction text",
+            "placeholder": ""
+          }
+        },
+        "title": "Callout content"
+      },
+      "dates": {
+        "description": "Schedule when your callout will go live and how long for",
+        "inputs": {
+          "expires": {
+            "label": "When should this callout end?",
+            "opts": {
+              "never": "Never, unless manually closed",
+              "schedule": "Schedule an end date"
+            }
+          },
+          "starts": {
+            "label": "When should this callout start?",
+            "opts": {
+              "now": "Now",
+              "schedule": "Schedule a start date"
+            }
+          }
+        },
+        "title": "Dates and duration"
+      },
+      "endMessage": {
+        "description": "Set a final thank you message or page to redirect to",
+        "inputs": {
+          "action": {
+            "label": "When the user finishes answering the callout",
+            "opts": {
+              "redirect": "Redirect them to another page",
+              "showMessage": "Show a thank you message"
+            }
+          },
+          "text": {
+            "help": "<p>Here you can thank them in more detail, let them know if and when they can expect updates or follow-ups.</p>\n",
+            "label": "Thank you text",
+            "placeholder": "Include more details about how valuable their input was..."
+          },
+          "title": {
+            "help": "<p>You readers will see the <strong>Thank you title</strong> when they finish answering the callout.</p>\n",
+            "label": "Thank you title",
+            "placeholder": "Thank you!"
+          },
+          "url": {
+            "help": "",
+            "label": "URL for redirect",
+            "placeholder": "https://example.com"
+          }
+        },
+        "title": "End message"
+      },
+      "mailchimp": {
+        "description": "Set up Mailchimp integration",
+        "title": "Mailchimp sync"
+      },
+      "titleAndImage": {
+        "description": "Set a title, description and image for the callout",
+        "inputs": {
+          "description": {
+            "help": "<p>The <strong>Short description</strong> expands on the title to explain what the callout is about. It is meant to quickly inform people what is inside in a few words.</p>\n",
+            "label": "Short description",
+            "placeholder": "Quickly explain why people should do this callout."
+          },
+          "image": {
+            "help": "<p>The <strong>Cover image</strong> will serve as an illustration for the callout on menus and forms.</p>\n",
+            "label": "Cover image",
+            "placeholder": "https://"
+          },
+          "title": {
+            "help": "<p>The <strong>Title</strong> will appear on all the mentions of this callout. It's worth spending a while coming up with the right name to get people interested.</p>\n",
+            "label": "Title",
+            "placeholder": "The name of your callout."
+          }
+        },
+        "title": "Title and image"
+      },
+      "url": {
+        "description": "Adjust how the URL will appear and how to access it",
+        "inputs": {
+          "description": {
+            "help": "<p>The <strong>Share description</strong> field sets the short description as it should appear on social media cards. This will not affect the original callout description.</p>\n",
+            "label": "Share description",
+            "placeholder": "Quickly explain why people should respond to this callout."
+          },
+          "overrideShare": {
+            "label": "Use callout title and description for sharing?",
+            "opts": {
+              "no": "No, set a custom title and description",
+              "yes": "Yes"
+            }
+          },
+          "slug": {
+            "help": "<p>The URL slug will be used to construct the web address for this callout.</p>\n",
+            "label": "URL slug",
+            "opts": {
+              "auto": "Auto-generate from callout title",
+              "manual": "Set custom URL"
+            }
+          },
+          "title": {
+            "help": "<p>The <strong>Share title</strong> field sets the title as it should appear on social media cards. This will not affect the original callout title.</p>\n",
+            "label": "Share title",
+            "placeholder": "The name of your callout"
+          }
+        },
+        "title": "URL and sharing"
+      },
+      "visibility": {
+        "description": "Choose who will see your callout",
+        "inputs": {
+          "anonymous": {
+            "help": "<p>If you allow <strong>anonymous responses</strong>, guests will be not asked for their contact information. This does not affect members.</p>\n",
+            "label": "Allow anonymous responses?",
+            "opts": {
+              "no": "No, require contact details",
+              "yes": "Yes, contact info is optional"
+            }
+          },
+          "editable": {
+            "help": "<p>If yes, the users will be able to <strong>update their answers</strong> until the callout reaches its end date.</p>\n",
+            "label": "Should people be able to change their answers before the callout ends?",
+            "opts": {
+              "no": "No, answers are final",
+              "yes": "Yes"
+            }
+          },
+          "visible": {
+            "help": "<p>You can make the callout <strong>not appear</strong> to users if you only want it to be answered by people who you share the link with.</p>\n",
+            "label": "Should it be visible in the users' dashboards?",
+            "opts": {
+              "no": "No, it can only be access through its link",
+              "yes": "Yes, show it to users"
+            }
+          },
+          "who": {
+            "help": "<p>Callouts can be presented to <strong>Everyone</strong> or restricted to <strong>Members only</strong> participation</p>\n",
+            "label": "Who can take part?",
+            "opts": {
+              "everyone": "Everyone",
+              "members": "Members only"
+            }
+          }
+        },
+        "title": "Visibility settings"
+      }
+    },
+    "title": "Create a callout"
   },
   "footer": {
     "contactUs": "Contact us at",

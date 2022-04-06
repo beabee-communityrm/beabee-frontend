@@ -1,4 +1,23 @@
 {
+  "adminDashboard": {
+    "joinSlack": "",
+    "latestCallout": {
+      "title": ""
+    },
+    "mostRecentMembers": {
+      "title": ""
+    },
+    "numbers": {
+      "averageContribution": "",
+      "newMembers": "",
+      "revenue": "",
+      "title": ""
+    },
+    "responsesSoFar": "",
+    "seeAllResponses": "",
+    "supportInbox": "",
+    "welcomeBack": ""
+  },
   "callout": {
     "contactDetails": "Kontaktdaten",
     "form": {
@@ -7,6 +26,9 @@
       "name": "Dein Name",
       "submittingResponseError": "Es gab ein Problem bei der Übermittlung deiner Antworten. Bitte versuche es erneut."
     },
+    "joinNow": "Mitglied werden",
+    "loginToYourAccount": "Einloggen",
+    "membersOnly": "An diesem Callout können nur zahlende Mitglieder teilnehmen. Um teilzunehmen",
     "status": {
       "endedOn": "am {date}",
       "endsIn": "Endet in {duration}",
@@ -26,6 +48,7 @@
       "unpublish": "",
       "view": ""
     },
+    "created": "",
     "dates": {
       "ends": "",
       "label": "",
@@ -68,10 +91,21 @@
     "showAnswered": "Beantwortet"
   },
   "calloutsAdmin": {
+    "addCallout": "Callout anlegen",
     "data": {
-      "status": "Status"
+      "expires": "Enddatum",
+      "responses": "Antworten",
+      "starts": "Startdatum",
+      "status": "Status",
+      "title": "Titel"
     },
-    "filter": {}
+    "filter": {
+      "all": "Alle Callouts",
+      "draft": "Entwürfe",
+      "ended": "Beendete Callouts",
+      "open": "Aktive Callouts",
+      "scheduled": "Geplante Callouts"
+    }
   },
   "common": {
     "annually": "Jährlich",
@@ -96,8 +130,8 @@
     "share": "Teilen",
     "status": {
       "draft": "Entwurf",
-      "ended": "Geschlossen",
-      "open": "Öffnen",
+      "ended": "Beendet",
+      "open": "Aktiv",
       "scheduled": "Geplant"
     },
     "thankYou": "Vielen Dank!",
@@ -196,6 +230,170 @@
     "willRenew": "Deine Mitgliedschaft verlängert sich am {renewalDate} automatisch.",
     "willRenewWithNewAmount": "Deine Mitgliedschaft verlängert sich am {renewalDate} automatisch. Dein Beitrag ist dann {nextAmount}."
   },
+  "createCallout": {
+    "actions": {
+      "back": "",
+      "continue": "",
+      "publish": "",
+      "schedule": ""
+    },
+    "steps": {
+      "content": {
+        "description": "Entwerfe deinen Callout mit Fragen und Aufforderungen",
+        "inputs": {
+          "intro": {
+            "help": "",
+            "label": "Einleitung",
+            "placeholder": ""
+          }
+        },
+        "title": "Callout-Inhalt"
+      },
+      "dates": {
+        "description": "Plane, wann dein Callout live gehen soll und wie lange er aktiv bleiben soll",
+        "inputs": {
+          "expires": {
+            "label": "Wann soll der Callout enden?",
+            "opts": {
+              "never": "Nie, er soll nur manuell beendet werden",
+              "schedule": "Plane ein Enddatum"
+            }
+          },
+          "starts": {
+            "label": "Ab wann soll der Callout aktiv sein?",
+            "opts": {
+              "now": "Sofort",
+              "schedule": "Plane eine Startdatum"
+            }
+          }
+        },
+        "title": "Startdatum und Dauer"
+      },
+      "endMessage": {
+        "description": "Danke Nutzern für die Teilnahme oder leite sie auf eine andere Seite weiter.",
+        "inputs": {
+          "action": {
+            "label": "Wenn die Teilnehmer ihre Antworten abgeschickt haben",
+            "opts": {
+              "redirect": "Leite sie auf eine andere Seite weiter",
+              "showMessage": "Zeige eine Dankesnachricht"
+            }
+          },
+          "text": {
+            "help": "<p>Hier kannst du den Teilnehmern ausführlicher Danke sagen oder erklären, wie es jetzt mit den Antworten weitergeht.</p>\n",
+            "label": "Text",
+            "placeholder": "Erkläre den Teilnehmern, warum ihre Antworten wertvoll sind."
+          },
+          "title": {
+            "help": "<p>Die Teilnehmer sehen den <strong>Titel</strong> wenn sie ihre Antworten abgeschickt haben.</p>\n",
+            "label": "Titel",
+            "placeholder": "Danke!"
+          },
+          "url": {
+            "help": "",
+            "label": "URL für die Weiterleitung",
+            "placeholder": "https://example.com"
+          }
+        },
+        "title": "Nachricht am Ende"
+      },
+      "mailchimp": {
+        "description": "",
+        "title": ""
+      },
+      "titleAndImage": {
+        "description": "Gib deinem Callout eine Titel, eine Beschreibung und ein Bild.",
+        "inputs": {
+          "description": {
+            "help": "<p>Die <strong>Kurzbeschreibung</strong> ergänzt den Titel und sollte in wenigen Worten erklären, worum es bei dem Callout geht.</p>\n",
+            "label": "Kurzbeschreibung",
+            "placeholder": "Erkläre kurz und knapp, warum Menschen an dem Callout teilnehmen sollten."
+          },
+          "image": {
+            "help": "<p>Das <strong>Titelbild</strong> dient zur Illustration des Callouts.</p>\n",
+            "label": "Titelbild",
+            "placeholder": "https://"
+          },
+          "title": {
+            "help": "<p>Der <strong>Titel</strong> taucht immer dort auf, wo dein Callout erwähnt wird. Überlege dir einen guten Namen, der Interesse weckt.</p>\n",
+            "label": "Titel",
+            "placeholder": "Der Name deines Callouts."
+          }
+        },
+        "title": "Titel und Bild"
+      },
+      "url": {
+        "description": "Passe die URL an und ",
+        "inputs": {
+          "description": {
+            "help": "<p>Die <strong>Social-Media-Beschreibung</strong> ist die Beschreibung, die beim Teilen auf Social Media unter dem Titel erscheint und hat keinen Einfluss auf die eigentliche Beschreibung des Callouts.</p>\n",
+            "label": "Social-Media-Beschreibung",
+            "placeholder": "Erkläre kurz und knapp, warum Menschen an dem Callout teilnehmen sollten."
+          },
+          "overrideShare": {
+            "label": "",
+            "opts": {
+              "no": "",
+              "yes": ""
+            }
+          },
+          "slug": {
+            "help": "<p>Die URL-Endung wird für die Webadresse des Callouts benötigt.</p>\n",
+            "label": "URL-Endung",
+            "opts": {
+              "auto": "",
+              "manual": ""
+            }
+          },
+          "title": {
+            "help": "<p>Der <strong>Social-Media-Titel</strong> ist der Titel, der beim Teilen des Callouts auf Social Media erscheint und hat keinen Einfluss auf den eigentlichen Titel des Callouts.</p>\n",
+            "label": "Social-Media-Titel",
+            "placeholder": "Der Name deines Callouts"
+          }
+        },
+        "title": "URL und Teilen"
+      },
+      "visibility": {
+        "description": "Entscheide, wer den Callout sehen kann.",
+        "inputs": {
+          "anonymous": {
+            "help": "<p>Wenn du <strong>anonyme Antworten</strong> erlaubst, werden Gastteilnehmer nicht nach ihren Kontakten gefragt. Auf Mitglieder hat das keinen Einfluss.</p>\n",
+            "label": "Möchtest du anonyme Antworten erlauben?",
+            "opts": {
+              "no": "Nein, Kontaktinformationen sind notwendig.",
+              "yes": "Ja, anonyme Antworten sind erlaubt."
+            }
+          },
+          "editable": {
+            "help": "<p>Wenn ja, können Teilnehmer vor dem Enddatum <strong>ihre abgeschickten Antworten bearbeiten</strong>.</p>\n",
+            "label": "Sollen Teilnehmer ihre Antworten bearbeiten können, solange der Callout aktiv ist?",
+            "opts": {
+              "no": "Nein, die Antworten können nicht bearbeitet werden",
+              "yes": "Ja"
+            }
+          },
+          "visible": {
+            "help": "<p>Du kannst den <strong>verstecken</strong>. Dann können Menschen mit dem richtigen Link den Callout beantworten.</p>\n",
+            "label": "Soll der Callout deinen Mitgliedern im Dashboard angezeigt werden?",
+            "opts": {
+              "no": "Nein, Callout nicht im Dashboard anzeigen.",
+              "yes": "Ja, Callout im Dashboard anzeigen."
+            }
+          },
+          "who": {
+            "help": "<p>Callouts können <strong>öffentlich</strong> oder nur für <strong>Mitglieder</strong> zugänglich sein.</p>\n",
+            "label": "Wer kann teilnehmen?",
+            "opts": {
+              "everyone": "Öffentlich",
+              "members": "Nur Mitglieder"
+            }
+          }
+        },
+        "title": "Sichtbarkeit"
+      }
+    },
+    "title": ""
+  },
   "footer": {
     "contactUs": "Kontaktiere uns unter",
     "contacts": "Kontakte",
@@ -268,7 +466,7 @@
     "quickActions": "Schnellaktionen",
     "title": "Home",
     "viewAllCallouts": "Alle Callouts anzeigen",
-    "viewOpenCallouts": "Offene Callouts anzeigen",
+    "viewOpenCallouts": "Aktive Callouts anzeigen",
     "welcome": "Herzlich willkommen {firstName}!",
     "yourProfile": "Dein Profil"
   },
@@ -329,11 +527,12 @@
   },
   "menu": {
     "admin": "Administration",
-    "adminDashboard": "Dashboard",
     "callouts": "Callouts",
     "community": "Community",
     "contribution": "Beitrag",
+    "dashboard": "Dashboard",
     "home": "Home",
+    "legacyApp": "",
     "logout": "Log out",
     "notices": "Hinweise",
     "settings": "Einstellungen",
