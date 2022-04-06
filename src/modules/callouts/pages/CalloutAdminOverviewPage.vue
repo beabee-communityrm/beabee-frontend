@@ -12,7 +12,7 @@
       <AppHeading>{{ t('calloutAdminOverview.summary') }}</AppHeading>
       <div class="flex mb-4">
         <div class="flex-1">
-          <h3 class="font-semibold text-lg">{{ callout.title }}</h3>
+          <h3 class="font-title font-semibold text-lg">{{ callout.title }}</h3>
           <p>{{ callout.excerpt }}</p>
         </div>
         <div class="flex-0 ml-4">

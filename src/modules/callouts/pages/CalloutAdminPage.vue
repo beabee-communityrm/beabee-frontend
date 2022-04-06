@@ -1,7 +1,7 @@
 <template>
   <template v-if="callout">
     <div class="mb-2">
-      <h1 class="text-2xl">{{ callout.title }}</h1>
+      <h1 class="font-title text-2xl">{{ callout.title }}</h1>
     </div>
 
     <AppTabs

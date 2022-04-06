@@ -5,6 +5,7 @@
     "link": "purple"
   },
   "fonts": {
-    "body": "ubuntu"
+    "body": "open sans",
+    "title": "roboto"
   }
 }

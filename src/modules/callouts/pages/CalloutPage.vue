@@ -1,6 +1,6 @@
 <template>
   <div v-if="callout" class="md:max-w-2xl">
-    <h1 class="text-4xl font-bold mb-8">{{ callout.title }}</h1>
+    <h1 class="font-title text-4xl font-bold mb-8">{{ callout.title }}</h1>
     <div class="flex justify-between items-center mb-8">
       <div class="flex items-center text-sm text-body-40 font-semibold">
         <div>
