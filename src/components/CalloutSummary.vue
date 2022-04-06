@@ -26,7 +26,14 @@
       <div class="flex flex-row flex-nowrap">
         <div class="flex-col text-sm">
           <p class="text-body-40">
-            <AppItemStatus status="open" /> - Ends in <b>5</b> days
+            <AppItemStatus :status="callout.status" /> -
+            <span v-if="callout.expires">
+              {{
+                t('callout.status.endsIn', {
+                  duration: formatDistanceLocale(new Date(), callout.expires),
+                })
+              }}
+            </span>
           </p>
           <font-awesome-icon :icon="['far', 'calendar']" class="mr-2" />
           {{
@@ -47,7 +54,10 @@ import { computed } from 'vue';
 import { GetBasicCalloutData } from '../utils/api/api.interface';
 import AppButton from './forms/AppButton.vue';
 import AppItemStatus from './AppItemStatus.vue';
-import { formatLocale } from '../utils/dates/locale-date-formats';
+import {
+  formatLocale,
+  formatDistanceLocale,
+} from '../utils/dates/locale-date-formats';
 
 const baseUrl = import.meta.env.VITE_APP_BASE_URL;
 const { t } = useI18n();
