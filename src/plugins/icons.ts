@@ -34,6 +34,7 @@ import {
   faNewspaper,
   faClone,
   faTrash,
+  faLink,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -68,7 +69,8 @@ library.add(
   faPencilAlt,
   faNewspaper,
   faClone,
-  faTrash
+  faTrash,
+  faLink
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
