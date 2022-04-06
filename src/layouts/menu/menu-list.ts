@@ -15,13 +15,13 @@ export const menu: MenuSection[] = [
         title: t('menu.yourProfile'),
         href: '/profile/edit',
         icon: ['far', 'user'],
-      },
+      },*/
       {
         title: t('menu.callouts'),
         href: '/callouts',
         icon: ['far', 'calendar-check'],
         isActive: /^\/callouts/,
-      },*/
+      },
     ],
   },
   {
