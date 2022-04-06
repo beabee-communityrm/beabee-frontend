@@ -45,8 +45,20 @@
           <CalloutSummary :callout="latestCallout" />
         </a>
       </template>
-      <div class="p-4 bg-white text-link font-bold text-xl text-center rounded">
-        {{ t('adminDashboard.joinSlack') }}
+      <div
+        class="
+          p-10
+          bg-white
+          text-link
+          font-bold
+          text-xl text-center
+          rounded
+          bg-[url('/src/modules/admin/assets/slack-bg.png')] bg-cover
+        "
+      >
+        <p class="textshadow">
+          {{ t('adminDashboard.joinSlack') }}
+        </p>
       </div>
     </div>
   </div>
@@ -115,3 +127,9 @@ onBeforeMount(async () => {
   });
 });
 </script>
+
+<style scoped>
+p.textshadow {
+  text-shadow: 0px 1px 3px rgb(255, 255, 255), 0px 1px 5px rgb(255, 255, 255);
+}
+</style>
