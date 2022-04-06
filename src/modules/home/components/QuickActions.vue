@@ -8,12 +8,12 @@
       <router-link to="/profile/edit">
         {{ t('homePage.editProfile') }}
       </router-link>
-    </li>
+    </li>-->
     <li>
       <router-link to="/callouts">
         {{ t('homePage.viewOpenCallouts') }}
       </router-link>
-    </li>-->
+    </li>
     <li>
       <router-link to="/profile/contribution">
         {{ t('homePage.manageYourContribution') }}

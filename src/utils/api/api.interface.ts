@@ -164,6 +164,7 @@ export interface GeneralContent {
   termsLink?: string;
   impressumLink?: string;
   currencyCode: string;
+  hideContribution?: boolean;
   footerLinks: { text: string; url: string }[];
 }
 

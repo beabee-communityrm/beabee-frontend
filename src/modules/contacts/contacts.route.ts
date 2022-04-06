@@ -5,7 +5,7 @@ const { t } = i18n.global;
 
 export const contactsRoute: Array<RouteRecordRaw> = [
   {
-    path: '/contacts',
+    path: '/admin/contacts',
     name: 'contacts',
     component: () => import('./ContactsPage.vue'),
     meta: {
@@ -14,7 +14,7 @@ export const contactsRoute: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/contacts/add',
+    path: '/admin/contacts/add',
     name: 'addContact',
     component: () => import('./pages/AddContactPage.vue'),
     meta: {
@@ -23,7 +23,7 @@ export const contactsRoute: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/contacts/:id',
+    path: '/admin/contacts/:id',
     name: 'contact',
     component: () => import('./pages/ContactPage.vue'),
     meta: {

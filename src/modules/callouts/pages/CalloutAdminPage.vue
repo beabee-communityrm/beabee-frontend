@@ -19,11 +19,14 @@ import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import AppTabs from '../../../components/tabs/AppTabs.vue';
 import { GetMoreCalloutData } from '../../../utils/api/api.interface';
-import { fetchCallout } from '../../../utils/api/callout';
+import { fetchCallout, fetchResponses } from '../../../utils/api/callout';
 
 const route = useRoute();
 
 const { t } = useI18n();
+
+const callout = ref<GetMoreCalloutData>();
+const responseCount = ref(-1);
 
 const tabs = computed(() =>
   callout.value
@@ -36,15 +39,18 @@ const tabs = computed(() =>
         {
           id: 'calloutAdminResponses',
           label: t('calloutAdmin.responses'),
-          to: `/admin/callouts/edit/${callout.value.slug}/responses`,
+          to: `/admin/callouts/${callout.value.slug}/responses`,
+          ...(responseCount.value > -1 && {
+            count: responseCount.value.toLocaleString(),
+          }),
         },
       ]
     : []
 );
 
-const callout = ref<GetMoreCalloutData>();
-
 onBeforeMount(async () => {
-  callout.value = await fetchCallout(route.params.id as string);
+  const calloutId = route.params.id.toString();
+  callout.value = await fetchCallout(calloutId);
+  responseCount.value = (await fetchResponses(calloutId, { limit: 1 })).total;
 });
 </script>

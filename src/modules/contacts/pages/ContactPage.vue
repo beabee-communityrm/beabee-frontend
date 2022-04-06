@@ -36,21 +36,21 @@ const tabs = computed(() =>
         {
           id: 'contactOverview',
           label: t('contactOverview.overview'),
-          to: `/contacts/${contact.value.id}`,
+          to: `/admin/contacts/${contact.value.id}`,
         },
         {
           id: 'contactInformation',
           label: t('contactOverview.information'),
-          to: `/contacts/${contact.value.id}/information`,
+          to: `/admin/contacts/${contact.value.id}/information`,
         },
         /*{
           id: 'contactContribution',
           label: t('contactOverview.roles'),
-          to: `/contacts/${contact.value.id}/contribution`,
+          to: `/admin/contacts/${contact.value.id}/contribution`,
         }{
           id: 'contactRoles',
           label: t('contactOverview.roles'),
-          to: `/contacts/${contact.value.id}/roles`,
+          to: `/admin/contacts/${contact.value.id}/roles`,
         },*/
       ]
     : []
