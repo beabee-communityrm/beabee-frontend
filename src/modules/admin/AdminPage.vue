@@ -53,8 +53,10 @@
           font-light
           text-2xl text-center
           rounded
-          bg-[url('/src/modules/admin/assets/slack-bg.png')] bg-right-top
-          bg-auto md:bg-cover
+          bg-[url('/src/modules/admin/assets/slack-bg.png')]
+          bg-right-top
+          bg-auto
+          md:bg-cover
         "
       >
         <p class="w-72 max-w-72 m-auto">
@@ -66,20 +68,41 @@
   <div class="lg:flex gap-12 mt-8">
     <Hint>
       <p>
-        Did you know callouts can be created without and end date, and just kept
-        running?
+        Did you know callouts can be created without an end date, and just keep
+        running? See our
+        <a
+          class="text-link"
+          href="https://beabee.io/en/beabee-full-feature-list/"
+          target="_blank"
+          >feature showcase</a
+        >
+        for more
       </p>
     </Hint>
     <Hint>
       <p>
-        Did you know callouts can be created without and end date, and just kept
-        running?
+        Find out more about
+        <a
+          class="text-link"
+          href="https://beabee.io/en/beabee-model/"
+          target="_blank"
+          >the beabee vision</a
+        >
+        around community engagement and meaningful relationships with your
+        audience.
       </p>
     </Hint>
     <Hint>
       <p>
-        Did you know callouts can be created without and end date, and just kept
-        running?
+        Our
+        <a
+          class="text-link"
+          href="https://beabee.io/en/beabee-faq/"
+          target="_blank"
+          >FAQ</a
+        >
+        addresses common questions about getting started and use cases. If the
+        answer you're looking for isn't there, get in touch.
       </p>
     </Hint>
   </div>
