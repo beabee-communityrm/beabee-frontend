@@ -128,6 +128,7 @@ onBeforeMount(async () => {
     await fetchCallouts({
       order: 'DESC',
       sort: 'starts',
+      limit: 3,
       rules: {
         condition: 'AND',
         rules: [
