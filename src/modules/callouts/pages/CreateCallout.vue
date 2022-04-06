@@ -3,7 +3,7 @@
     <PageTitle :title="t('createCallout.title')" />
   </div>
   <div class="flex gap-8">
-    <div class="flex-0 basis-[240px]">
+    <div class="flex-0 basis-menu">
       <Stepper v-model="selectedStepIndex" :steps="stepsInOrder" />
     </div>
     <div class="flex-1">
