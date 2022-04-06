@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col-reverse lg:flex-row lg:justify-between gap-8">
     <div class="flex-initial basis-1/2">
-      <AppAlert v-if="hasCreated" class="mb-8">
+      <AppAlert v-if="wasJustCreated" class="mb-8">
         <template #icon>
           <font-awesome-icon :icon="['fa', 'magic']" />
         </template>
@@ -125,7 +125,7 @@ const props = defineProps<{
 const { t } = useI18n();
 
 const route = useRoute();
-const hasCreated = route.query.created !== undefined;
+const wasJustCreated = route.query.created !== undefined;
 
 const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
 </script>
