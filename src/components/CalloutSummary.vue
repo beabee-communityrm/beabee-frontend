@@ -18,9 +18,9 @@
 
     <div class="flex flex-row flex-1 justify-between mt-3">
       <div class="flex-col">
-        <p><b>36</b> responses so far</p>
+        <p><b>36</b> {{ t('adminDashboard.responsesSoFar') }}</p>
         <router-link :to="calloutResponsesLink">
-          <p class="text-link text-sm">See all responses</p>
+          <p class="text-link text-sm">{{ t('See all responses') }}</p>
         </router-link>
       </div>
       <div class="flex flex-row flex-nowrap">
