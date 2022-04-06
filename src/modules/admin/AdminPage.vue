@@ -50,13 +50,13 @@
           p-10
           bg-white
           text-link
-          font-bold
-          text-xl text-center
+          font-light
+          text-2.5xl text-center
           rounded
-          bg-[url('/src/modules/admin/assets/slack-bg.png')] bg-cover
+          bg-[url('/src/modules/admin/assets/slack-bg.png')] bg-cover bg-right-top
         "
       >
-        <p class="textshadow">
+        <p class="w-72 max-w-72 m-auto">
           {{ t('adminDashboard.joinSlack') }}
         </p>
       </div>
@@ -127,9 +127,3 @@ onBeforeMount(async () => {
   });
 });
 </script>
-
-<style scoped>
-p.textshadow {
-  text-shadow: 0px 1px 3px rgb(255, 255, 255), 0px 1px 5px rgb(255, 255, 255);
-}
-</style>
