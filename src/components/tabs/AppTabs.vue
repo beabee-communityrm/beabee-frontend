@@ -9,7 +9,12 @@
           selected === item.id && 'text-link font-bold border-b-2 border-link'
         "
       >
-        <span class="font-bold opacity-0">{{ item.label }}</span>
+        <span class="font-bold opacity-0">
+          {{ item.label }}
+          <span v-if="item.count !== undefined" class="ml-1">
+            ({{ item.count }})
+          </span>
+        </span>
         <span
           class="
             absolute
@@ -19,8 +24,12 @@
             justify-center
             hover:font-bold
           "
-          >{{ item.label }}</span
         >
+          {{ item.label }}
+          <span v-if="item.count !== undefined" class="ml-1">
+            ({{ item.count }})
+          </span>
+        </span>
       </router-link>
     </li>
   </ul>
