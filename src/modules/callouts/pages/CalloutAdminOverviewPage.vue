@@ -1,6 +1,14 @@
 <template>
   <div class="flex flex-col-reverse lg:flex-row lg:justify-between gap-8">
     <div class="flex-initial basis-1/2">
+      <AppAlert v-if="wasJustCreated" class="mb-8">
+        <template #icon>
+          <font-awesome-icon :icon="['fa', 'magic']" />
+        </template>
+
+        {{ t('calloutAdminOverview.created') }}
+      </AppAlert>
+
       <AppHeading>{{ t('calloutAdminOverview.summary') }}</AppHeading>
       <CalloutSummary :callout="callout" class="mb-8" />
 
@@ -78,7 +86,9 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 import {
   GetMoreCalloutData,
   ItemStatus,
@@ -90,14 +100,17 @@ import {
   formatLocale,
   formatDistanceLocale,
 } from '../../../utils/dates/locale-date-formats';
-import { computed } from 'vue';
 import ActionButton from '../components/ActionButton.vue';
 import CalloutSummary from '../../../components/CalloutSummary.vue';
+import AppAlert from '../../../components/AppAlert.vue';
 
 const props = defineProps<{
   callout: GetMoreCalloutData;
 }>();
 const { t } = useI18n();
+
+const route = useRoute();
+const wasJustCreated = route.query.created !== undefined;
 
 const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
 </script>

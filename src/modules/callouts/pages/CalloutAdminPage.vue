@@ -34,7 +34,7 @@ const tabs = computed(() =>
         {
           id: 'calloutAdminOverview',
           label: t('calloutAdmin.overview'),
-          to: `/admin/callouts/${callout.value.slug}`,
+          to: `/admin/callouts/edit/${callout.value.slug}`,
         },
         {
           id: 'calloutAdminResponses',

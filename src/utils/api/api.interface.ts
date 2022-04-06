@@ -200,18 +200,36 @@ export interface ProfileContent {
   introMessage: string;
 }
 
-export interface GetBasicCalloutData {
+interface BasicCalloutData {
   slug: string;
   title: string;
   excerpt: string;
-  status: ItemStatus;
-  access: 'member' | 'guest' | 'anonymous' | 'only-anonymous';
-  allowUpdate: boolean;
-  allowMultiple: boolean;
-  image?: string;
+  image: string;
   starts?: Date;
   expires?: Date;
+  allowUpdate: boolean;
+  allowMultiple: boolean;
+  access: 'member' | 'guest' | 'anonymous' | 'only-anonymous';
+  hidden: boolean;
+}
+
+export interface CalloutFormSchema {
+  components: unknown[];
+}
+
+export interface GetBasicCalloutData extends BasicCalloutData {
+  status: ItemStatus;
   hasAnswered?: boolean;
+}
+
+export interface CreateCalloutData extends BasicCalloutData {
+  image: string;
+  starts: Date;
+  intro: string;
+  thanksText: string;
+  thanksTitle: string;
+  thanksRedirect?: string;
+  formSchema: CalloutFormSchema;
 }
 
 export interface GetCalloutsQuery
