@@ -7,6 +7,9 @@
       "name": "Ihr Name",
       "submittingResponseError": "Es gab ein Problem bei der Übermittlung ihrer Antworten. Bitte versuchen Sie es erneut."
     },
+    "joinNow": "",
+    "loginToYourAccount": "",
+    "membersOnly": "",
     "status": {
       "endedOn": "am {date}",
       "endsIn": "Endet in {duration}",
@@ -195,6 +198,149 @@
     "willExpire": "Ihre Mitgliedschaft läuft in {expires} ab.",
     "willRenew": "Ihre Mitgliedschaft verlängert sich am {renewalDate} automatisch.",
     "willRenewWithNewAmount": "Ihre Mitgliedschaft verlängert sich am {renewalDate} automatisch. Ihr Beitrag ist dann {nextAmount}."
+  },
+  "createCallout": {
+    "steps": {
+      "content": {
+        "description": "",
+        "inputs": {
+          "intro": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          }
+        },
+        "title": ""
+      },
+      "dates": {
+        "description": "",
+        "inputs": {
+          "expires": {
+            "label": "",
+            "opts": {
+              "never": "",
+              "schedule": ""
+            }
+          },
+          "starts": {
+            "label": "",
+            "opts": {
+              "now": "",
+              "schedule": ""
+            }
+          }
+        },
+        "title": ""
+      },
+      "endMessage": {
+        "description": "",
+        "inputs": {
+          "action": {
+            "label": "",
+            "opts": {
+              "redirect": "",
+              "showMessage": ""
+            }
+          },
+          "text": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          },
+          "title": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          },
+          "url": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          }
+        },
+        "title": ""
+      },
+      "titleAndImage": {
+        "description": "",
+        "inputs": {
+          "description": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          },
+          "image": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          },
+          "title": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          }
+        },
+        "title": ""
+      },
+      "url": {
+        "description": "",
+        "inputs": {
+          "description": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          },
+          "slug": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          },
+          "title": {
+            "help": "",
+            "label": "",
+            "placeholder": ""
+          }
+        },
+        "title": ""
+      },
+      "visibility": {
+        "description": "",
+        "inputs": {
+          "anonymous": {
+            "help": "",
+            "label": "",
+            "opts": {
+              "no": "",
+              "yes": ""
+            }
+          },
+          "editable": {
+            "help": "",
+            "label": "",
+            "opts": {
+              "no": "",
+              "yes": ""
+            }
+          },
+          "visible": {
+            "help": "",
+            "label": "",
+            "opts": {
+              "no": "",
+              "yes": ""
+            }
+          },
+          "who": {
+            "help": "",
+            "label": "",
+            "opts": {
+              "everyone": "",
+              "members": ""
+            }
+          }
+        },
+        "title": ""
+      }
+    }
   },
   "footer": {
     "contactUs": "Kontaktieren Sie uns unter",

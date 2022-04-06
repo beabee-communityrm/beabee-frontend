@@ -12,6 +12,7 @@
       focus:outline-none focus:shadow-input
     "
     :type="inputType"
+    :placeholder="placeholder"
     :class="dangerClasses"
     :value="modelValue"
     v-bind="$attrs"
@@ -40,11 +41,12 @@ import InfoMessage from '../InfoMessage.vue';
 const props = withDefaults(
   defineProps<{
     modelValue?: string;
-    inputType?: 'password' | 'email' | 'text';
+    inputType?: 'password' | 'email' | 'text' | 'date';
     label?: string;
     errorMessage?: string | Ref<string>;
     infoMessage?: string;
     required?: boolean;
+    placeholder?: string;
   }>(),
   {
     modelValue: '',

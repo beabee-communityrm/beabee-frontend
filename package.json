@@ -20,6 +20,7 @@
     "date-fns": "^2.26.0",
     "lodash.orderby": "^4.6.0",
     "mitt": "^3.0.0",
+    "slugify": "^1.6.5",
     "vue": "^3.2.6",
     "vue-formio": "github:beabee-communityrm/vue-formio#feature/vue-3-upgrade",
     "vue-i18n": "^9.1.7",

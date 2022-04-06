@@ -5,7 +5,7 @@
       <AppSelect v-model="currentStatus" :items="statusItems" />
     </div>
     <div class="flex-0 ml-3">
-      <AppButton href="/tools/polls">{{
+      <AppButton to="/admin/callouts/new">{{
         t('calloutsAdmin.addCallout')
       }}</AppButton>
     </div>
@@ -33,7 +33,7 @@
         </template>
         <template #title="{ item, value }">
           <router-link
-            :to="'/admin/callouts/' + item.slug"
+            :to="'/admin/callouts/edit/' + item.slug"
             class="text-base text-link font-bold"
           >
             {{ value }}

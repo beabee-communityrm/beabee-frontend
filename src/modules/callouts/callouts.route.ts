@@ -31,7 +31,16 @@ export const calloutsRoute: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/admin/callouts/:id',
+    path: '/admin/callouts/new',
+    name: 'new-callout',
+    component: () => import('./pages/CreateCallout.vue'),
+    meta: {
+      pageTitle: t('menu.callouts'),
+      role: 'admin',
+    },
+  },
+  {
+    path: '/admin/callouts/edit/:id',
     name: 'calloutAdmin',
     component: () => import('./pages/CalloutAdminPage.vue'),
     meta: {
