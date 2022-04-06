@@ -99,6 +99,6 @@ const buttonText = computed(() =>
 );
 
 onBeforeMount(() => {
-  setJoinContent(route.query, generalContent.value.hideContribution);
+  setJoinContent(route.query, !!generalContent.value.hideContribution);
 });
 </script>
