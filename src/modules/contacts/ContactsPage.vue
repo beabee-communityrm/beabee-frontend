@@ -22,7 +22,7 @@
       >
         <template #firstname="{ item }">
           <router-link
-            :to="'/contacts/' + item.id"
+            :to="'/admin/contacts/' + item.id"
             class="text-base text-link font-bold"
           >
             {{ `${item.firstname} ${item.lastname}`.trim() || item.email }}
@@ -194,13 +194,13 @@ const segmentItems = computed(() => [
     id: '',
     label: t('contacts.allContacts'),
     count: contactsTotal.value === null ? '???' : n(contactsTotal.value),
-    to: '/contacts',
+    to: '/admin/contacts',
   },
   ...segments.value.map((segment) => ({
     id: segment.id,
     label: segment.name,
     count: n(segment.memberCount),
-    to: '/contacts?segment=' + segment.id,
+    to: '/admin/contacts?segment=' + segment.id,
   })),
 ]);
 

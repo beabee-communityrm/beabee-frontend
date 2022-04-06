@@ -49,9 +49,9 @@ export const adminMenu: MenuSection[] = [
     items: [
       {
         title: t('menu.community'),
-        href: '/contacts',
+        href: '/admin/contacts',
         icon: ['fa', 'users'],
-        isActive: /^\/contacts.*/,
+        isActive: /^\/admin\/contacts.*/,
       },
       {
         title: t('menu.callouts'),
