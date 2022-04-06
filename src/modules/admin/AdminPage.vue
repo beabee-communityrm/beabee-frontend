@@ -48,7 +48,7 @@
       <template v-if="latestCallout">
         <AppHeading>{{ t('adminDashboard.latestCallout.title') }}</AppHeading>
         <a class="block bg-white p-4 mt-4 mb-8 rounded">
-          <CalloutSummary :callout="latestCallout" />
+          <CalloutSummary :callout="latestCallout" footer />
         </a>
       </template>
       <div

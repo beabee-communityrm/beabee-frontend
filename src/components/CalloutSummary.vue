@@ -16,10 +16,13 @@
       </router-link>
     </p>
 
-    <div class="flex flex-col md:flex-row flex-1 justify-between mt-3">
+    <div
+      v-if="footer"
+      class="flex flex-col md:flex-row flex-1 justify-between items-end mt-3"
+    >
       <div class="flex-col">
-        <p><b>36</b> {{ t('adminDashboard.responsesSoFar') }}</p>
-        <router-link :to="calloutResponsesLink">
+        <!--<p><b>36</b> {{ t('adminDashboard.responsesSoFar') }}</p>-->
+        <router-link :to="`/admin/callouts/edit/${callout.slug}/responses`">
           <p class="text-link text-sm">{{ t('See all responses') }}</p>
         </router-link>
       </div>
@@ -43,7 +46,9 @@
           }}
           {{ callout.expires && formatLocale(callout.expires, 'PP') }}
         </div>
-        <AppButton class="ml-2">Edit</AppButton>
+        <AppButton class="ml-2" :to="`/admin/callouts/edit/${callout.slug}`">{{
+          t('calloutAdminOverview.actions.edit')
+        }}</AppButton>
       </div>
     </div>
   </div>
@@ -64,8 +69,8 @@ const { t } = useI18n();
 
 const props = defineProps<{
   callout: GetBasicCalloutData;
+  footer?: boolean;
 }>();
 
-const calloutLink = computed(() => `/admin/callouts/${props.callout.slug}`);
-const calloutResponsesLink = computed(() => `${calloutLink.value}/responses`);
+const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
 </script>
