@@ -16,14 +16,14 @@
       </router-link>
     </p>
 
-    <div class="flex flex-row flex-1 justify-between mt-3">
+    <div class="flex flex-col md:flex-row flex-1 justify-between mt-3">
       <div class="flex-col">
         <p><b>36</b> {{ t('adminDashboard.responsesSoFar') }}</p>
         <router-link :to="calloutResponsesLink">
           <p class="text-link text-sm">{{ t('See all responses') }}</p>
         </router-link>
       </div>
-      <div class="flex flex-row flex-nowrap">
+      <div class="flex flex-row flex-nowrap mt-3 md:mt-0">
         <div class="flex-col text-sm">
           <p class="text-body-40">
             <AppItemStatus :status="callout.status" /> -
