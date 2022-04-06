@@ -54,11 +54,11 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppInput from '../../../components/forms/AppInput.vue';
-import AppTextArea from '../../../components/forms/AppTextArea.vue';
+import AppInput from '../../../../components/forms/AppInput.vue';
+import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import useVuelidate from '@vuelidate/core';
 import { required, url } from '@vuelidate/validators';
-import { TitleAndImageStepProps } from '../create-callout.interface';
+import { TitleAndImageStepProps } from '../../create-callout.interface';
 
 const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{ data: TitleAndImageStepProps }>();

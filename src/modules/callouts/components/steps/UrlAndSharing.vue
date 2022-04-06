@@ -82,10 +82,10 @@ import useVuelidate from '@vuelidate/core';
 import { requiredIf } from '@vuelidate/validators';
 import { onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppInput from '../../../components/forms/AppInput.vue';
-import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
-import AppTextArea from '../../../components/forms/AppTextArea.vue';
-import { UrlAndSharingStepProps } from '../create-callout.interface';
+import AppInput from '../../../../components/forms/AppInput.vue';
+import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
+import AppTextArea from '../../../../components/forms/AppTextArea.vue';
+import { UrlAndSharingStepProps } from '../../create-callout.interface';
 
 const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{ data: UrlAndSharingStepProps }>();

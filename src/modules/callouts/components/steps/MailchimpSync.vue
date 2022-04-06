@@ -29,8 +29,8 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
-import { MailchimpSyncStepProps } from '../create-callout.interface';
+import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
+import { MailchimpSyncStepProps } from '../../create-callout.interface';
 
 const emit = defineEmits(['update:validated']);
 const props = defineProps<{ data: MailchimpSyncStepProps }>();

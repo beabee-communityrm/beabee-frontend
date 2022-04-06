@@ -79,8 +79,8 @@ import useVuelidate from '@vuelidate/core';
 import { helpers, required } from '@vuelidate/validators';
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
-import { VisibilityStepProps } from '../create-callout.interface';
+import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
+import { VisibilityStepProps } from '../../create-callout.interface';
 
 const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{ data: VisibilityStepProps }>();

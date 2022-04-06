@@ -26,7 +26,7 @@ import { helpers, required } from '@vuelidate/validators';
 import { onBeforeMount, ref, watch } from 'vue';
 import { FormBuilder as FormBuilderVue } from 'vue-formio';
 import { FormBuilder } from 'formiojs';
-import AppTextArea from '../../../components/forms/AppTextArea.vue';
+import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import {
   faQuestionCircle,
   faTerminal,
@@ -51,7 +51,7 @@ import { dom, library } from '@fortawesome/fontawesome-svg-core';
 
 import 'formiojs/dist/formio.builder.css';
 import { useI18n } from 'vue-i18n';
-import { ContentStepProps } from '../create-callout.interface';
+import { ContentStepProps } from '../../create-callout.interface';
 
 const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{

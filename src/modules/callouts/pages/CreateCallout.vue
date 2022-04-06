@@ -52,18 +52,18 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { createCallout } from '../../../utils/api/callout';
 import type { CreateCalloutData } from '../../../utils/api/api.interface';
-import Stepper from '../components/Stepper.vue';
-import Visibility from '../components/Visibility.vue';
-import TitleAndImage from '../components/TitleAndImage.vue';
-import EndMessage from '../components/EndMessage.vue';
-import AppButton from '../../../components/forms/AppButton.vue';
-import UrlAndSharing from '../components/UrlAndSharing.vue';
-import MailchimpSync from '../components/MailchimpSync.vue';
-import DatesAndDurationVue from '../components/DatesAndDuration.vue';
-import ContentStep from '../components/ContentStep.vue';
-import { Steps } from '../create-callout.interface';
 import PageTitle from '../../../components/PageTitle.vue';
 import AppHeading from '../../../components/AppHeading.vue';
+import AppButton from '../../../components/forms/AppButton.vue';
+import Stepper from '../components/Stepper.vue';
+import StepVisibility from '../components/steps/Visibility.vue';
+import StepTitleAndImage from '../components/steps/TitleAndImage.vue';
+import StepEndMessage from '../components/steps/EndMessage.vue';
+import StepUrlAndSharing from '../components/steps/UrlAndSharing.vue';
+import StepMailchimpSync from '../components/steps/MailchimpSync.vue';
+import StepDatesAndDuration from '../components/steps/DatesAndDuration.vue';
+import StepContent from '../components/steps/Content.vue';
+import { Steps } from '../create-callout.interface';
 
 const { t } = useI18n();
 
@@ -74,21 +74,21 @@ const steps: Steps = reactive({
     name: t('createCallout.steps.content.title'),
     description: t('createCallout.steps.content.description'),
     validated: false,
-    component: markRaw(ContentStep),
+    component: markRaw(StepContent),
     data: { introText: '', formSchema: { components: [] } },
   },
   titleAndImage: {
     name: t('createCallout.steps.titleAndImage.title'),
     description: t('createCallout.steps.titleAndImage.description'),
     validated: false,
-    component: markRaw(TitleAndImage),
+    component: markRaw(StepTitleAndImage),
     data: { title: '', description: '', coverImageURL: '' },
   },
   visibility: {
     name: t('createCallout.steps.visibility.title'),
     description: t('createCallout.steps.visibility.description'),
     validated: false,
-    component: markRaw(Visibility),
+    component: markRaw(StepVisibility),
     data: {
       whoCanTakePart: 'members',
       allowAnonymousResponses: false,
@@ -100,7 +100,7 @@ const steps: Steps = reactive({
     name: 'End message',
     description: 'Set a final thank you message or page to redirect',
     validated: false,
-    component: markRaw(EndMessage),
+    component: markRaw(StepEndMessage),
     data: {
       whenFinished: 'message',
       thankYouTitle: '',
@@ -112,7 +112,7 @@ const steps: Steps = reactive({
     name: t('createCallout.steps.url.title'),
     description: t('createCallout.steps.url.description'),
     validated: false,
-    component: markRaw(UrlAndSharing),
+    component: markRaw(StepUrlAndSharing),
     data: {
       useCustomSlug: false,
       autoSlug: '',
@@ -126,7 +126,7 @@ const steps: Steps = reactive({
     name: t('createCallout.steps.mailchimp.title'),
     description: t('createCallout.steps.mailchimp.description'),
     validated: false,
-    component: markRaw(MailchimpSync),
+    component: markRaw(StepMailchimpSync),
     data: {
       useMailchimpSync: false,
     },
@@ -135,7 +135,7 @@ const steps: Steps = reactive({
     name: t('createCallout.steps.dates.title'),
     description: t('createCallout.steps.dates.description'),
     validated: false,
-    component: markRaw(DatesAndDurationVue),
+    component: markRaw(StepDatesAndDuration),
     data: {
       startNow: true,
       hasEndDate: false,

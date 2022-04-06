@@ -51,9 +51,9 @@ import useVuelidate from '@vuelidate/core';
 import { helpers, requiredIf } from '@vuelidate/validators';
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppInput from '../../../components/forms/AppInput.vue';
-import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
-import { DateAndDurationStepProps } from '../create-callout.interface';
+import AppInput from '../../../../components/forms/AppInput.vue';
+import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
+import { DateAndDurationStepProps } from '../../create-callout.interface';
 
 const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{ data: DateAndDurationStepProps }>();

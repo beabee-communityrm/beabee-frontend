@@ -69,10 +69,10 @@ import useVuelidate from '@vuelidate/core';
 import { requiredIf, url } from '@vuelidate/validators';
 import { ref, watch, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppInput from '../../../components/forms/AppInput.vue';
-import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
-import AppTextArea from '../../../components/forms/AppTextArea.vue';
-import { EndMessageStepProps } from '../create-callout.interface';
+import AppInput from '../../../../components/forms/AppInput.vue';
+import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
+import AppTextArea from '../../../../components/forms/AppTextArea.vue';
+import { EndMessageStepProps } from '../../create-callout.interface';
 
 const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{ data: EndMessageStepProps; validated: boolean }>();
