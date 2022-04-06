@@ -22,7 +22,7 @@
       </div>
 
       <Contribution
-        v-if="!signUpData.noContribution"
+        v-if="!generalContent.hideContribution && !signUpData.noContribution"
         v-model="signUpData"
         v-model:isValid="isContributionValid"
         :content="joinContent"
@@ -99,6 +99,6 @@ const buttonText = computed(() =>
 );
 
 onBeforeMount(() => {
-  setJoinContent(route.query);
+  setJoinContent(route.query, generalContent.value.hideContribution);
 });
 </script>
