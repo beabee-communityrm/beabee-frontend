@@ -46,9 +46,9 @@
       />
     </div>
 
-    <!--<AppButton to="/callouts" variant="primaryOutlined">{{
-        t('homePage.viewAllCallouts')
-      }}</AppButton>-->
+    <AppButton to="/callouts" variant="primaryOutlined">{{
+      t('homePage.viewAllCallouts')
+    }}</AppButton>
   </section>
 
   <section>
