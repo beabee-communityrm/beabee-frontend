@@ -51,9 +51,10 @@
           bg-white
           text-link
           font-light
-          text-2.5xl text-center
+          text-2xl text-center
           rounded
-          bg-[url('/src/modules/admin/assets/slack-bg.png')] bg-cover bg-right-top
+          bg-[url('/src/modules/admin/assets/slack-bg.png')] bg-right-top
+          bg-auto md:bg-cover
         "
       >
         <p class="w-72 max-w-72 m-auto">
