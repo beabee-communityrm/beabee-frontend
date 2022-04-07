@@ -39,7 +39,7 @@ const tabs = computed(() =>
         {
           id: 'calloutAdminResponses',
           label: t('calloutAdmin.responses'),
-          to: `/admin/callouts/${callout.value.slug}/responses`,
+          to: `/admin/callouts/edit/${callout.value.slug}/responses`,
           ...(responseCount.value > -1 && {
             count: responseCount.value.toLocaleString(),
           }),

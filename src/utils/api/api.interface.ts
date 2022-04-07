@@ -298,3 +298,14 @@ export interface GetSegmentData {
   order: number;
   memberCount: number;
 }
+
+export interface GetStatsQuery {
+  from: Date;
+  to: Date;
+}
+
+export interface GetStatsData {
+  newMembers: number;
+  averageContribution: number;
+  totalRevenue: number;
+}

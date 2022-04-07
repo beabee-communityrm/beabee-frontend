@@ -63,9 +63,12 @@
       <ContributionInfo :member="user" />
     </div>
 
-    <AppButton to="/profile/contribution" variant="primaryOutlined">{{
-      t('homePage.manageContribution')
-    }}</AppButton>
+    <AppButton
+      v-if="!generalContent.hideContribution"
+      to="/profile/contribution"
+      variant="primaryOutlined"
+      >{{ t('homePage.manageContribution') }}</AppButton
+    >
   </section>
 
   <section class="hidden pt-20 mt-auto max-w-xs md:max-w-sm mx-auto">
@@ -96,7 +99,7 @@ import {
 } from '../../utils/api/api.interface';
 import { fetchProfileContent } from '../../utils/api/content';
 import { fetchCallouts } from '../../utils/api/callout';
-import { currentUser } from '../../store';
+import { currentUser, generalContent } from '../../store';
 
 const { t } = useI18n();
 

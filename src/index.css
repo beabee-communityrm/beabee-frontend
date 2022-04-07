@@ -80,6 +80,10 @@
 .callout-form,
 .callout-form-builder .formarea,
 .formio-dialog .preview-panel {
+  .formio-hidden {
+    @apply hidden !important;
+  }
+
   .form-group {
     @apply mb-8 flex flex-col;
 
