@@ -72,45 +72,9 @@
     </div>
   </div>
   <div class="lg:flex gap-12 mt-8">
-    <Hint>
-      <p>
-        Did you know callouts can be created without an end date, and just keep
-        running? See our
-        <a
-          class="text-link"
-          href="https://beabee.io/en/beabee-full-feature-list/"
-          target="_blank"
-          >feature showcase</a
-        >
-        for more
-      </p>
-    </Hint>
-    <Hint>
-      <p>
-        Find out more about
-        <a
-          class="text-link"
-          href="https://beabee.io/en/beabee-model/"
-          target="_blank"
-          >the beabee vision</a
-        >
-        around community engagement and meaningful relationships with your
-        audience.
-      </p>
-    </Hint>
-    <Hint>
-      <p>
-        Our
-        <a
-          class="text-link"
-          href="https://beabee.io/en/beabee-faq/"
-          target="_blank"
-          >FAQ</a
-        >
-        addresses common questions about getting started and use cases. If the
-        answer you're looking for isn't there, get in touch.
-      </p>
-    </Hint>
+    <Hint class="content-i18n" v-html="t('adminDashboard.hint1')" />
+    <Hint class="content-i18n" v-html="t('adminDashboard.hint2')" />
+    <Hint class="content-i18n" v-html="t('adminDashboard.hint3')" />
   </div>
   <p class="text-center text-sm mt-8">
     {{ t('adminDashboard.supportInbox') }}
