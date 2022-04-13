@@ -1,7 +1,12 @@
 {
   "adminDashboard": {
+    "hint1": "<p>Did you know callouts can be created without an end date, and just keep running? See our [feature showcase](https://beabee.io/en/beabee-full-feature-list/) for more information.</p>\n",
+    "hint2": "<p>Find out more about [the beabee vision](https://beabee.io/en/beabee-model/) around community engagement and meaningful relationships with your audience.</p>\n",
+    "hint3": "<p>Our [FAQ](https://beabee.io/en/beabee-faq/) addresses common questions about getting started and use cases. If the answer you're looking for isn't there, get in touch.</p>\n",
     "joinSlack": "Join the beabee community on Slack!",
     "latestCallout": {
+      "createNew": "Create a new one?",
+      "empty": "There are no active callouts.",
       "title": "Latest callout"
     },
     "mostRecentMembers": {
