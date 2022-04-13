@@ -51,6 +51,15 @@
           <CalloutSummary :callout="latestCallout" footer />
         </a>
       </template>
+      <template v-else>
+        <AppHeading>{{ t('adminDashboard.latestCallout.title') }}</AppHeading>
+        <p class="block bg-white p-4 mt-4 mb-8 rounded">
+          No currently active callouts.
+          <router-link to="/admin/callouts/new" class="text-link">
+            Create a new one?
+          </router-link>
+        </p>
+      </template>
       <div
         class="
           p-10
