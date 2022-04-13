@@ -1,22 +1,25 @@
 {
   "adminDashboard": {
-    "joinSlack": "",
+    "hint1": "",
+    "hint2": "",
+    "hint3": "",
+    "joinSlack": "Tritt der beabee-Community auf Slack bei!",
     "latestCallout": {
-      "title": ""
+      "title": "Letzer Callout"
     },
     "mostRecentMembers": {
-      "title": ""
+      "title": "Neueste Mitglieder"
     },
     "numbers": {
-      "averageContribution": "",
-      "newMembers": "",
-      "revenue": "",
-      "title": ""
+      "averageContribution": "Durchschn. monatlicher Beitrag",
+      "newMembers": "Neue Mitglieder",
+      "revenue": "Einnahmen",
+      "title": "Überblick der letzten 30 Tage"
     },
-    "responsesSoFar": "",
-    "seeAllResponses": "",
-    "supportInbox": "",
-    "welcomeBack": ""
+    "responsesSoFar": "Antworten bisher",
+    "seeAllResponses": "Alle Antworten anzeigen",
+    "supportInbox": "Benötigst du Hilfe? Schreib' uns eine E-Mail an:",
+    "welcomeBack": "Willkommen zurück {firstName}!"
   },
   "callout": {
     "contactDetails": "Kontaktdaten",
@@ -42,13 +45,13 @@
   },
   "calloutAdminOverview": {
     "actions": {
-      "delete": "",
-      "edit": "",
-      "replicate": "",
-      "unpublish": "",
-      "view": ""
+      "delete": "Löschen",
+      "edit": "Bearbeiten",
+      "replicate": "Kopieren",
+      "unpublish": "Veröffentlichung aufheben",
+      "view": "Anzeigen"
     },
-    "created": "",
+    "created": "Gut gemacht! Dein Callout wurde erstellt.",
     "dates": {
       "ends": "Ende",
       "label": "Termine",
@@ -232,10 +235,10 @@
   },
   "createCallout": {
     "actions": {
-      "back": "",
-      "continue": "",
-      "publish": "",
-      "schedule": ""
+      "back": "Zurück",
+      "continue": "Weiter",
+      "publish": "Veröffentlichen",
+      "schedule": "Planen"
     },
     "steps": {
       "content": {
@@ -298,8 +301,8 @@
         "title": "Nachricht am Ende"
       },
       "mailchimp": {
-        "description": "",
-        "title": ""
+        "description": "Mailchimp-Synchronisation einrichten",
+        "title": "Mailchimp-Synchronisation"
       },
       "titleAndImage": {
         "description": "Gib deinem Callout eine Titel, eine Beschreibung und ein Bild.",
@@ -331,18 +334,18 @@
             "placeholder": "Erkläre kurz und knapp, warum Menschen an dem Callout teilnehmen sollten."
           },
           "overrideShare": {
-            "label": "",
+            "label": "Callout-Titel und -Beschreibung zum Teilen verwenden?",
             "opts": {
-              "no": "",
-              "yes": ""
+              "no": "Nein, Titel und Beschreibung selbst festlegen",
+              "yes": "Ja"
             }
           },
           "slug": {
             "help": "<p>Die URL-Endung wird für die Webadresse des Callouts benötigt.</p>\n",
             "label": "URL-Endung",
             "opts": {
-              "auto": "",
-              "manual": ""
+              "auto": "Automatisch aus Callout-Titel generieren",
+              "manual": "Benutzerdefinierte URL festlegen"
             }
           },
           "title": {
@@ -392,7 +395,7 @@
         "title": "Sichtbarkeit"
       }
     },
-    "title": ""
+    "title": "Callout anlegen"
   },
   "footer": {
     "contactUs": "Kontaktieren Sie uns unter",
@@ -532,7 +535,7 @@
     "contribution": "Beitrag",
     "dashboard": "Dashboard",
     "home": "Home",
-    "legacyApp": "",
+    "legacyApp": "Alter Adminbereich",
     "logout": "Log out",
     "notices": "Hinweise",
     "settings": "Einstellungen",

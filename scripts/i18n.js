@@ -5,7 +5,7 @@ const path = require('path');
 const { google } = require('googleapis');
 const MarkdownIt = require('markdown-it');
 
-const simpleMd = new MarkdownIt('zero').enable(['emphasis']);
+const simpleMd = new MarkdownIt('zero').enable(['emphasis', 'link']);
 
 const optHandlers = {
   md: (data) => simpleMd.render(data),

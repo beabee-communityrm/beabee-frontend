@@ -22,6 +22,12 @@
   @apply text-link underline;
 }
 
+.content-i18n {
+  a {
+    @apply text-link;
+  }
+}
+
 .callout-form,
 .callout-form-builder .formarea,
 .formio-dialog {
