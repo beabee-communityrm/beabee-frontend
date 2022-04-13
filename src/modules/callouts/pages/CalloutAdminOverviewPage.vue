@@ -10,6 +10,7 @@
       </AppAlert>
 
       <AppHeading>{{ t('calloutAdminOverview.summary') }}</AppHeading>
+
       <CalloutSummary :callout="callout" class="mb-8" />
 
       <AppHeading>{{ t('calloutAdminOverview.dates.label') }}</AppHeading>
