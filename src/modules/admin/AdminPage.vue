@@ -45,14 +45,16 @@
       </div>
     </div>
     <div class="flex-1 basis-2/3">
-      <AppHeading>{{ t('adminDashboard.latestCallout.title') }}</AppHeading>
-      <p v-if="latestCallout" class="block bg-white p-4 mt-4 mb-8 rounded">
-        {{ t('adminDashboard.latestCallout.empty') }}
-        <router-link to="/admin/callouts/new" class="text-link">
-          {{ t('adminDashboard.latestCallout.createNew') }}
-        </router-link>
-      </p>
-      <CalloutSummary v-else-if="latestCallout === null" :callout="latestCallout" footer />
+      <div class="block bg-white p-4 mt-4 mb-8 rounded">
+        <AppHeading>{{ t('adminDashboard.latestCallout.title') }}</AppHeading>
+        <CalloutSummary v-if="latestCallout" :callout="latestCallout" footer />
+        <div v-else-if="latestCallout === null">
+          {{ t('adminDashboard.latestCallout.empty') }}
+          <router-link to="/admin/callouts/new" class="text-link">
+            {{ t('adminDashboard.latestCallout.createNew') }}
+          </router-link>
+        </div>
+      </div>
       <div
         class="
           p-10
