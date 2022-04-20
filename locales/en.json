@@ -247,9 +247,7 @@
         "description": "Build your callout with questions and prompts",
         "inputs": {
           "intro": {
-            "help": "",
-            "label": "Introduction text",
-            "placeholder": ""
+            "label": "Introduction text"
           }
         },
         "title": "Callout content"
@@ -295,7 +293,6 @@
             "placeholder": "Thank you!"
           },
           "url": {
-            "help": "",
             "label": "URL for redirect",
             "placeholder": "https://example.com"
           }
