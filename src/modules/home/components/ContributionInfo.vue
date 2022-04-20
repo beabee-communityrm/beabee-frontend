@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div class="w-px bg-primary-20" />
+    <div v-if="member.contributionAmount" class="w-px bg-primary-20" />
 
     <div v-if="member.contributionAmount" class="flex-1 pl-4">
       <div class="title uppercase">{{ t('common.contributing') }}</div>

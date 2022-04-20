@@ -22,6 +22,12 @@
   @apply text-link underline;
 }
 
+.content-i18n {
+  a {
+    @apply text-link;
+  }
+}
+
 .callout-form,
 .callout-form-builder .formarea,
 .formio-dialog {
@@ -80,6 +86,10 @@
 .callout-form,
 .callout-form-builder .formarea,
 .formio-dialog .preview-panel {
+  .formio-hidden {
+    @apply hidden !important;
+  }
+
   .form-group {
     @apply mb-8 flex flex-col;
 

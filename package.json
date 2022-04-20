@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "i18n": "node scripts/i18n"
   },
   "dependencies": {
     "@fontsource/open-sans": "^4.5.2",

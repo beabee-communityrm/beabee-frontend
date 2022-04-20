@@ -1,7 +1,7 @@
 <template>
   <template v-if="callout">
     <div class="mb-2">
-      <h1 class="text-2xl">{{ callout.title }}</h1>
+      <h1 class="font-title text-2xl">{{ callout.title }}</h1>
     </div>
 
     <AppTabs
@@ -39,7 +39,7 @@ const tabs = computed(() =>
         {
           id: 'calloutAdminResponses',
           label: t('calloutAdmin.responses'),
-          to: `/admin/callouts/${callout.value.slug}/responses`,
+          to: `/admin/callouts/edit/${callout.value.slug}/responses`,
           ...(responseCount.value > -1 && {
             count: responseCount.value.toLocaleString(),
           }),

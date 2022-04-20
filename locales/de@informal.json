@@ -1,8 +1,8 @@
 {
   "adminDashboard": {
-    "hint1": "<p>Das beabee-Handbuch für Community-Journalismus [„Lust auf Lokal” ist erschienen](https://beabee.io/neu-handbuch-community-journalismus/). Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
-    "hint2": "<p>Kennst du schon unseren [Kurs für die Reporterfabrik](https://beabee.io/online-kurs-fuer-community-journalismus/) von CORRECTIV? Dort lernst du Schritt für Schritt, wie Community-Journalismus funktioniert.</p>\n",
-    "hint3": "<p>Unsere Community-Meetups finden jeden dritten Donnerstag im Monat statt. Du willst dein Best-Practice-Beispiel mit anderen teilen? Schreib eine E-Mail an [tobias.hauswurz@correctiv.org](mailto:tobias.hauswurz@correctiv.org)</p>\n",
+    "hint1": "<p>Das beabee-Handbuch für Community-Journalismus <a href=\"https://beabee.io/neu-handbuch-community-journalismus/\">„Lust auf Lokal” ist erschienen</a>. Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
+    "hint2": "<p>Kennst du schon unseren <a href=\"https://beabee.io/online-kurs-fuer-community-journalismus/\">Kurs für die Reporterfabrik</a> von CORRECTIV? Dort lernst du Schritt für Schritt, wie Community-Journalismus funktioniert.</p>\n",
+    "hint3": "<p>Unsere Community-Meetups finden jeden dritten Donnerstag im Monat statt. Du willst dein Best-Practice-Beispiel mit anderen teilen? Schreib eine E-Mail an <a href=\"mailto:tobias.hauswurz@correctiv.org\">tobias.hauswurz@correctiv.org</a></p>\n",
     "joinSlack": "Tritt der beabee-Community auf Slack bei!",
     "latestCallout": {
       "createNew": "",

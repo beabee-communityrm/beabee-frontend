@@ -23,7 +23,7 @@
       </div>
 
       <div class="px-4 flex-grow">
-        <h3 class="text-2xl leading-tight font-semibold mb-2">
+        <h3 class="font-title text-2xl leading-tight font-semibold mb-2">
           {{ callout.title }}
         </h3>
 
