@@ -1,13 +1,16 @@
 <template>
-  <table class="font-semibold">
-    <thead class="text-sm border-b border-primary-20">
+  <table class="">
+    <thead v-if="!hideHeaders" class="text-sm border-b border-primary-20">
       <tr>
         <th
           v-for="(header, i) in headers"
           :key="i"
-          class="p-2 relative"
-          :class="{ 'cursor-pointer': header.sortable }"
-          align="left"
+          class="p-2 relative whitespace-nowrap font-semibold text-body-80"
+          :class="{
+            'cursor-pointer': header.sortable,
+            'font-bold text-primary': header.value === sort?.by,
+          }"
+          :align="header.align || 'left'"
           :style="{ width: header.width }"
           @click="sortBy(header)"
         >
@@ -31,7 +34,7 @@
         <td
           v-for="(header, j) in headers"
           :key="j"
-          class="p-2 align-top"
+          class="p-2 align-bottom"
           :align="header.align || undefined"
         >
           <slot :name="header.value" :item="item" :value="item[header.value]">{{
@@ -56,6 +59,7 @@ const props = defineProps<{
   sort?: Sort;
   headers: Header[];
   items: any[]; // TODO: improve typing
+  hideHeaders?: boolean;
 }>();
 
 const emit = defineEmits(['update:sort']);

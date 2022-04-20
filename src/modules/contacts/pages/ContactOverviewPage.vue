@@ -19,7 +19,7 @@
       <AppHeading>{{ t('contactOverview.information') }}</AppHeading>
       <AppInfoList>
         <AppInfoListItem
-          :name="'Preferred channel'"
+          :name="t('contacts.data.preferredChannel')"
           :value="contact.profile.preferredContact"
         />
         <AppInfoListItem
@@ -77,25 +77,21 @@
     </div>
     <div class="row-span-3 max-w-xl">
       <AppHeading>{{ t('contactOverview.about') }}</AppHeading>
-      <p class="mb-5">
-        {{ t('contactOverview.annotation.copy.begin') }}
-        <b>{{ t('contactOverview.annotation.copy.bold') }}</b>
-        {{ t('contactOverview.annotation.copy.end') }}
-      </p>
+      <div class="mb-5" v-html="t('contactOverview.annotation.copy')" />
 
       <form @submit.prevent="handleFormSubmit">
         <AppInput
           v-model="contactAnnotations.notes"
           :model-value="contactAnnotations.notes"
           input-type="text"
-          :label="'Notes'"
+          :label="t('contacts.data.notes')"
           class="mb-4"
         />
         <AppTextArea
           v-model="contactAnnotations.description"
           :model-value="contactAnnotations.description"
           input-type="text"
-          :label="'Description'"
+          :label="t('contacts.data.description')"
         />
         <AppButton
           type="submit"

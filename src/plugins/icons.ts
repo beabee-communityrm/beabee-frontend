@@ -2,6 +2,7 @@ import { Library, library } from '@fortawesome/fontawesome-svg-core';
 import {
   faAddressCard as farAddressCard,
   faBuilding as farBuilding,
+  faCalendar as farCalendar,
   faCalendarCheck as farCalendarCheck,
   faCreditCard as farCreditCard,
   faUser as farUser,
@@ -24,11 +25,23 @@ import {
   faCheckCircle,
   faUsers,
   faSearch,
+  faShare,
+  faThumbsUp,
+  faEye,
+  faEyeSlash,
+  faCogs,
+  faExternalLinkAlt,
+  faPencilAlt,
+  faNewspaper,
+  faClone,
+  faTrash,
+  faLink,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
   farBuilding,
   farUser,
+  farCalendar,
   farCalendarCheck,
   farAddressCard,
   farCreditCard,
@@ -48,7 +61,18 @@ library.add(
   faCheck,
   faCheckCircle,
   faUsers,
-  faSearch
+  faSearch,
+  faShare,
+  faThumbsUp,
+  faEye,
+  faEyeSlash,
+  faCogs,
+  faExternalLinkAlt,
+  faPencilAlt,
+  faNewspaper,
+  faClone,
+  faTrash,
+  faLink
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

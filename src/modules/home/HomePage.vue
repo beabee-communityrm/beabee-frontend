@@ -29,42 +29,47 @@
     <QuickActions />
   </section>
 
-  <div class="lg:flex justify-between">
-    <section v-if="callouts.length" class="mb-6 lg:mr-6">
-      <SectionTitle class="mb-6 md:hidden">{{
-        t('homePage.openCallouts')
-      }}</SectionTitle>
-      <AppHeading class="mb-2 hidden md:block">{{
-        t('homePage.openCallouts')
-      }}</AppHeading>
+  <section v-if="callouts.length" class="mb-6 lg:mr-6">
+    <SectionTitle class="mb-6 md:hidden">{{
+      t('homePage.openCallouts')
+    }}</SectionTitle>
+    <AppHeading class="mb-2 hidden md:block">{{
+      t('homePage.openCallouts')
+    }}</AppHeading>
 
-      <div class="flex mb-4">
-        <!-- just show the first callout for now (design decision) -->
-        <CalloutCard :callout="callouts[0]" />
-      </div>
+    <div class="flex -mx-3 my-6 flex-wrap">
+      <CalloutCard
+        v-for="callout in callouts"
+        :key="callout.slug"
+        :callout="callout"
+        class="mb-5 mx-3"
+      />
+    </div>
 
-      <!--<AppButton to="/callouts" variant="primaryOutlined">{{
-        t('homePage.viewAllCallouts')
-      }}</AppButton>-->
-    </section>
+    <AppButton to="/callouts" variant="primaryOutlined">{{
+      t('homePage.viewAllCallouts')
+    }}</AppButton>
+  </section>
 
-    <section>
-      <SectionTitle class="mb-6 md:hidden">{{
-        t('homePage.yourProfile')
-      }}</SectionTitle>
-      <AppHeading class="mb-2 hidden md:block">{{
-        t('homePage.yourProfile')
-      }}</AppHeading>
+  <section>
+    <SectionTitle class="mb-6 md:hidden">{{
+      t('homePage.yourProfile')
+    }}</SectionTitle>
+    <AppHeading class="mb-2 hidden md:block">{{
+      t('homePage.yourProfile')
+    }}</AppHeading>
 
-      <div class="flex mb-4">
-        <ContributionInfo :member="user" />
-      </div>
+    <div class="flex mb-4">
+      <ContributionInfo :member="user" />
+    </div>
 
-      <AppButton to="/profile/contribution" variant="primaryOutlined">{{
-        t('homePage.manageContribution')
-      }}</AppButton>
-    </section>
-  </div>
+    <AppButton
+      v-if="!generalContent.hideContribution"
+      to="/profile/contribution"
+      variant="primaryOutlined"
+      >{{ t('homePage.manageContribution') }}</AppButton
+    >
+  </section>
 
   <section class="hidden pt-20 mt-auto max-w-xs md:max-w-sm mx-auto">
     <ThanksNotice>{{ profileContent.footerMessage }}</ThanksNotice>
@@ -87,14 +92,14 @@ import CalloutCard from '../../components/CalloutCard.vue';
 import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
 import AppHeading from '../../components/AppHeading.vue';
 import {
-  CalloutStatus,
   GetBasicCalloutData,
   GetMemberData,
+  ItemStatus,
   ProfileContent,
 } from '../../utils/api/api.interface';
 import { fetchProfileContent } from '../../utils/api/content';
 import { fetchCallouts } from '../../utils/api/callout';
-import { currentUser } from '../../store';
+import { currentUser, generalContent } from '../../store';
 
 const { t } = useI18n();
 
@@ -124,13 +129,21 @@ onBeforeMount(async () => {
   profileContent.value = await fetchProfileContent();
   callouts.value = (
     await fetchCallouts({
+      order: 'DESC',
+      sort: 'starts',
+      limit: 3,
       rules: {
         condition: 'AND',
         rules: [
           {
             field: 'status',
             operator: 'equal',
-            value: CalloutStatus.Open,
+            value: ItemStatus.Open,
+          },
+          {
+            field: 'hidden',
+            operator: 'equal',
+            value: false,
           },
         ],
       },

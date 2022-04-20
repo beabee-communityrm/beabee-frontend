@@ -26,7 +26,7 @@ interface GetPaginatedQueryRuleGroup<T> {
 interface GetPaginatedQueryRule<T> {
   field: T;
   operator: GetPaginatedQueryRuleOperator;
-  value: string;
+  value: string | number | boolean;
 }
 
 export interface GetPaginatedQuery<T> {
@@ -49,6 +49,13 @@ export interface Address {
   line2?: string | undefined;
   city: string;
   postcode: string;
+}
+
+export enum ItemStatus {
+  Draft = 'draft',
+  Scheduled = 'scheduled',
+  Open = 'open',
+  Ended = 'ended',
 }
 
 interface MemberData {
@@ -157,6 +164,7 @@ export interface GeneralContent {
   termsLink?: string;
   impressumLink?: string;
   currencyCode: string;
+  hideContribution?: boolean;
   footerLinks: { text: string; url: string }[];
 }
 
@@ -192,29 +200,72 @@ export interface ProfileContent {
   introMessage: string;
 }
 
-export interface GetBasicCalloutData {
+interface BasicCalloutData {
   slug: string;
   title: string;
   excerpt: string;
-  image?: string;
+  image: string;
   starts?: Date;
   expires?: Date;
+  allowUpdate: boolean;
+  allowMultiple: boolean;
+  access: 'member' | 'guest' | 'anonymous' | 'only-anonymous';
+  hidden: boolean;
+}
+
+export interface CalloutFormSchema {
+  components: unknown[];
+}
+
+export interface GetBasicCalloutData extends BasicCalloutData {
+  status: ItemStatus;
   hasAnswered?: boolean;
 }
 
-export enum CalloutStatus {
-  Open = 'open',
-  Finished = 'finished',
+export interface CreateCalloutData extends BasicCalloutData {
+  image: string;
+  starts: Date;
+  intro: string;
+  thanksText: string;
+  thanksTitle: string;
+  thanksRedirect?: string;
+  formSchema: CalloutFormSchema;
 }
 
 export interface GetCalloutsQuery
-  extends GetPaginatedQuery<'title' | 'status' | 'answeredBy'> {
+  extends GetPaginatedQuery<'title' | 'status' | 'answeredBy' | 'hidden'> {
   hasAnswered?: string;
 }
 
-export enum NoticeStatus {
-  Open = 'open',
-  Finished = 'finished',
+export interface GetMoreCalloutData extends GetBasicCalloutData {
+  formSchema: any;
+  intro: string;
+  thanksText: string;
+  thanksTitle: string;
+  thanksRedirect?: string;
+}
+
+export type GetCalloutResponsesQuery = GetPaginatedQuery<'member'>;
+
+type CalloutResponseAnswer =
+  | string
+  | boolean
+  | number
+  | null
+  | undefined
+  | Record<string, boolean>;
+export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
+
+export interface GetCalloutResponseData {
+  answers: CalloutResponseAnswers;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CreateCalloutResponseData {
+  guestName?: string;
+  guestEmail?: string;
+  answers: CalloutResponseAnswers;
 }
 
 export type GetNoticesQuery = GetPaginatedQuery<
@@ -225,7 +276,7 @@ export interface GetNoticeData {
   id: string;
   createdAt: Date;
   updatedAt: Date;
-  status: NoticeStatus;
+  status: ItemStatus;
   name: string;
   expires?: Date;
   enabled: boolean;
@@ -246,4 +297,15 @@ export interface GetSegmentData {
   ruleGroup: any;
   order: number;
   memberCount: number;
+}
+
+export interface GetStatsQuery {
+  from: Date;
+  to: Date;
+}
+
+export interface GetStatsData {
+  newMembers: number;
+  averageContribution: number;
+  totalRevenue: number;
 }

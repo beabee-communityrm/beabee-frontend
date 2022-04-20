@@ -1,5 +1,5 @@
 <template>
-  <AppLink :to="notice.url">
+  <a :href="notice.url">
     <div class="mb-2 bg-white rounded p-4.5 flex shadow">
       <div class="flex md:mt-1.5">
         <font-awesome-icon
@@ -13,15 +13,14 @@
       </div>
 
       <div class="ml-auto hidden md:flex">
-        <AppButton :to="notice.url">{{ notice.buttonText }}</AppButton>
+        <AppButton :href="notice.url">{{ notice.buttonText }}</AppButton>
       </div>
     </div>
-  </AppLink>
+  </a>
 </template>
 
 <script lang="ts" setup>
 import AppButton from '../../components/forms/AppButton.vue';
-import AppLink from '../../components/AppLink.vue';
 import { GetNoticeData } from '../../utils/api/api.interface';
 
 defineProps<{

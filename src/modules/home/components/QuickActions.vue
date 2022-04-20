@@ -8,13 +8,13 @@
       <router-link to="/profile/edit">
         {{ t('homePage.editProfile') }}
       </router-link>
-    </li>
+    </li>-->
     <li>
       <router-link to="/callouts">
         {{ t('homePage.viewOpenCallouts') }}
       </router-link>
-    </li>-->
-    <li>
+    </li>
+    <li v-if="!generalContent.hideContribution">
       <router-link to="/profile/contribution">
         {{ t('homePage.manageYourContribution') }}
       </router-link>
@@ -25,6 +25,7 @@
 <script lang="ts" setup>
 import SectionTitle from './SectionTitle.vue';
 import { useI18n } from 'vue-i18n';
+import { generalContent } from '../../../store';
 
 const { t } = useI18n();
 </script>

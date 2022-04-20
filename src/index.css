@@ -21,3 +21,122 @@
 .content-message a {
   @apply text-link underline;
 }
+
+.content-i18n {
+  a {
+    @apply text-link;
+  }
+}
+
+.callout-form,
+.callout-form-builder .formarea,
+.formio-dialog {
+  .form-control {
+    @apply p-2 w-full bg-white border border-primary-40 rounded focus:outline-none focus:shadow-input;
+
+    &.is-invalid {
+      @apply bg-danger-10 border-danger-70;
+    }
+  }
+
+  .btn:not(.component-settings-button):not(.formcomponent) {
+    @apply px-2 text-center cursor-pointer inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative h-10 bg-link text-white;
+
+    &[disabled] {
+      @apply opacity-50 cursor-not-allowed;
+    }
+
+    &:not([disabled]):hover {
+      @apply bg-link-110;
+    }
+
+    &.btn-success {
+      @apply bg-success;
+      &:not([disabled]):hover {
+        @apply bg-success-110;
+      }
+    }
+    &.btn-danger {
+      @apply bg-danger;
+      &:not([disabled]):hover {
+        @apply bg-danger-110;
+      }
+    }
+    &.btn-secondary {
+      @apply bg-white text-link border border-link;
+      &:not([disabled]):hover {
+        @apply bg-danger-10;
+      }
+    }
+
+    &.svg-inline--fa {
+      @apply box-content align-top box-content;
+    }
+  }
+
+  .choices__list {
+    @apply align-middle;
+  }
+
+  .formio-choices.form-group {
+    @apply mb-0;
+  }
+}
+
+.callout-form,
+.callout-form-builder .formarea,
+.formio-dialog .preview-panel {
+  .formio-hidden {
+    @apply hidden !important;
+  }
+
+  .form-group {
+    @apply mb-8 flex flex-col;
+
+    &.formio-component-button {
+      @apply block;
+    }
+  }
+
+  .col-form-label {
+    @apply block text-xl font-semibold mb-2 -order-2;
+  }
+
+  .form-text {
+    @apply mb-2 text-body-80 -order-1;
+  }
+
+  .formio-editor-read-only-content,
+  .form-check-input {
+    @apply accent-link;
+  }
+
+  .form-check-inline {
+    @apply inline-block mr-4;
+  }
+
+  .form-check-label {
+    @apply flex align-baseline mb-2;
+
+    .form-check-input {
+      @apply flex-none mr-2;
+    }
+  }
+
+  .formio-select-autocomplete-input {
+    @apply opacity-0 absolute -z-10;
+  }
+
+  .formio-errors {
+    @apply text-sm font-semibold mt-1.5;
+
+    .form-text {
+      @apply text-danger;
+    }
+  }
+
+  .field-required::after {
+    @apply text-danger;
+    content: '*';
+  }
+}

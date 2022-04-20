@@ -3,7 +3,7 @@
     <li>
       <button
         class="p-2"
-        :class="isFirst && 'opacity-25'"
+        :class="isFirst && 'opacity-25 hover:font-bold hover:border-link'"
         :disabled="isFirst"
         @click="emit('update:modelValue', modelValue - 1)"
       >
@@ -14,9 +14,18 @@
       <li v-if="index > 0 && pages[index - 1] !== page - 1">&hellip;</li>
       <li>
         <button
-          :class="page === modelValue && 'text-link bg-white'"
+          :class="
+            page === modelValue && 'text-link bg-white font-bold border-link'
+          "
           :disabled="page === modelValue"
-          class="p-2 leading-none border border-primary rounded mx-1"
+          class="
+            leading-none
+            border border-primary
+            rounded
+            mx-1
+            p-2
+            hover:font-bold hover:border-link
+          "
           @click="emit('update:modelValue', page)"
         >
           {{ page + 1 }}
@@ -26,7 +35,7 @@
     <li>
       <button
         class="p-2"
-        :class="isLast && 'opacity-25'"
+        :class="isLast && 'opacity-25 hover:font-bold hover:border-link'"
         :disabled="isLast"
         @click="emit('update:modelValue', modelValue + 1)"
       >
