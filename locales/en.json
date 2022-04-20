@@ -5,6 +5,8 @@
     "hint3": "<p>Our <a href=\"https://beabee.io/en/beabee-faq/\">FAQ</a> addresses common questions about getting started and use cases. If the answer you're looking for isn't there, get in touch.</p>\n",
     "joinSlack": "Join the beabee community on Slack!",
     "latestCallout": {
+      "createNew": "Create a new one?",
+      "empty": "No currently active callouts.",
       "title": "Latest callout"
     },
     "mostRecentMembers": {

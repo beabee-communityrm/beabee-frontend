@@ -45,12 +45,16 @@
       </div>
     </div>
     <div class="flex-1 basis-2/3">
-      <template v-if="latestCallout">
+      <div class="block bg-white p-4 mt-4 mb-8 rounded">
         <AppHeading>{{ t('adminDashboard.latestCallout.title') }}</AppHeading>
-        <a class="block bg-white p-4 mt-4 mb-8 rounded">
-          <CalloutSummary :callout="latestCallout" footer />
-        </a>
-      </template>
+        <CalloutSummary v-if="latestCallout" :callout="latestCallout" footer />
+        <div v-else-if="latestCallout === null">
+          {{ t('adminDashboard.latestCallout.empty') }}
+          <router-link to="/admin/callouts/new" class="text-link">
+            {{ t('adminDashboard.latestCallout.createNew') }}
+          </router-link>
+        </div>
+      </div>
       <div
         class="
           p-10
@@ -105,7 +109,7 @@ const { n, t } = useI18n();
 
 const stats = ref<GetStatsData>();
 const recentMembers = ref<GetMemberData[]>([]);
-const latestCallout = ref<GetBasicCalloutData>();
+const latestCallout = ref<GetBasicCalloutData | null>();
 
 onBeforeMount(async () => {
   fetchStats({
@@ -124,9 +128,7 @@ onBeforeMount(async () => {
     sort: 'starts',
     order: 'DESC',
   }).then((results) => {
-    if (results.count > 0) {
-      latestCallout.value = results.items[0];
-    }
+    latestCallout.value = results.count > 0 ? results.items[0] : null;
   });
 });
 </script>
