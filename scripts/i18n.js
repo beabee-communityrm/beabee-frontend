@@ -11,6 +11,18 @@ const optHandlers = {
   md: (data) => simpleMd.render(data),
 };
 
+function processKeyData(keyOpts, keyData) {
+  if (keyData !== undefined) {
+    return (
+      keyOpts
+        // Apply handlers
+        .reduce((data, opt) => optHandlers[opt](data), keyData || '')
+        // Santize special i18n character
+        .replace(/@/g, "{'@'}")
+    );
+  }
+}
+
 const auth = new google.auth.GoogleAuth({
   keyFile: path.join(__dirname, '.credentials.json'),
   scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
@@ -53,10 +65,7 @@ const sheets = google.sheets({ version: 'v4', auth });
       if (localeDataPart[lastKeyPart] !== undefined) {
         console.log('Duplicate key ' + row.key);
       }
-      localeDataPart[lastKeyPart] = keyOpts.reduce(
-        (data, opt) => optHandlers[opt](data),
-        row[locale] || ''
-      );
+      localeDataPart[lastKeyPart] = processKeyData(keyOpts, row[locale]);
     }
   }
 
