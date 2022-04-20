@@ -1,6 +1,6 @@
 {
   "name": "beabee-new-frontend",
-  "version": "0.0.0",
+  "version": "2.1.0",
   "scripts": {
     "start": "vite",
     "dev": "vite",
