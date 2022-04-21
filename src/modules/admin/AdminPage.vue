@@ -11,11 +11,19 @@
       <div v-if="stats" class="flex gap-4 mt-4 mb-8">
         <KeyStat
           :label="t('adminDashboard.numbers.revenue')"
-          :stat="n(stats.totalRevenue, 'currency')"
+          :stat="
+            stats.totalRevenue === null
+              ? '-'
+              : n(stats.totalRevenue, 'currency')
+          "
         />
         <KeyStat
           :label="t('adminDashboard.numbers.averageContribution')"
-          :stat="n(stats.averageContribution, 'currency')"
+          :stat="
+            stats.averageContribution === null
+              ? '-'
+              : n(stats.averageContribution, 'currency')
+          "
         />
         <KeyStat
           :label="t('adminDashboard.numbers.newMembers')"
@@ -44,9 +52,9 @@
         </div>
       </div>
     </div>
-    <div class="flex-1 basis-2/3">
+    <div class="flex-1 basis-7/12">
+      <AppHeading>{{ t('adminDashboard.latestCallout.title') }}</AppHeading>
       <div class="block bg-white p-4 mt-4 mb-8 rounded">
-        <AppHeading>{{ t('adminDashboard.latestCallout.title') }}</AppHeading>
         <CalloutSummary v-if="latestCallout" :callout="latestCallout" footer />
         <div v-else-if="latestCallout === null">
           {{ t('adminDashboard.latestCallout.empty') }}
