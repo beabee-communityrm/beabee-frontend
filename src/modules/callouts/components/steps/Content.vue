@@ -9,7 +9,10 @@
         @blur="validation.introText.$touch"
       />
     </div>
-    <div></div>
+    <div
+      class="col-span-1 text-sm text-grey mt-6"
+      v-html="inputT('intro.help')"
+    />
   </div>
   <div class="callout-form-builder mt-8">
     <FormBuilderVue
