@@ -360,11 +360,11 @@
         "description": "Choose who will see your callout",
         "inputs": {
           "anonymous": {
-            "help": "<p>If you allow <strong>anonymous responses</strong>, guests will be not asked for their contact information. This does not affect members.</p>\n",
-            "label": "Allow anonymous responses?",
+            "help": "<p>If you allow <strong>anonymous responses</strong>, guests will be not asked for their contact information.</p>\n",
+            "label": "Should guests be able to answer anonymously?",
             "opts": {
               "no": "No, require contact details",
-              "yes": "Yes, contact info is optional"
+              "yes": "Yes, contact info is not needed"
             }
           },
           "editable": {
