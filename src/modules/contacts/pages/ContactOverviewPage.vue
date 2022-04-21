@@ -92,7 +92,9 @@
           :model-value="contactAnnotations.description"
           input-type="text"
           :label="t('contacts.data.description')"
+          class="mb-4"
         />
+        <TagDropdown label="Tags" />
         <AppButton
           type="submit"
           variant="link"
@@ -153,6 +155,7 @@ import AppInput from '../../../components/forms/AppInput.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import AppRoundBadge from '../../../components/AppRoundBadge.vue';
+import TagDropdown from '../components/TagDropdown.vue';
 import { onBeforeMount, ref, reactive } from 'vue';
 import { ContributionType } from '../../../utils/enums/contribution-type.enum';
 import {
