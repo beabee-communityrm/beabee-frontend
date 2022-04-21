@@ -306,6 +306,6 @@ export interface GetStatsQuery {
 
 export interface GetStatsData {
   newMembers: number;
-  averageContribution: number;
-  totalRevenue: number;
+  averageContribution: number | null;
+  totalRevenue: number | null;
 }
