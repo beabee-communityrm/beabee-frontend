@@ -181,14 +181,14 @@ const contact = ref<GetMemberDataWith<
 > | null>(null);
 const loading = ref(false);
 const securityButtonsDisabled = ref(false);
-const contactAnnotations = reactive({ notes: '', description: '' });
+const contactAnnotations = reactive({ notes: '', description: '', tags: [] });
 const securityLink = ref('');
 
 async function handleFormSubmit() {
   loading.value = true;
   try {
     await updateMember(props.contact.id, {
-      profile: { tags: [], ...contactAnnotations },
+      profile: { ...contactAnnotations },
     });
   } finally {
     loading.value = false;
