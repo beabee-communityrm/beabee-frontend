@@ -141,7 +141,7 @@ onBeforeMount(() => {
   }
 
   .formcomponent {
-    @apply block w-full p-2 bg-grey-lighter border border-grey text-sm m-0 rounded-none !important;
+    @apply block w-full p-2 bg-grey-lighter border border-grey text-sm m-0 rounded-none cursor-pointer !important;
     &.gu-transit {
       @apply mb-4 text-base !important;
     }
