@@ -122,7 +122,7 @@ const steps: Steps = reactive({
       shareDescription: '',
     },
   },
-  mailchimp: {
+  /*mailchimp: {
     name: t('createCallout.steps.mailchimp.title'),
     description: t('createCallout.steps.mailchimp.description'),
     validated: false,
@@ -130,7 +130,7 @@ const steps: Steps = reactive({
     data: {
       useMailchimpSync: false,
     },
-  },
+  },*/
   dates: {
     name: t('createCallout.steps.dates.title'),
     description: t('createCallout.steps.dates.description'),
@@ -159,7 +159,7 @@ const stepsInOrder = computed(() => [
   steps.visibility,
   steps.endMessage,
   steps.url,
-  steps.mailchimp,
+  //steps.mailchimp,
   steps.dates,
 ]);
 

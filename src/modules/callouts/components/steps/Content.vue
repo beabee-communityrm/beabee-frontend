@@ -9,7 +9,10 @@
         @blur="validation.introText.$touch"
       />
     </div>
-    <div></div>
+    <div
+      class="col-span-1 text-sm text-grey mt-6"
+      v-html="inputT('intro.help')"
+    />
   </div>
   <div class="callout-form-builder mt-8">
     <FormBuilderVue
@@ -138,7 +141,7 @@ onBeforeMount(() => {
   }
 
   .formcomponent {
-    @apply block w-full p-2 bg-grey-lighter border border-grey text-sm m-0 rounded-none !important;
+    @apply block w-full p-2 bg-grey-lighter border border-grey text-sm m-0 rounded-none cursor-pointer !important;
     &.gu-transit {
       @apply mb-4 text-base !important;
     }
