@@ -247,6 +247,7 @@
         "description": "Entwerfe deinen Callout mit Fragen und Aufforderungen",
         "inputs": {
           "intro": {
+            "help": "<p>Die <strong>Einleitung</strong> erscheint über dem eigentlichen Callout. Erkläre darin, warum du den Callout machst, was das Ziel ist und wie die Antworten helfen. Gib so viel Kontext wie möglich, um den Teilnehmenden die Beantwortung zu erleichtern.</p>\n",
             "label": "Einleitung"
           }
         },
@@ -359,9 +360,11 @@
         "description": "Entscheide, wer den Callout sehen kann.",
         "inputs": {
           "anonymous": {
-            "help": "<p>Wenn du <strong>anonyme Antworten</strong> erlaubst, werden Gastteilnehmer nicht nach ihren Kontakten gefragt.</p>\n",
+            "help": "<p>Wenn du <strong>anonyme Antworten</strong> erlaubst, werden Gastteilnehmer nicht nach ihren Kontaktdaten gefragt.</p>\n",
+            "label": "Sollen Gastteilnehmer anonym antworten können?",
             "opts": {
-              "no": "Nein, Kontaktinformationen sind notwendig."
+              "no": "Nein, Kontaktinformationen sind notwendig.",
+              "yes": "Ja, keine Kontaktdaten nötig."
             }
           },
           "editable": {
