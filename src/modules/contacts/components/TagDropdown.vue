@@ -1,28 +1,12 @@
 <template>
   <label v-if="label" class="block mb-1.5 font-semibold">{{ label }}</label>
   <div class="flex flex-row flex-wrap ml-0 mt-2 sm:mt-0">
-    <div
+    <ContactTag
       v-for="tag in modelValue"
-      class="
-        text-xs
-        font-semibold
-        inline-block
-        cursor-pointer
-        py-1
-        px-2
-        uppercase
-        rounded
-        bg-white
-        last:mr-0
-        mr-1
-        h-[1.5rem]
-        mb-2
-      "
       @click="handleRemoveTag(tag)"
-    >
-      {{ tag }}
-      <font-awesome-icon class="inline-block ml-2" icon="times" />
-    </div>
+      :tag="tag"
+      :has-remove-icon="true"
+    />
   </div>
   <div class="flex flex-col sm:flex-row">
     <div
@@ -68,6 +52,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { computed } from '@vue/reactivity';
+import ContactTag from './ContactTag.vue';
 
 const props = defineProps<{
   modelValue: string[];
