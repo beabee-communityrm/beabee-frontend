@@ -94,7 +94,7 @@
           :label="t('contacts.data.description')"
           class="mb-4"
         />
-        <TagDropdown label="Tags" />
+        <TagDropdown v-model="contactAnnotations.tags" label="Tags" />
         <AppButton
           type="submit"
           variant="link"
@@ -181,7 +181,11 @@ const contact = ref<GetMemberDataWith<
 > | null>(null);
 const loading = ref(false);
 const securityButtonsDisabled = ref(false);
-const contactAnnotations = reactive({ notes: '', description: '', tags: [] });
+const contactAnnotations = reactive({
+  notes: '',
+  description: '',
+  tags: [] as string[],
+});
 const securityLink = ref('');
 
 async function handleFormSubmit() {

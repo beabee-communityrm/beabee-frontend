@@ -22,7 +22,6 @@
         <font-awesome-icon
           class="inline-block cursor-pointer mr-2 ml-2"
           icon="caret-down"
-          @click="handleRemoveTag(tag)"
         />
         Pick a tag from the list below
       </p>
@@ -32,14 +31,14 @@
           @click="handleAddTag(tag)"
           class="hover:bg-primary-20 first:mt-2 p-2"
         >
-          🏷 {{ tag.label }}
+          🏷 {{ tag }}
         </p>
       </div>
     </div>
 
     <div class="flex flex-row flex-wrap ml-0 sm:ml-4 mt-2 sm:mt-0">
       <div
-        v-for="tag in assignedTags"
+        v-for="tag in modelValue"
         class="
           text-xs
           font-semibold
@@ -60,41 +59,37 @@
           icon="times"
           @click="handleRemoveTag(tag)"
         />
-        {{ tag.label }}
+        {{ tag }}
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, watch } from 'vue';
-import type { Ref } from 'vue';
+import { ref } from 'vue';
+import { computed } from '@vue/reactivity';
 
-const props = withDefaults(
-  defineProps<{
-    label?: string;
-  }>(),
-  {
-    label: undefined,
-  }
-);
-type Tag = { id: number; label: string };
+const props = defineProps<{
+  modelValue: string[];
+  label?: string;
+}>();
+const emit = defineEmits(['update:modelValue']);
 
 const isTagMenuVisible = ref(false);
 
-const assignedTags: Ref<Tag[]> = ref([]);
-const availableTags: Ref<Tag[]> = ref([
-  { id: 1, label: 'French' },
-  { id: 2, label: 'Entrepreneur' },
-  { id: 3, label: 'Banana' },
-]);
+const availableTags = computed(() =>
+  ['French', 'Blah blah', 'Go Bristol'].filter(
+    (e) => !props.modelValue.includes(e)
+  )
+);
 
-const handleAddTag = (tag: Tag) => {
-  assignedTags.value = [...assignedTags.value, tag];
-  availableTags.value = [...availableTags.value.filter((e) => e.id != tag.id)];
+const handleAddTag = (tag: string) => {
+  emit('update:modelValue', [...props.modelValue, tag]);
 };
-const handleRemoveTag = (tag: Tag) => {
-  assignedTags.value = [...assignedTags.value.filter((e) => e.id != tag.id)];
-  availableTags.value = [...availableTags.value, tag];
+const handleRemoveTag = (tag: string) => {
+  emit(
+    'update:modelValue',
+    props.modelValue.filter((e) => e != tag)
+  );
 };
 </script>
