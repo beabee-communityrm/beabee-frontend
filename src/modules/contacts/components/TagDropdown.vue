@@ -1,6 +1,29 @@
 <template>
   <label v-if="label" class="block mb-1.5 font-semibold">{{ label }}</label>
-
+  <div class="flex flex-row flex-wrap ml-0 mt-2 sm:mt-0">
+    <div
+      v-for="tag in modelValue"
+      class="
+        text-xs
+        font-semibold
+        inline-block
+        cursor-pointer
+        py-1
+        px-2
+        uppercase
+        rounded
+        bg-white
+        last:mr-0
+        mr-1
+        h-[1.5rem]
+        mb-2
+      "
+      @click="handleRemoveTag(tag)"
+    >
+      {{ tag }}
+      <font-awesome-icon class="inline-block ml-2" icon="times" />
+    </div>
+  </div>
   <div class="flex flex-col sm:flex-row">
     <div
       @click="isTagMenuVisible = !isTagMenuVisible"
@@ -37,31 +60,6 @@
           />
           {{ tag }}
         </p>
-      </div>
-    </div>
-
-    <div class="flex flex-row flex-wrap ml-0 sm:ml-4 mt-2 sm:mt-0">
-      <div
-        v-for="tag in modelValue"
-        class="
-          text-xs
-          font-semibold
-          inline-block
-          cursor-pointer
-          py-1
-          px-2
-          uppercase
-          rounded
-          bg-white
-          last:mr-0
-          mr-1
-          h-[1.5rem]
-          mb-2
-        "
-        @click="handleRemoveTag(tag)"
-      >
-        {{ tag }}
-        <font-awesome-icon class="inline-block ml-2" icon="times" />
       </div>
     </div>
   </div>
