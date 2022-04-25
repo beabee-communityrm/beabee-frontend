@@ -5,6 +5,8 @@
     "hint3": "<p>Unsere Community-Meetups finden jeden dritten Donnerstag im Monat statt. Du willst dein Best-Practice-Beispiel mit anderen teilen? Schreib eine E-Mail an <a href=\"mailto:tobias.hauswurz{'@'}correctiv.org\">tobias.hauswurz{'@'}correctiv.org</a></p>\n",
     "joinSlack": "Tritt der beabee-Community auf Slack bei!",
     "latestCallout": {
+      "createNew": "Neuen Callout erstellen?",
+      "empty": "Es gibt aktuell keine aktiven Callouts.",
       "title": "Letzer Callout"
     },
     "mostRecentMembers": {
@@ -245,6 +247,7 @@
         "description": "Entwerfe deinen Callout mit Fragen und Aufforderungen",
         "inputs": {
           "intro": {
+            "help": "<p>Die <strong>Einleitung</strong> erscheint über dem eigentlichen Callout. Erkläre darin, warum du den Callout machst, was das Ziel ist und wie die Antworten helfen. Gib so viel Kontext wie möglich, um den Teilnehmenden die Beantwortung zu erleichtern.</p>\n",
             "label": "Einleitung"
           }
         },
@@ -302,7 +305,7 @@
         "title": "Mailchimp-Synchronisation"
       },
       "titleAndImage": {
-        "description": "Gib deinem Callout eine Titel, eine Beschreibung und ein Bild.",
+        "description": "Gib deinem Callout einen Titel, eine Beschreibung und ein Bild.",
         "inputs": {
           "description": {
             "help": "<p>Die <strong>Kurzbeschreibung</strong> ergänzt den Titel und sollte in wenigen Worten erklären, worum es bei dem Callout geht.</p>\n",
@@ -333,7 +336,7 @@
           "overrideShare": {
             "label": "Callout-Titel und -Beschreibung zum Teilen verwenden?",
             "opts": {
-              "no": "Nein, Titel und Beschreibung selbst festlegen",
+              "no": "Nein, Titel und Beschreibung selbst festlegen.",
               "yes": "Ja"
             }
           },
@@ -357,23 +360,23 @@
         "description": "Entscheide, wer den Callout sehen kann.",
         "inputs": {
           "anonymous": {
-            "help": "<p>Wenn du <strong>anonyme Antworten</strong> erlaubst, werden Gastteilnehmer nicht nach ihren Kontakten gefragt. Auf Mitglieder hat das keinen Einfluss.</p>\n",
-            "label": "Möchtest du anonyme Antworten erlauben?",
+            "help": "<p>Wenn du <strong>anonyme Antworten</strong> erlaubst, werden Gastteilnehmer nicht nach ihren Kontaktdaten gefragt.</p>\n",
+            "label": "Sollen Gastteilnehmer anonym antworten können?",
             "opts": {
               "no": "Nein, Kontaktinformationen sind notwendig.",
-              "yes": "Ja, anonyme Antworten sind erlaubt."
+              "yes": "Ja, keine Kontaktdaten nötig."
             }
           },
           "editable": {
             "help": "<p>Wenn ja, können Teilnehmer vor dem Enddatum <strong>ihre abgeschickten Antworten bearbeiten</strong>.</p>\n",
             "label": "Sollen Teilnehmer ihre Antworten bearbeiten können, solange der Callout aktiv ist?",
             "opts": {
-              "no": "Nein, die Antworten können nicht bearbeitet werden",
+              "no": "Nein, die Antworten können nicht bearbeitet werden.",
               "yes": "Ja"
             }
           },
           "visible": {
-            "help": "<p>Du kannst den <strong>verstecken</strong>. Dann können Menschen mit dem richtigen Link den Callout beantworten.</p>\n",
+            "help": "<p>Du kannst den Callout <strong>verstecken</strong>. Dann können Menschen mit dem richtigen Link den Callout beantworten.</p>\n",
             "label": "Soll der Callout deinen Mitgliedern im Dashboard angezeigt werden?",
             "opts": {
               "no": "Nein, Callout nicht im Dashboard anzeigen.",
