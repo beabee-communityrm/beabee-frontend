@@ -31,7 +31,11 @@
           @click="handleAddTag(tag)"
           class="hover:bg-primary-20 first:mt-2 p-2"
         >
-          🏷 {{ tag }}
+          <font-awesome-icon
+            class="inline-block cursor-pointer mr-2 ml-2"
+            icon="tag"
+          />
+          {{ tag }}
         </p>
       </div>
     </div>
@@ -43,6 +47,7 @@
           text-xs
           font-semibold
           inline-block
+          cursor-pointer
           py-1
           px-2
           uppercase
@@ -53,13 +58,10 @@
           h-[1.5rem]
           mb-2
         "
+        @click="handleRemoveTag(tag)"
       >
-        <font-awesome-icon
-          class="inline-block cursor-pointer mr-2"
-          icon="times"
-          @click="handleRemoveTag(tag)"
-        />
         {{ tag }}
+        <font-awesome-icon class="inline-block ml-2" icon="times" />
       </div>
     </div>
   </div>
