@@ -231,6 +231,7 @@ onBeforeMount(async () => {
   ]);
   contactAnnotations.notes = contact.value.profile.notes || '';
   contactAnnotations.description = contact.value.profile.description || '';
+  contactAnnotations.tags = contact.value.profile.tags || [];
   loading.value = false;
   securityButtonsDisabled.value = false;
 });
