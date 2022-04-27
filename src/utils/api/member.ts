@@ -10,8 +10,10 @@ import {
   GetPaymentData,
   GetPaymentsQuery,
   Paginated,
+  PaymentFlowParams,
   Serial,
   SetContributionData,
+  StartContributionData,
   UpdateMemberData,
 } from './api.interface';
 
@@ -110,15 +112,16 @@ export async function updateContribution(
 }
 
 export async function startContribution(
-  dataIn: SetContributionData
-): Promise<{ redirectUrl: string }> {
-  const { data } = await axios.post<Serial<{ redirectUrl: string }>>(
+  dataIn: StartContributionData
+): Promise<PaymentFlowParams> {
+  const { data } = await axios.post<Serial<PaymentFlowParams>>(
     '/member/me/contribution',
     {
       amount: dataIn.amount,
       period: dataIn.period,
       payFee: dataIn.payFee && dataIn.period === ContributionPeriod.Monthly,
       prorate: dataIn.prorate && dataIn.period === ContributionPeriod.Annually,
+      paymentMethod: dataIn.paymentMethod,
       completeUrl:
         import.meta.env.VITE_APP_BASE_URL + '/profile/contribution/complete',
     }
@@ -139,8 +142,8 @@ export async function cancelContribution(): Promise<void> {
   await axios.post('/member/me/contribution/cancel');
 }
 
-export async function updatePaymentSource(): Promise<{ redirectUrl: string }> {
-  const { data } = await axios.put<Serial<{ redirectUrl: string }>>(
+export async function updatePaymentSource(): Promise<PaymentFlowParams> {
+  const { data } = await axios.put<Serial<PaymentFlowParams>>(
     '/member/me/payment-source',
     {
       completeUrl:

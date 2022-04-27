@@ -17,6 +17,7 @@ import {
 import { MembershipStatus } from '../../utils/enums/membership-status.enum';
 import { ContributionInfo } from '../../utils/api/api.interface';
 import { fetchJoinContent } from '../../utils/api/content';
+import { PaymentMethod } from '../../utils/enums/payment-method.enum';
 
 const { t } = i18n.global;
 
@@ -30,6 +31,7 @@ const newContribution = reactive<ContributionData>({
   period: ContributionPeriod.Monthly,
   payFee: true,
   prorate: true,
+  paymentMethod: PaymentMethod.Card,
 
   // TODO: Can we move this?
   get totalAmount(): number {
@@ -99,7 +101,11 @@ const initContributionPage = async () => {
 
 const submitCreateContribution = () => {
   return startContribution(newContribution).then((data) => {
-    window.location.href = data.redirectUrl;
+    if (data.redirectUrl) {
+      window.location.href = data.redirectUrl;
+    } else if (data.clientSecret) {
+      // TODO
+    }
   });
 };
 
@@ -149,7 +155,11 @@ const updatePaymentSource = () => {
   updatePaymentSourceLoading.value = true;
   updateBankAccount()
     .then((data) => {
-      window.location.href = data.redirectUrl;
+      if (data.redirectUrl) {
+        window.location.href = data.redirectUrl;
+      } else {
+        // TODO: handle clientSecret route
+      }
     })
     .catch((err) => {
       // Only revert loading on error as success causes route change

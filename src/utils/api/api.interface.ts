@@ -2,6 +2,7 @@ import { ContributionPeriod } from '../enums/contribution-period.enum';
 import { ContributionType } from '../enums/contribution-type.enum';
 import { MembershipStatus } from '../enums/membership-status.enum';
 import { NewsletterStatus } from '../enums/newsletter-status.enum';
+import { PaymentMethod } from '../enums/payment-method.enum';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Noop {}
@@ -62,6 +63,11 @@ interface MemberData {
   email: string;
   firstname: string;
   lastname: string;
+}
+
+export interface PaymentFlowParams {
+  clientSecret?: string;
+  redirectUrl?: string;
 }
 
 interface MemberProfileData {
@@ -133,14 +139,15 @@ export interface ContributionInfo {
   membershipExpiryDate?: Date;
 }
 
-export interface UpdateContributionData {
+export interface SetContributionData {
   amount: number;
   payFee: boolean;
   prorate: boolean;
+  period: ContributionPeriod;
 }
 
-export interface SetContributionData extends UpdateContributionData {
-  period: ContributionPeriod;
+export interface StartContributionData extends SetContributionData {
+  paymentMethod: PaymentMethod;
 }
 
 export interface GetPaymentData {
@@ -285,7 +292,7 @@ export interface GetNoticeData {
   url?: string;
 }
 
-export interface SignupData extends SetContributionData {
+export interface SignupData extends StartContributionData {
   email: string;
   password: string;
   noContribution: boolean;

@@ -22,6 +22,7 @@ import {
   JoinSetupContent,
   UpdateMemberData,
 } from '../../../utils/api/api.interface';
+import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
 
 const { t } = i18n.global;
 
@@ -42,8 +43,10 @@ const signUpData = reactive<SignupData>({
   amount: 5,
   period: ContributionPeriod.Monthly,
   payFee: true,
-  noContribution: false,
   prorate: false,
+  paymentMethod: PaymentMethod.Card,
+
+  noContribution: false,
 
   get totalAmount(): number {
     return this.payFee && this.period === ContributionPeriod.Monthly
@@ -123,6 +126,8 @@ const submitSignUp = (router: Router) => {
     .then((data) => {
       if (data.redirectUrl) {
         window.location.href = data.redirectUrl;
+      } else if (data.clientSecret) {
+        // TODO
       } else {
         router.push({ path: '/join/confirm-email' });
       }
