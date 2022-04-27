@@ -74,7 +74,10 @@
       <ActionButton icon="eye" :to="calloutLink">
         {{ t('calloutAdminOverview.actions.view') }}
       </ActionButton>
-      <ActionButton icon="pencil-alt" :href="'/tools/polls/' + callout.slug">
+      <ActionButton
+        icon="pencil-alt"
+        :href="'/admin/callouts/edit/' + callout.slug"
+      >
         {{ t('calloutAdminOverview.actions.edit') }}
       </ActionButton>
       <ActionButton icon="clone" :href="'/tools/polls/' + callout.slug">
