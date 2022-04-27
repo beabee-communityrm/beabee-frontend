@@ -65,6 +65,11 @@ export async function createCallout(
   return toCallout(data);
 }
 
+export async function editCallout(calloutData: any): Promise<any> {
+  const { data } = await axios.patch('/callout', calloutData);
+  return toCallout(data);
+}
+
 export async function fetchResponses(
   id: string,
   query?: GetCalloutResponsesQuery
