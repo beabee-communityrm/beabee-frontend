@@ -52,6 +52,8 @@
         >{{ buttonText }}</AppButton
       >
 
+      <StripePayment v-if="clientSecret" :client-secret="clientSecret" />
+
       <JoinFooter :privacy-link="generalContent.privacyLink" />
     </form>
   </AuthBox>
@@ -70,19 +72,23 @@ import Contribution from '../../../components/contribution/Contribution.vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import { useJoin } from './use-join';
 import { generalContent } from '../../../store';
+import StripePayment from './components/StripePayment.vue';
 
 const { t, n } = useI18n();
 
 const {
   signUpData,
+  clientSecret,
   isContributionValid,
   isJoinFormInvalid,
   hasJoinError,
   loading,
   submitSignUp,
   joinContent,
-  setJoinContent,
+  initPage,
 } = useJoin();
+
+const stripePublicKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
 
 const route = useRoute();
 
@@ -99,6 +105,6 @@ const buttonText = computed(() =>
 );
 
 onBeforeMount(() => {
-  setJoinContent(route.query, !!generalContent.value.hideContribution);
+  initPage(route.query, !!generalContent.value.hideContribution);
 });
 </script>

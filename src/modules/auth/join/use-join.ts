@@ -58,20 +58,8 @@ const signUpData = reactive<SignupData>({
   },
 });
 
-const setJoinContent = (query: LocationQueryRaw, hideContribution: boolean) => {
-  fetchJoinContent()
-    .then((data) => {
-      joinContent.value = data;
-      signUpData.amount = query.amount ? +query.amount : data.initialAmount;
-      if (!data.showAbsorbFee) {
-        signUpData.payFee = false;
-      }
-      if (hideContribution) {
-        signUpData.noContribution = true;
-      }
-    })
-    .catch((err) => err);
-};
+const loading = ref(false);
+const clientSecret = ref('');
 
 const setupMemberData = reactive<SetupMemberData>({
   email: '',
@@ -118,7 +106,20 @@ const setupRules = computed(() => ({
 const joinValidation = useVuelidate(joinRules, signUpData);
 const setupValidation = useVuelidate(setupRules, setupMemberData);
 
-const loading = ref(false);
+async function initPage(query: LocationQueryRaw, hideContribution: boolean) {
+  loading.value = false;
+  clientSecret.value = '';
+
+  const data = await fetchJoinContent();
+  joinContent.value = data;
+  signUpData.amount = query.amount ? +query.amount : data.initialAmount;
+  if (!data.showAbsorbFee) {
+    signUpData.payFee = false;
+  }
+  if (hideContribution) {
+    signUpData.noContribution = true;
+  }
+}
 
 const submitSignUp = (router: Router) => {
   loading.value = true;
@@ -127,7 +128,7 @@ const submitSignUp = (router: Router) => {
       if (data.redirectUrl) {
         window.location.href = data.redirectUrl;
       } else if (data.clientSecret) {
-        // TODO
+        clientSecret.value = data.clientSecret;
       } else {
         router.push({ path: '/join/confirm-email' });
       }
@@ -243,6 +244,7 @@ const setSetupContent = () => {
 function useJoin() {
   return {
     signUpData,
+    clientSecret,
     isContributionValid,
     isJoinFormInvalid,
     hasJoinError,
@@ -253,7 +255,7 @@ function useJoin() {
     setupValidation,
     hasSetupError,
     joinContent,
-    setJoinContent,
+    initPage,
     setMemberData,
     setupContent,
     setSetupContent,
