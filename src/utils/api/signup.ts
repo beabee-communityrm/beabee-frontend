@@ -30,8 +30,8 @@ export async function signUp(
   ).data;
 }
 
-export async function completeSignUp(redirectFlowId: string): Promise<void> {
-  await axios.post('/signup/complete', { redirectFlowId, ...completeUrls });
+export async function completeSignUp(paymentFlowId: string): Promise<void> {
+  await axios.post('/signup/complete', { paymentFlowId, ...completeUrls });
 }
 
 export async function confirmEmail(
