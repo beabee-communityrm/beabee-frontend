@@ -213,7 +213,7 @@ async function submitForm() {
 
   const newCallout = await createCallout(callout);
   router.push({
-    path: '/admin/callouts/edit/' + newCallout.slug,
+    path: '/admin/callouts/view/' + newCallout.slug,
     query: { created: null },
   });
 }

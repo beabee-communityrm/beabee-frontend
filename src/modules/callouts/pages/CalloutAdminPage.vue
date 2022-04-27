@@ -34,12 +34,12 @@ const tabs = computed(() =>
         {
           id: 'calloutAdminOverview',
           label: t('calloutAdmin.overview'),
-          to: `/admin/callouts/edit/${callout.value.slug}`,
+          to: `/admin/callouts/view/${callout.value.slug}`,
         },
         {
           id: 'calloutAdminResponses',
           label: t('calloutAdmin.responses'),
-          to: `/admin/callouts/edit/${callout.value.slug}/responses`,
+          to: `/admin/callouts/view/${callout.value.slug}/responses`,
           ...(responseCount.value > -1 && {
             count: responseCount.value.toLocaleString(),
           }),
