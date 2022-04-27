@@ -47,10 +47,10 @@
 <script lang="ts" setup>
 import { parseISO } from 'date-fns';
 import slugify from 'slugify';
-import { reactive, ref, computed, markRaw, watch } from 'vue';
+import { reactive, ref, computed, markRaw, watch, onBeforeMount } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router';
-import { createCallout } from '../../../utils/api/callout';
+import { useRouter, useRoute } from 'vue-router';
+import { createCallout, fetchCallout } from '../../../utils/api/callout';
 import type { CreateCalloutData } from '../../../utils/api/api.interface';
 import PageTitle from '../../../components/PageTitle.vue';
 import AppHeading from '../../../components/AppHeading.vue';
@@ -68,6 +68,7 @@ import { Steps } from '../create-callout.interface';
 const { t } = useI18n();
 
 const router = useRouter();
+const route = useRoute();
 
 const steps: Steps = reactive({
   content: {
@@ -217,4 +218,11 @@ async function submitForm() {
     query: { created: null },
   });
 }
+
+onBeforeMount(async () => {
+  const calloutId = route.params.id as string;
+  await fetchCallout(calloutId + '1')
+    .then((c) => console.log('found callout', c))
+    .catch((err) => console.log('callout not found', err));
+});
 </script>
