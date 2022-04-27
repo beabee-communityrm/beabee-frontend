@@ -3,14 +3,14 @@
   <div class="flex flex-row flex-wrap ml-0 mt-2 sm:mt-0">
     <ContactTag
       v-for="tag in modelValue"
-      @click="handleRemoveTag(tag)"
+      :key="tag"
       :tag="tag"
       :has-remove-icon="true"
+      @click="handleRemoveTag(tag)"
     />
   </div>
   <div class="flex flex-col sm:flex-row">
     <div
-      @click="isTagMenuVisible = !isTagMenuVisible"
       class="
         cursor-pointer
         hover:bg-white
@@ -24,6 +24,7 @@
         p-2
       "
       :class="isTagMenuVisible ? 'h-auto focus:shadow-input' : ''"
+      @click="isTagMenuVisible = !isTagMenuVisible"
     >
       <p class="align-middle">
         <font-awesome-icon
@@ -35,8 +36,9 @@
       <div :class="isTagMenuVisible ? 'block' : 'hidden'" class="">
         <p
           v-for="tag in availableTags"
-          @click="handleAddTag(tag)"
+          :key="tag"
           class="hover:bg-primary-20 first:mt-2 p-2"
+          @click="handleAddTag(tag)"
         >
           <font-awesome-icon
             class="inline-block cursor-pointer mr-2 ml-2"
@@ -55,6 +57,7 @@ import { computed } from '@vue/reactivity';
 import ContactTag from './ContactTag.vue';
 
 const props = defineProps<{
+  tags: string[];
   modelValue: string[];
   label?: string;
 }>();
@@ -63,9 +66,7 @@ const emit = defineEmits(['update:modelValue']);
 const isTagMenuVisible = ref(false);
 
 const availableTags = computed(() =>
-  ['French', 'Blah blah', 'Go Bristol'].filter(
-    (e) => !props.modelValue.includes(e)
-  )
+  props.tags.filter((e) => !props.modelValue.includes(e))
 );
 
 const handleAddTag = (tag: string) => {

@@ -94,7 +94,12 @@
           :label="t('contacts.data.description')"
           class="mb-4"
         />
-        <TagDropdown v-model="contactAnnotations.tags" label="Tags" />
+        <TagDropdown
+          v-if="contactTags.length > 0"
+          v-model="contactAnnotations.tags"
+          :tags="contactTags"
+          label="Tags"
+        />
         <AppButton
           type="submit"
           variant="link"
@@ -167,6 +172,7 @@ import { fetchMember, updateMember } from '../../../utils/api/member';
 import AppInfoList from '../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
+import { fetchContactsContent } from '../../../utils/api/content';
 
 formatLocale;
 
@@ -179,6 +185,7 @@ const props = defineProps<{
 const contact = ref<GetMemberDataWith<
   'profile' | 'contribution' | 'roles'
 > | null>(null);
+const contactTags = ref<string[]>([]);
 const loading = ref(false);
 const securityButtonsDisabled = ref(false);
 const contactAnnotations = reactive({
@@ -224,6 +231,9 @@ const isRoleCurrent = (role: MemberRoleData): boolean => {
 };
 
 onBeforeMount(async () => {
+  loading.value = false;
+  securityButtonsDisabled.value = false;
+
   contact.value = await fetchMember(props.contact.id, [
     'profile',
     'contribution',
@@ -232,7 +242,7 @@ onBeforeMount(async () => {
   contactAnnotations.notes = contact.value.profile.notes || '';
   contactAnnotations.description = contact.value.profile.description || '';
   contactAnnotations.tags = contact.value.profile.tags || [];
-  loading.value = false;
-  securityButtonsDisabled.value = false;
+
+  contactTags.value = (await fetchContactsContent()).tags;
 });
 </script>
