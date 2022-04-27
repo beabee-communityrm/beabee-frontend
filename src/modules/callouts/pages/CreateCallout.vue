@@ -51,7 +51,10 @@ import { reactive, ref, computed, markRaw, watch, onBeforeMount } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
 import { createCallout, fetchCallout } from '../../../utils/api/callout';
-import type { CreateCalloutData } from '../../../utils/api/api.interface';
+import type {
+  CreateCalloutData,
+  GetMoreCalloutData,
+} from '../../../utils/api/api.interface';
 import PageTitle from '../../../components/PageTitle.vue';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
@@ -175,42 +178,45 @@ const isAllValid = computed(() =>
   stepsInOrder.value.every((step) => step.validated)
 );
 
+const makeCalloutData = (steps: Steps): CreateCalloutData => ({
+  slug: steps.url.data.useCustomSlug
+    ? steps.url.data.slug
+    : steps.url.data.autoSlug,
+  title: steps.titleAndImage.data.title,
+  excerpt: steps.titleAndImage.data.description,
+  image: steps.titleAndImage.data.coverImageURL,
+  intro: steps.content.data.introText,
+  formSchema: steps.content.data.formSchema,
+  starts: steps.dates.data.startNow
+    ? new Date()
+    : parseISO(steps.dates.data.startDate),
+  ...(steps.dates.data.hasEndDate && {
+    expires: parseISO(steps.dates.data.endDate),
+  }),
+  allowUpdate: steps.visibility.data.usersCanEditAnswers,
+  allowMultiple: false,
+  hidden: !steps.visibility.data.showOnUserDashboards,
+  access:
+    steps.visibility.data.whoCanTakePart === 'members'
+      ? 'member'
+      : steps.visibility.data.allowAnonymousResponses
+      ? 'anonymous'
+      : 'guest',
+  ...(steps.endMessage.data.whenFinished === 'message'
+    ? {
+        thanksText: steps.endMessage.data.thankYouText,
+        thanksTitle: steps.endMessage.data.thankYouTitle,
+      }
+    : {
+        thanksText: '',
+        thanksTitle: '',
+        thanksRedirect: steps.endMessage.data.thankYouRedirect,
+      }),
+});
+const makeStepsData = (data: GetMoreCalloutData): Steps => ({});
+
 async function submitForm() {
-  const callout: CreateCalloutData = {
-    slug: steps.url.data.useCustomSlug
-      ? steps.url.data.slug
-      : steps.url.data.autoSlug,
-    title: steps.titleAndImage.data.title,
-    excerpt: steps.titleAndImage.data.description,
-    image: steps.titleAndImage.data.coverImageURL,
-    intro: steps.content.data.introText,
-    formSchema: steps.content.data.formSchema,
-    starts: steps.dates.data.startNow
-      ? new Date()
-      : parseISO(steps.dates.data.startDate),
-    ...(steps.dates.data.hasEndDate && {
-      expires: parseISO(steps.dates.data.endDate),
-    }),
-    allowUpdate: steps.visibility.data.usersCanEditAnswers,
-    allowMultiple: false,
-    hidden: !steps.visibility.data.showOnUserDashboards,
-    access:
-      steps.visibility.data.whoCanTakePart === 'members'
-        ? 'member'
-        : steps.visibility.data.allowAnonymousResponses
-        ? 'anonymous'
-        : 'guest',
-    ...(steps.endMessage.data.whenFinished === 'message'
-      ? {
-          thanksText: steps.endMessage.data.thankYouText,
-          thanksTitle: steps.endMessage.data.thankYouTitle,
-        }
-      : {
-          thanksText: '',
-          thanksTitle: '',
-          thanksRedirect: steps.endMessage.data.thankYouRedirect,
-        }),
-  };
+  const callout: CreateCalloutData = makeCalloutData(steps);
 
   const newCallout = await createCallout(callout);
   router.push({

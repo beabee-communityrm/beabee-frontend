@@ -223,7 +223,6 @@ export interface GetBasicCalloutData extends BasicCalloutData {
 }
 
 export interface CreateCalloutData extends BasicCalloutData {
-  image: string;
   starts: Date;
   intro: string;
   thanksText: string;
