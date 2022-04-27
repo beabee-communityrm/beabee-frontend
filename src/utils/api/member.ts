@@ -127,11 +127,11 @@ export async function startContribution(
 }
 
 export async function completeStartContribution(
-  redirectFlowId: string
+  paymentFlowId: string
 ): Promise<ContributionInfo> {
   const { data } = await axios.post<Serial<ContributionInfo>>(
     '/member/me/contribution/complete',
-    { redirectFlowId }
+    { paymentFlowId }
   );
   return toContrib(data);
 }
@@ -152,11 +152,11 @@ export async function updatePaymentSource(): Promise<{ redirectUrl: string }> {
 }
 
 export async function completeUpdatePaymentSource(
-  redirectFlowId: string
+  paymentFlowId: string
 ): Promise<ContributionInfo> {
   const { data } = await axios.post<Serial<ContributionInfo>>(
     '/member/me/payment-source/complete',
-    { redirectFlowId }
+    { paymentFlowId }
   );
   return toContrib(data);
 }
