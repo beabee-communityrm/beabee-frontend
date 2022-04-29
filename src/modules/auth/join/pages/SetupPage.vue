@@ -1,6 +1,6 @@
 <template>
   <AuthBox>
-    <form @submit.prevent>
+    <form @submit.prevent="completeSetup">
       <JoinHeader
         class="mb-6"
         :title="
@@ -71,7 +71,6 @@
           v-model:line2="setupMemberData.addressLine2"
           v-model:postCode="setupMemberData.postCode"
           v-model:cityOrTown="setupMemberData.cityOrTown"
-          v-model:addressValidation="addressValidation"
           :is-address-required="setupMemberData.profile.deliveryOptIn"
         />
       </template>
@@ -99,15 +98,14 @@
         </div>
       </template>
 
-      <MessageBox v-if="hasSetupError" class="mb-4" />
+      <MessageBox v-if="setupValidation.$errors.length > 0" class="mb-4" />
 
       <AppButton
         variant="link"
         type="submit"
-        :loading="loading"
-        :disabled="hasSetupError"
+        :loading="saving"
+        :disabled="setupValidation.$invalid"
         class="w-full"
-        @click="completeSetup(router)"
       >
         {{ t('joinSetup.continue') }}
       </AppButton>
@@ -116,36 +114,126 @@
 </template>
 
 <script lang="ts" setup>
+import { onBeforeMount, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+import useVuelidate from '@vuelidate/core';
+import { helpers, required } from '@vuelidate/validators';
 import AuthBox from '../../AuthBox.vue';
 import JoinHeader from '../components/JoinHeader.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
 import AppAddress from '../../../../components/AppAddress.vue';
-import { useJoin } from '../use-join';
 import { errorGenerator } from '../../../../utils/form-error-generator';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import MessageBox from '../../../../components/MessageBox.vue';
-import { onBeforeMount } from '@vue/runtime-core';
-import { useRouter } from 'vue-router';
-import { useI18n } from 'vue-i18n';
+import { NewsletterStatus } from '../../../../utils/enums/newsletter-status.enum';
+import { fetchMember, updateMember } from '../../../../utils/api/member';
+import {
+  JoinSetupContent,
+  UpdateMemberData,
+} from '../../../../utils/api/api.interface';
+import { fetchJoinSetupContent } from '../../../../utils/api/content';
+import { SetupMemberData } from '../join.interface';
+import { emailValidationRule } from '../../../../utils/form-validation/rules';
 
 const { t } = useI18n();
 
 const router = useRouter();
 
-const {
-  setMemberData,
-  setupMemberData,
-  setSetupContent,
-  setupContent,
-  setupValidation,
-  hasSetupError,
-  addressValidation,
-  loading,
-  completeSetup,
-} = useJoin();
+const setupMemberData = reactive<SetupMemberData>({
+  email: '',
+  firstName: '',
+  lastName: '',
+  profile: {
+    newsletterOptIn: false,
+    deliveryOptIn: false,
+  },
+  addressLine1: '',
+  addressLine2: '',
+  cityOrTown: '',
+  postCode: '',
+});
 
-onBeforeMount(() => {
-  setMemberData();
-  setSetupContent();
+const setupContent = ref<JoinSetupContent>({
+  welcome: '',
+  newsletterText: '',
+  newsletterOptIn: '',
+  newsletterTitle: '',
+  showNewsletterOptIn: false,
+  showMailOptIn: false,
+  mailTitle: '',
+  mailText: '',
+  mailOptIn: '',
+});
+
+const saving = ref(false);
+
+const setupRules = {
+  email: emailValidationRule,
+  firstName: {
+    required: helpers.withMessage(
+      t('form.errors.firstName.required'),
+      required
+    ),
+  },
+  lastName: {
+    required: helpers.withMessage(t('form.errors.lastName.required'), required),
+  },
+};
+
+const setupValidation = useVuelidate(setupRules, setupMemberData);
+
+async function completeSetup() {
+  saving.value = true;
+
+  const updateMemberData: UpdateMemberData = {
+    email: setupMemberData.email,
+    firstname: setupMemberData.firstName,
+    lastname: setupMemberData.lastName,
+  };
+
+  if (
+    setupMemberData.profile.newsletterOptIn ||
+    setupContent.value.showMailOptIn
+  ) {
+    updateMemberData.profile = {
+      ...(setupMemberData.profile.newsletterOptIn && {
+        newsletterStatus: NewsletterStatus.Subscribed,
+      }),
+      ...(setupContent.value.showMailOptIn && {
+        deliveryOptIn: setupMemberData.profile.deliveryOptIn,
+        deliveryAddress: {
+          line1: setupMemberData.addressLine1,
+          line2: setupMemberData.addressLine2,
+          city: setupMemberData.cityOrTown,
+          postcode: setupMemberData.postCode,
+        },
+      }),
+    };
+  }
+
+  await updateMember('me', updateMemberData);
+  router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
+}
+
+onBeforeMount(async () => {
+  const member = await fetchMember('me', ['profile']);
+
+  setupMemberData.firstName = member.firstname;
+  setupMemberData.lastName = member.lastname;
+  setupMemberData.email = member.email;
+  setupMemberData.profile.newsletterOptIn =
+    member.profile.newsletterStatus === NewsletterStatus.Subscribed
+      ? true
+      : false;
+  setupMemberData.profile.deliveryOptIn = member.profile.deliveryOptIn;
+  if (member.profile.deliveryAddress) {
+    setupMemberData.addressLine1 = member.profile.deliveryAddress.line1;
+    setupMemberData.addressLine2 = member.profile.deliveryAddress.line2 || '';
+    setupMemberData.cityOrTown = member.profile.deliveryAddress.city;
+    setupMemberData.postCode = member.profile.deliveryAddress.postcode;
+  }
+
+  setupContent.value = await fetchJoinSetupContent();
 });
 </script>
