@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-5">
+  <div class="mb-3">
     <AppInput
       :model-value="line1"
       input-type="text"
@@ -11,7 +11,7 @@
     />
   </div>
 
-  <div class="mb-5">
+  <div class="mb-3">
     <AppInput
       :model-value="line2"
       input-type="text"
@@ -22,7 +22,7 @@
   </div>
 
   <div class="grid grid-cols-6 gap-4">
-    <div class="mb-5 col-span-4">
+    <div class="mb-3 col-span-4">
       <AppInput
         :model-value="cityOrTown"
         input-type="text"
@@ -34,7 +34,7 @@
       />
     </div>
 
-    <div class="mb-5 col-span-2">
+    <div class="mb-3 col-span-2">
       <AppInput
         :model-value="postCode"
         input-type="text"

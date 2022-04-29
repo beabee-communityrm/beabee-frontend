@@ -13,58 +13,17 @@
         :description="t('joinSetup.confirmDetails')"
       />
 
-      <div class="mb-3">
-        <AppInput
-          v-model="setupMemberData.email"
-          input-type="email"
-          required
-          :label="t('form.email')"
-          :error-message="errorGenerator(setupValidation, 'email')"
-          @blur="setupValidation.email.$touch"
-        />
-      </div>
-
-      <div class="mb-3">
-        <AppInput
-          v-model="setupMemberData.firstName"
-          required
-          :label="t('form.firstName')"
-          :error-message="errorGenerator(setupValidation, 'firstName')"
-          @blur="setupValidation.firstName.$touch"
-        />
-      </div>
-
-      <div class="mb-5">
-        <AppInput
-          v-model="setupMemberData.lastName"
-          required
-          :label="t('form.lastName')"
-          :error-message="errorGenerator(setupValidation, 'lastName')"
-          @blur="setupValidation.lastName.$touch"
-        />
-      </div>
+      <ContactInformation
+        v-model:email="setupMemberData.email"
+        v-model:firstName="setupMemberData.firstName"
+        v-model:lastName="setupMemberData.lastName"
+      />
 
       <template v-if="setupContent.showMailOptIn">
-        <p class="text-lg mb-1">
-          {{ setupContent.mailTitle }}
-        </p>
-
-        <p class="mb-4 text-sm">
-          {{ setupContent.mailText }}
-        </p>
-
-        <div class="mb-4">
-          <input
-            id="deliveryOptIn"
-            v-model="setupMemberData.profile.deliveryOptIn"
-            type="checkbox"
-            name="updates"
-          />
-
-          <label for="deliveryOptIn" class="font-bold ml-1">
-            {{ setupContent.mailOptIn }}
-          </label>
-        </div>
+        <ContactMailOptIn
+          v-model="setupMemberData.profile.deliveryOptIn"
+          :content="setupContent"
+        />
 
         <AppAddress
           v-model:line1="setupMemberData.addressLine1"
@@ -98,13 +57,13 @@
         </div>
       </template>
 
-      <MessageBox v-if="setupValidation.$errors.length > 0" class="mb-4" />
+      <MessageBox v-if="validation.$errors.length > 0" class="mb-4" />
 
       <AppButton
         variant="link"
         type="submit"
         :loading="saving"
-        :disabled="setupValidation.$invalid"
+        :disabled="validation.$invalid"
         class="w-full"
       >
         {{ t('joinSetup.continue') }}
@@ -118,12 +77,9 @@ import { onBeforeMount, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
-import { helpers, required } from '@vuelidate/validators';
 import AuthBox from '../../AuthBox.vue';
 import JoinHeader from '../components/JoinHeader.vue';
-import AppInput from '../../../../components/forms/AppInput.vue';
 import AppAddress from '../../../../components/AppAddress.vue';
-import { errorGenerator } from '../../../../utils/form-error-generator';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import MessageBox from '../../../../components/MessageBox.vue';
 import { NewsletterStatus } from '../../../../utils/enums/newsletter-status.enum';
@@ -133,14 +89,14 @@ import {
   UpdateMemberData,
 } from '../../../../utils/api/api.interface';
 import { fetchJoinSetupContent } from '../../../../utils/api/content';
-import { SetupMemberData } from '../join.interface';
-import { emailValidationRule } from '../../../../utils/form-validation/rules';
+import ContactInformation from '../../../../components/ContactInformation.vue';
+import ContactMailOptIn from '../../../../components/ContactMailOptIn.vue';
 
 const { t } = useI18n();
 
 const router = useRouter();
 
-const setupMemberData = reactive<SetupMemberData>({
+const setupMemberData = reactive({
   email: '',
   firstName: '',
   lastName: '',
@@ -168,20 +124,7 @@ const setupContent = ref<JoinSetupContent>({
 
 const saving = ref(false);
 
-const setupRules = {
-  email: emailValidationRule,
-  firstName: {
-    required: helpers.withMessage(
-      t('form.errors.firstName.required'),
-      required
-    ),
-  },
-  lastName: {
-    required: helpers.withMessage(t('form.errors.lastName.required'), required),
-  },
-};
-
-const setupValidation = useVuelidate(setupRules, setupMemberData);
+const validation = useVuelidate();
 
 async function completeSetup() {
   saving.value = true;
@@ -212,12 +155,18 @@ async function completeSetup() {
     };
   }
 
-  await updateMember('me', updateMemberData);
-  router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
+  try {
+    await updateMember('me', updateMemberData);
+    router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
+  } catch (err) {
+    saving.value = false;
+  }
 }
 
 onBeforeMount(async () => {
   const member = await fetchMember('me', ['profile']);
+
+  saving.value = false;
 
   setupMemberData.firstName = member.firstname;
   setupMemberData.lastName = member.lastname;
