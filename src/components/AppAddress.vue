@@ -7,6 +7,7 @@
       :error-message="errorGenerator(addressValidation, 'line1')"
       :required="isAddressRequired"
       @update:modelValue="$emit('update:line1', $event)"
+      @blur="addressValidation.line1.$touch"
     />
   </div>
 
@@ -16,6 +17,7 @@
       input-type="text"
       :label="t('form.addressLine2')"
       @update:modelValue="$emit('update:line2', $event)"
+      @blur="addressValidation.line2.$touch"
     />
   </div>
 
@@ -28,6 +30,7 @@
         :error-message="errorGenerator(addressValidation, 'cityOrTown')"
         :required="isAddressRequired"
         @update:modelValue="$emit('update:cityOrTown', $event)"
+        @blur="addressValidation.cityOrTown.$touch"
       />
     </div>
 
@@ -39,6 +42,7 @@
         :error-message="errorGenerator(addressValidation, 'postCode')"
         :required="isAddressRequired"
         @update:modelValue="$emit('update:postCode', $event)"
+        @blur="addressValidation.postCode.$touch"
       />
     </div>
   </div>
@@ -47,9 +51,9 @@
 <script lang="ts" setup>
 import { errorGenerator } from '../utils/form-error-generator';
 import AppInput from './forms/AppInput.vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { helpers, requiredIf } from '@vuelidate/validators';
-import { computed, watch } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
 
 const { t } = useI18n();
@@ -71,22 +75,17 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  addressValidation: {
-    type: Object,
-    default: () => ({}),
-  },
   isAddressRequired: {
     type: Boolean,
     default: false,
   },
 });
 
-const emits = defineEmits([
+defineEmits([
   'update:line1',
   'update:line2',
   'update:cityOrTown',
   'update:postCode',
-  'update:addressValidation',
 ]);
 
 const addressFieldError = t('form.errors.address.required');
@@ -121,12 +120,4 @@ const rules = computed(() => ({
 }));
 
 const addressValidation = useVuelidate(rules, props);
-
-watch(
-  () => addressValidation.value,
-  (addressValidation) => {
-    emits('update:addressValidation', addressValidation);
-  },
-  { immediate: true }
-);
 </script>
