@@ -4,7 +4,7 @@
       {{ t('join.absorbFeeText', { fee: n(fee, 'currency') }) }}
     </p>
 
-    <div class="mb-4 flex flex-row items-baseline">
+    <label class="mb-4 flex flex-row items-baseline">
       <input v-model="payFee" type="checkbox" :disabled="force" />
       <p class="ml-2">
         {{
@@ -14,7 +14,7 @@
           })
         }}
       </p>
-    </div>
+    </label>
   </section>
 </template>
 

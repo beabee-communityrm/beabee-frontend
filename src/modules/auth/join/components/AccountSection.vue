@@ -13,32 +13,59 @@
 
     <div class="mb-5">
       <AppInput
-        v-model="signUpData.email"
+        v-model="emailProxy"
         input-type="email"
         :label="t('form.email')"
-        :error-message="errorGenerator(joinValidation, 'email')"
-        @blur="joinValidation.email.$touch"
+        :error-message="errorGenerator(validation, 'email')"
+        @blur="validation.email.$touch"
       />
     </div>
 
     <AppInput
-      v-model="signUpData.password"
+      v-model="passwordProxy"
       input-type="password"
       :label="t('form.password')"
-      :error-message="errorGenerator(joinValidation, 'password')"
+      :error-message="errorGenerator(validation, 'password')"
       :info-message="t('form.passwordInfo')"
-      @blur="joinValidation.password.$touch"
+      @blur="validation.password.$touch"
     />
   </section>
 </template>
 
 <script lang="ts" setup>
+import useVuelidate from '@vuelidate/core';
 import AppInput from '../../../../components/forms/AppInput.vue';
 import { errorGenerator } from '../../../../utils/form-error-generator';
 import { useI18n } from 'vue-i18n';
-import { useJoin } from '../use-join';
+import {
+  emailValidationRule,
+  passwordValidationRule,
+} from '../../../../utils/form-validation/rules';
+import { computed } from 'vue';
+
+const emit = defineEmits(['update:email', 'update:password']);
+const props = defineProps<{
+  email: string;
+  password: string;
+}>();
+
+const emailProxy = computed({
+  get: () => props.email,
+  set: (email) => emit('update:email', email),
+});
+
+const passwordProxy = computed({
+  get: () => props.password,
+  set: (password) => emit('update:password', password),
+});
 
 const { t } = useI18n();
 
-const { signUpData, joinValidation } = useJoin();
+const validation = useVuelidate(
+  {
+    email: emailValidationRule,
+    password: passwordValidationRule,
+  },
+  props
+);
 </script>
