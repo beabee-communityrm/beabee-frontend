@@ -3,10 +3,7 @@ import { useRouter } from 'vue-router';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import { ContributionType } from '../../utils/enums/contribution-type.enum';
 import i18n from '../../i18n';
-import {
-  ContributionContent,
-  ContributionData,
-} from '../../components/contribution/contribution.interface';
+import { ContributionContent } from '../../components/contribution/contribution.interface';
 import {
   cancelContribution,
   startContribution,
@@ -18,6 +15,7 @@ import { MembershipStatus } from '../../utils/enums/membership-status.enum';
 import { ContributionInfo } from '../../utils/api/api.interface';
 import { fetchJoinContent } from '../../utils/api/content';
 import { PaymentMethod } from '../../utils/enums/payment-method.enum';
+import calcPaymentFee from '../../utils/calcPaymentFee';
 
 const { t } = i18n.global;
 
@@ -26,23 +24,15 @@ const currentContribution = reactive<ContributionInfo>({
   membershipStatus: MembershipStatus.None,
 });
 
-const newContribution = reactive<ContributionData>({
+const newContribution = reactive({
   amount: 5,
   period: ContributionPeriod.Monthly,
   payFee: true,
   prorate: true,
   paymentMethod: PaymentMethod.Card,
-
-  // TODO: Can we move this?
-  get totalAmount(): number {
-    return this.payFee && this.period === ContributionPeriod.Monthly
-      ? this.amount + this.fee
-      : this.amount;
-  },
-  get fee(): number {
-    return (this.amount + 20) / 100;
-  },
 });
+
+const newContributionFee = calcPaymentFee(newContribution);
 
 const contributionContent = reactive<ContributionContent>({
   initialAmount: 5,
@@ -224,6 +214,7 @@ export function useContribution() {
     isIniting,
     initContributionPage,
     newContribution,
+    newContributionFee,
     currentContribution,
     contributionContent,
     canSubmitContribution,

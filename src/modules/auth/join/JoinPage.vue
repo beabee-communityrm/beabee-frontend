@@ -26,7 +26,7 @@
         v-model:amount="signUpData.amount"
         v-model:period="signUpData.period"
         v-model:payFee="signUpData.payFee"
-        :fee="signUpData.fee"
+        :fee="fee"
         :content="joinContent"
       >
         <AccountSection
@@ -83,6 +83,7 @@ import { ContributionPeriod } from '../../../utils/enums/contribution-period.enu
 import { signUp } from '../../../utils/api/signup';
 import useVuelidate from '@vuelidate/core';
 import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
+import calcPaymentFee from '../../../utils/calcPaymentFee';
 
 const { t, n } = useI18n();
 
@@ -109,31 +110,27 @@ const signUpData = reactive({
   noContribution: false,
   prorate: false,
   paymentMethod: PaymentMethod.Card,
-
-  get totalAmount(): number {
-    return this.payFee && this.period === ContributionPeriod.Monthly
-      ? this.amount + this.fee
-      : this.amount;
-  },
-  get fee(): number {
-    return (this.amount + 20) / 100;
-  },
 });
+
+const fee = calcPaymentFee(signUpData);
 
 const loading = ref(false);
 const stripeClientSecret = ref('');
 
-const buttonText = computed(() =>
-  signUpData.noContribution
+const buttonText = computed(() => {
+  const totalAmount = signUpData.payFee
+    ? signUpData.amount + fee.value
+    : signUpData.amount;
+  return signUpData.noContribution
     ? t('join.now')
     : t('join.contribute', {
-        amount: n(signUpData.totalAmount, 'currency'),
+        amount: n(totalAmount, 'currency'),
         period:
           signUpData.period === 'monthly'
             ? t('common.month')
             : t('common.year'),
-      })
-);
+      });
+});
 
 const validation = useVuelidate();
 
