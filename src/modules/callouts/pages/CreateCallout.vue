@@ -73,20 +73,62 @@ const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
 
-const steps: Steps = reactive({
+const makeCalloutData = (steps: Steps): CreateCalloutData => ({
+  slug: steps.url.data.useCustomSlug
+    ? steps.url.data.slug
+    : steps.url.data.autoSlug,
+  title: steps.titleAndImage.data.title,
+  excerpt: steps.titleAndImage.data.description,
+  image: steps.titleAndImage.data.coverImageURL,
+  intro: steps.content.data.introText,
+  formSchema: steps.content.data.formSchema,
+  starts: steps.dates.data.startNow
+    ? new Date()
+    : parseISO(steps.dates.data.startDate),
+  ...(steps.dates.data.hasEndDate && {
+    expires: parseISO(steps.dates.data.endDate),
+  }),
+  allowUpdate: steps.visibility.data.usersCanEditAnswers,
+  allowMultiple: false,
+  hidden: !steps.visibility.data.showOnUserDashboards,
+  access:
+    steps.visibility.data.whoCanTakePart === 'members'
+      ? 'member'
+      : steps.visibility.data.allowAnonymousResponses
+      ? 'anonymous'
+      : 'guest',
+  ...(steps.endMessage.data.whenFinished === 'message'
+    ? {
+        thanksText: steps.endMessage.data.thankYouText,
+        thanksTitle: steps.endMessage.data.thankYouTitle,
+      }
+    : {
+        thanksText: '',
+        thanksTitle: '',
+        thanksRedirect: steps.endMessage.data.thankYouRedirect,
+      }),
+});
+const makeStepsData = (data: GetMoreCalloutData): Steps => ({
   content: {
     name: t('createCallout.steps.content.title'),
     description: t('createCallout.steps.content.description'),
     validated: false,
     component: markRaw(StepContent),
-    data: { introText: '', formSchema: { components: [] } },
+    data: {
+      introText: data.intro || '',
+      formSchema: data.formSchema || { components: [] },
+    },
   },
   titleAndImage: {
     name: t('createCallout.steps.titleAndImage.title'),
     description: t('createCallout.steps.titleAndImage.description'),
     validated: false,
     component: markRaw(StepTitleAndImage),
-    data: { title: '', description: '', coverImageURL: '' },
+    data: {
+      title: data.title || '',
+      description: data.excerpt || '',
+      coverImageURL: data.image || '',
+    },
   },
   visibility: {
     name: t('createCallout.steps.visibility.title'),
@@ -94,10 +136,18 @@ const steps: Steps = reactive({
     validated: false,
     component: markRaw(StepVisibility),
     data: {
-      whoCanTakePart: 'members',
-      allowAnonymousResponses: false,
-      showOnUserDashboards: true,
-      usersCanEditAnswers: false,
+      whoCanTakePart: data.access
+        ? data.access === 'member'
+          ? 'members'
+          : 'everyone'
+        : 'members',
+      allowAnonymousResponses: data.access
+        ? data.access === 'anonymous'
+          ? true
+          : false
+        : false,
+      showOnUserDashboards: data.hidden || false,
+      usersCanEditAnswers: data.allowUpdate || false,
     },
   },
   endMessage: {
@@ -107,9 +157,9 @@ const steps: Steps = reactive({
     component: markRaw(StepEndMessage),
     data: {
       whenFinished: 'message',
-      thankYouTitle: '',
-      thankYouText: '',
-      thankYouRedirect: '',
+      thankYouTitle: data.thanksTitle ? data.thanksTitle : '',
+      thankYouText: data.thanksText ? data.thanksText : '',
+      thankYouRedirect: data.thanksRedirect ? data.thanksRedirect : '',
     },
   },
   url: {
@@ -149,6 +199,9 @@ const steps: Steps = reactive({
   },
 });
 
+//@ts-expect-error
+const steps: Steps = reactive(makeStepsData({}));
+
 // TODO: should just be a computed
 watch(
   () => steps.titleAndImage.data.title,
@@ -178,43 +231,6 @@ const isAllValid = computed(() =>
   stepsInOrder.value.every((step) => step.validated)
 );
 
-const makeCalloutData = (steps: Steps): CreateCalloutData => ({
-  slug: steps.url.data.useCustomSlug
-    ? steps.url.data.slug
-    : steps.url.data.autoSlug,
-  title: steps.titleAndImage.data.title,
-  excerpt: steps.titleAndImage.data.description,
-  image: steps.titleAndImage.data.coverImageURL,
-  intro: steps.content.data.introText,
-  formSchema: steps.content.data.formSchema,
-  starts: steps.dates.data.startNow
-    ? new Date()
-    : parseISO(steps.dates.data.startDate),
-  ...(steps.dates.data.hasEndDate && {
-    expires: parseISO(steps.dates.data.endDate),
-  }),
-  allowUpdate: steps.visibility.data.usersCanEditAnswers,
-  allowMultiple: false,
-  hidden: !steps.visibility.data.showOnUserDashboards,
-  access:
-    steps.visibility.data.whoCanTakePart === 'members'
-      ? 'member'
-      : steps.visibility.data.allowAnonymousResponses
-      ? 'anonymous'
-      : 'guest',
-  ...(steps.endMessage.data.whenFinished === 'message'
-    ? {
-        thanksText: steps.endMessage.data.thankYouText,
-        thanksTitle: steps.endMessage.data.thankYouTitle,
-      }
-    : {
-        thanksText: '',
-        thanksTitle: '',
-        thanksRedirect: steps.endMessage.data.thankYouRedirect,
-      }),
-});
-const makeStepsData = (data: GetMoreCalloutData): Steps => ({});
-
 async function submitForm() {
   const callout: CreateCalloutData = makeCalloutData(steps);
 
@@ -227,8 +243,8 @@ async function submitForm() {
 
 onBeforeMount(async () => {
   const calloutId = route.params.id as string;
-  await fetchCallout(calloutId + '1')
-    .then((c) => console.log('found callout', c))
-    .catch((err) => console.log('callout not found', err));
+  await fetchCallout(calloutId)
+    .then((c) => Object.assign(steps, makeStepsData(c)))
+    .catch((err) => console.log('no callout found'));
 });
 </script>
