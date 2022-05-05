@@ -141,9 +141,9 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
     validated: data ? true : false,
     component: markRaw(StepUrlAndSharing),
     data: {
-      useCustomSlug: false,
+      useCustomSlug: data ? true : false,
       autoSlug: '',
-      slug: '',
+      slug: data?.slug || '',
       overrideShare: false,
       shareTitle: '',
       shareDescription: '',
