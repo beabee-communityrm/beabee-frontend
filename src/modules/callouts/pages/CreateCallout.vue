@@ -1,6 +1,7 @@
 <template>
   <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
-    <PageTitle :title="t('createCallout.title')" />
+    <PageTitle v-if="mode === 'new'" :title="t('createCallout.title')" />
+    <PageTitle v-if="mode === 'edit'" :title="t('editCallout.title')" />
   </div>
   <div class="flex gap-8">
     <CreateCalloutForm v-if="steps" v-model="steps" />
@@ -44,6 +45,7 @@ const router = useRouter();
 const route = useRoute();
 
 const steps: Ref<null | Steps> = ref(null);
+const mode = route.path.split('/')[3];
 
 const makeCalloutData = (steps: Steps): CreateCalloutData => ({
   slug: steps.url.data.useCustomSlug
