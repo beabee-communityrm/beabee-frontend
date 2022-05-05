@@ -1,8 +1,13 @@
 <template>
   <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
     <PageTitle v-if="mode === 'new'" :title="t('createCallout.title')" />
-    <PageTitle v-if="mode === 'edit'" :title="t('editCallout.title')" />
+    <PageTitle
+      v-if="mode === 'edit'"
+      :title="t('editCallout.title')"
+      subTitle="Warning!"
+    />
   </div>
+  <WarningBanner v-if="mode === 'edit'" />
   <div class="flex gap-8">
     <CreateCalloutForm v-if="steps" v-model="steps" />
   </div>
@@ -38,6 +43,7 @@ import StepDatesAndDuration from '../components/steps/DatesAndDuration.vue';
 import StepContent from '../components/steps/Content.vue';
 import { Steps } from '../create-callout.interface';
 import CreateCalloutForm from '../components/CreateCalloutForm.vue';
+import WarningBanner from '../components/WarningBanner.vue';
 
 const { t } = useI18n();
 

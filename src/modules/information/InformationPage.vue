@@ -1,8 +1,5 @@
 <template>
-  <PageTitle
-    :title="t('informationPage.title')"
-    :sub-title="t('informationPage.subTitle')"
-  />
+  <PageTitle :title="t('informationPage.title')" />
 
   <div class="grid lg:grid-cols-2 xl:grid-cols-3">
     <div>

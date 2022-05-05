@@ -398,7 +398,8 @@
     "title": "Create a callout"
   },
   "editCallout": {
-    "title": "Edit callout"
+    "title": "Edit callout",
+    "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
   "footer": {
     "contactUs": "Contact us at",
