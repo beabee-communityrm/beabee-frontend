@@ -397,6 +397,9 @@
     },
     "title": "Create a callout"
   },
+  "editCallout": {
+    "title": "Edit callout"
+  },
   "footer": {
     "contactUs": "Contact us at",
     "contacts": "Contacts",
