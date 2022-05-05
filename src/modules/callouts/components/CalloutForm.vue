@@ -8,6 +8,7 @@
       :is="selectedStep.component"
       v-model:data="selectedStep.data"
       v-model:validated="selectedStep.validated"
+      :mode="mode"
     ></component>
 
     <div class="flex mt-5">
@@ -50,7 +51,7 @@ import Stepper from '../components/Stepper.vue';
 import { Steps } from '../create-callout.interface';
 
 const { t } = useI18n();
-const props = defineProps<{ modelValue: Steps }>();
+const props = defineProps<{ modelValue: Steps; mode: 'edit' | 'new' }>();
 const emit = defineEmits(['update:modelValue', 'submit:modelValue']);
 
 // TODO: FIXME should just be a computed

@@ -7,11 +7,11 @@
       subTitle="Warning!"
     />
   </div>
-  <WarningBanner v-if="mode === 'edit'" />
   <div class="flex gap-8">
     <CalloutForm
       v-if="steps"
       v-model="steps"
+      :mode="mode"
       @submit:modelValue="submitForm()"
     />
   </div>
@@ -42,14 +42,13 @@ import StepDatesAndDuration from '../components/steps/DatesAndDuration.vue';
 import StepContent from '../components/steps/Content.vue';
 import { Steps } from '../create-callout.interface';
 import CalloutForm from '../components/CalloutForm.vue';
-import WarningBanner from '../components/WarningBanner.vue';
 
 const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
 
 const steps: Ref<null | Steps> = ref(null);
-const mode = route.path.split('/')[3];
+const mode: 'edit' | 'new' = route.name === 'edit-callout' ? 'edit' : 'new';
 
 const makeCalloutData = (steps: Steps): CreateCalloutData => ({
   slug: steps.url.data.useCustomSlug
@@ -179,14 +178,10 @@ const makeStepsData = (data: GetMoreCalloutData): Steps => ({
 async function submitForm() {
   // @ts-expect-error
   const callout: CreateCalloutData = makeCalloutData(steps);
-
-  if (mode === 'edit') {
-    const newCallout = await editCallout(callout);
-  } else if (mode === 'new') {
-    const newCallout = await createCallout(callout);
-  }
+  const newCallout =
+    mode === 'edit' ? await editCallout(callout) : await createCallout(callout);
   router.push({
-    path: '/admin/callouts/edit/' + callout.slug,
+    path: '/admin/callouts/edit/' + newCallout.slug,
     query: { created: null },
   });
 }
