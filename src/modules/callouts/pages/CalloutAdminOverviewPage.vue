@@ -76,7 +76,7 @@
       </ActionButton>
       <ActionButton
         icon="pencil-alt"
-        :href="'/admin/callouts/edit/' + callout.slug"
+        :to="'/admin/callouts/edit/' + callout.slug"
       >
         {{ t('calloutAdminOverview.actions.edit') }}
       </ActionButton>
