@@ -156,6 +156,11 @@ export interface LoginData {
   password: string;
 }
 
+export interface ContactsContent {
+  tags: string[];
+  manualPaymentSources: string[];
+}
+
 export interface GeneralContent {
   organisationName: string;
   siteUrl: string;
@@ -306,6 +311,6 @@ export interface GetStatsQuery {
 
 export interface GetStatsData {
   newMembers: number;
-  averageContribution: number;
-  totalRevenue: number;
+  averageContribution: number | null;
+  totalRevenue: number | null;
 }

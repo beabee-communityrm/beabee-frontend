@@ -33,24 +33,11 @@
         </template>
         <template #tags="{ item }">
           <span class="whitespace-normal">
-            <span
+            <ContactTag
               v-for="tag in item.profile.tags"
               :key="tag"
-              class="
-                bg-white
-                whitespace-nowrap
-                text-link
-                rounded
-                font-bold
-                inline-block
-                p-1
-                mr-1
-                mb-1
-                text-xs
-              "
-            >
-              {{ tag }}
-            </span>
+              :tag="tag"
+            />
           </span>
         </template>
         <template #contribution="{ item }">
@@ -113,6 +100,7 @@ import AppButton from '../../components/forms/AppButton.vue';
 import SearchBox from './components/SearchBox.vue';
 import AppSelect from '../../components/forms/AppSelect.vue';
 import AppVTabs from '../../components/tabs/AppVTabs.vue';
+import ContactTag from './components/ContactTag.vue';
 
 const { t, n } = useI18n();
 

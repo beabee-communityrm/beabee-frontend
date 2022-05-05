@@ -1,10 +1,12 @@
 {
   "adminDashboard": {
-    "hint1": "<p>Das beabee-Handbuch für Community-Journalismus <a href=\"https://beabee.io/neu-handbuch-community-journalismus/\">„Lust auf Lokal” ist erschienen</a>. Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
-    "hint2": "<p>Kennst du schon unseren <a href=\"https://beabee.io/online-kurs-fuer-community-journalismus/\">Kurs für die Reporterfabrik</a> von CORRECTIV? Dort lernst du Schritt für Schritt, wie Community-Journalismus funktioniert.</p>\n",
+    "hint1": "<p>Das beabee-Handbuch für Community-Journalismus „Lust auf Lokal” <a href=\"https://beabee.io/neu-handbuch-community-journalismus/\">ist erschienen</a>. Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
+    "hint2": "<p>Im <a href=\"https://beabee.io/#blog\">Blog</a> auf unserer Website findest du viele Best-Practice-Beispiele anderer Redaktionen, von denen du dich inspierieren lassen kannst.</p>\n",
     "hint3": "<p>Unsere Community-Meetups finden jeden dritten Donnerstag im Monat statt. Du willst dein Best-Practice-Beispiel mit anderen teilen? Schreib eine E-Mail an <a href=\"mailto:tobias.hauswurz{'@'}correctiv.org\">tobias.hauswurz{'@'}correctiv.org</a></p>\n",
     "joinSlack": "Tritt der beabee-Community auf Slack bei!",
     "latestCallout": {
+      "createNew": "Neuen Callout erstellen?",
+      "empty": "Es gibt aktuell keine aktiven Callouts.",
       "title": "Letzer Callout"
     },
     "mostRecentMembers": {
@@ -220,7 +222,7 @@
     "prorateIncreaseMessage": "Ihre Mitgliedschaft läuft noch {monthsLeft} {months} unter diesem Beitrag. Sie können eine Einmalzahlung in Höhe von {oneOffPayment} leisten um Ihre Mitgliedschaft sofort zu erneuern und den Beitrag zu erhöhen.",
     "prorateNoText": "Bis dahin bleibt Ihr Beitrag gleich.",
     "prorateNoTitle": "Ändern Sie meinen Beitrag ab dem {renewalDate}.",
-    "prorateYesText": "Wir buchen eine Einmalzahlung in Höhe von {oneOffPayment} ab und Ihre Mitgliedschaft wird mit ihrem neuen Beitrag sofort verlängert.",
+    "prorateYesText": "Wir buchen eine Einmalzahlung in Höhe von {oneOffPayment} ab und Ihre Mitgliedschaft wird mit Ihrem neuen Beitrag sofort verlängert.",
     "prorateYesTitle": "Meinen Beitrag sofort erhöhen.",
     "restartContribution": "Mitgliedschaft erneuern",
     "startContribution": "Mitgliedschaft beginnen",
@@ -245,6 +247,7 @@
         "description": "Entwerfe deinen Callout mit Fragen und Aufforderungen",
         "inputs": {
           "intro": {
+            "help": "<p>Die <strong>Einleitung</strong> erscheint über dem eigentlichen Callout. Erkläre darin, warum du den Callout machst, was das Ziel ist und wie die Antworten helfen. Gib so viel Kontext wie möglich, um den Teilnehmenden die Beantwortung zu erleichtern.</p>\n",
             "label": "Einleitung"
           }
         },
@@ -302,7 +305,7 @@
         "title": "Mailchimp-Synchronisation"
       },
       "titleAndImage": {
-        "description": "Gib deinem Callout eine Titel, eine Beschreibung und ein Bild.",
+        "description": "Gib deinem Callout einen Titel, eine Beschreibung und ein Bild.",
         "inputs": {
           "description": {
             "help": "<p>Die <strong>Kurzbeschreibung</strong> ergänzt den Titel und sollte in wenigen Worten erklären, worum es bei dem Callout geht.</p>\n",
@@ -333,7 +336,7 @@
           "overrideShare": {
             "label": "Callout-Titel und -Beschreibung zum Teilen verwenden?",
             "opts": {
-              "no": "Nein, Titel und Beschreibung selbst festlegen",
+              "no": "Nein, Titel und Beschreibung selbst festlegen.",
               "yes": "Ja"
             }
           },
@@ -357,23 +360,23 @@
         "description": "Entscheide, wer den Callout sehen kann.",
         "inputs": {
           "anonymous": {
-            "help": "<p>Wenn du <strong>anonyme Antworten</strong> erlaubst, werden Gastteilnehmer nicht nach ihren Kontakten gefragt. Auf Mitglieder hat das keinen Einfluss.</p>\n",
-            "label": "Möchtest du anonyme Antworten erlauben?",
+            "help": "<p>Wenn du <strong>anonyme Antworten</strong> erlaubst, werden Gastteilnehmer nicht nach ihren Kontaktdaten gefragt.</p>\n",
+            "label": "Sollen Gastteilnehmer anonym antworten können?",
             "opts": {
               "no": "Nein, Kontaktinformationen sind notwendig.",
-              "yes": "Ja, anonyme Antworten sind erlaubt."
+              "yes": "Ja, keine Kontaktdaten nötig."
             }
           },
           "editable": {
             "help": "<p>Wenn ja, können Teilnehmer vor dem Enddatum <strong>ihre abgeschickten Antworten bearbeiten</strong>.</p>\n",
             "label": "Sollen Teilnehmer ihre Antworten bearbeiten können, solange der Callout aktiv ist?",
             "opts": {
-              "no": "Nein, die Antworten können nicht bearbeitet werden",
+              "no": "Nein, die Antworten können nicht bearbeitet werden.",
               "yes": "Ja"
             }
           },
           "visible": {
-            "help": "<p>Du kannst den <strong>verstecken</strong>. Dann können Menschen mit dem richtigen Link den Callout beantworten.</p>\n",
+            "help": "<p>Du kannst den Callout <strong>verstecken</strong>. Dann können Menschen mit dem richtigen Link den Callout beantworten.</p>\n",
             "label": "Soll der Callout deinen Mitgliedern im Dashboard angezeigt werden?",
             "opts": {
               "no": "Nein, Callout nicht im Dashboard anzeigen.",
@@ -405,9 +408,9 @@
     "terms": "Allgemeine Geschäftsbedingungen"
   },
   "forgotPassword": {
-    "checkInbox": "Bitte schauen Sie in Ihren Posteingang und befolgen Sie die Anleitung in der Email. Sollte die Email nicht auftauchen, schauen Sie auch in ihrem Spamordner nach. ",
-    "description": "Bitte geben Sie Ihre Email-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.",
-    "message": "Gibt es einen Account mit der Email-Adresse {email}, bekommen Sie in Kürze eine Nachricht.",
+    "checkInbox": "Bitte schauen Sie in Ihren Posteingang und befolgen Sie die Anleitung in der E-Mail. Sollte die E-Mail nicht auftauchen, schauen Sie auch in ihrem Spamordner nach.",
+    "description": "Bitte geben Sie Ihre E-Mail-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.",
+    "message": "Gibt es einen Account mit der E-Mail-Adresse {email}, bekommen Sie in Kürze eine Nachricht.",
     "resetPassword": "Passwort zurücksetzen",
     "title": "Passwort vergessen?"
   },
@@ -418,15 +421,15 @@
     "cityOrTown": "Ort",
     "deliveryOptIn": "Einverständnis zur Postsendung",
     "description": "Bezeichnung",
-    "email": "Email",
+    "email": "E-Mail",
     "errors": {
       "address": {
         "required": "Dieses Feld wird benötigt, wenn Sie eine Adresse eintragen wollen."
       },
       "aggregator": "Es fehlt etwas! Bitte kontrollieren Sie die obigen Felder.",
       "email": {
-        "invalid": "Ungültige Email-Adresse",
-        "required": "Email-Adresse benötigt"
+        "invalid": "Ungültige E-Mail-Adresse",
+        "required": "E-Mail-Adresse benötigt"
       },
       "firstName": {
         "required": "Vorname benötigt"
@@ -467,7 +470,7 @@
     "title": "Home",
     "viewAllCallouts": "Alle Callouts anzeigen",
     "viewOpenCallouts": "Aktive Callouts anzeigen",
-    "welcome": "Herzlich willkommen {firstName}!",
+    "welcome": "Herzlich willkommen {firstName} {lastName}!",
     "yourProfile": "Ihr Profil"
   },
   "informationPage": {
@@ -487,13 +490,13 @@
     "contribution": "Beitrag",
     "errors": {
       "confirmEmail": {
-        "message": "Fast geschafft! Wir müssen nur noch Ihre Email-Adresse bestätigen, um fortzufahren.",
-        "proceed": "Wir haben Ihnen eine Email geschickt. Bitte klicken Sie auf den Bestätigung-Link, um fortzufahren.",
-        "title": "Email-Adresse bestätigen"
+        "message": "Fast geschafft! Wir müssen nur noch Ihre E-Mail-Adresse bestätigen, um fortzufahren.",
+        "proceed": "Wir haben Ihnen eine E-Mail geschickt. Bitte klicken Sie auf den Bestätigung-Link, um fortzufahren.",
+        "title": "E-Mail-Adresse bestätigen"
       },
       "duplicateEmail": {
-        "message": "Diese Email-Adresse ist bereits registriert. Bitte loggen Sie sich ein, um fortzufahren.",
-        "title": "Email-Adresse wiederholen"
+        "message": "Diese E-Mail-Adresse ist bereits registriert. Bitte loggen Sie sich ein, um fortzufahren.",
+        "title": "E-Mail-Adresse wiederholen"
       },
       "failed": {
         "backToJoin": "Zurück zur Registrierung",
@@ -523,7 +526,7 @@
     "login": "Login",
     "notMember": "Noch kein Mitglied?",
     "title": "Einloggen",
-    "wrongCredentials": "Falsche Kombination von Passwort und Email."
+    "wrongCredentials": "Falsche Kombination von Passwort und E-Mail."
   },
   "menu": {
     "admin": "Administration",
@@ -552,8 +555,8 @@
     "success": "Sehr gut! Das hat funktioniert."
   },
   "pageTitle": {
-    "confirmEmail": "Email-Adresse bestätigen",
-    "duplicateEmail": "Email-Adresse duplizieren",
+    "confirmEmail": "E-Mail-Adresse bestätigen",
+    "duplicateEmail": "E-Mail-Adresse duplizieren",
     "failed": "Fehler",
     "forgotPassword": "Passwort vergessen",
     "join": "Mitglied werden",

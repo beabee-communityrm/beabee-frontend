@@ -12,8 +12,8 @@
         :name="period.name"
         :value="period.name"
         class="absolute opacity-0 -z-10"
-        :checked="period.name === selectedPeriod"
-        @change="changePeriod(handleInput($event))"
+        :checked="period.name === modelValue"
+        @change="emit('update:modelValue', handleInput($event))"
       />
       <span
         class="
@@ -25,9 +25,7 @@
           cursor-pointer
         "
         :class="
-          period.name === selectedPeriod
-            ? 'bg-link text-white'
-            : 'hover:bg-link-10'
+          period.name === modelValue ? 'bg-link text-white' : 'hover:bg-link-10'
         "
       >
         {{
@@ -46,14 +44,10 @@ import { ContributionContent } from './contribution.interface';
 
 const { t } = useI18n();
 
-const emit = defineEmits(['changePeriod']);
+const emit = defineEmits(['update:modelValue']);
 
 defineProps<{
+  modelValue: ContributionPeriod;
   periods: ContributionContent['periods'];
-  selectedPeriod: ContributionPeriod;
 }>();
-
-const changePeriod = (period: string) => {
-  emit('changePeriod', period);
-};
 </script>

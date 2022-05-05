@@ -14,7 +14,7 @@
 
       <ContributionBox :contribution="currentContribution" class="mb-9" />
 
-      <form class="mb-7 md:mb-12" @submit.prevent>
+      <form class="mb-7 md:mb-12" @submit.prevent="submitContribution">
         <SectionTitle class="mb-2"
           >{{ t('contribution.billing') }}
         </SectionTitle>
@@ -24,8 +24,10 @@
         </p>
 
         <Contribution
-          v-model="newContribution"
-          v-model:isValid="isContributionValid"
+          v-model:amount="newContribution.amount"
+          v-model:payFee="newContribution.payFee"
+          v-model:period="newContribution.period"
+          :fee="newContribution.fee"
           :content="contributionContent"
           :show-period="showChangePeriod"
         />
@@ -47,12 +49,11 @@
         </MessageBox>
 
         <AppButton
-          :disabled="!canSubmitContribution"
+          :disabled="!canSubmitContribution || validation.$invalid"
           type="submit"
           variant="link"
           class="mb-4 w-full"
           :loading="submitContributionLoading"
-          @click="submitContribution"
         >
           {{ contributionButtonText }}
         </AppButton>
@@ -99,9 +100,10 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
+import useVuelidate from '@vuelidate/core';
 import { useContribution } from './use-contribution';
 
 import ContributionBox from './components/ContributionBox.vue';
@@ -124,7 +126,7 @@ const route = useRoute();
 const updatedPaymentSource = route.query.updatedPaymentSource !== undefined;
 const startedContribution = route.query.startedContribution !== undefined;
 
-const isContributionValid = ref(false);
+const validation = useVuelidate();
 
 const {
   isIniting,
