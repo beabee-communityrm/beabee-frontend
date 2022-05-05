@@ -24,7 +24,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
 import {
   createCallout,
-  editCallout,
+  updateCallout,
   fetchCallout,
 } from '../../../utils/api/callout';
 import type {
@@ -179,7 +179,9 @@ async function submitForm() {
   // @ts-expect-error
   const callout: CreateCalloutData = makeCalloutData(steps);
   const newCallout =
-    mode === 'edit' ? await editCallout(callout) : await createCallout(callout);
+    mode === 'edit'
+      ? await updateCallout(callout)
+      : await createCallout(callout);
   router.push({
     path: '/admin/callouts/edit/' + newCallout.slug,
     query: { created: null },
