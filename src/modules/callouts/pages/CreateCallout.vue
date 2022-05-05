@@ -85,64 +85,64 @@ const makeCalloutData = (steps: Steps): CreateCalloutData => ({
         thanksRedirect: steps.endMessage.data.thankYouRedirect,
       }),
 });
-const makeStepsData = (data: GetMoreCalloutData): Steps => ({
+const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
   content: {
     name: t('createCallout.steps.content.title'),
     description: t('createCallout.steps.content.description'),
-    validated: data.intro ? true : false,
+    validated: data?.intro ? true : false,
     component: markRaw(StepContent),
     data: {
-      introText: data.intro || '',
-      formSchema: data.formSchema || { components: [] },
+      introText: data?.intro || '',
+      formSchema: data?.formSchema || { components: [] },
     },
   },
   titleAndImage: {
     name: t('createCallout.steps.titleAndImage.title'),
     description: t('createCallout.steps.titleAndImage.description'),
-    validated: data.intro ? true : false,
+    validated: data?.intro ? true : false,
     component: markRaw(StepTitleAndImage),
     data: {
-      title: data.title || '',
-      description: data.excerpt || '',
-      coverImageURL: data.image || '',
+      title: data?.title || '',
+      description: data?.excerpt || '',
+      coverImageURL: data?.image || '',
     },
   },
   visibility: {
     name: t('createCallout.steps.visibility.title'),
     description: t('createCallout.steps.visibility.description'),
-    validated: data.intro ? true : false,
+    validated: data?.intro ? true : false,
     component: markRaw(StepVisibility),
     data: {
-      whoCanTakePart: data.access
-        ? data.access === 'member'
+      whoCanTakePart: data?.access
+        ? data?.access === 'member'
           ? 'members'
           : 'everyone'
         : 'members',
-      allowAnonymousResponses: data.access
-        ? data.access === 'anonymous'
+      allowAnonymousResponses: data?.access
+        ? data?.access === 'anonymous'
           ? true
           : false
         : false,
-      showOnUserDashboards: data.hidden || false,
-      usersCanEditAnswers: data.allowUpdate || false,
+      showOnUserDashboards: data?.hidden || false,
+      usersCanEditAnswers: data?.allowUpdate || false,
     },
   },
   endMessage: {
     name: 'End message',
     description: 'Set a final thank you message or page to redirect',
-    validated: data.intro ? true : false,
+    validated: data?.intro ? true : false,
     component: markRaw(StepEndMessage),
     data: {
       whenFinished: 'message',
-      thankYouTitle: data.thanksTitle ? data.thanksTitle : '',
-      thankYouText: data.thanksText ? data.thanksText : '',
-      thankYouRedirect: data.thanksRedirect ? data.thanksRedirect : '',
+      thankYouTitle: data?.thanksTitle ? data?.thanksTitle : '',
+      thankYouText: data?.thanksText ? data?.thanksText : '',
+      thankYouRedirect: data?.thanksRedirect ? data?.thanksRedirect : '',
     },
   },
   url: {
     name: t('createCallout.steps.url.title'),
     description: t('createCallout.steps.url.description'),
-    validated: data.intro ? true : false,
+    validated: data?.intro ? true : false,
     component: markRaw(StepUrlAndSharing),
     data: {
       useCustomSlug: false,
@@ -165,7 +165,7 @@ const makeStepsData = (data: GetMoreCalloutData): Steps => ({
   dates: {
     name: t('createCallout.steps.dates.title'),
     description: t('createCallout.steps.dates.description'),
-    validated: data.intro ? true : false,
+    validated: data?.intro ? true : false,
     component: markRaw(StepDatesAndDuration),
     data: {
       startNow: true,
@@ -175,6 +175,7 @@ const makeStepsData = (data: GetMoreCalloutData): Steps => ({
     },
   },
 });
+
 async function submitForm() {
   // @ts-expect-error
   const callout: CreateCalloutData = makeCalloutData(steps);
@@ -187,11 +188,12 @@ async function submitForm() {
     query: { created: null },
   });
 }
+
 onBeforeMount(async () => {
   const calloutId = route.params.id as string;
-  await fetchCallout(calloutId)
-    .then((c) => (steps.value = makeStepsData(c)))
-    //@ts-expect-error
-    .catch((err) => (steps.value = makeStepsData({})));
+  steps.value =
+    mode === 'edit'
+      ? makeStepsData(await fetchCallout(calloutId))
+      : makeStepsData();
 });
 </script>
