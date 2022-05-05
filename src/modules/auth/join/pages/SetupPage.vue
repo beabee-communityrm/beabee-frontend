@@ -2,16 +2,20 @@
   <AuthBox>
     <form @submit.prevent="completeSetup">
       <JoinHeader
-        class="mb-6"
         :title="
           t('joinSetup.welcome', {
             firstName: setupMemberData.firstName,
             lastName: setupMemberData.lastName,
           })
         "
-        :sub-title="setupContent.welcome"
-        :description="t('joinSetup.confirmDetails')"
       />
+      <div
+        class="mb-6 content-message"
+        v-html="t('joinSetup.confirmDetails')"
+      />
+      <p class="mt-2">
+        {{ setupContent.welcome }}
+      </p>
 
       <ContactInformation
         v-model:email="setupMemberData.email"

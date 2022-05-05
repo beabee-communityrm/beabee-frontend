@@ -1,12 +1,9 @@
 <template>
   <AuthBox>
-    <form @submit.prevent="submitSignUp">
-      <JoinHeader
-        class="mb-3"
-        :title="joinContent.title"
-        :description="joinContent.subtitle"
-      />
+    <JoinHeader :title="joinContent.title" />
 
+    <form v-if="!stripePaymentReady" @submit.prevent="submitSignUp">
+      <div class="mb-3 content-message" v-html="joinContent.subtitle" />
       <h3
         v-if="joinContent.showNoContribution"
         class="font-semibold text-lg mb-1"
