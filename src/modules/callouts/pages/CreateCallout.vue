@@ -9,25 +9,24 @@
   </div>
   <WarningBanner v-if="mode === 'edit'" />
   <div class="flex gap-8">
-    <CreateCalloutForm v-if="steps" v-model="steps" />
+    <CreateCalloutForm
+      v-if="steps"
+      v-model="steps"
+      @submit:modelValue="submitForm()"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { parseISO } from 'date-fns';
-import slugify from 'slugify';
-import {
-  reactive,
-  ref,
-  computed,
-  markRaw,
-  watch,
-  onBeforeMount,
-  Ref,
-} from 'vue';
+import { ref, markRaw, onBeforeMount, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
-import { createCallout, fetchCallout } from '../../../utils/api/callout';
+import {
+  createCallout,
+  editCallout,
+  fetchCallout,
+} from '../../../utils/api/callout';
 import type {
   CreateCalloutData,
   GetMoreCalloutData,
@@ -38,7 +37,7 @@ import StepVisibility from '../components/steps/Visibility.vue';
 import StepTitleAndImage from '../components/steps/TitleAndImage.vue';
 import StepEndMessage from '../components/steps/EndMessage.vue';
 import StepUrlAndSharing from '../components/steps/UrlAndSharing.vue';
-import StepMailchimpSync from '../components/steps/MailchimpSync.vue';
+// import StepMailchimpSync from '../components/steps/MailchimpSync.vue';
 import StepDatesAndDuration from '../components/steps/DatesAndDuration.vue';
 import StepContent from '../components/steps/Content.vue';
 import { Steps } from '../create-callout.interface';
@@ -46,7 +45,6 @@ import CreateCalloutForm from '../components/CreateCalloutForm.vue';
 import WarningBanner from '../components/WarningBanner.vue';
 
 const { t } = useI18n();
-
 const router = useRouter();
 const route = useRoute();
 
@@ -178,17 +176,25 @@ const makeStepsData = (data: GetMoreCalloutData): Steps => ({
     },
   },
 });
+async function submitForm() {
+  // @ts-expect-error
+  const callout: CreateCalloutData = makeCalloutData(steps);
 
+  if (mode === 'edit') {
+    const newCallout = await editCallout(callout);
+  } else if (mode === 'new') {
+    const newCallout = await createCallout(callout);
+  }
+  router.push({
+    path: '/admin/callouts/edit/' + callout.slug,
+    query: { created: null },
+  });
+}
 onBeforeMount(async () => {
   const calloutId = route.params.id as string;
   await fetchCallout(calloutId)
-    .then((c) => {
-      console.log('found callout', c, makeStepsData(c));
-      steps.value = makeStepsData(c);
-    })
-    .catch((err) => {
-      //@ts-expect-error
-      steps.value = makeStepsData({});
-    });
+    .then((c) => (steps.value = makeStepsData(c)))
+    //@ts-expect-error
+    .catch((err) => (steps.value = makeStepsData({})));
 });
 </script>

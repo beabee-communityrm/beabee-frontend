@@ -54,12 +54,12 @@ const props = defineProps<{ modelValue: Steps }>();
 const emit = defineEmits(['update:modelValue', 'submit:modelValue']);
 
 // TODO: FIXME should just be a computed
-// watch(
-//   () => props.modelValue.titleAndImage.data.title,
-//   (title) => {
-//     props.modelValue.url.data.autoSlug = slugify(title, { lower: true });
-//   }
-// );
+watch(
+  () => props.modelValue.titleAndImage.data.title,
+  (title) => {
+    props.modelValue.url.data.autoSlug = slugify(title, { lower: true });
+  }
+);
 
 const stepsInOrder = computed(() => [
   props.modelValue.content,
