@@ -29,7 +29,7 @@
         v-show="isLastStep"
         class="ml-2"
         :disabled="!isAllValid"
-        @click="$emit('submit:modelValue')"
+        @click="$emit('submit')"
         >{{
           props.modelValue.dates.data.startNow
             ? t('createCallout.actions.publish')
@@ -52,7 +52,7 @@ import { Steps } from '../create-callout.interface';
 
 const { t } = useI18n();
 const props = defineProps<{ modelValue: Steps; mode: 'edit' | 'new' }>();
-const emit = defineEmits(['update:modelValue', 'submit:modelValue']);
+const emit = defineEmits(['submit']);
 
 // TODO: FIXME should just be a computed
 watch(

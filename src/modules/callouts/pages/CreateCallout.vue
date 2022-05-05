@@ -8,7 +8,7 @@
       v-if="steps"
       v-model="steps"
       :mode="mode"
-      @submit:modelValue="submitForm()"
+      @submit="submitForm()"
     />
   </div>
 </template>
