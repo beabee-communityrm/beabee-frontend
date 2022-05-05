@@ -15,7 +15,6 @@ import { MembershipStatus } from '../../utils/enums/membership-status.enum';
 import { ContributionInfo } from '../../utils/api/api.interface';
 import { fetchJoinContent } from '../../utils/api/content';
 import { PaymentMethod } from '../../utils/enums/payment-method.enum';
-import calcPaymentFee from '../../utils/calcPaymentFee';
 
 const { t } = i18n.global;
 
@@ -29,10 +28,9 @@ const newContribution = reactive({
   period: ContributionPeriod.Monthly,
   payFee: true,
   prorate: true,
+  // TODO
   paymentMethod: PaymentMethod.Card,
 });
-
-const newContributionFee = calcPaymentFee(newContribution);
 
 const contributionContent = reactive<ContributionContent>({
   initialAmount: 5,
@@ -214,7 +212,6 @@ export function useContribution() {
     isIniting,
     initContributionPage,
     newContribution,
-    newContributionFee,
     currentContribution,
     contributionContent,
     canSubmitContribution,

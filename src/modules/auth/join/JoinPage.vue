@@ -23,7 +23,7 @@
         v-model:amount="signUpData.amount"
         v-model:period="signUpData.period"
         v-model:payFee="signUpData.payFee"
-        :fee="fee"
+        v-model:paymentMethod="signUpData.paymentMethod"
         :content="joinContent"
       >
         <AccountSection
@@ -50,13 +50,16 @@
         >{{ buttonText }}</AppButton
       >
 
-      <StripePayment
-        v-if="stripeClientSecret"
-        :client-secret="stripeClientSecret"
-      />
-
       <JoinFooter :privacy-link="generalContent.privacyLink" />
     </form>
+
+    <StripePayment
+      v-if="stripeClientSecret"
+      :show="stripePaymentReady"
+      :client-secret="stripeClientSecret"
+      :payment-data="signUpData"
+      @ready="stripePaymentReady = true"
+    />
   </AuthBox>
 </template>
 
@@ -109,14 +112,13 @@ const signUpData = reactive({
   paymentMethod: PaymentMethod.Card,
 });
 
-const fee = calcPaymentFee(signUpData);
-
 const loading = ref(false);
+const stripePaymentReady = ref(false);
 const stripeClientSecret = ref('');
 
 const buttonText = computed(() => {
   const totalAmount = signUpData.payFee
-    ? signUpData.amount + fee.value
+    ? signUpData.amount + calcPaymentFee(signUpData).value
     : signUpData.amount;
   return signUpData.noContribution
     ? t('join.now')

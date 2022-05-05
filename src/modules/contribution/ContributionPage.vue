@@ -27,7 +27,7 @@
           v-model:amount="newContribution.amount"
           v-model:payFee="newContribution.payFee"
           v-model:period="newContribution.period"
-          :fee="newContributionFee"
+          v-model:paymentMethod="newContribution.paymentMethod"
           :content="contributionContent"
           :show-period="showChangePeriod"
         />
@@ -133,7 +133,6 @@ const {
   initContributionPage,
   currentContribution,
   newContribution,
-  newContributionFee,
   contributionContent,
   canSubmitContribution,
   submitContribution,
