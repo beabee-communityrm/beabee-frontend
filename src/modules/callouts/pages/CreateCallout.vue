@@ -1,11 +1,7 @@
 <template>
   <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
     <PageTitle v-if="mode === 'new'" :title="t('createCallout.title')" />
-    <PageTitle
-      v-if="mode === 'edit'"
-      :title="t('editCallout.title')"
-      subTitle="Warning!"
-    />
+    <PageTitle v-if="mode === 'edit'" :title="t('editCallout.title')" />
   </div>
   <div class="flex gap-8">
     <CalloutForm
