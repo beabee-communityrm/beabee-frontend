@@ -8,13 +8,19 @@ import { completeSignUp } from '../../../../utils/api/signup';
 const route = useRoute();
 const router = useRouter();
 
-onBeforeMount(() => {
-  completeSignUp(route.query.redirect_flow_id as string)
-    .then(() => {
+onBeforeMount(async () => {
+  const paymentFlowId = (
+    route.query.redirect_flow_id || route.query.setup_intent
+  )?.toString();
+
+  if (paymentFlowId) {
+    try {
+      await completeSignUp(paymentFlowId);
       router.replace('/join/confirm-email');
-    })
-    .catch(() => {
-      router.replace('/join/failed');
-    });
+      return;
+    } catch (err) {}
+  }
+
+  router.replace('/join/failed');
 });
 </script>
