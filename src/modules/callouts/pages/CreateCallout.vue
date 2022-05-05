@@ -89,7 +89,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
   content: {
     name: t('createCallout.steps.content.title'),
     description: t('createCallout.steps.content.description'),
-    validated: data?.intro ? true : false,
+    validated: data ? true : false,
     component: markRaw(StepContent),
     data: {
       introText: data?.intro || '',
@@ -99,7 +99,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
   titleAndImage: {
     name: t('createCallout.steps.titleAndImage.title'),
     description: t('createCallout.steps.titleAndImage.description'),
-    validated: data?.intro ? true : false,
+    validated: data ? true : false,
     component: markRaw(StepTitleAndImage),
     data: {
       title: data?.title || '',
@@ -110,7 +110,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
   visibility: {
     name: t('createCallout.steps.visibility.title'),
     description: t('createCallout.steps.visibility.description'),
-    validated: data?.intro ? true : false,
+    validated: data ? true : false,
     component: markRaw(StepVisibility),
     data: {
       whoCanTakePart: data?.access
@@ -130,7 +130,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
   endMessage: {
     name: 'End message',
     description: 'Set a final thank you message or page to redirect',
-    validated: data?.intro ? true : false,
+    validated: data ? true : false,
     component: markRaw(StepEndMessage),
     data: {
       whenFinished: 'message',
@@ -142,7 +142,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
   url: {
     name: t('createCallout.steps.url.title'),
     description: t('createCallout.steps.url.description'),
-    validated: data?.intro ? true : false,
+    validated: data ? true : false,
     component: markRaw(StepUrlAndSharing),
     data: {
       useCustomSlug: false,
@@ -165,7 +165,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
   dates: {
     name: t('createCallout.steps.dates.title'),
     description: t('createCallout.steps.dates.description'),
-    validated: data?.intro ? true : false,
+    validated: data ? true : false,
     component: markRaw(StepDatesAndDuration),
     data: {
       startNow: true,
