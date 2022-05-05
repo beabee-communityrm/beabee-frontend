@@ -9,7 +9,7 @@
   </div>
   <WarningBanner v-if="mode === 'edit'" />
   <div class="flex gap-8">
-    <CreateCalloutForm
+    <CalloutForm
       v-if="steps"
       v-model="steps"
       @submit:modelValue="submitForm()"
@@ -41,7 +41,7 @@ import StepUrlAndSharing from '../components/steps/UrlAndSharing.vue';
 import StepDatesAndDuration from '../components/steps/DatesAndDuration.vue';
 import StepContent from '../components/steps/Content.vue';
 import { Steps } from '../create-callout.interface';
-import CreateCalloutForm from '../components/CreateCalloutForm.vue';
+import CalloutForm from '../components/CalloutForm.vue';
 import WarningBanner from '../components/WarningBanner.vue';
 
 const { t } = useI18n();
