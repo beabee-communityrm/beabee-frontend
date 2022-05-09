@@ -32,7 +32,7 @@
         </template>
         <template #title="{ item, value }">
           <router-link
-            :to="'/admin/callouts/edit/' + item.slug"
+            :to="'/admin/callouts/view/' + item.slug"
             class="text-base text-link font-bold"
           >
             {{ value }}

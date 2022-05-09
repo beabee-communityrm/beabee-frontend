@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid grid-cols-2 gap-6">
+    <div class="grid grid-cols-2 gap-6" v-if="mode === 'new'">
       <div class="col-span-1">
         <AppRadioGroup
           v-model="dataProxy.useCustomSlug"
@@ -88,7 +88,8 @@ import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import { UrlAndSharingStepProps } from '../../create-callout.interface';
 
 const emit = defineEmits(['update:data', 'update:validated']);
-const props = defineProps<{ data: UrlAndSharingStepProps }>();
+const props =
+  defineProps<{ data: UrlAndSharingStepProps; mode: 'edit' | 'new' }>();
 
 const { t } = useI18n();
 const inputT = (key: string) => t('createCallout.steps.url.inputs.' + key);

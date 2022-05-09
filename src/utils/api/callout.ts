@@ -10,6 +10,7 @@ import {
   GetCalloutResponsesQuery,
   CreateCalloutResponseData,
   CreateCalloutData,
+  UpdateCalloutData,
 } from './api.interface';
 
 // TODO: dedupe from member
@@ -62,6 +63,14 @@ export async function createCallout(
     // TODO: passing calloutData directly is not safe, it could contain extra properties
     calloutData
   );
+  return toCallout(data);
+}
+
+export async function updateCallout(
+  slug: string,
+  calloutData: UpdateCalloutData
+): Promise<any> {
+  const { data } = await axios.patch('/callout/' + slug, calloutData);
   return toCallout(data);
 }
 

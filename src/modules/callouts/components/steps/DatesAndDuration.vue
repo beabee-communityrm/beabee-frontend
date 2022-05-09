@@ -3,6 +3,7 @@
     <div class="grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <AppRadioGroup
+          v-if="mode === 'new'"
           v-model="dataProxy.startNow"
           name="calloutStartDate"
           :label="inputT('starts.label')"
@@ -12,10 +13,11 @@
           ]"
         />
         <AppInput
-          v-if="!dataProxy.startNow"
+          v-if="!dataProxy.startNow || mode === 'edit'"
           v-model="dataProxy.startDate"
           inputType="date"
           required
+          :label="mode === 'edit' ? inputT('starts.label') : undefined"
           :error-message="validation.startDate.$errors[0]?.$message"
           @blur="validation.startDate.$touch"
         />
@@ -56,7 +58,10 @@ import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
 import { DateAndDurationStepProps } from '../../create-callout.interface';
 
 const emit = defineEmits(['update:data', 'update:validated']);
-const props = defineProps<{ data: DateAndDurationStepProps }>();
+const props = defineProps<{
+  data: DateAndDurationStepProps;
+  mode: 'new' | 'edit';
+}>();
 
 const { t } = useI18n();
 const inputT = (key: string) => t('createCallout.steps.dates.inputs.' + key);

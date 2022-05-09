@@ -22,7 +22,7 @@
     >
       <div class="flex-col">
         <!--<p><b>36</b> {{ t('adminDashboard.responsesSoFar') }}</p>-->
-        <router-link :to="`/admin/callouts/edit/${callout.slug}/responses`">
+        <router-link :to="`/admin/callouts/view/${callout.slug}/responses`">
           <p class="text-link text-sm">{{ t('See all responses') }}</p>
         </router-link>
       </div>
