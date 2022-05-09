@@ -1,12 +1,5 @@
 <template>
-  <PageTitle
-    :title="t(mode === 'new' ? 'createCallout.title' : 'editCallout.title')"
-    border
-    no-collapse
-  />
-  <div class="flex gap-8">
-    <CalloutForm v-if="steps" :steps="steps" :mode="mode" />
-  </div>
+  <CalloutForm v-if="steps" :steps="steps" :mode="mode" />
 </template>
 
 <script lang="ts" setup>
@@ -15,7 +8,6 @@ import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { fetchCallout } from '../../../utils/api/callout';
 import type { GetMoreCalloutData } from '../../../utils/api/api.interface';
-import PageTitle from '../../../components/PageTitle.vue';
 
 import StepVisibility from '../components/steps/Visibility.vue';
 import StepTitleAndImage from '../components/steps/TitleAndImage.vue';
@@ -26,6 +18,7 @@ import StepDatesAndDuration from '../components/steps/DatesAndDuration.vue';
 import StepContent from '../components/steps/Content.vue';
 import { Steps } from '../create-callout.interface';
 import CalloutForm from '../components/CalloutForm.vue';
+import { format } from 'date-fns';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -116,10 +109,10 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
     validated: data ? true : false,
     component: markRaw(StepDatesAndDuration),
     data: {
-      startNow: true,
-      hasEndDate: false,
-      startDate: '',
-      endDate: '',
+      startNow: data ? true : false,
+      hasEndDate: !!data?.expires,
+      startDate: data?.starts ? format(data.starts, 'yyyy-MM-dd') : '',
+      endDate: data?.expires ? format(data.expires, 'yyyy-MM-dd') : '',
     },
   },
 });

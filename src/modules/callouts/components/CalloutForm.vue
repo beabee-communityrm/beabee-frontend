@@ -1,41 +1,54 @@
 <template>
-  <div class="flex-0 basis-menu">
-    <Stepper v-model="selectedStepIndex" :steps="stepsInOrder" />
-  </div>
-  <div class="flex-1">
-    <AppHeading class="mb-5">{{ selectedStep.name }}</AppHeading>
-    <component
-      :is="selectedStep.component"
-      v-model:data="selectedStep.data"
-      v-model:validated="selectedStep.validated"
-      :mode="mode"
-    ></component>
+  <PageTitle
+    :title="t(mode === 'new' ? 'createCallout.title' : 'editCallout.title')"
+    border
+    no-collapse
+  >
+    <div v-if="mode === 'edit'" class="flex-0 ml-3">
+      <AppButton :disabled="!isAllValid" @click="submitForm">{{
+        t('createCallout.actions.update')
+      }}</AppButton>
+    </div>
+  </PageTitle>
+  <div class="flex gap-8">
+    <div class="flex-0 basis-menu">
+      <Stepper v-model="selectedStepIndex" :steps="stepsInOrder" />
+    </div>
+    <div class="flex-1">
+      <AppHeading class="mb-5">{{ selectedStep.name }}</AppHeading>
+      <component
+        :is="selectedStep.component"
+        v-model:data="selectedStep.data"
+        v-model:validated="selectedStep.validated"
+        :mode="mode"
+      ></component>
 
-    <div class="flex mt-5">
-      <AppButton
-        variant="linkOutlined"
-        :disabled="selectedStepIndex === 0"
-        @click="selectedStepIndex--"
-        >{{ t('createCallout.actions.back') }}</AppButton
-      >
-      <AppButton
-        v-show="!isLastStep"
-        class="ml-2"
-        :disabled="!selectedStep.validated"
-        @click="selectedStepIndex++"
-        >{{ t('createCallout.actions.continue') }}</AppButton
-      >
-      <AppButton
-        v-show="isLastStep"
-        class="ml-2"
-        :disabled="!isAllValid"
-        @click="submitForm"
-        >{{
-          steps.dates.data.startNow
-            ? t('createCallout.actions.publish')
-            : t('createCallout.actions.schedule')
-        }}</AppButton
-      >
+      <div v-if="mode === 'new'" class="flex mt-5">
+        <AppButton
+          variant="linkOutlined"
+          :disabled="selectedStepIndex === 0"
+          @click="selectedStepIndex--"
+          >{{ t('createCallout.actions.back') }}</AppButton
+        >
+        <AppButton
+          v-show="!isLastStep"
+          class="ml-2"
+          :disabled="!selectedStep.validated"
+          @click="selectedStepIndex++"
+          >{{ t('createCallout.actions.continue') }}</AppButton
+        >
+        <AppButton
+          v-show="isLastStep"
+          class="ml-2"
+          :disabled="!isAllValid"
+          @click="submitForm"
+          >{{
+            steps.dates.data.startNow
+              ? t('createCallout.actions.publish')
+              : t('createCallout.actions.schedule')
+          }}</AppButton
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -45,13 +58,17 @@ import { watch, ref, computed, reactive } from 'vue';
 import slugify from 'slugify';
 import { useI18n } from 'vue-i18n';
 
+import PageTitle from '../../../components/PageTitle.vue';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import Stepper from '../components/Stepper.vue';
 import { Steps } from '../create-callout.interface';
 import { parseISO } from 'date-fns';
 import router from '../../../router';
-import { CreateCalloutData } from '../../../utils/api/api.interface';
+import {
+  CreateCalloutData,
+  UpdateCalloutData,
+} from '../../../utils/api/api.interface';
 import { updateCallout, createCallout } from '../../../utils/api/callout';
 
 const { t } = useI18n();
@@ -88,52 +105,56 @@ const isAllValid = computed(() =>
   stepsInOrder.value.every((step) => step.validated)
 );
 
-function makeCalloutData(steps: Steps): CreateCalloutData {
-  return {
-    slug: steps.url.data.useCustomSlug
+function makeCalloutData(steps: Steps): [string, UpdateCalloutData] {
+  return [
+    steps.url.data.useCustomSlug
       ? steps.url.data.slug
       : steps.url.data.autoSlug,
-    title: steps.titleAndImage.data.title,
-    excerpt: steps.titleAndImage.data.description,
-    image: steps.titleAndImage.data.coverImageURL,
-    intro: steps.content.data.introText,
-    formSchema: steps.content.data.formSchema,
-    starts: steps.dates.data.startNow
-      ? new Date()
-      : parseISO(steps.dates.data.startDate),
-    ...(steps.dates.data.hasEndDate && {
-      expires: parseISO(steps.dates.data.endDate),
-    }),
-    allowUpdate: steps.visibility.data.usersCanEditAnswers,
-    allowMultiple: false,
-    hidden: !steps.visibility.data.showOnUserDashboards,
-    access:
-      steps.visibility.data.whoCanTakePart === 'members'
-        ? 'member'
-        : steps.visibility.data.allowAnonymousResponses
-        ? 'anonymous'
-        : 'guest',
-    ...(steps.endMessage.data.whenFinished === 'message'
-      ? {
-          thanksText: steps.endMessage.data.thankYouText,
-          thanksTitle: steps.endMessage.data.thankYouTitle,
-        }
-      : {
-          thanksText: '',
-          thanksTitle: '',
-          thanksRedirect: steps.endMessage.data.thankYouRedirect,
-        }),
-  };
+    {
+      title: steps.titleAndImage.data.title,
+      excerpt: steps.titleAndImage.data.description,
+      image: steps.titleAndImage.data.coverImageURL,
+      intro: steps.content.data.introText,
+      formSchema: steps.content.data.formSchema,
+      starts: steps.dates.data.startNow
+        ? new Date()
+        : parseISO(steps.dates.data.startDate),
+      expires: steps.dates.data.hasEndDate
+        ? parseISO(steps.dates.data.endDate)
+        : null,
+      allowUpdate: steps.visibility.data.usersCanEditAnswers,
+      allowMultiple: false,
+      hidden: !steps.visibility.data.showOnUserDashboards,
+      access:
+        steps.visibility.data.whoCanTakePart === 'members'
+          ? 'member'
+          : steps.visibility.data.allowAnonymousResponses
+          ? 'anonymous'
+          : 'guest',
+      ...(steps.endMessage.data.whenFinished === 'message'
+        ? {
+            thanksText: steps.endMessage.data.thankYouText,
+            thanksTitle: steps.endMessage.data.thankYouTitle,
+          }
+        : {
+            thanksText: '',
+            thanksTitle: '',
+            thanksRedirect: steps.endMessage.data.thankYouRedirect,
+          }),
+    },
+  ];
 }
 async function submitForm() {
-  const callout: CreateCalloutData = makeCalloutData(steps);
+  const [slug, callout] = makeCalloutData(steps);
   const newCallout =
     props.mode === 'edit'
-      ? await updateCallout(callout)
-      : await createCallout(callout);
+      ? await updateCallout(slug, callout)
+      : await createCallout({ ...callout, slug });
   router.push({
-    path: '/admin/callouts/edit/' + newCallout.slug,
-    query: { created: null },
+    path: '/admin/callouts/view/' + newCallout.slug,
+    query: {
+      [props.mode === 'new' ? 'created' : 'updated']: null,
+    },
   });
 }
 </script>

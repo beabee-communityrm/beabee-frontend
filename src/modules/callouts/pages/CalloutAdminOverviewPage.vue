@@ -1,12 +1,15 @@
 <template>
   <div class="flex flex-col-reverse lg:flex-row lg:justify-between gap-8">
     <div class="flex-initial basis-1/2">
-      <AppAlert v-if="wasJustCreated" class="mb-8">
+      <AppAlert v-if="wasJustCreated || wasJustUpdated" class="mb-8">
         <template #icon>
           <font-awesome-icon :icon="['fa', 'magic']" />
         </template>
-
-        {{ t('calloutAdminOverview.created') }}
+        {{
+          wasJustCreated
+            ? t('calloutAdminOverview.created')
+            : t('calloutAdminOverview.updated')
+        }}
       </AppAlert>
 
       <AppHeading>{{ t('calloutAdminOverview.summary') }}</AppHeading>
@@ -115,6 +118,7 @@ const { t } = useI18n();
 
 const route = useRoute();
 const wasJustCreated = route.query.created !== undefined;
+const wasJustUpdated = route.query.updated !== undefined;
 
 const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
 </script>
