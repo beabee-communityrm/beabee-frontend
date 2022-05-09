@@ -11,16 +11,16 @@
         overflow-hidden
         text-sm
       "
-      :class="classes"
+      :class="hasError ? 'border-danger bg-danger-10' : 'bg-white'"
     >
       <div class="flex flex-1 px-6 py-3 items-baseline overflow-hidden">
         <span class="text-primary-40">{{ currencySign }}</span>
         <div class="relative mx-1 overflow-hidden">
           <div class="text-6xl font-semibold">
-            {{ modelValue || '0' }}
+            {{ amount || '0' }}
           </div>
           <input
-            :value="modelValue"
+            :value="amount"
             class="
               absolute
               text-6xl text-primary
@@ -33,10 +33,10 @@
             "
             :min="minAmount"
             :class="{ 'bg-danger-10': hasError }"
-            @input="$emit('update:modelValue', handleInput($event) || 0)"
+            @input="changeAmount(Number(handleInput($event)) || 0, true)"
             @keydown.up.prevent="0 /* just stop caret moving */"
-            @keyup.up="changeAmount(modelValue + 1)"
-            @keyup.down="changeAmount(modelValue - 1)"
+            @keyup.up="changeAmount(amount + 1)"
+            @keyup.down="changeAmount(amount - 1)"
           />
         </div>
 
@@ -47,7 +47,7 @@
         <button
           class="amount-button border-l border-b"
           type="button"
-          @click="changeAmount(modelValue + 1)"
+          @click="changeAmount(amount + 1)"
         >
           ▲
         </button>
@@ -55,9 +55,8 @@
         <button
           class="amount-button border-l"
           type="button"
-          :disabled="isButtonDisabled"
-          :class="disableClasses"
-          @click="changeAmount(modelValue - 1)"
+          :class="{ 'is-invalid': amount <= minAmount }"
+          @click="changeAmount(amount - 1)"
         >
           ▼
         </button>
@@ -79,18 +78,28 @@
       "
     >
       <button
-        v-for="(amount, index) in definedAmounts"
+        v-for="(definedAmount, index) in definedAmounts"
         :key="index"
         type="button"
-        class="group-button h-9 flex items-center justify-center font-semibold"
+        class="
+          border-primary-40 border-r
+          md:border-r-0 md:border-b
+          last:border-b-0 last:border-r-0
+          h-9
+          flex
+          items-center
+          justify-center
+          font-semibold
+          fir
+        "
         :class="
-          amount === modelValue
+          definedAmount === amount
             ? 'bg-link text-white'
             : 'hover:bg-link-10 text-primary'
         "
-        @click="changeAmount(amount)"
+        @click="changeAmount(definedAmount)"
       >
-        {{ n(amount, 'currency') }}
+        {{ n(definedAmount, 'currency') }}
       </button>
     </div>
 
@@ -106,44 +115,45 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity';
-import handleInput from '../../utils/handle-input';
+import { computed, toRefs } from '@vue/reactivity';
 import { useI18n } from 'vue-i18n';
+import { minValue } from '@vuelidate/validators';
+import useVuelidate from '@vuelidate/core';
+import handleInput from '../../utils/handle-input';
 
 const { t, n, getNumberFormat, locale } = useI18n();
 
-const props = defineProps({
-  modelValue: {
-    type: Number,
-    required: true,
-  },
-  isMonthly: {
-    type: Boolean,
-    required: true,
-  },
-  minAmount: {
-    type: Number,
-    required: true,
-  },
-  definedAmounts: {
-    type: Array as () => number[],
-    required: true,
-    default: () => [],
+const emits = defineEmits(['update:modelValue']);
+const props = defineProps<{
+  modelValue: number;
+  isMonthly: boolean;
+  minAmount: number;
+  definedAmounts: number[];
+}>();
+
+const amount = computed({
+  get: () => props.modelValue,
+  set: (newAmount) => {
+    emits('update:modelValue', newAmount);
+    validation.value.amount.$touch();
   },
 });
 
-const emits = defineEmits(['update:modelValue']);
+function changeAmount(newAmount: number, allowInvalid = false) {
+  amount.value = allowInvalid
+    ? newAmount
+    : Math.max(props.minAmount, newAmount);
+}
 
-const changeAmount = (amount: number) => {
-  emits('update:modelValue', Math.max(props.minAmount, amount));
-};
+const hasError = computed(() => validation.value.$errors.length > 0);
 
-const hasError = computed(
-  () =>
-    props.modelValue < props.minAmount || typeof props.modelValue !== 'number'
-);
+const rules = computed(() => ({
+  amount: {
+    minValue: minValue(toRefs(props).minAmount),
+  },
+}));
 
-const isButtonDisabled = computed(() => props.modelValue <= props.minAmount);
+const validation = useVuelidate(rules, { amount });
 
 // hacky way to get the currency sign because
 // setting `part` to `true` threw an error:
@@ -163,44 +173,16 @@ const currencySign = computed(() => {
   return currencySignObject?.value;
 });
 
-const disableClasses = computed(() => {
-  return isButtonDisabled.value ? 'cursor-not-allowed disabled' : null;
-});
-
-const classes = computed(() => {
-  return hasError.value ? 'border-danger bg-danger-10' : 'bg-white';
-});
-
 const period = computed(() => {
   return props.isMonthly ? t('common.month') : t('common.year');
 });
 </script>
 
 <style scoped>
-.disabled {
-  @apply text-grey !important;
-}
-
 .amount-button {
   @apply h-1/2 bg-white py-2 px-4 text-primary-70 hover:text-link border-primary-40;
-}
-
-.group-button {
-  @apply border-none;
-  @apply rounded-none !important;
-}
-
-/* group button */
-.group-button:nth-child(2) {
-  border-left: 1px solid theme('colors.primary.40');
-  border-right: 1px solid theme('colors.primary.40');
-}
-
-@media screen and (min-width: 768px) {
-  .group-button:nth-child(2) {
-    border: none;
-    border-bottom: 1px solid theme('colors.primary.40');
-    border-top: 1px solid theme('colors.primary.40');
+  &.is-invalid {
+    @apply text-grey cursor-not-allowed;
   }
 }
 </style>

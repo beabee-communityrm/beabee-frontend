@@ -1,10 +1,12 @@
 <template>
   <template v-if="contact">
-    <div class="mb-2">
-      <h1 class="text-2xl">
-        {{ `${contact.firstname} ${contact.lastname}`.trim() || contact.email }}
-      </h1>
-    </div>
+    <PageTitle
+      class="mb-2"
+      :title="
+        `${contact.firstname} ${contact.lastname}`.trim() || contact.email
+      "
+      no-collapse
+    />
 
     <AppTabs
       :items="tabs"

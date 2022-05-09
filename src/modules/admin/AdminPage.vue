@@ -1,7 +1,5 @@
 <template>
-  <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
-    <PageTitle :title="t('menu.dashboard')" />
-  </div>
+  <PageTitle :title="t('menu.dashboard')" border />
   <p class="mb-8">
     {{ t('adminDashboard.welcomeBack', { firstName: currentUser?.firstname }) }}
   </p>

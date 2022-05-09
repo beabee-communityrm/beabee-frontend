@@ -1,6 +1,6 @@
 <template>
   <PageTitle :title="t('menu.callouts')" />
-  <div class="flex -mx-3 my-6 flex-wrap">
+  <div class="flex -mx-3 mb-6 flex-wrap">
     <CalloutCard
       v-for="callout in activeCallouts.items"
       :key="callout.slug"

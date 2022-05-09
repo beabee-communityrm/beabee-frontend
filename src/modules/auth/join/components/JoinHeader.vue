@@ -6,8 +6,8 @@
         :alt="generalContent.organisationName"
         class="w-16 flex-none self-start"
       />
-      <div class="flex flex-col ml-4">
-        <h1 class="font-semibold text-2xl">
+      <div class="self-center flex flex-col ml-4">
+        <h1 class="font-semibold font-title text-2xl">
           {{ title }}
         </h1>
         <p v-if="subTitle" class="mt-2">

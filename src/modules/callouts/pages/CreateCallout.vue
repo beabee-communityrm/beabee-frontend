@@ -1,9 +1,9 @@
 <template>
-  <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
-    <PageTitle
-      :title="t(mode === 'new' ? 'createCallout.title' : 'editCallout.title')"
-    />
-  </div>
+  <PageTitle
+    :title="t(mode === 'new' ? 'createCallout.title' : 'editCallout.title')"
+    border
+    no-collapse
+  />
   <div class="flex gap-8">
     <CalloutForm v-if="steps" :steps="steps" :mode="mode" />
   </div>

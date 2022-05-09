@@ -1,4 +1,8 @@
 <template>
+  <AppHeading class="mb-3">
+    {{ t('informationPage.loginDetail') }}
+  </AppHeading>
+
   <MessageBox v-if="saved" class="mb-4" type="success">{{
     t('informationPage.savedPassword')
   }}</MessageBox>
@@ -59,6 +63,7 @@ import { updateMember } from '../../../utils/api/member';
 import AppButton from '../../../components/forms/AppButton.vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
+import AppHeading from '../../../components/AppHeading.vue';
 
 const { t } = useI18n();
 
