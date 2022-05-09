@@ -1,7 +1,12 @@
 <template>
   <div class="mb-5" :class="{ 'border-primary-40 border-b pb-3': border }">
     <div class="flex justify-between">
-      <h1 class="hidden font-title text-2.5xl md:block">{{ title }}</h1>
+      <h1
+        class="font-title text-2.5xl"
+        :class="{ 'hidden md:block': !noCollapse }"
+      >
+        {{ title }}
+      </h1>
       <slot></slot>
     </div>
     <div v-if="subTitle" class="text-sm text-primary-80">
@@ -14,5 +19,6 @@ defineProps<{
   title: string;
   subTitle?: string;
   border?: boolean;
+  noCollapse?: boolean;
 }>();
 </script>
