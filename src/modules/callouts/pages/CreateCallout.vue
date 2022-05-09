@@ -1,7 +1,5 @@
 <template>
-  <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
-    <PageTitle :title="t('createCallout.title')" />
-  </div>
+  <PageTitle :title="t('createCallout.title')" border no-collapse />
   <div class="flex gap-8">
     <div class="flex-0 basis-menu">
       <Stepper v-model="selectedStepIndex" :steps="stepsInOrder" />

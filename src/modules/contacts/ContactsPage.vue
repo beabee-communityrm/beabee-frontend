@@ -1,13 +1,12 @@
 <template>
-  <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
-    <PageTitle :title="t('menu.community')"></PageTitle>
+  <PageTitle :title="t('menu.community')" border>
     <div class="flex-1 md:hidden">
       <AppSelect v-model="currentSegment" :items="segmentItems" />
     </div>
     <div class="flex-0 ml-3">
       <AppButton href="/members/add">{{ t('contacts.addContact') }}</AppButton>
     </div>
-  </div>
+  </PageTitle>
   <div class="md:flex">
     <div class="flex-none hidden md:block basis-[220px]">
       <AppVTabs v-model="currentSegment" :items="segmentItems" />

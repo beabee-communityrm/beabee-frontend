@@ -6,13 +6,11 @@
 
     {{ t('homePage.passwordReset') }}
   </AppAlert>
-  <h1 class="md:hidden text-lg font-semibold">
-    {{ `${t('common.hello')} ${user.firstname}!` }}
-  </h1>
 
   <PageTitle
     :title="`${t('common.hello')} ${user.firstname}!`"
     :sub-title="profileContent.welcomeMessage"
+    no-collapse
   />
 
   <section v-if="showWelcomeMessage" class="mb-10">

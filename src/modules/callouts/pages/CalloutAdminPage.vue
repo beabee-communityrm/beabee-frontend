@@ -1,8 +1,6 @@
 <template>
   <template v-if="callout">
-    <div class="mb-2">
-      <h1 class="font-title text-2xl">{{ callout.title }}</h1>
-    </div>
+    <PageTitle class="mb-2" :title="callout.title" no-collapse />
 
     <AppTabs
       :items="tabs"
@@ -17,6 +15,7 @@
 import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
+import PageTitle from '../../../components/PageTitle.vue';
 import AppTabs from '../../../components/tabs/AppTabs.vue';
 import { GetMoreCalloutData } from '../../../utils/api/api.interface';
 import { fetchCallout, fetchResponses } from '../../../utils/api/callout';

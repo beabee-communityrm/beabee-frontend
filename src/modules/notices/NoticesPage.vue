@@ -1,10 +1,9 @@
 <template>
-  <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
-    <PageTitle :title="t('menu.notices')"></PageTitle>
+  <PageTitle :title="t('menu.notices')" border>
     <div class="flex-0 ml-3">
       <AppButton href="/tools/notices">{{ t('notices.addNotice') }}</AppButton>
     </div>
-  </div>
+  </PageTitle>
   <AppTable
     v-model:sort="currentSort"
     :headers="headers"
