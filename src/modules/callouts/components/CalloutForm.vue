@@ -29,9 +29,9 @@
         v-show="isLastStep"
         class="ml-2"
         :disabled="!isAllValid"
-        @click="$emit('submit')"
+        @click="submitForm"
         >{{
-          props.modelValue.dates.data.startNow
+          steps.dates.data.startNow
             ? t('createCallout.actions.publish')
             : t('createCallout.actions.schedule')
         }}</AppButton
@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { watch, ref, computed } from 'vue';
+import { watch, ref, computed, reactive } from 'vue';
 import slugify from 'slugify';
 import { useI18n } from 'vue-i18n';
 
@@ -49,27 +49,32 @@ import AppHeading from '../../../components/AppHeading.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import Stepper from '../components/Stepper.vue';
 import { Steps } from '../create-callout.interface';
+import { parseISO } from 'date-fns';
+import router from '../../../router';
+import { CreateCalloutData } from '../../../utils/api/api.interface';
+import { updateCallout, createCallout } from '../../../utils/api/callout';
 
 const { t } = useI18n();
-const props = defineProps<{ modelValue: Steps; mode: 'edit' | 'new' }>();
-const emit = defineEmits(['submit']);
+const props = defineProps<{ steps: Steps; mode: 'edit' | 'new' }>();
+
+const steps = reactive(props.steps);
 
 // TODO: FIXME should just be a computed
 watch(
-  () => props.modelValue.titleAndImage.data.title,
+  () => steps.titleAndImage.data.title,
   (title) => {
-    props.modelValue.url.data.autoSlug = slugify(title, { lower: true });
+    steps.url.data.autoSlug = slugify(title, { lower: true });
   }
 );
 
 const stepsInOrder = computed(() => [
-  props.modelValue.content,
-  props.modelValue.titleAndImage,
-  props.modelValue.visibility,
-  props.modelValue.endMessage,
-  props.modelValue.url,
-  //props.modelValue.mailchimp,
-  props.modelValue.dates,
+  steps.content,
+  steps.titleAndImage,
+  steps.visibility,
+  steps.endMessage,
+  steps.url,
+  //steps.mailchimp,
+  steps.dates,
 ]);
 
 const selectedStepIndex = ref(0);
@@ -82,4 +87,53 @@ const isLastStep = computed(
 const isAllValid = computed(() =>
   stepsInOrder.value.every((step) => step.validated)
 );
+
+function makeCalloutData(steps: Steps): CreateCalloutData {
+  return {
+    slug: steps.url.data.useCustomSlug
+      ? steps.url.data.slug
+      : steps.url.data.autoSlug,
+    title: steps.titleAndImage.data.title,
+    excerpt: steps.titleAndImage.data.description,
+    image: steps.titleAndImage.data.coverImageURL,
+    intro: steps.content.data.introText,
+    formSchema: steps.content.data.formSchema,
+    starts: steps.dates.data.startNow
+      ? new Date()
+      : parseISO(steps.dates.data.startDate),
+    ...(steps.dates.data.hasEndDate && {
+      expires: parseISO(steps.dates.data.endDate),
+    }),
+    allowUpdate: steps.visibility.data.usersCanEditAnswers,
+    allowMultiple: false,
+    hidden: !steps.visibility.data.showOnUserDashboards,
+    access:
+      steps.visibility.data.whoCanTakePart === 'members'
+        ? 'member'
+        : steps.visibility.data.allowAnonymousResponses
+        ? 'anonymous'
+        : 'guest',
+    ...(steps.endMessage.data.whenFinished === 'message'
+      ? {
+          thanksText: steps.endMessage.data.thankYouText,
+          thanksTitle: steps.endMessage.data.thankYouTitle,
+        }
+      : {
+          thanksText: '',
+          thanksTitle: '',
+          thanksRedirect: steps.endMessage.data.thankYouRedirect,
+        }),
+  };
+}
+async function submitForm() {
+  const callout: CreateCalloutData = makeCalloutData(steps);
+  const newCallout =
+    props.mode === 'edit'
+      ? await updateCallout(callout)
+      : await createCallout(callout);
+  router.push({
+    path: '/admin/callouts/edit/' + newCallout.slug,
+    query: { created: null },
+  });
+}
 </script>

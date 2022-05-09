@@ -1,32 +1,20 @@
 <template>
   <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
-    <PageTitle v-if="mode === 'new'" :title="t('createCallout.title')" />
-    <PageTitle v-if="mode === 'edit'" :title="t('editCallout.title')" />
+    <PageTitle
+      :title="t(mode === 'new' ? 'createCallout.title' : 'editCallout.title')"
+    />
   </div>
   <div class="flex gap-8">
-    <CalloutForm
-      v-if="steps"
-      v-model="steps"
-      :mode="mode"
-      @submit="submitForm()"
-    />
+    <CalloutForm v-if="steps" :steps="steps" :mode="mode" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { parseISO } from 'date-fns';
 import { ref, markRaw, onBeforeMount, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRouter, useRoute } from 'vue-router';
-import {
-  createCallout,
-  updateCallout,
-  fetchCallout,
-} from '../../../utils/api/callout';
-import type {
-  CreateCalloutData,
-  GetMoreCalloutData,
-} from '../../../utils/api/api.interface';
+import { useRoute } from 'vue-router';
+import { fetchCallout } from '../../../utils/api/callout';
+import type { GetMoreCalloutData } from '../../../utils/api/api.interface';
 import PageTitle from '../../../components/PageTitle.vue';
 
 import StepVisibility from '../components/steps/Visibility.vue';
@@ -40,47 +28,11 @@ import { Steps } from '../create-callout.interface';
 import CalloutForm from '../components/CalloutForm.vue';
 
 const { t } = useI18n();
-const router = useRouter();
 const route = useRoute();
 
 const steps: Ref<null | Steps> = ref(null);
 const mode: 'edit' | 'new' = route.name === 'edit-callout' ? 'edit' : 'new';
 
-const makeCalloutData = (steps: Steps): CreateCalloutData => ({
-  slug: steps.url.data.useCustomSlug
-    ? steps.url.data.slug
-    : steps.url.data.autoSlug,
-  title: steps.titleAndImage.data.title,
-  excerpt: steps.titleAndImage.data.description,
-  image: steps.titleAndImage.data.coverImageURL,
-  intro: steps.content.data.introText,
-  formSchema: steps.content.data.formSchema,
-  starts: steps.dates.data.startNow
-    ? new Date()
-    : parseISO(steps.dates.data.startDate),
-  ...(steps.dates.data.hasEndDate && {
-    expires: parseISO(steps.dates.data.endDate),
-  }),
-  allowUpdate: steps.visibility.data.usersCanEditAnswers,
-  allowMultiple: false,
-  hidden: !steps.visibility.data.showOnUserDashboards,
-  access:
-    steps.visibility.data.whoCanTakePart === 'members'
-      ? 'member'
-      : steps.visibility.data.allowAnonymousResponses
-      ? 'anonymous'
-      : 'guest',
-  ...(steps.endMessage.data.whenFinished === 'message'
-    ? {
-        thanksText: steps.endMessage.data.thankYouText,
-        thanksTitle: steps.endMessage.data.thankYouTitle,
-      }
-    : {
-        thanksText: '',
-        thanksTitle: '',
-        thanksRedirect: steps.endMessage.data.thankYouRedirect,
-      }),
-});
 const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
   content: {
     name: t('createCallout.steps.content.title'),
@@ -171,19 +123,6 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
     },
   },
 });
-
-async function submitForm() {
-  // @ts-expect-error
-  const callout: CreateCalloutData = makeCalloutData(steps);
-  const newCallout =
-    mode === 'edit'
-      ? await updateCallout(callout)
-      : await createCallout(callout);
-  router.push({
-    path: '/admin/callouts/edit/' + newCallout.slug,
-    query: { created: null },
-  });
-}
 
 onBeforeMount(async () => {
   const calloutId = route.params.id as string;
