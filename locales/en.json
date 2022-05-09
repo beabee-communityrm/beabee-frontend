@@ -82,7 +82,8 @@
         "membersOnly": "Members only"
       }
     },
-    "summary": "Summary"
+    "summary": "Summary",
+    "updated": "Your callout was successfully updated."
   },
   "callouts": {
     "archive": "Archive",
@@ -240,7 +241,8 @@
       "back": "Back",
       "continue": "Continue",
       "publish": "Publish",
-      "schedule": "Schedule"
+      "schedule": "Schedule",
+      "update": "Update"
     },
     "steps": {
       "content": {
