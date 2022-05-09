@@ -1,7 +1,5 @@
 <template>
-  <div class="mb-5">
-    <PageTitle :title="t('menu.contribution')" />
-  </div>
+  <PageTitle :title="t('menu.contribution')" />
 
   <div v-if="!isIniting" class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
     <div>

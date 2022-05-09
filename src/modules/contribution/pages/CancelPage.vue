@@ -1,7 +1,5 @@
 <template>
-  <div class="mb-5">
-    <PageTitle :title="t('menu.contribution')" />
-  </div>
+  <PageTitle :title="t('menu.contribution')" />
 
   <h3 class="text-2xl font-semibold text-body mb-4">
     {{ t('contribution.cancelMessage') }}
