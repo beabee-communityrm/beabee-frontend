@@ -173,6 +173,7 @@
     "allContacts": "All contacts",
     "data": {
       "amount": "Amount",
+      "annotationsCopy": "Contact successfully updated",
       "contribution": "Contribution",
       "contributionType": "Type",
       "deliveryOptIn": "Delivery opt-in?",
