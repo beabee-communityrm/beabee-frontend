@@ -19,7 +19,7 @@
         rounded
         align-middle
         w-full
-        sm:w-1/2
+        sm:w-1/2 sm:min-w-[17rem]
         bg-white
         p-2
       "
