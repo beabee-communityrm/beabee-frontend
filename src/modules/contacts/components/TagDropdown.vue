@@ -6,7 +6,7 @@
       :key="tag"
       :tag="tag"
       :has-remove-icon="true"
-      @click="handleRemoveTag(tag)"
+      @click:remove-tag="handleRemoveTag(tag)"
     />
   </div>
   <div class="flex flex-col sm:flex-row">
