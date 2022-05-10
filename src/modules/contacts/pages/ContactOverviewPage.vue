@@ -108,6 +108,12 @@
           >{{ t('form.saveChanges') }}</AppButton
         >
       </form>
+      <AppAlert v-if="hasSetAnnotations" class="mt-5">
+        <template #icon>
+          <font-awesome-icon :icon="['fa', 'magic']" />
+        </template>
+        {{ t('contacts.data.annotationsCopy') }}
+      </AppAlert>
     </div>
 
     <div>
@@ -161,6 +167,7 @@ import AppTextArea from '../../../components/forms/AppTextArea.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import AppRoundBadge from '../../../components/AppRoundBadge.vue';
 import TagDropdown from '../components/TagDropdown.vue';
+import AppAlert from '../../../components/AppAlert.vue';
 import { onBeforeMount, ref, reactive } from 'vue';
 import { ContributionType } from '../../../utils/enums/contribution-type.enum';
 import {
@@ -187,6 +194,7 @@ const contact = ref<GetMemberDataWith<
 > | null>(null);
 const contactTags = ref<string[]>([]);
 const loading = ref(false);
+const hasSetAnnotations = ref(false);
 const securityButtonsDisabled = ref(false);
 const contactAnnotations = reactive({
   notes: '',
@@ -203,6 +211,7 @@ async function handleFormSubmit() {
     });
   } finally {
     loading.value = false;
+    hasSetAnnotations.value = true;
   }
 }
 
