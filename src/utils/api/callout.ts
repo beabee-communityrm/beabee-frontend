@@ -69,8 +69,11 @@ export async function createCallout(
 export async function updateCallout(
   slug: string,
   calloutData: UpdateCalloutData
-): Promise<any> {
-  const { data } = await axios.patch('/callout/' + slug, calloutData);
+): Promise<GetBasicCalloutData> {
+  const { data } = await axios.patch<Serial<GetBasicCalloutData>>(
+    '/callout/' + slug,
+    calloutData
+  );
   return toCallout(data);
 }
 
