@@ -82,7 +82,8 @@
         "membersOnly": "Nur Mitglieder"
       }
     },
-    "summary": "Zusammenfassung"
+    "summary": "Zusammenfassung",
+    "updated": "Änderungen gespeichert!"
   },
   "callouts": {
     "archive": "Archiv",
@@ -172,6 +173,7 @@
     "allContacts": "Alle Kontakte",
     "data": {
       "amount": "Betrag",
+      "annotationsCopy": "Änderungen gespeichert!",
       "contribution": "Beitrag",
       "contributionType": "Zahlungsart",
       "deliveryOptIn": "Postsendung",
@@ -240,7 +242,8 @@
       "back": "Zurück",
       "continue": "Weiter",
       "publish": "Veröffentlichen",
-      "schedule": "Planen"
+      "schedule": "Planen",
+      "update": "Änderungen speichern"
     },
     "steps": {
       "content": {
@@ -397,7 +400,10 @@
     },
     "title": "Callout anlegen"
   },
-  "editCallout": {},
+  "editCallout": {
+    "title": "Callout bearbeiten",
+    "warning": "Vorsicht! Du bearbeitest einen veröffentlichten Callout. Wenn du Umfrageelemente bearbeitest riskierst du, Antworten unbrauchbar zu machen."
+  },
   "footer": {
     "contactUs": "Kontaktiere uns unter",
     "contacts": "Kontakte",
