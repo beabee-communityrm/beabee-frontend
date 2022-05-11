@@ -108,12 +108,9 @@
           >{{ t('form.saveChanges') }}</AppButton
         >
       </form>
-      <AppAlert v-if="hasSetAnnotations" class="mt-5">
-        <template #icon>
-          <font-awesome-icon :icon="['fa', 'magic']" />
-        </template>
+      <MessageBox v-if="hasSetAnnotations" type="success" class="mt-5">
         {{ t('contacts.data.annotationsCopy') }}
-      </AppAlert>
+      </MessageBox>
     </div>
 
     <div>
@@ -167,7 +164,7 @@ import AppTextArea from '../../../components/forms/AppTextArea.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import AppRoundBadge from '../../../components/AppRoundBadge.vue';
 import TagDropdown from '../components/TagDropdown.vue';
-import AppAlert from '../../../components/AppAlert.vue';
+import MessageBox from '../../../components/MessageBox.vue';
 import { onBeforeMount, ref, reactive } from 'vue';
 import { ContributionType } from '../../../utils/enums/contribution-type.enum';
 import {
