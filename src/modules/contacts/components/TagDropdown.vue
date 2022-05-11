@@ -6,7 +6,7 @@
       :key="tag"
       :tag="tag"
       :has-remove-icon="true"
-      @click="handleRemoveTag(tag)"
+      @click:remove-tag="handleRemoveTag(tag)"
     />
   </div>
   <div class="flex flex-col sm:flex-row">
@@ -19,7 +19,7 @@
         rounded
         align-middle
         w-full
-        sm:w-1/2
+        sm:w-1/2 sm:min-w-[17rem]
         bg-white
         p-2
       "

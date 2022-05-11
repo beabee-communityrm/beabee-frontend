@@ -13,13 +13,14 @@
       text-xs
       border border-white
     "
-    :class="hasRemoveIcon ? 'cursor-pointer hover:border-primary-40' : ''"
+    :class="hasRemoveIcon ? 'hover:border-primary-40' : ''"
   >
     {{ props.tag }}
     <font-awesome-icon
       v-if="props.hasRemoveIcon"
-      class="inline-block ml-2"
+      class="inline-block cursor-pointer ml-2"
       icon="times"
+      @click="$emit('click:removeTag')"
     />
   </span>
 </template>
@@ -29,4 +30,6 @@ const props = defineProps<{
   tag: string;
   hasRemoveIcon?: boolean;
 }>();
+
+defineEmits(['click:removeTag']);
 </script>
