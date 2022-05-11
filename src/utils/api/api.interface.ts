@@ -224,6 +224,8 @@ interface MoreCalloutData extends BasicCalloutData {
   thanksText: string;
   thanksTitle: string;
   thanksRedirect?: string;
+  shareTitle?: string;
+  shareDescription?: string;
 }
 
 export interface CalloutFormSchema {
