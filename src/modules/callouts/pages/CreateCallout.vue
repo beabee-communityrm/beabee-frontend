@@ -89,7 +89,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
       useCustomSlug: data ? true : false,
       autoSlug: '',
       slug: data?.slug || '',
-      overrideShare: false,
+      overrideShare: data?.shareTitle ? true : false,
       shareTitle: data?.shareTitle ? data?.shareTitle : '',
       shareDescription: data?.shareDescription ? data?.shareDescription : '',
     },
