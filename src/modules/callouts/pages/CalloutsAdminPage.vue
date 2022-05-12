@@ -1,6 +1,5 @@
 <template>
-  <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
-    <PageTitle :title="t('menu.callouts')"></PageTitle>
+  <PageTitle :title="t('menu.callouts')" border>
     <div class="flex-1 block lg:hidden">
       <AppSelect v-model="currentStatus" :items="statusItems" />
     </div>
@@ -9,7 +8,7 @@
         t('calloutsAdmin.addCallout')
       }}</AppButton>
     </div>
-  </div>
+  </PageTitle>
   <div class="md:flex">
     <div class="flex-none hidden lg:block basis-[220px]">
       <AppVTabs v-model="currentStatus" :items="statusItems" />
@@ -33,7 +32,7 @@
         </template>
         <template #title="{ item, value }">
           <router-link
-            :to="'/admin/callouts/edit/' + item.slug"
+            :to="'/admin/callouts/view/' + item.slug"
             class="text-base text-link font-bold"
           >
             {{ value }}

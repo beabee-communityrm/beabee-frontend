@@ -36,6 +36,7 @@ import {
   faClone,
   faTrash,
   faLink,
+  faTag,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -72,7 +73,8 @@ library.add(
   faNewspaper,
   faClone,
   faTrash,
-  faLink
+  faLink,
+  faTag
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

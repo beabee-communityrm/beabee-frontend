@@ -92,6 +92,13 @@
           :model-value="contactAnnotations.description"
           input-type="text"
           :label="t('contacts.data.description')"
+          class="mb-4"
+        />
+        <TagDropdown
+          v-if="contactTags.length > 0"
+          v-model="contactAnnotations.tags"
+          :tags="contactTags"
+          label="Tags"
         />
         <AppButton
           type="submit"
@@ -101,6 +108,9 @@
           >{{ t('form.saveChanges') }}</AppButton
         >
       </form>
+      <MessageBox v-if="hasSetAnnotations" type="success" class="mt-5">
+        {{ t('contacts.data.annotationsCopy') }}
+      </MessageBox>
     </div>
 
     <div>
@@ -153,6 +163,8 @@ import AppInput from '../../../components/forms/AppInput.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import AppRoundBadge from '../../../components/AppRoundBadge.vue';
+import TagDropdown from '../components/TagDropdown.vue';
+import MessageBox from '../../../components/MessageBox.vue';
 import { onBeforeMount, ref, reactive } from 'vue';
 import { ContributionType } from '../../../utils/enums/contribution-type.enum';
 import {
@@ -164,6 +176,7 @@ import { fetchMember, updateMember } from '../../../utils/api/member';
 import AppInfoList from '../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
+import { fetchContactsContent } from '../../../utils/api/content';
 
 formatLocale;
 
@@ -176,19 +189,26 @@ const props = defineProps<{
 const contact = ref<GetMemberDataWith<
   'profile' | 'contribution' | 'roles'
 > | null>(null);
+const contactTags = ref<string[]>([]);
 const loading = ref(false);
+const hasSetAnnotations = ref(false);
 const securityButtonsDisabled = ref(false);
-const contactAnnotations = reactive({ notes: '', description: '' });
+const contactAnnotations = reactive({
+  notes: '',
+  description: '',
+  tags: [] as string[],
+});
 const securityLink = ref('');
 
 async function handleFormSubmit() {
   loading.value = true;
   try {
     await updateMember(props.contact.id, {
-      profile: { tags: [], ...contactAnnotations },
+      profile: { ...contactAnnotations },
     });
   } finally {
     loading.value = false;
+    hasSetAnnotations.value = true;
   }
 }
 
@@ -217,6 +237,9 @@ const isRoleCurrent = (role: MemberRoleData): boolean => {
 };
 
 onBeforeMount(async () => {
+  loading.value = false;
+  securityButtonsDisabled.value = false;
+
   contact.value = await fetchMember(props.contact.id, [
     'profile',
     'contribution',
@@ -224,7 +247,8 @@ onBeforeMount(async () => {
   ]);
   contactAnnotations.notes = contact.value.profile.notes || '';
   contactAnnotations.description = contact.value.profile.description || '';
-  loading.value = false;
-  securityButtonsDisabled.value = false;
+  contactAnnotations.tags = contact.value.profile.tags || [];
+
+  contactTags.value = (await fetchContactsContent()).tags;
 });
 </script>

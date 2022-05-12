@@ -43,6 +43,7 @@
         v-if="callout.status === ItemStatus.Open"
         icon="share"
         variant="primaryOutlined"
+        class="hidden"
         >{{ t('common.share') }}</AppButton
       >
     </div>

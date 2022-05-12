@@ -5,7 +5,7 @@
     </template>
 
     <header>
-      <h1 class="text-3xl md:text-5xl font-extrabold mb-6">
+      <h1 class="text-3xl md:text-5xl font-extrabold font-title mb-6">
         <slot name="header" />
       </h1>
     </header>

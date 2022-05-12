@@ -1,13 +1,12 @@
 <template>
-  <div class="mb-5 flex justify-between border-primary-40 border-b pb-3">
-    <PageTitle :title="t('menu.community')"></PageTitle>
+  <PageTitle :title="t('menu.community')" border>
     <div class="flex-1 md:hidden">
       <AppSelect v-model="currentSegment" :items="segmentItems" />
     </div>
     <div class="flex-0 ml-3">
       <AppButton href="/members/add">{{ t('contacts.addContact') }}</AppButton>
     </div>
-  </div>
+  </PageTitle>
   <div class="md:flex">
     <div class="flex-none hidden md:block basis-[220px]">
       <AppVTabs v-model="currentSegment" :items="segmentItems" />
@@ -33,24 +32,11 @@
         </template>
         <template #tags="{ item }">
           <span class="whitespace-normal">
-            <span
+            <ContactTag
               v-for="tag in item.profile.tags"
               :key="tag"
-              class="
-                bg-white
-                whitespace-nowrap
-                text-link
-                rounded
-                font-bold
-                inline-block
-                p-1
-                mr-1
-                mb-1
-                text-xs
-              "
-            >
-              {{ tag }}
-            </span>
+              :tag="tag"
+            />
           </span>
         </template>
         <template #contribution="{ item }">
@@ -113,6 +99,7 @@ import AppButton from '../../components/forms/AppButton.vue';
 import SearchBox from './components/SearchBox.vue';
 import AppSelect from '../../components/forms/AppSelect.vue';
 import AppVTabs from '../../components/tabs/AppVTabs.vue';
+import ContactTag from './components/ContactTag.vue';
 
 const { t, n } = useI18n();
 

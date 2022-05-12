@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent>
-    <h1 class="text-2.5xl mb-2">{{ t('login.title') }}</h1>
+    <h1 class="text-2.5xl font-title mb-2">{{ t('login.title') }}</h1>
 
     <div class="mb-5">
       <span>{{ t('login.notMember') }}</span>

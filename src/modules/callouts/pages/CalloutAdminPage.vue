@@ -1,8 +1,6 @@
 <template>
   <template v-if="callout">
-    <div class="mb-2">
-      <h1 class="font-title text-2xl">{{ callout.title }}</h1>
-    </div>
+    <PageTitle class="mb-2" :title="callout.title" no-collapse />
 
     <AppTabs
       :items="tabs"
@@ -17,6 +15,7 @@
 import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
+import PageTitle from '../../../components/PageTitle.vue';
 import AppTabs from '../../../components/tabs/AppTabs.vue';
 import { GetMoreCalloutData } from '../../../utils/api/api.interface';
 import { fetchCallout, fetchResponses } from '../../../utils/api/callout';
@@ -34,12 +33,12 @@ const tabs = computed(() =>
         {
           id: 'calloutAdminOverview',
           label: t('calloutAdmin.overview'),
-          to: `/admin/callouts/edit/${callout.value.slug}`,
+          to: `/admin/callouts/view/${callout.value.slug}`,
         },
         {
           id: 'calloutAdminResponses',
           label: t('calloutAdmin.responses'),
-          to: `/admin/callouts/edit/${callout.value.slug}/responses`,
+          to: `/admin/callouts/view/${callout.value.slug}/responses`,
           ...(responseCount.value > -1 && {
             count: responseCount.value.toLocaleString(),
           }),

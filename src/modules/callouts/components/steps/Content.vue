@@ -1,4 +1,5 @@
 <template>
+  <WarningBanner v-if="mode === 'edit'" />
   <div class="grid grid-cols-2 gap-6">
     <div class="col-span-1">
       <AppTextArea
@@ -55,10 +56,12 @@ import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import 'formiojs/dist/formio.builder.css';
 import { useI18n } from 'vue-i18n';
 import { ContentStepProps } from '../../create-callout.interface';
+import WarningBanner from '../WarningBanner.vue';
 
 const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{
   data: ContentStepProps;
+  mode: 'edit' | 'new';
 }>();
 
 const { t } = useI18n();
