@@ -141,6 +141,10 @@ function makeCalloutData(steps: Steps): [string, UpdateCalloutData] {
             thanksTitle: '',
             thanksRedirect: steps.endMessage.data.thankYouRedirect,
           }),
+      shareTitle: steps.url.data.overrideShare ? steps.url.data.shareTitle : '',
+      shareDescription: steps.url.data.overrideShare
+        ? steps.url.data.shareDescription
+        : '',
     },
   ];
 }
