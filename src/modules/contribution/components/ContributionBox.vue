@@ -30,7 +30,7 @@
       <div v-else>
         <p>{{ t('common.thankYou') }}</p>
         <div
-          v-if="contribution.type === ContributionType.GoCardless"
+          v-if="contribution.type === ContributionType.Automatic"
           class="mt-2 text-body-80 text-sm"
         >
           <i18n-t
