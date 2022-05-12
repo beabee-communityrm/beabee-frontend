@@ -19,6 +19,12 @@
         :items="contactsTable.items"
         class="w-full mt-2 whitespace-nowrap"
       >
+        <template #empty v-if="contactsTotal && contactsTotal.value">
+          <p>No results found.</p>
+        </template>
+        <template #empty v-else>
+          <p>No contacts added yet.</p>
+        </template>
         <template #firstname="{ item }">
           <router-link
             :to="'/admin/contacts/' + item.id"
@@ -67,7 +73,7 @@
               ><b>{{ n(contactsTable.total) }}</b></template
             >
           </i18n-t>
-          <i18n-t v-else keypath="contacts.noResults" />
+          <!-- <i18n-t v-else keypath="contacts.noResults" /> -->
         </p>
         <div class="mx-4">Page size</div>
 
@@ -241,5 +247,6 @@ watchEffect(async () => {
   if (!currentSegment.value) {
     contactsTotal.value = contactsTable.value.total;
   }
+
 });
 </script>
