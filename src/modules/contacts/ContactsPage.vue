@@ -20,10 +20,10 @@
         class="w-full mt-2 whitespace-nowrap"
       >
         <template #empty v-if="route.query.s">
-          <p>No results found.</p>
+          <p>{{ t('contacts.noResults') }}</p>
         </template>
         <template #empty v-else>
-          <p>No contacts added yet.</p>
+          <p>{{ t('contacts.noContacts') }}</p>
         </template>
         <template #firstname="{ item }">
           <router-link
