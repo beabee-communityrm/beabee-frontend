@@ -63,7 +63,7 @@
           :value="contact.contributionPeriod"
         />
         <AppInfoListItem
-          v-if="contact.contribution.type === ContributionType.GoCardless"
+          v-if="contact.contribution.type === ContributionType.Automatic"
           :name="t('contacts.data.payingFee')"
           :value="
             contact.contribution.payFee ? t('common.yes') : t('common.no')

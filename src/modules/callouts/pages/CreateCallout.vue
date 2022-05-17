@@ -89,9 +89,9 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
       useCustomSlug: data ? true : false,
       autoSlug: '',
       slug: data?.slug || '',
-      overrideShare: false,
-      shareTitle: '',
-      shareDescription: '',
+      overrideShare: data?.shareTitle ? true : false,
+      shareTitle: data?.shareTitle ? data?.shareTitle : '',
+      shareDescription: data?.shareDescription ? data?.shareDescription : '',
     },
   },
   /*mailchimp: {
