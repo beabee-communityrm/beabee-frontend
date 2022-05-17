@@ -19,7 +19,7 @@
         :items="contactsTable.items"
         class="w-full mt-2 whitespace-nowrap"
       >
-        <template #empty v-if="contactsTotal && contactsTotal.value">
+        <template #empty v-if="route.query.s">
           <p>No results found.</p>
         </template>
         <template #empty v-else>
