@@ -153,7 +153,7 @@ onBeforeMount(async () => {
     route.query.period
   )
     ? (route.query.period as ContributionPeriod)
-    : ContributionPeriod.Monthly;
+    : joinContent.value.initialPeriod;
 
   if (!joinContent.value.showAbsorbFee) {
     signUpData.payFee = false;
