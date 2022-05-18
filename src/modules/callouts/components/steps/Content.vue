@@ -9,6 +9,9 @@
         :error-message="validation.introText.$errors[0]?.$message"
         @blur="validation.introText.$touch"
       />
+      <RichTextEditor v-model="dataProxy.introText" />
+      <p>output html:</p>
+      {{ dataProxy.introText }}
     </div>
     <div
       class="col-span-1 text-sm text-grey mt-6"
@@ -57,6 +60,7 @@ import 'formiojs/dist/formio.builder.css';
 import { useI18n } from 'vue-i18n';
 import { ContentStepProps } from '../../create-callout.interface';
 import WarningBanner from '../WarningBanner.vue';
+import RichTextEditor from '../../../../components/RichTextEditor.vue';
 
 const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{
