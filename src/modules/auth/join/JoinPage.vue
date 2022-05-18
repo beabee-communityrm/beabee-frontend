@@ -149,6 +149,12 @@ onBeforeMount(async () => {
     ? Number(route.query.amount)
     : joinContent.value.initialAmount;
 
+  signUpData.period = Object.values(ContributionPeriod).includes(
+    route.query.period
+  )
+    ? (route.query.period as ContributionPeriod)
+    : joinContent.value.initialPeriod;
+
   if (!joinContent.value.showAbsorbFee) {
     signUpData.payFee = false;
   }
