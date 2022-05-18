@@ -19,11 +19,8 @@
         :items="contactsTable.items"
         class="w-full mt-2 whitespace-nowrap"
       >
-        <template #empty v-if="route.query.s">
-          <p>{{ t('contacts.noResults') }}</p>
-        </template>
-        <template #empty v-else>
-          <p>{{ t('contacts.noContacts') }}</p>
+        <template #empty>
+          <p>{{ route.query.s ? t('contacts.noResults') : t('contacts.noContacts') }}</p>
         </template>
         <template #firstname="{ item }">
           <router-link
