@@ -39,6 +39,8 @@
       "endsIn": "Ends in {duration}",
       "startsIn": "starts in {duration}"
     },
+    "toContributionPage": "Edit my contribution",
+    "updateContribution": "please update your contribution",
     "youResponded": "You replied to this callout ♥"
   },
   "calloutAdmin": {
@@ -195,6 +197,7 @@
       },
       "tags": "Tags"
     },
+    "noContacts": "No contacts added yet",
     "noResults": "No contacts found",
     "search": "Search contacts...",
     "showingOf": "Showing {start} to {end} contacts out of {total}"
@@ -217,6 +220,7 @@
     "paymentHistory": {
       "amount": "Amount",
       "date": "Date",
+      "empty": "Past payments and their invoices will show up here.",
       "title": "Payment history"
     },
     "paymentSourceUpdateError": "You can't update your bank account at the moment as you have a payment pending",
