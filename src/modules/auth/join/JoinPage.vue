@@ -2,7 +2,7 @@
   <AuthBox>
     <JoinHeader :title="joinContent.title" />
 
-    <form v-if="!stripePaymentReady" @submit.prevent="submitSignUp">
+    <form v-if="!stripePaymentLoaded" @submit.prevent="submitSignUp">
       <div class="mb-3 content-message" v-html="joinContent.subtitle" />
       <h3
         v-if="joinContent.showNoContribution"
@@ -55,10 +55,17 @@
 
     <StripePayment
       v-if="stripeClientSecret"
-      :show="stripePaymentReady"
+      :show="stripePaymentLoaded"
       :client-secret="stripeClientSecret"
       :payment-data="signUpData"
-      @ready="stripePaymentReady = true"
+      @loaded="
+        stripePaymentLoaded = true;
+        loading = false;
+      "
+      @back="
+        stripeClientSecret = '';
+        stripePaymentLoaded = false;
+      "
     />
   </AuthBox>
 </template>
@@ -113,7 +120,7 @@ const signUpData = reactive({
 });
 
 const loading = ref(false);
-const stripePaymentReady = ref(false);
+const stripePaymentLoaded = ref(false);
 const stripeClientSecret = ref('');
 
 const buttonText = computed(() => {
@@ -153,6 +160,7 @@ async function submitSignUp() {
 
 onBeforeMount(async () => {
   loading.value = false;
+  stripePaymentLoaded.value = false;
   stripeClientSecret.value = '';
 
   joinContent.value = await fetchJoinContent();

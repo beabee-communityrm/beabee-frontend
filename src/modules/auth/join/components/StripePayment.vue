@@ -1,6 +1,25 @@
 <template>
-  <p v-if="show">Join for {{ paymentData.amount }}/{{ paymentData.period }}</p>
-  <div class="my-4" ref="divRef"></div>
+  <template v-if="show">
+    <AppAlert variant="info" class="mb-4">
+      <template #icon>
+        <font-awesome-icon :icon="['fa', 'hand-sparkles']" />
+      </template>
+      You'll be contributing {{ n(paymentData.amount, 'currency') }}/{{
+        paymentData.period
+      }}
+    </AppAlert>
+    <p class="mb-3">
+      You'll be able to modify your contribution and access your payment history
+      at any time in your member account
+    </p>
+    <p class="mb-6">
+      Did you miss something?
+      <a class="cursor-pointer underline text-link" @click="emit('back')">
+        Back to the previous screen
+      </a>
+    </p>
+  </template>
+  <div ref="divRef"></div>
   <MessageBox v-if="error" type="error">{{ error }}</MessageBox>
   <AppButton
     v-if="show"
@@ -8,7 +27,7 @@
     :loading="loading"
     variant="link"
     type="submit"
-    class="w-full"
+    class="w-full mt-4"
     @click="completePayment"
     >Complete</AppButton
   >
@@ -19,7 +38,12 @@ import { onBeforeMount, ref } from 'vue';
 import { ContributionPeriod } from '../../../../utils/enums/contribution-period.enum';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import MessageBox from '../../../../components/MessageBox.vue';
-const emit = defineEmits(['ready']);
+import AppAlert from '../../../../components/AppAlert.vue';
+import { useI18n } from 'vue-i18n';
+
+const { n } = useI18n();
+
+const emit = defineEmits(['loaded', 'back']);
 
 const props = defineProps<{
   show: boolean;
@@ -54,7 +78,7 @@ onBeforeMount(async () => {
       },
     });
     paymentElement.mount(divRef.value);
-    paymentElement.on('ready', () => emit('ready'));
+    paymentElement.on('ready', () => emit('loaded'));
     paymentElement.on('change', (evt) => {
       paymentReady.value = evt.complete;
     });
