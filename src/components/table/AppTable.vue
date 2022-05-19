@@ -29,7 +29,7 @@
 
       <tr v-if="!items.length">
         <slot name="empty">
-          <p>Nothing here but crickets~</p>
+          <p>Loading contents, please wait...</p>
         </slot>
       </tr>
 
