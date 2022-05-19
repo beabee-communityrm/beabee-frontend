@@ -70,7 +70,6 @@
               ><b>{{ n(contactsTable.total) }}</b></template
             >
           </i18n-t>
-          <!-- <i18n-t v-else keypath="contacts.noResults" /> -->
         </p>
         <div class="mx-4">Page size</div>
 
