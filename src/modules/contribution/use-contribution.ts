@@ -9,7 +9,6 @@ import {
   startContribution,
   fetchContribution,
   updateContribution,
-  updatePaymentSource as updateBankAccount,
 } from '../../utils/api/member';
 import { MembershipStatus } from '../../utils/enums/membership-status.enum';
 import { ContributionInfo } from '../../utils/api/api.interface';
@@ -43,7 +42,6 @@ const contributionContent = reactive<ContributionContent>({
 
 const isIniting = ref(false);
 const cantUpdateContribution = ref(false);
-const cantUpdatePaymentSource = ref(false);
 const hasUpdatedContribution = ref(false);
 
 const resetNewContribution = () => {
@@ -60,7 +58,6 @@ const resetNewContribution = () => {
 const initContributionPage = async () => {
   isIniting.value = true;
   cantUpdateContribution.value = false;
-  cantUpdatePaymentSource.value = false;
   hasUpdatedContribution.value = false;
 
   const contrib = await fetchContribution();
@@ -121,7 +118,7 @@ const submitUpdateContribution = () => {
 
 const canSubmitContribution = computed(
   () =>
-    !isActiveMemberWithGoCardless.value ||
+    !isAutoActiveMember.value ||
     currentContribution.amount != newContribution.amount
 );
 
@@ -130,7 +127,7 @@ const submitContributionLoading = ref(false);
 const submitContribution = async () => {
   submitContributionLoading.value = true;
 
-  const submitAction = isActiveMemberWithGoCardless.value
+  const submitAction = isAutoActiveMember.value
     ? submitUpdateContribution()
     : submitCreateContribution();
 
@@ -139,37 +136,13 @@ const submitContribution = async () => {
     .finally(() => (submitContributionLoading.value = false));
 };
 
-const updatePaymentSourceLoading = ref(false);
-
-const updatePaymentSource = () => {
-  updatePaymentSourceLoading.value = true;
-  updateBankAccount()
-    .then((data) => {
-      if (data.redirectUrl) {
-        window.location.href = data.redirectUrl;
-      } else {
-        // TODO: handle clientSecret route
-      }
-    })
-    .catch((err) => {
-      // Only revert loading on error as success causes route change
-      updatePaymentSourceLoading.value = false;
-      if (
-        err.response?.status === 400 &&
-        err.response?.data.code === 'cant-update-contribution'
-      ) {
-        cantUpdatePaymentSource.value = true;
-      }
-    });
-};
-
 const hasManualType = computed(
   () => currentContribution.type === ContributionType.Manual
 );
 const isActiveMember = computed(
   () => currentContribution.membershipStatus === MembershipStatus.Active
 );
-const isActiveMemberWithGoCardless = computed(
+const isAutoActiveMember = computed(
   () =>
     isActiveMember.value &&
     currentContribution.type === ContributionType.Automatic
@@ -187,7 +160,7 @@ const contributionButtonText = computed(() => {
 
 const showChangePeriod = computed(
   () =>
-    !isActiveMemberWithGoCardless.value &&
+    !isAutoActiveMember.value &&
     currentContribution.period !== ContributionPeriod.Annually
 );
 
@@ -223,10 +196,7 @@ export function useContribution() {
     hasUpdatedContribution,
     hasManualType,
     contributionButtonText,
-    updatePaymentSourceLoading,
-    updatePaymentSource,
-    cantUpdatePaymentSource,
-    isActiveMemberWithGoCardless,
+    isAutoActiveMember,
     showChangePeriod,
     showProrateOptions,
     submitCancelContribution,

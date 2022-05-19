@@ -57,7 +57,7 @@
         </AppButton>
 
         <InfoMessage
-          v-if="!isActiveMemberWithGoCardless"
+          v-if="!isAutoActiveMember"
           :message="t('contribution.changeBankInfo')"
         />
       </form>
@@ -69,14 +69,11 @@
 
         <PaymentSource
           class="mb-7 md:mb-12"
-          :loading="updatePaymentSourceLoading"
           :payment-source="currentContribution.paymentSource"
-          :has-error="cantUpdatePaymentSource"
-          @update-payment-source="updatePaymentSource"
         />
       </template>
 
-      <template v-if="isActiveMemberWithGoCardless">
+      <template v-if="isAutoActiveMember">
         <SectionTitle class="mb-4">{{
           t('contribution.cancelContribution')
         }}</SectionTitle>
@@ -140,11 +137,8 @@ const {
   showChangePeriod,
   showProrateOptions,
   contributionButtonText,
-  updatePaymentSource,
-  updatePaymentSourceLoading,
-  cantUpdatePaymentSource,
   hasManualType,
-  isActiveMemberWithGoCardless,
+  isAutoActiveMember,
 } = useContribution();
 
 onBeforeMount(() => {

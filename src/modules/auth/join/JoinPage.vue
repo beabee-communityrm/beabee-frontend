@@ -53,20 +53,40 @@
       <JoinFooter :privacy-link="generalContent.privacyLink" />
     </form>
 
-    <StripePayment
-      v-if="stripeClientSecret"
-      :show="stripePaymentLoaded"
-      :client-secret="stripeClientSecret"
-      :payment-data="signUpData"
-      @loaded="
-        stripePaymentLoaded = true;
-        loading = false;
-      "
-      @back="
-        stripeClientSecret = '';
-        stripePaymentLoaded = false;
-      "
-    />
+    <div v-if="stripeClientSecret" v-show="stripePaymentLoaded">
+      <AppAlert variant="info" class="mb-4">
+        <template #icon>
+          <font-awesome-icon :icon="['fa', 'hand-sparkles']" />
+        </template>
+        You'll be contributing {{ n(signUpData.amount, 'currency') }}/{{
+          signUpData.period
+        }}
+      </AppAlert>
+      <p class="mb-3">
+        You'll be able to modify your contribution and access your payment
+        history at any time in your member account
+      </p>
+      <p class="mb-6">
+        Did you miss something?
+        <a
+          class="cursor-pointer underline text-link"
+          @click="
+            stripeClientSecret = '';
+            stripePaymentLoaded = false;
+          "
+        >
+          Back to the previous screen
+        </a>
+      </p>
+      <StripePayment
+        :client-secret="stripeClientSecret"
+        :email="signUpData.email"
+        @loaded="
+          stripePaymentLoaded = true;
+          loading = false;
+        "
+      />
+    </div>
   </AuthBox>
 </template>
 
@@ -82,7 +102,7 @@ import AppButton from '../../../components/forms/AppButton.vue';
 import Contribution from '../../../components/contribution/Contribution.vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import { generalContent } from '../../../store';
-import StripePayment from './components/StripePayment.vue';
+import StripePayment from '../../../components/StripePayment.vue';
 
 import { JoinContent } from '../../../utils/api/api.interface';
 import { fetchJoinContent } from '../../../utils/api/content';
@@ -91,6 +111,7 @@ import { signUp } from '../../../utils/api/signup';
 import useVuelidate from '@vuelidate/core';
 import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
 import calcPaymentFee from '../../../utils/calcPaymentFee';
+import AppAlert from '../../../components/AppAlert.vue';
 
 const { t, n } = useI18n();
 
@@ -153,7 +174,6 @@ async function submitSignUp() {
       router.push({ path: '/join/confirm-email' });
     }
   } catch (err) {
-    // Only revert loading on error as success causes route change
     loading.value = false;
     throw err;
   }
