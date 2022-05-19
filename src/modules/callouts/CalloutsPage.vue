@@ -59,7 +59,7 @@
       <span v-else>-</span>
     </template>
 
-    <template #answered="{ item }" v-if"callout.hasAnswered">
+    <template #answered="{ item }" v-if="callout.hasAnswered">
       <font-awesome-icon icon="check-circle" />
       {{ t('callouts.showAnswered') }}
     </template>
