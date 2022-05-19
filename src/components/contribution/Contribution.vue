@@ -17,7 +17,11 @@
   <!-- TODO: Needed for join form, can we rework UI? -->
   <slot></slot>
 
-  <ContributionMethod v-model="paymentMethodProxy" />
+  <ContributionMethod
+    v-model="paymentMethodProxy"
+    :methods="content.paymentMethods"
+    class="mb-5"
+  />
 
   <ContributionFee
     v-if="isMonthly && content.showAbsorbFee"

@@ -7,4 +7,5 @@ export type ContributionContent = Pick<
   | 'minMonthlyAmount'
   | 'showAbsorbFee'
   | 'periods'
+  | 'paymentMethods'
 >;

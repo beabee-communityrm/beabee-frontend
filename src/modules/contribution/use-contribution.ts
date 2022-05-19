@@ -38,6 +38,7 @@ const contributionContent = reactive<ContributionContent>({
   minMonthlyAmount: 5,
   periods: [],
   showAbsorbFee: true,
+  paymentMethods: [],
 });
 
 const isIniting = ref(false);
@@ -81,6 +82,7 @@ const initContributionPage = async () => {
   contributionContent.minMonthlyAmount = content.minMonthlyAmount;
   contributionContent.periods = content.periods;
   contributionContent.showAbsorbFee = content.showAbsorbFee;
+  contributionContent.paymentMethods = content.paymentMethods;
 
   resetNewContribution();
 

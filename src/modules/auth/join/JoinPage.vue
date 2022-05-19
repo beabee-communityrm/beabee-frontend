@@ -106,6 +106,7 @@ const joinContent = ref<JoinContent>({
   showNoContribution: false,
   subtitle: '',
   title: '',
+  paymentMethods: [],
 });
 
 const signUpData = reactive({
@@ -167,6 +168,8 @@ onBeforeMount(async () => {
   signUpData.amount = route.query.amount
     ? Number(route.query.amount)
     : joinContent.value.initialAmount;
+
+  signUpData.paymentMethod = joinContent.value.paymentMethods[0];
 
   if (!joinContent.value.showAbsorbFee) {
     signUpData.payFee = false;

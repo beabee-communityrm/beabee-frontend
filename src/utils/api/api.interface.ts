@@ -118,12 +118,21 @@ export interface UpdateMemberData extends Partial<MemberData> {
   profile?: UpdateMemberProfileData;
 }
 
-export interface PaymentSource {
-  type: 'direct-debit';
+export interface CardPaymentSource {
+  type: PaymentMethod.Card;
+  last4: string;
+  expiryMonth: number;
+  expiryYear: number;
+}
+
+export interface DirectDebitPaymentSource {
+  type: PaymentMethod.DirectDebit;
   bankName: string;
   accountHolderName: string;
   accountNumberEnding: string;
 }
+
+export type PaymentSource = CardPaymentSource | DirectDebitPaymentSource;
 
 export interface ContributionInfo {
   type: ContributionType;
@@ -187,6 +196,7 @@ export interface JoinContent {
   }[];
   showAbsorbFee: boolean;
   showNoContribution: boolean;
+  paymentMethods: PaymentMethod[];
 }
 
 export interface JoinSetupContent {

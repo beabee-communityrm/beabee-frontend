@@ -1,28 +1,48 @@
 <template>
-  <AppRadioGroup
-    v-model="paymentMethod"
-    name="paymentMethod"
-    :options="[
-      [PaymentMethod.Card, 'Card'],
-      [PaymentMethod.DirectDebit, 'Direct debit'],
-    ]"
-  />
-  <div></div>
+  <div class="flex flex-wrap gap-2">
+    <div v-for="method in methods" :key="method" class="flex-1">
+      <button
+        class="
+          h-12
+          w-full
+          rounded
+          border border-primary-40
+          font-semibold
+          cursor-pointer
+        "
+        :class="
+          method === modelValue ? 'bg-link text-white' : 'hover:bg-link-10'
+        "
+        type="button"
+        @click="emit('update:modelValue', method)"
+      >
+        {{ availableMethods[method].label }}
+      </button>
+    </div>
+  </div>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { PaymentMethod } from '../../utils/enums/payment-method.enum';
-import AppRadioGroup from '../forms/AppRadioGroup.vue';
 
-PaymentMethod;
+interface MethodOpts {
+  label: string;
+  image: string;
+}
+
+const availableMethods: Record<PaymentMethod, MethodOpts> = {
+  card: {
+    label: 'Card',
+    image: '',
+  },
+  'direct-debit': {
+    label: 'Direct debit',
+    image: '',
+  },
+} as const;
 
 const emit = defineEmits(['update:modelValue']);
-const props = defineProps<{
+defineProps<{
   modelValue: PaymentMethod;
+  methods: PaymentMethod[];
 }>();
-
-const paymentMethod = computed({
-  get: () => props.modelValue,
-  set: (newPaymentMethod) => emit('update:modelValue', newPaymentMethod),
-});
 </script>
