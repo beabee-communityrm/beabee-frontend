@@ -20,7 +20,11 @@
         class="w-full mt-2 whitespace-nowrap"
       >
         <template #empty>
-          <p>{{ route.query.s ? t('contacts.noResults') : t('contacts.noContacts') }}</p>
+          <p>
+            {{
+              route.query.s ? t('contacts.noResults') : t('contacts.noContacts')
+            }}
+          </p>
         </template>
         <template #firstname="{ item }">
           <router-link
@@ -243,6 +247,5 @@ watchEffect(async () => {
   if (!currentSegment.value) {
     contactsTotal.value = contactsTable.value.total;
   }
-
 });
 </script>
