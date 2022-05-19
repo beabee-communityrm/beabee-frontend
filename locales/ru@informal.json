@@ -1,0 +1,407 @@
+{
+  "adminDashboard": {
+    "latestCallout": {},
+    "mostRecentMembers": {},
+    "numbers": {}
+  },
+  "callout": {
+    "contactDetails": "Контактная информация",
+    "form": {
+      "guestFieldsMissing": "Пожалуйста, сообщи нам твои контактные данные",
+      "submittingResponseError": "Не удалось отправить ответ. Повтори попытку."
+    },
+    "status": {
+      "endedOn": "в {duration}",
+      "endsIn": "Заканчивается {duration}",
+      "startsIn": "Начинается с {duration}"
+    },
+    "youResponded": "Ты ответил ♥"
+  },
+  "calloutAdmin": {},
+  "calloutAdminOverview": {
+    "actions": {},
+    "dates": {},
+    "settings": {
+      "answers": {},
+      "contactInfo": {},
+      "endsWith": {},
+      "openTo": {}
+    }
+  },
+  "callouts": {
+    "archive": "Архив",
+    "data": {
+      "callout": "Callout",
+      "endDate": "Последняя Дата"
+    },
+    "search": "Поиск Callouts",
+    "show": "Показать",
+    "showAll": "Все",
+    "showAnswered": "Отвечен"
+  },
+  "calloutsAdmin": {
+    "data": {},
+    "filter": {}
+  },
+  "common": {
+    "annually": "ежегодно",
+    "backToHome": "Назад к главной странице",
+    "contributing": "Ваш Вклад",
+    "every": "каждый/ую",
+    "goBack": "Назад",
+    "hello": "Привет",
+    "in": "в",
+    "joined": "Учасник с",
+    "login": "Войти",
+    "month": "Месяц/Месяцев",
+    "monthly": "ежемесячно",
+    "new": "Новый/Новое/Новая",
+    "no": "Нет",
+    "participate": "Участвовать",
+    "role": {
+      "admin": "Администратор",
+      "member": "Учасник",
+      "superadmin": "Главный aдминистратор"
+    },
+    "share": "Поделится",
+    "status": {
+      "draft": "Черновик",
+      "ended": "Закрыто",
+      "open": "Открыть",
+      "scheduled": "Запланированно"
+    },
+    "thankYou": "Большое Спасибо",
+    "timeAgo": "до {time}",
+    "timeIn": "в {time}",
+    "until": "до",
+    "year": "год/ годов",
+    "yes": "Да"
+  },
+  "contactInformation": {
+    "deliveryOptIn": "Отправка письма"
+  },
+  "contactOverview": {
+    "about": "О",
+    "annotation": {
+      "copy": "<p>Вся информация, добавленная в этот раздел, <strong>видна только администраторам</strong>. Участники никогда не увидят их в своем профиле или личном кабинете.</p>\n"
+    },
+    "contribution": "Взнос",
+    "information": "Информация",
+    "overview": "Обзор",
+    "roles": "Роль",
+    "security": {
+      "instructions": "Скопируйте и поделитесь этой ссылкой:",
+      "loginOverride": "Автоматический Вход",
+      "resetPassword": "Сбросить пароль",
+      "title": "Безопасность",
+      "whatDoTheButtonsDo": "Нажми кнопку, чтобы создать экстренную ссылку:"
+    }
+  },
+  "contacts": {
+    "addContact": "Добавить контакт",
+    "advancedSearch": "Расширенный поиск",
+    "allContacts": "Все контакты",
+    "data": {
+      "amount": "Сумма",
+      "contribution": "Взнос",
+      "contributionType": "Вид оплаты",
+      "deliveryOptIn": "Отправка письма",
+      "description": "Описание",
+      "email": "Почтовый ящик",
+      "groups": "Группа",
+      "joined": "Участник с",
+      "lastSeen": "Последний раз онлайн",
+      "name": "Имя",
+      "newsletter": "Новости",
+      "notes": "Примечания",
+      "payingFee": "Оплатить Транзакцию?",
+      "period": "Период",
+      "phone": "Телефон",
+      "preferredChannel": "Предпочтительный канал",
+      "roles": "Роль",
+      "rolesCopy": {
+        "today": "сегодня"
+      },
+      "tags": "Теги"
+    },
+    "noResults": "Контактов не найдено",
+    "search": "Искать контакт",
+    "showingOf": "Контакты от {} и до {} показаны"
+  },
+  "contribution": {
+    "bankAccount": "Банковский счет",
+    "billing": "Вид оплаты",
+    "cancelContribution": "Удалить учётную запись",
+    "cancelDescription": "Если ты отменишь свой взнос, твой член прекратится в конце текущего платежного цикла,{day} {month}.",
+    "cancelMessage": "Жаль, что ты покидаешь нас",
+    "changeBank": "Измени твои банковские реквизиты",
+    "changeBankInfo": "На следующем шаге ты сможешь ввести свои новые банковские реквизиты.",
+    "contributing": "Твой взнос",
+    "contributionUpdateError": "Ты не можешь обновить свой взнос, потомучто скоро платёж",
+    "expiredText": "Пожалуйста, рассмотри возможность продления, даже если наименьшая сумма поможет нам очень сильно. Спасибо!",
+    "hasPendingPayment": "Твой платеж в настоящее время обрабатывается.",
+    "manualPayment": "Вы платите вручную через банковский перевод прямо сейчас. Чтобы вам было проще управлять своим взносом, а нам было проще узнать, на какую сумму денег от наших участников мы можем рассчитывать из месяца в месяц, обновите автоматическую оплату с помощью прямого дебета.",
+    "nextAmountChanging": "С {renewalDate} твой взнос изменится на {nextAmount}",
+    "paymentHistory": {
+      "amount": "Взнос",
+      "date": "Дата",
+      "title": "Твоя история платежей"
+    },
+    "paymentSourceUpdateError": "Ты не можешь обновить твой банковские реквизиты, потомучто скоро платёж",
+    "prorateDecreaseMessage": "У тебя осталось {monthsLeft} {месяцев} на твой текущий взнос, твой новый взнос начнется {renewalDate}.",
+    "prorateIncreaseMessage": "Твоё членство по-прежнему действует в течение {monthsLeft} {months} ​​под этим сообщением. Ты можешь совершить разовый платеж в размере {oneOffPayment}, чтобы немедленно продлить свое членство и увеличить взнос.",
+    "prorateNoText": "До тех пор ты останетешся на своем текущем взносе.",
+    "prorateYesText": "С тебя будет списан единоразовый платеж в размере {oneOffPayment}, и твой взнос будет немедленно обновлен.",
+    "restartContribution": "Обновить членство",
+    "startContribution": "Начать членство",
+    "startedContribution": "Твоё членство началось",
+    "updateContribution": "Актуализировать взнос",
+    "updatePaymentType": "Обновить тип оплаты",
+    "updatedContribution": "Твой взнос был изменён",
+    "updatedPaymentSource": "Твои банковские реквизиты были изменены",
+    "willExpire": "Твоя подписка заканчивается через {expires}",
+    "willRenew": "Твоя подписка будет автоматически продлена {renewalDate}",
+    "willRenewWithNewAmount": "Твоя подписка будет автоматически продлена {renewalDate} и взнос изменится на выбранную тобою сумму {nextAmount}."
+  },
+  "createCallout": {
+    "actions": {},
+    "steps": {
+      "content": {
+        "inputs": {
+          "intro": {}
+        }
+      },
+      "dates": {
+        "inputs": {
+          "expires": {
+            "opts": {}
+          },
+          "starts": {
+            "opts": {}
+          }
+        }
+      },
+      "endMessage": {
+        "inputs": {
+          "action": {
+            "opts": {}
+          },
+          "text": {},
+          "title": {},
+          "url": {}
+        }
+      },
+      "mailchimp": {},
+      "titleAndImage": {
+        "inputs": {
+          "description": {},
+          "image": {},
+          "title": {}
+        }
+      },
+      "url": {
+        "inputs": {
+          "description": {},
+          "overrideShare": {
+            "opts": {}
+          },
+          "slug": {
+            "opts": {}
+          },
+          "title": {}
+        }
+      },
+      "visibility": {
+        "inputs": {
+          "anonymous": {
+            "opts": {}
+          },
+          "editable": {
+            "opts": {}
+          },
+          "visible": {
+            "opts": {}
+          },
+          "who": {
+            "opts": {}
+          }
+        }
+      }
+    }
+  },
+  "editCallout": {},
+  "footer": {
+    "contactUs": "Свяжитесь с нами по",
+    "contacts": "Контакт",
+    "handbookResources": "Справочник и ресурсы",
+    "impressum": "Импрессум",
+    "joinCommunity": "Стать участником",
+    "poweredBy": "Мы поддерживаем независимые локальные новости.",
+    "privacyPolicy": "Политика конфиденциальности",
+    "terms": "Условия и положения"
+  },
+  "forgotPassword": {
+    "checkInbox": "Пожалуйста проверь свою почту и следуйте присланной инструкции. Если ты не нашёл письма проверь свой спам-ящик.",
+    "description": "Пожалуйста введи адрес почты. Мы отправим информацию по возобновлению пароля",
+    "message": "Введи твоё имя или адрес почты {email}, вскоре ты получишь сообщение.",
+    "title": "Забыли пароль?"
+  },
+  "form": {
+    "addressLine1": "Адрес",
+    "addressLine2": "Адрес 2",
+    "cancel": "Отменить",
+    "cityOrTown": "Город",
+    "deliveryOptIn": "Согласие на посылку",
+    "description": "Описание",
+    "email": "Почта",
+    "errors": {
+      "address": {
+        "required": "Это окно нужно, если хочешь ввести адрес"
+      },
+      "aggregator": "Чего-то нехватает! Пожалуйста проконтролируйте верхние поля ввода",
+      "email": {
+        "invalid": "Некорректное имя почтового ящика",
+        "required": "Нужен почтовый ящик"
+      },
+      "firstName": {
+        "required": "Нужно Имя"
+      },
+      "lastName": {
+        "required": "Нужна Фамилия"
+      },
+      "name": {
+        "required": "Нужно Имя"
+      },
+      "password": {
+        "invalid": "Некорректный Пароль",
+        "required": "Нужен пароль",
+        "sameAs": "Пароли не совпадают"
+      }
+    },
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "newPassword": "Новый пароль",
+    "newPasswordConfirm": "Потвердить новый пароль",
+    "notes": "Замечания",
+    "password": "Пароль",
+    "passwordInfo": "Пароль должен содержать как минимум 8 символов, минимум одно число, одну заглавную букву и одну строчную букву",
+    "phone": "Телефон",
+    "postCode": "Почтовый индекс",
+    "saveChanges": "Сохранить изменения",
+    "warning": "Пожалуйста меняй информацию на этой странице, только с согласием пользователя. Изменения будут показаны другим пользователям."
+  },
+  "homePage": {
+    "editProfile": "Настроить профиль",
+    "manageContribution": "Поменять взнос",
+    "manageYourContribution": "Поменять ваш взнос",
+    "newCallout": "Новый Callout!",
+    "openCallouts": "Открытые Callouts",
+    "passwordReset": "Твой пароль был обновлён",
+    "quickActions": "Быстрые действия",
+    "title": "Главная страница",
+    "viewAllCallouts": "Показать все Callouts",
+    "viewOpenCallouts": "Показать открытые Callouts",
+    "welcome": "Добро пожаловать {firstName}!",
+    "yourProfile": "Твой профиль"
+  },
+  "informationPage": {
+    "changePassword": "Поменять пароль",
+    "contactInformation": "Контактная информация",
+    "deliveryAddress": "Адрес",
+    "loginDetail": "Данные для входа",
+    "savedPassword": "Новый пароль был сохранён",
+    "subTitle": "Все нужные поля помечены *. Вся информация будет рассматриваться кофеденциально",
+    "title": "Твоя информация"
+  },
+  "join": {
+    "absorbFeeForce": "При взносе в {amount}, ты должны покрыть транзакционные издержки {fee}.",
+    "absorbFeeOptIn": "Да, я покрою транзакционные издержки {fee}.",
+    "absorbFeeText": "Мы платим за каждую транзакцию издержки. Это значит, что мы практически ничего не получим при ежемесячном взносе. Ты не хочешь перенять транзакционные издержки? Так же ты можешь платить ежегодно",
+    "contribute": "Поддержать {amount} в {period}",
+    "contribution": "Взнос",
+    "errors": {
+      "confirmEmail": {
+        "message": "Почти готово! Мы только должны подтвердить твой почтовый ящик, что бы продолжить.",
+        "proceed": "Мы послали вам письмо. Пожалуйста"
+      },
+      "duplicateEmail": {
+        "message": "При настройке вашего членства возникла проблема, наша команда была уведомлена. Обратитесь в службу поддержки, если проблема не устранена.",
+        "title": "Подтвердите адрес почтового ящика"
+      },
+      "failed": {
+        "backToJoin": "Назад к регистрации",
+        "message": "При регистрации возникла проблема, наша команда была уведомлена. Обратись в службу поддержки, если проблема не устранена.",
+        "title": "Что то пошло нетак!"
+      }
+    },
+    "login": "Войти",
+    "memberAccount": "Учётная запись",
+    "memberAlready": "Ты еще не член сообщества?",
+    "minimumContribution": "Минимальный взнос",
+    "noContribution": "Я нехочу сейчас вносить взнос",
+    "notice": "продолжая, ты принимаешь наши",
+    "now": "Стать участником сообщества!",
+    "privacy": "Политика конфиденциальности"
+  },
+  "joinSetup": {
+    "confirmDetails": "Пожалуйста, подтверди твою информацию:",
+    "welcome": "Добро Пожаловать {firstName}!"
+  },
+  "locale": "ru",
+  "login": {
+    "backTo": "Назад к {newsroomName}",
+    "forgotPassword": "Забыли пароль?",
+    "joinNow": "Присоединяйся к нам!",
+    "login": "Войти",
+    "notMember": "Ещё не член сообщества?",
+    "title": "Войти",
+    "wrongCredentials": "Неверная комбинация пароля и почтового ящика"
+  },
+  "menu": {
+    "admin": "Администрация",
+    "callouts": "Callouts",
+    "community": "Сообщетсво",
+    "contribution": "Взнос",
+    "dashboard": "приборная доска",
+    "home": "Главная страница",
+    "logout": "Выйти",
+    "notices": "уведомление",
+    "settings": "Настройки",
+    "yourInformation": "Твой аккаунт",
+    "yourProfile": "Твой профиль"
+  },
+  "notices": {
+    "addNotice": "Добавить уведомление",
+    "data": {
+      "createdAt": "Создать",
+      "name": "Имя",
+      "status": "Статус"
+    }
+  },
+  "notification": {
+    "error": "Уупс, что-то пошло нетак!",
+    "success": "Очень хорошо! Это сработало"
+  },
+  "pageTitle": {
+    "confirmEmail": "Подтвердить адрес почты",
+    "duplicateEmail": "Скопировать адрес почты",
+    "failed": "Ошибка",
+    "forgotPassword": "Забыли пароль",
+    "join": "Стать участником",
+    "login": "Войти",
+    "resetPassword": "Сбросить пароль",
+    "setup": "Создать аккаунт"
+  },
+  "resetPassword": {
+    "changePassword": "Поменять пароль",
+    "confirmPassword": "Подтвердить пароль",
+    "description": "Введите новый пароль, что бы продолжить",
+    "login": "Войти на ваш аккаунт",
+    "newPassword": "Новый пароль",
+    "title": "Обновить пароль?"
+  },
+  "setPassword": {
+    "description": "Введите новый пароль, что бы продолжить",
+    "title": "поставить пароль"
+  }
+}

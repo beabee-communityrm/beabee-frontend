@@ -172,7 +172,7 @@ const isActiveMember = computed(
 const isActiveMemberWithGoCardless = computed(
   () =>
     isActiveMember.value &&
-    currentContribution.type === ContributionType.GoCardless
+    currentContribution.type === ContributionType.Automatic
 );
 const isExpiringMember = computed(
   () => currentContribution.membershipStatus === MembershipStatus.Expiring

@@ -172,6 +172,11 @@ export interface LoginData {
   password: string;
 }
 
+export interface ContactsContent {
+  tags: string[];
+  manualPaymentSources: string[];
+}
+
 export interface GeneralContent {
   organisationName: string;
   siteUrl: string;
@@ -222,12 +227,22 @@ interface BasicCalloutData {
   title: string;
   excerpt: string;
   image: string;
-  starts?: Date;
-  expires?: Date;
+  starts: Date | null;
+  expires: Date | null;
   allowUpdate: boolean;
   allowMultiple: boolean;
   access: 'member' | 'guest' | 'anonymous' | 'only-anonymous';
   hidden: boolean;
+}
+
+interface MoreCalloutData extends BasicCalloutData {
+  formSchema: CalloutFormSchema;
+  intro: string;
+  thanksText: string;
+  thanksTitle: string;
+  thanksRedirect?: string;
+  shareTitle?: string;
+  shareDescription?: string;
 }
 
 export interface CalloutFormSchema {
@@ -239,27 +254,20 @@ export interface GetBasicCalloutData extends BasicCalloutData {
   hasAnswered?: boolean;
 }
 
-export interface CreateCalloutData extends BasicCalloutData {
-  image: string;
+export interface GetMoreCalloutData
+  extends GetBasicCalloutData,
+    MoreCalloutData {}
+
+export interface CreateCalloutData extends MoreCalloutData {
+  // Must currently set a date on creation
   starts: Date;
-  intro: string;
-  thanksText: string;
-  thanksTitle: string;
-  thanksRedirect?: string;
-  formSchema: CalloutFormSchema;
 }
+
+export type UpdateCalloutData = Omit<CreateCalloutData, 'slug'>;
 
 export interface GetCalloutsQuery
   extends GetPaginatedQuery<'title' | 'status' | 'answeredBy' | 'hidden'> {
   hasAnswered?: string;
-}
-
-export interface GetMoreCalloutData extends GetBasicCalloutData {
-  formSchema: any;
-  intro: string;
-  thanksText: string;
-  thanksTitle: string;
-  thanksRedirect?: string;
 }
 
 export type GetCalloutResponsesQuery = GetPaginatedQuery<'member'>;

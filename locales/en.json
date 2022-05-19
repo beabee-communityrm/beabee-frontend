@@ -82,7 +82,8 @@
         "membersOnly": "Members only"
       }
     },
-    "summary": "Summary"
+    "summary": "Summary",
+    "updated": "Your callout was successfully updated."
   },
   "callouts": {
     "archive": "Archive",
@@ -172,6 +173,7 @@
     "allContacts": "All contacts",
     "data": {
       "amount": "Amount",
+      "annotationsCopy": "Contact successfully updated",
       "contribution": "Contribution",
       "contributionType": "Type",
       "deliveryOptIn": "Delivery opt-in?",
@@ -240,7 +242,8 @@
       "back": "Back",
       "continue": "Continue",
       "publish": "Publish",
-      "schedule": "Schedule"
+      "schedule": "Schedule",
+      "update": "Update"
     },
     "steps": {
       "content": {
@@ -396,6 +399,10 @@
       }
     },
     "title": "Create a callout"
+  },
+  "editCallout": {
+    "title": "Edit callout",
+    "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
   "footer": {
     "contactUs": "Contact us at",
