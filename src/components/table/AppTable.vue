@@ -26,6 +26,13 @@
     </thead>
 
     <tbody class="text-xs lg:text-sm">
+
+      <tr v-if="!items.length">
+        <slot name="empty">
+          <p>Loading contents, please wait...</p>
+        </slot>
+      </tr>
+
       <tr
         v-for="(item, i) in items"
         :key="i"
