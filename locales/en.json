@@ -39,6 +39,8 @@
       "endsIn": "Ends in {duration}",
       "startsIn": "starts in {duration}"
     },
+    "toContributionPage": "Edit my contribution",
+    "updateContribution": "please update your contribution",
     "youResponded": "You replied to this callout ♥"
   },
   "calloutAdmin": {
@@ -195,6 +197,7 @@
       },
       "tags": "Tags"
     },
+    "noContacts": "No contacts added yet",
     "noResults": "No contacts found",
     "search": "Search contacts...",
     "showingOf": "Showing {start} to {end} contacts out of {total}"
@@ -217,6 +220,7 @@
     "paymentHistory": {
       "amount": "Amount",
       "date": "Date",
+      "empty": "Past payments and their invoices will show up here.",
       "title": "Payment history"
     },
     "paymentSourceUpdateError": "You can't update your bank account at the moment as you have a payment pending",
@@ -250,7 +254,7 @@
         "description": "Build your callout with questions and prompts",
         "inputs": {
           "intro": {
-            "help": "<p>The <strong>Introduction text</strong> appears alongside the callout, it should explain why you are doing this callout and give any context the user might need before answering.</p>\n",
+            "help": "<p>The <strong>Introduction text</strong> appears alongside the callout, it should explain why you are doing this callout and give any context the user might need before answering. Select and click the buttons to format the copy, or use keyboard shortcuts.</p>\n",
             "label": "Introduction text"
           }
         },
