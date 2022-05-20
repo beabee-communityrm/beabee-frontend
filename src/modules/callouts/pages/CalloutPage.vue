@@ -64,11 +64,7 @@
     <figure class="relative mb-6 pb-[56.25%]">
       <img class="absolute w-full h-full object-cover" :src="callout.image" />
     </figure>
-    <div
-      class="text-lg content-message"
-      v-if="!canSeeButNotRespond"
-      v-html="callout.intro"
-    />
+    <div class="text-lg content-message" v-html="callout.intro" />
     <div
       class="
         w-full
