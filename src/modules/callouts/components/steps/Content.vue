@@ -2,14 +2,13 @@
   <WarningBanner v-if="mode === 'edit'" />
   <div class="grid grid-cols-2 gap-6">
     <div class="col-span-1">
-      <AppTextArea
+      <RichTextEditor
         v-model="dataProxy.introText"
         :label="inputT('intro.label')"
         required
         :error-message="validation.introText.$errors[0]?.$message"
         @blur="validation.introText.$touch"
       />
-      <RichTextEditor v-model="dataProxy.introText" />
       <p>output html:</p>
       {{ dataProxy.introText }}
     </div>
