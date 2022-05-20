@@ -333,6 +333,7 @@
         "title": "Title and image"
       },
       "url": {
+        "URLWillBe": "URL will be",
         "description": "Adjust how the URL will appear and how to access it",
         "inputs": {
           "description": {

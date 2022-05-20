@@ -19,7 +19,9 @@
           @blur="validation.slug.$touch"
         />
         <p class="mt-2 text-sm">
-          URL will be {{ baseUrl }}/callouts/{{ slug || '???' }}
+          {{ t('createCallout.steps.url.URLWillBe') }} {{ baseUrl }}/callouts/{{
+            slug || '???'
+          }}
         </p>
       </div>
       <div
