@@ -9,8 +9,6 @@
         :error-message="validation.introText.$errors[0]?.$message"
         @blur="validation.introText.$touch"
       />
-      <p>output html:</p>
-      {{ dataProxy.introText }}
     </div>
     <div
       class="col-span-1 text-sm text-grey mt-6"
