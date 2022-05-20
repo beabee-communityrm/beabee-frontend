@@ -177,12 +177,16 @@ const canRespond = computed(
     currentUser.value?.activeRoles.includes('member')
 );
 
-// edge-case where a member is not contributing
-// (anymore) and should be given some indication as
+// edge-case where a member is:
+// 1. logged in
+// 2. to a member-only callout
+// 3. but not contributing (anymore)
+// and should be given some indication as
 // to why they can't reply to a callout
 const canSeeButNotRespond = computed(
   () =>
     callout.value?.access === 'member' &&
+    currentUser.value &&
     !currentUser.value?.activeRoles.includes('member')
 );
 
