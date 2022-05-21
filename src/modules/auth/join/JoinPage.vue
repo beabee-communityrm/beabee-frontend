@@ -185,9 +185,18 @@ onBeforeMount(async () => {
   stripeClientSecret.value = '';
 
   joinContent.value = await fetchJoinContent();
+
   signUpData.amount = route.query.amount
     ? Number(route.query.amount)
     : joinContent.value.initialAmount;
+
+  signUpData.period =
+    route.query.period &&
+    Object.values(ContributionPeriod).includes(
+      route.query.period as ContributionPeriod
+    )
+      ? (route.query.period as ContributionPeriod)
+      : joinContent.value.initialPeriod;
 
   signUpData.paymentMethod = joinContent.value.paymentMethods[0];
 
