@@ -1,11 +1,9 @@
 import { computed, reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import { ContributionType } from '../../utils/enums/contribution-type.enum';
 import i18n from '../../i18n';
 import { ContributionContent } from '../../components/contribution/contribution.interface';
 import {
-  cancelContribution,
   startContribution,
   fetchContribution,
   updateContribution,
