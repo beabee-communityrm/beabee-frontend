@@ -13,7 +13,7 @@ import StepVisibility from '../components/steps/Visibility.vue';
 import StepTitleAndImage from '../components/steps/TitleAndImage.vue';
 import StepEndMessage from '../components/steps/EndMessage.vue';
 import StepUrlAndSharing from '../components/steps/UrlAndSharing.vue';
-// import StepMailchimpSync from '../components/steps/MailchimpSync.vue';
+import StepMailchimpSync from '../components/steps/MailchimpSync.vue';
 import StepDatesAndDuration from '../components/steps/DatesAndDuration.vue';
 import StepContent from '../components/steps/Content.vue';
 import { Steps } from '../create-callout.interface';
@@ -94,7 +94,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
       shareDescription: data?.shareDescription ? data?.shareDescription : '',
     },
   },
-  /*mailchimp: {
+  mailchimp: {
     name: t('createCallout.steps.mailchimp.title'),
     description: t('createCallout.steps.mailchimp.description'),
     validated: false,
@@ -102,7 +102,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
     data: {
       useMailchimpSync: false,
     },
-  },*/
+  },
   dates: {
     name: t('createCallout.steps.dates.title'),
     description: t('createCallout.steps.dates.description'),
