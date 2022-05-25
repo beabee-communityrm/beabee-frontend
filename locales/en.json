@@ -254,7 +254,7 @@
         "description": "Build your callout with questions and prompts",
         "inputs": {
           "intro": {
-            "help": "<p>The <strong>Introduction text</strong> appears alongside the callout, it should explain why you are doing this callout and give any context the user might need before answering.</p>\n",
+            "help": "<p>The <strong>Introduction text</strong> appears alongside the callout, it should explain why you are doing this callout and give any context the user might need before answering. Select and click the buttons to format the copy, or use keyboard shortcuts.</p>\n",
             "label": "Introduction text"
           }
         },
