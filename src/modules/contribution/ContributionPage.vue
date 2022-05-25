@@ -70,10 +70,7 @@
         :payment-source="currentContribution.paymentSource"
       />
 
-      <CancelContribution
-        v-if="isAutoActiveMember"
-        :expiry-date="currentContribution.membershipExpiryDate"
-      />
+      <CancelContribution :contribution="currentContribution" />
     </div>
     <div>
       <PaymentsHistory id="me" class="lg:ml-10" />

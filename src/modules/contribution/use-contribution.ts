@@ -171,17 +171,6 @@ const showProrateOptions = computed(() => {
   );
 });
 
-const cancelContributionLoading = ref(false);
-const submitCancelContribution = () => {
-  cancelContributionLoading.value = true;
-  cancelContribution()
-    .then(() => {
-      useRouter().push('/profile/contribution');
-    })
-    .catch((err) => err)
-    .finally(() => (cancelContributionLoading.value = false));
-};
-
 export function useContribution() {
   return {
     isIniting,
@@ -199,7 +188,5 @@ export function useContribution() {
     isAutoActiveMember,
     showChangePeriod,
     showProrateOptions,
-    submitCancelContribution,
-    cancelContributionLoading,
   };
 }
