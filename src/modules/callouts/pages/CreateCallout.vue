@@ -100,7 +100,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
     validated: false,
     component: markRaw(StepMailchimpSync),
     data: {
-      useMailchimpSync: false,
+      useMailchimpSync: true,
     },
   },
   dates: {
