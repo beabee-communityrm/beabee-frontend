@@ -1,6 +1,7 @@
 import { parseISO } from 'date-fns';
 import axios from '../../axios';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
+import { PaymentMethod } from '../enums/payment-method.enum';
 import {
   ContributionInfo,
   GetMemberData,
@@ -142,13 +143,18 @@ export async function cancelContribution(): Promise<void> {
   await axios.post('/member/me/contribution/cancel');
 }
 
-export async function updatePaymentSource(): Promise<PaymentFlowParams> {
+export const updatePaymentSourceCompleteUrl =
+  import.meta.env.VITE_APP_BASE_URL +
+  '/profile/contribution/payment-source/complete';
+
+export async function updatePaymentSource(
+  paymentMethod: PaymentMethod
+): Promise<PaymentFlowParams> {
   const { data } = await axios.put<Serial<PaymentFlowParams>>(
     '/member/me/payment-source',
     {
-      completeUrl:
-        import.meta.env.VITE_APP_BASE_URL +
-        '/profile/contribution/payment-source/complete',
+      paymentMethod,
+      completeUrl: updatePaymentSourceCompleteUrl,
     }
   );
   return data;

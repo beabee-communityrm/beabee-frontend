@@ -82,7 +82,10 @@ const monthsLeft = computed(() =>
 );
 
 const oneOffPayment = computed(
-  () => ((props.newAmount - props.oldAmount) * monthsLeft.value) / 12
+  () =>
+    Math.floor(
+      (((props.newAmount - props.oldAmount) * monthsLeft.value) / 12) * 100
+    ) / 100
 );
 
 // TODO: formatLocale isn't imported if used directly in the template

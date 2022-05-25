@@ -28,6 +28,7 @@
           v-model:paymentMethod="newContribution.paymentMethod"
           :content="contributionContent"
           :show-period="showChangePeriod"
+          :show-payment-method="!isAutoActiveMember"
         />
 
         <ProrateContribution
@@ -62,40 +63,26 @@
         />
       </form>
 
-      <template v-if="currentContribution.paymentSource">
-        <SectionTitle class="mb-4">{{
-          t('contribution.bankAccount')
-        }}</SectionTitle>
+      <PaymentSource
+        v-if="currentContribution.paymentSource"
+        class="mb-7 md:mb-12"
+        :email="email"
+        :payment-source="currentContribution.paymentSource"
+      />
 
-        <PaymentSource
-          class="mb-7 md:mb-12"
-          :payment-source="currentContribution.paymentSource"
-        />
-      </template>
-
-      <template v-if="isAutoActiveMember">
-        <SectionTitle class="mb-4">{{
-          t('contribution.cancelContribution')
-        }}</SectionTitle>
-
-        <CancelContribution
-          class="mb-9 md:mb-0"
-          :expiry-date="currentContribution.membershipExpiryDate"
-        />
-      </template>
+      <CancelContribution
+        v-if="isAutoActiveMember"
+        :expiry-date="currentContribution.membershipExpiryDate"
+      />
     </div>
-    <PaymentsHistory id="me" class="lg:ml-10" />
-  </div>
-
-  <div class="text-center md:hidden">
-    <router-link class="underline text-sm" to="/profile">
-      ←{{ t('common.backToHome') }}
-    </router-link>
+    <div>
+      <PaymentsHistory id="me" class="lg:ml-10" />
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount } from 'vue';
+import { computed, onBeforeMount } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import useVuelidate from '@vuelidate/core';
@@ -114,6 +101,7 @@ import ProrateContribution from './components/ProrateContribution.vue';
 import AppAlert from '../../components/AppAlert.vue';
 import MessageBox from '../../components/MessageBox.vue';
 import PaymentsHistory from './components/PaymentsHistory.vue';
+import { currentUser } from '../../store';
 
 const { t } = useI18n();
 
@@ -122,6 +110,10 @@ const updatedPaymentSource = route.query.updatedPaymentSource !== undefined;
 const startedContribution = route.query.startedContribution !== undefined;
 
 const validation = useVuelidate();
+
+const email = computed(() =>
+  currentUser.value ? currentUser.value.email : ''
+);
 
 const {
   isIniting,

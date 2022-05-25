@@ -1,5 +1,9 @@
 <template>
   <div>
+    <SectionTitle class="mb-4">{{
+      t('contribution.cancelContribution')
+    }}</SectionTitle>
+
     <p class="mb-3 text-sm">
       {{
         t('contribution.cancelDescription', {
@@ -24,6 +28,7 @@ import AppButton from '../../../components/forms/AppButton.vue';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import SectionTitle from '../../../components/SectionTitle.vue';
 
 const { t } = useI18n();
 

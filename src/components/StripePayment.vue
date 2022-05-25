@@ -22,6 +22,7 @@ const emit = defineEmits(['loaded']);
 const props = defineProps<{
   clientSecret: string;
   email: string;
+  returnUrl: string;
 }>();
 
 const divRef = ref<HTMLElement>();
@@ -56,7 +57,7 @@ onBeforeMount(async () => {
       const result = await stripe.confirmSetup({
         elements,
         confirmParams: {
-          return_url: import.meta.env.VITE_APP_BASE_URL + '/join/complete',
+          return_url: props.returnUrl,
           payment_method_data: {
             billing_details: {
               email: props.email,

@@ -2,6 +2,8 @@ import axios from '../../axios';
 import { ContributionPeriod } from '../enums/contribution-period.enum';
 import { PaymentFlowParams, Serial, SignupData } from './api.interface';
 
+export const completeUrl = import.meta.env.VITE_APP_BASE_URL + '/join/complete';
+
 export async function signUp(data: SignupData): Promise<PaymentFlowParams> {
   return (
     await axios.post<Serial<PaymentFlowParams>>('/signup', {
@@ -17,7 +19,7 @@ export async function signUp(data: SignupData): Promise<PaymentFlowParams> {
           payFee: data.payFee && data.period === ContributionPeriod.Monthly,
           prorate: false,
           paymentMethod: data.paymentMethod,
-          completeUrl: import.meta.env.VITE_APP_BASE_URL + '/join/complete',
+          completeUrl,
         },
       }),
     })

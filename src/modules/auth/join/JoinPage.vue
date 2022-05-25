@@ -81,6 +81,7 @@
       <StripePayment
         :client-secret="stripeClientSecret"
         :email="signUpData.email"
+        :return-url="completeUrl"
         @loaded="
           stripePaymentLoaded = true;
           loading = false;
@@ -107,7 +108,7 @@ import StripePayment from '../../../components/StripePayment.vue';
 import { JoinContent } from '../../../utils/api/api.interface';
 import { fetchJoinContent } from '../../../utils/api/content';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
-import { signUp } from '../../../utils/api/signup';
+import { signUp, completeUrl } from '../../../utils/api/signup';
 import useVuelidate from '@vuelidate/core';
 import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
 import calcPaymentFee from '../../../utils/calcPaymentFee';

@@ -18,6 +18,7 @@
   <slot></slot>
 
   <ContributionMethod
+    v-if="showPaymentMethod"
     v-model="paymentMethodProxy"
     :methods="content.paymentMethods"
     class="mb-5"
@@ -51,8 +52,9 @@ const props = withDefaults(
     paymentMethod: PaymentMethod;
     content: ContributionContent;
     showPeriod?: boolean;
+    showPaymentMethod?: boolean;
   }>(),
-  { showPeriod: true }
+  { showPeriod: true, showPaymentMethod: true }
 );
 
 const fee = calcPaymentFee(props);

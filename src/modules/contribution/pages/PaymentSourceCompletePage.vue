@@ -8,14 +8,22 @@ import { completeUpdatePaymentSource } from '../../../utils/api/member';
 const route = useRoute();
 const router = useRouter();
 
-onBeforeMount(() => {
-  completeUpdatePaymentSource(route.query.redirect_flow_id as string)
-    .then(() => {
+onBeforeMount(async () => {
+  const paymentFlowId = (
+    route.query.redirect_flow_id || route.query.setup_intent
+  )?.toString();
+
+  if (paymentFlowId) {
+    try {
+      await completeUpdatePaymentSource(paymentFlowId);
       router.replace({
         path: '/profile/contribution',
         query: { updatedPaymentSource: null },
       });
-    })
-    .catch((err) => err);
+      return;
+    } catch (err) {}
+  }
+
+  router.replace('/profile/contribution');
 });
 </script>
