@@ -50,12 +50,12 @@
 </template>
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import InfoMessage from '../../components/InfoMessage.vue';
-import SectionTitle from '../../components/SectionTitle.vue';
-import Contribution from '../../components/contribution/Contribution.vue';
-import AppButton from '../../components/forms/AppButton.vue';
-import ProrateContribution from './components/ProrateContribution.vue';
-import MessageBox from '../../components/MessageBox.vue';
+import InfoMessage from '../../../components/InfoMessage.vue';
+import SectionTitle from '../../../components/SectionTitle.vue';
+import Contribution from '../../../components/contribution/Contribution.vue';
+import AppButton from '../../../components/forms/AppButton.vue';
+import ProrateContribution from './ProrateContribution.vue';
+import MessageBox from '../../../components/MessageBox.vue';
 import { useI18n } from 'vue-i18n';
 import { useContribution } from '../use-contribution';
 
