@@ -11,8 +11,8 @@
 				class="mr-1 mt-1"
 				size="sm"
 				@click="editor.chain().focus().toggleBold().run()"
-				>Bold</AppButton
-			>
+				:noMargin="true"
+			/>
 			<AppButton
 				type="button"
 				variant="primaryOutlined"
@@ -21,8 +21,8 @@
 				class="mr-1 mt-1"
 				size="sm"
 				@click="editor.chain().focus().toggleItalic().run()"
-				>Italics</AppButton
-			>
+				:noMargin="true"
+			/>
 			<AppButton
 				type="button"
 				variant="primaryOutlined"
@@ -31,8 +31,8 @@
 				class="mr-1 mt-1"
 				size="sm"
 				@click="editor.chain().focus().toggleUnderline().run()"
-				>Underline</AppButton
-			>
+				:noMargin="true"
+			/>
 			<AppButton
 				type="button"
 				variant="primaryOutlined"
@@ -41,8 +41,8 @@
 				class="mr-1 mt-1"
 				size="sm"
 				@click="editor.chain().focus().toggleStrike().run()"
-				>Strikethr.</AppButton
-			>
+				:noMargin="true"
+			/>
 			<AppButton
 				type="button"
 				variant="primaryOutlined"
@@ -51,8 +51,8 @@
 				class="mr-1 mt-1"
 				size="sm"
 				@click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-				>Heading</AppButton
-			>
+				:noMargin="true"
+			/>
 			<AppButton
 				type="button"
 				variant="primaryOutlined"
@@ -61,8 +61,9 @@
 				class="mr-1 mt-1"
 				size="sm"
 				@click="editor.chain().focus().toggleBulletList().run()"
-				>Bullet list</AppButton
-			>
+				:noMargin="true"
+			/>
+
 			<AppButton
 				type="button"
 				variant="primaryOutlined"
@@ -71,8 +72,9 @@
 				class="mr-1 mt-1"
 				size="sm"
 				@click="editor.chain().focus().toggleOrderedList().run()"
-				>Ordered list</AppButton
-			>
+				:noMargin="true"
+			/>
+
 			<!-- <AppButton
 				type="button"
 				variant="primaryOutlined"
