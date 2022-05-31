@@ -7,6 +7,15 @@ import {
   faCreditCard as farCreditCard,
   faUser as farUser,
 } from '@fortawesome/free-regular-svg-icons';
+
+import {
+  faFacebook,
+  faLinkedin,
+  faTelegram,
+  faTwitter,
+  faWhatsapp,
+} from '@fortawesome/free-brands-svg-icons';
+
 import {
   faSignInAlt,
   faCaretLeft,
@@ -38,6 +47,7 @@ import {
   faLink,
   faTag,
   faCopy,
+  faEnvelope,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -76,7 +86,13 @@ library.add(
   faTrash,
   faLink,
   faTag,
-  faCopy
+  faCopy,
+  faFacebook,
+  faLinkedin,
+  faTelegram,
+  faTwitter,
+  faWhatsapp,
+  faEnvelope
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
