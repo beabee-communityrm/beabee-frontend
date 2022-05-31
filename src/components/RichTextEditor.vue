@@ -74,6 +74,6 @@ const editor = useEditor({
 
 <style>
 .ProseMirror {
-	@apply p-2 h-[5rem] bg-white w-full border border-primary-40 rounded focus:outline-none focus:shadow-input;
+	@apply p-2 min-h-[5rem] h-auto bg-white w-full border border-primary-40 rounded focus:outline-none focus:shadow-input;
 }
 </style>
