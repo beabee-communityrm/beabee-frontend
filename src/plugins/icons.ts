@@ -37,6 +37,7 @@ import {
   faTrash,
   faLink,
   faTag,
+  faCopy,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -74,7 +75,8 @@ library.add(
   faClone,
   faTrash,
   faLink,
-  faTag
+  faTag,
+  faCopy
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

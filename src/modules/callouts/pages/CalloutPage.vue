@@ -41,12 +41,13 @@
       </div>
       <AppButton
         v-if="callout.status === ItemStatus.Open"
-        icon="share"
+        :icon="showSharingPanel ? 'caret-down' : 'share'"
         variant="primaryOutlined"
-        class="hidden"
+        @click="toggleSharePanel"
         >{{ t('common.share') }}</AppButton
       >
     </div>
+    <SharingPanel v-if="showSharingPanel" :slug="callout.slug" />
     <div
       v-if="showThanksMessage"
       class="flex mb-6 bg-white rounded p-6 text-lg text-success"
@@ -149,6 +150,7 @@ import AppItemStatus from '../../../components/AppItemStatus.vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import { currentUser } from '../../../store';
 import GuestFields from '../components/GuestFields.vue';
+import SharingPanel from '../components/CalloutSharingPanel.vue';
 import axios from '../../../axios';
 
 type FormSubmission = { data: CalloutResponseAnswers };
@@ -162,6 +164,12 @@ const responses = ref<Paginated<GetCalloutResponseData>>();
 
 const guestName = ref('');
 const guestEmail = ref('');
+
+const showSharingPanel = ref(false);
+const toggleSharePanel = () => {
+  showSharingPanel.value = !showSharingPanel.value;
+  console.log('hello!', showSharingPanel);
+};
 
 const hasResponded = computed(
   () => !!responses.value && responses.value.count > 0
