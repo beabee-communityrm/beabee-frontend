@@ -44,6 +44,36 @@
 				@click="editor.chain().focus().toggleStrike().run()"
 				>Strikethr.</AppButton
 			>
+			<AppButton
+				type="button"
+				variant="primaryOutlined"
+				icon="heading"
+				:class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+				class="mr-1 mt-1"
+				size="sm"
+				@click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+				>Heading</AppButton
+			>
+			<AppButton
+				type="button"
+				variant="primaryOutlined"
+				icon="list"
+				:class="{ 'is-active': editor.isActive('bulletList') }"
+				class="mr-1 mt-1"
+				size="sm"
+				@click="editor.chain().focus().toggleBulletList().run()"
+				>Bullet list</AppButton
+			>
+			<AppButton
+				type="button"
+				variant="primaryOutlined"
+				icon="list-ol"
+				:class="{ 'is-active': editor.isActive('orderedList') }"
+				class="mr-1 mt-1"
+				size="sm"
+				@click="editor.chain().focus().toggleOrderedList().run()"
+				>Ordered list</AppButton
+			>
 		</div>
 	</div>
 </template>

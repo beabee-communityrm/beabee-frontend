@@ -41,6 +41,9 @@ import {
   faItalic,
   faStrikethrough,
   faUnderline,
+  faHeading,
+  faList,
+  faListOl,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -82,7 +85,10 @@ library.add(
   faBold,
   faItalic,
   faStrikethrough,
-  faUnderline
+  faUnderline,
+  faHeading,
+  faList,
+  faListOl
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
