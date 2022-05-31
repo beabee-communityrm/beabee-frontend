@@ -10,24 +10,40 @@
 				icon="bold"
 				:class="{ 'is-active': editor.isActive('bold') }"
 				class="mr-1 mt-1"
+				size="sm"
 				@click="editor.chain().focus().toggleBold().run()"
-			/>
+				>Bold</AppButton
+			>
 			<AppButton
 				type="button"
 				variant="primaryOutlined"
 				icon="italic"
 				:class="{ 'is-active': editor.isActive('italic') }"
 				class="mr-1 mt-1"
+				size="sm"
 				@click="editor.chain().focus().toggleItalic().run()"
-			/>
+				>Italics</AppButton
+			>
+			<AppButton
+				type="button"
+				variant="primaryOutlined"
+				icon="underline"
+				:class="{ 'is-active': editor.isActive('underline') }"
+				class="mr-1 mt-1"
+				size="sm"
+				@click="editor.chain().focus().toggleUnderline().run()"
+				>Underline</AppButton
+			>
 			<AppButton
 				type="button"
 				variant="primaryOutlined"
 				icon="strikethrough"
 				:class="{ 'is-active': editor.isActive('strike') }"
 				class="mr-1 mt-1"
+				size="sm"
 				@click="editor.chain().focus().toggleStrike().run()"
-			/>
+				>Strikethr.</AppButton
+			>
 		</div>
 	</div>
 </template>
