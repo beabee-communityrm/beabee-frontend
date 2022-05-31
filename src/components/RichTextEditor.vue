@@ -1,8 +1,7 @@
 <template>
 	<label v-if="label" class="block mb-1.5 font-semibold">{{ label }} </label>
 
-	<editor-content :editor="editor" />
-	<div v-if="editor">
+	<div v-if="editor" class="mb-2 min-h-[2rem] h-auto">
 		<div class="flex flex-row">
 			<AppButton
 				type="button"
@@ -86,6 +85,7 @@
 			> -->
 		</div>
 	</div>
+	<editor-content :editor="editor" />
 </template>
 
 <script lang="ts" setup="{ emit }">

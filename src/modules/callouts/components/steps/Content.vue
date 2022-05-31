@@ -11,7 +11,7 @@
       />
     </div>
     <div
-      class="col-span-1 text-sm text-grey mt-6"
+      class="col-span-1 text-sm text-grey mt-[4rem]"
       v-html="inputT('intro.help')"
     />
   </div>
