@@ -74,6 +74,16 @@
 				@click="editor.chain().focus().toggleOrderedList().run()"
 				>Ordered list</AppButton
 			>
+			<!-- <AppButton
+				type="button"
+				variant="primaryOutlined"
+				icon="link"
+				:class="{ 'is-active': editor.isActive('link') }"
+				class="mr-1 mt-1"
+				size="sm"
+				@click="setLink"
+				>Link</AppButton
+			> -->
 		</div>
 	</div>
 </template>
@@ -85,6 +95,8 @@ import {
 	BubbleMenu,
 	FloatingMenu,
 } from '@tiptap/vue-3';
+import Link from '@tiptap/extension-link';
+import Underline from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
 import AppButton from './forms/AppButton.vue';
 
@@ -97,13 +109,51 @@ const emit = defineEmits(['update:modelValue']);
 
 const editor = useEditor({
 	content: props.modelValue.value,
-	extensions: [StarterKit],
+	extensions: [
+		StarterKit,
+		Underline,
+		Link.configure({
+			openOnClick: false,
+		}),
+	],
 	onUpdate: () => emit('update:modelValue', editor.value.getHTML()),
 });
+
+const setLink = () => {
+	const previousUrl = editor.getMarkAttributes('link').href;
+	const url = window.prompt('URL', previousUrl);
+
+	// cancelled
+	if (url === null) {
+		return;
+	}
+
+	// empty
+	if (url === '') {
+		editor.chain().focus().extendMarkRange('link').unsetLink().run();
+		return;
+	}
+
+	// update link
+	editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+};
 </script>
 
 <style>
 .ProseMirror {
 	@apply p-2 min-h-[5rem] h-auto bg-white w-full border border-primary-40 rounded focus:outline-none focus:shadow-input;
+}
+ul,
+ol {
+	@apply px-4;
+}
+ul {
+	@apply list-disc;
+}
+ol {
+	@apply list-decimal;
+}
+h1 {
+	@apply font-title text-2.5xl;
 }
 </style>
