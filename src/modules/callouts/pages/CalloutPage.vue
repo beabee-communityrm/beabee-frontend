@@ -47,7 +47,9 @@
         >{{ t('common.share') }}</AppButton
       >
     </div>
-    <SharingPanel v-if="showSharingPanel" :slug="callout.slug" />
+    <transition-group name="slide">
+      <SharingPanel v-if="showSharingPanel" :slug="callout.slug" />
+    </transition-group>
     <div
       v-if="showThanksMessage"
       class="flex mb-6 bg-white rounded p-6 text-lg text-success"
@@ -283,3 +285,23 @@ onBeforeMount(async () => {
     : { total: 0, count: 0, offset: 0, items: [] };
 });
 </script>
+
+<style scoped>
+.slide-enter-from,
+.slide-leave-to {
+  max-height: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.2s ease-out;
+}
+.slide-enter-to,
+.slide-leave-from {
+  max-height: 16rem;
+  height: auto;
+}
+</style>

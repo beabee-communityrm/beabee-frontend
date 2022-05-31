@@ -1,5 +1,5 @@
 <template>
-	<div class="flex flex-col border border-primary-40 p-5 my-2">
+	<div class="h-auto flex flex-col border border-primary-40 p-5 my-2">
 		Share this callout with the following address:
 
 		<div
@@ -25,16 +25,19 @@
 				Facebook
 			</div>
 			<div>
-				<font-awesome-icon :icon="['fab', 'linkedin']" class="mr-1" /> LinkedIn
+				<font-awesome-icon :icon="['fab', 'linkedin']" class="mr-1" />
+				LinkedIn
 			</div>
 			<div>
-				<font-awesome-icon :icon="['fab', 'telegram']" class="mr-1" /> Telegram
+				<font-awesome-icon :icon="['fab', 'telegram']" class="mr-1" />
+				Telegram
 			</div>
 			<div>
 				<font-awesome-icon :icon="['fab', 'twitter']" class="mr-1" /> Twitter
 			</div>
 			<div>
-				<font-awesome-icon :icon="['fab', 'whatsapp']" class="mr-1" /> WhatsApp
+				<font-awesome-icon :icon="['fab', 'whatsapp']" class="mr-1" />
+				WhatsApp
 			</div>
 			<div>
 				<font-awesome-icon :icon="['fa', 'envelope']" class="mr-1" /> E-mail
