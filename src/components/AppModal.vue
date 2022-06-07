@@ -18,15 +18,11 @@
       flex
       items-center
       justify-center
-      bg-gray-700 bg-opacity-50
+      bg-black bg-opacity-50
     "
   >
-    <div class="max-w-sm p-6 bg-white divide-y divide-gray-500">
-      <div class="flex items-center justify-between">
-        <h3 class="text-2xl"><slot name="title" /></h3>
-      </div>
-
-      <div>
+    <div class="max-w-md relative p-4 bg-white rounded">
+      <div class="text-right mb-4">
         <FontAwesomeIcon
           class="text-xl cursor-pointer"
           :icon="['fas', 'times']"
@@ -34,16 +30,23 @@
         />
       </div>
 
-      <div class="mt-4">
-        <p class="mb-4 text-sm"><slot name="text" /></p>
-        <AppButton
-          class="ml-4"
-          to="/admin/callouts"
-          variant="danger"
-          @click="$emit('confirm')"
-          ><slot name="button-text"
-        /></AppButton>
-      </div>
+      <article class="px-8 pb-4">
+        <header class="flex items-center justify-between mb-2">
+          <h3 class="text-2xl font-semibold text-danger"><slot name="title" /></h3>
+        </header>
+
+        <div class="mt-4">
+          <p class="mb-4 text-lg"><slot name="text" /></p>
+          <AppButton
+            class=""
+            to="/admin/callouts"
+            variant="danger"
+            @click="$emit('confirm')"
+            ><slot name="button-text"
+          /></AppButton>
+        </div>
+      </article>
+
     </div>
   </div>
 </template>
