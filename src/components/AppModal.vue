@@ -36,9 +36,13 @@
 
       <div class="mt-4">
         <p class="mb-4 text-sm"><slot name="text" /></p>
-        <button class="px-4 py-2 rounded" @click="$emit('confirm')">
-          <slot name="button-text" />
-        </button>
+        <AppButton
+          class="ml-4"
+          to="/admin/callouts"
+          variant="danger"
+          @click="$emit('confirm')"
+          ><slot name="button-text"
+        /></AppButton>
       </div>
     </div>
   </div>
@@ -47,6 +51,7 @@
 <script lang="ts" setup>
 import { computed } from '@vue/reactivity';
 import { useSlots } from '@vue/runtime-core';
+import AppButton from '../components/forms/AppButton.vue';
 
 const slots = useSlots();
 </script>
