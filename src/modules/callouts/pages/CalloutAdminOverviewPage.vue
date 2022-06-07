@@ -89,9 +89,14 @@
       <ActionButton icon="trash" @click="showDeleteModal = true">
         {{ t('calloutAdminOverview.actions.delete') }}
       </ActionButton>
-      <AppModal v-if="showDeleteModal" @close="showDeleteModal = false">
-        <AppHeading>Are you sure you want to delete this callout?</AppHeading>
-        <p>Delete this callout</p>
+      <AppModal
+        v-if="showDeleteModal"
+        @close="showDeleteModal = false"
+        @confirm="deleteCallout"
+      >
+        <template #title>Delete callout?</template>
+        <template #text>Are you sure you want to delete this callout?</template>
+        <template #button-text>Yes, delete it</template>
       </AppModal>
     </div>
   </div>
@@ -128,4 +133,8 @@ const wasJustUpdated = route.query.updated !== undefined;
 const showDeleteModal = ref(false);
 
 const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
+
+const deleteCallout = () => {
+  console.log(props.callout.slug);
+};
 </script>
