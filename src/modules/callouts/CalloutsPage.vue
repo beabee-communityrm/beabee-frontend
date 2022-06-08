@@ -27,7 +27,6 @@
   </div>
 
   <AppTable
-    v-model:sort="currentSort"
     :headers="headers"
     :items="archivedCallouts.items"
     class="w-full mt-2 whitespace-nowrap"
@@ -46,22 +45,24 @@
 
     <template #expires="{ item }">
       <time
-        v-if="callout.expires"
-        :datetime="callout.expires.toISOString()"
-        :title="formatLocale(callout.expires, 'PPPppp')"
+        v-if="item.expires"
+        :datetime="item.expires.toISOString()"
+        :title="formatLocale(item.expires, 'PPPppp')"
       >
         {{
           t('common.timeAgo', {
-            time: formatDistanceLocale(new Date(), callout.expires),
+            time: formatDistanceLocale(new Date(), item.expires),
           })
         }}
       </time>
       <span v-else>-</span>
     </template>
 
-    <template v-if="callout.hasAnswered" #answered="{ item }">
-      <font-awesome-icon icon="check-circle" />
-      {{ t('callouts.showAnswered') }}
+    <template #answered="{ item }">
+      <span v-if="item.hasAnswered">
+        <font-awesome-icon icon="check-circle" />
+        {{ t('callouts.showAnswered') }}
+      </span>
     </template>
   </AppTable>
 
@@ -90,6 +91,8 @@ import {
   formatLocale,
 } from '../../utils/dates/locale-date-formats';
 import AppToggle from '../../components/forms/AppToggle.vue';
+import { Header } from '../../components/table/table.interface';
+import AppTable from '../../components/table/AppTable.vue';
 
 formatDistanceLocale;
 formatLocale;
@@ -98,6 +101,12 @@ const { t } = useI18n();
 
 const route = useRoute();
 const router = useRouter();
+
+const headers: Header[] = [
+  { value: 'name', text: t('callouts.data.callout') },
+  { value: 'expires', text: t('callouts.data.endDate') },
+  { value: 'answered', text: '' },
+];
 
 const currentPage = computed({
   get: () => Number(route.query.page) || 0,
@@ -113,21 +122,6 @@ const currentShow = computed({
     router.push({
       query: { ...route.query, show, page: undefined },
     }),
-});
-const currentSort = computed({
-  get: () => ({
-    by: (route.query.sortBy as string) || 'expires',
-    type: (route.query.sortType as SortType) || SortType.Desc,
-  }),
-  set: ({ by, type }) => {
-    router.replace({
-      query: {
-        ...route.query,
-        sortBy: by || undefined,
-        sortType: type,
-      },
-    });
-  },
 });
 const activeCallouts = ref<Paginated<GetBasicCalloutData>>({
   total: 0,
