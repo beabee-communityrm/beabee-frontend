@@ -33,7 +33,10 @@
           >
             {{ `${item.firstname} ${item.lastname}`.trim() || item.email }}
           </router-link>
-          <p v-if="item.profile.description" class="text-xs whitespace-normal mt-1">
+          <p
+            v-if="item.profile.description"
+            class="text-xs whitespace-normal mt-1"
+          >
             {{ item.profile.description }}
           </p>
         </template>
