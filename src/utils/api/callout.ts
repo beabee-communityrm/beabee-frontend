@@ -77,6 +77,10 @@ export async function updateCallout(
   return toCallout(data);
 }
 
+export async function deleteCallout(slug: string): Promise<void> {
+  await axios.delete('/callout/' + slug);
+}
+
 export async function fetchResponses(
   id: string,
   query?: GetCalloutResponsesQuery
