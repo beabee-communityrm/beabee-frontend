@@ -21,8 +21,8 @@
       bg-black bg-opacity-50
     "
   >
-    <div class="max-w-md relative p-4 bg-white rounded">
-      <div class="text-right mb-4">
+    <div class="max-w-md relative bg-white rounded">
+      <div class="absolute top-0 right-0 p-3 text-primary-80 hover:text-primary">
         <FontAwesomeIcon
           class="text-xl cursor-pointer"
           :icon="['fas', 'times']"
@@ -30,14 +30,19 @@
         />
       </div>
 
-      <article class="px-8 pb-4">
-        <header class="flex items-center justify-between mb-2">
+      <article class="p-8">
+        <header class="flex items-center justify-between mb-4">
           <h3 class="text-2xl font-semibold text-danger"><slot name="title" /></h3>
         </header>
 
-        <div class="mt-4">
+        <div class="py-2">
           <p class="mb-4 text-lg"><slot name="text" /></p>
+        </div>
+
+        <footer class="text-center">
           <AppButton
+            class="mr-4"
+            variant="primaryOutlined"
             @click="$emit('close')"
             ><slot name="button-cancel-text"
           /></AppButton>
@@ -47,7 +52,7 @@
             @click="$emit('confirm')"
             ><slot name="button-confirm-text"
           /></AppButton>
-        </div>
+        </footer>
       </article>
 
     </div>
