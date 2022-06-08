@@ -39,16 +39,11 @@
         @click="editor.chain().focus().toggleOrderedList().run()"
       />
 
-      <!-- <RichTextEditorButton
-				type="button"
-				variant="primaryOutlined"
-				icon="link"
-				:class="{ 'is-active': editor.isActive('link') }"
-				class="mr-1 mt-1"
-				size="sm"
-				@click="setLink"
-				>Link</AppButton
-			> -->
+      <RichTextEditorButton
+        icon="link"
+        :active="editor.isActive('link')"
+        @click="setLink"
+      />
     </div>
   </div>
   <editor-content :editor="editor" class="content-message" />
@@ -100,8 +95,10 @@ onBeforeUnmount(() => {
   editor.value?.destroy();
 });
 
-const setLink = () => {
-  const previousUrl = editor.value?.getMarkAttributes('link').href;
+function setLink() {
+  if (!editor.value) return;
+
+  const previousUrl = editor.value.getAttributes('link').href;
   const url = window.prompt('URL', previousUrl);
 
   // cancelled
@@ -111,13 +108,18 @@ const setLink = () => {
 
   // empty
   if (url === '') {
-    editor.chain().focus().extendMarkRange('link').unsetLink().run();
+    editor.value.chain().focus().extendMarkRange('link').unsetLink().run();
     return;
   }
 
   // update link
-  editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
-};
+  editor.value
+    .chain()
+    .focus()
+    .extendMarkRange('link')
+    .setLink({ href: url })
+    .run();
+}
 </script>
 
 <style>
