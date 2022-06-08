@@ -3,72 +3,43 @@
 
   <div v-if="editor" class="mb-2 min-h-[2rem] h-auto">
     <div class="flex flex-row">
-      <AppButton
-        type="button"
-        variant="primaryOutlined"
+      <RichTextEditorButton
         icon="bold"
-        :class="{ 'is-active': editor.isActive('bold') }"
-        class="mr-1 mt-1"
-        size="sm"
+        :active="editor.isActive('bold')"
         @click="editor.chain().focus().toggleBold().run()"
       />
-      <AppButton
-        type="button"
-        variant="primaryOutlined"
+      <RichTextEditorButton
         icon="italic"
-        :class="{ 'is-active': editor.isActive('italic') }"
-        class="mr-1 mt-1"
-        size="sm"
+        :active="editor.isActive('italic')"
         @click="editor.chain().focus().toggleItalic().run()"
       />
-      <AppButton
-        type="button"
-        variant="primaryOutlined"
+      <RichTextEditorButton
         icon="underline"
-        :class="{ 'is-active': editor.isActive('underline') }"
-        class="mr-1 mt-1"
-        size="sm"
+        :active="editor.isActive('underline')"
         @click="editor.chain().focus().toggleUnderline().run()"
       />
-      <AppButton
-        type="button"
-        variant="primaryOutlined"
+      <RichTextEditorButton
         icon="strikethrough"
-        :class="{ 'is-active': editor.isActive('strike') }"
-        class="mr-1 mt-1"
-        size="sm"
+        :active="editor.isActive('strike')"
         @click="editor.chain().focus().toggleStrike().run()"
       />
-      <AppButton
-        type="button"
-        variant="primaryOutlined"
+      <RichTextEditorButton
         icon="heading"
-        :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
-        class="mr-1 mt-1"
-        size="sm"
-        @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+        :active="editor.isActive('heading', { level: 3 })"
+        @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
       />
-      <AppButton
-        type="button"
-        variant="primaryOutlined"
+      <RichTextEditorButton
         icon="list"
-        :class="{ 'is-active': editor.isActive('bulletList') }"
-        class="mr-1 mt-1"
-        size="sm"
+        :active="editor.isActive('bulletList')"
         @click="editor.chain().focus().toggleBulletList().run()"
       />
-
-      <AppButton
-        type="button"
-        variant="primaryOutlined"
+      <RichTextEditorButton
         icon="list-ol"
-        :class="{ 'is-active': editor.isActive('orderedList') }"
-        class="mr-1 mt-1"
-        size="sm"
+        :active="editor.isActive('orderedList')"
         @click="editor.chain().focus().toggleOrderedList().run()"
       />
 
-      <!-- <AppButton
+      <!-- <RichTextEditorButton
 				type="button"
 				variant="primaryOutlined"
 				icon="link"
@@ -80,20 +51,16 @@
 			> -->
     </div>
   </div>
-  <editor-content :editor="editor" />
+  <editor-content :editor="editor" class="content-message" />
 </template>
 
 <script lang="ts" setup="{ emit }">
-import {
-  useEditor,
-  EditorContent,
-  BubbleMenu,
-  FloatingMenu,
-} from '@tiptap/vue-3';
+import { useEditor, EditorContent } from '@tiptap/vue-3';
 import Link from '@tiptap/extension-link';
 import Underline from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
-import AppButton from './forms/AppButton.vue';
+import { onBeforeUnmount, watch } from 'vue';
+import RichTextEditorButton from './RichTextEditorButton.vue';
 
 const props = defineProps<{
   modelValue: string;
@@ -103,19 +70,38 @@ const props = defineProps<{
 const emit = defineEmits(['update:modelValue']);
 
 const editor = useEditor({
-  content: props.modelValue.value,
+  content: props.modelValue,
   extensions: [
-    StarterKit,
+    StarterKit.configure({
+      blockquote: false,
+      codeBlock: false,
+      heading: { levels: [3] },
+      horizontalRule: false,
+    }),
     Underline,
     Link.configure({
       openOnClick: false,
     }),
   ],
-  onUpdate: () => emit('update:modelValue', editor.value.getHTML()),
+  onUpdate: () =>
+    editor.value && emit('update:modelValue', editor.value.getHTML()),
+});
+
+watch(
+  () => props.modelValue,
+  (value) => {
+    if (editor.value && editor.value.getHTML() !== value) {
+      editor.value.commands.setContent(value, false);
+    }
+  }
+);
+
+onBeforeUnmount(() => {
+  editor.value?.destroy();
 });
 
 const setLink = () => {
-  const previousUrl = editor.getMarkAttributes('link').href;
+  const previousUrl = editor.value?.getMarkAttributes('link').href;
   const url = window.prompt('URL', previousUrl);
 
   // cancelled
@@ -137,18 +123,5 @@ const setLink = () => {
 <style>
 .ProseMirror {
   @apply p-2 min-h-[5rem] h-auto bg-white w-full border border-primary-40 rounded focus:outline-none focus:shadow-input;
-}
-ul,
-ol {
-  @apply px-4;
-}
-ul {
-  @apply list-disc;
-}
-ol {
-  @apply list-decimal;
-}
-h1 {
-  @apply font-title text-2.5xl;
 }
 </style>

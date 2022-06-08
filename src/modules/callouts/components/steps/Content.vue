@@ -57,7 +57,7 @@ import 'formiojs/dist/formio.builder.css';
 import { useI18n } from 'vue-i18n';
 import { ContentStepProps } from '../../create-callout.interface';
 import WarningBanner from '../WarningBanner.vue';
-import RichTextEditor from '../../../../components/RichTextEditor.vue';
+import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 
 const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{
