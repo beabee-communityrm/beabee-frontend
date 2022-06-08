@@ -20,15 +20,15 @@
       v-if="showProrateOptions"
       v-model="newContribution.prorate"
       :new-amount="newContribution.amount"
-      :old-amount="props.contribution.amount!"
-      :renewal-date="props.contribution.renewalDate!"
+      :old-amount="modelValue.amount!"
+      :renewal-date="modelValue.renewalDate!"
     />
 
-    <MessageBox v-if="hasUpdatedContribution" class="mb-4" type="success">
+    <MessageBox v-if="hasUpdated" class="mb-4" type="success">
       {{ t('contribution.updatedContribution') }}
     </MessageBox>
 
-    <MessageBox v-if="cantUpdateContribution" class="mb-4" type="error">
+    <MessageBox v-if="cantUpdate" class="mb-4" type="error">
       {{ t('contribution.contributionUpdateError') }}
     </MessageBox>
 
@@ -39,7 +39,15 @@
       class="mb-4 w-full"
       :loading="loading"
     >
-      {{ contributionButtonText }}
+      {{
+        hasManualType
+          ? t('contribution.updatePaymentType')
+          : isActiveMember
+          ? t('contribution.updateContribution')
+          : isExpiringMember
+          ? t('contribution.restartContribution')
+          : t('contribution.startContribution')
+      }}
     </AppButton>
 
     <InfoMessage
@@ -49,7 +57,7 @@
   </form>
 </template>
 <script lang="ts" setup>
-import { computed, onBeforeMount, reactive, ref } from 'vue';
+import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import InfoMessage from '../../../components/InfoMessage.vue';
@@ -75,8 +83,9 @@ const validation = useVuelidate();
 
 const { t } = useI18n();
 
+const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
-  contribution: ContributionInfo;
+  modelValue: ContributionInfo;
 }>();
 
 const content = ref<ContributionContent>({
@@ -96,49 +105,41 @@ const newContribution = reactive({
   paymentMethod: PaymentMethod.StripeCard,
 });
 
-const cantUpdateContribution = ref(false);
-const hasUpdatedContribution = ref(false);
+const cantUpdate = ref(false);
+const hasUpdated = ref(false);
 const loading = ref(false);
 
 const hasManualType = computed(
-  () => props.contribution.type === ContributionType.Manual
+  () => props.modelValue.type === ContributionType.Manual
 );
 const isActiveMember = computed(
-  () => props.contribution.membershipStatus === MembershipStatus.Active
+  () => props.modelValue.membershipStatus === MembershipStatus.Active
 );
 const isAutoActiveMember = computed(
   () =>
-    isActiveMember.value &&
-    props.contribution.type === ContributionType.Automatic
+    isActiveMember.value && props.modelValue.type === ContributionType.Automatic
 );
 const isExpiringMember = computed(
-  () => props.contribution.membershipStatus === MembershipStatus.Expiring
+  () => props.modelValue.membershipStatus === MembershipStatus.Expiring
 );
-
-const contributionButtonText = computed(() => {
-  if (hasManualType.value) return t('contribution.updatePaymentType');
-  else if (isActiveMember.value) return t('contribution.updateContribution');
-  else if (isExpiringMember.value) return t('contribution.restartContribution');
-  return t('contribution.startContribution');
-});
 
 const showChangePeriod = computed(
   () =>
     !isAutoActiveMember.value &&
-    props.contribution.period !== ContributionPeriod.Annually
+    props.modelValue.period !== ContributionPeriod.Annually
 );
 
 const showProrateOptions = computed(() => {
   return (
-    props.contribution.period === ContributionPeriod.Annually &&
-    props.contribution.amount !== newContribution.amount
+    props.modelValue.period === ContributionPeriod.Annually &&
+    props.modelValue.amount !== newContribution.amount
   );
 });
 
 const canSubmit = computed(
   () =>
     !isAutoActiveMember.value ||
-    props.contribution.amount != newContribution.amount
+    props.modelValue.amount != newContribution.amount
 );
 
 async function handleCreate() {
@@ -152,20 +153,16 @@ async function handleCreate() {
 async function handleUpdate() {
   try {
     const data = await updateContribution(newContribution);
-    // TODO:
-    // currentContribution.amount = data.amount;
-    // currentContribution.period = data.period;
-    // currentContribution.nextAmount = data.nextAmount;
-    resetNewContribution();
+    emit('update:modelValue', data);
 
-    hasUpdatedContribution.value = true;
+    hasUpdated.value = true;
   } catch (err) {
     if (
       axios.isAxiosError(err) &&
       err.response?.status === 400 &&
       err.response.data.code === 'cant-update-contribution'
     ) {
-      cantUpdateContribution.value = true;
+      cantUpdate.value = true;
     }
   }
 }
@@ -180,20 +177,23 @@ async function handleSubmit() {
   }
 }
 
-function resetNewContribution() {
-  newContribution.amount =
-    props.contribution.amount || content.value.initialAmount;
-  newContribution.period =
-    props.contribution.period || content.value.initialPeriod;
-  newContribution.payFee = content.value.showAbsorbFee
-    ? !!props.contribution.payFee
-    : false;
-  newContribution.prorate = true;
-}
+watch(
+  props,
+  () => {
+    newContribution.amount =
+      props.modelValue.amount || content.value.initialAmount;
+    newContribution.period =
+      props.modelValue.period || content.value.initialPeriod;
+    newContribution.payFee = content.value.showAbsorbFee
+      ? !!props.modelValue.payFee
+      : false;
+    newContribution.prorate = true;
+  },
+  { immediate: true }
+);
 
 onBeforeMount(async () => {
   content.value = await fetchJoinContent();
   newContribution.paymentMethod = content.value.paymentMethods[0];
-  resetNewContribution();
 });
 </script>

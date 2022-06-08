@@ -12,7 +12,7 @@
 
       <ContributionBox :contribution="contribution" class="mb-9" />
 
-      <UpdateContribution :contribution="contribution" class="mb-7 md:mb-9" />
+      <UpdateContribution v-model="contribution" class="mb-7 md:mb-9" />
 
       <PaymentSource
         v-if="contribution.paymentSource"
