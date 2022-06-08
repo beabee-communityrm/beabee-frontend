@@ -96,7 +96,8 @@
       >
         <template #title>Delete callout?</template>
         <template #text>Are you sure you want to delete this callout?</template>
-        <template #button-text>Yes, delete it</template>
+        <template #button-cancel-text>No, go back</template>
+        <template #button-confirm-text>Yes, delete it</template>
       </AppModal>
     </div>
   </div>

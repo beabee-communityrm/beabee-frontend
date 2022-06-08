@@ -38,11 +38,14 @@
         <div class="mt-4">
           <p class="mb-4 text-lg"><slot name="text" /></p>
           <AppButton
-            class=""
+            @click="$emit('close')"
+            ><slot name="button-cancel-text"
+          /></AppButton>
+          <AppButton
             to="/admin/callouts"
             variant="danger"
             @click="$emit('confirm')"
-            ><slot name="button-text"
+            ><slot name="button-confirm-text"
           /></AppButton>
         </div>
       </article>
