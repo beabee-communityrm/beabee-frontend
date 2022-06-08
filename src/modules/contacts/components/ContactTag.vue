@@ -7,9 +7,11 @@
       rounded
       font-bold
       inline-block
-      p-1
+      py-0.5
+      px-1
       mr-1
       mb-1
+      last-of-type:mb-0
       text-xs
       border border-white
     "
