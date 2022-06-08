@@ -26,7 +26,7 @@ const newContribution = reactive({
   payFee: true,
   prorate: true,
   // TODO
-  paymentMethod: PaymentMethod.Card,
+  paymentMethod: PaymentMethod.StripeCard,
 });
 
 const contributionContent = reactive<ContributionContent>({

@@ -143,28 +143,25 @@ export async function cancelContribution(): Promise<void> {
   await axios.post('/member/me/contribution/cancel');
 }
 
-export const updatePaymentSourceCompleteUrl =
+export const updatePaymentMethodCompleteUrl =
   import.meta.env.VITE_APP_BASE_URL +
-  '/profile/contribution/payment-source/complete';
+  '/profile/contribution/payment-method/complete';
 
-export async function updatePaymentSource(
-  paymentMethod: PaymentMethod
+export async function updatePaymentMethod(
+  paymentMethod?: PaymentMethod
 ): Promise<PaymentFlowParams> {
   const { data } = await axios.put<Serial<PaymentFlowParams>>(
-    '/member/me/payment-source',
-    {
-      paymentMethod,
-      completeUrl: updatePaymentSourceCompleteUrl,
-    }
+    '/member/me/payment-method',
+    { paymentMethod, completeUrl: updatePaymentMethodCompleteUrl }
   );
   return data;
 }
 
-export async function completeUpdatePaymentSource(
+export async function completeUpdatePaymentMethod(
   paymentFlowId: string
 ): Promise<ContributionInfo> {
   const { data } = await axios.post<Serial<ContributionInfo>>(
-    '/member/me/payment-source/complete',
+    '/member/me/payment-method/complete',
     { paymentFlowId }
   );
   return toContrib(data);

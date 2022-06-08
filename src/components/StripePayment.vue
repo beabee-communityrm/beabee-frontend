@@ -48,7 +48,7 @@ onBeforeMount(async () => {
     });
     paymentElement.mount(divRef.value);
     paymentElement.on('ready', () => emit('loaded'));
-    paymentElement.on('change', (evt) => {
+    paymentElement.on('change', (evt: { complete: boolean }) => {
       paymentReady.value = evt.complete;
     });
 

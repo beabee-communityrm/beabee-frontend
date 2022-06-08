@@ -139,7 +139,7 @@ const signUpData = reactive({
   payFee: true,
   noContribution: false,
   prorate: false,
-  paymentMethod: PaymentMethod.Card,
+  paymentMethod: PaymentMethod.StripeCard,
 });
 
 const loading = ref(false);

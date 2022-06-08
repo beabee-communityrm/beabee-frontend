@@ -10,7 +10,7 @@
         :icon="['far', 'credit-card']"
       />
 
-      <span v-if="paymentSource.type === PaymentMethod.DirectDebit">
+      <span v-if="paymentSource.type === 'direct-debit'">
         {{ paymentSource.accountHolderName }}, {{ paymentSource.bankName }},
         ••••••••••{{ paymentSource.accountNumberEnding }}
       </span>
@@ -31,7 +31,7 @@
       @click="handleUpdate"
     >
       {{
-        paymentSource.type === PaymentMethod.DirectDebit
+        paymentSource.type === 'direct-debit'
           ? t('contribution.changeBank')
           : t('contribution.changeCard')
       }}
@@ -46,7 +46,7 @@
       <StripePayment
         :client-secret="stripeClientSecret"
         :email="email"
-        :return-url="updatePaymentSourceCompleteUrl"
+        :return-url="updatePaymentMethodCompleteUrl"
         @loaded="onStripeLoaded"
       />
     </AppModal>
@@ -60,10 +60,9 @@ import MessageBox from '../../../components/MessageBox.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import { useI18n } from 'vue-i18n';
 import { PaymentSource } from '../../../utils/api/api.interface';
-import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
 import {
-  updatePaymentSource,
-  updatePaymentSourceCompleteUrl,
+  updatePaymentMethod,
+  updatePaymentMethodCompleteUrl,
 } from '../../../utils/api/member';
 import StripePayment from '../../../components/StripePayment.vue';
 import AppModal from '../../../components/AppModal.vue';
@@ -71,7 +70,7 @@ import SectionTitle from '../../../components/SectionTitle.vue';
 
 const { t } = useI18n();
 
-const props = defineProps<{
+defineProps<{
   paymentSource: PaymentSource;
   email: string;
 }>();
@@ -95,7 +94,7 @@ function onStripeLoaded() {
 async function handleUpdate() {
   loading.value = true;
   try {
-    const data = await updatePaymentSource(props.paymentSource.type);
+    const data = await updatePaymentMethod();
     if (data.redirectUrl) {
       window.location.href = data.redirectUrl;
     } else if (data.clientSecret) {

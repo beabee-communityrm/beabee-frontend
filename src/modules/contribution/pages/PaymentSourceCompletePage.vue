@@ -3,7 +3,7 @@
 <script lang="ts" setup>
 import { onBeforeMount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { completeUpdatePaymentSource } from '../../../utils/api/member';
+import { completeUpdatePaymentMethod } from '../../../utils/api/member';
 
 const route = useRoute();
 const router = useRouter();
@@ -15,7 +15,7 @@ onBeforeMount(async () => {
 
   if (paymentFlowId) {
     try {
-      await completeUpdatePaymentSource(paymentFlowId);
+      await completeUpdatePaymentMethod(paymentFlowId);
       router.replace({
         path: '/profile/contribution',
         query: { updatedPaymentSource: null },

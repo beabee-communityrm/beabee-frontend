@@ -9,8 +9,9 @@ interface Feeable {
 }
 
 const fees: Record<PaymentMethod, (amount: number) => number> = {
-  [PaymentMethod.Card]: (amount) => 0.25 + 0.014 * amount,
-  [PaymentMethod.DirectDebit]: (amount) => 0.2 + amount / 100,
+  [PaymentMethod.StripeCard]: (amount) => 0.25 + 0.014 * amount,
+  [PaymentMethod.StripeSEPA]: () => 0.35,
+  [PaymentMethod.GoCardlessDirectDebit]: (amount) => 0.2 + amount / 100,
 };
 
 function calcPaymentFee(feeable: Feeable): ComputedRef<number> {

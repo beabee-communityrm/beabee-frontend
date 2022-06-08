@@ -119,14 +119,14 @@ export interface UpdateMemberData extends Partial<MemberData> {
 }
 
 export interface CardPaymentSource {
-  type: PaymentMethod.Card;
+  type: 'card';
   last4: string;
   expiryMonth: number;
   expiryYear: number;
 }
 
 export interface DirectDebitPaymentSource {
-  type: PaymentMethod.DirectDebit;
+  type: 'direct-debit';
   bankName: string;
   accountHolderName: string;
   accountNumberEnding: string;

@@ -34,11 +34,15 @@ interface MethodOpts {
 }
 
 const availableMethods: Record<PaymentMethod, MethodOpts> = {
-  card: {
+  [PaymentMethod.StripeCard]: {
     label: 'Card',
     image: '',
   },
-  'direct-debit': {
+  [PaymentMethod.StripeSEPA]: {
+    label: 'SEPA debit',
+    image: '',
+  },
+  [PaymentMethod.GoCardlessDirectDebit]: {
     label: 'Direct debit',
     image: '',
   },
