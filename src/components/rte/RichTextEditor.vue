@@ -6,39 +6,38 @@
       <RichTextEditorButton
         icon="bold"
         :active="editor.isActive('bold')"
-        @click="editor.chain().focus().toggleBold().run()"
+        @click="run((cmd) => cmd.toggleBold())"
       />
       <RichTextEditorButton
         icon="italic"
         :active="editor.isActive('italic')"
-        @click="editor.chain().focus().toggleItalic().run()"
+        @click="run((cmd) => cmd.toggleItalic())"
       />
       <RichTextEditorButton
         icon="underline"
         :active="editor.isActive('underline')"
-        @click="editor.chain().focus().toggleUnderline().run()"
+        @click="run((cmd) => cmd.toggleUnderline())"
       />
       <RichTextEditorButton
         icon="strikethrough"
         :active="editor.isActive('strike')"
-        @click="editor.chain().focus().toggleStrike().run()"
+        @click="run((cmd) => cmd.toggleStrike())"
       />
       <RichTextEditorButton
         icon="heading"
         :active="editor.isActive('heading', { level: 3 })"
-        @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
+        @click="run((cmd) => cmd.toggleHeading({ level: 3 }))"
       />
       <RichTextEditorButton
         icon="list"
         :active="editor.isActive('bulletList')"
-        @click="editor.chain().focus().toggleBulletList().run()"
+        @click="run((cmd) => cmd.toggleBulletList())"
       />
       <RichTextEditorButton
         icon="list-ol"
         :active="editor.isActive('orderedList')"
-        @click="editor.chain().focus().toggleOrderedList().run()"
+        @click="run((cmd) => cmd.toggleOrderedList())"
       />
-
       <RichTextEditorButton
         icon="link"
         :active="editor.isActive('link')"
@@ -50,7 +49,7 @@
 </template>
 
 <script lang="ts" setup="{ emit }">
-import { useEditor, EditorContent } from '@tiptap/vue-3';
+import { useEditor, EditorContent, ChainedCommands } from '@tiptap/vue-3';
 import Link from '@tiptap/extension-link';
 import Underline from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
@@ -94,6 +93,10 @@ watch(
 onBeforeUnmount(() => {
   editor.value?.destroy();
 });
+
+function run(cb: (cmd: ChainedCommands) => ChainedCommands) {
+  if (editor.value) cb(editor.value.chain().focus()).run();
+}
 
 function setLink() {
   if (!editor.value) return;
