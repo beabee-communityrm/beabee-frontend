@@ -11,6 +11,10 @@
     margin: 0;
   }
 
+  p:empty {
+    @apply h-5;
+  }
+
   ul,
   ol {
     @apply ml-2 pl-6 list-none relative;
