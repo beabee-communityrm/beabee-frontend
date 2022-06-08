@@ -10,18 +10,18 @@
         t('contribution.startedContribution')
       }}</AppAlert>
 
-      <ContributionBox :contribution="currentContribution" class="mb-9" />
+      <ContributionBox :contribution="contribution" class="mb-9" />
 
-      <UpdateContribution />
+      <UpdateContribution :contribution="contribution" class="mb-7 md:mb-9" />
 
       <PaymentSource
-        v-if="currentContribution.paymentSource"
-        class="mb-7 md:mb-12"
+        v-if="contribution.paymentSource"
+        class="mb-7 md:mb-9"
         :email="email"
-        :payment-source="currentContribution.paymentSource"
+        :payment-source="contribution.paymentSource"
       />
 
-      <CancelContribution :contribution="currentContribution" />
+      <CancelContribution :contribution="contribution" />
     </div>
     <div>
       <PaymentsHistory id="me" class="lg:ml-10" />
@@ -30,20 +30,21 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onBeforeMount } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import { useContribution } from './use-contribution';
-
 import ContributionBox from './components/ContributionBox.vue';
 import CancelContribution from './components/CancelContribution.vue';
 import PaymentSource from './components/PaymentSource.vue';
-
 import PageTitle from '../../components/PageTitle.vue';
 import AppAlert from '../../components/AppAlert.vue';
 import PaymentsHistory from './components/PaymentsHistory.vue';
 import { currentUser } from '../../store';
 import UpdateContribution from './components/UpdateContribution.vue';
+import { ContributionInfo } from '../../utils/api/api.interface';
+import { fetchContribution } from '../../utils/api/member';
+import { MembershipStatus } from '../../utils/enums/membership-status.enum';
+import { ContributionType } from '../../utils/enums/contribution-type.enum';
 
 const { t } = useI18n();
 
@@ -55,10 +56,15 @@ const email = computed(() =>
   currentUser.value ? currentUser.value.email : ''
 );
 
-const { isIniting, initContributionPage, currentContribution } =
-  useContribution();
+const isIniting = ref(true);
+const contribution = ref<ContributionInfo>({
+  type: ContributionType.None,
+  membershipStatus: MembershipStatus.None,
+});
 
-onBeforeMount(() => {
-  initContributionPage();
+onBeforeMount(async () => {
+  isIniting.value = true;
+  contribution.value = await fetchContribution();
+  isIniting.value = false;
 });
 </script>
