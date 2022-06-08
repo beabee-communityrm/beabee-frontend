@@ -102,26 +102,23 @@ function setLink() {
   if (!editor.value) return;
 
   const previousUrl = editor.value.getAttributes('link').href;
-  const url = window.prompt('URL', previousUrl);
+  const url = window.prompt('Set URL (blank to remove)', previousUrl);
 
-  // cancelled
   if (url === null) {
     return;
   }
 
-  // empty
   if (url === '') {
     editor.value.chain().focus().extendMarkRange('link').unsetLink().run();
     return;
+  } else {
+    editor.value
+      .chain()
+      .focus()
+      .extendMarkRange('link')
+      .setLink({ href: url })
+      .run();
   }
-
-  // update link
-  editor.value
-    .chain()
-    .focus()
-    .extendMarkRange('link')
-    .setLink({ href: url })
-    .run();
 }
 </script>
 
