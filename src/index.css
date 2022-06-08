@@ -4,22 +4,28 @@
 @tailwind components;
 @tailwind utilities;
 
-.content-message p,
-.content-message ul,
-.content-message ol {
-  margin: 0;
-}
+.content-message {
+  p,
+  ul,
+  ol {
+    margin: 0;
+  }
 
-.content-message ul {
-  @apply pl-3 list-inside list-disc;
-}
+  ul {
+    @apply pl-3 list-inside list-disc;
+  }
 
-.content-message ol {
-  @apply pl-3 list-inside list-decimal;
-}
+  ol {
+    @apply pl-3 list-inside list-decimal;
+  }
 
-.content-message a {
-  @apply text-link underline;
+  a {
+    @apply text-link underline;
+  }
+
+  h3 {
+    @apply font-title text-xl font-semibold;
+  }
 }
 
 .content-i18n {
