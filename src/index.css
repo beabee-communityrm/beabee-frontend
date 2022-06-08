@@ -11,12 +11,25 @@
     margin: 0;
   }
 
-  ul {
-    @apply pl-3 list-inside list-disc;
+  ul,
+  ol {
+    @apply ml-2 pl-6 list-none relative;
+    li::before {
+      @apply absolute left-0;
+    }
+  }
+
+  ul li::before {
+    @apply font-bold pl-1;
+    content: '•';
   }
 
   ol {
-    @apply pl-3 list-inside list-decimal;
+    counter-reset: list;
+    li::before {
+      counter-increment: list;
+      content: counter(list) '.';
+    }
   }
 
   a {
