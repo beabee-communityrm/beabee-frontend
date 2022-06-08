@@ -90,7 +90,7 @@ const stepsInOrder = computed(() => [
   steps.visibility,
   steps.endMessage,
   steps.url,
-  //steps.mailchimp,
+  steps.mailchimp,
   steps.dates,
 ]);
 

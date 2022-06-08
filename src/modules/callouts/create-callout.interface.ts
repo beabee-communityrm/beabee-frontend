@@ -58,6 +58,6 @@ export interface Steps {
   visibility: Step<VisibilityStepProps>;
   endMessage: Step<EndMessageStepProps>;
   url: Step<UrlAndSharingStepProps>;
-  //mailchimp: Step<MailchimpSyncStepProps>;
+  mailchimp: Step<MailchimpSyncStepProps>;
   dates: Step<DateAndDurationStepProps>;
 }

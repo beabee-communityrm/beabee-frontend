@@ -49,19 +49,39 @@
         </div>
       </div>
     </div>
+    <div>
+      <div class="col-span-1">
+        <h3>available segments</h3>
+        <div v-for="segment in segments" class="flex flex-row justify-between">
+          <div>
+            <b>{{ segment.name }}</b>
+          </div>
+          <div>{{ segment.memberCount }}</div>
+          <div>{{ segment.newsletterTag }}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onBeforeMount, ref } from 'vue';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
 import { MailchimpSyncStepProps } from '../../create-callout.interface';
 import AppSelect from '../../../../components/forms/AppSelect.vue';
+import { fetchSegments } from '../../../../utils/api/segments';
+import { GetSegmentData } from '../../../../utils/api/api.interface';
 
 const emit = defineEmits(['update:validated']);
 const props = defineProps<{ data: MailchimpSyncStepProps }>();
 const dataProxy = ref(props.data);
 
+const segments = ref<GetSegmentData[]>([]);
+
 const foo = '';
 onMounted(() => emit('update:validated', true));
+
+onBeforeMount(async () => {
+  segments.value = await fetchSegments();
+});
 </script>
