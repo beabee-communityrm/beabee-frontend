@@ -11,7 +11,6 @@
         class="mr-1 mt-1"
         size="sm"
         @click="editor.chain().focus().toggleBold().run()"
-        :noMargin="true"
       />
       <AppButton
         type="button"
@@ -21,7 +20,6 @@
         class="mr-1 mt-1"
         size="sm"
         @click="editor.chain().focus().toggleItalic().run()"
-        :noMargin="true"
       />
       <AppButton
         type="button"
@@ -31,7 +29,6 @@
         class="mr-1 mt-1"
         size="sm"
         @click="editor.chain().focus().toggleUnderline().run()"
-        :noMargin="true"
       />
       <AppButton
         type="button"
@@ -41,7 +38,6 @@
         class="mr-1 mt-1"
         size="sm"
         @click="editor.chain().focus().toggleStrike().run()"
-        :noMargin="true"
       />
       <AppButton
         type="button"
@@ -51,7 +47,6 @@
         class="mr-1 mt-1"
         size="sm"
         @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-        :noMargin="true"
       />
       <AppButton
         type="button"
@@ -61,7 +56,6 @@
         class="mr-1 mt-1"
         size="sm"
         @click="editor.chain().focus().toggleBulletList().run()"
-        :noMargin="true"
       />
 
       <AppButton
@@ -72,7 +66,6 @@
         class="mr-1 mt-1"
         size="sm"
         @click="editor.chain().focus().toggleOrderedList().run()"
-        :noMargin="true"
       />
 
       <!-- <AppButton

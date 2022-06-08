@@ -15,7 +15,7 @@
     <font-awesome-icon
       v-if="icon"
       :icon="icon"
-      :class="noMargin ? 'mr-0' : 'mr-2'"
+      :class="$slots.default ? 'mr-2' : 'mr-0'"
     /><slot />
     <span v-if="loading" class="absolute inset-0 bg-white opacity-30" />
     <font-awesome-icon
@@ -64,7 +64,6 @@ const props = withDefaults(
     size?: 'sm';
     loading?: boolean;
     icon?: string;
-    noMargin?: boolean;
   }>(),
   {
     disabled: false,
@@ -75,7 +74,6 @@ const props = withDefaults(
     size: undefined,
     loading: false,
     icon: undefined,
-    noMargin: false,
   }
 );
 
