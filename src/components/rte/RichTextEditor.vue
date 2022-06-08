@@ -49,11 +49,12 @@
 </template>
 
 <script lang="ts" setup="{ emit }">
+import { onBeforeUnmount, watch } from 'vue';
 import { useEditor, EditorContent, ChainedCommands } from '@tiptap/vue-3';
 import Link from '@tiptap/extension-link';
 import Underline from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
-import { onBeforeUnmount, watch } from 'vue';
+import Typeography from '@tiptap/extension-typography';
 import RichTextEditorButton from './RichTextEditorButton.vue';
 
 const props = defineProps<{
@@ -76,6 +77,7 @@ const editor = useEditor({
     Link.configure({
       openOnClick: false,
     }),
+    Typeography,
   ],
   onUpdate: () =>
     editor.value && emit('update:modelValue', editor.value.getHTML()),
@@ -110,7 +112,6 @@ function setLink() {
 
   if (url === '') {
     editor.value.chain().focus().extendMarkRange('link').unsetLink().run();
-    return;
   } else {
     editor.value
       .chain()
