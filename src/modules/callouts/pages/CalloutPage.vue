@@ -65,6 +65,28 @@
       <img class="absolute w-full h-full object-cover" :src="callout.image" />
     </figure>
     <div class="text-lg content-message" v-html="callout.intro" />
+    <div
+      class="
+        w-full
+        text-lg text-center
+        flex flex-col
+        justify-center
+        items-center
+      "
+      v-if="canSeeButNotRespond"
+    >
+      <p class="w-full sm:w-2/3">
+        {{ t('callout.membersOnly') }}
+        <b>{{ t('callout.updateContribution') }}</b>
+      </p>
+      <AppButton
+        class="w-full sm:w-1/2 mt-4"
+        variant="link"
+        to="/profile/contribution"
+      >
+        {{ t('callout.toContributionPage') }}
+      </AppButton>
+    </div>
     <form
       v-if="showResponseForm"
       class="callout-form mt-10 pt-10 border-primary-40 border-t"
@@ -149,6 +171,19 @@ const canRespond = computed(
   () =>
     callout.value?.access !== 'member' ||
     currentUser.value?.activeRoles.includes('member')
+);
+
+// edge-case where a member is:
+// 1. logged in
+// 2. to a member-only callout
+// 3. but not contributing (anymore)
+// and should be given some indication as
+// to why they can't reply to a callout
+const canSeeButNotRespond = computed(
+  () =>
+    callout.value?.access === 'member' &&
+    currentUser.value &&
+    !currentUser.value?.activeRoles.includes('member')
 );
 
 const showResponseForm = computed(

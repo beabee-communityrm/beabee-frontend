@@ -26,6 +26,12 @@
     </thead>
 
     <tbody class="text-xs lg:text-sm">
+      <tr v-if="!items.length">
+        <slot name="empty">
+          <p>Loading contents, please wait...</p>
+        </slot>
+      </tr>
+
       <tr
         v-for="(item, i) in items"
         :key="i"
@@ -34,7 +40,7 @@
         <td
           v-for="(header, j) in headers"
           :key="j"
-          class="p-2 align-bottom"
+          class="p-2 align-top"
           :align="header.align || undefined"
         >
           <slot :name="header.value" :item="item" :value="item[header.value]">{{

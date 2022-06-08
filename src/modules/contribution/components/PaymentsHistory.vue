@@ -10,6 +10,9 @@
       :hide-headers="true"
       class="w-full"
     >
+      <template #empty>
+        <p>{{ t('contribution.paymentHistory.empty') }}</p>
+      </template>
       <template #chargeDate="{ value }">
         {{ formatLocale(value, 'PPP') }}
       </template>

@@ -19,6 +19,13 @@
         :items="contactsTable.items"
         class="w-full mt-2 whitespace-nowrap"
       >
+        <template #empty>
+          <p>
+            {{
+              route.query.s ? t('contacts.noResults') : t('contacts.noContacts')
+            }}
+          </p>
+        </template>
         <template #firstname="{ item }">
           <router-link
             :to="'/admin/contacts/' + item.id"
@@ -26,7 +33,7 @@
           >
             {{ `${item.firstname} ${item.lastname}`.trim() || item.email }}
           </router-link>
-          <p v-if="item.profile.description" class="whitespace-normal mt-1">
+          <p v-if="item.profile.description" class="text-xs whitespace-normal mt-1">
             {{ item.profile.description }}
           </p>
         </template>
@@ -67,7 +74,6 @@
               ><b>{{ n(contactsTable.total) }}</b></template
             >
           </i18n-t>
-          <i18n-t v-else keypath="contacts.noResults" />
         </p>
         <div class="mx-4">Page size</div>
 
