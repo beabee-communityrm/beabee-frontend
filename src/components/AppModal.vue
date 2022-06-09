@@ -14,7 +14,7 @@
       v-bind="$attrs"
       @click="$emit('close')"
     >
-      <div class="rounded bg-white p-8">
+      <div class="rounded bg-white p-8" @click.stop>
         <slot></slot>
       </div>
     </div>
