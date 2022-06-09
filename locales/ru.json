@@ -1,8 +1,27 @@
 {
   "adminDashboard": {
-    "latestCallout": {},
-    "mostRecentMembers": {},
-    "numbers": {}
+    "hint1": "",
+    "hint2": "",
+    "hint3": "",
+    "joinSlack": "",
+    "latestCallout": {
+      "createNew": "",
+      "empty": "",
+      "title": ""
+    },
+    "mostRecentMembers": {
+      "title": ""
+    },
+    "numbers": {
+      "averageContribution": "",
+      "newMembers": "",
+      "revenue": "",
+      "title": ""
+    },
+    "responsesSoFar": "",
+    "seeAllResponses": "",
+    "supportInbox": "",
+    "welcomeBack": ""
   },
   "callout": {
     "contactDetails": "Контактная информация",
@@ -105,6 +124,7 @@
     "allContacts": "Все контакты",
     "data": {
       "amount": "Сумма",
+      "annotationsCopy": "",
       "contribution": "Взнос",
       "contributionType": "Вид оплаты",
       "deliveryOptIn": "Отправка письма",
@@ -126,6 +146,7 @@
       },
       "tags": "Теги"
     },
+    "noContacts": "",
     "noResults": "Контактов не найдено",
     "search": "Искать контакт",
     "showingOf": "Контакты от {} и до {} показаны"
@@ -294,6 +315,7 @@
     "phone": "Телефон",
     "postCode": "Почтовый индекс",
     "saveChanges": "Сохранить изменения",
+    "saved": "",
     "warning": "Пожалуйста меняй информацию на этой странице, только с согласием пользователя. Изменения будут показаны другим пользователям."
   },
   "homePage": {
@@ -328,7 +350,8 @@
     "errors": {
       "confirmEmail": {
         "message": "Почти готово! Мы только должны подтвердить ваш почтовый ящик, что бы продолжить.",
-        "proceed": "Мы послали вам письмо. Пожалуйста"
+        "proceed": "Мы послали вам письмо. Пожалуйста",
+        "title": ""
       },
       "duplicateEmail": {
         "message": "Мы отправили вам электронное письмо, пожалуйста, нажмите на ссылку, чтобы продолжить",
@@ -371,6 +394,7 @@
     "contribution": "Взнос",
     "dashboard": "приборная доска",
     "home": "Главная страница",
+    "legacyApp": "",
     "logout": "Выйти",
     "notices": "уведомление",
     "settings": "Настройки",

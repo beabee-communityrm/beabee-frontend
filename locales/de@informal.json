@@ -195,6 +195,7 @@
       },
       "tags": "Tags"
     },
+    "noContacts": "",
     "noResults": "Keine Kontakte gefunden",
     "search": "Kontakte durchsuchen...",
     "showingOf": "{start} to {end} von {total} Kontakten werden angezeigt."

@@ -212,6 +212,7 @@
     "changeBankInfo": "You'll be asked for the details of your new bank account in the next step.",
     "contributing": "You're contributing",
     "contributionUpdateError": "You can't update your contribution at the moment as you have a payment pending",
+    "dueToRenew": "Your contribution is due to renew on {renewalDate}.",
     "expired": "Your contribution expired.",
     "expiredText": "Please consider renewing, even if at the lowest amount it would help us immensely. Thank you!",
     "hasPendingPayment": "Your payment is currently being processed.",

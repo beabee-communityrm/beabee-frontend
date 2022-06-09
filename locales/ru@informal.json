@@ -1,8 +1,27 @@
 {
   "adminDashboard": {
-    "latestCallout": {},
-    "mostRecentMembers": {},
-    "numbers": {}
+    "hint1": "",
+    "hint2": "",
+    "hint3": "",
+    "joinSlack": "",
+    "latestCallout": {
+      "createNew": "",
+      "empty": "",
+      "title": ""
+    },
+    "mostRecentMembers": {
+      "title": ""
+    },
+    "numbers": {
+      "averageContribution": "",
+      "newMembers": "",
+      "revenue": "",
+      "title": ""
+    },
+    "responsesSoFar": "",
+    "seeAllResponses": "",
+    "supportInbox": "",
+    "welcomeBack": ""
   },
   "callout": {
     "contactDetails": "Контактная информация",
@@ -103,6 +122,7 @@
     "allContacts": "Все контакты",
     "data": {
       "amount": "Сумма",
+      "annotationsCopy": "",
       "contribution": "Взнос",
       "contributionType": "Вид оплаты",
       "deliveryOptIn": "Отправка письма",
@@ -124,6 +144,7 @@
       },
       "tags": "Теги"
     },
+    "noContacts": "",
     "noResults": "Контактов не найдено",
     "search": "Искать контакт",
     "showingOf": "Контакты от {} и до {} показаны"
@@ -244,6 +265,7 @@
     "checkInbox": "Пожалуйста проверь свою почту и следуйте присланной инструкции. Если ты не нашёл письма проверь свой спам-ящик.",
     "description": "Пожалуйста введи адрес почты. Мы отправим информацию по возобновлению пароля",
     "message": "Введи твоё имя или адрес почты {email}, вскоре ты получишь сообщение.",
+    "resetPassword": "",
     "title": "Забыли пароль?"
   },
   "form": {
@@ -288,6 +310,7 @@
     "phone": "Телефон",
     "postCode": "Почтовый индекс",
     "saveChanges": "Сохранить изменения",
+    "saved": "",
     "warning": "Пожалуйста меняй информацию на этой странице, только с согласием пользователя. Изменения будут показаны другим пользователям."
   },
   "homePage": {
@@ -322,7 +345,8 @@
     "errors": {
       "confirmEmail": {
         "message": "Почти готово! Мы только должны подтвердить твой почтовый ящик, что бы продолжить.",
-        "proceed": "Мы послали вам письмо. Пожалуйста"
+        "proceed": "Мы послали вам письмо. Пожалуйста",
+        "title": ""
       },
       "duplicateEmail": {
         "message": "При настройке вашего членства возникла проблема, наша команда была уведомлена. Обратитесь в службу поддержки, если проблема не устранена.",
@@ -345,6 +369,7 @@
   },
   "joinSetup": {
     "confirmDetails": "Пожалуйста, подтверди твою информацию:",
+    "continue": "",
     "welcome": "Добро Пожаловать {firstName}!"
   },
   "locale": "ru",
@@ -364,6 +389,7 @@
     "contribution": "Взнос",
     "dashboard": "приборная доска",
     "home": "Главная страница",
+    "legacyApp": "",
     "logout": "Выйти",
     "notices": "уведомление",
     "settings": "Настройки",
