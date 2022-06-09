@@ -329,6 +329,7 @@
         "title": "Titel und Bild"
       },
       "url": {
+        "URLWillBe": "Die URL ist",
         "description": "Passe die URL an und ",
         "inputs": {
           "description": {
