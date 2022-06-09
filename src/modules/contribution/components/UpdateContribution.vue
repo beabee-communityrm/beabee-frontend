@@ -33,7 +33,6 @@
     />
 
     <ProrateContribution
-      v-if="showProrateOptions"
       v-model="newContribution.prorate"
       :new-amount="newContribution.amount"
       :old-amount="modelValue.amount!"
@@ -71,8 +70,22 @@
       :message="t('contribution.changeBankInfo')"
     />
   </form>
+  <AppModal
+    v-if="stripeClientSecret"
+    :class="{ hidden: !stripePaymentLoaded }"
+    @close="reset"
+  >
+    <SectionTitle class="mb-4">Set your card details</SectionTitle>
+    <StripePayment
+      :client-secret="stripeClientSecret"
+      :email="email"
+      :return-url="startContributionCompleteUrl"
+      @loaded="onStripeLoaded"
+    />
+  </AppModal>
 </template>
 <script lang="ts" setup>
+import axios from 'axios';
 import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
@@ -91,13 +104,18 @@ import { ContributionType } from '../../../utils/enums/contribution-type.enum';
 import { MembershipStatus } from '../../../utils/enums/membership-status.enum';
 import {
   startContribution,
+  startContributionCompleteUrl,
   updateContribution,
 } from '../../../utils/api/member';
-import axios from 'axios';
+import AppModal from '../../../components/AppModal.vue';
+import StripePayment from '../../../components/StripePayment.vue';
+import { currentUser } from '../../../store/currentUser';
+import AppAlert from '../../../components/AppAlert.vue';
+import { formatLocale } from '../../../utils/dates/locale-date-formats';
 
 const validation = useVuelidate();
 
-const { t } = useI18n();
+const { t, n } = useI18n();
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
@@ -124,6 +142,12 @@ const newContribution = reactive({
 const cantUpdate = ref(false);
 const hasUpdated = ref(false);
 const loading = ref(false);
+const stripeClientSecret = ref('');
+const stripePaymentLoaded = ref(false);
+
+const email = computed(() =>
+  currentUser.value ? currentUser.value.email : ''
+);
 
 const hasManualType = computed(
   () => props.modelValue.type === ContributionType.Manual
@@ -145,13 +169,6 @@ const showChangePeriod = computed(
     props.modelValue.period !== ContributionPeriod.Annually
 );
 
-const showProrateOptions = computed(() => {
-  return (
-    props.modelValue.period === ContributionPeriod.Annually &&
-    props.modelValue.amount !== newContribution.amount
-  );
-});
-
 const canSubmit = computed(
   () =>
     !isAutoActiveMember.value ||
@@ -163,6 +180,7 @@ async function handleCreate() {
   if (data.redirectUrl) {
     window.location.href = data.redirectUrl;
   } else if (data.clientSecret) {
+    stripeClientSecret.value = data.clientSecret;
   }
 }
 
@@ -193,6 +211,19 @@ async function handleSubmit() {
   }
 }
 
+function onStripeLoaded() {
+  stripePaymentLoaded.value = true;
+  loading.value = false;
+}
+
+function reset() {
+  cantUpdate.value = false;
+  hasUpdated.value = false;
+  loading.value = false;
+  stripeClientSecret.value = '';
+  stripePaymentLoaded.value = false;
+}
+
 watch(
   props,
   () => {
@@ -209,6 +240,7 @@ watch(
 );
 
 onBeforeMount(async () => {
+  reset();
   content.value = await fetchJoinContent();
   newContribution.paymentMethod = content.value.paymentMethods[0];
 });

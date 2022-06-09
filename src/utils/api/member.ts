@@ -112,6 +112,9 @@ export async function updateContribution(
   return toContrib(data);
 }
 
+export const startContributionCompleteUrl =
+  import.meta.env.VITE_APP_BASE_URL + '/profile/contribution/complete';
+
 export async function startContribution(
   dataIn: StartContributionData
 ): Promise<PaymentFlowParams> {
@@ -123,8 +126,7 @@ export async function startContribution(
       payFee: dataIn.payFee && dataIn.period === ContributionPeriod.Monthly,
       prorate: dataIn.prorate && dataIn.period === ContributionPeriod.Annually,
       paymentMethod: dataIn.paymentMethod,
-      completeUrl:
-        import.meta.env.VITE_APP_BASE_URL + '/profile/contribution/complete',
+      completeUrl: startContributionCompleteUrl,
     }
   );
   return data;
