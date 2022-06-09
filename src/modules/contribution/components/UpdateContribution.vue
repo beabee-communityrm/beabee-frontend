@@ -6,6 +6,22 @@
       {{ t('contribution.manualPayment') }}
     </p>
 
+    <AppAlert
+      v-if="modelValue.nextAmount && modelValue.renewalDate"
+      variant="info"
+      class="mb-4"
+    >
+      <template #icon
+        ><font-awesome-icon :icon="['fa', 'info-circle']"
+      /></template>
+      {{
+        t('contribution.nextAmountChanging', {
+          nextAmount: n(modelValue.nextAmount, 'currency'),
+          renewalDate: formatLocale(modelValue.renewalDate, 'PPP'),
+        })
+      }}
+    </AppAlert>
+
     <Contribution
       v-model:amount="newContribution.amount"
       v-model:payFee="newContribution.payFee"

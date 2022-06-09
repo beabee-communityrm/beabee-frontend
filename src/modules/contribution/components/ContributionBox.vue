@@ -29,28 +29,21 @@
       </div>
       <div v-else>
         <p>{{ t('common.thankYou') }}</p>
-        <div
-          v-if="contribution.type === ContributionType.Automatic"
-          class="mt-2 text-body-80 text-sm"
-        >
+        <div class="mt-2 text-body-80 text-sm">
           <i18n-t
             v-if="contribution.hasPendingPayment"
             keypath="contribution.hasPendingPayment"
           />
           <i18n-t
-            v-else-if="contribution.nextAmount"
-            keypath="contribution.willRenewWithNewAmount"
+            v-else-if="contribution.renewalDate"
+            :keypath="
+              contribution.type === ContributionType.Automatic
+                ? 'contribution.willRenew'
+                : 'contribution.dueToRenew'
+            "
           >
             <template #renewalDate>
-              <b>{{ formattedRenewalDate }}</b>
-            </template>
-            <template #nextAmount>
-              <b>{{ n(contribution.nextAmount, 'currency') }}/{{ period }}</b>
-            </template>
-          </i18n-t>
-          <i18n-t v-else keypath="contribution.willRenew">
-            <template #renewalDate>
-              <b>{{ formattedRenewalDate }}</b>
+              <b>{{ formatLocale(contribution.renewalDate, 'PPP') }}</b>
             </template>
           </i18n-t>
         </div>
@@ -81,12 +74,6 @@ const period = computed(() =>
   props.contribution.period === ContributionPeriod.Monthly
     ? t('common.month')
     : t('common.year')
-);
-
-const formattedRenewalDate = computed(() =>
-  props.contribution.renewalDate
-    ? formatLocale(props.contribution.renewalDate, 'PPP')
-    : undefined
 );
 
 const formattedExpiryDate = computed(() =>

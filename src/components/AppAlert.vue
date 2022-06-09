@@ -23,7 +23,7 @@ const slots = useSlots();
 
 const alertClass = computed(() =>
   props.variant === 'info'
-    ? 'bg-primary-5 text-primary'
+    ? 'bg-primary-10 text-primary'
     : `bg-${props.variant} text-white`
 );
 </script>
