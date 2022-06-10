@@ -10,7 +10,7 @@
       }}
     </p>
   </div>
-  <div v-if="oneOffPayment >= 1" class="mb-5">
+  <div v-if="aboveThreshold" class="mb-5">
     <p class="mb-3">
       {{
         t('contribution.prorateIncreaseMessage', {
@@ -57,12 +57,13 @@
 
 <script lang="ts" setup>
 import { differenceInMonths } from 'date-fns';
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 
 const { t, n } = useI18n();
 
+const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   modelValue: boolean;
   newAmount: number;
@@ -70,12 +71,7 @@ const props = defineProps<{
   renewalDate: Date;
 }>();
 
-const emit = defineEmits(['update:modelValue']);
-
-const prorate = computed({
-  get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value),
-});
+const prorate = ref(props.modelValue);
 
 const monthsLeft = computed(() =>
   Math.max(0, differenceInMonths(props.renewalDate, new Date()))
@@ -86,6 +82,15 @@ const oneOffPayment = computed(
     Math.floor(
       (((props.newAmount - props.oldAmount) * monthsLeft.value) / 12) * 100
     ) / 100
+);
+
+const aboveThreshold = computed(() => oneOffPayment.value >= 1);
+
+watch(
+  [prorate, aboveThreshold],
+  ([newProrate, newAboveThreshold]) =>
+    emit('update:modelValue', newProrate && newAboveThreshold),
+  { immediate: true }
 );
 
 // TODO: formatLocale isn't imported if used directly in the template
