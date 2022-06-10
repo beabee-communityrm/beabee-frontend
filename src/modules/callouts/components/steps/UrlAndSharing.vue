@@ -13,7 +13,7 @@
         />
         <AppInput
           v-if="dataProxy.useCustomSlug"
-          v-model="dataProxy.slug"
+          v-model="customSlug"
           required
           :error-message="validation.slug.$errors[0]?.$message"
           @blur="validation.slug.$touch"
@@ -82,7 +82,8 @@
 import { computed } from '@vue/reactivity';
 import useVuelidate from '@vuelidate/core';
 import { requiredIf } from '@vuelidate/validators';
-import { onMounted, ref, watch } from 'vue';
+import slugify from 'slugify';
+import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../../components/forms/AppInput.vue';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
@@ -105,6 +106,11 @@ const slug = computed(() =>
     ? dataProxy.value.slug
     : dataProxy.value.autoSlug
 );
+
+const customSlug = computed({
+  get: () => dataProxy.value.slug,
+  set: (newSlug) => (dataProxy.value.slug = slugify(newSlug)),
+});
 
 const rules = computed(() => ({
   slug: { required: requiredIf(dataProxy.value.useCustomSlug) },
