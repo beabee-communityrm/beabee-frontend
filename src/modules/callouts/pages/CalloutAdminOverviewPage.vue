@@ -83,7 +83,7 @@
       >
         {{ t('calloutAdminOverview.actions.edit') }}
       </ActionButton>
-      <ActionButton icon="clone" :href="'/tools/polls/' + callout.slug">
+      <ActionButton icon="clone" @click="replicateThisCallout()">
         {{ t('calloutAdminOverview.actions.replicate') }}
       </ActionButton>
       <ActionButton icon="trash" :href="'/tools/polls/' + callout.slug">
@@ -95,7 +95,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import {
   GetMoreCalloutData,
   ItemStatus,
@@ -110,6 +110,7 @@ import {
 import ActionButton from '../components/ActionButton.vue';
 import CalloutSummary from '../../../components/CalloutSummary.vue';
 import AppAlert from '../../../components/AppAlert.vue';
+import { updateCallout, createCallout } from '../../../utils/api/callout';
 
 const props = defineProps<{
   callout: GetMoreCalloutData;
@@ -117,8 +118,21 @@ const props = defineProps<{
 const { t } = useI18n();
 
 const route = useRoute();
+const router = useRouter();
 const wasJustCreated = route.query.created !== undefined;
 const wasJustUpdated = route.query.updated !== undefined;
 
 const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
+
+async function replicateThisCallout() {
+  var newCalloutData = { ...props.callout };
+  newCalloutData.slug = newCalloutData.slug + '-copy';
+  newCalloutData.title = newCalloutData.title + ' copy';
+  delete newCalloutData['status'];
+  const newCallout = await createCallout(newCalloutData);
+  router.push({
+    path: '/admin/callouts/view/' + newCallout.slug,
+    query: { ['replicated']: null },
+  });
+}
 </script>
