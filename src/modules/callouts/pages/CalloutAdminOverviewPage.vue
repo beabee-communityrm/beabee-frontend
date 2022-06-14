@@ -94,10 +94,18 @@
         @close="showDeleteModal = false"
         @confirm="deleteCallout"
       >
-        <template #title>Delete callout?</template>
-        <template #text>Are you sure you want to delete this callout?</template>
-        <template #button-cancel-text>No, go back</template>
-        <template #button-confirm-text>Yes, delete it</template>
+        <template #title>
+          {{ t('calloutAdminOverview.actions.delete.confirmTitle') }}
+        </template>
+        <template #text>
+          {{ t('calloutAdminOverview.actions.delete.confirmText') }}
+        </template>
+        <template #button-cancel-text>
+          {{ t('calloutAdminOverview.actions.delete.confirmActionNo') }}
+        </template>
+        <template #button-confirm-text>
+          {{ t('calloutAdminOverview.actions.delete.confirmActionYes') }}
+        </template>
       </AppModal>
     </div>
   </div>
