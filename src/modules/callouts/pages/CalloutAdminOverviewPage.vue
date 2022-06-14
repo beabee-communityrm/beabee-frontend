@@ -92,7 +92,7 @@
       <AppModal
         v-if="showDeleteModal"
         @close="showDeleteModal = false"
-        @confirm="deleteCallout"
+        @confirm="confirmDeleteCallout"
       >
         <template #title>
           {{ t('calloutAdminOverview.actions.delete.confirmTitle') }}
@@ -113,11 +113,12 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import {
   GetMoreCalloutData,
   ItemStatus,
 } from '../../../utils/api/api.interface';
+// import { deleteCallout } from '../../../utils/api/callout';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppInfoList from '../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../components/AppInfoListItem.vue';
@@ -136,6 +137,7 @@ const props = defineProps<{
 const { t } = useI18n();
 
 const route = useRoute();
+const router = useRouter();
 const wasJustCreated = route.query.created !== undefined;
 const wasJustUpdated = route.query.updated !== undefined;
 
@@ -143,7 +145,11 @@ const showDeleteModal = ref(false);
 
 const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
 
-const deleteCallout = () => {
+const confirmDeleteCallout = () => {
   console.log(props.callout.slug);
+  /*
+  deleteCallout(props.callout.slug)
+    .then(() => router.replace('/admin/callouts'));
+  */
 };
 </script>
