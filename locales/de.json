@@ -39,6 +39,8 @@
       "endsIn": "Endet in {duration}",
       "startsIn": "startet in {duration}"
     },
+    "toContributionPage": "",
+    "updateContribution": "",
     "youResponded": "Sie haben geantwortet ♥"
   },
   "calloutAdmin": {
@@ -195,6 +197,7 @@
       },
       "tags": "Tags"
     },
+    "noContacts": "",
     "noResults": "Keine Kontakte gefunden",
     "search": "Kontakte durchsuchen...",
     "showingOf": "{start} to {end} von {total} Kontakten werden angezeigt."
@@ -463,6 +466,7 @@
     "passwordInfo": "Das Passwort muss aus mindestens acht Zeichen bestehen und mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten.",
     "phone": "Telefon",
     "postCode": "Postleitzahl",
+    "richtext": {},
     "saveChanges": "Änderungen speichern",
     "saved": "Gespeichert!",
     "warning": "Ändere hier nur etwas, wenn du das Einverständnis hast. Änderungen werden auch den Nutzern angezeigt."

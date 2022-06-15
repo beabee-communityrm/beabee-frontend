@@ -1,8 +1,27 @@
 {
   "adminDashboard": {
-    "latestCallout": {},
-    "mostRecentMembers": {},
-    "numbers": {}
+    "hint1": "",
+    "hint2": "",
+    "hint3": "",
+    "joinSlack": "",
+    "latestCallout": {
+      "createNew": "",
+      "empty": "",
+      "title": ""
+    },
+    "mostRecentMembers": {
+      "title": ""
+    },
+    "numbers": {
+      "averageContribution": "",
+      "newMembers": "",
+      "revenue": "",
+      "title": ""
+    },
+    "responsesSoFar": "",
+    "seeAllResponses": "",
+    "supportInbox": "",
+    "welcomeBack": ""
   },
   "callout": {
     "contactDetails": "Контактная информация",
@@ -12,16 +31,23 @@
       "name": "Ваше имя",
       "submittingResponseError": "Не удалось отправить ответ. Повторите попытку."
     },
+    "joinNow": "",
+    "loginToYourAccount": "",
+    "membersOnly": "",
     "status": {
       "endedOn": "в {duration}",
       "endsIn": "Заканчивается {duration}",
       "startsIn": "Начинается с {duration}"
     },
+    "toContributionPage": "",
+    "updateContribution": "",
     "youResponded": "Вы ответили ♥"
   },
   "calloutAdmin": {},
   "calloutAdminOverview": {
-    "actions": {},
+    "actions": {
+      "delete": {}
+    },
     "dates": {},
     "settings": {
       "answers": {},
@@ -42,8 +68,21 @@
     "showAnswered": "Отвечен"
   },
   "calloutsAdmin": {
-    "data": {},
-    "filter": {}
+    "addCallout": "",
+    "data": {
+      "expires": "",
+      "responses": "",
+      "starts": "",
+      "status": "",
+      "title": ""
+    },
+    "filter": {
+      "all": "",
+      "draft": "",
+      "ended": "",
+      "open": "",
+      "scheduled": ""
+    }
   },
   "common": {
     "annually": "ежегодно",
@@ -105,6 +144,7 @@
     "allContacts": "Все контакты",
     "data": {
       "amount": "Сумма",
+      "annotationsCopy": "",
       "contribution": "Взнос",
       "contributionType": "Вид оплаты",
       "deliveryOptIn": "Отправка письма",
@@ -126,6 +166,7 @@
       },
       "tags": "Теги"
     },
+    "noContacts": "",
     "noResults": "Контактов не найдено",
     "search": "Искать контакт",
     "showingOf": "Контакты от {} и до {} показаны"
@@ -293,7 +334,9 @@
     "passwordInfo": "Пароль должен содержать как минимум 8 символов, минимум одно число, одну заглавную букву и одну строчную букву",
     "phone": "Телефон",
     "postCode": "Почтовый индекс",
+    "richtext": {},
     "saveChanges": "Сохранить изменения",
+    "saved": "",
     "warning": "Пожалуйста меняй информацию на этой странице, только с согласием пользователя. Изменения будут показаны другим пользователям."
   },
   "homePage": {
@@ -328,7 +371,8 @@
     "errors": {
       "confirmEmail": {
         "message": "Почти готово! Мы только должны подтвердить ваш почтовый ящик, что бы продолжить.",
-        "proceed": "Мы послали вам письмо. Пожалуйста"
+        "proceed": "Мы послали вам письмо. Пожалуйста",
+        "title": ""
       },
       "duplicateEmail": {
         "message": "Мы отправили вам электронное письмо, пожалуйста, нажмите на ссылку, чтобы продолжить",
@@ -371,6 +415,7 @@
     "contribution": "Взнос",
     "dashboard": "приборная доска",
     "home": "Главная страница",
+    "legacyApp": "",
     "logout": "Выйти",
     "notices": "уведомление",
     "settings": "Настройки",
