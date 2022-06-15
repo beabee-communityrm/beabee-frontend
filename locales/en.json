@@ -61,6 +61,7 @@
       "label": "Dates",
       "starts": "Starts"
     },
+    "replicated": "Callout replicated! You are now editing the new callout.",
     "settings": {
       "answers": {
         "editable": "Can be updated",
