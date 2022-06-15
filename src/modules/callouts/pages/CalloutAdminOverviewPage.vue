@@ -95,16 +95,16 @@
         @confirm="confirmDeleteCallout"
       >
         <template #title>
-          {{ t('calloutAdminOverview.actions.delete.confirmTitle') }}
+          {{ t('calloutAdminOverview.actions.confirmDelete.title') }}
         </template>
         <template #text>
-          {{ t('calloutAdminOverview.actions.delete.confirmText') }}
+          {{ t('calloutAdminOverview.actions.confirmDelete.text') }}
         </template>
         <template #button-cancel-text>
-          {{ t('calloutAdminOverview.actions.delete.confirmActionNo') }}
+          {{ t('calloutAdminOverview.actions.confirmDelete.actionNo') }}
         </template>
         <template #button-confirm-text>
-          {{ t('calloutAdminOverview.actions.delete.confirmActionYes') }}
+          {{ t('calloutAdminOverview.actions.confirmDelete.actionYes') }}
         </template>
       </AppModal>
     </div>

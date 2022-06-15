@@ -49,6 +49,12 @@
   },
   "calloutAdminOverview": {
     "actions": {
+      "confirmDelete": {
+        "actionNo": "No, go back",
+        "actionYes": "Yes, delete it",
+        "text": "Are you sure you want to delete this callout?",
+        "title": "Delete callout?"
+      },
       "delete": "Delete",
       "edit": "Edit",
       "replicate": "Replicate",
