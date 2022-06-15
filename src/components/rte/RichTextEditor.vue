@@ -5,41 +5,49 @@
     <div class="flex flex-row">
       <RichTextEditorButton
         icon="bold"
+        :title="t('form.richtext.bold')"
         :active="editor.isActive('bold')"
         @click="run((cmd) => cmd.toggleBold())"
       />
       <RichTextEditorButton
         icon="italic"
+        :title="t('form.richtext.italic')"
         :active="editor.isActive('italic')"
         @click="run((cmd) => cmd.toggleItalic())"
       />
       <RichTextEditorButton
         icon="underline"
+        :title="t('form.richtext.underline')"
         :active="editor.isActive('underline')"
         @click="run((cmd) => cmd.toggleUnderline())"
       />
       <RichTextEditorButton
         icon="strikethrough"
+        :title="t('form.richtext.strikethrough')"
         :active="editor.isActive('strike')"
         @click="run((cmd) => cmd.toggleStrike())"
       />
       <RichTextEditorButton
         icon="heading"
+        :title="t('form.richtext.heading')"
         :active="editor.isActive('heading', { level: 3 })"
         @click="run((cmd) => cmd.toggleHeading({ level: 3 }))"
       />
       <RichTextEditorButton
         icon="list"
+        :title="t('form.richtext.bulletlist')"
         :active="editor.isActive('bulletList')"
         @click="run((cmd) => cmd.toggleBulletList())"
       />
       <RichTextEditorButton
         icon="list-ol"
+        :title="t('form.richtext.numberedlist')"
         :active="editor.isActive('orderedList')"
         @click="run((cmd) => cmd.toggleOrderedList())"
       />
       <RichTextEditorButton
         icon="link"
+        :title="t('form.richtext.link')"
         :active="editor.isActive('link')"
         @click="setLink"
       />
@@ -50,12 +58,15 @@
 
 <script lang="ts" setup="{ emit }">
 import { onBeforeUnmount, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useEditor, EditorContent, ChainedCommands } from '@tiptap/vue-3';
 import Link from '@tiptap/extension-link';
 import Underline from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
 import Typeography from '@tiptap/extension-typography';
 import RichTextEditorButton from './RichTextEditorButton.vue';
+
+const { t } = useI18n();
 
 const props = defineProps<{
   modelValue: string;
