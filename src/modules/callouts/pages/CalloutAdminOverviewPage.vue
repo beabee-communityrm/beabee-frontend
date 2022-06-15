@@ -118,7 +118,7 @@ import {
   GetMoreCalloutData,
   ItemStatus,
 } from '../../../utils/api/api.interface';
-// import { deleteCallout } from '../../../utils/api/callout';
+import { deleteCallout } from '../../../utils/api/callout';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppInfoList from '../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../components/AppInfoListItem.vue';
@@ -146,10 +146,7 @@ const showDeleteModal = ref(false);
 const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
 
 const confirmDeleteCallout = () => {
-  console.log(props.callout.slug);
-  /*
   deleteCallout(props.callout.slug)
-    .then(() => router.replace('/admin/callouts'));
-  */
+    .then(() => router.push('/admin/callouts'));
 };
 </script>
