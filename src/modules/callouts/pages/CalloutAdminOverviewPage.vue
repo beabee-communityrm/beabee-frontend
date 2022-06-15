@@ -125,14 +125,15 @@ const wasJustUpdated = route.query.updated !== undefined;
 const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
 
 async function replicateThisCallout() {
-  var newCalloutData = { ...props.callout };
-  newCalloutData.slug = newCalloutData.slug + '-copy';
-  newCalloutData.title = newCalloutData.title + ' copy';
-  delete newCalloutData['status'];
+  const newCalloutData = { ...props.callout,
+    slug: props.callout.slug + '-copy',
+    title: props.callout.title + ' copy',
+    status: undefined
+  };
   const newCallout = await createCallout(newCalloutData);
   router.push({
-    path: '/admin/callouts/view/' + newCallout.slug,
-    query: { ['replicated']: null },
+    path: '/admin/callouts/edit/' + newCallout.slug,
+    query: { replicated: null },
   });
 }
 </script>
