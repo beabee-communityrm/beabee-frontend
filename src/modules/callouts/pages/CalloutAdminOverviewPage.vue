@@ -10,6 +10,7 @@
             ? t('calloutAdminOverview.created')
             : t('calloutAdminOverview.updated')
         }}
+        {{ wasJustReplicated ? t('calloutAdminOverview.replicated') : '' }}
       </AppAlert>
 
       <AppHeading>{{ t('calloutAdminOverview.summary') }}</AppHeading>
@@ -121,14 +122,16 @@ const route = useRoute();
 const router = useRouter();
 const wasJustCreated = route.query.created !== undefined;
 const wasJustUpdated = route.query.updated !== undefined;
+const wasJustReplicated = route.query.replicated !== undefined;
 
 const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
 
 async function replicateThisCallout() {
-  const newCalloutData = { ...props.callout,
+  const newCalloutData = {
+    ...props.callout,
     slug: props.callout.slug + '-copy',
     title: props.callout.title + ' copy',
-    status: undefined
+    status: undefined,
   };
   const newCallout = await createCallout(newCalloutData);
   router.push({
