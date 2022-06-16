@@ -132,6 +132,8 @@ async function replicateThisCallout() {
     slug: props.callout.slug + '-copy',
     title: props.callout.title + ' copy',
     status: undefined,
+    starts: null,
+    expires: null,
   };
   const newCallout = await createCallout(newCalloutData);
   router.push({
