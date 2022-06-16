@@ -61,7 +61,7 @@
         <template #joined="{ value }">
           {{ formatLocale(value, 'PPP') }}
         </template>
-        <template #membershipStartDate="{ item }">
+        <template #membershipStarts="{ item }">
           {{ getMembershipStartDate(item) }}
         </template>
       </AppTable>
@@ -136,10 +136,11 @@ const headers: Header[] = [
     sortable: true,
   },
   {
-    value: 'membershipStartDate',
-    text: t('contacts.data.membershipStartDate'),
+    value: 'membershipStarts',
+    text: t('contacts.data.membershipStarts'),
     align: 'right',
     sortable: true,
+    wrap: true,
   },
 ];
 
