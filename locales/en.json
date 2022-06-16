@@ -588,19 +588,23 @@
   "paymentMethods": {
     "gc_direct-debit": {
       "changeLabel": "Change direct debit",
-      "label": "Direct debit"
+      "label": "Direct debit",
+      "setLabel": "Add direct debit"
     },
     "s_bacs": {
       "changeLabel": "Change direct debit",
-      "label": "Direct debit"
+      "label": "Direct debit",
+      "setLabel": "Add direct debit"
     },
     "s_card": {
-      "changeLabel": "Change card",
-      "label": "Card"
+      "changeLabel": "Change card details",
+      "label": "Card",
+      "setLabel": "Add card details"
     },
     "s_sepa": {
       "changeLabel": "Change direct debit",
-      "label": "Direct debit"
+      "label": "Direct debit",
+      "setLabel": "Add direct debit"
     }
   },
   "resetPassword": {

@@ -75,7 +75,9 @@
     :class="{ hidden: !stripePaymentLoaded }"
     @close="reset"
   >
-    <SectionTitle class="mb-4">Set your card details</SectionTitle>
+    <SectionTitle class="mb-4">{{
+      t(`paymentMethods.${newContribution.paymentMethod}.setLabel`)
+    }}</SectionTitle>
     <StripePayment
       :client-secret="stripeClientSecret"
       :email="email"
