@@ -1,5 +1,15 @@
 <template>
-  <WarningBanner v-if="mode === 'edit'" />
+  <AppAlert v-if="wasJustReplicated" variant="success">
+    {{ t('editCallout.replicated') }}
+  </AppAlert>
+
+  <AppAlert v-else-if="mode === 'edit'" variant="warning">
+    <template #icon>
+      <font-awesome-icon :icon="['fa', 'exclamation']" />
+    </template>
+    {{ t('editCallout.warning') }}
+  </AppAlert>
+
   <div class="grid grid-cols-2 gap-6">
     <div class="col-span-1">
       <AppTextArea
@@ -55,8 +65,9 @@ import { dom, library } from '@fortawesome/fontawesome-svg-core';
 
 import 'formiojs/dist/formio.builder.css';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 import { ContentStepProps } from '../../create-callout.interface';
-import WarningBanner from '../WarningBanner.vue';
+import AppAlert from '../../../../components/AppAlert.vue';
 
 const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{
@@ -65,7 +76,10 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
+const route = useRoute();
 const inputT = (key: string) => t('createCallout.steps.content.inputs.' + key);
+
+const wasJustReplicated = route.query.replicated !== undefined;
 
 const dataProxy = ref(props.data);
 const validation = useVuelidate(
