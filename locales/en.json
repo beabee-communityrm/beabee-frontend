@@ -524,6 +524,7 @@
     "noContribution": "I don't want to contribute right now",
     "notice": "By proceeding you are accepting the",
     "now": "Join now!",
+    "paymentMethod": "Payment method",
     "privacy": "Privacy Policy"
   },
   "joinSetup": {
@@ -576,6 +577,11 @@
     "login": "Login",
     "resetPassword": "Reset password",
     "setup": "Setup"
+  },
+  "paymentMethods": {
+    "gc_direct-debit": "Direct debit",
+    "s_card": "Card",
+    "s_sepa": "Direct debit"
   },
   "resetPassword": {
     "changePassword": "Change password",

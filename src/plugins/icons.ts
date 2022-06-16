@@ -38,6 +38,7 @@ import {
   faLink,
   faHandSparkles,
   faTag,
+  faCreditCard,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -76,7 +77,8 @@ library.add(
   faTrash,
   faLink,
   faHandSparkles,
-  faTag
+  faTag,
+  faCreditCard
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
