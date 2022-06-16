@@ -224,6 +224,7 @@
       "empty": "Past payments and their invoices will show up here.",
       "title": "Payment history"
     },
+    "paymentMethod": "Payment method",
     "paymentSourceUpdateError": "You can't update your bank account at the moment as you have a payment pending",
     "prorateDecreaseMessage": "You have {monthsLeft} {months} left on your current contribution, your new contribution will start on {renewalDate}.",
     "prorateIncreaseMessage": "You have {monthsLeft} {months} left on your current contribution. You can make a one-off payment of {oneOffPayment} to start your new contribution immediately.",
@@ -579,9 +580,22 @@
     "setup": "Setup"
   },
   "paymentMethods": {
-    "gc_direct-debit": "Direct debit",
-    "s_card": "Card",
-    "s_sepa": "Direct debit"
+    "gc_direct-debit": {
+      "changeLabel": "Change direct debit",
+      "label": "Direct debit"
+    },
+    "s_bacs": {
+      "changeLabel": "Change direct debit",
+      "label": "Direct debit"
+    },
+    "s_card": {
+      "changeLabel": "Change card",
+      "label": "Card"
+    },
+    "s_sepa": {
+      "changeLabel": "Change direct debit",
+      "label": "Direct debit"
+    }
   },
   "resetPassword": {
     "changePassword": "Change password",

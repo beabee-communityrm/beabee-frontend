@@ -1,20 +1,12 @@
 <template>
   <div>
     <SectionTitle class="mb-4">{{
-      t('contribution.bankAccount')
+      t('contribution.paymentMethod')
     }}</SectionTitle>
 
     <div class="mb-4">
       <PaymentMethodIcon :method="paymentSource.method" />
-
-      <span v-if="paymentSource.method === PaymentMethod.GoCardlessDirectDebit">
-        {{ paymentSource.accountHolderName }}, {{ paymentSource.bankName }},
-        ••••••••••{{ paymentSource.accountNumberEnding }}
-      </span>
-      <span v-else-if="paymentSource.method === PaymentMethod.StripeCard">
-        •••• •••• •••• {{ paymentSource.last4 }},
-        {{ paymentSource.expiryMonth }}/{{ paymentSource.expiryYear }}
-      </span>
+      {{ paymentSourceDescription }}
     </div>
 
     <MessageBox v-if="cantUpdate" class="mb-4" type="error">
@@ -27,11 +19,7 @@
       class="mb-2 w-full"
       @click="handleUpdate"
     >
-      {{
-        paymentSource.method === PaymentMethod.GoCardlessDirectDebit
-          ? t('contribution.changeBank')
-          : t('contribution.changeCard')
-      }}
+      {{ changeLabel }}
     </AppButton>
 
     <AppModal
@@ -39,7 +27,7 @@
       :class="{ hidden: !stripePaymentLoaded }"
       @close="reset"
     >
-      <SectionTitle class="mb-4">Update your card</SectionTitle>
+      <SectionTitle class="mb-4">{{ changeLabel }}</SectionTitle>
       <StripePayment
         :client-secret="stripeClientSecret"
         :email="email"
@@ -65,13 +53,12 @@ import StripePayment from '../../../components/StripePayment.vue';
 import AppModal from '../../../components/AppModal.vue';
 import SectionTitle from '../../../components/SectionTitle.vue';
 import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
-import PaymentMethodIcon from '../../../components/contribution/icons/PaymentMethodIcon.vue';
+import PaymentMethodIcon from '../../../components/payment-method/PaymentMethodIcon.vue';
+import { computed } from '@vue/reactivity';
 
 const { t } = useI18n();
 
-PaymentMethod;
-
-defineProps<{
+const props = defineProps<{
   paymentSource: PaymentSource;
   email: string;
 }>();
@@ -80,6 +67,24 @@ const loading = ref(false);
 const cantUpdate = ref(false);
 const stripeClientSecret = ref('');
 const stripePaymentLoaded = ref(false);
+
+const paymentSourceDescription = computed(() => {
+  const source = props.paymentSource;
+  switch (source.method) {
+    case PaymentMethod.StripeCard:
+      return `•••• •••• •••• ${source.last4} ${source.expiryMonth}/${source.expiryYear}`;
+    case PaymentMethod.StripeBACS:
+      return `${source.sortCode} ••••••••••${source.last4}`;
+    case PaymentMethod.StripeSEPA:
+      return `${source.country}••${source.bankCode}${source.branchCode}••••${source.last4}`;
+    case PaymentMethod.GoCardlessDirectDebit:
+      return `${source.accountHolderName}, ${source.bankName}, ••••••••••${source.accountNumberEnding}`;
+  }
+});
+
+const changeLabel = computed(() =>
+  t(`paymentMethods.${props.paymentSource.method}.changeLabel`)
+);
 
 function reset() {
   loading.value = false;

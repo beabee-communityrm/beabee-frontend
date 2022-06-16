@@ -23,7 +23,7 @@
         >
           <PaymentMethodIcon :method="method" /><span
             :class="methods.length > 2 ? 'block' : 'inline'"
-            >{{ t('paymentMethods.' + method) }}</span
+            >{{ t(`paymentMethods.${method}.label`) }}</span
           >
         </button>
       </div>
