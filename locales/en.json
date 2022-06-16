@@ -528,6 +528,12 @@
     "paymentMethod": "Payment method",
     "privacy": "Privacy Policy"
   },
+  "joinPayment": {
+    "goBack": "Did you miss something? {back}",
+    "goBackButton": "Back to the previous screen",
+    "note": "You'll be able to modify your contribution and access your payment history at any time in your member account",
+    "willBeContributing": "You'll be contributing {amount}/{period}"
+  },
   "joinSetup": {
     "confirmDetails": "Please confirm your details",
     "continue": "All good! Continue",

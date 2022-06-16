@@ -58,25 +58,30 @@
         <template #icon>
           <font-awesome-icon :icon="['fa', 'hand-sparkles']" />
         </template>
-        You'll be contributing {{ n(signUpData.amount, 'currency') }}/{{
-          signUpData.period
+        {{
+          t('joinPayment.willBeContributing', {
+            amount: n(signUpData.amount, 'currency'),
+            period: signUpData.period,
+          })
         }}
       </AppAlert>
       <p class="mb-3">
-        You'll be able to modify your contribution and access your payment
-        history at any time in your member account
+        {{ t('joinPayment.note') }}
       </p>
       <p class="mb-6">
-        Did you miss something?
-        <a
-          class="cursor-pointer underline text-link"
-          @click="
-            stripeClientSecret = '';
-            stripePaymentLoaded = false;
-          "
-        >
-          Back to the previous screen
-        </a>
+        <i18n-t keypath="joinPayment.goBack">
+          <template #back>
+            <a
+              class="cursor-pointer underline text-link"
+              @click="
+                stripeClientSecret = '';
+                stripePaymentLoaded = false;
+              "
+            >
+              {{ t('joinPayment.goBackButton') }}
+            </a>
+          </template>
+        </i18n-t>
       </p>
       <StripePayment
         :client-secret="stripeClientSecret"

@@ -14,6 +14,7 @@
 <script lang="ts" setup>
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { onBeforeMount, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import AppButton from './forms/AppButton.vue';
 import MessageBox from './MessageBox.vue';
 
@@ -24,6 +25,8 @@ const props = defineProps<{
   email: string;
   returnUrl: string;
 }>();
+
+const { t } = useI18n();
 
 const divRef = ref<HTMLElement>();
 const paymentReady = ref(false);
@@ -72,7 +75,7 @@ onBeforeMount(async () => {
           (result.error.type === 'card_error' ||
             result.error.type === 'validation_error')
             ? (error.value = result.error.message)
-            : 'There was a problem';
+            : t('notification.error');
       }
     };
   }
