@@ -29,9 +29,11 @@
 
     <tbody class="text-xs lg:text-sm">
       <tr v-if="!items.length">
-        <slot name="empty">
-          <p>Loading contents, please wait...</p>
-        </slot>
+        <td :colspan="headers.length" class="p-2">
+          <slot name="empty">
+            <p>Loading contents, please wait...</p>
+          </slot>
+        </td>
       </tr>
 
       <tr
