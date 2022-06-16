@@ -5,16 +5,13 @@
     }}</SectionTitle>
 
     <div class="mb-4">
-      <font-awesome-icon
-        class="text-2xl -mb-1 mr-3"
-        :icon="['far', 'credit-card']"
-      />
+      <PaymentMethodIcon :method="paymentSource.method" />
 
-      <span v-if="paymentSource.type === 'direct-debit'">
+      <span v-if="paymentSource.method === PaymentMethod.GoCardlessDirectDebit">
         {{ paymentSource.accountHolderName }}, {{ paymentSource.bankName }},
         ••••••••••{{ paymentSource.accountNumberEnding }}
       </span>
-      <span v-else>
+      <span v-else-if="paymentSource.method === PaymentMethod.StripeCard">
         •••• •••• •••• {{ paymentSource.last4 }},
         {{ paymentSource.expiryMonth }}/{{ paymentSource.expiryYear }}
       </span>
@@ -31,7 +28,7 @@
       @click="handleUpdate"
     >
       {{
-        paymentSource.type === 'direct-debit'
+        paymentSource.method === PaymentMethod.GoCardlessDirectDebit
           ? t('contribution.changeBank')
           : t('contribution.changeCard')
       }}
@@ -67,8 +64,12 @@ import {
 import StripePayment from '../../../components/StripePayment.vue';
 import AppModal from '../../../components/AppModal.vue';
 import SectionTitle from '../../../components/SectionTitle.vue';
+import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
+import PaymentMethodIcon from '../../../components/contribution/icons/PaymentMethodIcon.vue';
 
 const { t } = useI18n();
+
+PaymentMethod;
 
 defineProps<{
   paymentSource: PaymentSource;

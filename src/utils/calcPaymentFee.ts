@@ -12,10 +12,12 @@ const stripeFees = {
   gb: {
     [PaymentMethod.StripeCard]: (amount: number) => 0.2 + 0.014 * amount,
     [PaymentMethod.StripeSEPA]: () => 0.3,
+    [PaymentMethod.StripeBACS]: (amount: number) => 0.2 * 0.01 * amount,
   },
   eu: {
     [PaymentMethod.StripeCard]: (amount: number) => 0.25 + 0.014 * amount,
     [PaymentMethod.StripeSEPA]: () => 0.35,
+    [PaymentMethod.StripeBACS]: () => 0, // Not available
   },
 } as const;
 

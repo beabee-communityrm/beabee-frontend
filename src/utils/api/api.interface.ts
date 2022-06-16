@@ -119,20 +119,37 @@ export interface UpdateMemberData extends Partial<MemberData> {
 }
 
 export interface CardPaymentSource {
-  type: 'card';
+  method: PaymentMethod.StripeCard;
   last4: string;
   expiryMonth: number;
   expiryYear: number;
 }
 
-export interface DirectDebitPaymentSource {
-  type: 'direct-debit';
+export interface GoCardlessDirectDebitPaymentSource {
+  method: PaymentMethod.GoCardlessDirectDebit;
   bankName: string;
   accountHolderName: string;
   accountNumberEnding: string;
 }
 
-export type PaymentSource = CardPaymentSource | DirectDebitPaymentSource;
+export interface StripeBACSPaymentSource {
+  method: PaymentMethod.StripeBACS;
+  sortCode: string;
+  last4: string;
+}
+
+export interface StripeSEPAPaymentSource {
+  method: PaymentMethod.StripeSEPA;
+  country: string;
+  bankCode: string;
+  last4: string;
+}
+
+export type PaymentSource =
+  | CardPaymentSource
+  | GoCardlessDirectDebitPaymentSource
+  | StripeBACSPaymentSource
+  | StripeSEPAPaymentSource;
 
 export interface ContributionInfo {
   type: ContributionType;

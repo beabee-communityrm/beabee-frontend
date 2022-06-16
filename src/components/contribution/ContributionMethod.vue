@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="font-semibold text-lg mb-1">{{ t('join.paymentMethod') }}</h3>
-    <div class="flex flex-wrap gap-2">
+    <div class="grid grid-cols-3 gap-2">
       <div v-for="method in methods" :key="method" class="flex-1">
         <button
           class="
@@ -21,7 +21,7 @@
           type="button"
           @click="emit('update:modelValue', method)"
         >
-          <component :is="icons[method]" class="mr-2" /><span
+          <PaymentMethodIcon :method="method" /><span
             :class="methods.length > 2 ? 'block' : 'inline'"
             >{{ t('paymentMethods.' + method) }}</span
           >
@@ -33,16 +33,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import { PaymentMethod } from '../../utils/enums/payment-method.enum';
-
-import Card from './icons/Card.vue';
-import DirectDebit from './icons/DirectDebit.vue';
-import SEPA from './icons/SEPA.vue';
-
-const icons = {
-  [PaymentMethod.StripeCard]: Card,
-  [PaymentMethod.StripeSEPA]: SEPA,
-  [PaymentMethod.GoCardlessDirectDebit]: DirectDebit,
-};
+import PaymentMethodIcon from '../payment-method/PaymentMethodIcon.vue';
 
 const { t } = useI18n();
 
