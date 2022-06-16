@@ -26,19 +26,28 @@
   "callout": {
     "contactDetails": "Контактная информация",
     "form": {
+      "email": "",
       "guestFieldsMissing": "Пожалуйста, сообщи нам твои контактные данные",
+      "name": "",
       "submittingResponseError": "Не удалось отправить ответ. Повтори попытку."
     },
+    "joinNow": "",
+    "loginToYourAccount": "",
+    "membersOnly": "",
     "status": {
       "endedOn": "в {duration}",
       "endsIn": "Заканчивается {duration}",
       "startsIn": "Начинается с {duration}"
     },
+    "toContributionPage": "",
+    "updateContribution": "",
     "youResponded": "Ты ответил ♥"
   },
   "calloutAdmin": {},
   "calloutAdminOverview": {
-    "actions": {},
+    "actions": {
+      "delete": {}
+    },
     "dates": {},
     "settings": {
       "answers": {},
@@ -59,8 +68,21 @@
     "showAnswered": "Отвечен"
   },
   "calloutsAdmin": {
-    "data": {},
-    "filter": {}
+    "addCallout": "",
+    "data": {
+      "expires": "",
+      "responses": "",
+      "starts": "",
+      "status": "",
+      "title": ""
+    },
+    "filter": {
+      "all": "",
+      "draft": "",
+      "ended": "",
+      "open": "",
+      "scheduled": ""
+    }
   },
   "common": {
     "annually": "ежегодно",
@@ -309,6 +331,7 @@
     "passwordInfo": "Пароль должен содержать как минимум 8 символов, минимум одно число, одну заглавную букву и одну строчную букву",
     "phone": "Телефон",
     "postCode": "Почтовый индекс",
+    "richtext": {},
     "saveChanges": "Сохранить изменения",
     "saved": "",
     "warning": "Пожалуйста меняй информацию на этой странице, только с согласием пользователя. Изменения будут показаны другим пользователям."

@@ -40,6 +40,13 @@ import {
   faTag,
   faCreditCard,
   faArchway,
+  faBold,
+  faItalic,
+  faStrikethrough,
+  faUnderline,
+  faHeading,
+  faList,
+  faListOl,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -80,7 +87,15 @@ library.add(
   faHandSparkles,
   faTag,
   faCreditCard,
-  faArchway
+  faArchway,
+  faTag,
+  faBold,
+  faItalic,
+  faStrikethrough,
+  faUnderline,
+  faHeading,
+  faList,
+  faListOl
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

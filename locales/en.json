@@ -184,6 +184,7 @@
       "groups": "Groups",
       "joined": "Joined",
       "lastSeen": "Last seen",
+      "membershipStarts": "Member since",
       "name": "Name",
       "newsletter": "Newsletter",
       "notes": "Notes",
@@ -256,7 +257,7 @@
         "description": "Build your callout with questions and prompts",
         "inputs": {
           "intro": {
-            "help": "<p>The <strong>Introduction text</strong> appears alongside the callout, it should explain why you are doing this callout and give any context the user might need before answering. Select and click the buttons to format the copy, or use keyboard shortcuts.</p>\n",
+            "help": "<p>The <strong>Introduction text</strong> appears alongside the callout, it should explain why you are doing this callout and give any context the user might need before answering.</p>\n",
             "label": "Introduction text"
           }
         },
@@ -469,6 +470,16 @@
     "passwordInfo": "Set a secure password: 8+ characters at least one number, one uppercase and one lowercase letters.",
     "phone": "Phone",
     "postCode": "Postcode",
+    "richtext": {
+      "bold": "Bold",
+      "bulletlist": "Bullet list",
+      "heading": "Heading",
+      "italic": "Italic",
+      "link": "Link",
+      "numberedlist": "Numbered list",
+      "strikethrough": "Strikethrough",
+      "underline": "Underline"
+    },
     "saveChanges": "Save Changes",
     "saved": "Saved!",
     "warning": "Please only make updates to this page with the consent of the user. Changes you make here will also be visible to the user."

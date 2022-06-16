@@ -53,11 +53,19 @@ function toContrib(data: Serial<ContributionInfo>): ContributionInfo {
 }
 
 export async function fetchMembers(
-  query: GetMembersQuery = {}
-): Promise<Paginated<GetMemberDataWith<'profile'>>> {
+  query: GetMembersQuery
+): Promise<Paginated<GetMemberData>>;
+export async function fetchMembers<With extends GetMemberWith>(
+  query: GetMembersQuery,
+  _with: readonly With[]
+): Promise<Paginated<GetMemberDataWith<With>>>;
+export async function fetchMembers<With extends GetMemberWith>(
+  query: GetMembersQuery = {},
+  _with?: readonly With[]
+): Promise<Paginated<GetMemberDataWith<With>>> {
   // TODO: fix type safety
   const { data } = await axios.get('/member', {
-    params: { with: ['profile'], ...query },
+    params: { with: _with, ...query },
   });
   return {
     ...data,

@@ -1,14 +1,16 @@
 <template>
   <table class="">
     <thead v-if="!hideHeaders" class="text-sm border-b border-primary-20">
-      <tr>
+      <tr class="align-bottom">
         <th
           v-for="(header, i) in headers"
           :key="i"
-          class="p-2 relative whitespace-nowrap font-semibold text-body-80"
+          class="p-2 relative font-semibold text-body-80"
           :class="{
             'cursor-pointer': header.sortable,
             'font-bold text-primary': header.value === sort?.by,
+            'whitespace-normal': header.wrap,
+            'whitespace-nowrap': !header.wrap,
           }"
           :align="header.align || 'left'"
           :style="{ width: header.width }"
@@ -27,9 +29,11 @@
 
     <tbody class="text-xs lg:text-sm">
       <tr v-if="!items.length">
-        <slot name="empty">
-          <p>Loading contents, please wait...</p>
-        </slot>
+        <td :colspan="headers.length" class="p-2">
+          <slot name="empty">
+            <p>Loading contents, please wait...</p>
+          </slot>
+        </td>
       </tr>
 
       <tr
