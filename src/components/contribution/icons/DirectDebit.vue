@@ -1,3 +1,3 @@
 <template>
-  <font-awesome-icon :icon="['fa', 'credit-card']" />
+  <font-awesome-icon :icon="['fa', 'archway']" />
 </template>
