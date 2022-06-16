@@ -61,7 +61,6 @@
       "label": "Dates",
       "starts": "Starts"
     },
-    "replicated": "Callout replicated! You are now editing the new callout.",
     "settings": {
       "answers": {
         "editable": "Can be updated",
@@ -406,6 +405,7 @@
     "title": "Create a callout"
   },
   "editCallout": {
+    "replicated": "Your callout was replicated! You are now editing the new copy. Be sure to edit the title in the \"Title and Image\" tab.",
     "title": "Edit callout",
     "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
