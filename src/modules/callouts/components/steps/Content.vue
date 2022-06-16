@@ -12,7 +12,7 @@
 
   <div class="grid grid-cols-2 gap-6">
     <div class="col-span-1">
-      <AppTextArea
+      <RichTextEditor
         v-model="dataProxy.introText"
         :label="inputT('intro.label')"
         required
@@ -21,7 +21,7 @@
       />
     </div>
     <div
-      class="col-span-1 text-sm text-grey mt-6"
+      class="col-span-1 text-sm text-grey mt-[4rem]"
       v-html="inputT('intro.help')"
     />
   </div>
@@ -68,6 +68,7 @@ import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { ContentStepProps } from '../../create-callout.interface';
 import AppAlert from '../../../../components/AppAlert.vue';
+import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 
 const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{
@@ -158,7 +159,7 @@ onBeforeMount(() => {
   }
 
   .formcomponent {
-    @apply block w-full p-2 bg-grey-lighter border border-grey text-sm m-0 rounded-none cursor-pointer !important;
+    @apply block w-full px-2 bg-white border border-primary-70 text-primary-80 hover:bg-primary-10 hover:text-primary hover:border-primary rounded text-sm m-0 cursor-pointer !important;
     &.gu-transit {
       @apply mb-4 text-base !important;
     }

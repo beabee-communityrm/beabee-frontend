@@ -149,10 +149,9 @@ onBeforeMount(async () => {
     ? Number(route.query.amount)
     : joinContent.value.initialAmount;
 
-  signUpData.period = Object.values(ContributionPeriod).includes(
-    route.query.period
-  )
-    ? (route.query.period as ContributionPeriod)
+  const period = route.query.period as ContributionPeriod;
+  signUpData.period = Object.values(ContributionPeriod).includes(period)
+    ? period
     : joinContent.value.initialPeriod;
 
   if (!joinContent.value.showAbsorbFee) {
