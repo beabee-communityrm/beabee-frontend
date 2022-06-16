@@ -64,11 +64,6 @@
           : t('contribution.startContribution')
       }}
     </AppButton>
-
-    <InfoMessage
-      v-if="!isAutoActiveMember"
-      :message="t('contribution.changeBankInfo')"
-    />
   </form>
   <AppModal
     v-if="stripeClientSecret"
@@ -91,7 +86,6 @@ import axios from 'axios';
 import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
-import InfoMessage from '../../../components/InfoMessage.vue';
 import SectionTitle from '../../../components/SectionTitle.vue';
 import Contribution from '../../../components/contribution/Contribution.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
