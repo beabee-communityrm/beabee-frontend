@@ -1,6 +1,6 @@
 <template>
   <div ref="divRef"></div>
-  <MessageBox v-if="error" type="error">{{ error }}</MessageBox>
+  <MessageBox v-if="error" type="error" class="mt-4">{{ error }}</MessageBox>
   <AppButton
     :disabled="!paymentReady"
     :loading="loading"
