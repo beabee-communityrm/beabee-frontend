@@ -1,5 +1,7 @@
 <template>
-  <label v-if="label" class="block mb-1.5 font-semibold">{{ label }} </label>
+  <label v-if="label" class="block mb-1.5 font-semibold">{{
+    formattedLabel
+  }}</label>
 
   <div v-if="editor" class="mb-2 min-h-[2rem] h-auto">
     <div class="flex flex-row">
@@ -57,7 +59,7 @@
 </template>
 
 <script lang="ts" setup="{ emit }">
-import { onBeforeUnmount, watch } from 'vue';
+import { computed, onBeforeUnmount, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useEditor, EditorContent, ChainedCommands } from '@tiptap/vue-3';
 import Link from '@tiptap/extension-link';
@@ -102,6 +104,10 @@ watch(
     }
   }
 );
+
+const formattedLabel = computed(() => {
+  return props.required ? props.label + '*' : props.label;
+});
 
 onBeforeUnmount(() => {
   editor.value?.destroy();

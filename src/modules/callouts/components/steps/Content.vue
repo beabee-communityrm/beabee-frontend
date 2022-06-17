@@ -1,9 +1,9 @@
 <template>
-  <AppAlert v-if="wasJustReplicated" variant="success">
+  <AppAlert v-if="wasJustReplicated" variant="success" class="mb-4">
     {{ t('editCallout.replicated') }}
   </AppAlert>
 
-  <AppAlert v-else-if="mode === 'edit'" variant="warning">
+  <AppAlert v-else-if="mode === 'edit'" variant="warning" class="mb-4">
     <template #icon>
       <font-awesome-icon :icon="['fa', 'exclamation']" />
     </template>
@@ -40,7 +40,6 @@ import { helpers, required } from '@vuelidate/validators';
 import { onBeforeMount, ref, watch } from 'vue';
 import { FormBuilder as FormBuilderVue } from 'vue-formio';
 import { FormBuilder } from 'formiojs';
-import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import {
   faQuestionCircle,
   faTerminal,
