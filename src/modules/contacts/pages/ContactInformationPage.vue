@@ -10,6 +10,7 @@
           v-model:email="information.emailAddress"
           v-model:firstName="information.firstName"
           v-model:lastName="information.lastName"
+          optional-names
         />
 
         <AppHeading class="mt-5 mb-3">

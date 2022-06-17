@@ -3,7 +3,8 @@
     <AppInput
       v-model="emailProxy"
       input-type="email"
-      :label="t('form.email') + '*'"
+      :label="t('form.email')"
+      required
       :error-message="errorGenerator(validation, 'email')"
       @blur="validation.email.$touch"
     />
@@ -13,7 +14,8 @@
     <AppInput
       v-model="firstNameProxy"
       input-type="text"
-      :label="t('form.firstName') + '*'"
+      :label="t('form.firstName')"
+      :required="!optionalNames"
       :error-message="errorGenerator(validation, 'firstName')"
       @blur="validation.firstName.$touch"
     />
@@ -23,7 +25,8 @@
     <AppInput
       v-model="lastNameProxy"
       input-type="text"
-      :label="t('form.lastName') + '*'"
+      :label="t('form.lastName')"
+      :required="!optionalNames"
       :error-message="errorGenerator(validation, 'lastName')"
       @blur="validation.lastName.$touch"
     />
@@ -33,7 +36,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { helpers, required } from '@vuelidate/validators';
+import { helpers, requiredIf } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import { errorGenerator } from '../utils/form-error-generator';
 import { emailValidationRule } from '../utils/form-validation/rules';
@@ -50,6 +53,7 @@ const props = defineProps<{
   email: string;
   firstName: string;
   lastName: string;
+  optionalNames?: boolean;
 }>();
 
 const emailProxy = computed({
@@ -73,12 +77,15 @@ const rules = {
   firstName: {
     required: helpers.withMessage(
       t('form.errors.firstName.required'),
-      required
+      requiredIf(!props.optionalNames)
     ),
   },
 
   lastName: {
-    required: helpers.withMessage(t('form.errors.lastName.required'), required),
+    required: helpers.withMessage(
+      t('form.errors.lastName.required'),
+      requiredIf(!props.optionalNames)
+    ),
   },
 };
 
