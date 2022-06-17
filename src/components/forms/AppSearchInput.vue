@@ -7,6 +7,7 @@
       @blur="submit"
     />
     <button
+      type="button"
       v-if="searchText.length > 0"
       class="
         absolute
