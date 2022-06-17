@@ -4,22 +4,45 @@
 @tailwind components;
 @tailwind utilities;
 
-.content-message p,
-.content-message ul,
-.content-message ol {
-  margin: 0;
-}
+.content-message {
+  p,
+  ul,
+  ol {
+    margin: 0;
+  }
 
-.content-message ul {
-  @apply pl-3 list-inside list-disc;
-}
+  p:empty {
+    @apply h-5;
+  }
 
-.content-message ol {
-  @apply pl-3 list-inside list-decimal;
-}
+  ul,
+  ol {
+    @apply ml-2 pl-6 list-none relative;
+    li::before {
+      @apply absolute left-0;
+    }
+  }
 
-.content-message a {
-  @apply text-link underline;
+  ul li::before {
+    @apply font-bold pl-1;
+    content: '•';
+  }
+
+  ol {
+    counter-reset: list;
+    li::before {
+      counter-increment: list;
+      content: counter(list) '.';
+    }
+  }
+
+  a {
+    @apply text-link underline;
+  }
+
+  h3 {
+    @apply font-title text-xl font-semibold;
+  }
 }
 
 .content-i18n {

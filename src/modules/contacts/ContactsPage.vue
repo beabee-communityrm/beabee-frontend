@@ -19,6 +19,13 @@
         :items="contactsTable.items"
         class="w-full mt-2 whitespace-nowrap"
       >
+        <template #empty>
+          <p>
+            {{
+              route.query.s ? t('contacts.noResults') : t('contacts.noContacts')
+            }}
+          </p>
+        </template>
         <template #firstname="{ item }">
           <router-link
             :to="'/admin/contacts/' + item.id"
@@ -26,7 +33,10 @@
           >
             {{ `${item.firstname} ${item.lastname}`.trim() || item.email }}
           </router-link>
-          <p v-if="item.profile.description" class="whitespace-normal mt-1">
+          <p
+            v-if="item.profile.description"
+            class="text-xs whitespace-normal mt-1"
+          >
             {{ item.profile.description }}
           </p>
         </template>
@@ -51,6 +61,9 @@
         <template #joined="{ value }">
           {{ formatLocale(value, 'PPP') }}
         </template>
+        <template #membershipStarts="{ item }">
+          {{ getMembershipStartDate(item) }}
+        </template>
       </AppTable>
       <div class="flex mt-4 items-center text-sm">
         <p class="flex-1">
@@ -67,7 +80,6 @@
               ><b>{{ n(contactsTable.total) }}</b></template
             >
           </i18n-t>
-          <i18n-t v-else keypath="contacts.noResults" />
         </p>
         <div class="mx-4">Page size</div>
 
@@ -123,6 +135,13 @@ const headers: Header[] = [
     align: 'right',
     sortable: true,
   },
+  {
+    value: 'membershipStarts',
+    text: t('contacts.data.membershipStarts'),
+    align: 'right',
+    sortable: true,
+    wrap: true,
+  },
 ];
 
 const route = useRoute();
@@ -166,7 +185,7 @@ const currentSegment = computed({
 
 const segments = ref<GetSegmentData[]>([]);
 const contactsTotal = ref<number | null>(null);
-const contactsTable = ref<Paginated<GetMemberDataWith<'profile'>>>({
+const contactsTable = ref<Paginated<GetMemberDataWith<'profile' | 'roles'>>>({
   total: 0,
   count: 0,
   offset: 0,
@@ -190,6 +209,11 @@ const segmentItems = computed(() => [
     to: '/admin/contacts?segment=' + segment.id,
   })),
 ]);
+
+function getMembershipStartDate(member: GetMemberDataWith<'roles'>): string {
+  const membership = member.roles.find((role) => role.role === 'member');
+  return membership ? formatLocale(membership.dateAdded, 'PPP') : '';
+}
 
 onBeforeMount(async () => {
   // Load the total if in a segment, otherwise it will be updated automatically below
@@ -234,8 +258,11 @@ watchEffect(async () => {
   };
 
   contactsTable.value = currentSegment.value
-    ? await fetchSegmentMembers(currentSegment.value, query)
-    : await fetchMembers(query);
+    ? await fetchSegmentMembers(currentSegment.value, query, [
+        'profile',
+        'roles',
+      ])
+    : await fetchMembers(query, ['profile', 'roles']);
 
   // Update all contacts total if no segment
   if (!currentSegment.value) {

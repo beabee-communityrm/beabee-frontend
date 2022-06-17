@@ -25,57 +25,47 @@
       />
     </div>
   </div>
-  <table>
-    <thead class="text-left whitespace-nowrap hidden md:table-header-group">
-      <tr>
-        <th class="py-2">{{ t('callouts.data.callout') }}</th>
-        <th class="py-2 px-5">{{ t('callouts.data.endDate') }}</th>
-        <th class="py-2"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        v-for="callout in archivedCallouts.items"
-        :key="callout.slug"
-        class="
-          flex flex-wrap
-          justify-between
-          py-3
-          md:table-row
-          border-t border-primary-20
-        "
+
+  <AppTable
+    :headers="headers"
+    :items="archivedCallouts.items"
+    class="w-full mt-2 whitespace-nowrap"
+  >
+    <template #empty>
+      <p>{{ t('callout.noArchivedCallouts') }}</p>
+    </template>
+
+    <template #name="{ item }">
+      <router-link
+        :to="`/callouts/${item.slug}`"
+        class="text-base text-link font-bold"
+        >{{ item.title }}</router-link
       >
-        <td class="pb-2 md:py-4 w-full">
-          <router-link
-            :to="`/callouts/${callout.slug}`"
-            class="text-link font-semibold underline"
-            >{{ callout.title }}</router-link
-          >
-        </td>
-        <td class="md:py-4 md:px-5 whitespace-nowrap text-body-80 md:text-body">
-          <time
-            v-if="callout.expires"
-            :datetime="callout.expires.toISOString()"
-            :title="formatLocale(callout.expires, 'PPPppp')"
-          >
-            {{
-              t('common.timeAgo', {
-                time: formatDistanceLocale(new Date(), callout.expires),
-              })
-            }}
-          </time>
-          <span v-else>-</span>
-        </td>
-        <td
-          v-if="callout.hasAnswered"
-          class="md:py-4 text-success font-bold text-sm whitespace-nowrap"
-        >
-          <font-awesome-icon icon="check-circle" />
-          {{ t('callouts.showAnswered') }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    </template>
+
+    <template #expires="{ item }">
+      <time
+        v-if="item.expires"
+        :datetime="item.expires.toISOString()"
+        :title="formatLocale(item.expires, 'PPPppp')"
+      >
+        {{
+          t('common.timeAgo', {
+            time: formatDistanceLocale(new Date(), item.expires),
+          })
+        }}
+      </time>
+      <span v-else>-</span>
+    </template>
+
+    <template #answered="{ item }">
+      <span v-if="item.hasAnswered">
+        <font-awesome-icon icon="check-circle" />
+        {{ t('callouts.showAnswered') }}
+      </span>
+    </template>
+  </AppTable>
+
   <div class="ml-auto mt-3">
     <AppPagination v-model="currentPage" :total-pages="totalPages" />
   </div>
@@ -101,6 +91,8 @@ import {
   formatLocale,
 } from '../../utils/dates/locale-date-formats';
 import AppToggle from '../../components/forms/AppToggle.vue';
+import { Header } from '../../components/table/table.interface';
+import AppTable from '../../components/table/AppTable.vue';
 
 formatDistanceLocale;
 formatLocale;
@@ -109,6 +101,12 @@ const { t } = useI18n();
 
 const route = useRoute();
 const router = useRouter();
+
+const headers: Header[] = [
+  { value: 'name', text: t('callouts.data.callout') },
+  { value: 'expires', text: t('callouts.data.endDate') },
+  { value: 'answered', text: '' },
+];
 
 const currentPage = computed({
   get: () => Number(route.query.page) || 0,
@@ -125,7 +123,6 @@ const currentShow = computed({
       query: { ...route.query, show, page: undefined },
     }),
 });
-
 const activeCallouts = ref<Paginated<GetBasicCalloutData>>({
   total: 0,
   count: 0,
