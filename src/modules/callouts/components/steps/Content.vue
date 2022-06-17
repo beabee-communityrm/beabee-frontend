@@ -1,9 +1,9 @@
 <template>
-  <AppAlert v-if="wasJustReplicated" variant="success">
+  <AppAlert v-if="wasJustReplicated" variant="success" class="mb-4">
     {{ t('editCallout.replicated') }}
   </AppAlert>
 
-  <AppAlert v-else-if="mode === 'edit'" variant="warning">
+  <AppAlert v-else-if="mode === 'edit'" variant="warning" class="mb-4">
     <template #icon>
       <font-awesome-icon :icon="['fa', 'exclamation']" />
     </template>
