@@ -239,7 +239,7 @@
     "updateContribution": "Update contribution",
     "updatePaymentType": "Update payment type",
     "updatedContribution": "Your contribution has been updated.",
-    "updatedPaymentSource": "Your bank account has been updated.",
+    "updatedPaymentSource": "Your payment method has been updated.",
     "willExpire": "Your contribution will expire in {expires}.",
     "willRenew": "Your contribution will automatically renew on {renewalDate}.",
     "willRenewWithNewAmount": "Your contribution will automatically renew on {renewalDate} and will change to your chosen amount of {nextAmount}."
