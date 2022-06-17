@@ -40,7 +40,6 @@ import { helpers, required } from '@vuelidate/validators';
 import { onBeforeMount, ref, watch } from 'vue';
 import { FormBuilder as FormBuilderVue } from 'vue-formio';
 import { FormBuilder } from 'formiojs';
-import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import {
   faQuestionCircle,
   faTerminal,
