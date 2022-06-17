@@ -60,7 +60,7 @@
         </template>
         {{
           t('joinPayment.willBeContributing', {
-            amount: n(signUpData.amount, 'currency'),
+            amount: n(totalAmount, 'currency'),
             period: signUpData.period,
           })
         }}
@@ -151,14 +151,17 @@ const loading = ref(false);
 const stripePaymentLoaded = ref(false);
 const stripeClientSecret = ref('');
 
+const totalAmount = computed(
+  () =>
+    signUpData.amount +
+    (signUpData.payFee ? calcPaymentFee(signUpData).value : 0)
+);
+
 const buttonText = computed(() => {
-  const totalAmount = signUpData.payFee
-    ? signUpData.amount + calcPaymentFee(signUpData).value
-    : signUpData.amount;
   return signUpData.noContribution
     ? t('join.now')
     : t('join.contribute', {
-        amount: n(totalAmount, 'currency'),
+        amount: n(totalAmount.value, 'currency'),
         period:
           signUpData.period === 'monthly'
             ? t('common.month')
