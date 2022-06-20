@@ -72,7 +72,9 @@ const paymentSourceDescription = computed(() => {
   const source = props.paymentSource;
   switch (source.method) {
     case PaymentMethod.StripeCard:
-      return `•••• •••• •••• ${source.last4} ${source.expiryMonth}/${source.expiryYear}`;
+      return `•••• •••• •••• ${source.last4}, ${String(
+        source.expiryMonth
+      ).padStart(2, '0')}/${source.expiryYear}`;
     case PaymentMethod.StripeBACS:
       return `${source.sortCode} ••••••••••${source.last4}`;
     case PaymentMethod.StripeSEPA:
