@@ -177,10 +177,17 @@ export interface StartContributionData extends SetContributionData {
   paymentMethod: PaymentMethod;
 }
 
+export enum PaymentStatus {
+  Pending = 'pending',
+  Successful = 'successful',
+  Failed = 'failed',
+  Cancelled = 'cancelled',
+}
+
 export interface GetPaymentData {
   chargeDate: string;
   amount: number;
-  status: string;
+  status: PaymentStatus;
 }
 
 export type GetPaymentsQuery = GetPaginatedQuery<'chargeDate'>;
