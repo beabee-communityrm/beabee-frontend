@@ -2,7 +2,7 @@
   <form @submit.prevent="handleSubmit">
     <SectionTitle class="mb-2">{{ t('contribution.billing') }} </SectionTitle>
 
-    <p v-if="hasManualType" class="mb-4">
+    <p v-if="isManualActiveMember" class="mb-4">
       {{ t('contribution.manualPayment') }}
     </p>
 
@@ -55,7 +55,7 @@
       :loading="loading"
     >
       {{
-        hasManualType
+        isManualActiveMember
           ? t('contribution.updatePaymentType')
           : isActiveMember
           ? t('contribution.updateContribution')
@@ -145,24 +145,29 @@ const email = computed(() =>
   currentUser.value ? currentUser.value.email : ''
 );
 
-const hasManualType = computed(
-  () => props.modelValue.type === ContributionType.Manual
-);
 const isActiveMember = computed(
   () => props.modelValue.membershipStatus === MembershipStatus.Active
-);
-const isAutoActiveMember = computed(
-  () =>
-    isActiveMember.value && props.modelValue.type === ContributionType.Automatic
 );
 const isExpiringMember = computed(
   () => props.modelValue.membershipStatus === MembershipStatus.Expiring
 );
 
+const isManualActiveMember = computed(
+  () =>
+    isActiveMember.value && props.modelValue.type === ContributionType.Manual
+);
+const isAutoActiveMember = computed(
+  () =>
+    isActiveMember.value && props.modelValue.type === ContributionType.Automatic
+);
+
+// Only non-active members and monthly manual contributors can change their period
+// as otherwise proration gets complicated
 const showChangePeriod = computed(
   () =>
-    !isAutoActiveMember.value &&
-    props.modelValue.period !== ContributionPeriod.Annually
+    !isActiveMember.value ||
+    (isManualActiveMember.value &&
+      props.modelValue.period !== ContributionPeriod.Annually)
 );
 
 const canSubmit = computed(
