@@ -234,7 +234,9 @@ watch(
     newContribution.period =
       props.modelValue.period || content.value.initialPeriod;
     newContribution.payFee = content.value.showAbsorbFee
-      ? !!props.modelValue.payFee
+      ? props.modelValue.payFee === undefined
+        ? true
+        : props.modelValue.payFee
       : false;
     newContribution.prorate = true;
     newContribution.paymentMethod =
