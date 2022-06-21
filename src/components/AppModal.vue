@@ -48,7 +48,7 @@
             ><slot name="button-cancel-text"
           /></AppButton>
           <AppButton
-            to="/admin/callouts"
+            :to="redirectTo"
             variant="danger"
             @click="$emit('confirm')"
             ><slot name="button-confirm-text"
@@ -66,4 +66,11 @@ import { useSlots } from '@vue/runtime-core';
 import AppButton from '../components/forms/AppButton.vue';
 
 const slots = useSlots();
+
+const props = defineProps({
+  redirectTo: {
+    type: String,
+    default: '',
+  },
+});
 </script>
