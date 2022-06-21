@@ -13,7 +13,7 @@
         class="mb-6 content-message"
         v-html="t('joinSetup.confirmDetails')"
       />
-      <p class="mt-2">
+      <p class="mt-2 mb-4">
         {{ setupContent.welcome }}
       </p>
 
