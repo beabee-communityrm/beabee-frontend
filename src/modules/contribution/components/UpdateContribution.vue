@@ -67,7 +67,8 @@
   </form>
   <AppModal
     v-if="stripeClientSecret"
-    :class="{ hidden: !stripePaymentLoaded }"
+    :open="stripePaymentLoaded"
+    class="md:w-[30rem]"
     @close="reset"
   >
     <SectionTitle class="mb-4">{{

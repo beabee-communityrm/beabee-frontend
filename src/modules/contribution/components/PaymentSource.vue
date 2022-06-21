@@ -26,6 +26,7 @@
       v-if="stripeClientSecret"
       :open="stripePaymentLoaded"
       :title="changeLabel"
+      class="md:w-[30rem]"
       @close="reset"
     >
       <StripePayment
