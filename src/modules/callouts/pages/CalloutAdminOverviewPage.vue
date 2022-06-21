@@ -147,9 +147,12 @@ const showDeleteModal = ref(false);
 const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
 
 const confirmDeleteCallout = () => {
-  deleteCallout(props.callout.slug)
-    .then(() => router.push('/admin/callouts'));
-};
+  deleteCallout(props.callout.slug);
+  router.push({
+    path: '/admin/callouts',
+    query: { deleted: null },
+  });
+}
 
 async function replicateThisCallout() {
   const newCalloutData = {
