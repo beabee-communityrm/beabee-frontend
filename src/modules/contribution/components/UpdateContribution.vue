@@ -124,7 +124,7 @@ const content = ref<ContributionContent>({
   minMonthlyAmount: 5,
   periods: [],
   showAbsorbFee: true,
-  paymentMethods: [],
+  paymentMethods: [PaymentMethod.StripeCard],
 });
 
 const newContribution = reactive({
@@ -221,7 +221,7 @@ function reset() {
 }
 
 watch(
-  props,
+  [props, content],
   () => {
     newContribution.amount =
       props.modelValue.amount || content.value.initialAmount;
@@ -231,6 +231,8 @@ watch(
       ? !!props.modelValue.payFee
       : false;
     newContribution.prorate = true;
+    newContribution.paymentMethod =
+      props.modelValue.paymentSource?.method || content.value.paymentMethods[0];
   },
   { immediate: true }
 );
@@ -238,6 +240,5 @@ watch(
 onBeforeMount(async () => {
   reset();
   content.value = await fetchJoinContent();
-  newContribution.paymentMethod = content.value.paymentMethods[0];
 });
 </script>
