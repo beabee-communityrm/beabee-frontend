@@ -1,6 +1,9 @@
 <template>
   <div
-    v-if="contribution.type !== ContributionType.None"
+    v-if="
+      contribution.type !== ContributionType.None &&
+      contribution.membershipStatus !== MembershipStatus.None
+    "
     class="flex flex-col p-8 bg-white shadow"
   >
     <template v-if="contribution.membershipStatus === MembershipStatus.Expired">
@@ -27,7 +30,9 @@
           </template>
         </i18n-t>
       </div>
-      <div v-else>
+      <div
+        v-else-if="contribution.membershipStatus === MembershipStatus.Active"
+      >
         <p>{{ t('common.thankYou') }}</p>
         <div class="mt-2 text-body-80 text-sm">
           <i18n-t
