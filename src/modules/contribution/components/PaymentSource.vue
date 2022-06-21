@@ -24,10 +24,10 @@
 
     <AppModal
       v-if="stripeClientSecret"
-      :class="{ hidden: !stripePaymentLoaded }"
+      :open="stripePaymentLoaded"
+      :title="changeLabel"
       @close="reset"
     >
-      <SectionTitle class="mb-4">{{ changeLabel }}</SectionTitle>
       <StripePayment
         :client-secret="stripeClientSecret"
         :email="email"

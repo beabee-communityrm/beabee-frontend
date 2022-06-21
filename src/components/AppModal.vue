@@ -10,11 +10,26 @@
         justify-center
         items-center
         p-4
+        h-full
       "
-      v-bind="$attrs"
+      :class="{ hidden: !open }"
       @click="$emit('close')"
     >
-      <div class="relative rounded bg-white p-8 shadow-lg" @click.stop>
+      <div
+        ref="divRef"
+        class="
+          relative
+          rounded
+          bg-white
+          p-6
+          md:p-8
+          shadow-lg
+          max-h-full
+          flex flex-col
+        "
+        v-bind="$attrs"
+        @click.stop
+      >
         <button
           class="absolute top-0 right-0 w-8 h-8 hover:text-primary"
           type="button"
@@ -22,11 +37,40 @@
         >
           <font-awesome-icon :icon="['fa', 'times']" />
         </button>
-        <slot></slot>
+        <SectionTitle v-if="title" class="mb-4">{{ title }}</SectionTitle>
+        <div class="overflow-auto">
+          <slot></slot>
+        </div>
       </div>
     </div>
   </Teleport>
 </template>
 <script lang="ts" setup>
+import { onBeforeUnmount, ref, toRef, watch } from 'vue';
+import SectionTitle from './SectionTitle.vue';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+
 defineEmits(['close']);
+const props = defineProps<{
+  open: boolean;
+  title?: string;
+}>();
+
+const divRef = ref<HTMLElement>();
+
+watch([toRef(props, 'open'), divRef], ([open]) => {
+  if (divRef.value) {
+    if (open) {
+      disableBodyScroll(divRef.value);
+    } else {
+      enableBodyScroll(divRef.value);
+    }
+  }
+});
+
+onBeforeUnmount(() => {
+  if (divRef.value && props.open) {
+    enableBodyScroll(divRef.value);
+  }
+});
 </script>

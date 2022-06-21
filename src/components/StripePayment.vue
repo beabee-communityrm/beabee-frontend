@@ -114,3 +114,8 @@ onBeforeMount(async () => {
   }
 });
 </script>
+<style scoped>
+.StripeElement {
+  overflow: hidden;
+}
+</style>
