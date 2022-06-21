@@ -39,6 +39,8 @@
       "endsIn": "Endet in {duration}",
       "startsIn": "startet in {duration}"
     },
+    "toContributionPage": "Meinen Beitrag ändern",
+    "updateContribution": "Bitte ändere deinen Beitrag. ",
     "youResponded": "Du hast geantwortet ♥"
   },
   "calloutAdmin": {
@@ -47,6 +49,12 @@
   },
   "calloutAdminOverview": {
     "actions": {
+      "confirmDelete": {
+        "actionNo": "Nein, gehe zurück.",
+        "actionYes": "Ja, bitte löschen.",
+        "text": "Bist du sicher, dass du diesen Callout löschen willst?",
+        "title": "Callout löschen?"
+      },
       "delete": "Löschen",
       "edit": "Bearbeiten",
       "replicate": "Kopieren",
@@ -180,8 +188,9 @@
       "description": "Beschreibung",
       "email": "E-Mail",
       "groups": "Gruppe",
-      "joined": "Mitglied seit",
+      "joined": "Kontakt seit",
       "lastSeen": "Zuletzt angemeldet",
+      "membershipStarts": "Mitglied seit",
       "name": "Name",
       "newsletter": "Newsletter",
       "notes": "Notizen",
@@ -195,6 +204,7 @@
       },
       "tags": "Tags"
     },
+    "noContacts": "",
     "noResults": "Keine Kontakte gefunden",
     "search": "Kontakte durchsuchen...",
     "showingOf": "{start} to {end} von {total} Kontakten werden angezeigt."
@@ -209,6 +219,7 @@
     "changeBankInfo": "Im nächsten Schritt kannst du deine neue Bankverbindung eingeben.",
     "contributing": "Dein Beitrag ist",
     "contributionUpdateError": "Du kannst deinen Beitrag aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
+    "dueToRenew": "Deine Mitgliedschaft wird am {renewalDate} erneuert.",
     "expired": "Deine Mitgliedschaft ist abgelaufen.",
     "expiredText": "Möchtest du deine Mitgliedschaft verlängern? Selbst kleinste Beträge helfen uns und unserer Arbeit. Danke!",
     "hasPendingPayment": "Deine Zahlung wird gerade verarbeitet.",
@@ -217,8 +228,10 @@
     "paymentHistory": {
       "amount": "Betrag",
       "date": "Datum",
+      "empty": "Ältere Zahlungen und Rechnungen finden Sie hier.",
       "title": "Deine bisherigen Beiträge."
     },
+    "paymentMethod": "Zahlungsart",
     "paymentSourceUpdateError": "Du kannst deine Bankverbindung aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
     "prorateDecreaseMessage": "Dein Beitrag bleibt noch für {monthsLeft} {months} gleich. Der neue Beitrag wird am {renewalDate} zum ersten Mal eingezogen.",
     "prorateIncreaseMessage": "Deine Mitgliedschaft läuft noch {monthsLeft} {months} unter diesem Beitrag. Du kannst eine Einmalzahlung in Höhe von {oneOffPayment} leisten um deine Mitgliedschaft sofort zu erneuern und den Beitrag zu erhöhen.",
@@ -232,7 +245,7 @@
     "updateContribution": "Beitrag aktualisieren",
     "updatePaymentType": "Neuen Zahlungsweg einrichten",
     "updatedContribution": "Dein Beitrag wurde geändert.",
-    "updatedPaymentSource": "Deine Bankverbindung wurde geändert.",
+    "updatedPaymentSource": "Deine Zahlungsart wurde aktualisiert. ",
     "willExpire": "Deine Mitgliedschaft läuft in {expires} ab.",
     "willRenew": "Deine Mitgliedschaft verlängert sich am {renewalDate} automatisch.",
     "willRenewWithNewAmount": "Deine Mitgliedschaft verlängert sich am {renewalDate} automatisch. Dein Beitrag ist dann {nextAmount}."
@@ -402,6 +415,7 @@
     "title": "Callout anlegen"
   },
   "editCallout": {
+    "replicated": "Dein Callout wurde kopiert! Du bearbeitest jetzt die Kopie. Bitte denke daran, den Bereich „Titel und Bild” zu bearbeiten.",
     "title": "Callout bearbeiten",
     "warning": "Vorsicht! Du bearbeitest einen veröffentlichten Callout. Wenn du Umfrageelemente bearbeitest riskierst du, Antworten unbrauchbar zu machen."
   },
@@ -463,6 +477,16 @@
     "passwordInfo": "Das Passwort muss aus mindestens acht Zeichen bestehen und mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten.",
     "phone": "Telefon",
     "postCode": "Postleitzahl",
+    "richtext": {
+      "bold": "Fett",
+      "bulletlist": "Aufzählungszeichen",
+      "heading": "Überschrift",
+      "italic": "Kursiv",
+      "link": "Link",
+      "numberedlist": "Nummerierung",
+      "strikethrough": "Durchstreichen",
+      "underline": "Unterstreichen"
+    },
     "saveChanges": "Änderungen speichern",
     "saved": "Gespeichert!",
     "warning": "Ändere hier nur etwas, wenn du das Einverständnis hast. Änderungen werden auch den Nutzern angezeigt."
@@ -519,7 +543,14 @@
     "noContribution": "Ich möchte jetzt keinen Beitrag leisten",
     "notice": "Indem du fortfährst, akzeptierst Du unsere",
     "now": "Jetzt Mitglied werden! ",
+    "paymentMethod": "Zahlungsart",
     "privacy": "Datenschutzerklärung"
+  },
+  "joinPayment": {
+    "goBack": "Hast du etwas vergessen?",
+    "goBackButton": "Zurück zum letzten Schritt",
+    "note": "Du kannst deine Zahlungsdaten jederzeit in deinem Nutzer-Account ändern und dort auch sehen, wie viel du in der Vergangenheit bereits gezahlt hast. ",
+    "willBeContributing": "Dein Beitrag ist {amount}/{period}"
   },
   "joinSetup": {
     "confirmDetails": "Bitte bestätige deine Angaben:",
@@ -571,6 +602,23 @@
     "login": "Login",
     "resetPassword": "Passwort zurücksetzen",
     "setup": "Account fertigstellen"
+  },
+  "paymentMethods": {
+    "gc_direct-debit": {
+      "changeLabel": "Lastschrift ändern",
+      "label": "Lastschrift",
+      "setLabel": "Deine Laschriftdaten"
+    },
+    "s_bacs": {
+      "label": "Lastschrift",
+      "setLabel": "Deine Laschriftdaten"
+    },
+    "s_card": {},
+    "s_sepa": {
+      "changeLabel": "Lastschrift ändern",
+      "label": "Lastschrift",
+      "setLabel": "Deine Laschriftdaten"
+    }
   },
   "resetPassword": {
     "changePassword": "Passwort ändern",

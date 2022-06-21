@@ -1,7 +1,9 @@
 import axios from '../../axios';
 import {
+  GetMemberData,
   GetMemberDataWith,
   GetMembersQuery,
+  GetMemberWith,
   GetSegmentData,
   Paginated,
   Serial,
@@ -14,10 +16,20 @@ export async function fetchSegments(): Promise<GetSegmentData[]> {
 
 export async function fetchSegmentMembers(
   id: string,
-  query: GetMembersQuery = {}
-): Promise<Paginated<GetMemberDataWith<'profile'>>> {
+  query: GetMembersQuery
+): Promise<Paginated<GetMemberData>>;
+export async function fetchSegmentMembers<With extends GetMemberWith>(
+  id: string,
+  query: GetMembersQuery,
+  _with: readonly With[]
+): Promise<Paginated<GetMemberDataWith<With>>>;
+export async function fetchSegmentMembers<With extends GetMemberWith>(
+  id: string,
+  query: GetMembersQuery = {},
+  _with?: readonly With[]
+): Promise<Paginated<GetMemberDataWith<With>>> {
   const { data } = await axios.get(`/segments/${id}/members`, {
-    params: { with: ['profile'], ...query },
+    params: { with: _with, ...query },
   });
 
   return {

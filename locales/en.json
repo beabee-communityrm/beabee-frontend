@@ -190,6 +190,7 @@
       "groups": "Groups",
       "joined": "Joined",
       "lastSeen": "Last seen",
+      "membershipStarts": "Member since",
       "name": "Name",
       "newsletter": "Newsletter",
       "notes": "Notes",
@@ -218,6 +219,7 @@
     "changeBankInfo": "You'll be asked for the details of your new bank account in the next step.",
     "contributing": "You're contributing",
     "contributionUpdateError": "You can't update your contribution at the moment as you have a payment pending",
+    "dueToRenew": "Your contribution is due to renew on {renewalDate}.",
     "expired": "Your contribution expired.",
     "expiredText": "Please consider renewing, even if at the lowest amount it would help us immensely. Thank you!",
     "hasPendingPayment": "Your payment is currently being processed.",
@@ -229,6 +231,7 @@
       "empty": "Past payments and their invoices will show up here.",
       "title": "Payment history"
     },
+    "paymentMethod": "Payment method",
     "paymentSourceUpdateError": "You can't update your bank account at the moment as you have a payment pending",
     "prorateDecreaseMessage": "You have {monthsLeft} {months} left on your current contribution, your new contribution will start on {renewalDate}.",
     "prorateIncreaseMessage": "You have {monthsLeft} {months} left on your current contribution. You can make a one-off payment of {oneOffPayment} to start your new contribution immediately.",
@@ -242,7 +245,7 @@
     "updateContribution": "Update contribution",
     "updatePaymentType": "Update payment type",
     "updatedContribution": "Your contribution has been updated.",
-    "updatedPaymentSource": "Your bank account has been updated.",
+    "updatedPaymentSource": "Your payment method has been updated.",
     "willExpire": "Your contribution will expire in {expires}.",
     "willRenew": "Your contribution will automatically renew on {renewalDate}.",
     "willRenewWithNewAmount": "Your contribution will automatically renew on {renewalDate} and will change to your chosen amount of {nextAmount}."
@@ -260,7 +263,7 @@
         "description": "Build your callout with questions and prompts",
         "inputs": {
           "intro": {
-            "help": "<p>The <strong>Introduction text</strong> appears alongside the callout, it should explain why you are doing this callout and give any context the user might need before answering. Select and click the buttons to format the copy, or use keyboard shortcuts.</p>\n",
+            "help": "<p>The <strong>Introduction text</strong> appears alongside the callout, it should explain why you are doing this callout and give any context the user might need before answering.</p>\n",
             "label": "Introduction text"
           }
         },
@@ -412,6 +415,7 @@
     "title": "Create a callout"
   },
   "editCallout": {
+    "replicated": "Your callout was replicated! You are now editing the new copy. Be sure to edit the title in the \"Title and Image\" tab.",
     "title": "Edit callout",
     "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
@@ -473,6 +477,16 @@
     "passwordInfo": "Set a secure password: 8+ characters at least one number, one uppercase and one lowercase letters.",
     "phone": "Phone",
     "postCode": "Postcode",
+    "richtext": {
+      "bold": "Bold",
+      "bulletlist": "Bullet list",
+      "heading": "Heading",
+      "italic": "Italic",
+      "link": "Link",
+      "numberedlist": "Numbered list",
+      "strikethrough": "Strikethrough",
+      "underline": "Underline"
+    },
     "saveChanges": "Save Changes",
     "saved": "Saved!",
     "warning": "Please only make updates to this page with the consent of the user. Changes you make here will also be visible to the user."
@@ -529,7 +543,14 @@
     "noContribution": "I don't want to contribute right now",
     "notice": "By proceeding you are accepting the",
     "now": "Join now!",
+    "paymentMethod": "Payment method",
     "privacy": "Privacy Policy"
+  },
+  "joinPayment": {
+    "goBack": "Did you miss something? {back}",
+    "goBackButton": "Back to the previous screen",
+    "note": "You'll be able to modify your contribution and access your payment history at any time in your member account",
+    "willBeContributing": "You'll be contributing {amount}/{period}"
   },
   "joinSetup": {
     "confirmDetails": "Please confirm your details",
@@ -581,6 +602,28 @@
     "login": "Login",
     "resetPassword": "Reset password",
     "setup": "Setup"
+  },
+  "paymentMethods": {
+    "gc_direct-debit": {
+      "changeLabel": "Change direct debit",
+      "label": "Direct debit",
+      "setLabel": "Your direct debit details"
+    },
+    "s_bacs": {
+      "changeLabel": "Change direct debit",
+      "label": "Direct debit",
+      "setLabel": "Your direct debit details"
+    },
+    "s_card": {
+      "changeLabel": "Change card details",
+      "label": "Card",
+      "setLabel": "Your card details"
+    },
+    "s_sepa": {
+      "changeLabel": "Change direct debit",
+      "label": "Direct debit",
+      "setLabel": "Your direct debit details"
+    }
   },
   "resetPassword": {
     "changePassword": "Change password",

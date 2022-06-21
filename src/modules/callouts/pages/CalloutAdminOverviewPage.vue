@@ -83,7 +83,7 @@
       >
         {{ t('calloutAdminOverview.actions.edit') }}
       </ActionButton>
-      <ActionButton icon="clone" :href="'/tools/polls/' + callout.slug">
+      <ActionButton icon="clone" @click="replicateThisCallout()">
         {{ t('calloutAdminOverview.actions.replicate') }}
       </ActionButton>
       <ActionButton icon="trash" @click="showDeleteModal = true">
@@ -130,6 +130,7 @@ import ActionButton from '../components/ActionButton.vue';
 import CalloutSummary from '../../../components/CalloutSummary.vue';
 import AppAlert from '../../../components/AppAlert.vue';
 import AppModal from '../../../components/AppModal.vue';
+import { updateCallout, createCallout } from '../../../utils/api/callout';
 
 const props = defineProps<{
   callout: GetMoreCalloutData;
@@ -149,4 +150,21 @@ const confirmDeleteCallout = () => {
   deleteCallout(props.callout.slug)
     .then(() => router.push('/admin/callouts'));
 };
+
+async function replicateThisCallout() {
+  const newCalloutData = {
+    ...props.callout,
+    slug: props.callout.slug + '-copy',
+    title: props.callout.title + ' copy',
+    status: undefined,
+    starts: null,
+    expires: null,
+  };
+  const newCallout = await createCallout(newCalloutData);
+  router.push({
+    path: '/admin/callouts/edit/' + newCallout.slug,
+    query: { replicated: null },
+  });
+}
+
 </script>
