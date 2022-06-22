@@ -49,6 +49,12 @@
   },
   "calloutAdminOverview": {
     "actions": {
+      "confirmDelete": {
+        "actionNo": "No, go back",
+        "actionYes": "Yes, delete it",
+        "text": "Are you sure you want to delete this callout?",
+        "title": "Delete callout?"
+      },
       "delete": "Delete",
       "edit": "Edit",
       "replicate": "Replicate",
@@ -409,6 +415,7 @@
     "title": "Create a callout"
   },
   "editCallout": {
+    "replicated": "Your callout was replicated! You are now editing the new copy. Be sure to edit the title in the \"Title and Image\" tab.",
     "title": "Edit callout",
     "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },

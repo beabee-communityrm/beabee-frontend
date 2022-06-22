@@ -1,5 +1,15 @@
 <template>
-  <WarningBanner v-if="mode === 'edit'" />
+  <AppAlert v-if="wasJustReplicated" variant="success" class="mb-4">
+    {{ t('editCallout.replicated') }}
+  </AppAlert>
+
+  <AppAlert v-else-if="mode === 'edit'" variant="warning" class="mb-4">
+    <template #icon>
+      <font-awesome-icon :icon="['fa', 'exclamation']" />
+    </template>
+    {{ t('editCallout.warning') }}
+  </AppAlert>
+
   <div class="grid grid-cols-2 gap-6">
     <div class="col-span-1">
       <RichTextEditor
@@ -30,7 +40,6 @@ import { helpers, required } from '@vuelidate/validators';
 import { onBeforeMount, ref, watch } from 'vue';
 import { FormBuilder as FormBuilderVue } from 'vue-formio';
 import { FormBuilder } from 'formiojs';
-import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import {
   faQuestionCircle,
   faTerminal,
@@ -55,8 +64,9 @@ import { dom, library } from '@fortawesome/fontawesome-svg-core';
 
 import 'formiojs/dist/formio.builder.css';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 import { ContentStepProps } from '../../create-callout.interface';
-import WarningBanner from '../WarningBanner.vue';
+import AppAlert from '../../../../components/AppAlert.vue';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 
 const emit = defineEmits(['update:data', 'update:validated']);
@@ -66,7 +76,10 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
+const route = useRoute();
 const inputT = (key: string) => t('createCallout.steps.content.inputs.' + key);
+
+const wasJustReplicated = route.query.replicated !== undefined;
 
 const dataProxy = ref(props.data);
 const validation = useVuelidate(

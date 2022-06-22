@@ -58,7 +58,10 @@
         <h3 class="font-semibold">
           {{ callout.thanksTitle }}
         </h3>
-        <div class="font-normal text-body-80" v-html="callout.thanksText" />
+        <div
+          class="font-normal text-body-80 content-message"
+          v-html="callout.thanksText"
+        />
       </div>
     </div>
     <figure class="relative mb-6 pb-[56.25%]">

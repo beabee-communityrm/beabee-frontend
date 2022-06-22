@@ -31,7 +31,7 @@
     </div>
     <div class="grid grid-cols-2 gap-6" v-show="showThankYouSection">
       <div class="col-span-1">
-        <AppTextArea
+        <RichTextEditor
           v-model="dataProxy.thankYouText"
           :label="inputT('text.label')"
           :placeholder="inputT('text.placeholder')"
@@ -73,6 +73,7 @@ import AppInput from '../../../../components/forms/AppInput.vue';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
 import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import { EndMessageStepProps } from '../../create-callout.interface';
+import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 
 const emit = defineEmits(['update:data', 'update:validated']);
 const props = defineProps<{ data: EndMessageStepProps; validated: boolean }>();
