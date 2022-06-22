@@ -16,17 +16,17 @@ import StepUrlAndSharing from '../components/steps/UrlAndSharing.vue';
 // import StepMailchimpSync from '../components/steps/MailchimpSync.vue';
 import StepDatesAndDuration from '../components/steps/DatesAndDuration.vue';
 import StepContent from '../components/steps/Content.vue';
-import { Steps } from '../create-callout.interface';
+import { CalloutSteps } from '../create-callout.interface';
 import CalloutForm from '../components/CalloutForm.vue';
 import { format } from 'date-fns';
 
 const { t } = useI18n();
 const route = useRoute();
 
-const steps: Ref<null | Steps> = ref(null);
+const steps: Ref<null | CalloutSteps> = ref(null);
 const mode: 'edit' | 'new' = route.name === 'edit-callout' ? 'edit' : 'new';
 
-const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
+const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
   content: {
     name: t('createCallout.steps.content.title'),
     description: t('createCallout.steps.content.description'),

@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Step } from '../create-callout.interface';
-defineProps<{ steps: Step<unknown>[]; modelValue: number }>();
+import { Step } from './stepper.interface';
+defineProps<{ steps: Step[]; modelValue: number }>();
 const emit = defineEmits(['update:modelValue']);
 </script>

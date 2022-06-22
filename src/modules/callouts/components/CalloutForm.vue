@@ -12,7 +12,7 @@
   </PageTitle>
   <div class="flex gap-8">
     <div class="flex-0 basis-menu">
-      <Stepper v-model="selectedStepIndex" :steps="stepsInOrder" />
+      <AppStepper v-model="selectedStepIndex" :steps="stepsInOrder" />
     </div>
     <div class="flex-1">
       <AppHeading class="mb-5">{{ selectedStep.name }}</AppHeading>
@@ -61,18 +61,15 @@ import { useI18n } from 'vue-i18n';
 import PageTitle from '../../../components/PageTitle.vue';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
-import Stepper from '../components/Stepper.vue';
-import { Steps } from '../create-callout.interface';
+import AppStepper from '../../../components/stepper/AppStepper.vue';
+import { CalloutSteps } from '../create-callout.interface';
 import { parseISO } from 'date-fns';
 import router from '../../../router';
-import {
-  CreateCalloutData,
-  UpdateCalloutData,
-} from '../../../utils/api/api.interface';
+import { UpdateCalloutData } from '../../../utils/api/api.interface';
 import { updateCallout, createCallout } from '../../../utils/api/callout';
 
 const { t } = useI18n();
-const props = defineProps<{ steps: Steps; mode: 'edit' | 'new' }>();
+const props = defineProps<{ steps: CalloutSteps; mode: 'edit' | 'new' }>();
 
 const steps = reactive(props.steps);
 
@@ -105,7 +102,7 @@ const isAllValid = computed(() =>
   stepsInOrder.value.every((step) => step.validated)
 );
 
-function makeCalloutData(steps: Steps): [string, UpdateCalloutData] {
+function makeCalloutData(steps: CalloutSteps): [string, UpdateCalloutData] {
   return [
     steps.url.data.useCustomSlug
       ? steps.url.data.slug
