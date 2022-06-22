@@ -71,7 +71,7 @@ import Contribution from '../../../components/contribution/Contribution.vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import { generalContent } from '../../../store';
 import { JoinContent } from '../../../utils/api/api.interface';
-import { fetchJoinContent } from '../../../utils/api/content';
+import { fetchContent } from '../../../utils/api/content';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { signUp } from '../../../utils/api/signup';
 import useVuelidate from '@vuelidate/core';
@@ -144,7 +144,7 @@ async function submitSignUp() {
 }
 
 onBeforeMount(async () => {
-  joinContent.value = await fetchJoinContent();
+  joinContent.value = await fetchContent('join');
   signUpData.amount = route.query.amount
     ? Number(route.query.amount)
     : joinContent.value.initialAmount;

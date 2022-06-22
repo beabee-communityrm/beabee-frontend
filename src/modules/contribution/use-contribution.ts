@@ -16,7 +16,7 @@ import {
 } from '../../utils/api/member';
 import { MembershipStatus } from '../../utils/enums/membership-status.enum';
 import { ContributionInfo } from '../../utils/api/api.interface';
-import { fetchJoinContent } from '../../utils/api/content';
+import { fetchContent } from '../../utils/api/content';
 
 const { t } = i18n.global;
 
@@ -85,7 +85,7 @@ const initContributionPage = async () => {
   currentContribution.membershipStatus = contrib.membershipStatus;
   currentContribution.membershipExpiryDate = contrib.membershipExpiryDate;
 
-  const content = await fetchJoinContent();
+  const content = await fetchContent('join');
   contributionContent.initialAmount = content.initialAmount;
   contributionContent.initialPeriod = content.initialPeriod;
   contributionContent.minMonthlyAmount = content.minMonthlyAmount;
