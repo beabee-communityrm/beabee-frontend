@@ -9,8 +9,22 @@ import {
 
 type ContentId = 'join' | 'join/setup' | 'profile' | 'general' | 'contacts';
 
-async function fetchContent<T>(id: ContentId): Promise<T> {
-  return (await axios.get<T>('/content/' + id)).data;
+type Content<Id extends ContentId> = Id extends 'join'
+  ? JoinContent
+  : Id extends 'join/setup'
+  ? JoinSetupContent
+  : Id extends 'profile'
+  ? ProfileContent
+  : Id extends 'general'
+  ? GeneralContent
+  : Id extends 'contacts'
+  ? ContactsContent
+  : never;
+
+async function fetchContent<Id extends ContentId>(
+  id: Id
+): Promise<Content<Id>> {
+  return (await axios.get('/content/' + id)).data;
 }
 
 export async function fetchContactsContent(): Promise<ContactsContent> {
@@ -27,4 +41,11 @@ export async function fetchJoinSetupContent(): Promise<JoinSetupContent> {
 }
 export async function fetchProfileContent(): Promise<ProfileContent> {
   return await fetchContent('profile');
+}
+
+export async function updateContent<Id extends ContentId>(
+  id: Id,
+  content: Content<Id>
+): Promise<Content<Id>> {
+  return (await axios.put('/content/' + id, content)).data;
 }
