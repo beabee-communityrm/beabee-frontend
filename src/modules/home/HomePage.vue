@@ -95,7 +95,7 @@ import {
   ItemStatus,
   ProfileContent,
 } from '../../utils/api/api.interface';
-import { fetchProfileContent } from '../../utils/api/content';
+import { fetchContent } from '../../utils/api/content';
 import { fetchCallouts } from '../../utils/api/callout';
 import { currentUser, generalContent } from '../../store';
 
@@ -124,7 +124,7 @@ const callouts = ref<GetBasicCalloutData[]>([]);
 const user = currentUser as Ref<GetMemberData>;
 
 onBeforeMount(async () => {
-  profileContent.value = await fetchProfileContent();
+  profileContent.value = await fetchContent('profile');
   callouts.value = (
     await fetchCallouts({
       order: 'DESC',

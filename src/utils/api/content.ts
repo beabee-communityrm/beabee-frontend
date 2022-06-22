@@ -21,26 +21,10 @@ type Content<Id extends ContentId> = Id extends 'join'
   ? ContactsContent
   : never;
 
-async function fetchContent<Id extends ContentId>(
+export async function fetchContent<Id extends ContentId>(
   id: Id
 ): Promise<Content<Id>> {
   return (await axios.get('/content/' + id)).data;
-}
-
-export async function fetchContactsContent(): Promise<ContactsContent> {
-  return await fetchContent('contacts');
-}
-export async function fetchGeneralContent(): Promise<GeneralContent> {
-  return await fetchContent('general');
-}
-export async function fetchJoinContent(): Promise<JoinContent> {
-  return await fetchContent('join');
-}
-export async function fetchJoinSetupContent(): Promise<JoinSetupContent> {
-  return await fetchContent('join/setup');
-}
-export async function fetchProfileContent(): Promise<ProfileContent> {
-  return await fetchContent('profile');
 }
 
 export async function updateContent<Id extends ContentId>(
