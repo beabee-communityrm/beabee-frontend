@@ -44,6 +44,7 @@ import {
   faHeading,
   faList,
   faListOl,
+  faHandsHelping,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -88,7 +89,8 @@ library.add(
   faUnderline,
   faHeading,
   faList,
-  faListOl
+  faListOl,
+  faHandsHelping
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
