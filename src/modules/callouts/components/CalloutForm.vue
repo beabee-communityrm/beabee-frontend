@@ -21,7 +21,7 @@
         v-model:data="selectedStep.data"
         v-model:validated="selectedStep.validated"
         :mode="mode"
-      ></component>
+      />
 
       <div v-if="mode === 'new'" class="flex mt-5">
         <AppButton
