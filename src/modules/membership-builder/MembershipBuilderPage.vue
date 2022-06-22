@@ -5,7 +5,6 @@
       <AppStepper v-model="selectedStepIndex" :steps="steps" />
     </div>
     <div class="flex-1">
-      <AppHeading class="mb-5">{{ selectedStep.name }}</AppHeading>
       <component :is="selectedStep.component" />
     </div>
   </div>
@@ -16,7 +15,6 @@ import { useI18n } from 'vue-i18n';
 import PageTitle from '../../components/PageTitle.vue';
 import AppStepper from '../../components/stepper/AppStepper.vue';
 import { Step } from '../../components/stepper/stepper.interface';
-import AppHeading from '../../components/AppHeading.vue';
 import EditJoinForm from './components/steps/EditJoinForm.vue';
 
 const { t } = useI18n();
