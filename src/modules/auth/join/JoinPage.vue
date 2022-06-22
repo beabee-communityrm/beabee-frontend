@@ -14,12 +14,12 @@
         {{ t('join.contribution') }}
       </h3>
 
-      <div v-if="joinContent.showNoContribution" class="mb-4">
-        <label>
-          <input v-model="signUpData.noContribution" type="checkbox" />
-          {{ t('join.noContribution') }}
-        </label>
-      </div>
+      <AppCheckbox
+        v-if="joinContent.showNoContribution"
+        v-model="signUpData.noContribution"
+        :label="t('join.noContribution')"
+        class="mb-4"
+      />
 
       <Contribution
         v-if="!generalContent.hideContribution && !signUpData.noContribution"
@@ -75,6 +75,7 @@ import { fetchJoinContent } from '../../../utils/api/content';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { signUp } from '../../../utils/api/signup';
 import useVuelidate from '@vuelidate/core';
+import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 
 const { t, n } = useI18n();
 
