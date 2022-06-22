@@ -48,6 +48,13 @@ import {
   faTag,
   faCopy,
   faEnvelope,
+  faBold,
+  faItalic,
+  faStrikethrough,
+  faUnderline,
+  faHeading,
+  faList,
+  faListOl,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -92,7 +99,14 @@ library.add(
   faTelegram,
   faTwitter,
   faWhatsapp,
-  faEnvelope
+  faEnvelope,
+  faBold,
+  faItalic,
+  faStrikethrough,
+  faUnderline,
+  faHeading,
+  faList,
+  faListOl,
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
