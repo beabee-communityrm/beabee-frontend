@@ -2,6 +2,7 @@
   <AppLabel v-if="label" :label="label" :required="required" :for="inputType" />
   <input
     :id="inputType"
+    v-model="value"
     class="
       p-2
       w-full
@@ -12,10 +13,8 @@
     :type="inputType"
     :placeholder="placeholder"
     :class="dangerClasses"
-    :value="modelValue"
     v-bind="$attrs"
     :required="required"
-    @input="$emit('update:modelValue', handleInput($event))"
   />
 
   <div
@@ -33,10 +32,10 @@
 
 <script lang="ts" setup>
 import { computed, Ref } from '@vue/reactivity';
-import handleInput from '../../utils/handle-input';
 import InfoMessage from '../InfoMessage.vue';
 import AppLabel from './AppLabel.vue';
 
+const emit = defineEmits(['update:modelValue']);
 const props = withDefaults(
   defineProps<{
     modelValue?: string;
@@ -57,7 +56,10 @@ const props = withDefaults(
   }
 );
 
-defineEmits(['update:modelValue']);
+const value = computed({
+  get: () => props.modelValue,
+  set: (value) => emit('update:modelValue', value),
+});
 
 const dangerClasses = computed(() => {
   return props.errorMessage ? ['bg-danger-10', 'border-danger-70'] : null;
