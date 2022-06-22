@@ -180,7 +180,7 @@ export interface JoinContent {
   initialPeriod: ContributionPeriod;
   minMonthlyAmount: number;
   periods: {
-    name: string;
+    name: ContributionPeriod;
     presetAmounts: number[];
   }[];
   showAbsorbFee: boolean;
