@@ -10,7 +10,7 @@
 import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { JoinContent, SignupData } from '../../../utils/api/api.interface';
-import { fetchJoinContent } from '../../../utils/api/content';
+import { fetchContent } from '../../../utils/api/content';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { signUp } from '../../../utils/api/signup';
 import JoinForm from './components/JoinForm.vue';
@@ -47,6 +47,6 @@ async function submitSignUp(signUpData: SignupData) {
 }
 
 onBeforeMount(async () => {
-  joinContent.value = await fetchJoinContent();
+  joinContent.value = await fetchContent('join');
 });
 </script>

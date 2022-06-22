@@ -132,11 +132,7 @@ import {
   JoinContent,
   JoinSetupContent,
 } from '../../../../utils/api/api.interface';
-import {
-  fetchJoinContent,
-  fetchJoinSetupContent,
-  updateContent,
-} from '../../../../utils/api/content';
+import { fetchContent, updateContent } from '../../../../utils/api/content';
 import AppInput from '../../../../components/forms/AppInput.vue';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 import AppHeading from '../../../../components/AppHeading.vue';
@@ -190,7 +186,7 @@ async function handleSubmit() {
 }
 
 onBeforeMount(async () => {
-  joinContent.value = await fetchJoinContent();
-  setupContent.value = await fetchJoinSetupContent();
+  joinContent.value = await fetchContent('join');
+  setupContent.value = await fetchContent('join/setup');
 });
 </script>

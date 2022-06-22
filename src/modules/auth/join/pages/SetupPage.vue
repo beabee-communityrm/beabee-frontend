@@ -14,7 +14,7 @@ import {
   JoinSetupContent,
   UpdateMemberData,
 } from '../../../../utils/api/api.interface';
-import { fetchJoinSetupContent } from '../../../../utils/api/content';
+import { fetchContent } from '../../../../utils/api/content';
 import SetupForm from '../components/SetupForm.vue';
 import { SetupMemberData } from '../join.interface';
 
@@ -73,6 +73,6 @@ async function completeSetup(setupMemberData: SetupMemberData) {
 
 onBeforeMount(async () => {
   saving.value = false;
-  setupContent.value = await fetchJoinSetupContent();
+  setupContent.value = await fetchContent('join/setup');
 });
 </script>
