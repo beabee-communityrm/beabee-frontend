@@ -17,29 +17,18 @@
           {{ t('informationPage.deliveryAddress') }}
         </AppHeading>
 
-        <template v-if="infoContent.showMailOptIn">
-          <h4 class="font-semibold mb-1.5">
-            {{ t('contactInformation.deliveryOptIn') }}
-          </h4>
-          <div class="flex mb-4">
-            <label class="mr-3">
-              <input
-                v-model="information.deliveryOptIn"
-                type="radio"
-                :value="true"
-              />
-              {{ t('common.yes') }}
-            </label>
-            <label>
-              <input
-                v-model="information.deliveryOptIn"
-                type="radio"
-                :value="false"
-              />
-              {{ t('common.no') }}
-            </label>
-          </div>
-        </template>
+        <AppRadioGroup
+          v-if="infoContent.showMailOptIn"
+          v-model="information.deliveryOptIn"
+          name="deliveryOptIn"
+          :label="t('contactInformation.deliveryOptIn')"
+          :options="[
+            [true, t('common.yes')],
+            [false, t('common.no')],
+          ]"
+          class="mb-4"
+          inline
+        />
 
         <AppAddress
           v-model:line1="information.addressLine1"
@@ -82,6 +71,7 @@ import AppHeading from '../../../components/AppHeading.vue';
 import { GetMemberData } from '../../../utils/api/api.interface';
 import useVuelidate from '@vuelidate/core';
 import ContactInformation from '../../../components/ContactInformation.vue';
+import AppRadioGroup from '../../../components/forms/AppRadioGroup.vue';
 
 const props = defineProps<{
   contact: GetMemberData;

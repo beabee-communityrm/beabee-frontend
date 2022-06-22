@@ -1,7 +1,5 @@
 <template>
-  <label v-if="label" class="block mb-1.5 font-semibold">{{
-    formattedLabel
-  }}</label>
+  <AppLabel v-if="label" :label="label" :required="required" />
 
   <div v-if="editor" class="mb-2 min-h-[2rem] h-auto">
     <div class="flex flex-row">
@@ -67,6 +65,7 @@ import Underline from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
 import Typeography from '@tiptap/extension-typography';
 import RichTextEditorButton from './RichTextEditorButton.vue';
+import AppLabel from '../forms/AppLabel.vue';
 
 const { t } = useI18n();
 
@@ -104,10 +103,6 @@ watch(
     }
   }
 );
-
-const formattedLabel = computed(() => {
-  return props.required ? props.label + '*' : props.label;
-});
 
 onBeforeUnmount(() => {
   editor.value?.destroy();
