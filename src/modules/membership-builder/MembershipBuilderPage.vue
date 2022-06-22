@@ -17,7 +17,7 @@ import PageTitle from '../../components/PageTitle.vue';
 import AppStepper from '../../components/stepper/AppStepper.vue';
 import { Step } from '../../components/stepper/stepper.interface';
 import AppHeading from '../../components/AppHeading.vue';
-import JoinForm from './components/steps/JoinForm.vue';
+import EditJoinForm from './components/steps/EditJoinForm.vue';
 
 const { t } = useI18n();
 
@@ -32,25 +32,25 @@ const steps: BuilderStep[] = [
     name: 'Overview',
     description: '',
     validated: true,
-    component: JoinForm,
+    component: EditJoinForm,
   },
   {
     name: 'Join form',
     description: 'Edit and fine tune your member signup form',
     validated: true,
-    component: JoinForm,
+    component: EditJoinForm,
   },
   {
     name: 'Intro message',
     description: 'Greet your new members',
     validated: true,
-    component: JoinForm,
+    component: EditJoinForm,
   },
   {
     name: 'Welcome emails',
     description: "Write the emails they'll receive",
     validated: true,
-    component: JoinForm,
+    component: EditJoinForm,
   },
 ];
 
