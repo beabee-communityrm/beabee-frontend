@@ -39,8 +39,8 @@ import AppLabel from './AppLabel.vue';
 
 const props = withDefaults(
   defineProps<{
-    modelValue?: string;
-    inputType?: 'password' | 'email' | 'text' | 'date';
+    modelValue?: string | number;
+    inputType?: 'password' | 'email' | 'text' | 'date' | 'number';
     label?: string;
     errorMessage?: string | Ref<string>;
     infoMessage?: string;
