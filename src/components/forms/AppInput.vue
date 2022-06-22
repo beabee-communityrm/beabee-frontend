@@ -1,7 +1,5 @@
 <template>
-  <label v-if="label" class="block mb-1.5 font-semibold" :for="inputType"
-    >{{ formattedLabel }}
-  </label>
+  <AppLabel v-if="label" :label="label" :required="required" :for="inputType" />
   <input
     :id="inputType"
     class="
@@ -37,6 +35,7 @@
 import { computed, Ref } from '@vue/reactivity';
 import handleInput from '../../utils/handle-input';
 import InfoMessage from '../InfoMessage.vue';
+import AppLabel from './AppLabel.vue';
 
 const props = withDefaults(
   defineProps<{
@@ -62,9 +61,5 @@ defineEmits(['update:modelValue']);
 
 const dangerClasses = computed(() => {
   return props.errorMessage ? ['bg-danger-10', 'border-danger-70'] : null;
-});
-
-const formattedLabel = computed(() => {
-  return props.required ? props.label + '*' : props.label;
 });
 </script>
