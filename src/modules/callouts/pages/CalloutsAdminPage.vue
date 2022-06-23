@@ -9,6 +9,14 @@
       }}</AppButton>
     </div>
   </PageTitle>
+
+    <AppAlert v-if="wasJustDeleted" class="mb-8">
+      <template #icon>
+        <font-awesome-icon :icon="['fa', 'magic']" />
+      </template>
+      {{ t('calloutAdmin.deleted') }}
+    </AppAlert>
+
   <div class="md:flex">
     <div class="flex-none hidden lg:block basis-[220px]">
       <AppVTabs v-model="currentStatus" :items="statusItems" />
@@ -71,6 +79,7 @@ import AppButton from '../../../components/forms/AppButton.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import AppTable from '../../../components/table/AppTable.vue';
 import AppPagination from '../../../components/AppPagination.vue';
+import AppAlert from '../../../components/AppAlert.vue';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
 import {
   Paginated,
@@ -85,6 +94,10 @@ import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
 
 const { t } = useI18n();
+const route = useRoute();
+const router = useRouter();
+
+const wasJustDeleted = route.query.deleted !== undefined;
 
 const statusItems = [
   {
@@ -142,9 +155,6 @@ const headers: Header[] = [
     sortable: true,
   },
 ];
-
-const route = useRoute();
-const router = useRouter();
 
 const currentPageSize = computed({
   get: () => Number(route.query.limit) || 25,
