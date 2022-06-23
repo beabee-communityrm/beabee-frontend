@@ -13,9 +13,7 @@
       <ContributionBox :contribution="currentContribution" class="mb-9" />
 
       <form class="mb-7 md:mb-12" @submit.prevent="submitContribution">
-        <SectionTitle class="mb-2"
-          >{{ t('contribution.billing') }}
-        </SectionTitle>
+        <AppHeading class="mb-2">{{ t('contribution.billing') }} </AppHeading>
 
         <p v-if="hasManualType" class="mb-4">
           {{ t('contribution.manualPayment') }}
@@ -63,9 +61,9 @@
       </form>
 
       <template v-if="currentContribution.paymentSource">
-        <SectionTitle class="mb-4">{{
+        <AppHeading class="mb-4">{{
           t('contribution.bankAccount')
-        }}</SectionTitle>
+        }}</AppHeading>
 
         <PaymentSource
           class="mb-7 md:mb-12"
@@ -77,9 +75,9 @@
       </template>
 
       <template v-if="isActiveMemberWithGoCardless">
-        <SectionTitle class="mb-4">{{
+        <AppHeading class="mb-4">{{
           t('contribution.cancelContribution')
-        }}</SectionTitle>
+        }}</AppHeading>
 
         <CancelContribution
           class="mb-9 md:mb-0"
@@ -110,13 +108,13 @@ import PaymentSource from './components/PaymentSource.vue';
 
 import PageTitle from '../../components/PageTitle.vue';
 import InfoMessage from '../../components/InfoMessage.vue';
-import SectionTitle from '../../components/SectionTitle.vue';
 import Contribution from '../../components/contribution/Contribution.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import ProrateContribution from './components/ProrateContribution.vue';
 import AppAlert from '../../components/AppAlert.vue';
 import MessageBox from '../../components/MessageBox.vue';
 import PaymentsHistory from './components/PaymentsHistory.vue';
+import AppHeading from '../../components/AppHeading.vue';
 
 const { t } = useI18n();
 

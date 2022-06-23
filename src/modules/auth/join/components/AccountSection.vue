@@ -1,6 +1,6 @@
 <template>
   <section class="mb-6">
-    <h3 class="font-semibold text-lg mb-1">{{ t('join.memberAccount') }}</h3>
+    <AppSubHeading class="mb-1">{{ t('join.memberAccount') }}</AppSubHeading>
 
     <p class="mb-3 text-sm">
       {{ t('join.memberAlready') }}
@@ -42,6 +42,7 @@ import {
   passwordValidationRule,
 } from '../../../../utils/form-validation/rules';
 import { computed } from 'vue';
+import AppSubHeading from '../../../../components/AppSubHeading.vue';
 
 const emit = defineEmits(['update:email', 'update:password']);
 const props = defineProps<{

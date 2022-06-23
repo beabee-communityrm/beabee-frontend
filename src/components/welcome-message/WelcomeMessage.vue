@@ -15,17 +15,17 @@
     <div class="flex items-center md:items-start mb-2 md:mb-0">
       <WelcomeIcon class="icon md:hidden lg:block" />
 
-      <h3 class="title md:hidden ml-4">
-        {{ t('homePage.welcome', { firstName: memberFirstName }) }}
-      </h3>
+      <AppSubHeading class="md:hidden ml-4">
+        {{ t('homePage.welcome', { firstName }) }}
+      </AppSubHeading>
     </div>
 
     <div class="lg:ml-8 flex-grow">
       <WelcomeIcon class="hidden md:block lg:hidden icon float-left mr-4" />
 
-      <h3 class="title mb-3 hidden md:block">
-        {{ t('homePage.welcome', { firstName: memberFirstName }) }}
-      </h3>
+      <AppSubHeading class="mb-3 hidden md:block">
+        {{ t('homePage.welcome', { firstName }) }}
+      </AppSubHeading>
 
       <div
         class="
@@ -52,6 +52,7 @@
 <script lang="ts" setup>
 import WelcomeIcon from './WelcomeIcon.vue';
 import { useI18n } from 'vue-i18n';
+import AppSubHeading from '../AppSubHeading.vue';
 
 const { t } = useI18n();
 
@@ -70,10 +71,6 @@ defineEmits(['close']);
 </script>
 
 <style scoped>
-.title {
-  @apply text-lg font-semibold;
-}
-
 .icon {
   width: 4.5rem;
   height: 5rem;

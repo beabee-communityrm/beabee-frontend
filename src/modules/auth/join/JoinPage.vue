@@ -7,12 +7,9 @@
         :description="joinContent.subtitle"
       />
 
-      <h3
-        v-if="joinContent.showNoContribution"
-        class="font-semibold text-lg mb-1"
-      >
+      <AppSubHeading v-if="joinContent.showNoContribution" class="mb-1">
         {{ t('join.contribution') }}
-      </h3>
+      </AppSubHeading>
 
       <div v-if="joinContent.showNoContribution" class="mb-4">
         <label>
@@ -75,6 +72,7 @@ import { fetchContent } from '../../../utils/api/content';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { signUp } from '../../../utils/api/signup';
 import useVuelidate from '@vuelidate/core';
+import AppSubHeading from '../../../components/AppSubHeading.vue';
 
 const { t, n } = useI18n();
 
