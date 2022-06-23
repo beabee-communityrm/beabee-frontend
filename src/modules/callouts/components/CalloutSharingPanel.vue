@@ -110,7 +110,7 @@ const props = defineProps<{
 }>();
 
 const baseUrl = import.meta.env.VITE_APP_BASE_URL;
-const calloutUrl = `${baseUrl}/${props.slug}`;
+const calloutUrl = `${baseUrl}/callouts/${props.slug}`;
 
 const copyToClipboard = () => navigator.clipboard.writeText(calloutUrl);
 </script>
