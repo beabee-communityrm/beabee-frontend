@@ -152,7 +152,7 @@ const confirmDeleteCallout = () => {
     path: '/admin/callouts',
     query: { deleted: null },
   });
-}
+};
 
 async function replicateThisCallout() {
   const newCalloutData = {
@@ -169,5 +169,4 @@ async function replicateThisCallout() {
     query: { replicated: null },
   });
 }
-
 </script>

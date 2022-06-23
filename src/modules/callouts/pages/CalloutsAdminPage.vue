@@ -10,12 +10,12 @@
     </div>
   </PageTitle>
 
-    <AppAlert v-if="wasJustDeleted" class="mb-8">
-      <template #icon>
-        <font-awesome-icon :icon="['fa', 'magic']" />
-      </template>
-      {{ t('calloutAdmin.deleted') }}
-    </AppAlert>
+  <AppAlert v-if="wasJustDeleted" class="mb-8">
+    <template #icon>
+      <font-awesome-icon :icon="['fa', 'magic']" />
+    </template>
+    {{ t('calloutAdmin.deleted') }}
+  </AppAlert>
 
   <div class="md:flex">
     <div class="flex-none hidden lg:block basis-[220px]">

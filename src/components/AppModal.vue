@@ -23,7 +23,9 @@
     "
   >
     <div class="max-w-md relative bg-white rounded">
-      <div class="absolute top-0 right-0 p-3 text-primary-80 hover:text-primary">
+      <div
+        class="absolute top-0 right-0 p-3 text-primary-80 hover:text-primary"
+      >
         <FontAwesomeIcon
           class="text-xl cursor-pointer"
           :icon="['fas', 'times']"
@@ -33,7 +35,9 @@
 
       <article class="p-8">
         <header class="flex items-center justify-between mb-4">
-          <h3 class="text-2xl font-semibold text-danger"><slot name="title" /></h3>
+          <h3 class="text-2xl font-semibold text-danger">
+            <slot name="title" />
+          </h3>
         </header>
 
         <div class="py-2">
@@ -47,14 +51,11 @@
             @click="$emit('close')"
             ><slot name="button-cancel-text"
           /></AppButton>
-          <AppButton
-            variant="danger"
-            @click="$emit('confirm')"
+          <AppButton variant="danger" @click="$emit('confirm')"
             ><slot name="button-confirm-text"
           /></AppButton>
         </footer>
       </article>
-
     </div>
   </div>
 </template>
@@ -65,5 +66,4 @@ import { useSlots } from '@vue/runtime-core';
 import AppButton from '../components/forms/AppButton.vue';
 
 const slots = useSlots();
-
 </script>
