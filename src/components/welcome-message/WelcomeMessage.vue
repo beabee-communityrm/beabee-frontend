@@ -1,45 +1,23 @@
 <template>
-  <div
-    class="
-      bg-white
-      rounded
-      px-4
-      py-4
-      md:p-8
-      flex flex-col
-      md:flex-row
-      shadow
-      relative
-    "
-  >
-    <div class="flex items-center md:items-start mb-2 md:mb-0">
-      <WelcomeIcon class="icon md:hidden lg:block" />
-
-      <AppSubHeading class="md:hidden ml-4">
-        {{ t('homePage.welcome', { firstName }) }}
-      </AppSubHeading>
-    </div>
-
-    <div class="lg:ml-8 flex-grow">
-      <WelcomeIcon class="hidden md:block lg:hidden icon float-left mr-4" />
-
-      <AppSubHeading class="mb-3 hidden md:block">
-        {{ t('homePage.welcome', { firstName }) }}
-      </AppSubHeading>
-
-      <div
-        class="
-          content-message
-          text-sm
-          leading-5
-          md:text-base md:leading-5.5
-          lg:text-lg lg:leading-6
-          mb-6
-          whitespace-normal
-        "
-        v-html="text"
+  <div class="bg-white rounded p-4 shadow relative" :class="!small && 'md:8'">
+    <div class="flex" :class="!small && 'md:block'">
+      <WelcomeIcon
+        class="float-left mb-4 mr-4 w-[4.5rem] h-auto"
+        :class="!small && 'md:w-[7.5rem] lg:w-[17rem] md:mb-8 md:mr-8'"
       />
+
+      <AppSubHeading class="mb-3">
+        {{ t('homePage.welcome', { firstName }) }}
+      </AppSubHeading>
     </div>
+
+    <div
+      class="content-message text-sm leading-5 mb-6 whitespace-normal"
+      :class="!small && 'md:text-base md:leading-5.5 lg:text-lg lg:leading-6'"
+      v-html="text"
+    />
+
+    <div class="clear-left" />
 
     <FontAwesomeIcon
       class="text-2xl absolute top-4 right-4 cursor-pointer"
@@ -59,28 +37,8 @@ const { t } = useI18n();
 defineProps<{
   firstName: string;
   text: string;
+  small?: boolean;
 }>();
 
 defineEmits(['close']);
 </script>
-
-<style scoped>
-.icon {
-  width: 4.5rem;
-  height: 5rem;
-}
-
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-  .icon {
-    width: 7.625rem;
-    height: 8.625rem;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .icon {
-    width: 17rem;
-    height: 19.125rem;
-  }
-}
-</style>

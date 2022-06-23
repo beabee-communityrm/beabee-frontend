@@ -24,6 +24,7 @@
         <WelcomeMessage
           :first-name="currentUser?.firstname || ''"
           :text="profileContent.welcomeMessage"
+          small
         />
       </div>
     </div>
