@@ -123,7 +123,13 @@
       </div>
       <div class="flex-1"><SetupForm :setup-content="setupContent" /></div>
     </div>
-    <AppButton type="submit" variant="primary" class="w-20">Save</AppButton>
+    <AppButton
+      v-if="joinContent && setupContent"
+      type="submit"
+      variant="link"
+      class="w-32"
+      >Save</AppButton
+    >
   </form>
 </template>
 <script lang="ts" setup>
