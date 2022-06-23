@@ -17,6 +17,7 @@ import AppStepper from '../../components/stepper/AppStepper.vue';
 import { Step } from '../../components/stepper/stepper.interface';
 import EditJoinForm from './components/steps/EditJoinForm.vue';
 import IntroMessage from './components/steps/IntroMessage.vue';
+import Emails from './components/steps/Emails.vue';
 
 const { t } = useI18n();
 
@@ -43,7 +44,7 @@ const steps: BuilderStep[] = [
     name: 'Welcome emails',
     description: "Write the emails they'll receive",
     validated: true,
-    component: EditJoinForm,
+    component: Emails,
   },
 ];
 
