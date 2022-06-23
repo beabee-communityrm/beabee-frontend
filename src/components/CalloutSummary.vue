@@ -2,7 +2,7 @@
   <div>
     <div class="flex mb-4">
       <div class="flex-1">
-        <h3 class="font-semibold text-lg">{{ callout.title }}</h3>
+        <AppSubHeading>{{ callout.title }}</AppSubHeading>
         <p>{{ callout.excerpt }}</p>
       </div>
       <div class="flex-0 ml-4">
@@ -63,6 +63,7 @@ import {
   formatLocale,
   formatDistanceLocale,
 } from '../utils/dates/locale-date-formats';
+import AppSubHeading from './AppSubHeading.vue';
 
 const baseUrl = import.meta.env.VITE_APP_BASE_URL;
 const { t } = useI18n();

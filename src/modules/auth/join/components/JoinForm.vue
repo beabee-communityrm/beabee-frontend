@@ -7,12 +7,9 @@
         :description="joinContent.subtitle"
       />
 
-      <h3
-        v-if="joinContent.showNoContribution"
-        class="font-semibold text-lg mb-1"
-      >
+      <AppSubHeading v-if="joinContent.showNoContribution" class="mb-1">
         {{ t('join.contribution') }}
-      </h3>
+      </AppSubHeading>
 
       <AppCheckbox
         v-if="joinContent.showNoContribution"
@@ -81,6 +78,7 @@ import Contribution from '../../../../components/contribution/Contribution.vue';
 import MessageBox from '../../../../components/MessageBox.vue';
 import AppCheckbox from '../../../../components/forms/AppCheckbox.vue';
 import AuthBox from '../../AuthBox.vue';
+import AppSubHeading from '../../../../components/AppSubHeading.vue';
 
 const emit = defineEmits(['submit']);
 const props = defineProps<{
