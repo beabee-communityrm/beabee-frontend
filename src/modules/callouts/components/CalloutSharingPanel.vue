@@ -80,7 +80,14 @@
         </a>
       </div>
       <div>
-        <font-awesome-icon :icon="['fa', 'envelope']" class="mr-1" /> E-mail
+        <a
+          :href="'mailto:?body=' + encodeURIComponent(calloutUrl)"
+          target="_blank"
+          rel="nofollow noopener"
+        >
+          <font-awesome-icon :icon="['fa', 'envelope']" class="mr-1" />
+          E-mail
+        </a>
       </div>
     </div>
   </div>
