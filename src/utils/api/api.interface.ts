@@ -317,3 +317,10 @@ export interface GetStatsData {
   averageContribution: number | null;
   totalRevenue: number | null;
 }
+
+export interface GetEmailData {
+  subject: string;
+  body: string;
+}
+
+export type UpdateEmailData = GetEmailData;
