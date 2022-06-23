@@ -56,16 +56,10 @@ import AppSubHeading from '../AppSubHeading.vue';
 
 const { t } = useI18n();
 
-defineProps({
-  memberFirstName: {
-    type: String,
-    default: '',
-  },
-  text: {
-    type: String,
-    default: '',
-  },
-});
+defineProps<{
+  firstName: string;
+  text: string;
+}>();
 
 defineEmits(['close']);
 </script>

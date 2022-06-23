@@ -16,6 +16,7 @@ import PageTitle from '../../components/PageTitle.vue';
 import AppStepper from '../../components/stepper/AppStepper.vue';
 import { Step } from '../../components/stepper/stepper.interface';
 import EditJoinForm from './components/steps/EditJoinForm.vue';
+import IntroMessage from './components/steps/IntroMessage.vue';
 
 const { t } = useI18n();
 
@@ -27,12 +28,6 @@ interface BuilderStep extends Step {
 
 const steps: BuilderStep[] = [
   {
-    name: 'Overview',
-    description: '',
-    validated: true,
-    component: EditJoinForm,
-  },
-  {
     name: 'Join form',
     description: 'Edit and fine tune your member signup form',
     validated: true,
@@ -42,7 +37,7 @@ const steps: BuilderStep[] = [
     name: 'Intro message',
     description: 'Greet your new members',
     validated: true,
-    component: EditJoinForm,
+    component: IntroMessage,
   },
   {
     name: 'Welcome emails',
