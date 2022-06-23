@@ -34,6 +34,10 @@
     "joinNow": "Join now",
     "loginToYourAccount": "Login to your account",
     "membersOnly": "This callout is open to members only. To participate",
+    "share": {
+      "address": "Share this callout with the following address:",
+      "services": "Or quickly share using one of these services:"
+    },
     "status": {
       "endedOn": "on {date}",
       "endsIn": "Ends in {duration}",
@@ -125,6 +129,7 @@
     "annually": "Annually",
     "backToHome": "Back to home",
     "contributing": "Contributing",
+    "copy": "Copy",
     "every": "every",
     "goBack": "Go back",
     "hello": "Hello",

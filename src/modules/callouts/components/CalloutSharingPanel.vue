@@ -1,6 +1,6 @@
 <template>
   <div class="h-auto flex flex-col border border-primary-40 p-5 my-2">
-    Share this callout with the following address:
+    {{ t('callout.share.address') }}
 
     <div
       class="
@@ -15,10 +15,11 @@
       "
     >
       <span class="text-link mr-2">{{ calloutUrl }}</span>
-      <AppButton icon="copy" size="sm" @click="copyToClipboard">Copy</AppButton>
+      <AppButton icon="copy" size="sm" @click="copyToClipboard">{{ t('common.copy') }}</AppButton>
     </div>
 
-    Or quickly share using one of these services:
+    {{ t('callout.share.services') }}
+
     <div class="w-2/3 grid gap-2 grid-cols-3 grid-rows-2 mt-3">
       <div>
         <a
@@ -91,7 +92,7 @@
           rel="nofollow noopener"
         >
           <font-awesome-icon :icon="['fa', 'envelope']" class="mr-1" />
-          E-mail
+          {{ t('form.email') }}
         </a>
       </div>
     </div>
@@ -99,7 +100,10 @@
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
 import AppButton from '../../../components/forms/AppButton.vue';
+
+const { t } = useI18n();
 
 const props = defineProps<{
   slug: string;
