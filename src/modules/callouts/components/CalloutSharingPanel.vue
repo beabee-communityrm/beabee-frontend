@@ -1,22 +1,22 @@
 <template>
-	<div class="h-auto flex flex-col border border-primary-40 p-5 my-2">
-		Share this callout with the following address:
+  <div class="h-auto flex flex-col border border-primary-40 p-5 my-2">
+    Share this callout with the following address:
 
-		<div
-			class="
-				justify-between
-				flex flex-row
-				items-center
-				bg-white
-				rounded
-				mt-2
-				mb-4
-				pl-3
-			"
-		>
-			<span class="text-link mr-2">{{ calloutUrl }}</span>
-			<AppButton icon="copy" size="sm" @click="copyToClipboard">Copy</AppButton>
-		</div>
+    <div
+      class="
+        justify-between
+        flex flex-row
+        items-center
+        bg-white
+        rounded
+        mt-2
+        mb-4
+        pl-3
+      "
+    >
+      <span class="text-link mr-2">{{ calloutUrl }}</span>
+      <AppButton icon="copy" size="sm" @click="copyToClipboard">Copy</AppButton>
+    </div>
 
     Or quickly share using one of these services:
     <div class="w-2/3 grid gap-2 grid-cols-3 grid-rows-2 mt-3">
@@ -26,7 +26,8 @@
             'https://www.facebook.com/sharer/sharer.php?u=' +
             encodeURIComponent(calloutUrl)
           "
-          target="_blank" rel="nofollow noopener"
+          target="_blank"
+          rel="nofollow noopener"
         >
           <font-awesome-icon :icon="['fab', 'facebook']" class="mr-1" />
           Facebook
@@ -38,7 +39,8 @@
             'https://www.linkedin.com/shareArticle?mini=true&url=' +
             encodeURIComponent(calloutUrl)
           "
-          target="_blank" rel="nofollow noopener"
+          target="_blank"
+          rel="nofollow noopener"
         >
           <font-awesome-icon :icon="['fab', 'linkedin']" class="mr-1" />
           LinkedIn
@@ -50,7 +52,8 @@
             'https://telegram.me/share/url?url=' +
             encodeURIComponent(calloutUrl)
           "
-          target="_blank" rel="nofollow noopener"
+          target="_blank"
+          rel="nofollow noopener"
         >
           <font-awesome-icon :icon="['fab', 'telegram']" class="mr-1" />
           Telegram
@@ -61,7 +64,8 @@
           :href="
             'https://twitter.com/share?url=' + encodeURIComponent(calloutUrl)
           "
-          target="_blank" rel="nofollow noopener"
+          target="_blank"
+          rel="nofollow noopener"
         >
           <font-awesome-icon :icon="['fab', 'twitter']" class="mr-1" />
           Twitter
@@ -73,7 +77,8 @@
             'https://api.whatsapp.com/send?text=' +
             encodeURIComponent(calloutUrl)
           "
-          target="_blank" rel="nofollow noopener"
+          target="_blank"
+          rel="nofollow noopener"
         >
           <font-awesome-icon :icon="['fab', 'whatsapp']" class="mr-1" />
           WhatsApp
@@ -97,7 +102,7 @@
 import AppButton from '../../../components/forms/AppButton.vue';
 
 const props = defineProps<{
-	slug: string;
+  slug: string;
 }>();
 
 const baseUrl = import.meta.env.VITE_APP_BASE_URL;
