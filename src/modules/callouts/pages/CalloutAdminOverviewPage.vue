@@ -93,7 +93,6 @@
         v-if="showDeleteModal"
         @close="showDeleteModal = false"
         @confirm="confirmDeleteCallout"
-        redirect-to="/admin/callouts"
       >
         <template #title>
           {{ t('calloutAdminOverview.actions.confirmDelete.title') }}
