@@ -16,7 +16,7 @@
       <WelcomeIcon class="icon md:hidden lg:block" />
 
       <AppSubHeading class="md:hidden ml-4">
-        {{ t('homePage.welcome', { firstName }) }}
+        {{ t('homePage.welcome', { firstName, lastName }) }}
       </AppSubHeading>
     </div>
 
@@ -24,7 +24,7 @@
       <WelcomeIcon class="hidden md:block lg:hidden icon float-left mr-4" />
 
       <AppSubHeading class="mb-3 hidden md:block">
-        {{ t('homePage.welcome', { firstName }) }}
+        {{ t('homePage.welcome', { firstName, lastName }) }}
       </AppSubHeading>
 
       <div
@@ -58,6 +58,10 @@ const { t } = useI18n();
 
 defineProps({
   firstName: {
+    type: String,
+    default: '',
+  },
+  lastName: {
     type: String,
     default: '',
   },
