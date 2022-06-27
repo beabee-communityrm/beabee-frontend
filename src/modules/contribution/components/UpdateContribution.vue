@@ -1,86 +1,88 @@
 <template>
-  <form @submit.prevent="handleSubmit">
-    <AppHeading class="mb-2">{{ t('contribution.billing') }} </AppHeading>
+  <div>
+    <form @submit.prevent="handleSubmit">
+      <AppHeading class="mb-2">{{ t('contribution.billing') }} </AppHeading>
 
-    <p v-if="isManualActiveMember" class="mb-4">
-      {{ t('contribution.manualPayment') }}
-    </p>
+      <p v-if="isManualActiveMember" class="mb-4">
+        {{ t('contribution.manualPayment') }}
+      </p>
 
-    <AppAlert
-      v-if="modelValue.nextAmount && modelValue.renewalDate"
-      variant="info"
-      class="mb-4"
+      <AppAlert
+        v-if="modelValue.nextAmount && modelValue.renewalDate"
+        variant="info"
+        class="mb-4"
+      >
+        <template #icon
+          ><font-awesome-icon :icon="['fa', 'info-circle']"
+        /></template>
+        {{
+          t('contribution.nextAmountChanging', {
+            nextAmount: n(modelValue.nextAmount, 'currency'),
+            renewalDate: formatLocale(modelValue.renewalDate, 'PPP'),
+          })
+        }}
+      </AppAlert>
+
+      <Contribution
+        v-model:amount="newContribution.amount"
+        v-model:payFee="newContribution.payFee"
+        v-model:period="newContribution.period"
+        v-model:paymentMethod="newContribution.paymentMethod"
+        :content="content"
+        :show-period="showChangePeriod"
+        :show-payment-method="!isAutoActiveMember"
+      />
+
+      <ProrateContribution
+        v-model="newContribution.prorate"
+        :new-amount="newContribution.amount"
+        :old-amount="modelValue.amount!"
+        :renewal-date="modelValue.renewalDate!"
+      />
+
+      <MessageBox v-if="hasUpdated" class="mb-4" type="success">
+        {{ t('contribution.updatedContribution') }}
+      </MessageBox>
+
+      <MessageBox v-if="cantUpdate" class="mb-4" type="error">
+        {{ t('contribution.contributionUpdateError') }}
+      </MessageBox>
+
+      <AppButton
+        :disabled="!canSubmit || validation.$invalid"
+        type="submit"
+        variant="link"
+        class="mb-4 w-full"
+        :loading="loading"
+      >
+        {{
+          isManualActiveMember
+            ? t('contribution.updatePaymentType')
+            : isActiveMember
+            ? t('contribution.updateContribution')
+            : isExpiringMember
+            ? t('contribution.restartContribution')
+            : t('contribution.startContribution')
+        }}
+      </AppButton>
+    </form>
+    <AppModal
+      v-if="stripeClientSecret"
+      :open="stripePaymentLoaded"
+      class="w-full"
+      @close="reset"
     >
-      <template #icon
-        ><font-awesome-icon :icon="['fa', 'info-circle']"
-      /></template>
-      {{
-        t('contribution.nextAmountChanging', {
-          nextAmount: n(modelValue.nextAmount, 'currency'),
-          renewalDate: formatLocale(modelValue.renewalDate, 'PPP'),
-        })
-      }}
-    </AppAlert>
-
-    <Contribution
-      v-model:amount="newContribution.amount"
-      v-model:payFee="newContribution.payFee"
-      v-model:period="newContribution.period"
-      v-model:paymentMethod="newContribution.paymentMethod"
-      :content="content"
-      :show-period="showChangePeriod"
-      :show-payment-method="!isAutoActiveMember"
-    />
-
-    <ProrateContribution
-      v-model="newContribution.prorate"
-      :new-amount="newContribution.amount"
-      :old-amount="modelValue.amount!"
-      :renewal-date="modelValue.renewalDate!"
-    />
-
-    <MessageBox v-if="hasUpdated" class="mb-4" type="success">
-      {{ t('contribution.updatedContribution') }}
-    </MessageBox>
-
-    <MessageBox v-if="cantUpdate" class="mb-4" type="error">
-      {{ t('contribution.contributionUpdateError') }}
-    </MessageBox>
-
-    <AppButton
-      :disabled="!canSubmit || validation.$invalid"
-      type="submit"
-      variant="link"
-      class="mb-4 w-full"
-      :loading="loading"
-    >
-      {{
-        isManualActiveMember
-          ? t('contribution.updatePaymentType')
-          : isActiveMember
-          ? t('contribution.updateContribution')
-          : isExpiringMember
-          ? t('contribution.restartContribution')
-          : t('contribution.startContribution')
-      }}
-    </AppButton>
-  </form>
-  <AppModal
-    v-if="stripeClientSecret"
-    :open="stripePaymentLoaded"
-    class="w-full"
-    @close="reset"
-  >
-    <AppHeading class="mb-4">{{
-      t(`paymentMethods.${newContribution.paymentMethod}.setLabel`)
-    }}</AppHeading>
-    <StripePayment
-      :client-secret="stripeClientSecret"
-      :email="email"
-      :return-url="startContributionCompleteUrl"
-      @loaded="onStripeLoaded"
-    />
-  </AppModal>
+      <AppHeading class="mb-4">{{
+        t(`paymentMethods.${newContribution.paymentMethod}.setLabel`)
+      }}</AppHeading>
+      <StripePayment
+        :client-secret="stripeClientSecret"
+        :email="email"
+        :return-url="startContributionCompleteUrl"
+        @loaded="onStripeLoaded"
+      />
+    </AppModal>
+  </div>
 </template>
 <script lang="ts" setup>
 import axios from 'axios';
