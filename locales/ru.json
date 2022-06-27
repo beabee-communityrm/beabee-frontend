@@ -34,6 +34,7 @@
     "joinNow": "",
     "loginToYourAccount": "",
     "membersOnly": "",
+    "share": {},
     "status": {
       "endedOn": "в {duration}",
       "endsIn": "Заканчивается {duration}",
@@ -46,7 +47,7 @@
   "calloutAdmin": {},
   "calloutAdminOverview": {
     "actions": {
-      "delete": {}
+      "confirmDelete": {}
     },
     "dates": {},
     "settings": {
@@ -204,7 +205,6 @@
     "updateContribution": "Актуализировать взнос",
     "updatePaymentType": "Обновить тип оплаты",
     "updatedContribution": "Ваш взнос был изменён",
-    "updatedPaymentSource": "Ваши банковские реквизиты были изменены",
     "willExpire": "Ваша подписка заканчивается через {expires}",
     "willRenew": "Ваше подписка будет автоматически продлена {renewalDate}",
     "willRenewWithNewAmount": "Ваша подписка будет автоматически продлена {renewalDate} и изменится на выбранную вами сумму {nextAmount}."
@@ -393,6 +393,7 @@
     "now": "Стать участником сообщества!",
     "privacy": "Политика конфиденциальности"
   },
+  "joinPayment": {},
   "joinSetup": {
     "confirmDetails": "Пожалуйста, подтвердите вашу информацию:",
     "continue": "Дальше",
@@ -443,6 +444,12 @@
     "login": "Войти",
     "resetPassword": "Сбросить пароль",
     "setup": "Создать аккаунт"
+  },
+  "paymentMethods": {
+    "gc_direct-debit": {},
+    "s_bacs": {},
+    "s_card": {},
+    "s_sepa": {}
   },
   "resetPassword": {
     "changePassword": "Поменять пароль",
