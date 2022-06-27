@@ -1,8 +1,11 @@
 <template>
-  <div>
-    <h3 class="font-semibold text-lg mb-1">{{ t('join.paymentMethod') }}</h3>
-    <div class="grid grid-cols-3 gap-2">
-      <div v-for="method in methods" :key="method" class="flex-1">
+  <div v-if="methods.length > 1">
+    <AppSubHeading class="mb-1">{{ t('join.paymentMethod') }}</AppSubHeading>
+    <div
+      class="grid grid-cols-3 gap-2"
+      :class="methods.length > 2 ? 'grid-cols-3' : 'grid-cols-2'"
+    >
+      <div v-for="method in methods" :key="method">
         <button
           class="
             w-full
@@ -22,7 +25,7 @@
           @click="emit('update:modelValue', method)"
         >
           <PaymentMethodIcon :method="method" /><span
-            :class="methods.length > 2 ? 'block' : 'inline'"
+            :class="methods.length > 2 ? 'block' : 'inline m-2'"
             >{{ t(`paymentMethods.${method}.label`) }}</span
           >
         </button>
@@ -34,6 +37,7 @@
 import { useI18n } from 'vue-i18n';
 import { PaymentMethod } from '../../utils/enums/payment-method.enum';
 import PaymentMethodIcon from '../payment-method/PaymentMethodIcon.vue';
+import AppSubHeading from '../AppSubHeading.vue';
 
 const { t } = useI18n();
 

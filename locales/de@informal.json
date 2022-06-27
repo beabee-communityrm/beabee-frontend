@@ -610,10 +610,15 @@
       "setLabel": "Deine Laschriftdaten"
     },
     "s_bacs": {
+      "changeLabel": "Lastschrift ändern",
       "label": "Lastschrift",
       "setLabel": "Deine Laschriftdaten"
     },
-    "s_card": {},
+    "s_card": {
+      "changeLabel": "Kreditkartendetails ändern",
+      "label": "Kreditkarte",
+      "setLabel": "Deine Kreditkartendetails"
+    },
     "s_sepa": {
       "changeLabel": "Lastschrift ändern",
       "label": "Lastschrift",
