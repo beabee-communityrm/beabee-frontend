@@ -1,69 +1,76 @@
 <template>
-  <!--
-  <div
-    class="flex items-center px-4 text-white font-semibold rounded"
-  >
-    <div v-if="slots.icon" class="mr-4 text-lg">
-      <slot name="icon" />
-    </div>
-
-    <div class="py-4"><slot /></div>
-  </div>
-  -->
-
-  <div
-    class="
-      absolute
-      inset-0
-      flex
-      items-center
-      justify-center
-      bg-black bg-opacity-50
-      z-50
-    "
-  >
-    <div class="max-w-md relative bg-white rounded">
+  <Teleport to="body">
+    <div
+      class="
+        fixed
+        inset-0
+        z-50
+        bg-black bg-opacity-50
+        flex
+        justify-center
+        items-center
+        p-4
+        h-full
+      "
+      :class="{ hidden: !open }"
+      @click="$emit('close')"
+    >
       <div
-        class="absolute top-0 right-0 p-3 text-primary-80 hover:text-primary"
+        ref="divRef"
+        class="
+          relative
+          rounded
+          bg-white
+          p-6
+          md:p-8
+          shadow-lg
+          max-w-md max-h-full
+          flex flex-col
+        "
+        v-bind="$attrs"
+        @click.stop
       >
-        <FontAwesomeIcon
-          class="text-xl cursor-pointer"
-          :icon="['fas', 'times']"
+        <button
+          class="absolute top-0 right-0 w-8 h-8 hover:text-primary"
+          type="button"
           @click="$emit('close')"
-        />
-      </div>
-
-      <article class="p-8">
-        <header class="flex items-center justify-between mb-4">
-          <h3 class="text-2xl font-semibold text-danger">
-            <slot name="title" />
-          </h3>
-        </header>
-
-        <div class="py-2">
-          <p class="mb-4 text-lg"><slot name="text" /></p>
+        >
+          <font-awesome-icon :icon="['fa', 'times']" />
+        </button>
+        <AppHeading v-if="title" class="mb-4">{{ title }}</AppHeading>
+        <div class="overflow-auto">
+          <slot></slot>
         </div>
-
-        <footer class="text-center">
-          <AppButton
-            class="mr-4"
-            variant="primaryOutlined"
-            @click="$emit('close')"
-            ><slot name="button-cancel-text"
-          /></AppButton>
-          <AppButton variant="danger" @click="$emit('confirm')"
-            ><slot name="button-confirm-text"
-          /></AppButton>
-        </footer>
-      </article>
+      </div>
     </div>
-  </div>
+  </Teleport>
 </template>
-
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity';
-import { useSlots } from '@vue/runtime-core';
-import AppButton from '../components/forms/AppButton.vue';
+import { onBeforeUnmount, ref, toRef, watch } from 'vue';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import AppHeading from './AppHeading.vue';
 
-const slots = useSlots();
+defineEmits(['close']);
+const props = defineProps<{
+  open: boolean;
+  title?: string;
+}>();
+
+const divRef = ref<HTMLElement>();
+
+watch([toRef(props, 'open'), divRef], ([open]) => {
+  if (divRef.value) {
+    if (open) {
+      disableBodyScroll(divRef.value);
+    } else {
+      enableBodyScroll(divRef.value);
+    }
+  }
+});
+
+onBeforeUnmount(() => {
+  if (divRef.value && props.open) {
+    enableBodyScroll(divRef.value);
+  }
+});
 </script>

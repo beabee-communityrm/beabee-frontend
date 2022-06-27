@@ -1,6 +1,7 @@
 import { parseISO } from 'date-fns';
 import axios from '../../axios';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
+import { PaymentMethod } from '../enums/payment-method.enum';
 import {
   ContributionInfo,
   GetMemberData,
@@ -10,8 +11,10 @@ import {
   GetPaymentData,
   GetPaymentsQuery,
   Paginated,
+  PaymentFlowParams,
   Serial,
   SetContributionData,
+  StartContributionData,
   UpdateMemberData,
 } from './api.interface';
 
@@ -117,18 +120,21 @@ export async function updateContribution(
   return toContrib(data);
 }
 
+export const startContributionCompleteUrl =
+  import.meta.env.VITE_APP_BASE_URL + '/profile/contribution/complete';
+
 export async function startContribution(
-  dataIn: SetContributionData
-): Promise<{ redirectUrl: string }> {
-  const { data } = await axios.post<Serial<{ redirectUrl: string }>>(
+  dataIn: StartContributionData
+): Promise<PaymentFlowParams> {
+  const { data } = await axios.post<Serial<PaymentFlowParams>>(
     '/member/me/contribution',
     {
       amount: dataIn.amount,
       period: dataIn.period,
       payFee: dataIn.payFee && dataIn.period === ContributionPeriod.Monthly,
       prorate: dataIn.prorate && dataIn.period === ContributionPeriod.Annually,
-      completeUrl:
-        import.meta.env.VITE_APP_BASE_URL + '/profile/contribution/complete',
+      paymentMethod: dataIn.paymentMethod,
+      completeUrl: startContributionCompleteUrl,
     }
   );
   return data;
@@ -147,23 +153,25 @@ export async function cancelContribution(): Promise<void> {
   await axios.post('/member/me/contribution/cancel');
 }
 
-export async function updatePaymentSource(): Promise<{ redirectUrl: string }> {
-  const { data } = await axios.put<Serial<{ redirectUrl: string }>>(
-    '/member/me/payment-source',
-    {
-      completeUrl:
-        import.meta.env.VITE_APP_BASE_URL +
-        '/profile/contribution/payment-source/complete',
-    }
+export const updatePaymentMethodCompleteUrl =
+  import.meta.env.VITE_APP_BASE_URL +
+  '/profile/contribution/payment-method/complete';
+
+export async function updatePaymentMethod(
+  paymentMethod?: PaymentMethod
+): Promise<PaymentFlowParams> {
+  const { data } = await axios.put<Serial<PaymentFlowParams>>(
+    '/member/me/payment-method',
+    { paymentMethod, completeUrl: updatePaymentMethodCompleteUrl }
   );
   return data;
 }
 
-export async function completeUpdatePaymentSource(
+export async function completeUpdatePaymentMethod(
   paymentFlowId: string
 ): Promise<ContributionInfo> {
   const { data } = await axios.post<Serial<ContributionInfo>>(
-    '/member/me/payment-source/complete',
+    '/member/me/payment-method/complete',
     { paymentFlowId }
   );
   return toContrib(data);

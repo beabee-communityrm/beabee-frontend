@@ -89,8 +89,9 @@
       <ActionButton icon="trash" @click="showDeleteModal = true">
         {{ t('calloutAdminOverview.actions.delete') }}
       </ActionButton>
-      <AppModal
+      <AppConfirmDialog
         v-if="showDeleteModal"
+        open
         @close="showDeleteModal = false"
         @confirm="confirmDeleteCallout"
       >
@@ -106,7 +107,7 @@
         <template #button-confirm-text>
           {{ t('calloutAdminOverview.actions.confirmDelete.actionYes') }}
         </template>
-      </AppModal>
+      </AppConfirmDialog>
     </div>
   </div>
 </template>
@@ -129,8 +130,8 @@ import {
 import ActionButton from '../components/ActionButton.vue';
 import CalloutSummary from '../../../components/CalloutSummary.vue';
 import AppAlert from '../../../components/AppAlert.vue';
-import AppModal from '../../../components/AppModal.vue';
 import { updateCallout, createCallout } from '../../../utils/api/callout';
+import AppConfirmDialog from '../../../components/AppConfirmDialog.vue';
 
 const props = defineProps<{
   callout: GetMoreCalloutData;

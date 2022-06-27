@@ -1,18 +1,13 @@
 <template>
   <div>
-    <div class="mb-4">
-      <FontAwesomeIcon
-        class="text-2xl -mb-1 mr-3"
-        :icon="['far', 'credit-card']"
-      />
+    <AppHeading class="mb-4">{{ t('contribution.paymentMethod') }}</AppHeading>
 
-      <span
-        >{{ paymentSource.accountHolderName }}, {{ paymentSource.bankName }},
-        ••••••••••{{ paymentSource.accountNumberEnding }}</span
-      >
+    <div class="mb-4">
+      <PaymentMethodIcon :method="paymentSource.method" />
+      {{ paymentSourceDescription }}
     </div>
 
-    <MessageBox v-if="hasError" class="mb-4" type="error">
+    <MessageBox v-if="cantUpdate" class="mb-4" type="error">
       {{ t('contribution.paymentSourceUpdateError') }}
     </MessageBox>
 
@@ -20,29 +15,109 @@
       :loading="loading"
       variant="primaryOutlined"
       class="mb-2 w-full"
-      @click="$emit('update-payment-source')"
+      @click="handleUpdate"
     >
-      {{ t('contribution.changeBank') }}
+      {{ changeLabel }}
     </AppButton>
 
-    <InfoMessage :message="t('contribution.changeBankInfo')" />
+    <AppModal
+      v-if="stripeClientSecret"
+      :open="stripePaymentLoaded"
+      :title="changeLabel"
+      class="w-full"
+      @close="reset"
+    >
+      <StripePayment
+        :client-secret="stripeClientSecret"
+        :email="email"
+        :return-url="updatePaymentMethodCompleteUrl"
+        @loaded="onStripeLoaded"
+      />
+    </AppModal>
   </div>
 </template>
 
 <script lang="ts" setup>
-import InfoMessage from '../../../components/InfoMessage.vue';
+import axios from 'axios';
+import { onBeforeMount, ref } from 'vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import { useI18n } from 'vue-i18n';
 import { PaymentSource } from '../../../utils/api/api.interface';
+import {
+  updatePaymentMethod,
+  updatePaymentMethodCompleteUrl,
+} from '../../../utils/api/member';
+import StripePayment from '../../../components/StripePayment.vue';
+import AppModal from '../../../components/AppModal.vue';
+import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
+import PaymentMethodIcon from '../../../components/payment-method/PaymentMethodIcon.vue';
+import { computed } from '@vue/reactivity';
+import AppHeading from '../../../components/AppHeading.vue';
 
 const { t } = useI18n();
 
-defineProps<{
+const props = defineProps<{
   paymentSource: PaymentSource;
-  hasError: boolean;
-  loading: boolean;
+  email: string;
 }>();
 
-defineEmits(['update-payment-source']);
+const loading = ref(false);
+const cantUpdate = ref(false);
+const stripeClientSecret = ref('');
+const stripePaymentLoaded = ref(false);
+
+const paymentSourceDescription = computed(() => {
+  const source = props.paymentSource;
+  switch (source.method) {
+    case PaymentMethod.StripeCard:
+      return `•••• •••• •••• ${source.last4}, ${String(
+        source.expiryMonth
+      ).padStart(2, '0')}/${source.expiryYear}`;
+    case PaymentMethod.StripeBACS:
+      return `${source.sortCode} ••••••••••${source.last4}`;
+    case PaymentMethod.StripeSEPA:
+      return `${source.country}••${source.bankCode}${source.branchCode}••••${source.last4}`;
+    case PaymentMethod.GoCardlessDirectDebit:
+      return `${source.accountHolderName}, ${source.bankName}, ••••••••••${source.accountNumberEnding}`;
+  }
+});
+
+const changeLabel = computed(() =>
+  t(`paymentMethods.${props.paymentSource.method}.changeLabel`)
+);
+
+function reset() {
+  loading.value = false;
+  stripeClientSecret.value = '';
+  stripePaymentLoaded.value = false;
+}
+
+function onStripeLoaded() {
+  stripePaymentLoaded.value = true;
+  loading.value = false;
+}
+
+async function handleUpdate() {
+  loading.value = true;
+  try {
+    const data = await updatePaymentMethod();
+    if (data.redirectUrl) {
+      window.location.href = data.redirectUrl;
+    } else if (data.clientSecret) {
+      stripeClientSecret.value = data.clientSecret;
+    }
+  } catch (err: unknown) {
+    loading.value = false;
+    if (
+      axios.isAxiosError(err) &&
+      err.response?.status === 400 &&
+      err.response.data.code === 'cant-update-contribution'
+    ) {
+      cantUpdate.value = true;
+    }
+  }
+}
+
+onBeforeMount(reset);
 </script>
