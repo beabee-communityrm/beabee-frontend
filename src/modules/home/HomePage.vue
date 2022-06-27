@@ -28,12 +28,7 @@
   </section>
 
   <section v-if="callouts.length" class="mb-6 lg:mr-6">
-    <SectionTitle class="mb-6 md:hidden">{{
-      t('homePage.openCallouts')
-    }}</SectionTitle>
-    <AppHeading class="mb-2 hidden md:block">{{
-      t('homePage.openCallouts')
-    }}</AppHeading>
+    <SectionTitle>{{ t('homePage.openCallouts') }}</SectionTitle>
 
     <div class="flex -mx-3 my-6 flex-wrap">
       <CalloutCard
@@ -50,12 +45,7 @@
   </section>
 
   <section>
-    <SectionTitle class="mb-6 md:hidden">{{
-      t('homePage.yourProfile')
-    }}</SectionTitle>
-    <AppHeading class="mb-2 hidden md:block">{{
-      t('homePage.yourProfile')
-    }}</AppHeading>
+    <SectionTitle>{{ t('homePage.yourProfile') }}</SectionTitle>
 
     <div class="flex mb-4">
       <ContributionInfo :member="user" />
@@ -88,14 +78,13 @@ import AppButton from '../../components/forms/AppButton.vue';
 import AppAlert from '../../components/AppAlert.vue';
 import CalloutCard from '../../components/CalloutCard.vue';
 import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
-import AppHeading from '../../components/AppHeading.vue';
 import {
   GetBasicCalloutData,
   GetMemberData,
   ItemStatus,
   ProfileContent,
 } from '../../utils/api/api.interface';
-import { fetchProfileContent } from '../../utils/api/content';
+import { fetchContent } from '../../utils/api/content';
 import { fetchCallouts } from '../../utils/api/callout';
 import { currentUser, generalContent } from '../../store';
 
@@ -124,7 +113,7 @@ const callouts = ref<GetBasicCalloutData[]>([]);
 const user = currentUser as Ref<GetMemberData>;
 
 onBeforeMount(async () => {
-  profileContent.value = await fetchProfileContent();
+  profileContent.value = await fetchContent('profile');
   callouts.value = (
     await fetchCallouts({
       order: 'DESC',

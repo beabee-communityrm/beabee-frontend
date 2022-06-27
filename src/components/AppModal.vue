@@ -5,7 +5,7 @@
         fixed
         inset-0
         z-50
-        bg-black bg-opacity-20
+        bg-black bg-opacity-50
         flex
         justify-center
         items-center
@@ -24,7 +24,7 @@
           p-6
           md:p-8
           shadow-lg
-          max-h-full
+          max-w-md max-h-full
           flex flex-col
         "
         v-bind="$attrs"
@@ -37,7 +37,7 @@
         >
           <font-awesome-icon :icon="['fa', 'times']" />
         </button>
-        <SectionTitle v-if="title" class="mb-4">{{ title }}</SectionTitle>
+        <AppHeading v-if="title" class="mb-4">{{ title }}</AppHeading>
         <div class="overflow-auto">
           <slot></slot>
         </div>
@@ -47,8 +47,8 @@
 </template>
 <script lang="ts" setup>
 import { onBeforeUnmount, ref, toRef, watch } from 'vue';
-import SectionTitle from './SectionTitle.vue';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import AppHeading from './AppHeading.vue';
 
 defineEmits(['close']);
 const props = defineProps<{

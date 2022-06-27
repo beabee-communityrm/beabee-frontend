@@ -1,8 +1,6 @@
 <template>
   <div>
-    <SectionTitle class="mb-4">{{
-      t('contribution.paymentMethod')
-    }}</SectionTitle>
+    <AppHeading class="mb-4">{{ t('contribution.paymentMethod') }}</AppHeading>
 
     <div class="mb-4">
       <PaymentMethodIcon :method="paymentSource.method" />
@@ -26,7 +24,7 @@
       v-if="stripeClientSecret"
       :open="stripePaymentLoaded"
       :title="changeLabel"
-      class="md:w-[30rem]"
+      class="w-full"
       @close="reset"
     >
       <StripePayment
@@ -52,10 +50,10 @@ import {
 } from '../../../utils/api/member';
 import StripePayment from '../../../components/StripePayment.vue';
 import AppModal from '../../../components/AppModal.vue';
-import SectionTitle from '../../../components/SectionTitle.vue';
 import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
 import PaymentMethodIcon from '../../../components/payment-method/PaymentMethodIcon.vue';
 import { computed } from '@vue/reactivity';
+import AppHeading from '../../../components/AppHeading.vue';
 
 const { t } = useI18n();
 

@@ -92,7 +92,7 @@ import {
   JoinSetupContent,
   UpdateMemberData,
 } from '../../../../utils/api/api.interface';
-import { fetchJoinSetupContent } from '../../../../utils/api/content';
+import { fetchContent } from '../../../../utils/api/content';
 import ContactInformation from '../../../../components/ContactInformation.vue';
 import ContactMailOptIn from '../../../../components/ContactMailOptIn.vue';
 
@@ -187,6 +187,6 @@ onBeforeMount(async () => {
     setupMemberData.postCode = member.profile.deliveryAddress.postcode;
   }
 
-  setupContent.value = await fetchJoinSetupContent();
+  setupContent.value = await fetchContent('join/setup');
 });
 </script>

@@ -7,7 +7,9 @@
     class="flex flex-col p-8 bg-white shadow"
   >
     <template v-if="contribution.membershipStatus === MembershipStatus.Expired">
-      <p class="text-lg mb-2 font-semibold">{{ t('contribution.expired') }}</p>
+      <AppSubHeading class="mb-2">{{
+        t('contribution.expired')
+      }}</AppSubHeading>
 
       <p>
         {{ t('contribution.expiredText') }}
@@ -68,6 +70,7 @@ import { ContributionPeriod } from '../../../utils/enums/contribution-period.enu
 import { ContributionInfo } from '../../../utils/api/api.interface';
 import { MembershipStatus } from '../../../utils/enums/membership-status.enum';
 import { ContributionType } from '../../../utils/enums/contribution-type.enum';
+import AppSubHeading from '../../../components/AppSubHeading.vue';
 
 const { n, t } = useI18n();
 

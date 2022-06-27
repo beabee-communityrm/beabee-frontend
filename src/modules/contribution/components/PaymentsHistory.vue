@@ -1,8 +1,8 @@
 <template>
   <div v-if="paymentsHistoryTable.total > 0">
-    <SectionTitle class="mb-2">{{
+    <AppHeading class="mb-2">{{
       t('contribution.paymentHistory.title')
-    }}</SectionTitle>
+    }}</AppHeading>
     <AppTable
       :sort="{ by: 'chargeDate', type: SortType.Desc }"
       :headers="headers"
@@ -35,7 +35,6 @@ import { useI18n } from 'vue-i18n';
 import { computed, ref, watchEffect } from 'vue';
 
 import AppTable from '../../../components/table/AppTable.vue';
-import SectionTitle from '../../../components/SectionTitle.vue';
 import AppPagination from '../../../components/AppPagination.vue';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 
@@ -43,6 +42,7 @@ import { fetchPayments } from '../../../utils/api/member';
 import { Paginated } from '../../../utils/api/api.interface';
 import { GetPaymentData } from '../../../utils/api/api.interface';
 import { Header, SortType } from '../../../components/table/table.interface';
+import AppHeading from '../../../components/AppHeading.vue';
 
 const { t, n } = useI18n();
 

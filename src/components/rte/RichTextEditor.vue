@@ -1,61 +1,61 @@
 <template>
-  <label v-if="label" class="block mb-1.5 font-semibold">{{
-    formattedLabel
-  }}</label>
+  <div>
+    <AppLabel v-if="label" :label="label" :required="required" />
 
-  <div v-if="editor" class="mb-2 min-h-[2rem] h-auto">
-    <div class="flex flex-row">
-      <RichTextEditorButton
-        icon="bold"
-        :title="t('form.richtext.bold')"
-        :active="editor.isActive('bold')"
-        @click="run((cmd) => cmd.toggleBold())"
-      />
-      <RichTextEditorButton
-        icon="italic"
-        :title="t('form.richtext.italic')"
-        :active="editor.isActive('italic')"
-        @click="run((cmd) => cmd.toggleItalic())"
-      />
-      <RichTextEditorButton
-        icon="underline"
-        :title="t('form.richtext.underline')"
-        :active="editor.isActive('underline')"
-        @click="run((cmd) => cmd.toggleUnderline())"
-      />
-      <RichTextEditorButton
-        icon="strikethrough"
-        :title="t('form.richtext.strikethrough')"
-        :active="editor.isActive('strike')"
-        @click="run((cmd) => cmd.toggleStrike())"
-      />
-      <RichTextEditorButton
-        icon="heading"
-        :title="t('form.richtext.heading')"
-        :active="editor.isActive('heading', { level: 3 })"
-        @click="run((cmd) => cmd.toggleHeading({ level: 3 }))"
-      />
-      <RichTextEditorButton
-        icon="list"
-        :title="t('form.richtext.bulletlist')"
-        :active="editor.isActive('bulletList')"
-        @click="run((cmd) => cmd.toggleBulletList())"
-      />
-      <RichTextEditorButton
-        icon="list-ol"
-        :title="t('form.richtext.numberedlist')"
-        :active="editor.isActive('orderedList')"
-        @click="run((cmd) => cmd.toggleOrderedList())"
-      />
-      <RichTextEditorButton
-        icon="link"
-        :title="t('form.richtext.link')"
-        :active="editor.isActive('link')"
-        @click="setLink"
-      />
+    <div v-if="editor" class="mb-2 min-h-[2rem] h-auto">
+      <div class="flex flex-row">
+        <RichTextEditorButton
+          icon="bold"
+          :title="t('form.richtext.bold')"
+          :active="editor.isActive('bold')"
+          @click="run((cmd) => cmd.toggleBold())"
+        />
+        <RichTextEditorButton
+          icon="italic"
+          :title="t('form.richtext.italic')"
+          :active="editor.isActive('italic')"
+          @click="run((cmd) => cmd.toggleItalic())"
+        />
+        <RichTextEditorButton
+          icon="underline"
+          :title="t('form.richtext.underline')"
+          :active="editor.isActive('underline')"
+          @click="run((cmd) => cmd.toggleUnderline())"
+        />
+        <RichTextEditorButton
+          icon="strikethrough"
+          :title="t('form.richtext.strikethrough')"
+          :active="editor.isActive('strike')"
+          @click="run((cmd) => cmd.toggleStrike())"
+        />
+        <RichTextEditorButton
+          icon="heading"
+          :title="t('form.richtext.heading')"
+          :active="editor.isActive('heading', { level: 3 })"
+          @click="run((cmd) => cmd.toggleHeading({ level: 3 }))"
+        />
+        <RichTextEditorButton
+          icon="list"
+          :title="t('form.richtext.bulletlist')"
+          :active="editor.isActive('bulletList')"
+          @click="run((cmd) => cmd.toggleBulletList())"
+        />
+        <RichTextEditorButton
+          icon="list-ol"
+          :title="t('form.richtext.numberedlist')"
+          :active="editor.isActive('orderedList')"
+          @click="run((cmd) => cmd.toggleOrderedList())"
+        />
+        <RichTextEditorButton
+          icon="link"
+          :title="t('form.richtext.link')"
+          :active="editor.isActive('link')"
+          @click="setLink"
+        />
+      </div>
     </div>
+    <editor-content :editor="editor" class="content-message" />
   </div>
-  <editor-content :editor="editor" class="content-message" />
 </template>
 
 <script lang="ts" setup="{ emit }">
@@ -67,6 +67,7 @@ import Underline from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
 import Typeography from '@tiptap/extension-typography';
 import RichTextEditorButton from './RichTextEditorButton.vue';
+import AppLabel from '../forms/AppLabel.vue';
 
 const { t } = useI18n();
 
@@ -104,10 +105,6 @@ watch(
     }
   }
 );
-
-const formattedLabel = computed(() => {
-  return props.required ? props.label + '*' : props.label;
-});
 
 onBeforeUnmount(() => {
   editor.value?.destroy();

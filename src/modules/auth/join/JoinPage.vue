@@ -4,12 +4,10 @@
 
     <form v-if="!stripePaymentLoaded" @submit.prevent="submitSignUp">
       <div class="mb-3 content-message" v-html="joinContent.subtitle" />
-      <h3
-        v-if="joinContent.showNoContribution"
-        class="font-semibold text-lg mb-1"
-      >
+
+      <AppSubHeading v-if="joinContent.showNoContribution" class="mb-1">
         {{ t('join.contribution') }}
-      </h3>
+      </AppSubHeading>
 
       <div v-if="joinContent.showNoContribution" class="mb-4">
         <label>
@@ -109,15 +107,15 @@ import Contribution from '../../../components/contribution/Contribution.vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import { generalContent } from '../../../store';
 import StripePayment from '../../../components/StripePayment.vue';
-
 import { JoinContent } from '../../../utils/api/api.interface';
-import { fetchJoinContent } from '../../../utils/api/content';
+import { fetchContent } from '../../../utils/api/content';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { signUp, completeUrl } from '../../../utils/api/signup';
 import useVuelidate from '@vuelidate/core';
 import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
 import calcPaymentFee from '../../../utils/calcPaymentFee';
 import AppAlert from '../../../components/AppAlert.vue';
+import AppSubHeading from '../../../components/AppSubHeading.vue';
 
 const { t, n } = useI18n();
 
@@ -193,7 +191,7 @@ onBeforeMount(async () => {
   stripePaymentLoaded.value = false;
   stripeClientSecret.value = '';
 
-  joinContent.value = await fetchJoinContent();
+  joinContent.value = await fetchContent('join');
 
   signUpData.amount = route.query.amount
     ? Number(route.query.amount)

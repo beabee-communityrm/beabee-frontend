@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="handleSubmit">
-    <SectionTitle class="mb-2">{{ t('contribution.billing') }} </SectionTitle>
+    <AppHeading class="mb-2">{{ t('contribution.billing') }} </AppHeading>
 
     <p v-if="isManualActiveMember" class="mb-4">
       {{ t('contribution.manualPayment') }}
@@ -68,12 +68,12 @@
   <AppModal
     v-if="stripeClientSecret"
     :open="stripePaymentLoaded"
-    class="md:w-[30rem]"
+    class="w-full"
     @close="reset"
   >
-    <SectionTitle class="mb-4">{{
+    <AppHeading class="mb-4">{{
       t(`paymentMethods.${newContribution.paymentMethod}.setLabel`)
-    }}</SectionTitle>
+    }}</AppHeading>
     <StripePayment
       :client-secret="stripeClientSecret"
       :email="email"
@@ -87,14 +87,13 @@ import axios from 'axios';
 import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
-import SectionTitle from '../../../components/SectionTitle.vue';
 import Contribution from '../../../components/contribution/Contribution.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import ProrateContribution from './ProrateContribution.vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import { ContributionContent } from '../../../components/contribution/contribution.interface';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
-import { fetchJoinContent } from '../../../utils/api/content';
+import { fetchContent } from '../../../utils/api/content';
 import { ContributionInfo } from '../../../utils/api/api.interface';
 import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
 import { ContributionType } from '../../../utils/enums/contribution-type.enum';
@@ -109,6 +108,7 @@ import StripePayment from '../../../components/StripePayment.vue';
 import { currentUser } from '../../../store/currentUser';
 import AppAlert from '../../../components/AppAlert.vue';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
+import AppHeading from '../../../components/AppHeading.vue';
 
 const validation = useVuelidate();
 
@@ -247,6 +247,6 @@ watch(
 
 onBeforeMount(async () => {
   reset();
-  content.value = await fetchJoinContent();
+  content.value = await fetchContent('join');
 });
 </script>

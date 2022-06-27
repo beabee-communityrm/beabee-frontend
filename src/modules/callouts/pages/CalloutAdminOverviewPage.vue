@@ -86,20 +86,40 @@
       <ActionButton icon="clone" @click="replicateThisCallout()">
         {{ t('calloutAdminOverview.actions.replicate') }}
       </ActionButton>
-      <ActionButton icon="trash" :href="'/tools/polls/' + callout.slug">
+      <ActionButton icon="trash" @click="showDeleteModal = true">
         {{ t('calloutAdminOverview.actions.delete') }}
       </ActionButton>
+      <AppConfirmDialog
+        v-if="showDeleteModal"
+        open
+        @close="showDeleteModal = false"
+        @confirm="confirmDeleteCallout"
+      >
+        <template #title>
+          {{ t('calloutAdminOverview.actions.confirmDelete.title') }}
+        </template>
+        <template #text>
+          {{ t('calloutAdminOverview.actions.confirmDelete.text') }}
+        </template>
+        <template #button-cancel-text>
+          {{ t('calloutAdminOverview.actions.confirmDelete.actionNo') }}
+        </template>
+        <template #button-confirm-text>
+          {{ t('calloutAdminOverview.actions.confirmDelete.actionYes') }}
+        </template>
+      </AppConfirmDialog>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import {
   GetMoreCalloutData,
   ItemStatus,
 } from '../../../utils/api/api.interface';
+import { deleteCallout } from '../../../utils/api/callout';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppInfoList from '../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../components/AppInfoListItem.vue';
@@ -111,6 +131,7 @@ import ActionButton from '../components/ActionButton.vue';
 import CalloutSummary from '../../../components/CalloutSummary.vue';
 import AppAlert from '../../../components/AppAlert.vue';
 import { updateCallout, createCallout } from '../../../utils/api/callout';
+import AppConfirmDialog from '../../../components/AppConfirmDialog.vue';
 
 const props = defineProps<{
   callout: GetMoreCalloutData;
@@ -122,7 +143,17 @@ const router = useRouter();
 const wasJustCreated = route.query.created !== undefined;
 const wasJustUpdated = route.query.updated !== undefined;
 
+const showDeleteModal = ref(false);
+
 const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
+
+const confirmDeleteCallout = () => {
+  deleteCallout(props.callout.slug);
+  router.push({
+    path: '/admin/callouts',
+    query: { deleted: null },
+  });
+};
 
 async function replicateThisCallout() {
   const newCalloutData = {

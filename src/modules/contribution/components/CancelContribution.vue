@@ -1,8 +1,8 @@
 <template>
   <div v-if="canCancel">
-    <SectionTitle class="mb-4">{{
+    <AppHeading class="mb-4">{{
       t('contribution.cancelContribution')
-    }}</SectionTitle>
+    }}</AppHeading>
 
     <p class="mb-3 text-sm">
       {{
@@ -28,10 +28,10 @@ import AppButton from '../../../components/forms/AppButton.vue';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import SectionTitle from '../../../components/SectionTitle.vue';
 import { ContributionInfo } from '../../../utils/api/api.interface';
 import { MembershipStatus } from '../../../utils/enums/membership-status.enum';
 import { ContributionType } from '../../../utils/enums/contribution-type.enum';
+import AppHeading from '../../../components/AppHeading.vue';
 
 const { t } = useI18n();
 

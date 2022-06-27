@@ -1,5 +1,5 @@
 <template>
-  <h2 class="font-title font-semibold text-xl text-body-80"><slot /></h2>
+  <h3 class="font-title font-semibold text-lg"><slot /></h3>
 </template>
 <script lang="ts" setup>
 /* Stub script for better type inference */
