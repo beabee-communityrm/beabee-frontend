@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="font-semibold text-lg mb-1">{{ t('join.paymentMethod') }}</h3>
+    <AppSubHeading class="mb-1">{{ t('join.paymentMethod') }}</AppSubHeading>
     <div class="grid grid-cols-3 gap-2">
       <div v-for="method in methods" :key="method" class="flex-1">
         <button
@@ -34,6 +34,7 @@
 import { useI18n } from 'vue-i18n';
 import { PaymentMethod } from '../../utils/enums/payment-method.enum';
 import PaymentMethodIcon from '../payment-method/PaymentMethodIcon.vue';
+import AppSubHeading from '../AppSubHeading.vue';
 
 const { t } = useI18n();
 
