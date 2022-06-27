@@ -57,7 +57,7 @@ import AppSubHeading from '../AppSubHeading.vue';
 const { t } = useI18n();
 
 defineProps({
-  memberFirstName: {
+  firstName: {
     type: String,
     default: '',
   },

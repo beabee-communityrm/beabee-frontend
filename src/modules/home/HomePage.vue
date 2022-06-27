@@ -15,7 +15,7 @@
 
   <section v-if="showWelcomeMessage" class="mb-10">
     <WelcomeMessage
-      :member-first-name="user.firstname"
+      :first-name="user.firstname"
       :text="profileContent.introMessage"
       @close="removeWelcomeMessage"
     />
