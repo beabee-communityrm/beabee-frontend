@@ -8,7 +8,7 @@
     type="submit"
     class="w-full mt-4"
     @click="completePayment"
-    >Complete</AppButton
+    >{{ t('joinPayment.complete') }}</AppButton
   >
 </template>
 <script lang="ts" setup>
@@ -108,7 +108,7 @@ onBeforeMount(async () => {
           (result.error.type === 'card_error' ||
             result.error.type === 'validation_error')
             ? (error.value = result.error.message)
-            : t('notification.error');
+            : t('joinPayment.genericError');
       }
     };
   }

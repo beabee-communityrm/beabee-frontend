@@ -56,12 +56,7 @@
         <template #icon>
           <font-awesome-icon :icon="['fa', 'hand-sparkles']" />
         </template>
-        {{
-          t('joinPayment.willBeContributing', {
-            amount: n(totalAmount, 'currency'),
-            period: signUpData.period,
-          })
-        }}
+        {{ t('joinPayment.willBeContributing', contributionDescription) }}
       </AppAlert>
       <p class="mb-3">
         {{ t('joinPayment.note') }}
@@ -155,16 +150,16 @@ const totalAmount = computed(
     (signUpData.payFee ? calcPaymentFee(signUpData).value : 0)
 );
 
+const contributionDescription = computed(() => ({
+  amount: n(totalAmount.value, 'currency'),
+  period:
+    signUpData.period === 'monthly' ? t('common.month') : t('common.year'),
+}));
+
 const buttonText = computed(() => {
   return signUpData.noContribution
     ? t('join.now')
-    : t('join.contribute', {
-        amount: n(totalAmount.value, 'currency'),
-        period:
-          signUpData.period === 'monthly'
-            ? t('common.month')
-            : t('common.year'),
-      });
+    : t('join.contribute', contributionDescription.value);
 });
 
 const validation = useVuelidate();
