@@ -547,7 +547,7 @@
     "privacy": "Datenschutzerklärung"
   },
   "joinPayment": {
-    "goBack": "Hast du etwas vergessen?",
+    "goBack": "Hast du etwas vergessen? {back}",
     "goBackButton": "Zurück zum letzten Schritt",
     "note": "Du kannst deine Zahlungsdaten jederzeit in deinem Nutzer-Account ändern und dort auch sehen, wie viel du in der Vergangenheit bereits gezahlt hast. ",
     "willBeContributing": "Dein Beitrag ist {amount}/{period}"
