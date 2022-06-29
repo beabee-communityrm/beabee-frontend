@@ -1,6 +1,11 @@
 import axios from '../../axios';
 import { ContributionPeriod } from '../enums/contribution-period.enum';
-import { PaymentFlowParams, Serial, SignupData } from './api.interface';
+import {
+  CompleteSignupData,
+  PaymentFlowParams,
+  Serial,
+  SignupData,
+} from './api.interface';
 
 export const completeUrl = import.meta.env.VITE_APP_BASE_URL + '/join/complete';
 
@@ -26,8 +31,12 @@ export async function signUp(data: SignupData): Promise<PaymentFlowParams> {
   ).data;
 }
 
-export async function completeSignUp(paymentFlowId: string): Promise<void> {
-  await axios.post('/signup/complete', { paymentFlowId });
+export async function completeSignUp(data: CompleteSignupData): Promise<void> {
+  await axios.post('/signup/complete', {
+    paymentFlowId: data.paymentFlowId,
+    firstname: data.firstname,
+    lastname: data.lastname,
+  });
 }
 
 export async function confirmEmail(
