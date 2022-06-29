@@ -1,5 +1,10 @@
 /// <reference types="vite/client" />
 
+declare module 'virtual:theme' {
+  const theme: any;
+  export default theme;
+}
+
 interface ImportMetaEnv {
   VITE_APP_BASE_URL: string;
   VITE_API_BASE_URL: string;

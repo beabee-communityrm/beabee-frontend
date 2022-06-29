@@ -130,7 +130,7 @@ import {
 import ActionButton from '../components/ActionButton.vue';
 import CalloutSummary from '../../../components/CalloutSummary.vue';
 import AppAlert from '../../../components/AppAlert.vue';
-import { updateCallout, createCallout } from '../../../utils/api/callout';
+import { createCallout } from '../../../utils/api/callout';
 import AppConfirmDialog from '../../../components/AppConfirmDialog.vue';
 
 const props = defineProps<{

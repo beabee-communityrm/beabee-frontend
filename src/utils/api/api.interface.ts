@@ -283,10 +283,7 @@ export interface GetMoreCalloutData
   extends GetBasicCalloutData,
     MoreCalloutData {}
 
-export interface CreateCalloutData extends MoreCalloutData {
-  // Must currently set a date on creation
-  starts: Date;
-}
+export type CreateCalloutData = MoreCalloutData;
 
 export type UpdateCalloutData = Omit<CreateCalloutData, 'slug'>;
 
