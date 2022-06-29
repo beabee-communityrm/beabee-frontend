@@ -41,7 +41,7 @@ import AppButton from '../../../../components/forms/AppButton.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 import { GetEmailData } from '../../../../utils/api/api.interface';
-import { fetchEmail } from '../../../../utils/api/email';
+import { fetchEmail, updateEmail } from '../../../../utils/api/email';
 
 const { t } = useI18n();
 const stepT = (key: string) => t('membershipBuilder.steps.emails.' + key);
@@ -50,7 +50,12 @@ const welcomeEmail = ref<GetEmailData>();
 const cancellationEmail = ref<GetEmailData>();
 
 async function handleSubmit() {
-  return;
+  if (welcomeEmail.value && cancellationEmail.value) {
+    await Promise.all([
+      await updateEmail('welcome', welcomeEmail.value),
+      await updateEmail('cancelled-contribution', cancellationEmail.value),
+    ]);
+  }
 }
 
 onBeforeMount(async () => {
