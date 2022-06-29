@@ -1,7 +1,10 @@
 <template>
   <form v-if="profileContent" @submit.prevent="handleSubmit">
     <AppHeading class="mb-5">Intro message</AppHeading>
-    <p class="mb-4">Once your users are done with re</p>
+    <p class="mb-8">
+      Once your members are done with registration, they'll be greated with this
+      message on first login. Make it yours!
+    </p>
 
     <AppCheckbox
       v-model="showWelcomeMessage"

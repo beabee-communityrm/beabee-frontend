@@ -1,7 +1,7 @@
 <template>
   <JoinHeader :title="joinContent.title" />
 
-  <form>
+  <form v-bind="$attrs">
     <div class="mb-3 content-message" v-html="joinContent.subtitle" />
 
     <AppSubHeading v-if="joinContent.showNoContribution" class="mb-1">

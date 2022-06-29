@@ -10,7 +10,7 @@
       <div class="flex-1"></div>
     </div>
 
-    <div class="flex">
+    <div class="flex mb-8">
       <div class="flex-1">
         <AppSubHeading class="mb-4">Cancellation email</AppSubHeading>
         <AppInput
@@ -30,6 +30,7 @@
 import { onBeforeMount, ref } from 'vue';
 import AppHeading from '../../../../components/AppHeading.vue';
 import AppSubHeading from '../../../../components/AppSubHeading.vue';
+import AppButton from '../../../../components/forms/AppButton.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 import { GetEmailData } from '../../../../utils/api/api.interface';

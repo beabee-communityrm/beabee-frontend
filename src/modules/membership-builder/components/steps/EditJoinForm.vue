@@ -3,6 +3,10 @@
     <div v-if="joinContent" class="flex gap-8 mb-12">
       <div class="flex-1">
         <AppHeading class="mb-5">Join form editor</AppHeading>
+        <p class="mb-8">
+          In this section you can edit, fine tune and preview your member signup
+          form.
+        </p>
         <AppInput
           v-model="joinContent.title"
           label="Title"
@@ -59,7 +63,7 @@
       </div>
       <div class="flex-1 mt-4">
         <AuthBox>
-          <JoinForm :join-content="joinContent" />
+          <JoinForm :join-content="joinContent" @submit.prevent="" />
         </AuthBox>
       </div>
     </div>
@@ -158,7 +162,6 @@ import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import SetupForm from '../../../auth/join/components/SetupForm.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import AuthBox from '../../../auth/AuthBox.vue';
-import JoinHeader from '../../../auth/join/components/JoinHeader.vue';
 
 const joinContent = ref<JoinContent>();
 const setupContent = ref<JoinSetupContent>();

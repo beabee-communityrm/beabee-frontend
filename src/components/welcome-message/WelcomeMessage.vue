@@ -1,19 +1,26 @@
 <template>
-  <div class="bg-white rounded p-4 shadow relative" :class="!small && 'md:8'">
-    <div class="flex" :class="!small && 'md:block'">
+  <div class="bg-white rounded p-4 shadow relative">
+    <div>
       <WelcomeIcon
-        class="float-left mb-4 mr-4 w-[4.5rem] h-auto"
-        :class="!small && 'md:w-[7.5rem] lg:w-[17rem] md:mb-8 md:mr-8'"
+        class="float-left mb-4 mr-4 w-[4.5rem] h-auto md:w-[7.5rem]"
+        :class="!small && 'lg:w-[17rem] lg:mb-8 lg:mr-8'"
       />
 
-      <AppSubHeading class="mb-3">
+      <AppSubHeading class="mb-4">
         {{ t('homePage.welcome', { firstName, lastName }) }}
       </AppSubHeading>
     </div>
 
     <div
-      class="content-message text-sm leading-5 mb-6 whitespace-normal"
-      :class="!small && 'md:text-base md:leading-5.5 lg:text-lg lg:leading-6'"
+      class="
+        content-message
+        text-sm
+        leading-5
+        mb-6
+        whitespace-normal
+        md:text-base md:leading-5.5
+      "
+      :class="!small && 'lg:leading-6'"
       v-html="text"
     />
 
