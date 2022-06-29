@@ -84,7 +84,7 @@ export const adminMenu: MenuSection[] = [
   },
   {
     type: 'settings',
-    title: t('menu.adminSettings'),
+    title: t('menu.settings'),
     items: [
       {
         title: t('menu.membershipBuilder'),
