@@ -1,57 +1,121 @@
 <template>
-  <JoinForm
-    v-if="!stripePaymentLoaded"
-    :join-content="joinContent"
-    :loading="loading"
-    @submit.prevent="submitSignUp"
-  />
+  <AuthBox>
+    <JoinHeader :title="joinContent.title" />
 
-  <div
-    v-if="stripeClientSecret && localSignUpData"
-    v-show="stripePaymentLoaded"
-  >
-    <AppAlert variant="info" class="mb-4">
-      <template #icon>
-        <font-awesome-icon :icon="['fa', 'hand-sparkles']" />
-      </template>
-      {{ contributionT('joinPayment.willBeContributing', localSignUpData) }}
-    </AppAlert>
-    <p class="mb-3">
-      {{ t('joinPayment.note') }}
-    </p>
-    <p class="mb-6">
-      <i18n-t keypath="joinPayment.goBack">
-        <template #back>
-          <a class="cursor-pointer underline text-link" @click="reset">
-            {{ t('joinPayment.goBackButton') }}
-          </a>
+    <form v-if="!stripePaymentLoaded" @submit.prevent="submitSignUp">
+      <div class="mb-3 content-message" v-html="joinContent.subtitle" />
+
+      <AppSubHeading v-if="joinContent.showNoContribution" class="mb-1">
+        {{ t('join.contribution') }}
+      </AppSubHeading>
+
+      <div v-if="joinContent.showNoContribution" class="mb-4">
+        <label>
+          <input v-model="signUpData.noContribution" type="checkbox" />
+          {{ t('join.noContribution') }}
+        </label>
+      </div>
+
+      <Contribution
+        v-if="!generalContent.hideContribution && !signUpData.noContribution"
+        v-model:amount="signUpData.amount"
+        v-model:period="signUpData.period"
+        v-model:payFee="signUpData.payFee"
+        v-model:paymentMethod="signUpData.paymentMethod"
+        :content="joinContent"
+      >
+        <AccountSection
+          v-model:email="signUpData.email"
+          v-model:password="signUpData.password"
+        />
+      </Contribution>
+
+      <!-- TODO: clean this up by always having account section above contribution -->
+      <AccountSection
+        v-else
+        v-model:email="signUpData.email"
+        v-model:password="signUpData.password"
+      />
+
+      <MessageBox v-if="validation.$errors.length > 0" class="mb-4" />
+
+      <AppButton
+        :disabled="validation.$invalid"
+        :loading="loading"
+        variant="link"
+        type="submit"
+        class="mb-4 w-full"
+        >{{ buttonText }}</AppButton
+      >
+
+      <JoinFooter :privacy-link="generalContent.privacyLink" />
+    </form>
+
+    <div v-if="stripeClientSecret" v-show="stripePaymentLoaded">
+      <AppAlert variant="info" class="mb-4">
+        <template #icon>
+          <font-awesome-icon :icon="['fa', 'hand-sparkles']" />
         </template>
-      </i18n-t>
-    </p>
-    <StripePayment
-      :client-secret="stripeClientSecret"
-      :email="localSignUpData.email"
-      :return-url="completeUrl"
-      @loaded="handleStripePaymentLoaded"
-    />
-  </div>
+        {{ t('joinPayment.willBeContributing', contributionDescription) }}
+      </AppAlert>
+      <p class="mb-3">
+        {{ t('joinPayment.note') }}
+      </p>
+      <p class="mb-6">
+        <i18n-t keypath="joinPayment.goBack">
+          <template #back>
+            <a
+              class="cursor-pointer underline text-link"
+              @click="
+                stripeClientSecret = '';
+                stripePaymentLoaded = false;
+              "
+            >
+              {{ t('joinPayment.goBackButton') }}
+            </a>
+          </template>
+        </i18n-t>
+      </p>
+      <StripePayment
+        :client-secret="stripeClientSecret"
+        :email="signUpData.email"
+        :return-url="completeUrl"
+        @loaded="
+          stripePaymentLoaded = true;
+          loading = false;
+        "
+      />
+    </div>
+  </AuthBox>
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { JoinContent, SignupData } from '../../../utils/api/api.interface';
+import { computed, onBeforeMount, reactive, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRoute, useRouter } from 'vue-router';
+import JoinHeader from './components/JoinHeader.vue';
+import AuthBox from '../AuthBox.vue';
+import AccountSection from './components/AccountSection.vue';
+import JoinFooter from './components/JoinFooter.vue';
+import AppButton from '../../../components/forms/AppButton.vue';
+import Contribution from '../../../components/contribution/Contribution.vue';
+import MessageBox from '../../../components/MessageBox.vue';
+import { generalContent } from '../../../store';
+import StripePayment from '../../../components/StripePayment.vue';
+import { JoinContent } from '../../../utils/api/api.interface';
 import { fetchContent } from '../../../utils/api/content';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
-import { completeUrl, signUp } from '../../../utils/api/signup';
-import JoinForm from './components/JoinForm.vue';
-import { useI18n } from 'vue-i18n';
-import contributionT from '../../../utils/contributionT';
-import StripePayment from '../../../components/StripePayment.vue';
+import { signUp, completeUrl } from '../../../utils/api/signup';
+import useVuelidate from '@vuelidate/core';
+import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
+import calcPaymentFee from '../../../utils/calcPaymentFee';
 import AppAlert from '../../../components/AppAlert.vue';
+import AppSubHeading from '../../../components/AppSubHeading.vue';
 
+const { t, n } = useI18n();
+
+const route = useRoute();
 const router = useRouter();
-const { t } = useI18n();
 
 const joinContent = ref<JoinContent>({
   initialAmount: 5,
@@ -65,26 +129,43 @@ const joinContent = ref<JoinContent>({
   paymentMethods: [],
 });
 
+const signUpData = reactive({
+  email: '',
+  password: '',
+  amount: 5,
+  period: ContributionPeriod.Monthly,
+  payFee: true,
+  noContribution: false,
+  prorate: false,
+  paymentMethod: PaymentMethod.StripeCard,
+});
+
 const loading = ref(false);
-const localSignUpData = ref<SignupData>();
-const stripeClientSecret = ref('');
 const stripePaymentLoaded = ref(false);
+const stripeClientSecret = ref('');
 
-function reset() {
-  loading.value = false;
-  stripeClientSecret.value = '';
-  stripePaymentLoaded.value = false;
-}
+const totalAmount = computed(
+  () =>
+    signUpData.amount +
+    (signUpData.payFee ? calcPaymentFee(signUpData).value : 0)
+);
 
-function handleStripePaymentLoaded() {
-  stripePaymentLoaded.value = true;
-  loading.value = false;
-}
+const contributionDescription = computed(() => ({
+  amount: n(totalAmount.value, 'currency'),
+  period:
+    signUpData.period === 'monthly' ? t('common.month') : t('common.year'),
+}));
 
-async function submitSignUp(signUpData: SignupData) {
+const buttonText = computed(() => {
+  return signUpData.noContribution
+    ? t('join.now')
+    : t('join.contribute', contributionDescription.value);
+});
+
+const validation = useVuelidate();
+
+async function submitSignUp() {
   loading.value = true;
-  localSignUpData.value = signUpData;
-
   try {
     const data = await signUp(signUpData);
     if (data.redirectUrl) {
@@ -101,7 +182,29 @@ async function submitSignUp(signUpData: SignupData) {
 }
 
 onBeforeMount(async () => {
-  reset();
+  loading.value = false;
+  stripePaymentLoaded.value = false;
+  stripeClientSecret.value = '';
+
   joinContent.value = await fetchContent('join');
+
+  signUpData.amount = route.query.amount
+    ? Number(route.query.amount)
+    : joinContent.value.initialAmount;
+
+  const period = route.query.period as ContributionPeriod;
+  signUpData.period = Object.values(ContributionPeriod).includes(period)
+    ? period
+    : joinContent.value.initialPeriod;
+
+  signUpData.paymentMethod = joinContent.value.paymentMethods[0];
+
+  if (!joinContent.value.showAbsorbFee) {
+    signUpData.payFee = false;
+  }
+
+  if (generalContent.value.hideContribution) {
+    signUpData.noContribution = true;
+  }
 });
 </script>

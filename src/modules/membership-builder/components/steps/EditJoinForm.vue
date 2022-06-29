@@ -58,7 +58,7 @@
         />
       </div>
       <div class="flex-1 mt-4">
-        <JoinForm :join-content="joinContent" />
+        <!-- <JoinForm :join-content="joinContent" /> -->
       </div>
     </div>
     <div v-if="setupContent" class="flex gap-8">
@@ -147,7 +147,7 @@ import { useI18n } from 'vue-i18n';
 import AppSelect from '../../../../components/forms/AppSelect.vue';
 import { ContributionPeriod } from '../../../../utils/enums/contribution-period.enum';
 import AppCheckbox from '../../../../components/forms/AppCheckbox.vue';
-import JoinForm from '../../../auth/join/components/JoinForm.vue';
+// import JoinForm from '../../../auth/join/components/JoinForm.vue';
 import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import SetupForm from '../../../auth/join/components/SetupForm.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
