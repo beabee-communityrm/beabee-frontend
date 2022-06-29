@@ -23,6 +23,7 @@
       <div class="flex-1">
         <WelcomeMessage
           :first-name="currentUser?.firstname || ''"
+          :last-name="currentUser?.lastname || ''"
           :text="profileContent.welcomeMessage"
           small
         />

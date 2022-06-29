@@ -34,6 +34,10 @@
     "joinNow": "Join now",
     "loginToYourAccount": "Login to your account",
     "membersOnly": "This callout is open to members only. To participate",
+    "share": {
+      "address": "Share this callout with the following address:",
+      "services": "Or quickly share using one of these services:"
+    },
     "status": {
       "endedOn": "on {date}",
       "endsIn": "Ends in {duration}",
@@ -44,6 +48,7 @@
     "youResponded": "You replied to this callout ♥"
   },
   "calloutAdmin": {
+    "deleted": "Callout deleted.",
     "overview": "Overview",
     "responses": "Responses"
   },
@@ -125,6 +130,7 @@
     "annually": "Annually",
     "backToHome": "Back to home",
     "contributing": "Contributing",
+    "copy": "Copy",
     "every": "every",
     "goBack": "Go back",
     "hello": "Hello",
@@ -547,6 +553,8 @@
     "privacy": "Privacy Policy"
   },
   "joinPayment": {
+    "complete": "Complete",
+    "genericError": "Oops, something went wrong! Contact support if this happens again.",
     "goBack": "Did you miss something? {back}",
     "goBackButton": "Back to the previous screen",
     "note": "You'll be able to modify your contribution and access your payment history at any time in your member account",
@@ -590,7 +598,7 @@
     }
   },
   "notification": {
-    "error": "Oops, something went wrong!",
+    "error": "Oops, something went wrong! Try reloading the page.",
     "success": "Well done! Your action was successful."
   },
   "pageTitle": {

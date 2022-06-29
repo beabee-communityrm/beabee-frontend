@@ -1,11 +1,9 @@
 <template>
   <AuthBox>
+    <JoinHeader :title="joinContent.title" />
+
     <form @submit.prevent="emit('submit', signUpData)">
-      <JoinHeader
-        class="mb-3"
-        :title="joinContent.title"
-        :description="joinContent.subtitle"
-      />
+      <div class="mb-3 content-message" v-html="joinContent.subtitle" />
 
       <AppSubHeading v-if="joinContent.showNoContribution" class="mb-1">
         {{ t('join.contribution') }}
@@ -23,7 +21,7 @@
         v-model:amount="signUpData.amount"
         v-model:period="signUpData.period"
         v-model:payFee="signUpData.payFee"
-        :fee="signUpData.fee"
+        v-model:payment-method="signUpData.paymentMethod"
         :content="joinContent"
       >
         <AccountSection
@@ -79,6 +77,8 @@ import MessageBox from '../../../../components/MessageBox.vue';
 import AppCheckbox from '../../../../components/forms/AppCheckbox.vue';
 import AuthBox from '../../AuthBox.vue';
 import AppSubHeading from '../../../../components/AppSubHeading.vue';
+import { PaymentMethod } from '../../../../utils/enums/payment-method.enum';
+import contributionT from '../../../../utils/contributionT';
 
 const emit = defineEmits(['submit']);
 const props = defineProps<{
@@ -86,7 +86,7 @@ const props = defineProps<{
   loading?: boolean;
 }>();
 
-const { n, t } = useI18n();
+const { t } = useI18n();
 const route = useRoute();
 const validation = useVuelidate();
 
@@ -98,28 +98,14 @@ const signUpData = reactive({
   payFee: true,
   noContribution: false,
   prorate: false,
-
-  get totalAmount(): number {
-    return this.payFee && this.period === ContributionPeriod.Monthly
-      ? this.amount + this.fee
-      : this.amount;
-  },
-  get fee(): number {
-    return (this.amount + 20) / 100;
-  },
+  paymentMethod: PaymentMethod.StripeCard,
 });
 
-const buttonText = computed(() =>
-  signUpData.noContribution
+const buttonText = computed(() => {
+  return signUpData.noContribution
     ? t('join.now')
-    : t('join.contribute', {
-        amount: n(signUpData.totalAmount, 'currency'),
-        period:
-          signUpData.period === 'monthly'
-            ? t('common.month')
-            : t('common.year'),
-      })
-);
+    : contributionT('join.contribute', signUpData);
+});
 
 onBeforeMount(() => {
   signUpData.amount = route.query.amount
@@ -130,6 +116,8 @@ onBeforeMount(() => {
   signUpData.period = Object.values(ContributionPeriod).includes(period)
     ? period
     : props.joinContent.initialPeriod;
+
+  signUpData.paymentMethod = props.joinContent.paymentMethods[0];
 
   if (!props.joinContent.showAbsorbFee) {
     signUpData.payFee = false;

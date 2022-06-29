@@ -7,7 +7,7 @@
       />
 
       <AppSubHeading class="mb-3">
-        {{ t('homePage.welcome', { firstName }) }}
+        {{ t('homePage.welcome', { firstName, lastName }) }}
       </AppSubHeading>
     </div>
 
@@ -36,6 +36,7 @@ const { t } = useI18n();
 
 defineProps<{
   firstName: string;
+  lastName: string;
   text: string;
   small?: boolean;
 }>();

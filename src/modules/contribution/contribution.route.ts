@@ -22,8 +22,8 @@ export const contributionRoute: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/profile/contribution/payment-source/complete',
-    name: 'complete payment source',
+    path: '/profile/contribution/payment-method/complete',
+    name: 'complete payment method',
     component: () => import('./pages/PaymentSourceCompletePage.vue'),
     meta: {
       pageTitle: t('menu.contribution'),
