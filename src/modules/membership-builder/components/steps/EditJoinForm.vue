@@ -58,7 +58,9 @@
         />
       </div>
       <div class="flex-1 mt-4">
-        <!-- <JoinForm :join-content="joinContent" /> -->
+        <AuthBox>
+          <JoinForm :join-content="joinContent" />
+        </AuthBox>
       </div>
     </div>
     <div v-if="setupContent" class="flex gap-8">
@@ -121,7 +123,11 @@
           />
         </template>
       </div>
-      <div class="flex-1"><SetupForm :setup-content="setupContent" /></div>
+      <div class="flex-1">
+        <AuthBox>
+          <SetupForm :setup-content="setupContent" />
+        </AuthBox>
+      </div>
     </div>
     <AppButton
       v-if="joinContent && setupContent"
@@ -147,10 +153,12 @@ import { useI18n } from 'vue-i18n';
 import AppSelect from '../../../../components/forms/AppSelect.vue';
 import { ContributionPeriod } from '../../../../utils/enums/contribution-period.enum';
 import AppCheckbox from '../../../../components/forms/AppCheckbox.vue';
-// import JoinForm from '../../../auth/join/components/JoinForm.vue';
+import JoinForm from '../../../auth/join/components/JoinForm.vue';
 import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import SetupForm from '../../../auth/join/components/SetupForm.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
+import AuthBox from '../../../auth/AuthBox.vue';
+import JoinHeader from '../../../auth/join/components/JoinHeader.vue';
 
 const joinContent = ref<JoinContent>();
 const setupContent = ref<JoinSetupContent>();

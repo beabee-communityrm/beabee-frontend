@@ -1,80 +1,73 @@
 <template>
-  <AuthBox>
-    <form @submit.prevent="emit('submit', setupMemberData)">
-      <JoinHeader
-        :title="
-          t('joinSetup.welcome', {
-            firstName: setupMemberData.firstName,
-            lastName: setupMemberData.lastName,
-          })
-        "
+  <form @submit.prevent="emit('submit', setupMemberData)">
+    <JoinHeader
+      :title="
+        t('joinSetup.welcome', {
+          firstName: setupMemberData.firstName,
+          lastName: setupMemberData.lastName,
+        })
+      "
+    />
+    <div class="mb-6 content-message" v-html="t('joinSetup.confirmDetails')" />
+    <p class="mt-2 mb-4">
+      {{ setupContent.welcome }}
+    </p>
+
+    <ContactInformation
+      v-model:email="setupMemberData.email"
+      v-model:firstName="setupMemberData.firstName"
+      v-model:lastName="setupMemberData.lastName"
+    />
+
+    <template v-if="setupContent.showMailOptIn">
+      <ContactMailOptIn
+        v-model="setupMemberData.profile.deliveryOptIn"
+        :content="setupContent"
       />
-      <div
-        class="mb-6 content-message"
-        v-html="t('joinSetup.confirmDetails')"
+
+      <AppAddress
+        v-model:line1="setupMemberData.addressLine1"
+        v-model:line2="setupMemberData.addressLine2"
+        v-model:postCode="setupMemberData.postCode"
+        v-model:cityOrTown="setupMemberData.cityOrTown"
+        :is-address-required="setupMemberData.profile.deliveryOptIn"
       />
-      <p class="mt-2 mb-4">
-        {{ setupContent.welcome }}
+    </template>
+
+    <template v-if="setupContent.showNewsletterOptIn">
+      <p class="text-lg mb-1">
+        {{ setupContent.newsletterTitle }}
       </p>
 
-      <ContactInformation
-        v-model:email="setupMemberData.email"
-        v-model:firstName="setupMemberData.firstName"
-        v-model:lastName="setupMemberData.lastName"
+      <p class="mb-4 text-sm">
+        {{ setupContent.newsletterText }}
+      </p>
+
+      <AppCheckbox
+        v-model="setupMemberData.profile.newsletterOptIn"
+        :label="setupContent.newsletterOptIn"
+        class="mb-4 font-bold"
       />
+    </template>
 
-      <template v-if="setupContent.showMailOptIn">
-        <ContactMailOptIn
-          v-model="setupMemberData.profile.deliveryOptIn"
-          :content="setupContent"
-        />
+    <MessageBox v-if="validation.$errors.length > 0" class="mb-4" />
 
-        <AppAddress
-          v-model:line1="setupMemberData.addressLine1"
-          v-model:line2="setupMemberData.addressLine2"
-          v-model:postCode="setupMemberData.postCode"
-          v-model:cityOrTown="setupMemberData.cityOrTown"
-          :is-address-required="setupMemberData.profile.deliveryOptIn"
-        />
-      </template>
-
-      <template v-if="setupContent.showNewsletterOptIn">
-        <p class="text-lg mb-1">
-          {{ setupContent.newsletterTitle }}
-        </p>
-
-        <p class="mb-4 text-sm">
-          {{ setupContent.newsletterText }}
-        </p>
-
-        <AppCheckbox
-          v-model="setupMemberData.profile.newsletterOptIn"
-          :label="setupContent.newsletterOptIn"
-          class="mb-4 font-bold"
-        />
-      </template>
-
-      <MessageBox v-if="validation.$errors.length > 0" class="mb-4" />
-
-      <AppButton
-        variant="link"
-        type="submit"
-        :loading="loading"
-        :disabled="validation.$invalid"
-        class="w-full"
-      >
-        {{ t('joinSetup.continue') }}
-      </AppButton>
-    </form>
-  </AuthBox>
+    <AppButton
+      variant="link"
+      type="submit"
+      :loading="loading"
+      :disabled="validation.$invalid"
+      class="w-full"
+    >
+      {{ t('joinSetup.continue') }}
+    </AppButton>
+  </form>
 </template>
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
 import { onBeforeMount, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { JoinSetupContent } from '../../../../utils/api/api.interface';
-
-import AuthBox from '../../AuthBox.vue';
 import JoinHeader from './JoinHeader.vue';
 import AppAddress from '../../../../components/AppAddress.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
