@@ -7,6 +7,15 @@ import {
   faCreditCard as farCreditCard,
   faUser as farUser,
 } from '@fortawesome/free-regular-svg-icons';
+
+import {
+  faFacebook,
+  faLinkedin,
+  faTelegram,
+  faTwitter,
+  faWhatsapp,
+} from '@fortawesome/free-brands-svg-icons';
+
 import {
   faSignInAlt,
   faCaretLeft,
@@ -38,6 +47,8 @@ import {
   faLink,
   faHandSparkles,
   faTag,
+  faCopy,
+  faEnvelope,
   faCreditCard,
   faBold,
   faItalic,
@@ -87,6 +98,13 @@ library.add(
   faTag,
   faCreditCard,
   faTag,
+  faCopy,
+  faFacebook,
+  faLinkedin,
+  faTelegram,
+  faTwitter,
+  faWhatsapp,
+  faEnvelope,
   faBold,
   faItalic,
   faStrikethrough,

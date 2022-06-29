@@ -41,12 +41,15 @@
       </div>
       <AppButton
         v-if="callout.status === ItemStatus.Open"
-        icon="share"
+        :icon="showSharingPanel ? 'caret-down' : 'share'"
         variant="primaryOutlined"
-        class="hidden"
+        @click="toggleSharePanel"
         >{{ t('common.share') }}</AppButton
       >
     </div>
+    <transition-group name="slide">
+      <SharingPanel v-if="showSharingPanel" :slug="callout.slug" />
+    </transition-group>
     <div
       v-if="showThanksMessage"
       class="flex mb-6 bg-white rounded p-6 text-lg text-success"
@@ -152,6 +155,7 @@ import AppItemStatus from '../../../components/AppItemStatus.vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import { currentUser } from '../../../store';
 import GuestFields from '../components/GuestFields.vue';
+import SharingPanel from '../components/CalloutSharingPanel.vue';
 import axios from '../../../axios';
 
 type FormSubmission = { data: CalloutResponseAnswers };
@@ -165,6 +169,11 @@ const responses = ref<Paginated<GetCalloutResponseData>>();
 
 const guestName = ref('');
 const guestEmail = ref('');
+
+const showSharingPanel = ref(false);
+const toggleSharePanel = () => {
+  showSharingPanel.value = !showSharingPanel.value;
+};
 
 const hasResponded = computed(
   () => !!responses.value && responses.value.count > 0
@@ -278,3 +287,23 @@ onBeforeMount(async () => {
     : { total: 0, count: 0, offset: 0, items: [] };
 });
 </script>
+
+<style scoped>
+.slide-enter-from,
+.slide-leave-to {
+  max-height: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.2s ease-out;
+}
+.slide-enter-to,
+.slide-leave-from {
+  max-height: 16rem;
+  height: auto;
+}
+</style>
