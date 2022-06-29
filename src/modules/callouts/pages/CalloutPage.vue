@@ -173,7 +173,6 @@ const guestEmail = ref('');
 const showSharingPanel = ref(false);
 const toggleSharePanel = () => {
   showSharingPanel.value = !showSharingPanel.value;
-  console.log('hello!', showSharingPanel);
 };
 
 const hasResponded = computed(
