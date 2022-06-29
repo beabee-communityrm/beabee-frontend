@@ -176,7 +176,7 @@ import { fetchMember, updateMember } from '../../../utils/api/member';
 import AppInfoList from '../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
-import { fetchContactsContent } from '../../../utils/api/content';
+import { fetchContent } from '../../../utils/api/content';
 
 formatLocale;
 
@@ -249,6 +249,6 @@ onBeforeMount(async () => {
   contactAnnotations.description = contact.value.profile.description || '';
   contactAnnotations.tags = contact.value.profile.tags || [];
 
-  contactTags.value = (await fetchContactsContent()).tags;
+  contactTags.value = (await fetchContent('contacts')).tags;
 });
 </script>

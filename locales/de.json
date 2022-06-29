@@ -34,6 +34,10 @@
     "joinNow": "Mitglied werden",
     "loginToYourAccount": "Einloggen",
     "membersOnly": "An diesem Callout können nur zahlende Mitglieder teilnehmen. Um teilzunehmen",
+    "share": {
+      "address": "Diesen Callout per Link teilen:",
+      "services": "Diesen Callout auf einer der folgenden Plattformen teilen: "
+    },
     "status": {
       "endedOn": "am {date}",
       "endsIn": "Endet in {duration}",
@@ -44,6 +48,7 @@
     "youResponded": "Sie haben geantwortet ♥"
   },
   "calloutAdmin": {
+    "deleted": "Callout gelöscht.",
     "overview": "Überblick",
     "responses": "Antworten"
   },
@@ -125,6 +130,7 @@
     "annually": "Jährlich",
     "backToHome": "Zurück zur Startseite",
     "contributing": "Ihr Beitrag",
+    "copy": "Kopieren",
     "every": "pro",
     "goBack": "Zurück",
     "hello": "Hallo",
@@ -204,7 +210,7 @@
       },
       "tags": "Tags"
     },
-    "noContacts": "",
+    "noContacts": "Keine Kontakte",
     "noResults": "Keine Kontakte gefunden",
     "search": "Kontakte durchsuchen...",
     "showingOf": "{start} to {end} von {total} Kontakten werden angezeigt."
@@ -547,10 +553,12 @@
     "privacy": "Datenschutzerklärung"
   },
   "joinPayment": {
-    "goBack": "Haben Sie etwas vergessen?",
+    "complete": "Zahlung abschließen",
+    "genericError": "Upps! Etwas ist schiefgelaufen. Bitte wenden Sie sich an den Support, sollte das erneut passieren.",
+    "goBack": "Möchten Sie etwas ändern? {back}",
     "goBackButton": "Zurück zum letzten Schritt",
     "note": "Sie können Ihre Zahlungsdaten jederzeit in Ihrem Nutzer-Account ändern und dort auch sehen, wie viel Sie in der Vergangenheit bereits gezahlt haben. ",
-    "willBeContributing": "Ihr Beitrag ist {amount}/{period}"
+    "willBeContributing": "Sie zahlen {amount}/{period}"
   },
   "joinSetup": {
     "confirmDetails": "Bitte bestätigen Sie Ihre Angaben:",
@@ -610,10 +618,15 @@
       "setLabel": "Ihre Laschriftdaten"
     },
     "s_bacs": {
+      "changeLabel": "Lastschrift ändern",
       "label": "Lastschrift",
       "setLabel": "Ihre Laschriftdaten"
     },
-    "s_card": {},
+    "s_card": {
+      "changeLabel": "Kreditkartendetails ändern",
+      "label": "Kreditkarte",
+      "setLabel": "Ihre Kreditkartendetails"
+    },
     "s_sepa": {
       "changeLabel": "Lastschrift ändern",
       "label": "Lastschrift",

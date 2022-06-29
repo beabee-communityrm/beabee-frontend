@@ -1,5 +1,4 @@
 import { JoinContent } from '../../utils/api/api.interface';
-import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 
 export type ContributionContent = Pick<
   JoinContent,
@@ -8,14 +7,5 @@ export type ContributionContent = Pick<
   | 'minMonthlyAmount'
   | 'showAbsorbFee'
   | 'periods'
+  | 'paymentMethods'
 >;
-
-export interface ContributionData {
-  amount: number;
-  period: ContributionPeriod;
-  payFee: boolean;
-  prorate: boolean;
-
-  get totalAmount(): number;
-  get fee(): number;
-}

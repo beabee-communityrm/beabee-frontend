@@ -45,9 +45,11 @@ import {
   faClone,
   faTrash,
   faLink,
+  faHandSparkles,
   faTag,
   faCopy,
   faEnvelope,
+  faCreditCard,
   faBold,
   faItalic,
   faStrikethrough,
@@ -92,6 +94,9 @@ library.add(
   faClone,
   faTrash,
   faLink,
+  faHandSparkles,
+  faTag,
+  faCreditCard,
   faTag,
   faCopy,
   faFacebook,
@@ -106,7 +111,7 @@ library.add(
   faUnderline,
   faHeading,
   faList,
-  faListOl,
+  faListOl
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
