@@ -15,7 +15,9 @@
       "
     >
       <span class="text-link mr-2">{{ calloutUrl }}</span>
-      <AppButton icon="copy" size="sm" @click="copyToClipboard">{{ t('common.copy') }}</AppButton>
+      <AppButton icon="copy" size="sm" @click="copyToClipboard">{{
+        t('common.copy')
+      }}</AppButton>
     </div>
 
     {{ t('callout.share.services') }}
