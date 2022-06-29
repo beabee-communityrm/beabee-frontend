@@ -1,26 +1,27 @@
 <template>
+  <div class="grid grid-cols-2 gap-8 mb-8">
+    <div>
+      <AppHeading class="mb-5">{{ stepT('title') }}</AppHeading>
+      <p>{{ stepT('text') }}</p>
+    </div>
+  </div>
   <form @submit.prevent="handleSubmit">
-    <div v-if="joinContent" class="flex gap-8 mb-12">
-      <div class="flex-1">
-        <AppHeading class="mb-5">Join form editor</AppHeading>
-        <p class="mb-8">
-          In this section you can edit, fine tune and preview your member signup
-          form.
-        </p>
+    <div v-if="joinContent" class="grid grid-cols-2 gap-8 mb-12">
+      <div>
         <AppInput
           v-model="joinContent.title"
-          label="Title"
+          :label="stepT('formTitle')"
           required
           class="mb-4"
         />
         <RichTextEditor
           v-model="joinContent.subtitle"
-          label="Subtitle"
+          :label="stepT('formSubtitle')"
           class="mb-4"
         />
 
         <h4 class="font-semibold text-lg mb-4">
-          Suggested contribution amounts
+          {{ stepT('suggestedAmounts') }}
         </h4>
         <div class="flex gap-4 mb-4">
           <div
@@ -40,7 +41,7 @@
         </div>
         <div class="flex gap-4 mb-4">
           <div class="flex-1">
-            <AppLabel label="Minimum amount" />
+            <AppLabel :label="stepT('minAmount')" />
             <AppInput
               v-model="joinContent.minMonthlyAmount"
               input-type="number"
@@ -48,7 +49,7 @@
             />
           </div>
           <div class="flex-1">
-            <AppLabel label="Default amount" />
+            <AppLabel :label="stepT('defaultAmount')" />
             <AppSelect
               v-model="selectedDefaultAmount"
               :items="defaultAmounts"
@@ -57,77 +58,77 @@
         </div>
         <AppCheckbox
           v-model="joinContent.showAbsorbFee"
-          label="Ask about processing fee"
+          :label="stepT('showAbsorbFee')"
           class="font-semibold"
         />
       </div>
-      <div class="flex-1 mt-4">
+      <div class="flex-1">
         <AuthBox>
           <JoinForm :join-content="joinContent" @submit.prevent="" />
         </AuthBox>
       </div>
     </div>
-    <div v-if="setupContent" class="flex gap-8">
-      <div class="flex-1">
-        <AppHeading class="mb-4">Account confirmation</AppHeading>
+    <div v-if="setupContent" class="grid grid-cols-2 gap-8">
+      <div>
+        <AppHeading class="mb-4">{{ stepT('accountConfirmation') }}</AppHeading>
         <AppInput
           v-model="setupContent.welcome"
           class="mb-4"
-          label="Welcome message"
+          :label="stepT('welcomeMessage')"
           required
         />
 
         <AppCheckbox
           v-model="setupContent.showMailOptIn"
-          label="Ask for postal address"
+          :label="stepT('showMailOptIn')"
           class="font-semibold mb-4"
         />
 
         <template v-if="setupContent.showMailOptIn">
           <AppInput
             v-model="setupContent.mailTitle"
-            label="Heading"
+            :label="stepT('heading')"
             class="mb-4"
             required
           />
           <AppTextArea
             v-model="setupContent.mailText"
-            label="Subheading"
+            :label="stepT('subheading')"
             class="mb-4"
           />
           <AppInput
             v-model="setupContent.mailOptIn"
-            label="Checkbox label"
+            :label="stepT('checkboxLabel')"
             class="mb-4"
           />
         </template>
 
         <AppCheckbox
           v-model="setupContent.showNewsletterOptIn"
-          label="Ask to subscribe to newsletter"
+          :label="stepT('showNewsletterOptIn')"
           class="font-semibold mb-4"
         />
 
         <template v-if="setupContent.showNewsletterOptIn">
           <AppInput
             v-model="setupContent.newsletterTitle"
-            label="Heading"
+            :label="stepT('heading')"
             class="mb-4"
             required
           />
           <AppTextArea
             v-model="setupContent.newsletterText"
-            label="Subheading"
+            :label="stepT('subheading')"
             class="mb-4"
           />
           <AppInput
             v-model="setupContent.newsletterOptIn"
-            label="Checkbox label"
+            :label="stepT('checkboxLabel')"
             class="mb-4"
           />
         </template>
       </div>
-      <div class="flex-1">
+      <div>
         <AuthBox>
           <SetupForm :setup-content="setupContent" />
         </AuthBox>
@@ -137,8 +138,7 @@
       v-if="joinContent && setupContent"
       type="submit"
       variant="link"
-      class="w-32"
-      >Save</AppButton
+      >{{ t('form.saveChanges') }}</AppButton
     >
   </form>
 </template>
@@ -167,6 +167,8 @@ const joinContent = ref<JoinContent>();
 const setupContent = ref<JoinSetupContent>();
 
 const { n, t } = useI18n();
+
+const stepT = (key: string) => t('membershipBuilder.steps.joinForm.' + key);
 
 const selectedDefaultAmount = computed({
   get: () =>

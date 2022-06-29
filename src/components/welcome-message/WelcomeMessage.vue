@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded p-4 shadow relative">
+  <div class="bg-white rounded p-4 shadow relative" :class="!small && 'lg:p-8'">
     <div>
       <WelcomeIcon
         class="float-left mb-4 mr-4 w-[4.5rem] h-auto md:w-[7.5rem]"
@@ -16,7 +16,6 @@
         content-message
         text-sm
         leading-5
-        mb-6
         whitespace-normal
         md:text-base md:leading-5.5
       "

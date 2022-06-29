@@ -575,6 +575,45 @@
     "title": "Log in to your account",
     "wrongCredentials": "Wrong password/email combination"
   },
+  "membershipBuilder": {
+    "steps": {
+      "emails": {
+        "bigTitle": "Welcome & cancellation emails",
+        "cancellationEmail": "Cancellation email",
+        "cancellationEmailText": "Your members will receive this email when they cancel their contribution.",
+        "description": "Customise your welcome and cancellation emails",
+        "title": "Emails",
+        "welcomeEmail": "Welcome email",
+        "welcomeEmailText": "Your members will receive this email when they first signup."
+      },
+      "intro": {
+        "description": "Say hello to your new members",
+        "message": "Message",
+        "showWelcomeMessage": "Show welcome message",
+        "text": "Once your members are done with registration, they'll be greeted with a message. Make it yours!",
+        "title": "Welcome message"
+      },
+      "joinForm": {
+        "accountConfirmation": "Account confirmation",
+        "checkboxLabel": "Checkbox label",
+        "defaultAmount": "Default amount",
+        "description": "Fine tune your membership join form",
+        "formSubtitle": "Subtitle",
+        "formTitle": "Title",
+        "heading": "Heading",
+        "minAmount": "Minimum amount",
+        "showAbsorbFee": "Ask about processing fee",
+        "showMailOptIn": "Ask for postal address",
+        "showNewsletterOptIn": "Ask to subscribe to newsletter",
+        "subheading": "Subheading",
+        "suggestedAmounts": "Suggested contribution amounts",
+        "text": "In this section you can edit, fine tune and preview your membership join form.",
+        "title": "Join form",
+        "welcomeMessage": "Welcome message"
+      }
+    },
+    "title": "Membership builder"
+  },
   "menu": {
     "admin": "Administration",
     "callouts": "Callouts",
@@ -584,6 +623,7 @@
     "home": "Home",
     "legacyApp": "Old admin",
     "logout": "Log out",
+    "membershipBuilder": "Membership builder",
     "notices": "Notices",
     "settings": "Settings",
     "yourInformation": "Your information",

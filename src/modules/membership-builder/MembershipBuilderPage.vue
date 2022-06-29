@@ -29,20 +29,20 @@ interface BuilderStep extends Step {
 
 const steps: BuilderStep[] = [
   {
-    name: 'Join form',
-    description: 'Edit and fine tune your member signup form',
+    name: t('membershipBuilder.steps.joinForm.title'),
+    description: t('membershipBuilder.steps.joinForm.description'),
     validated: true,
     component: EditJoinForm,
   },
   {
-    name: 'Intro message',
-    description: 'Greet your new members',
+    name: t('membershipBuilder.steps.intro.title'),
+    description: t('membershipBuilder.steps.intro.description'),
     validated: true,
     component: IntroMessage,
   },
   {
-    name: 'Welcome emails',
-    description: "Write the emails they'll receive",
+    name: t('membershipBuilder.steps.emails.title'),
+    description: t('membershipBuilder.steps.emails.description'),
     validated: true,
     component: Emails,
   },

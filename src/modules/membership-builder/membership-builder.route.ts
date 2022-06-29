@@ -6,7 +6,7 @@ const { t } = i18n.global;
 export const membershipBuilderRoute: Array<RouteRecordRaw> = [
   {
     path: '/admin/membership-builder',
-    name: 'home',
+    name: 'membershipBuilder',
     component: () => import('./MembershipBuilderPage.vue'),
     meta: {
       pageTitle: t('membershipBuilder.title'),
