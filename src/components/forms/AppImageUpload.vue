@@ -5,8 +5,8 @@
       <div class="bg-grey-light flex-0 basis-28">
         <img
           :src="imageUrl"
-          width="400"
-          height="200"
+          :width="width"
+          :height="height"
           class="w-full h-auto"
           :class="!imageUrl && 'invisible'"
         />
@@ -43,6 +43,8 @@ import AppLabel from './AppLabel.vue';
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   modelValue: string;
+  width: number;
+  height: number;
   label?: string;
   required?: boolean;
 }>();
@@ -87,7 +89,7 @@ async function handleUpload() {
       },
     });
 
-    const newUrl = baseURL + '/uploads/' + resp.data.hash;
+    const newUrl = `${baseURL}/uploads/${props.width}x${props.height}/${resp.data.hash}`;
     emit('update:modelValue', newUrl);
 
     uploading.value = false;

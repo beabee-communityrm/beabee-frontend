@@ -23,6 +23,8 @@
         <AppImageUpload
           v-model="backgroundUrl"
           :label="stepT('backgroundImage')"
+          :width="1440"
+          :height="810"
           class="mb-4"
         />
 
