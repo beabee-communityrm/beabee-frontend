@@ -1,6 +1,7 @@
 {
   "actions": {
     "back": "Back",
+    "chooseFile": "Choose file",
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
@@ -9,6 +10,7 @@
     "schedule": "Schedule",
     "unpublish": "Unpublish",
     "update": "Update",
+    "upload": "Upload",
     "view": "View"
   },
   "adminDashboard": {
