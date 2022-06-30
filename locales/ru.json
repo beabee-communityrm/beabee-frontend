@@ -1,4 +1,5 @@
 {
+  "actions": {},
   "adminDashboard": {
     "hint1": "",
     "hint2": "",
@@ -210,7 +211,6 @@
     "willRenewWithNewAmount": "Ваша подписка будет автоматически продлена {renewalDate} и изменится на выбранную вами сумму {nextAmount}."
   },
   "createCallout": {
-    "actions": {},
     "steps": {
       "content": {
         "inputs": {

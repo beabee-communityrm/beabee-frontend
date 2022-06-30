@@ -99,7 +99,7 @@ const definedAmounts = computed(() => {
   const selectedPeriod = props.content.periods.find((period) => {
     return period.name === periodProxy.value;
   });
-  return selectedPeriod?.presetAmounts as number[];
+  return selectedPeriod?.presetAmounts || [];
 });
 
 watch(periodProxy, () => {
