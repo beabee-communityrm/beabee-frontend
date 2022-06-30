@@ -212,6 +212,7 @@ export interface GeneralContent {
   currencyCode: string;
   hideContribution?: boolean;
   footerLinks: { text: string; url: string }[];
+  backgroundUrl?: string;
 }
 
 export interface JoinContent {

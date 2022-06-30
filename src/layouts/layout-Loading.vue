@@ -1,5 +1,8 @@
 <template>
-  <main class="auth min-h-screen bg-fixed bg-cover bg-center py-4">
+  <main
+    class="min-h-screen bg-fixed bg-cover bg-center py-4"
+    :style="backgroundStyle"
+  >
     <AuthBox class="text-center">
       <img
         class="w-28 inline-block mb-5"
@@ -18,15 +21,8 @@
     </AuthBox>
   </main>
 </template>
-
 <script lang="ts" setup>
 import AuthBox from '../modules/auth/AuthBox.vue';
 import { generalContent } from '../store';
-const newsroomName = import.meta.env.VITE_NEWSROOM_NAME;
+import backgroundStyle from '../utils/backgroundStyle';
 </script>
-
-<style scoped>
-.auth {
-  background-image: url('../assets/images/auth-bg.jpg');
-}
-</style>

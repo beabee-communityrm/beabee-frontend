@@ -9,7 +9,7 @@
   <AuthBox>
     <div class="flex justify-center mb-10">
       <img
-        class="logo"
+        class="h-[120px]"
         src="../../assets/images/logo.png"
         :alt="generalContent.organisationName"
       />
@@ -32,13 +32,3 @@ const route = useRoute();
 
 const isAuthPath = computed(() => route.path.startsWith('/auth'));
 </script>
-
-<style scoped>
-.auth {
-  background-image: url('../assets/images/auth-bg.jpg');
-}
-
-.logo {
-  height: 120px;
-}
-</style>
