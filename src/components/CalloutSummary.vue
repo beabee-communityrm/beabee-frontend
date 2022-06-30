@@ -47,7 +47,7 @@
           {{ callout.expires && formatLocale(callout.expires, 'PP') }}
         </div>
         <AppButton class="ml-2" :to="`/admin/callouts/edit/${callout.slug}`">{{
-          t('calloutAdminOverview.actions.edit')
+          t('actions.edit')
         }}</AppButton>
       </div>
     </div>
