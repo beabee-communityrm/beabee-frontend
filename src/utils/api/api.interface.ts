@@ -338,6 +338,12 @@ export interface SignupData extends StartContributionData {
   noContribution: boolean;
 }
 
+export interface CompleteSignupData {
+  paymentFlowId: string;
+  firstname?: string;
+  lastname?: string;
+}
+
 export interface GetSegmentData {
   id: string;
   name: string;

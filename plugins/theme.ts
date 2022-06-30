@@ -21,6 +21,7 @@ export default function themePlugin(): Plugin {
           JSON.stringify({
             colors: fullConfig.theme.colors,
             fontFamily: fullConfig.theme.fontFamily,
+            fontSize: fullConfig.theme.fontSize,
             borderRadius: fullConfig.theme.borderRadius,
             boxShadow: fullConfig.theme.boxShadow,
             spacing: fullConfig.theme.spacing,
