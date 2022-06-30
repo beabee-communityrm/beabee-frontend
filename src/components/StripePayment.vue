@@ -30,7 +30,7 @@
     type="submit"
     class="w-full mt-4"
     @click="completePayment"
-    >{{ t('joinPayment.complete') }}</AppButton
+    >{{ t('actions.continue') }}</AppButton
   >
 </template>
 <script lang="ts" setup>

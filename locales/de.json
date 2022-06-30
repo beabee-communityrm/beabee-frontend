@@ -553,7 +553,6 @@
     "privacy": "Datenschutzerklärung"
   },
   "joinPayment": {
-    "complete": "Zahlung abschließen",
     "genericError": "Upps! Etwas ist schiefgelaufen. Bitte wenden Sie sich an den Support, sollte das erneut passieren.",
     "goBack": "Möchten Sie etwas ändern? {back}",
     "goBackButton": "Zurück zum letzten Schritt",
