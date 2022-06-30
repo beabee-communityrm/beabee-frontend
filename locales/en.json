@@ -597,6 +597,7 @@
       },
       "joinForm": {
         "accountConfirmation": "Account confirmation",
+        "backgroundImage": "Background image",
         "checkboxLabel": "Checkbox label",
         "defaultAmount": "Default amount",
         "description": "Fine tune your membership join form",

@@ -26,6 +26,7 @@
           :width="1440"
           :height="810"
           class="mb-4"
+          required
         />
 
         <h4 class="font-semibold text-lg mb-4">
