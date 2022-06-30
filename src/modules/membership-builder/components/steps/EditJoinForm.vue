@@ -20,6 +20,12 @@
           class="mb-4"
         />
 
+        <AppImageUpload
+          v-model="backgroundUrl"
+          :label="stepT('backgroundImage')"
+          class="mb-4"
+        />
+
         <h4 class="font-semibold text-lg mb-4">
           {{ stepT('suggestedAmounts') }}
         </h4>
@@ -62,7 +68,10 @@
           class="font-semibold"
         />
       </div>
-      <div class="flex-1">
+      <div
+        class="p-4 pt-8 bg-center bg-cover"
+        :style="`background-image: url(${backgroundUrl})`"
+      >
         <AuthBox>
           <JoinForm :join-content="joinContent" @submit.prevent="" />
         </AuthBox>
@@ -128,7 +137,10 @@
           />
         </template>
       </div>
-      <div>
+      <div
+        class="p-4 pt-8 bg-center bg-cover"
+        :style="`background-image: url(${backgroundUrl})`"
+      >
         <AuthBox>
           <SetupForm :setup-content="setupContent" />
         </AuthBox>
@@ -162,9 +174,11 @@ import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import SetupForm from '../../../auth/join/components/SetupForm.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import AuthBox from '../../../auth/AuthBox.vue';
+import AppImageUpload from '../../../../components/forms/AppImageUpload.vue';
 
 const joinContent = ref<JoinContent>();
 const setupContent = ref<JoinSetupContent>();
+const backgroundUrl = ref('');
 
 const { n, t } = useI18n();
 

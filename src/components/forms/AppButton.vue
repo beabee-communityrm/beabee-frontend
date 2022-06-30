@@ -6,7 +6,8 @@
     <font-awesome-icon v-if="icon" :icon="icon" class="mr-2" /><slot />
   </router-link>
 
-  <button
+  <component
+    :is="is"
     v-else
     :disabled="disabled || loading"
     :class="buttonClasses"
@@ -25,7 +26,7 @@
       :icon="['fas', 'circle-notch']"
       spin
     />
-  </button>
+  </component>
 </template>
 
 <script lang="ts" setup>
@@ -72,6 +73,7 @@ const props = withDefaults(
     size?: 'sm';
     loading?: boolean;
     icon?: string;
+    is?: 'button' | 'label';
   }>(),
   {
     disabled: false,
@@ -82,6 +84,7 @@ const props = withDefaults(
     size: undefined,
     loading: false,
     icon: undefined,
+    is: 'button',
   }
 );
 
