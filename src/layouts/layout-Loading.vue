@@ -9,7 +9,7 @@
         src="../assets/images/logo.png"
         :alt="generalContent.organisationName"
       />
-      <h1 class="text-2.5xl mb-5">Loading...</h1>
+      <h1 class="text-2.5xl mb-5">{{ t('common.loading') }}</h1>
 
       <font-awesome-icon
         class="text-[60px] text-body-40"
@@ -22,7 +22,10 @@
   </main>
 </template>
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
 import AuthBox from '../modules/auth/AuthBox.vue';
 import { generalContent } from '../store';
 import backgroundStyle from '../utils/backgroundStyle';
+
+const { t } = useI18n();
 </script>
