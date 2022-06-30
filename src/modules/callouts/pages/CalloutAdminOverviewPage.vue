@@ -75,19 +75,19 @@
     </div>
     <div class="flex-0 flex flex-wrap lg:flex-col gap-2">
       <ActionButton icon="eye" :to="calloutLink">
-        {{ t('calloutAdminOverview.actions.view') }}
+        {{ t('actions.view') }}
       </ActionButton>
       <ActionButton
         icon="pencil-alt"
         :to="'/admin/callouts/edit/' + callout.slug"
       >
-        {{ t('calloutAdminOverview.actions.edit') }}
+        {{ t('actions.edit') }}
       </ActionButton>
       <ActionButton icon="clone" @click="replicateThisCallout()">
-        {{ t('calloutAdminOverview.actions.replicate') }}
+        {{ t('actions.replicate') }}
       </ActionButton>
       <ActionButton icon="trash" @click="showDeleteModal = true">
-        {{ t('calloutAdminOverview.actions.delete') }}
+        {{ t('actions.delete') }}
       </ActionButton>
       <AppConfirmDialog
         v-if="showDeleteModal"

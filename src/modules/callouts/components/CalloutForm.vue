@@ -6,7 +6,7 @@
   >
     <div v-if="mode === 'edit'" class="flex-0 ml-3">
       <AppButton :disabled="!isAllValid" @click="submitForm">{{
-        t('createCallout.actions.update')
+        t('actions.update')
       }}</AppButton>
     </div>
   </PageTitle>
@@ -28,14 +28,14 @@
           variant="linkOutlined"
           :disabled="selectedStepIndex === 0"
           @click="selectedStepIndex--"
-          >{{ t('createCallout.actions.back') }}</AppButton
+          >{{ t('actions.back') }}</AppButton
         >
         <AppButton
           v-show="!isLastStep"
           class="ml-2"
           :disabled="!selectedStep.validated"
           @click="selectedStepIndex++"
-          >{{ t('createCallout.actions.continue') }}</AppButton
+          >{{ t('actions.continue') }}</AppButton
         >
         <AppButton
           v-show="isLastStep"
@@ -44,8 +44,8 @@
           @click="submitForm"
           >{{
             steps.dates.data.startNow
-              ? t('createCallout.actions.publish')
-              : t('createCallout.actions.schedule')
+              ? t('actions.publish')
+              : t('actions.schedule')
           }}</AppButton
         >
       </div>

@@ -1,4 +1,16 @@
 {
+  "actions": {
+    "back": "Back",
+    "continue": "Continue",
+    "delete": "Delete",
+    "edit": "Edit",
+    "publish": "Publish",
+    "replicate": "Replicate",
+    "schedule": "Schedule",
+    "unpublish": "Unpublish",
+    "update": "Update",
+    "view": "View"
+  },
   "adminDashboard": {
     "hint1": "<p>Did you know callouts can be created without an end date, and just keep running? See our <a href=\"https://beabee.io/en/beabee-full-feature-list/\">feature showcase</a> for more information.</p>\n",
     "hint2": "<p>Find out more about <a href=\"https://beabee.io/en/beabee-model/\">the beabee vision</a> around community engagement and meaningful relationships with your audience.</p>\n",
@@ -59,12 +71,7 @@
         "actionYes": "Yes, delete it",
         "text": "Are you sure you want to delete this callout?",
         "title": "Delete callout?"
-      },
-      "delete": "Delete",
-      "edit": "Edit",
-      "replicate": "Replicate",
-      "unpublish": "Unpublish",
-      "view": "View"
+      }
     },
     "created": "Well done! Your callout was successfully created.",
     "dates": {
@@ -257,13 +264,6 @@
     "willRenewWithNewAmount": "Your contribution will automatically renew on {renewalDate} and will change to your chosen amount of {nextAmount}."
   },
   "createCallout": {
-    "actions": {
-      "back": "Back",
-      "continue": "Continue",
-      "publish": "Publish",
-      "schedule": "Schedule",
-      "update": "Update"
-    },
     "steps": {
       "content": {
         "description": "Build your callout with questions and prompts",
@@ -553,7 +553,6 @@
     "privacy": "Privacy Policy"
   },
   "joinPayment": {
-    "complete": "Complete",
     "genericError": "Oops, something went wrong! Contact support if this happens again.",
     "goBack": "Did you miss something? {back}",
     "goBackButton": "Back to the previous screen",

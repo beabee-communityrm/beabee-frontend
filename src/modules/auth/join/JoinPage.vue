@@ -39,6 +39,7 @@
         :client-secret="stripeClientSecret"
         :email="signUpData.email"
         :return-url="completeUrl"
+        show-name-fields
         @loaded="
           stripePaymentLoaded = true;
           loading = false;

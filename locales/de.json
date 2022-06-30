@@ -1,4 +1,16 @@
 {
+  "actions": {
+    "back": "Zurück",
+    "continue": "Weiter",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "publish": "Veröffentlichen",
+    "replicate": "Kopieren",
+    "schedule": "Planen",
+    "unpublish": "Veröffentlichung aufheben",
+    "update": "Änderungen speichern",
+    "view": "Anzeigen"
+  },
   "adminDashboard": {
     "hint1": "<p>Das beabee-Handbuch für Community-Journalismus „Lust auf Lokal” <a href=\"https://beabee.io/neu-handbuch-community-journalismus/\">ist erschienen</a>. Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
     "hint2": "<p>Im <a href=\"https://beabee.io/#blog\">Blog</a> auf unserer Website findest du viele Best-Practice-Beispiele anderer Redaktionen, von denen du dich inspierieren lassen kannst.</p>\n",
@@ -59,12 +71,7 @@
         "actionYes": "Ja, bitte löschen.",
         "text": "Bist du sicher, dass du diesen Callout löschen willst?",
         "title": "Callout löschen?"
-      },
-      "delete": "Löschen",
-      "edit": "Bearbeiten",
-      "replicate": "Kopieren",
-      "unpublish": "Veröffentlichung aufheben",
-      "view": "Anzeigen"
+      }
     },
     "created": "Gut gemacht! Dein Callout wurde erstellt.",
     "dates": {
@@ -257,13 +264,6 @@
     "willRenewWithNewAmount": "Ihre Mitgliedschaft verlängert sich am {renewalDate} automatisch. Ihr Beitrag ist dann {nextAmount}."
   },
   "createCallout": {
-    "actions": {
-      "back": "Zurück",
-      "continue": "Weiter",
-      "publish": "Veröffentlichen",
-      "schedule": "Planen",
-      "update": "Änderungen speichern"
-    },
     "steps": {
       "content": {
         "description": "Entwerfe deinen Callout mit Fragen und Aufforderungen",
@@ -553,7 +553,6 @@
     "privacy": "Datenschutzerklärung"
   },
   "joinPayment": {
-    "complete": "Zahlung abschließen",
     "genericError": "Upps! Etwas ist schiefgelaufen. Bitte wenden Sie sich an den Support, sollte das erneut passieren.",
     "goBack": "Möchten Sie etwas ändern? {back}",
     "goBackButton": "Zurück zum letzten Schritt",
