@@ -34,7 +34,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import axios from '../../axios';
 import AppButton from './AppButton.vue';
@@ -58,6 +58,14 @@ const canUpload = ref(false);
 const uploading = ref(false);
 
 const imageUrl = ref(props.modelValue);
+
+watch(toRef(props, 'modelValue'), (newModelValue) => {
+  imageUrl.value = newModelValue;
+  canUpload.value = false;
+  if (inputRef.value) {
+    inputRef.value.value = '';
+  }
+});
 
 function handleChange() {
   if (inputRef.value && inputRef.value.files) {

@@ -178,6 +178,7 @@ import SetupForm from '../../../auth/join/components/SetupForm.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import AuthBox from '../../../auth/AuthBox.vue';
 import AppImageUpload from '../../../../components/forms/AppImageUpload.vue';
+import { generalContent } from '../../../../store';
 
 const joinContent = ref<JoinContent>();
 const setupContent = ref<JoinSetupContent>();
@@ -217,6 +218,10 @@ async function handleSubmit() {
     await Promise.all([
       updateContent('join', joinContent.value),
       updateContent('join/setup', setupContent.value),
+      updateContent('general', {
+        ...generalContent.value,
+        backgroundUrl: backgroundUrl.value || '',
+      }),
     ]);
   }
 }
@@ -224,5 +229,6 @@ async function handleSubmit() {
 onBeforeMount(async () => {
   joinContent.value = await fetchContent('join');
   setupContent.value = await fetchContent('join/setup');
+  backgroundUrl.value = generalContent.value.backgroundUrl || '';
 });
 </script>
