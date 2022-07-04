@@ -40,6 +40,7 @@
         v-for="(item, i) in items"
         :key="i"
         class="border-b border-primary-20"
+        :class="rowClass && rowClass(item)"
       >
         <td
           v-for="(header, j) in headers"
@@ -70,6 +71,7 @@ const props = defineProps<{
   headers: Header[];
   items: any[]; // TODO: improve typing
   hideHeaders?: boolean;
+  rowClass?: (item: any) => string;
 }>();
 
 const emit = defineEmits(['update:sort']);

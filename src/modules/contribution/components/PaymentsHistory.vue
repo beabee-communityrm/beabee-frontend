@@ -7,20 +7,21 @@
       :sort="{ by: 'chargeDate', type: SortType.Desc }"
       :headers="headers"
       :items="paymentsHistoryTable.items"
-      :hide-headers="true"
+      :row-class="getRowClass"
+      hide-headers
       class="w-full"
     >
-      <template #empty>
-        <p>{{ t('contribution.paymentHistory.empty') }}</p>
-      </template>
       <template #chargeDate="{ value }">
         {{ formatLocale(value, 'PPP') }}
       </template>
-      <template #amount="{ value }"
-        ><b>{{ n(value, 'currency') }}</b></template
-      >
+      <template #amount="{ value, item }">
+        <span class="mr-3">
+          {{ getStatusText(item) }}
+        </span>
+        <b>{{ n(value, 'currency') }}</b>
+      </template>
     </AppTable>
-    <div class="flex w-full justify-center">
+    <div v-if="totalPages > 1" class="flex w-full justify-center">
       <AppPagination
         v-model="currentPage"
         :total-pages="totalPages"
@@ -39,7 +40,7 @@ import AppPagination from '../../../components/AppPagination.vue';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 
 import { fetchPayments } from '../../../utils/api/member';
-import { Paginated } from '../../../utils/api/api.interface';
+import { Paginated, PaymentStatus } from '../../../utils/api/api.interface';
 import { GetPaymentData } from '../../../utils/api/api.interface';
 import { Header, SortType } from '../../../components/table/table.interface';
 import AppHeading from '../../../components/AppHeading.vue';
@@ -63,13 +64,32 @@ const totalPages = computed(() =>
 );
 
 const headers: Header[] = [
-  { value: 'chargeDate', text: t('contribution.paymentHistory.date') },
-  {
-    value: 'amount',
-    text: t('contribution.paymentHistory.amount'),
-    align: 'right',
-  },
+  { value: 'chargeDate', text: '' },
+  { value: 'amount', text: '', align: 'right' },
 ];
+
+function getRowClass(item: GetPaymentData) {
+  switch (item.status) {
+    case PaymentStatus.Cancelled:
+    case PaymentStatus.Failed:
+      return 'text-danger';
+    case PaymentStatus.Pending:
+      return 'text-body-40';
+    default:
+      return '';
+  }
+}
+
+function getStatusText(item: GetPaymentData) {
+  switch (item.status) {
+    case PaymentStatus.Cancelled:
+      return t('contribution.paymentHistory.status.cancelled');
+    case PaymentStatus.Failed:
+      return t('contribution.paymentHistory.status.failed');
+    case PaymentStatus.Pending:
+      return t('contribution.paymentHistory.status.pending');
+  }
+}
 
 watchEffect(async () => {
   const query = {
