@@ -582,11 +582,10 @@
       "emails": {
         "bigTitle": "Welcome & cancellation emails",
         "cancellationEmail": "Cancellation email",
-        "cancellationEmailText": "Your members will receive this email when they cancel their contribution.",
         "description": "Customise your welcome and cancellation emails",
+        "text": "All emails are sent from your support email address and include standard signature, you can change these in your email settings.",
         "title": "Emails",
-        "welcomeEmail": "Welcome email",
-        "welcomeEmailText": "Your members will receive this email when they first signup."
+        "welcomeEmail": "Welcome email"
       },
       "intro": {
         "description": "Say hello to your new members",

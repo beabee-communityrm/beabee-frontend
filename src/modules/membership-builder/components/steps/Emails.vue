@@ -1,37 +1,38 @@
 <template>
-  <template v-if="welcomeEmail && cancellationEmail">
-    <AppHeading class="mb-5">{{ stepT('bigTitle') }}</AppHeading>
-    <p></p>
-    <div class="grid grid-cols-2 gap-8 mb-8">
-      <div>
-        <AppSubHeading class="mb-2">{{ stepT('welcomeEmail') }}</AppSubHeading>
-        <p class="mb-4">{{ stepT('welcomeEmailText') }}</p>
-        <AppInput v-model="welcomeEmail.subject" label="Subject" class="mb-4" />
-        <RichTextEditor v-model="welcomeEmail.body" label="Message" />
-      </div>
-      <div>
-        <EmailPreview :body="welcomeEmail.body" :footer="emailFooter" />
-      </div>
+  <div class="grid grid-cols-2 gap-8 mb-8">
+    <div>
+      <AppHeading class="mb-5">{{ stepT('bigTitle') }}</AppHeading>
+      <p>{{ stepT('text') }}</p>
     </div>
+  </div>
 
-    <div class="grid grid-cols-2 gap-8">
-      <div>
-        <AppSubHeading class="mb-2">{{
-          stepT('cancellationEmail')
-        }}</AppSubHeading>
-        <p class="mb-4">{{ stepT('cancellationEmailText') }}</p>
-        <AppInput
-          v-model="cancellationEmail.subject"
-          label="Subject"
-          class="mb-4"
-        />
-        <RichTextEditor v-model="cancellationEmail.body" label="Message" />
-      </div>
-      <div>
-        <EmailPreview :body="cancellationEmail.body" :footer="emailFooter" />
-      </div>
+  <div v-if="welcomeEmail" class="grid grid-cols-2 gap-8 mb-8">
+    <div>
+      <AppSubHeading class="mb-4">{{ stepT('welcomeEmail') }}</AppSubHeading>
+      <AppInput v-model="welcomeEmail.subject" label="Subject" class="mb-4" />
+      <RichTextEditor v-model="welcomeEmail.body" label="Message" />
     </div>
-  </template>
+    <div>
+      <EmailPreview :body="welcomeEmail.body" :footer="emailFooter" />
+    </div>
+  </div>
+
+  <div v-if="cancellationEmail" class="grid grid-cols-2 gap-8">
+    <div>
+      <AppSubHeading class="mb-4">{{
+        stepT('cancellationEmail')
+      }}</AppSubHeading>
+      <AppInput
+        v-model="cancellationEmail.subject"
+        label="Subject"
+        class="mb-4"
+      />
+      <RichTextEditor v-model="cancellationEmail.body" label="Message" />
+    </div>
+    <div>
+      <EmailPreview :body="cancellationEmail.body" :footer="emailFooter" />
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
