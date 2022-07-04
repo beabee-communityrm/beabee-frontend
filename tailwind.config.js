@@ -1,41 +1,25 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const Color = require('color');
-const theme = require('./theme.json');
-
-const white = Color('white');
-const black = Color('black');
-
-function shades(_color, levels = []) {
-  const color = Color(_color);
+function shades(color, levels = []) {
   return Object.assign(
-    { DEFAULT: color.hex() },
+    { DEFAULT: `var(--c-${color})` },
     ...levels.map((level) => ({
-      [level]:
-        level > 100
-          ? color.mix(black, level / 100 - 1).hex()
-          : color.mix(white, 1 - level / 100).hex(),
+      [level]: `var(--c-${color}-${level})`,
     }))
   );
 }
-
-const fonts = theme.fonts || {};
-const bodyFont = fonts.body || '"Open Sans", sans-serif';
-
-const linkColor = theme.colors.link || theme.colors.primary;
 
 module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   safelist: ['bg-success', 'bg-warning', 'bg-danger'],
   theme: {
     colors: {
-      primary: shades(theme.colors.primary, [5, 10, 20, 40, 70, 80]),
-      body: shades(theme.colors.body || theme.colors.primary, [40, 80]),
-      link: shades(linkColor, [10, 70, 110]),
-      warning: shades(theme.colors.warning || '#f5cc5b', [10, 30, 70]),
-      success: shades(theme.colors.success || '#86a960', [10, 30, 70, 110]),
-      danger: shades(theme.colors.danger || '#ce3d3d', [10, 30, 70, 110]),
-      white: shades(theme.colors.white || '#ffffff'),
-      black: shades(theme.colors.black || '#000000'),
+      primary: shades('primary', [5, 10, 20, 40, 70, 80]),
+      body: shades('body', [40, 80]),
+      link: shades('link', [10, 70, 110]),
+      warning: shades('warning', [10, 30, 70]),
+      success: shades('success', [10, 30, 70, 110]),
+      danger: shades('danger', [10, 30, 70, 110]),
+      white: shades('white'),
+      black: shades('black'),
       grey: {
         lighter: '#f6f6f6',
         light: '#c7c7c7',
@@ -45,8 +29,8 @@ module.exports = {
       },
     },
     fontFamily: {
-      body: bodyFont,
-      title: fonts.title || bodyFont,
+      body: 'var(--ff-body)',
+      title: 'var(--ff-title)',
     },
     extend: {
       borderRadius: {
@@ -71,7 +55,7 @@ module.exports = {
       },
       boxShadow: {
         DEFAULT: '0 0 8px 0 rgba(0, 0, 0, 0.2)',
-        input: '0 0 0 0.125em ' + Color(linkColor).alpha(0.25).rgb().string(),
+        input: 'var(--bs-input)',
       },
       fontSize: {
         '2.5xl': '1.75rem',
