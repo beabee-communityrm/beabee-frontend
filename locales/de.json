@@ -239,9 +239,8 @@
     "manualPayment": "Sie leisten Ihren Beitrag aktuell manuell via Banküberweisung. Richten Sie hier jetzt eine automatische Abbuchung via Lastschrift ein. Dann wird es für Sie leichter, Ihre Beiträge zu verwalten. Und wir bekommen einen besseren Überblick, auf welche Beiträge wir uns monatlich verlassen können.",
     "nextAmountChanging": "Ab dem {renewalDate} ist Ihr Beitrag {nextAmount}.",
     "paymentHistory": {
-      "amount": "Betrag",
-      "date": "Datum",
       "empty": "Ältere Zahlungen und Rechnungen finden Sie hier.",
+      "status": {},
       "title": "Ihre bisherigen Beiträge."
     },
     "paymentMethod": "Zahlungsart",
