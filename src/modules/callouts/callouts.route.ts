@@ -1,7 +1,4 @@
 import { RouteRecordRaw } from 'vue-router';
-import i18n from '../../i18n';
-
-const { t } = i18n.global;
 
 export const calloutsRoute: Array<RouteRecordRaw> = [
   {
@@ -9,7 +6,7 @@ export const calloutsRoute: Array<RouteRecordRaw> = [
     name: 'callouts',
     component: () => import('./CalloutsPage.vue'),
     meta: {
-      pageTitle: t('menu.callouts'),
+      pageTitle: 'menu.callouts',
     },
   },
   {
@@ -17,7 +14,7 @@ export const calloutsRoute: Array<RouteRecordRaw> = [
     name: 'callout',
     component: () => import('./pages/CalloutPage.vue'),
     meta: {
-      pageTitle: t('menu.callouts'),
+      pageTitle: 'menu.callouts',
       noAuth: true,
     },
   },
@@ -26,7 +23,7 @@ export const calloutsRoute: Array<RouteRecordRaw> = [
     name: 'calloutsAdmin',
     component: () => import('./pages/CalloutsAdminPage.vue'),
     meta: {
-      pageTitle: t('menu.callouts'),
+      pageTitle: 'menu.callouts',
       role: 'admin',
     },
   },
@@ -35,7 +32,7 @@ export const calloutsRoute: Array<RouteRecordRaw> = [
     name: 'new-callout',
     component: () => import('./pages/CreateCallout.vue'),
     meta: {
-      pageTitle: t('menu.callouts'),
+      pageTitle: 'menu.callouts',
       role: 'admin',
     },
   },
@@ -44,7 +41,7 @@ export const calloutsRoute: Array<RouteRecordRaw> = [
     name: 'edit-callout',
     component: () => import('./pages/CreateCallout.vue'),
     meta: {
-      pageTitle: t('menu.callouts'),
+      pageTitle: 'menu.callouts',
       role: 'admin',
     },
   },
@@ -53,7 +50,7 @@ export const calloutsRoute: Array<RouteRecordRaw> = [
     name: 'calloutAdmin',
     component: () => import('./pages/CalloutAdminPage.vue'),
     meta: {
-      pageTitle: t('menu.callouts'),
+      pageTitle: 'menu.callouts',
       role: 'admin',
     },
     children: [
@@ -62,7 +59,7 @@ export const calloutsRoute: Array<RouteRecordRaw> = [
         name: 'calloutAdminOverview',
         component: () => import('./pages/CalloutAdminOverviewPage.vue'),
         meta: {
-          pageTitle: t('menu.callouts'),
+          pageTitle: 'menu.callouts',
           role: 'admin',
         },
       },
@@ -71,7 +68,7 @@ export const calloutsRoute: Array<RouteRecordRaw> = [
         name: 'calloutAdminResponses',
         component: () => import('./pages/CalloutAdminResponsesPage.vue'),
         meta: {
-          pageTitle: t('menu.callouts'),
+          pageTitle: 'menu.callouts',
           role: 'admin',
         },
       },

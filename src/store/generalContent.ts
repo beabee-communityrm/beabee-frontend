@@ -28,6 +28,7 @@ export const generalContent = ref<GeneralContent>({
   supportEmail: '',
   privacyLink: '',
   termsLink: '',
+  locale: '',
   currencyCode: '',
   footerLinks: [],
   theme: {},

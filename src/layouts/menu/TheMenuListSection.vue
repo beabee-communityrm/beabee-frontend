@@ -5,7 +5,7 @@
   >
     <div v-if="!isFirst" class="border-t border-primary-40 my-2" />
     <div v-if="section.title" class="pb-2">
-      {{ section.title }}
+      {{ t(section.title) }}
     </div>
     <ul class="flex flex-col">
       <template v-for="item in section.items" :key="item.href">
@@ -13,7 +13,7 @@
           <router-link :to="item.href">
             <TheMenuListItem
               :icon="item.icon"
-              :title="item.title"
+              :title="t(item.title)"
               :type="section.type"
               :is-active="
                 item.isActive
@@ -28,6 +28,7 @@
   </nav>
 </template>
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { MenuSection } from './menu-list.interface';
 import TheMenuListItem from './TheMenuListItem.vue';
@@ -36,6 +37,8 @@ defineProps<{
   section: MenuSection;
   isFirst: boolean;
 }>();
+
+const { t } = useI18n();
 
 const route = useRoute();
 </script>

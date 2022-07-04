@@ -209,6 +209,7 @@ export interface GeneralContent {
   privacyLink: string;
   termsLink?: string;
   impressumLink?: string;
+  locale: string;
   currencyCode: string;
   hideContribution?: boolean;
   footerLinks: { text: string; url: string }[];
