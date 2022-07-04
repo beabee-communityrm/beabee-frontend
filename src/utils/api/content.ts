@@ -1,13 +1,20 @@
 import axios from '../../axios';
 import {
   ContactsContent,
+  EmailContent,
   GeneralContent,
   JoinContent,
   JoinSetupContent,
   ProfileContent,
 } from './api.interface';
 
-type ContentId = 'join' | 'join/setup' | 'profile' | 'general' | 'contacts';
+type ContentId =
+  | 'join'
+  | 'join/setup'
+  | 'profile'
+  | 'general'
+  | 'contacts'
+  | 'email';
 
 type Content<Id extends ContentId> = Id extends 'join'
   ? JoinContent
@@ -19,6 +26,8 @@ type Content<Id extends ContentId> = Id extends 'join'
   ? GeneralContent
   : Id extends 'contacts'
   ? ContactsContent
+  : Id extends 'email'
+  ? EmailContent
   : never;
 
 export async function fetchContent<Id extends ContentId>(

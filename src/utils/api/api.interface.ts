@@ -248,6 +248,10 @@ export interface ProfileContent {
   introMessage: string;
 }
 
+export interface EmailContent {
+  footer: string;
+}
+
 interface BasicCalloutData {
   slug: string;
   title: string;
