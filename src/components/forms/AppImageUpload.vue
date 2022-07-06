@@ -22,18 +22,17 @@
           />
           {{ t('actions.chooseFile') }}
         </AppButton>
-        <AppButton
-          :disabled="!canUpload"
-          :loading="uploading"
-          @click="handleUpload"
-        >
-          {{ t('actions.upload') }}
-        </AppButton>
+        <span v-if="uploading">
+          <font-awesome-icon :icon="['fas', 'circle-notch']" spin />
+          {{ t('form.uploading') }}
+        </span>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+import useVuelidate from '@vuelidate/core';
+import { sameAs } from '@vuelidate/validators';
 import { ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import axios from '../../axios';
@@ -54,54 +53,43 @@ const { t } = useI18n();
 const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
 const inputRef = ref<HTMLInputElement>();
-const canUpload = ref(false);
 const uploading = ref(false);
 
 const imageUrl = ref(props.modelValue);
 
+useVuelidate({ uploading: { equal: sameAs(false) } }, { uploading });
+
 watch(toRef(props, 'modelValue'), (newModelValue) => {
   imageUrl.value = newModelValue;
-  canUpload.value = false;
   if (inputRef.value) {
     inputRef.value.value = '';
   }
 });
 
 function handleChange() {
-  if (inputRef.value && inputRef.value.files) {
-    const file = inputRef.value.files[0];
-    if (file) {
-      imageUrl.value = URL.createObjectURL(file);
-      canUpload.value = true;
-    } else {
-      canUpload.value = false;
-    }
+  const file = inputRef.value?.files?.item(0);
+  if (file) {
+    imageUrl.value = URL.createObjectURL(file);
+    uploadFile(file);
   }
 }
 
-async function handleUpload() {
-  if (
-    inputRef.value &&
-    inputRef.value.files &&
-    inputRef.value.files.length > 0
-  ) {
-    const data = new FormData();
-    data.append('file', inputRef.value.files[0]);
+async function uploadFile(file: File) {
+  const data = new FormData();
+  data.append('file', file);
 
-    uploading.value = true;
+  uploading.value = true;
 
-    const resp = await axios.post('/upload/', data, {
-      baseURL,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+  const resp = await axios.post('/upload/', data, {
+    baseURL,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 
-    const newUrl = `${baseURL}/uploads/${props.width}x${props.height}/${resp.data.hash}`;
-    emit('update:modelValue', newUrl);
+  const newUrl = `${baseURL}/uploads/${props.width}x${props.height}/${resp.data.hash}`;
+  emit('update:modelValue', newUrl);
 
-    uploading.value = false;
-    canUpload.value = false;
-  }
+  uploading.value = false;
 }
 </script>
