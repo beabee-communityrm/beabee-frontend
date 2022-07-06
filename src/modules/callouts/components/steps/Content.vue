@@ -69,7 +69,7 @@ import { ContentStepProps } from '../../create-callout.interface';
 import AppAlert from '../../../../components/AppAlert.vue';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 
-const emit = defineEmits(['update:data', 'update:validated']);
+const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   data: ContentStepProps;
   mode: 'edit' | 'new';
@@ -92,6 +92,7 @@ const validation = useVuelidate(
 );
 
 watch([validation, props.data.formSchema], () => {
+  emit('update:error', validation.value.$errors.length > 0);
   emit(
     'update:validated',
     !validation.value.$invalid && props.data.formSchema.components.length > 1

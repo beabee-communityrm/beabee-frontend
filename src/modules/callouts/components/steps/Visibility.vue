@@ -82,7 +82,7 @@ import { useI18n } from 'vue-i18n';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
 import { VisibilityStepProps } from '../../create-callout.interface';
 
-const emit = defineEmits(['update:data', 'update:validated']);
+const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{ data: VisibilityStepProps }>();
 
 const { t } = useI18n();
@@ -106,7 +106,14 @@ const validate = useVuelidate(
   dataProxy
 );
 
-watch(validate, () => emit('update:validated', !validate.value.$invalid), {
-  immediate: true,
-});
+watch(
+  validate,
+  () => {
+    emit('update:error', validate.value.$errors.length > 0);
+    emit('update:validated', !validate.value.$invalid);
+  },
+  {
+    immediate: true,
+  }
+);
 </script>

@@ -20,6 +20,7 @@
         :is="selectedStep.component"
         v-model:data="selectedStep.data"
         v-model:validated="selectedStep.validated"
+        v-model:error="selectedStep.error"
         :mode="mode"
       />
 
