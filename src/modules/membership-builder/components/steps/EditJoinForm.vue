@@ -110,6 +110,7 @@
             <AppTextArea
               v-model="setupContent.mailText"
               :label="stepT('subheading')"
+              required
               :error-message="
                 validation.setupContent.mailText.$errors[0]?.$message
               "
@@ -120,6 +121,7 @@
             <AppInput
               v-model="setupContent.mailOptIn"
               :label="stepT('checkboxLabel')"
+              required
               :error-message="
                 validation.setupContent.mailOptIn.$errors[0]?.$message
               "
@@ -139,7 +141,6 @@
             <AppInput
               v-model="setupContent.newsletterTitle"
               :label="stepT('heading')"
-              class="mb-4"
               required
               :error-message="
                 validation.setupContent.newsletterTitle.$errors[0]?.$message
@@ -151,7 +152,7 @@
             <AppTextArea
               v-model="setupContent.newsletterText"
               :label="stepT('subheading')"
-              class="mb-4"
+              required
               :error-message="
                 validation.setupContent.newsletterText.$errors[0]?.$message
               "
@@ -162,7 +163,7 @@
             <AppInput
               v-model="setupContent.newsletterOptIn"
               :label="stepT('checkboxLabel')"
-              class="mb-4"
+              required
               :error-message="
                 validation.setupContent.newsletterOptIn.$errors[0]?.$message
               "

@@ -86,7 +86,7 @@ defineProps<{
 }>();
 
 const { t } = useI18n();
-const validation = useVuelidate();
+const validation = useVuelidate({ $stopPropagation: true });
 
 const setupMemberData = reactive<SetupMemberData>({
   email: '',
