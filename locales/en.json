@@ -498,6 +498,8 @@
     },
     "saveChanges": "Save Changes",
     "saved": "Saved!",
+    "unsavedChanges": "Unsaved changes",
+    "updated": "Updated",
     "warning": "Please only make updates to this page with the consent of the user. Changes you make here will also be visible to the user."
   },
   "homePage": {
