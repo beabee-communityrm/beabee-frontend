@@ -6,7 +6,7 @@
       :section="section"
       :is-first="index === 0"
     />
-    <div v-if="canAdmin" class="bg-primary-10 py-4 xl:mt-4">
+    <div v-if="canAdmin" class="bg-primary-10 py-2 mt-2">
       <TheMenuListSection
         v-for="(section, index) in adminMenu"
         :key="index"

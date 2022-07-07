@@ -2,7 +2,7 @@
   <div
     class="
     px-1 py-2
-    my-1
+    my-0.5
     rounded
     flex
     items-center
