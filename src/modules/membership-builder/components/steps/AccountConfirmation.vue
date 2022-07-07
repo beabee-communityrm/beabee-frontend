@@ -64,10 +64,7 @@
         />
       </template>
     </div>
-    <div
-      class="p-4 pt-8 bg-center bg-cover"
-      :style="`background-image: url(${backgroundUrl})`"
-    >
+    <div class="p-4 pt-8 bg-center bg-cover" >
       <AuthBox>
         <SetupForm :setup-content="setupContent" />
       </AuthBox>
