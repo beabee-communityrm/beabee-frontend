@@ -76,75 +76,6 @@
       </AuthBox>
     </div>
   </div>
-  <div v-if="setupContent" class="grid grid-cols-2 gap-8">
-    <div>
-      <AppHeading class="mb-4">{{ stepT('accountConfirmation') }}</AppHeading>
-      <AppInput
-        v-model="setupContent.welcome"
-        class="mb-4"
-        :label="stepT('welcomeMessage')"
-        required
-      />
-
-      <AppCheckbox
-        v-model="setupContent.showMailOptIn"
-        :label="stepT('showMailOptIn')"
-        class="font-semibold mb-4"
-      />
-
-      <template v-if="setupContent.showMailOptIn">
-        <AppInput
-          v-model="setupContent.mailTitle"
-          :label="stepT('heading')"
-          class="mb-4"
-          required
-        />
-        <AppTextArea
-          v-model="setupContent.mailText"
-          :label="stepT('subheading')"
-          class="mb-4"
-        />
-        <AppInput
-          v-model="setupContent.mailOptIn"
-          :label="stepT('checkboxLabel')"
-          class="mb-4"
-        />
-      </template>
-
-      <AppCheckbox
-        v-model="setupContent.showNewsletterOptIn"
-        :label="stepT('showNewsletterOptIn')"
-        class="font-semibold mb-4"
-      />
-
-      <template v-if="setupContent.showNewsletterOptIn">
-        <AppInput
-          v-model="setupContent.newsletterTitle"
-          :label="stepT('heading')"
-          class="mb-4"
-          required
-        />
-        <AppTextArea
-          v-model="setupContent.newsletterText"
-          :label="stepT('subheading')"
-          class="mb-4"
-        />
-        <AppInput
-          v-model="setupContent.newsletterOptIn"
-          :label="stepT('checkboxLabel')"
-          class="mb-4"
-        />
-      </template>
-    </div>
-    <div
-      class="p-4 pt-8 bg-center bg-cover"
-      :style="`background-image: url(${backgroundUrl})`"
-    >
-      <AuthBox>
-        <SetupForm :setup-content="setupContent" />
-      </AuthBox>
-    </div>
-  </div>
 </template>
 <script lang="ts" setup>
 import { computed, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
@@ -174,7 +105,6 @@ const props = defineProps<{
 }>();
 
 const joinContent = ref<JoinContent>();
-const setupContent = ref<JoinSetupContent>();
 const backgroundUrl = ref('');
 
 const { n, t } = useI18n();
@@ -207,10 +137,9 @@ const defaultAmounts = computed(() => {
 });
 
 async function handleUpdate() {
-  if (joinContent.value && setupContent.value) {
+  if (joinContent.value) {
     await Promise.all([
       updateContent('join', joinContent.value),
-      updateContent('join/setup', setupContent.value),
       updateContent('general', {
         ...generalContent.value,
         backgroundUrl: backgroundUrl.value || '',
@@ -224,11 +153,10 @@ async function handleUpdate() {
 onBeforeMount(async () => {
   props.emitter.on('update', handleUpdate);
   joinContent.value = await fetchContent('join');
-  setupContent.value = await fetchContent('join/setup');
   backgroundUrl.value = generalContent.value.backgroundUrl || '';
 
   watch(
-    [joinContent, setupContent, backgroundUrl],
+    [joinContent, backgroundUrl],
     () => {
       props.emitter.emit('dirty');
     },

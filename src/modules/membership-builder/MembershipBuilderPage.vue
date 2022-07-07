@@ -31,6 +31,7 @@ import PageTitle from '../../components/PageTitle.vue';
 import AppStepper from '../../components/stepper/AppStepper.vue';
 import { Step } from '../../components/stepper/stepper.interface';
 import EditJoinForm from './components/steps/EditJoinForm.vue';
+import AccountConfirmation from './components/steps/AccountConfirmation.vue';
 import IntroMessage from './components/steps/IntroMessage.vue';
 import Emails from './components/steps/Emails.vue';
 import AppButton from '../../components/forms/AppButton.vue';
@@ -52,6 +53,12 @@ const steps: BuilderStep[] = [
     description: t('membershipBuilder.steps.joinForm.description'),
     validated: true,
     component: EditJoinForm,
+  },
+  {
+    name: t('membershipBuilder.steps.accountConfirmation.title'),
+    description: t('membershipBuilder.steps.accountConfirmation.description'),
+    validated: true,
+    component: AccountConfirmation,
   },
   {
     name: t('membershipBuilder.steps.intro.title'),
