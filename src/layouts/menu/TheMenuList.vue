@@ -16,7 +16,7 @@
     </div>
   </div>
   <div
-    class="fixed bottom-0 left-0 p-4 border-t border-primary-40 bg-white w-menu md:w-16 xl:w-menu"
+    class="fixed bottom-0 left-0 px-1 py-2 border-t border-primary-40 bg-white w-menu md:w-16 xl:w-menu"
   >
     <a class="cursor-pointer" @click="doLogout">
       <TheMenuListItem
