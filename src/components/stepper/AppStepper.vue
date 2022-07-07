@@ -16,13 +16,20 @@
       >
         <h4
           class="flex items-center font-semibold"
-          :class="{ 'text-link': stepIndex === modelValue }"
+          :class="
+            step.error
+              ? 'text-danger'
+              : stepIndex === modelValue
+              ? 'text-link'
+              : ''
+          "
         >
           <span
             class="inline-block w-4 h-4 border-2 rounded-full align-middle mr-2"
             :class="{
               'bg-link': step.validated,
               'border-link': step.validated || stepIndex === modelValue,
+              'border-danger': step.error,
             }"
           />
           {{ step.name }}

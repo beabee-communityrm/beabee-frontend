@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="errorMessage && 'ProseMirror-hasError'">
     <AppLabel v-if="label" :label="label" :required="required" />
 
     <div v-if="editor" class="mb-2 min-h-[2rem] h-auto">
@@ -55,11 +55,18 @@
       </div>
     </div>
     <editor-content :editor="editor" class="content-message" />
+    <div
+      v-if="errorMessage"
+      class="text-xs text-danger font-semibold mt-1.5"
+      role="alert"
+    >
+      {{ errorMessage }}
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup="{ emit }">
-import { computed, onBeforeUnmount, watch } from 'vue';
+import { onBeforeUnmount, Ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useEditor, EditorContent, ChainedCommands } from '@tiptap/vue-3';
 import Link from '@tiptap/extension-link';
@@ -75,8 +82,9 @@ const props = defineProps<{
   modelValue: string;
   label?: string;
   required?: boolean;
+  errorMessage?: string | Ref<string>;
 }>();
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['blur', 'update:modelValue']);
 
 const editor = useEditor({
   content: props.modelValue,
@@ -93,18 +101,22 @@ const editor = useEditor({
     }),
     Typeography,
   ],
-  onUpdate: () =>
-    editor.value && emit('update:modelValue', editor.value.getHTML()),
+  onUpdate: () => {
+    if (editor.value) {
+      emit(
+        'update:modelValue',
+        editor.value.isEmpty ? '' : editor.value.getHTML()
+      );
+    }
+  },
+  onBlur: () => emit('blur'),
 });
 
-watch(
-  () => props.modelValue,
-  (value) => {
-    if (editor.value && editor.value.getHTML() !== value) {
-      editor.value.commands.setContent(value, false);
-    }
+watch(toRef(props, 'modelValue'), (value) => {
+  if (editor.value && editor.value.getHTML() !== value) {
+    editor.value.commands.setContent(value, false);
   }
-);
+});
 
 onBeforeUnmount(() => {
   editor.value?.destroy();
@@ -140,5 +152,9 @@ function setLink() {
 <style>
 .ProseMirror {
   @apply p-2 min-h-[5rem] h-auto bg-white w-full border border-primary-40 rounded focus:outline-none focus:shadow-input;
+
+  .ProseMirror-hasError & {
+    @apply bg-danger-10 border-danger-70;
+  }
 }
 </style>

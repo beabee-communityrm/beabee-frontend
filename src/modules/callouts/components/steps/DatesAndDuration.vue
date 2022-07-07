@@ -57,7 +57,7 @@ import AppInput from '../../../../components/forms/AppInput.vue';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
 import { DateAndDurationStepProps } from '../../create-callout.interface';
 
-const emit = defineEmits(['update:data', 'update:validated']);
+const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   data: DateAndDurationStepProps;
   mode: 'new' | 'edit';
@@ -85,7 +85,12 @@ const dataProxy = ref(props.data);
 
 const validation = useVuelidate(rules, dataProxy);
 
-watch(validation, () => emit('update:validated', !validation.value.$invalid), {
-  immediate: true,
-});
+watch(
+  validation,
+  () => {
+    emit('update:error', validation.value.$errors.length > 0);
+    emit('update:validated', !validation.value.$invalid);
+  },
+  { immediate: true }
+);
 </script>

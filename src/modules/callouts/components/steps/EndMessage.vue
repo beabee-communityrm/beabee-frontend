@@ -71,11 +71,10 @@ import { ref, watch, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../../components/forms/AppInput.vue';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
-import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import { EndMessageStepProps } from '../../create-callout.interface';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 
-const emit = defineEmits(['update:data', 'update:validated']);
+const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{ data: EndMessageStepProps; validated: boolean }>();
 
 const { t } = useI18n();
@@ -96,5 +95,8 @@ const rules = computed(() => ({
 
 const validation = useVuelidate(rules, dataProxy);
 
-watch(validation, () => emit('update:validated', !validation.value.$invalid));
+watch(validation, () => {
+  emit('update:error', validation.value.$errors.length > 0);
+  emit('update:validated', !validation.value.$invalid);
+});
 </script>

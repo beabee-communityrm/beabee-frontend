@@ -1,10 +1,20 @@
 <template>
   <PageTitle :title="t('membershipBuilder.title')" border>
     <div class="flex-0 ml-3">
-      <span v-if="dirty" class="mr-4">Unsaved changes</span>
-      <AppButton :loading="updating" :disabled="!dirty" @click="handleUpdate">{{
-        t('actions.update')
-      }}</AppButton>
+      <span v-if="updated" class="mr-4 text-success">
+        <font-awesome-icon :icon="['fa', 'check-circle']" />
+        {{ t('form.updated') }}
+      </span>
+      <span v-if="dirty" class="mr-4">
+        <font-awesome-icon :icon="['fa', 'info-circle']" />
+        {{ t('form.unsavedChanges') }}
+      </span>
+      <AppButton
+        :loading="updating"
+        :disabled="!dirty || validation.$invalid"
+        @click="handleUpdate"
+        >{{ t('actions.update') }}</AppButton
+      >
     </div>
   </PageTitle>
   <div class="flex gap-8">
@@ -17,14 +27,19 @@
         :key="i"
         :class="{ hidden: selectedStepIndex !== i }"
       >
-        <component :is="step.component" :emitter="emitter" />
+        <component
+          :is="step.component"
+          v-model:error="step.error"
+          v-model:validated="step.validated"
+          :emitter="emitter"
+        />
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import mitt from 'mitt';
-import { ref } from 'vue';
+import { markRaw, Ref, ref } from 'vue';
 import type { Component } from 'vue';
 import { useI18n } from 'vue-i18n';
 import PageTitle from '../../components/PageTitle.vue';
@@ -36,10 +51,12 @@ import IntroMessage from './components/steps/IntroMessage.vue';
 import Emails from './components/steps/Emails.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import { MembershipBuilderEmitter } from './membership-builder.interface';
+import useVuelidate from '@vuelidate/core';
 
 const { t } = useI18n();
 
 const selectedStepIndex = ref(0);
+const updated = ref(false);
 const updating = ref(false);
 const dirty = ref(false);
 
@@ -47,12 +64,13 @@ interface BuilderStep extends Step {
   component: Component;
 }
 
-const steps: BuilderStep[] = [
+const steps: Ref<BuilderStep[]> = ref([
   {
     name: t('membershipBuilder.steps.joinForm.title'),
     description: t('membershipBuilder.steps.joinForm.description'),
     validated: true,
-    component: EditJoinForm,
+    error: false,
+    component: markRaw(EditJoinForm),
   },
   {
     name: t('membershipBuilder.steps.accountConfirmation.title'),
@@ -64,31 +82,37 @@ const steps: BuilderStep[] = [
     name: t('membershipBuilder.steps.intro.title'),
     description: t('membershipBuilder.steps.intro.description'),
     validated: true,
-    component: IntroMessage,
+    error: false,
+    component: markRaw(IntroMessage),
   },
   {
     name: t('membershipBuilder.steps.emails.title'),
     description: t('membershipBuilder.steps.emails.description'),
     validated: true,
-    component: Emails,
+    error: false,
+    component: markRaw(Emails),
   },
-];
+]);
+
+const validation = useVuelidate();
 
 const emitter: MembershipBuilderEmitter = mitt();
 
 emitter.on('dirty', () => {
   dirty.value = true;
+  updated.value = false;
 });
 
 async function handleUpdate() {
-  let updated = 0;
+  let updatedNo = 0;
 
   function handleUpdated() {
-    updated++;
-    if (updated === steps.length) {
+    updatedNo++;
+    if (updatedNo === steps.value.length) {
       updating.value = false;
       dirty.value = false;
       emitter.off('updated', handleUpdated);
+      updated.value = true;
     }
   }
   updating.value = true;

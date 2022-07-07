@@ -10,7 +10,6 @@
     "schedule": "Schedule",
     "unpublish": "Unpublish",
     "update": "Update",
-    "upload": "Upload",
     "view": "View"
   },
   "adminDashboard": {
@@ -498,6 +497,9 @@
     },
     "saveChanges": "Save Changes",
     "saved": "Saved!",
+    "unsavedChanges": "Unsaved changes",
+    "updated": "Updated",
+    "uploading": "Uploading...",
     "warning": "Please only make updates to this page with the consent of the user. Changes you make here will also be visible to the user."
   },
   "homePage": {
