@@ -31,6 +31,7 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
     name: t('createCallout.steps.content.title'),
     description: t('createCallout.steps.content.description'),
     validated: data ? true : false,
+    error: false,
     component: markRaw(StepContent),
     data: {
       introText: data?.intro || '',
@@ -41,6 +42,7 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
     name: t('createCallout.steps.titleAndImage.title'),
     description: t('createCallout.steps.titleAndImage.description'),
     validated: data ? true : false,
+    error: false,
     component: markRaw(StepTitleAndImage),
     data: {
       title: data?.title || '',
@@ -52,6 +54,7 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
     name: t('createCallout.steps.visibility.title'),
     description: t('createCallout.steps.visibility.description'),
     validated: data ? true : false,
+    error: false,
     component: markRaw(StepVisibility),
     data: {
       whoCanTakePart: data?.access
@@ -72,6 +75,7 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
     name: 'End message',
     description: 'Set a final thank you message or page to redirect',
     validated: data ? true : false,
+    error: false,
     component: markRaw(StepEndMessage),
     data: {
       whenFinished: 'message',
@@ -84,6 +88,7 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
     name: t('createCallout.steps.url.title'),
     description: t('createCallout.steps.url.description'),
     validated: data ? true : false,
+    error: false,
     component: markRaw(StepUrlAndSharing),
     data: {
       useCustomSlug: data ? true : false,
@@ -98,6 +103,7 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
     name: t('createCallout.steps.mailchimp.title'),
     description: t('createCallout.steps.mailchimp.description'),
     validated: false,
+    error: false,
     component: markRaw(StepMailchimpSync),
     data: {
       useMailchimpSync: false,
@@ -107,6 +113,7 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
     name: t('createCallout.steps.dates.title'),
     description: t('createCallout.steps.dates.description'),
     validated: data ? true : false,
+    error: false,
     component: markRaw(StepDatesAndDuration),
     data: {
       startNow: data ? true : false,

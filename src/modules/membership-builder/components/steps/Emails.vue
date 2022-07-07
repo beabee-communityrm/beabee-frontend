@@ -1,41 +1,75 @@
 <template>
-  <div class="grid grid-cols-2 gap-8 mb-8">
-    <div>
-      <AppHeading class="mb-5">{{ stepT('bigTitle') }}</AppHeading>
-      <p>{{ stepT('text') }}</p>
+  <div>
+    <div class="grid grid-cols-2 gap-8 mb-8">
+      <div>
+        <AppHeading class="mb-5">{{ stepT('bigTitle') }}</AppHeading>
+        <p>{{ stepT('text') }}</p>
+      </div>
     </div>
-  </div>
 
-  <div v-if="welcomeEmail" class="grid grid-cols-2 gap-8 mb-8">
-    <div>
-      <AppSubHeading class="mb-4">{{ stepT('welcomeEmail') }}</AppSubHeading>
-      <AppInput v-model="welcomeEmail.subject" label="Subject" class="mb-4" />
-      <RichTextEditor v-model="welcomeEmail.body" label="Message" />
+    <div v-if="welcomeEmail" class="grid grid-cols-2 gap-8 mb-8">
+      <div>
+        <AppSubHeading class="mb-4">{{ stepT('welcomeEmail') }}</AppSubHeading>
+        <div class="mb-4">
+          <AppInput
+            v-model="welcomeEmail.subject"
+            label="Subject"
+            :error-message="
+              validation.welcomeEmail.subject.$errors[0]?.$message
+            "
+            required
+            @blur="validation.welcomeEmail.subject.$touch"
+          />
+        </div>
+        <RichTextEditor
+          v-model="welcomeEmail.body"
+          label="Message"
+          :error-message="validation.welcomeEmail.body.$errors[0]?.$message"
+          required
+          @blur="validation.welcomeEmail.body.$touch"
+        />
+      </div>
+      <div>
+        <EmailPreview :body="welcomeEmail.body" :footer="emailFooter" />
+      </div>
     </div>
-    <div>
-      <EmailPreview :body="welcomeEmail.body" :footer="emailFooter" />
-    </div>
-  </div>
 
-  <div v-if="cancellationEmail" class="grid grid-cols-2 gap-8">
-    <div>
-      <AppSubHeading class="mb-4">{{
-        stepT('cancellationEmail')
-      }}</AppSubHeading>
-      <AppInput
-        v-model="cancellationEmail.subject"
-        label="Subject"
-        class="mb-4"
-      />
-      <RichTextEditor v-model="cancellationEmail.body" label="Message" />
-    </div>
-    <div>
-      <EmailPreview :body="cancellationEmail.body" :footer="emailFooter" />
+    <div v-if="cancellationEmail" class="grid grid-cols-2 gap-8">
+      <div>
+        <AppSubHeading class="mb-4">{{
+          stepT('cancellationEmail')
+        }}</AppSubHeading>
+        <div class="mb-4">
+          <AppInput
+            v-model="cancellationEmail.subject"
+            label="Subject"
+            :error-message="
+              validation.cancellationEmail.subject.$errors[0]?.$message
+            "
+            required
+            @blur="validation.cancellationEmail.subject.$touch"
+          />
+        </div>
+        <RichTextEditor
+          v-model="cancellationEmail.body"
+          label="Message"
+          :error-message="
+            validation.cancellationEmail.body.$errors[0]?.$message
+          "
+          required
+          @blur="validation.cancellationEmail.body.$touch"
+        />
+      </div>
+      <div>
+        <EmailPreview :body="cancellationEmail.body" :footer="emailFooter" />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import useVuelidate from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
 import { onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../components/AppHeading.vue';
@@ -48,6 +82,7 @@ import { fetchEmail, updateEmail } from '../../../../utils/api/email';
 import { MembershipBuilderEmitter } from '../../membership-builder.interface';
 import EmailPreview from '../EmailPreview.vue';
 
+const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   emitter: MembershipBuilderEmitter;
 }>();
@@ -69,6 +104,22 @@ async function handleUpdate() {
 
   props.emitter.emit('updated');
 }
+
+const rules = {
+  welcomeEmail: {
+    subject: { required },
+    body: { required },
+  },
+  cancellationEmail: {
+    subject: { required },
+    body: { required },
+  },
+};
+const validation = useVuelidate(rules, { welcomeEmail, cancellationEmail });
+watch(validation, () => {
+  emit('update:error', validation.value.$errors.length > 0);
+  emit('update:validated', !validation.value.$invalid);
+});
 
 onBeforeMount(async () => {
   props.emitter.on('update', handleUpdate);

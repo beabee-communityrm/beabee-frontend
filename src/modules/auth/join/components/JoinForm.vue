@@ -76,5 +76,5 @@ const buttonText = computed(() => {
     : t('join.contribute', signUpDescription.value);
 });
 
-const validation = useVuelidate();
+const validation = useVuelidate({ $stopPropagation: true });
 </script>
