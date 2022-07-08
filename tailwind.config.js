@@ -78,7 +78,7 @@ module.exports = {
         '3.5xl': '2rem',
       },
       transitionProperty: {
-        'width': 'width',
+        width: 'width',
       },
     },
   },
