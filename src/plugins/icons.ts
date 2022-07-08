@@ -57,6 +57,7 @@ import {
   faHeading,
   faList,
   faListOl,
+  faChartLine,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -111,7 +112,8 @@ library.add(
   faUnderline,
   faHeading,
   faList,
-  faListOl
+  faListOl,
+  faChartLine
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
