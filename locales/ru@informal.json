@@ -1,4 +1,5 @@
 {
+  "actions": {},
   "adminDashboard": {
     "hint1": "",
     "hint2": "",
@@ -34,6 +35,7 @@
     "joinNow": "",
     "loginToYourAccount": "",
     "membersOnly": "",
+    "share": {},
     "status": {
       "endedOn": "в {duration}",
       "endsIn": "Заканчивается {duration}",
@@ -46,7 +48,7 @@
   "calloutAdmin": {},
   "calloutAdminOverview": {
     "actions": {
-      "delete": {}
+      "confirmDelete": {}
     },
     "dates": {},
     "settings": {
@@ -201,13 +203,11 @@
     "updateContribution": "Актуализировать взнос",
     "updatePaymentType": "Обновить тип оплаты",
     "updatedContribution": "Твой взнос был изменён",
-    "updatedPaymentSource": "Твои банковские реквизиты были изменены",
     "willExpire": "Твоя подписка заканчивается через {expires}",
     "willRenew": "Твоя подписка будет автоматически продлена {renewalDate}",
     "willRenewWithNewAmount": "Твоя подписка будет автоматически продлена {renewalDate} и взнос изменится на выбранную тобою сумму {nextAmount}."
   },
   "createCallout": {
-    "actions": {},
     "steps": {
       "content": {
         "inputs": {
@@ -390,6 +390,7 @@
     "now": "Стать участником сообщества!",
     "privacy": "Политика конфиденциальности"
   },
+  "joinPayment": {},
   "joinSetup": {
     "confirmDetails": "Пожалуйста, подтверди твою информацию:",
     "continue": "",
@@ -404,6 +405,13 @@
     "notMember": "Ещё не член сообщества?",
     "title": "Войти",
     "wrongCredentials": "Неверная комбинация пароля и почтового ящика"
+  },
+  "membershipBuilder": {
+    "steps": {
+      "emails": {},
+      "intro": {},
+      "joinForm": {}
+    }
   },
   "menu": {
     "admin": "Администрация",
@@ -440,6 +448,12 @@
     "login": "Войти",
     "resetPassword": "Сбросить пароль",
     "setup": "Создать аккаунт"
+  },
+  "paymentMethods": {
+    "gc_direct-debit": {},
+    "s_bacs": {},
+    "s_card": {},
+    "s_sepa": {}
   },
   "resetPassword": {
     "changePassword": "Поменять пароль",

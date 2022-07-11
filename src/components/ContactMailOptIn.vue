@@ -7,16 +7,15 @@
     {{ content.mailText }}
   </p>
 
-  <div class="mb-4">
-    <input id="deliveryOptIn" v-model="optIn" type="checkbox" name="updates" />
-
-    <label for="deliveryOptIn" class="font-bold ml-1">
-      {{ content.mailOptIn }}
-    </label>
-  </div>
+  <AppCheckbox
+    v-model="optIn"
+    :label="content.mailOptIn"
+    class="mb-4 font-bold"
+  />
 </template>
 <script lang="ts" setup>
 import { computed } from '@vue/reactivity';
+import AppCheckbox from './forms/AppCheckbox.vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{

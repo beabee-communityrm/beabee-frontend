@@ -8,14 +8,22 @@ import { completeStartContribution } from '../../../utils/api/member';
 const route = useRoute();
 const router = useRouter();
 
-onBeforeMount(() => {
-  completeStartContribution(route.query.redirect_flow_id as string)
-    .then(() => {
+onBeforeMount(async () => {
+  const paymentFlowId = (
+    route.query.redirect_flow_id || route.query.setup_intent
+  )?.toString();
+
+  if (paymentFlowId) {
+    try {
+      await completeStartContribution(paymentFlowId);
       router.replace({
         path: '/profile/contribution',
         query: { startedContribution: null },
       });
-    })
-    .catch((err) => err);
+      return;
+    } catch (err) {}
+  }
+
+  router.replace('/profile/contribution');
 });
 </script>

@@ -1,6 +1,6 @@
 import { reactive, ref } from 'vue';
 import { fetchMember, updateMember } from '../../utils/api/member';
-import { fetchJoinSetupContent } from '../../utils/api/content';
+import { fetchContent } from '../../utils/api/content';
 
 const information = reactive({
   emailAddress: '',
@@ -26,7 +26,7 @@ async function initPage(id: string) {
   loading.value = false;
   isSaved.value = false;
 
-  infoContent.value = await fetchJoinSetupContent();
+  infoContent.value = await fetchContent('join/setup');
 
   const member = await fetchMember(id, ['profile']);
   information.emailAddress = member.email;

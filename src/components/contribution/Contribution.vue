@@ -17,6 +17,13 @@
   <!-- TODO: Needed for join form, can we rework UI? -->
   <slot></slot>
 
+  <ContributionMethod
+    v-if="showPaymentMethod"
+    v-model="paymentMethodProxy"
+    :methods="content.paymentMethods"
+    class="mb-5"
+  />
+
   <ContributionFee
     v-if="isMonthly && content.showAbsorbFee"
     v-model="payFeeProxy"
@@ -31,22 +38,33 @@ import { computed, watch } from 'vue';
 import ContributionPeriod_ from './ContributionPeriod.vue';
 import ContributionAmount from './ContributionAmount.vue';
 import ContributionFee from './ContributionFee.vue';
+import ContributionMethod from './ContributionMethod.vue';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
+import { PaymentMethod } from '../../utils/enums/payment-method.enum';
 import { ContributionContent } from './contribution.interface';
+import calcPaymentFee from '../../utils/calcPaymentFee';
 
 const props = withDefaults(
   defineProps<{
     amount: number;
     period: ContributionPeriod;
     payFee: boolean;
-    fee: number;
+    paymentMethod: PaymentMethod;
     content: ContributionContent;
     showPeriod?: boolean;
+    showPaymentMethod?: boolean;
   }>(),
-  { showPeriod: true }
+  { showPeriod: true, showPaymentMethod: true }
 );
 
-const emit = defineEmits(['update:amount', 'update:period', 'update:payFee']);
+const fee = calcPaymentFee(props);
+
+const emit = defineEmits([
+  'update:amount',
+  'update:period',
+  'update:payFee',
+  'update:paymentMethod',
+]);
 
 const amountProxy = computed({
   get: () => props.amount,
@@ -63,6 +81,11 @@ const payFeeProxy = computed({
   set: (payFee) => emit('update:payFee', payFee),
 });
 
+const paymentMethodProxy = computed({
+  get: () => props.paymentMethod,
+  set: (paymentMethod) => emit('update:paymentMethod', paymentMethod),
+});
+
 const isMonthly = computed(
   () => periodProxy.value === ContributionPeriod.Monthly
 );
@@ -76,7 +99,7 @@ const definedAmounts = computed(() => {
   const selectedPeriod = props.content.periods.find((period) => {
     return period.name === periodProxy.value;
   });
-  return selectedPeriod?.presetAmounts as number[];
+  return selectedPeriod?.presetAmounts || [];
 });
 
 watch(periodProxy, () => {

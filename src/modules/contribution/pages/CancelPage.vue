@@ -14,8 +14,8 @@
       class="ml-4"
       to="/profile/contribution"
       variant="danger"
-      :loading="cancelContributionLoading"
-      @click="submitCancelContribution"
+      :loading="loading"
+      @click="submit"
       >{{ t('contribution.cancelContribution') }}</AppButton
     >
   </div>
@@ -25,9 +25,20 @@
 import PageTitle from '../../../components/PageTitle.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import { useI18n } from 'vue-i18n';
-import { useContribution } from '../use-contribution';
+import { ref } from 'vue';
+import { cancelContribution } from '../../../utils/api/member';
+import { useRouter } from 'vue-router';
 
-const { submitCancelContribution, cancelContributionLoading } =
-  useContribution();
 const { t } = useI18n();
+
+const loading = ref(false);
+async function submit() {
+  loading.value = true;
+  try {
+    await cancelContribution();
+    useRouter().push('/profile/contribution');
+  } finally {
+    loading.value = false;
+  }
+}
 </script>

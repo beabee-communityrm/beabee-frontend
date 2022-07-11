@@ -1,24 +1,28 @@
 <template>
-  <p v-if="label" class="mb-1.5 font-semibold">{{ label }}</p>
-  <label
-    v-for="[value, label] in options"
-    :key="value.toString()"
-    class="flex items-center mb-1"
-  >
-    <input
-      v-model="selected"
-      type="radio"
-      :name="name"
-      :value="value"
-      :checked="modelValue === value"
-      class="mr-1"
-    />
-    {{ label }}
-  </label>
+  <div>
+    <AppLabel v-if="label" :label="label" />
+    <label
+      v-for="[value, optLabel] in options"
+      :key="value.toString()"
+      class="items-center mb-1"
+      :class="inline ? 'inline-flex mr-3' : 'flex'"
+    >
+      <input
+        v-model="selected"
+        type="radio"
+        :name="name"
+        :value="value"
+        :checked="modelValue === value"
+        class="mr-1"
+      />
+      {{ optLabel }}
+    </label>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { computed } from 'vue';
+import AppLabel from './AppLabel.vue';
 const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps<{
@@ -26,6 +30,7 @@ const props = defineProps<{
   options: [string | boolean | number, string][];
   name: string;
   label?: string;
+  inline?: boolean;
 }>();
 
 const selected = computed({

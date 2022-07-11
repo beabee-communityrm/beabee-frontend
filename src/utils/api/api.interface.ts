@@ -2,6 +2,7 @@ import { ContributionPeriod } from '../enums/contribution-period.enum';
 import { ContributionType } from '../enums/contribution-type.enum';
 import { MembershipStatus } from '../enums/membership-status.enum';
 import { NewsletterStatus } from '../enums/newsletter-status.enum';
+import { PaymentMethod } from '../enums/payment-method.enum';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Noop {}
@@ -64,6 +65,11 @@ interface MemberData {
   lastname: string;
 }
 
+export interface PaymentFlowParams {
+  clientSecret?: string;
+  redirectUrl?: string;
+}
+
 interface MemberProfileData {
   telephone: string;
   twitter: string;
@@ -112,12 +118,39 @@ export interface UpdateMemberData extends Partial<MemberData> {
   profile?: UpdateMemberProfileData;
 }
 
-export interface PaymentSource {
-  type: 'direct-debit';
+export interface CardPaymentSource {
+  method: PaymentMethod.StripeCard;
+  last4: string;
+  expiryMonth: number;
+  expiryYear: number;
+}
+
+export interface GoCardlessDirectDebitPaymentSource {
+  method: PaymentMethod.GoCardlessDirectDebit;
   bankName: string;
   accountHolderName: string;
   accountNumberEnding: string;
 }
+
+export interface StripeBACSPaymentSource {
+  method: PaymentMethod.StripeBACS;
+  sortCode: string;
+  last4: string;
+}
+
+export interface StripeSEPAPaymentSource {
+  method: PaymentMethod.StripeSEPA;
+  country: string;
+  bankCode: string;
+  branchCode: string;
+  last4: string;
+}
+
+export type PaymentSource =
+  | CardPaymentSource
+  | GoCardlessDirectDebitPaymentSource
+  | StripeBACSPaymentSource
+  | StripeSEPAPaymentSource;
 
 export interface ContributionInfo {
   type: ContributionType;
@@ -133,20 +166,28 @@ export interface ContributionInfo {
   membershipExpiryDate?: Date;
 }
 
-export interface UpdateContributionData {
+export interface SetContributionData {
   amount: number;
   payFee: boolean;
   prorate: boolean;
+  period: ContributionPeriod;
 }
 
-export interface SetContributionData extends UpdateContributionData {
-  period: ContributionPeriod;
+export interface StartContributionData extends SetContributionData {
+  paymentMethod: PaymentMethod;
+}
+
+export enum PaymentStatus {
+  Pending = 'pending',
+  Successful = 'successful',
+  Failed = 'failed',
+  Cancelled = 'cancelled',
 }
 
 export interface GetPaymentData {
   chargeDate: string;
   amount: number;
-  status: string;
+  status: PaymentStatus;
 }
 
 export type GetPaymentsQuery = GetPaginatedQuery<'chargeDate'>;
@@ -171,6 +212,7 @@ export interface GeneralContent {
   currencyCode: string;
   hideContribution?: boolean;
   footerLinks: { text: string; url: string }[];
+  backgroundUrl?: string;
 }
 
 export interface JoinContent {
@@ -180,11 +222,12 @@ export interface JoinContent {
   initialPeriod: ContributionPeriod;
   minMonthlyAmount: number;
   periods: {
-    name: string;
+    name: ContributionPeriod;
     presetAmounts: number[];
   }[];
   showAbsorbFee: boolean;
   showNoContribution: boolean;
+  paymentMethods: PaymentMethod[];
 }
 
 export interface JoinSetupContent {
@@ -203,6 +246,10 @@ export interface ProfileContent {
   welcomeMessage: string;
   footerMessage: string;
   introMessage: string;
+}
+
+export interface EmailContent {
+  footer: string;
 }
 
 interface BasicCalloutData {
@@ -241,10 +288,7 @@ export interface GetMoreCalloutData
   extends GetBasicCalloutData,
     MoreCalloutData {}
 
-export interface CreateCalloutData extends MoreCalloutData {
-  // Must currently set a date on creation
-  starts: Date;
-}
+export type CreateCalloutData = MoreCalloutData;
 
 export type UpdateCalloutData = Omit<CreateCalloutData, 'slug'>;
 
@@ -293,10 +337,16 @@ export interface GetNoticeData {
   url?: string;
 }
 
-export interface SignupData extends SetContributionData {
+export interface SignupData extends StartContributionData {
   email: string;
   password: string;
   noContribution: boolean;
+}
+
+export interface CompleteSignupData {
+  paymentFlowId: string;
+  firstname?: string;
+  lastname?: string;
 }
 
 export interface GetSegmentData {
@@ -317,3 +367,10 @@ export interface GetStatsData {
   averageContribution: number | null;
   totalRevenue: number | null;
 }
+
+export interface GetEmailData {
+  subject: string;
+  body: string;
+}
+
+export type UpdateEmailData = GetEmailData;

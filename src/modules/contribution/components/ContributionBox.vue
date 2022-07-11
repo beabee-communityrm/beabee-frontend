@@ -1,10 +1,15 @@
 <template>
   <div
-    v-if="contribution.type !== ContributionType.None"
+    v-if="
+      contribution.type !== ContributionType.None &&
+      contribution.membershipStatus !== MembershipStatus.None
+    "
     class="flex flex-col p-8 bg-white shadow"
   >
     <template v-if="contribution.membershipStatus === MembershipStatus.Expired">
-      <p class="text-lg mb-2 font-semibold">{{ t('contribution.expired') }}</p>
+      <AppSubHeading class="mb-2">{{
+        t('contribution.expired')
+      }}</AppSubHeading>
 
       <p>
         {{ t('contribution.expiredText') }}
@@ -27,30 +32,25 @@
           </template>
         </i18n-t>
       </div>
-      <div v-else>
+      <div
+        v-else-if="contribution.membershipStatus === MembershipStatus.Active"
+      >
         <p>{{ t('common.thankYou') }}</p>
-        <div
-          v-if="contribution.type === ContributionType.Automatic"
-          class="mt-2 text-body-80 text-sm"
-        >
+        <div class="mt-2 text-body-80 text-sm">
           <i18n-t
             v-if="contribution.hasPendingPayment"
             keypath="contribution.hasPendingPayment"
           />
           <i18n-t
-            v-else-if="contribution.nextAmount"
-            keypath="contribution.willRenewWithNewAmount"
+            v-else-if="contribution.renewalDate"
+            :keypath="
+              contribution.type === ContributionType.Automatic
+                ? 'contribution.willRenew'
+                : 'contribution.dueToRenew'
+            "
           >
             <template #renewalDate>
-              <b>{{ formattedRenewalDate }}</b>
-            </template>
-            <template #nextAmount>
-              <b>{{ n(contribution.nextAmount, 'currency') }}/{{ period }}</b>
-            </template>
-          </i18n-t>
-          <i18n-t v-else keypath="contribution.willRenew">
-            <template #renewalDate>
-              <b>{{ formattedRenewalDate }}</b>
+              <b>{{ formatLocale(contribution.renewalDate, 'PPP') }}</b>
             </template>
           </i18n-t>
         </div>
@@ -70,6 +70,7 @@ import { ContributionPeriod } from '../../../utils/enums/contribution-period.enu
 import { ContributionInfo } from '../../../utils/api/api.interface';
 import { MembershipStatus } from '../../../utils/enums/membership-status.enum';
 import { ContributionType } from '../../../utils/enums/contribution-type.enum';
+import AppSubHeading from '../../../components/AppSubHeading.vue';
 
 const { n, t } = useI18n();
 
@@ -81,12 +82,6 @@ const period = computed(() =>
   props.contribution.period === ContributionPeriod.Monthly
     ? t('common.month')
     : t('common.year')
-);
-
-const formattedRenewalDate = computed(() =>
-  props.contribution.renewalDate
-    ? formatLocale(props.contribution.renewalDate, 'PPP')
-    : undefined
 );
 
 const formattedExpiryDate = computed(() =>

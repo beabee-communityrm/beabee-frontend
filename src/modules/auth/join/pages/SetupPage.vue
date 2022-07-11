@@ -2,16 +2,20 @@
   <AuthBox>
     <form @submit.prevent="completeSetup">
       <JoinHeader
-        class="mb-6"
         :title="
           t('joinSetup.welcome', {
             firstName: setupMemberData.firstName,
             lastName: setupMemberData.lastName,
           })
         "
-        :sub-title="setupContent.welcome"
-        :description="t('joinSetup.confirmDetails')"
       />
+      <div
+        class="mb-6 content-message"
+        v-html="t('joinSetup.confirmDetails')"
+      />
+      <p class="mt-2 mb-4">
+        {{ setupContent.welcome }}
+      </p>
 
       <ContactInformation
         v-model:email="setupMemberData.email"
@@ -43,18 +47,11 @@
           {{ setupContent.newsletterText }}
         </p>
 
-        <div class="mb-4">
-          <input
-            id="newsletterOptIn"
-            v-model="setupMemberData.profile.newsletterOptIn"
-            type="checkbox"
-            name="updates"
-          />
-
-          <label for="newsletterOptIn" class="font-bold ml-1">
-            {{ setupContent.newsletterOptIn }}
-          </label>
-        </div>
+        <AppCheckbox
+          v-model="setupMemberData.profile.newsletterOptIn"
+          :label="setupContent.newsletterOptIn"
+          class="mb-4 font-bold"
+        />
       </template>
 
       <MessageBox v-if="validation.$errors.length > 0" class="mb-4" />
@@ -88,9 +85,10 @@ import {
   JoinSetupContent,
   UpdateMemberData,
 } from '../../../../utils/api/api.interface';
-import { fetchJoinSetupContent } from '../../../../utils/api/content';
+import { fetchContent } from '../../../../utils/api/content';
 import ContactInformation from '../../../../components/ContactInformation.vue';
 import ContactMailOptIn from '../../../../components/ContactMailOptIn.vue';
+import AppCheckbox from '../../../../components/forms/AppCheckbox.vue';
 
 const { t } = useI18n();
 
@@ -183,6 +181,6 @@ onBeforeMount(async () => {
     setupMemberData.postCode = member.profile.deliveryAddress.postcode;
   }
 
-  setupContent.value = await fetchJoinSetupContent();
+  setupContent.value = await fetchContent('join/setup');
 });
 </script>

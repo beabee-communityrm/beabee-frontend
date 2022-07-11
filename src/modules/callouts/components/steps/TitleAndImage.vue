@@ -60,7 +60,7 @@ import useVuelidate from '@vuelidate/core';
 import { required, url } from '@vuelidate/validators';
 import { TitleAndImageStepProps } from '../../create-callout.interface';
 
-const emit = defineEmits(['update:data', 'update:validated']);
+const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{ data: TitleAndImageStepProps }>();
 
 const { t } = useI18n();
@@ -78,5 +78,8 @@ const validation = useVuelidate(
   dataProxy
 );
 
-watch(validation, () => emit('update:validated', !validation.value.$invalid));
+watch(validation, () => {
+  emit('update:error', validation.value.$errors.length > 0);
+  emit('update:validated', !validation.value.$invalid);
+});
 </script>

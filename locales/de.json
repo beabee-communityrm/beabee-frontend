@@ -1,4 +1,16 @@
 {
+  "actions": {
+    "back": "Zurück",
+    "continue": "Weiter",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "publish": "Veröffentlichen",
+    "replicate": "Kopieren",
+    "schedule": "Planen",
+    "unpublish": "Veröffentlichung aufheben",
+    "update": "Änderungen speichern",
+    "view": "Anzeigen"
+  },
   "adminDashboard": {
     "hint1": "<p>Das beabee-Handbuch für Community-Journalismus „Lust auf Lokal” <a href=\"https://beabee.io/neu-handbuch-community-journalismus/\">ist erschienen</a>. Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
     "hint2": "<p>Im <a href=\"https://beabee.io/#blog\">Blog</a> auf unserer Website findest du viele Best-Practice-Beispiele anderer Redaktionen, von denen du dich inspierieren lassen kannst.</p>\n",
@@ -34,6 +46,10 @@
     "joinNow": "Mitglied werden",
     "loginToYourAccount": "Einloggen",
     "membersOnly": "An diesem Callout können nur zahlende Mitglieder teilnehmen. Um teilzunehmen",
+    "share": {
+      "address": "Diesen Callout per Link teilen:",
+      "services": "Diesen Callout auf einer der folgenden Plattformen teilen: "
+    },
     "status": {
       "endedOn": "am {date}",
       "endsIn": "Endet in {duration}",
@@ -44,6 +60,7 @@
     "youResponded": "Sie haben geantwortet ♥"
   },
   "calloutAdmin": {
+    "deleted": "Callout gelöscht.",
     "overview": "Überblick",
     "responses": "Antworten"
   },
@@ -54,12 +71,7 @@
         "actionYes": "Ja, bitte löschen.",
         "text": "Bist du sicher, dass du diesen Callout löschen willst?",
         "title": "Callout löschen?"
-      },
-      "delete": "Löschen",
-      "edit": "Bearbeiten",
-      "replicate": "Kopieren",
-      "unpublish": "Veröffentlichung aufheben",
-      "view": "Anzeigen"
+      }
     },
     "created": "Gut gemacht! Dein Callout wurde erstellt.",
     "dates": {
@@ -125,6 +137,7 @@
     "annually": "Jährlich",
     "backToHome": "Zurück zur Startseite",
     "contributing": "Ihr Beitrag",
+    "copy": "Kopieren",
     "every": "pro",
     "goBack": "Zurück",
     "hello": "Hallo",
@@ -204,7 +217,7 @@
       },
       "tags": "Tags"
     },
-    "noContacts": "",
+    "noContacts": "Keine Kontakte",
     "noResults": "Keine Kontakte gefunden",
     "search": "Kontakte durchsuchen...",
     "showingOf": "{start} to {end} von {total} Kontakten werden angezeigt."
@@ -251,13 +264,6 @@
     "willRenewWithNewAmount": "Ihre Mitgliedschaft verlängert sich am {renewalDate} automatisch. Ihr Beitrag ist dann {nextAmount}."
   },
   "createCallout": {
-    "actions": {
-      "back": "Zurück",
-      "continue": "Weiter",
-      "publish": "Veröffentlichen",
-      "schedule": "Planen",
-      "update": "Änderungen speichern"
-    },
     "steps": {
       "content": {
         "description": "Entwerfe deinen Callout mit Fragen und Aufforderungen",
@@ -547,10 +553,11 @@
     "privacy": "Datenschutzerklärung"
   },
   "joinPayment": {
-    "goBack": "Haben Sie etwas vergessen?",
+    "genericError": "Upps! Etwas ist schiefgelaufen. Bitte wenden Sie sich an den Support, sollte das erneut passieren.",
+    "goBack": "Möchten Sie etwas ändern? {back}",
     "goBackButton": "Zurück zum letzten Schritt",
     "note": "Sie können Ihre Zahlungsdaten jederzeit in Ihrem Nutzer-Account ändern und dort auch sehen, wie viel Sie in der Vergangenheit bereits gezahlt haben. ",
-    "willBeContributing": "Ihr Beitrag ist {amount}/{period}"
+    "willBeContributing": "Sie zahlen {amount}/{period}"
   },
   "joinSetup": {
     "confirmDetails": "Bitte bestätigen Sie Ihre Angaben:",
@@ -566,6 +573,13 @@
     "notMember": "Noch kein Mitglied?",
     "title": "Einloggen",
     "wrongCredentials": "Falsche Kombination von Passwort und E-Mail."
+  },
+  "membershipBuilder": {
+    "steps": {
+      "emails": {},
+      "intro": {},
+      "joinForm": {}
+    }
   },
   "menu": {
     "admin": "Administration",
@@ -610,10 +624,15 @@
       "setLabel": "Ihre Laschriftdaten"
     },
     "s_bacs": {
+      "changeLabel": "Lastschrift ändern",
       "label": "Lastschrift",
       "setLabel": "Ihre Laschriftdaten"
     },
-    "s_card": {},
+    "s_card": {
+      "changeLabel": "Kreditkartendetails ändern",
+      "label": "Kreditkarte",
+      "setLabel": "Ihre Kreditkartendetails"
+    },
     "s_sepa": {
       "changeLabel": "Lastschrift ändern",
       "label": "Lastschrift",

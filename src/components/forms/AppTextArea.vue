@@ -1,8 +1,7 @@
 <template>
-  <label v-if="label" class="block mb-1.5 font-semibold"
-    >{{ formattedLabel }}
-  </label>
+  <AppLabel v-if="label" :label="label" :required="required" />
   <textarea
+    v-model="value"
     class="
       p-2
       w-full
@@ -11,10 +10,8 @@
       focus:outline-none focus:shadow-input
     "
     :class="dangerClasses"
-    :value="modelValue"
     v-bind="$attrs"
     :required="required"
-    @input="$emit('update:modelValue', handleInput($event))"
   />
 
   <div
@@ -32,9 +29,10 @@
 
 <script lang="ts" setup>
 import { computed, Ref } from '@vue/reactivity';
-import handleInput from '../../utils/handle-input';
 import InfoMessage from '../InfoMessage.vue';
+import AppLabel from './AppLabel.vue';
 
+const emit = defineEmits(['update:modelValue']);
 const props = withDefaults(
   defineProps<{
     modelValue?: string;
@@ -52,13 +50,12 @@ const props = withDefaults(
   }
 );
 
-defineEmits(['update:modelValue']);
+const value = computed({
+  get: () => props.modelValue,
+  set: (newValue) => emit('update:modelValue', newValue),
+});
 
 const dangerClasses = computed(() => {
   return props.errorMessage ? ['bg-danger-10', 'border-danger-70'] : null;
-});
-
-const formattedLabel = computed(() => {
-  return props.required ? props.label + '*' : props.label;
 });
 </script>

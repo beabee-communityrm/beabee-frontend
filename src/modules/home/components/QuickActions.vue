@@ -1,7 +1,5 @@
 <template>
-  <SectionTitle class="uppercase">{{
-    t('homePage.quickActions')
-  }}</SectionTitle>
+  <SectionTitle>{{ t('homePage.quickActions') }}</SectionTitle>
 
   <ul class="list-disc pl-4 font-semibold underline space-y-2 mt-4">
     <!--<li>

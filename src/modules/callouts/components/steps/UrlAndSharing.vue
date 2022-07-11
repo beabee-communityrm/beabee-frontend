@@ -90,7 +90,7 @@ import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
 import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import { UrlAndSharingStepProps } from '../../create-callout.interface';
 
-const emit = defineEmits(['update:data', 'update:validated']);
+const emit = defineEmits(['update:error', 'update:validated']);
 const props =
   defineProps<{ data: UrlAndSharingStepProps; mode: 'edit' | 'new' }>();
 
@@ -120,7 +120,14 @@ const rules = computed(() => ({
 
 const validation = useVuelidate(rules, dataProxy);
 
-watch(validation, () => emit('update:validated', !validation.value.$invalid), {
-  immediate: true,
-});
+watch(
+  validation,
+  () => {
+    emit('update:error', validation.value.$errors.length > 0);
+    emit('update:validated', !validation.value.$invalid);
+  },
+  {
+    immediate: true,
+  }
+);
 </script>

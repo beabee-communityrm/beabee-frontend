@@ -1,5 +1,5 @@
 <template>
-  <label v-if="label" class="block mb-1.5 font-semibold">{{ label }}</label>
+  <AppLabel v-if="label" :label="label" />
   <div class="flex flex-row flex-wrap ml-0 mt-2 sm:mt-0">
     <ContactTag
       v-for="tag in modelValue"
@@ -55,6 +55,7 @@
 import { ref } from 'vue';
 import { computed } from '@vue/reactivity';
 import ContactTag from './ContactTag.vue';
+import AppLabel from '../../../components/forms/AppLabel.vue';
 
 const props = defineProps<{
   tags: string[];
