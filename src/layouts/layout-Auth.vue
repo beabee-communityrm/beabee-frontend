@@ -1,11 +1,11 @@
 <template>
-  <main class="auth min-h-screen bg-fixed bg-cover bg-center py-4">
+  <main
+    class="min-h-screen bg-fixed bg-cover bg-center py-4"
+    :style="backgroundStyle"
+  >
     <router-view />
   </main>
 </template>
-
-<style scoped>
-.auth {
-  background-image: url('../assets/images/auth-bg.jpg');
-}
-</style>
+<script lang="ts" setup>
+import backgroundStyle from '../utils/backgroundStyle';
+</script>

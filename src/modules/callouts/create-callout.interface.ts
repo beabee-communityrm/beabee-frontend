@@ -1,4 +1,5 @@
 import { Component } from 'vue';
+import { Step } from '../../components/stepper/stepper.interface';
 
 export interface ContentStepProps {
   introText: string;
@@ -44,20 +45,17 @@ export interface DateAndDurationStepProps {
   endDate: string;
 }
 
-export interface Step<T> {
-  name: string;
-  description: string;
-  validated: boolean;
+export interface CalloutStep<T> extends Step {
   component: Component;
   data: T;
 }
 
-export interface Steps {
-  content: Step<ContentStepProps>;
-  titleAndImage: Step<TitleAndImageStepProps>;
-  visibility: Step<VisibilityStepProps>;
-  endMessage: Step<EndMessageStepProps>;
-  url: Step<UrlAndSharingStepProps>;
+export interface CalloutSteps {
+  content: CalloutStep<ContentStepProps>;
+  titleAndImage: CalloutStep<TitleAndImageStepProps>;
+  visibility: CalloutStep<VisibilityStepProps>;
+  endMessage: CalloutStep<EndMessageStepProps>;
+  url: CalloutStep<UrlAndSharingStepProps>;
   //mailchimp: Step<MailchimpSyncStepProps>;
-  dates: Step<DateAndDurationStepProps>;
+  dates: CalloutStep<DateAndDurationStepProps>;
 }

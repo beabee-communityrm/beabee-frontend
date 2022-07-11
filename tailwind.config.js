@@ -61,6 +61,9 @@ module.exports = {
         '2.5xl': '1.75rem',
         '3.5xl': '2rem',
       },
+      transitionProperty: {
+        width: 'width',
+      },
     },
   },
   plugins: [],

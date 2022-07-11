@@ -57,7 +57,7 @@ export const adminMenu: MenuSection[] = [
       {
         title: 'menu.dashboard',
         href: '/admin',
-        icon: ['far', 'building'],
+        icon: ['fa', 'chart-line'],
       },
       {
         title: 'menu.community',
@@ -79,4 +79,15 @@ export const adminMenu: MenuSection[] = [
       },
     ],
   },
+  /*{
+    type: 'settings',
+    title: ('menu.settings',
+    items: [
+      {
+        title: 'menu.membershipBuilder',
+        href: '/admin/membership-builder',
+        icon: ['fa', 'hands-helping'],
+      },
+    ],
+  },*/
 ];

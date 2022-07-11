@@ -18,7 +18,7 @@ export default ({ mode }) => {
     ],
     server: {
       proxy: {
-        '^/(api|login)': {
+        '^/(api|login|upload|uploads)': {
           target: process.env.API_PROXY_URL,
           changeOrigin: true,
           cookieDomainRewrite: {

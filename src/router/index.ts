@@ -10,6 +10,7 @@ import { currentUser, initStore, generalContent } from '../store';
 import { calloutsRoute } from '../modules/callouts/callouts.route';
 import { noticesRoute } from '../modules/notices/notices.route';
 import { adminRoute } from '../modules/admin/admin.route';
+import { membershipBuilderRoute } from '../modules/membership-builder/membership-builder.route';
 import i18n, { setLocale } from '../i18n';
 
 // routes
@@ -25,6 +26,7 @@ const routes: RouteRecordRaw[] = [
   ...calloutsRoute,
   ...noticesRoute,
   ...adminRoute,
+  ...membershipBuilderRoute,
 ];
 
 const router = createRouter({

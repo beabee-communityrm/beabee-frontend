@@ -47,18 +47,11 @@
           {{ setupContent.newsletterText }}
         </p>
 
-        <div class="mb-4">
-          <input
-            id="newsletterOptIn"
-            v-model="setupMemberData.profile.newsletterOptIn"
-            type="checkbox"
-            name="updates"
-          />
-
-          <label for="newsletterOptIn" class="font-bold ml-1">
-            {{ setupContent.newsletterOptIn }}
-          </label>
-        </div>
+        <AppCheckbox
+          v-model="setupMemberData.profile.newsletterOptIn"
+          :label="setupContent.newsletterOptIn"
+          class="mb-4 font-bold"
+        />
       </template>
 
       <MessageBox v-if="validation.$errors.length > 0" class="mb-4" />
@@ -95,6 +88,7 @@ import {
 import { fetchContent } from '../../../../utils/api/content';
 import ContactInformation from '../../../../components/ContactInformation.vue';
 import ContactMailOptIn from '../../../../components/ContactMailOptIn.vue';
+import AppCheckbox from '../../../../components/forms/AppCheckbox.vue';
 
 const { t } = useI18n();
 

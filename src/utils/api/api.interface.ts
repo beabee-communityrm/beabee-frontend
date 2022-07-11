@@ -229,6 +229,7 @@ export interface GeneralContent {
       title?: string;
     };
   };
+  backgroundUrl?: string;
 }
 
 export interface JoinContent {
@@ -238,7 +239,7 @@ export interface JoinContent {
   initialPeriod: ContributionPeriod;
   minMonthlyAmount: number;
   periods: {
-    name: string;
+    name: ContributionPeriod;
     presetAmounts: number[];
   }[];
   showAbsorbFee: boolean;
@@ -262,6 +263,10 @@ export interface ProfileContent {
   welcomeMessage: string;
   footerMessage: string;
   introMessage: string;
+}
+
+export interface EmailContent {
+  footer: string;
 }
 
 interface BasicCalloutData {
@@ -379,3 +384,10 @@ export interface GetStatsData {
   averageContribution: number | null;
   totalRevenue: number | null;
 }
+
+export interface GetEmailData {
+  subject: string;
+  body: string;
+}
+
+export type UpdateEmailData = GetEmailData;
