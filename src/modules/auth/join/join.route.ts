@@ -1,7 +1,4 @@
 import { RouteRecordRaw } from 'vue-router';
-import i18n from '../../../i18n';
-
-const { t } = i18n.global;
 
 export const joinRoute: Array<RouteRecordRaw> = [
   {
@@ -11,7 +8,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     meta: {
       layout: 'Auth',
       noAuth: true,
-      pageTitle: t('pageTitle.join'),
+      pageTitle: 'pageTitle.join',
     },
   },
   {
@@ -20,7 +17,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/SetupPage.vue'),
     meta: {
       layout: 'Auth',
-      pageTitle: t('pageTitle.setup'),
+      pageTitle: 'pageTitle.setup',
     },
   },
   {
@@ -29,7 +26,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     component: () => import('./pages/CompletePage.vue'),
     meta: {
       layout: 'Loading',
-      pageTitle: t('pageTitle.join'),
+      pageTitle: 'pageTitle.join',
       noAuth: true,
     },
   },
@@ -40,7 +37,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     meta: {
       layout: 'Auth',
       noAuth: true,
-      pageTitle: t('pageTitle.confirmEmail'),
+      pageTitle: 'pageTitle.confirmEmail',
     },
   },
   {
@@ -50,7 +47,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     meta: {
       layout: 'Loading',
       noAuth: true,
-      pageTitle: t('pageTitle.confirmEmail'),
+      pageTitle: 'pageTitle.confirmEmail',
     },
   },
   {
@@ -60,7 +57,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     meta: {
       layout: 'Auth',
       noAuth: true,
-      pageTitle: t('pageTitle.failed'),
+      pageTitle: 'pageTitle.failed',
     },
   },
   {
@@ -70,7 +67,7 @@ export const joinRoute: Array<RouteRecordRaw> = [
     meta: {
       layout: 'Auth',
       noAuth: true,
-      pageTitle: t('pageTitle.duplicateEmail'),
+      pageTitle: 'pageTitle.duplicateEmail',
     },
   },
 ];

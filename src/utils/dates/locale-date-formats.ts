@@ -9,7 +9,7 @@ function formatDistanceLocale(firstDate: Date, secondDate: Date): string {
   return formatDistance(firstDate, secondDate, {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore - locale is interfered as string which is not
-    locale: locales[locale.value as keyof typeof locales],
+    locale: locales[locale.value],
   });
 }
 
@@ -17,7 +17,7 @@ function formatLocale(date: Date, formatString: string): string {
   return format(date, formatString, {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore - locale is interfered as string which is not
-    locale: locales[locale.value as keyof typeof locales],
+    locale: locales[locale.value],
   });
 }
 

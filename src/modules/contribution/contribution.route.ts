@@ -1,7 +1,4 @@
 import { RouteRecordRaw } from 'vue-router';
-import i18n from '../../i18n';
-
-const { t } = i18n.global;
 
 export const contributionRoute: Array<RouteRecordRaw> = [
   {
@@ -9,7 +6,7 @@ export const contributionRoute: Array<RouteRecordRaw> = [
     name: 'contribution',
     component: () => import('./ContributionPage.vue'),
     meta: {
-      pageTitle: t('menu.contribution'),
+      pageTitle: 'menu.contribution',
     },
   },
   {
@@ -17,7 +14,7 @@ export const contributionRoute: Array<RouteRecordRaw> = [
     name: 'complete contribution',
     component: () => import('./pages/ContributionCompletePage.vue'),
     meta: {
-      pageTitle: t('menu.contribution'),
+      pageTitle: 'menu.contribution',
       layout: 'Loading',
     },
   },
@@ -26,7 +23,7 @@ export const contributionRoute: Array<RouteRecordRaw> = [
     name: 'complete payment method',
     component: () => import('./pages/PaymentSourceCompletePage.vue'),
     meta: {
-      pageTitle: t('menu.contribution'),
+      pageTitle: 'menu.contribution',
       layout: 'Loading',
     },
   },
@@ -35,7 +32,7 @@ export const contributionRoute: Array<RouteRecordRaw> = [
     name: 'cancel contribution',
     component: () => import('./pages/CancelPage.vue'),
     meta: {
-      pageTitle: t('menu.contribution'),
+      pageTitle: 'menu.contribution',
     },
   },
 ];
