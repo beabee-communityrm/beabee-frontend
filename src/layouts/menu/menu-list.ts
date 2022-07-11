@@ -60,7 +60,7 @@ export const adminMenu: MenuSection[] = [
       {
         title: t('menu.dashboard'),
         href: '/admin',
-        icon: ['far', 'building'],
+        icon: ['fa', 'chart-line'],
       },
       {
         title: t('menu.community'),

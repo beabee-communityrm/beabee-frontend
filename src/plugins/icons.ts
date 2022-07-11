@@ -58,6 +58,7 @@ import {
   faList,
   faListOl,
   faHandsHelping,
+  faChartLine,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -113,7 +114,8 @@ library.add(
   faHeading,
   faList,
   faListOl,
-  faHandsHelping
+  faHandsHelping,
+  faChartLine
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
