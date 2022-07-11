@@ -1,6 +1,7 @@
 {
   "actions": {
     "back": "Back",
+    "chooseFile": "Choose file",
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
@@ -143,6 +144,7 @@
     "hello": "Hello",
     "in": "in",
     "joined": "Joined",
+    "loading": "Loading...",
     "login": "Login",
     "month": "month | months",
     "monthly": "Monthly",
@@ -495,6 +497,9 @@
     },
     "saveChanges": "Save Changes",
     "saved": "Saved!",
+    "unsavedChanges": "Unsaved changes",
+    "updated": "Updated",
+    "uploading": "Uploading...",
     "warning": "Please only make updates to this page with the consent of the user. Changes you make here will also be visible to the user."
   },
   "homePage": {
@@ -574,6 +579,45 @@
     "title": "Log in to your account",
     "wrongCredentials": "Wrong password/email combination"
   },
+  "membershipBuilder": {
+    "steps": {
+      "emails": {
+        "bigTitle": "Welcome & cancellation emails",
+        "cancellationEmail": "Cancellation email",
+        "description": "Customise your welcome and cancellation emails",
+        "text": "All emails are sent from your support email address and include standard signature, you can change these in your email settings.",
+        "title": "Emails",
+        "welcomeEmail": "Welcome email"
+      },
+      "intro": {
+        "description": "Say hello to your new members",
+        "message": "Message",
+        "showWelcomeMessage": "Show welcome message",
+        "text": "Once your members are done with registration, they'll be greeted with a message. Make it yours!",
+        "title": "Welcome message"
+      },
+      "joinForm": {
+        "accountConfirmation": "Account confirmation",
+        "backgroundImage": "Background image",
+        "checkboxLabel": "Checkbox label",
+        "defaultAmount": "Default amount",
+        "description": "Fine tune your membership join form",
+        "formSubtitle": "Subtitle",
+        "formTitle": "Title",
+        "heading": "Heading",
+        "minAmount": "Minimum amount",
+        "showAbsorbFee": "Ask about processing fee",
+        "showMailOptIn": "Ask for postal address",
+        "showNewsletterOptIn": "Ask to subscribe to newsletter",
+        "subheading": "Subheading",
+        "suggestedAmounts": "Suggested contribution amounts",
+        "text": "In this section you can edit, fine tune and preview your membership join form.",
+        "title": "Join form",
+        "welcomeMessage": "Welcome message"
+      }
+    },
+    "title": "Membership builder"
+  },
   "menu": {
     "admin": "Administration",
     "callouts": "Callouts",
@@ -583,6 +627,7 @@
     "home": "Home",
     "legacyApp": "Old admin",
     "logout": "Log out",
+    "membershipBuilder": "Membership builder",
     "notices": "Notices",
     "settings": "Settings",
     "yourInformation": "Your information",

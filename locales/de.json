@@ -574,6 +574,13 @@
     "title": "Einloggen",
     "wrongCredentials": "Falsche Kombination von Passwort und E-Mail."
   },
+  "membershipBuilder": {
+    "steps": {
+      "emails": {},
+      "intro": {},
+      "joinForm": {}
+    }
+  },
   "menu": {
     "admin": "Administration",
     "callouts": "Callouts",

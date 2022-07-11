@@ -13,7 +13,10 @@
     no-collapse
   />
 
-  <section v-if="showWelcomeMessage" class="mb-10">
+  <section
+    v-if="showWelcomeMessage && profileContent.introMessage"
+    class="mb-10"
+  >
     <WelcomeMessage
       :first-name="user.firstname"
       :last-name="user.lastname"

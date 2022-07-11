@@ -16,21 +16,22 @@ import StepUrlAndSharing from '../components/steps/UrlAndSharing.vue';
 // import StepMailchimpSync from '../components/steps/MailchimpSync.vue';
 import StepDatesAndDuration from '../components/steps/DatesAndDuration.vue';
 import StepContent from '../components/steps/Content.vue';
-import { Steps } from '../create-callout.interface';
+import { CalloutSteps } from '../create-callout.interface';
 import CalloutForm from '../components/CalloutForm.vue';
 import { format } from 'date-fns';
 
 const { t } = useI18n();
 const route = useRoute();
 
-const steps: Ref<null | Steps> = ref(null);
+const steps: Ref<null | CalloutSteps> = ref(null);
 const mode: 'edit' | 'new' = route.name === 'edit-callout' ? 'edit' : 'new';
 
-const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
+const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
   content: {
     name: t('createCallout.steps.content.title'),
     description: t('createCallout.steps.content.description'),
     validated: data ? true : false,
+    error: false,
     component: markRaw(StepContent),
     data: {
       introText: data?.intro || '',
@@ -41,6 +42,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
     name: t('createCallout.steps.titleAndImage.title'),
     description: t('createCallout.steps.titleAndImage.description'),
     validated: data ? true : false,
+    error: false,
     component: markRaw(StepTitleAndImage),
     data: {
       title: data?.title || '',
@@ -52,6 +54,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
     name: t('createCallout.steps.visibility.title'),
     description: t('createCallout.steps.visibility.description'),
     validated: data ? true : false,
+    error: false,
     component: markRaw(StepVisibility),
     data: {
       whoCanTakePart: data?.access
@@ -72,6 +75,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
     name: 'End message',
     description: 'Set a final thank you message or page to redirect',
     validated: data ? true : false,
+    error: false,
     component: markRaw(StepEndMessage),
     data: {
       whenFinished: 'message',
@@ -84,6 +88,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
     name: t('createCallout.steps.url.title'),
     description: t('createCallout.steps.url.description'),
     validated: data ? true : false,
+    error: false,
     component: markRaw(StepUrlAndSharing),
     data: {
       useCustomSlug: data ? true : false,
@@ -98,6 +103,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
     name: t('createCallout.steps.mailchimp.title'),
     description: t('createCallout.steps.mailchimp.description'),
     validated: false,
+    error: false,
     component: markRaw(StepMailchimpSync),
     data: {
       useMailchimpSync: false,
@@ -107,6 +113,7 @@ const makeStepsData = (data?: GetMoreCalloutData): Steps => ({
     name: t('createCallout.steps.dates.title'),
     description: t('createCallout.steps.dates.description'),
     validated: data ? true : false,
+    error: false,
     component: markRaw(StepDatesAndDuration),
     data: {
       startNow: data ? true : false,

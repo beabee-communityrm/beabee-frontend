@@ -406,6 +406,13 @@
     "title": "Войти",
     "wrongCredentials": "Неверная комбинация пароля и почтового ящика"
   },
+  "membershipBuilder": {
+    "steps": {
+      "emails": {},
+      "intro": {},
+      "joinForm": {}
+    }
+  },
   "menu": {
     "admin": "Администрация",
     "callouts": "Callouts",

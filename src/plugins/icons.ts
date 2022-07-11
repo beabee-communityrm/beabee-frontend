@@ -57,6 +57,7 @@ import {
   faHeading,
   faList,
   faListOl,
+  faHandsHelping,
   faChartLine,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -113,6 +114,7 @@ library.add(
   faHeading,
   faList,
   faListOl,
+  faHandsHelping,
   faChartLine
 );
 

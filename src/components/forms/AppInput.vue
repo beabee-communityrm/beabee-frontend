@@ -38,8 +38,8 @@ import AppLabel from './AppLabel.vue';
 const emit = defineEmits(['update:modelValue']);
 const props = withDefaults(
   defineProps<{
-    modelValue?: string;
-    inputType?: 'password' | 'email' | 'text' | 'date';
+    modelValue?: string | number;
+    inputType?: 'password' | 'email' | 'text' | 'date' | 'number';
     label?: string;
     errorMessage?: string | Ref<string>;
     infoMessage?: string;
