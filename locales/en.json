@@ -581,6 +581,17 @@
   },
   "membershipBuilder": {
     "steps": {
+      "accountConfirmation": {
+        "checkboxLabel": "Checkbox label",
+        "description": "Compose your confirmation screen",
+        "heading": "Heading",
+        "showMailOptIn": "Ask for postal address",
+        "showNewsletterOptIn": "Ask to subscribe to newsletter",
+        "subheading": "Subheading",
+        "text": "After joining, users will be asked to confirm their registration. Here you can set the details of the confirmation screen.",
+        "title": "Account confirmation",
+        "welcomeMessage": "Welcome message"
+      },
       "emails": {
         "bigTitle": "Welcome & cancellation emails",
         "cancellationEmail": "Cancellation email",
