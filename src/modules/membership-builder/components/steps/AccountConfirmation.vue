@@ -26,16 +26,27 @@
           :label="stepT('heading')"
           class="mb-4"
           required
+          :error-message="
+            validation.setupContent.mailTitle.$errors[0]?.$message
+          "
+          @blur="validation.setupContent.mailTitle.$touch"
         />
         <AppTextArea
           v-model="setupContent.mailText"
           :label="stepT('subheading')"
           class="mb-4"
+          required
+          :error-message="validation.setupContent.mailText.$errors[0]?.$message"
+          @blur="validation.setupContent.mailText.$touch"
         />
         <AppInput
           v-model="setupContent.mailOptIn"
           :label="stepT('checkboxLabel')"
           class="mb-4"
+          :error-message="
+            validation.setupContent.mailOptIn.$errors[0]?.$message
+          "
+          @blur="validation.setupContent.mailOptIn.$touch"
         />
       </template>
 
@@ -51,20 +62,34 @@
           :label="stepT('heading')"
           class="mb-4"
           required
+          :error-message="
+            validation.setupContent.newsletterTitle.$errors[0]?.$message
+          "
+          @blur="validation.setupContent.newsletterTitle.$touch"
         />
         <AppTextArea
           v-model="setupContent.newsletterText"
           :label="stepT('subheading')"
           class="mb-4"
+          required
+          :error-message="
+            validation.setupContent.newsletterText.$errors[0]?.$message
+          "
+          @blur="validation.setupContent.newsletterText.$touch"
         />
         <AppInput
           v-model="setupContent.newsletterOptIn"
           :label="stepT('checkboxLabel')"
           class="mb-4"
+          required
+          :error-message="
+            validation.setupContent.newsletterOptIn.$errors[0]?.$message
+          "
+          @blur="validation.setupContent.newsletterOptIn.$touch"
         />
       </template>
     </div>
-    <div class="p-4 pt-8 bg-center bg-cover" >
+    <div class="p-4 pt-8 bg-center bg-cover">
       <AuthBox>
         <SetupForm :setup-content="setupContent" />
       </AuthBox>
@@ -93,6 +118,11 @@ import AuthBox from '../../../auth/AuthBox.vue';
 import AppImageUpload from '../../../../components/forms/AppImageUpload.vue';
 import { generalContent } from '../../../../store';
 import { MembershipBuilderEmitter } from '../../membership-builder.interface';
+import useVuelidate from '@vuelidate/core';
+import { required, requiredIf } from '@vuelidate/validators';
+import PeriodAmounts from '../PeriodAmounts.vue';
+
+const emit = defineEmits(['update:error', 'update:validated']);
 
 const props = defineProps<{
   emitter: MembershipBuilderEmitter;
@@ -103,7 +133,32 @@ const backgroundUrl = ref('');
 
 const { n, t } = useI18n();
 
-const stepT = (key: string) => t('membershipBuilder.steps.accountConfirmation.' + key);
+const stepT = (key: string) =>
+  t('membershipBuilder.steps.accountConfirmation.' + key);
+
+const rules = computed(() => {
+  const requiredIfNewsletter = requiredIf(
+    !!setupContent.value?.showNewsletterOptIn
+  );
+  const requiredIfMail = requiredIf(!!setupContent.value?.showMailOptIn);
+  return {
+    setupContent: {
+      newsletterText: { required: requiredIfNewsletter },
+      newsletterOptIn: { required: requiredIfNewsletter },
+      newsletterTitle: { required: requiredIfNewsletter },
+      mailText: { required: requiredIfMail },
+      mailOptIn: { required: requiredIfMail },
+      mailTitle: { required: requiredIfMail },
+    },
+  };
+});
+
+const validation = useVuelidate(rules, { setupContent });
+
+watch(validation, () => {
+  emit('update:error', validation.value.$errors.length > 0);
+  emit('update:validated', !validation.value.$invalid);
+});
 
 async function handleUpdate() {
   if (setupContent.value) {

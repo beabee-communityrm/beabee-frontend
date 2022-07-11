@@ -12,8 +12,8 @@
           <AppInput
             v-model="joinContent.title"
             :label="stepT('formTitle')"
-            :error-message="validation.joinContent.title.$errors[0]?.$message"
             required
+            :error-message="validation.joinContent.title.$errors[0]?.$message"
             @blur="validation.joinContent.title.$touch"
           />
         </div>
@@ -158,21 +158,9 @@ async function handleUpdate() {
 }
 
 const rules = computed(() => {
-  const requiredIfNewsletter = requiredIf(
-    !!setupContent.value?.showNewsletterOptIn
-  );
-  const requiredIfMail = requiredIf(!!setupContent.value?.showMailOptIn);
   return {
     joinContent: {
       title: { required },
-    },
-    setupContent: {
-      newsletterText: { required: requiredIfNewsletter },
-      newsletterOptIn: { required: requiredIfNewsletter },
-      newsletterTitle: { required: requiredIfNewsletter },
-      mailText: { required: requiredIfMail },
-      mailOptIn: { required: requiredIfMail },
-      mailTitle: { required: requiredIfMail },
     },
     backgroundUrl: { required },
   };
@@ -180,7 +168,6 @@ const rules = computed(() => {
 
 const validation = useVuelidate(rules, {
   joinContent,
-  setupContent,
   backgroundUrl,
 });
 

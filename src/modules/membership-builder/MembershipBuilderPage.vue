@@ -76,7 +76,8 @@ const steps: Ref<BuilderStep[]> = ref([
     name: t('membershipBuilder.steps.accountConfirmation.title'),
     description: t('membershipBuilder.steps.accountConfirmation.description'),
     validated: true,
-    component: AccountConfirmation,
+    error: false,
+    component: markRaw(AccountConfirmation),
   },
   {
     name: t('membershipBuilder.steps.intro.title'),
