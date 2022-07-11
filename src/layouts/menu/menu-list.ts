@@ -82,7 +82,7 @@ export const adminMenu: MenuSection[] = [
       },
     ],
   },
-  {
+  /*{
     type: 'settings',
     title: t('menu.settings'),
     items: [
@@ -92,5 +92,5 @@ export const adminMenu: MenuSection[] = [
         icon: ['fa', 'hands-helping'],
       },
     ],
-  },
+  },*/
 ];
