@@ -1,7 +1,7 @@
 <template>
   <div v-if="callout" class="md:max-w-2xl">
-    <h1 class="font-title text-4xl font-bold mb-8">{{ callout.title }}</h1>
-    <div class="flex justify-between items-center mb-8">
+    <h1 class="font-title text-4xl font-bold mb-6">{{ callout.title }}</h1>
+    <div class="flex justify-between items-center mb-6">
       <div class="flex items-center text-sm text-body-40 font-semibold">
         <div>
           <div class="flex flex-col">
@@ -67,17 +67,18 @@
         />
       </div>
     </div>
-    <figure class="relative mb-6 pb-[56.25%]">
-      <img class="absolute w-full h-full object-cover" :src="callout.image" />
+    <figure class="mb-6">
+      <img class="w-full object-cover" :src="callout.image" />
     </figure>
-    <div class="text-lg content-message" v-html="callout.intro" />
+    <div class="text-lg content-message mb-6" v-html="callout.intro" />
     <div
       class="
         w-full
-        text-lg text-center
+        text-center
         flex flex-col
         justify-center
         items-center
+        mb-6
       "
       v-if="canSeeButNotRespond"
     >
