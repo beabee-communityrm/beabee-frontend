@@ -17,14 +17,13 @@
       <div v-if="showIntroMessage" class="grid grid-cols-2 gap-8">
         <div>
           <RichTextEditor
-            v-model="profileContent.introMessage"
+            v-model="validation.profileContent.introMessage.$model"
             :label="stepT('message')"
             class="mb-4"
             required
             :error-message="
               validation.profileContent.introMessage.$errors[0]?.$message
             "
-            @blur="validation.profileContent.introMessage.$touch"
           />
         </div>
         <div>

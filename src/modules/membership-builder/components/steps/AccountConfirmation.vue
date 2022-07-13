@@ -22,31 +22,28 @@
 
       <template v-if="setupContent.showMailOptIn">
         <AppInput
-          v-model="setupContent.mailTitle"
+          v-model="validation.setupContent.mailTitle.$model"
           :label="stepT('heading')"
           class="mb-4"
           required
           :error-message="
             validation.setupContent.mailTitle.$errors[0]?.$message
           "
-          @blur="validation.setupContent.mailTitle.$touch"
         />
         <AppTextArea
-          v-model="setupContent.mailText"
+          v-model="validation.setupContent.mailText.$model"
           :label="stepT('subheading')"
           class="mb-4"
           required
           :error-message="validation.setupContent.mailText.$errors[0]?.$message"
-          @blur="validation.setupContent.mailText.$touch"
         />
         <AppInput
-          v-model="setupContent.mailOptIn"
+          v-model="validation.setupContent.mailOptIn.$model"
           :label="stepT('checkboxLabel')"
           class="mb-4"
           :error-message="
             validation.setupContent.mailOptIn.$errors[0]?.$message
           "
-          @blur="validation.setupContent.mailOptIn.$touch"
         />
       </template>
 
@@ -58,34 +55,31 @@
 
       <template v-if="setupContent.showNewsletterOptIn">
         <AppInput
-          v-model="setupContent.newsletterTitle"
+          v-model="validation.setupContent.newsletterTitle.$model"
           :label="stepT('heading')"
           class="mb-4"
           required
           :error-message="
             validation.setupContent.newsletterTitle.$errors[0]?.$message
           "
-          @blur="validation.setupContent.newsletterTitle.$touch"
         />
         <AppTextArea
-          v-model="setupContent.newsletterText"
+          v-model="validation.setupContent.newsletterText.$model"
           :label="stepT('subheading')"
           class="mb-4"
           required
           :error-message="
             validation.setupContent.newsletterText.$errors[0]?.$message
           "
-          @blur="validation.setupContent.newsletterText.$touch"
         />
         <AppInput
-          v-model="setupContent.newsletterOptIn"
+          v-model="validation.setupContent.newsletterOptIn.$model"
           :label="stepT('checkboxLabel')"
           class="mb-4"
           required
           :error-message="
             validation.setupContent.newsletterOptIn.$errors[0]?.$message
           "
-          @blur="validation.setupContent.newsletterOptIn.$touch"
         />
       </template>
     </div>

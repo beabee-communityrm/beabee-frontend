@@ -5,7 +5,11 @@
         <font-awesome-icon :icon="['fa', 'check-circle']" />
         {{ t('form.updated') }}
       </span>
-      <span v-if="dirty" class="mr-4">
+      <span v-else-if="validation.$invalid" class="mr-4">
+        <font-awesome-icon :icon="['fa', 'bomb']" />
+        {{ t('form.errors.aggregator') }}
+      </span>
+      <span v-else-if="dirty" class="mr-4">
         <font-awesome-icon :icon="['fa', 'info-circle']" />
         {{ t('form.unsavedChanges') }}
       </span>

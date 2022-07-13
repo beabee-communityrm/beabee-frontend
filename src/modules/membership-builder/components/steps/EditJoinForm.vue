@@ -10,11 +10,10 @@
       <div>
         <div class="mb-4">
           <AppInput
-            v-model="joinContent.title"
+            v-model="validation.joinContent.title.$model"
             :label="stepT('formTitle')"
             required
             :error-message="validation.joinContent.title.$errors[0]?.$message"
-            @blur="validation.joinContent.title.$touch"
           />
         </div>
         <RichTextEditor
@@ -24,12 +23,13 @@
         />
 
         <AppImageUpload
-          v-model="backgroundUrl"
+          v-model="validation.backgroundUrl.$model"
           :label="stepT('backgroundImage')"
           :width="1440"
           :height="810"
           class="mb-4"
           required
+          :error-message="validation.backgroundUrl.$errors[0]?.$message"
         />
 
         <h4 class="font-semibold text-lg mb-4">
