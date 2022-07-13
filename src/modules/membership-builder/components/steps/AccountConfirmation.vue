@@ -11,7 +11,6 @@
         v-model="setupContent.welcome"
         class="mb-4"
         :label="stepT('welcomeMessage')"
-        required
       />
 
       <AppCheckbox
@@ -41,6 +40,7 @@
           v-model="validation.setupContent.mailOptIn.$model"
           :label="stepT('checkboxLabel')"
           class="mb-4"
+          required
           :error-message="
             validation.setupContent.mailOptIn.$errors[0]?.$message
           "
