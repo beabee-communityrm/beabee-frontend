@@ -79,7 +79,7 @@ import AppLabel from '../forms/AppLabel.vue';
 const { t } = useI18n();
 
 const props = defineProps<{
-  modelValue: string;
+  modelValue: unknown; // TODO: should be string but vuelidate $model is unknown
   label?: string;
   required?: boolean;
   errorMessage?: string | Ref<string>;
@@ -87,7 +87,7 @@ const props = defineProps<{
 const emit = defineEmits(['blur', 'update:modelValue']);
 
 const editor = useEditor({
-  content: props.modelValue,
+  content: props.modelValue as string,
   extensions: [
     StarterKit.configure({
       blockquote: false,
@@ -114,7 +114,7 @@ const editor = useEditor({
 
 watch(toRef(props, 'modelValue'), (value) => {
   if (editor.value && editor.value.getHTML() !== value) {
-    editor.value.commands.setContent(value, false);
+    editor.value.commands.setContent(value as string, false);
   }
 });
 

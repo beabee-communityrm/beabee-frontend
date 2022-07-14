@@ -29,8 +29,10 @@ const amount = computed({
 
 const validation = useVuelidate(
   {
-    minValue: minValue(toRef(props, 'minAmount')),
+    amount: {
+      minValue: minValue(toRef(props, 'minAmount')),
+    },
   },
-  amount
+  { amount }
 );
 </script>

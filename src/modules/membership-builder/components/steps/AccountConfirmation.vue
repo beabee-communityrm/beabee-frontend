@@ -92,29 +92,19 @@
 </template>
 <script lang="ts" setup>
 import { computed, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
-import {
-  JoinContent,
-  JoinSetupContent,
-} from '../../../../utils/api/api.interface';
+import { JoinSetupContent } from '../../../../utils/api/api.interface';
 import { fetchContent, updateContent } from '../../../../utils/api/content';
 import AppInput from '../../../../components/forms/AppInput.vue';
-import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 import AppHeading from '../../../../components/AppHeading.vue';
-import AppLabel from '../../../../components/forms/AppLabel.vue';
 import { useI18n } from 'vue-i18n';
-import AppSelect from '../../../../components/forms/AppSelect.vue';
-import { ContributionPeriod } from '../../../../utils/enums/contribution-period.enum';
 import AppCheckbox from '../../../../components/forms/AppCheckbox.vue';
-import JoinForm from '../../../auth/join/components/JoinForm.vue';
 import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import SetupForm from '../../../auth/join/components/SetupForm.vue';
 import AuthBox from '../../../auth/AuthBox.vue';
-import AppImageUpload from '../../../../components/forms/AppImageUpload.vue';
 import { generalContent } from '../../../../store';
 import { MembershipBuilderEmitter } from '../../membership-builder.interface';
 import useVuelidate from '@vuelidate/core';
-import { required, requiredIf } from '@vuelidate/validators';
-import PeriodAmounts from '../PeriodAmounts.vue';
+import { requiredIf } from '@vuelidate/validators';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 
