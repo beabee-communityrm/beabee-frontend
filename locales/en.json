@@ -243,7 +243,8 @@
     "paymentHistory": {
       "empty": "Past payments and their invoices will show up here.",
       "status": {
-        "failed": "Cancelled",
+        "cancelled": "Cancelled",
+        "failed": "Failed",
         "pending": "Pending"
       },
       "title": "Payment history"
