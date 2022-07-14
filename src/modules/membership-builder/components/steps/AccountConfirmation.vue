@@ -101,7 +101,6 @@ import AppCheckbox from '../../../../components/forms/AppCheckbox.vue';
 import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import SetupForm from '../../../auth/join/components/SetupForm.vue';
 import AuthBox from '../../../auth/AuthBox.vue';
-import { generalContent } from '../../../../store';
 import { MembershipBuilderEmitter } from '../../membership-builder.interface';
 import useVuelidate from '@vuelidate/core';
 import { requiredIf } from '@vuelidate/validators';
@@ -113,9 +112,8 @@ const props = defineProps<{
 }>();
 
 const setupContent = ref<JoinSetupContent>();
-const backgroundUrl = ref('');
 
-const { n, t } = useI18n();
+const { t } = useI18n();
 
 const stepT = (key: string) =>
   t('membershipBuilder.steps.accountConfirmation.' + key);
@@ -146,13 +144,7 @@ watch(validation, () => {
 
 async function handleUpdate() {
   if (setupContent.value) {
-    await Promise.all([
-      updateContent('join/setup', setupContent.value),
-      updateContent('general', {
-        ...generalContent.value,
-        backgroundUrl: backgroundUrl.value || '',
-      }),
-    ]);
+    await updateContent('join/setup', setupContent.value);
   }
 
   props.emitter.emit('updated');
@@ -163,7 +155,7 @@ onBeforeMount(async () => {
   setupContent.value = await fetchContent('join/setup');
 
   watch(
-    [setupContent, backgroundUrl],
+    setupContent,
     () => {
       props.emitter.emit('dirty');
     },
