@@ -8,12 +8,12 @@
       {{ t('join.contribution') }}
     </AppSubHeading>
 
-    <div v-if="joinContent.showNoContribution" class="mb-4">
-      <label>
-        <input v-model="signUpData.noContribution" type="checkbox" />
-        {{ t('join.noContribution') }}
-      </label>
-    </div>
+    <AppCheckbox
+      v-if="joinContent.showNoContribution"
+      v-model="signUpData.noContribution"
+      class="mb-4"
+      :label="t('join.noContribution')"
+    />
 
     <Contribution
       v-if="!generalContent.hideContribution && !signUpData.noContribution"
@@ -64,6 +64,7 @@ import MessageBox from '../../../../components/MessageBox.vue';
 import AppSubHeading from '../../../../components/AppSubHeading.vue';
 import { JoinContent } from '../../../../utils/api/api.interface';
 import JoinHeader from './JoinHeader.vue';
+import AppCheckbox from '../../../../components/forms/AppCheckbox.vue';
 
 const { t } = useI18n();
 const { signUpData, signUpDescription } = useJoin();

@@ -82,10 +82,7 @@
 </template>
 <script lang="ts" setup>
 import { computed, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
-import {
-  JoinContent,
-  JoinSetupContent,
-} from '../../../../utils/api/api.interface';
+import { JoinContent } from '../../../../utils/api/api.interface';
 import { fetchContent, updateContent } from '../../../../utils/api/content';
 import AppInput from '../../../../components/forms/AppInput.vue';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
@@ -96,14 +93,12 @@ import AppSelect from '../../../../components/forms/AppSelect.vue';
 import { ContributionPeriod } from '../../../../utils/enums/contribution-period.enum';
 import AppCheckbox from '../../../../components/forms/AppCheckbox.vue';
 import JoinForm from '../../../auth/join/components/JoinForm.vue';
-import AppTextArea from '../../../../components/forms/AppTextArea.vue';
-import SetupForm from '../../../auth/join/components/SetupForm.vue';
 import AuthBox from '../../../auth/AuthBox.vue';
 import AppImageUpload from '../../../../components/forms/AppImageUpload.vue';
 import { generalContent } from '../../../../store';
 import { MembershipBuilderEmitter } from '../../membership-builder.interface';
 import useVuelidate from '@vuelidate/core';
-import { required, requiredIf } from '@vuelidate/validators';
+import { required } from '@vuelidate/validators';
 import PeriodAmounts from '../PeriodAmounts.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
@@ -157,19 +152,18 @@ async function handleUpdate() {
   props.emitter.emit('updated');
 }
 
-const rules = computed(() => {
-  return {
+const validation = useVuelidate(
+  {
     joinContent: {
       title: { required },
     },
     backgroundUrl: { required },
-  };
-});
-
-const validation = useVuelidate(rules, {
-  joinContent,
-  backgroundUrl,
-});
+  },
+  {
+    joinContent,
+    backgroundUrl,
+  }
+);
 
 watch(validation, () => {
   emit('update:error', validation.value.$errors.length > 0);
