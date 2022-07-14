@@ -5,13 +5,17 @@
         <font-awesome-icon :icon="['fa', 'check-circle']" />
         {{ t('form.updated') }}
       </span>
-      <span v-if="dirty" class="mr-4">
+      <span v-else-if="validation.$invalid" class="mr-4 text-danger">
+        <font-awesome-icon :icon="['fa', 'warning']" />
+        {{ t('form.errors.aggregatorTop') }}
+      </span>
+      <span v-else-if="dirty" class="mr-4">
         <font-awesome-icon :icon="['fa', 'info-circle']" />
         {{ t('form.unsavedChanges') }}
       </span>
       <AppButton
         :loading="updating"
-        :disabled="!dirty || validation.$invalid"
+        :disabled="validation.$invalid"
         @click="handleUpdate"
         >{{ t('actions.update') }}</AppButton
       >
@@ -46,6 +50,7 @@ import PageTitle from '../../components/PageTitle.vue';
 import AppStepper from '../../components/stepper/AppStepper.vue';
 import { Step } from '../../components/stepper/stepper.interface';
 import EditJoinForm from './components/steps/EditJoinForm.vue';
+import AccountConfirmation from './components/steps/AccountConfirmation.vue';
 import IntroMessage from './components/steps/IntroMessage.vue';
 import Emails from './components/steps/Emails.vue';
 import AppButton from '../../components/forms/AppButton.vue';
@@ -70,6 +75,13 @@ const steps: Ref<BuilderStep[]> = ref([
     validated: true,
     error: false,
     component: markRaw(EditJoinForm),
+  },
+  {
+    name: t('membershipBuilder.steps.accountConfirmation.title'),
+    description: t('membershipBuilder.steps.accountConfirmation.description'),
+    validated: true,
+    error: false,
+    component: markRaw(AccountConfirmation),
   },
   {
     name: t('membershipBuilder.steps.intro.title'),

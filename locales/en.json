@@ -457,6 +457,7 @@
         "required": "This field is required if you want to add address"
       },
       "aggregator": "Something is missing! Please check the fields above.",
+      "aggregatorTop": "Something is missing! Please check for errors below.",
       "email": {
         "invalid": "Invalid email address",
         "required": "Email is required"

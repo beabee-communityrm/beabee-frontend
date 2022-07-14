@@ -35,14 +35,14 @@ import AppLabel from './AppLabel.vue';
 const emit = defineEmits(['update:modelValue']);
 const props = withDefaults(
   defineProps<{
-    modelValue?: string;
+    modelValue?: any; // TODO: should be string but vuelidate $model is unknown
     label?: string;
     errorMessage?: string | Ref<string>;
     infoMessage?: string;
     required?: boolean;
   }>(),
   {
-    modelValue: '',
+    modelValue: '' as any,
     label: undefined,
     errorMessage: undefined,
     infoMessage: undefined,
