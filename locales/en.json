@@ -241,9 +241,11 @@
     "manualPayment": "You are paying manually through bank transfer right now. To make it easier for you to manage your contribution and easier for us to know on how much money from our members we can rely on month on month, please update to paying automatically via direct debit.",
     "nextAmountChanging": "Your contribution will change to {nextAmount} on {renewalDate}.",
     "paymentHistory": {
-      "amount": "Amount",
-      "date": "Date",
       "empty": "Past payments and their invoices will show up here.",
+      "status": {
+        "failed": "Cancelled",
+        "pending": "Pending"
+      },
       "title": "Payment history"
     },
     "paymentMethod": "Payment method",
