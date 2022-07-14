@@ -72,14 +72,7 @@
     </figure>
     <div class="text-lg content-message mb-6" v-html="callout.intro" />
     <div
-      class="
-        w-full
-        text-center
-        flex flex-col
-        justify-center
-        items-center
-        mb-6
-      "
+      class="w-full text-center flex flex-col justify-center items-center mb-6"
       v-if="canSeeButNotRespond"
     >
       <p class="w-full sm:w-2/3">
