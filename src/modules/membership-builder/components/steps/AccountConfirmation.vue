@@ -20,31 +20,36 @@
       />
 
       <template v-if="setupContent.showMailOptIn">
-        <AppInput
-          v-model="validation.setupContent.mailTitle.$model"
-          :label="stepT('heading')"
-          class="mb-4"
-          required
-          :error-message="
-            validation.setupContent.mailTitle.$errors[0]?.$message
-          "
-        />
-        <AppTextArea
-          v-model="validation.setupContent.mailText.$model"
-          :label="stepT('subheading')"
-          class="mb-4"
-          required
-          :error-message="validation.setupContent.mailText.$errors[0]?.$message"
-        />
-        <AppInput
-          v-model="validation.setupContent.mailOptIn.$model"
-          :label="stepT('checkboxLabel')"
-          class="mb-4"
-          required
-          :error-message="
-            validation.setupContent.mailOptIn.$errors[0]?.$message
-          "
-        />
+        <div class="mb-4">
+          <AppInput
+            v-model="validation.setupContent.mailTitle.$model"
+            :label="stepT('heading')"
+            required
+            :error-message="
+              validation.setupContent.mailTitle.$errors[0]?.$message
+            "
+          />
+        </div>
+        <div class="mb-4">
+          <AppTextArea
+            v-model="validation.setupContent.mailText.$model"
+            :label="stepT('subheading')"
+            required
+            :error-message="
+              validation.setupContent.mailText.$errors[0]?.$message
+            "
+          />
+        </div>
+        <div class="mb-4">
+          <AppInput
+            v-model="validation.setupContent.mailOptIn.$model"
+            :label="stepT('checkboxLabel')"
+            required
+            :error-message="
+              validation.setupContent.mailOptIn.$errors[0]?.$message
+            "
+          />
+        </div>
       </template>
 
       <AppCheckbox
@@ -54,33 +59,36 @@
       />
 
       <template v-if="setupContent.showNewsletterOptIn">
-        <AppInput
-          v-model="validation.setupContent.newsletterTitle.$model"
-          :label="stepT('heading')"
-          class="mb-4"
-          required
-          :error-message="
-            validation.setupContent.newsletterTitle.$errors[0]?.$message
-          "
-        />
-        <AppTextArea
-          v-model="validation.setupContent.newsletterText.$model"
-          :label="stepT('subheading')"
-          class="mb-4"
-          required
-          :error-message="
-            validation.setupContent.newsletterText.$errors[0]?.$message
-          "
-        />
-        <AppInput
-          v-model="validation.setupContent.newsletterOptIn.$model"
-          :label="stepT('checkboxLabel')"
-          class="mb-4"
-          required
-          :error-message="
-            validation.setupContent.newsletterOptIn.$errors[0]?.$message
-          "
-        />
+        <div class="mb-4">
+          <AppInput
+            v-model="validation.setupContent.newsletterTitle.$model"
+            :label="stepT('heading')"
+            required
+            :error-message="
+              validation.setupContent.newsletterTitle.$errors[0]?.$message
+            "
+          />
+        </div>
+        <div class="mb-4">
+          <AppTextArea
+            v-model="validation.setupContent.newsletterText.$model"
+            :label="stepT('subheading')"
+            required
+            :error-message="
+              validation.setupContent.newsletterText.$errors[0]?.$message
+            "
+          />
+        </div>
+        <div class="mb-4">
+          <AppInput
+            v-model="validation.setupContent.newsletterOptIn.$model"
+            :label="stepT('checkboxLabel')"
+            required
+            :error-message="
+              validation.setupContent.newsletterOptIn.$errors[0]?.$message
+            "
+          />
+        </div>
       </template>
     </div>
     <div class="p-4 pt-8 bg-center bg-cover">
