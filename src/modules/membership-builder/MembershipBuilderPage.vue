@@ -15,7 +15,7 @@
       </span>
       <AppButton
         :loading="updating"
-        :disabled="!dirty || validation.$invalid"
+        :disabled="validation.$invalid"
         @click="handleUpdate"
         >{{ t('actions.update') }}</AppButton
       >
