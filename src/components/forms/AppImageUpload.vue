@@ -41,7 +41,7 @@ import AppLabel from './AppLabel.vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
-  modelValue: string;
+  modelValue: unknown; // TODO: should be string but vuelidate $model is unknown
   width: number;
   height: number;
   label?: string;
@@ -55,12 +55,12 @@ const baseURL = import.meta.env.VITE_APP_BASE_URL;
 const inputRef = ref<HTMLInputElement>();
 const uploading = ref(false);
 
-const imageUrl = ref(props.modelValue);
+const imageUrl = ref(props.modelValue as string);
 
 useVuelidate({ uploading: { equal: sameAs(false) } }, { uploading });
 
 watch(toRef(props, 'modelValue'), (newModelValue) => {
-  imageUrl.value = newModelValue;
+  imageUrl.value = newModelValue as string;
   if (inputRef.value) {
     inputRef.value.value = '';
   }

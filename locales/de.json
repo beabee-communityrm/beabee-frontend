@@ -241,9 +241,12 @@
     "manualPayment": "Sie leisten Ihren Beitrag aktuell manuell via Banküberweisung. Richten Sie hier jetzt eine automatische Abbuchung via Lastschrift ein. Dann wird es für Sie leichter, Ihre Beiträge zu verwalten. Und wir bekommen einen besseren Überblick, auf welche Beiträge wir uns monatlich verlassen können.",
     "nextAmountChanging": "Ab dem {renewalDate} ist Ihr Beitrag {nextAmount}.",
     "paymentHistory": {
-      "amount": "Betrag",
-      "date": "Datum",
       "empty": "Ältere Zahlungen und Rechnungen finden Sie hier.",
+      "status": {
+        "cancelled": "Gekündigt",
+        "failed": "Fehlgeschlagen",
+        "pending": "In Bearbeitung"
+      },
       "title": "Ihre bisherigen Beiträge."
     },
     "paymentMethod": "Zahlungsart",
@@ -457,6 +460,7 @@
         "required": "Dieses Feld wird benötigt, wenn Sie eine Adresse eintragen wollen."
       },
       "aggregator": "Es fehlt etwas! Bitte kontrollieren Sie die obigen Felder.",
+      "aggregatorTop": "Hier fehlt etwas! Bitte ergänzen.",
       "email": {
         "invalid": "Ungültige E-Mail-Adresse",
         "required": "E-Mail-Adresse benötigt"

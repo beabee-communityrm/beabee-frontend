@@ -171,7 +171,7 @@
     "noContacts": "",
     "noResults": "Контактов не найдено",
     "search": "Искать контакт",
-    "showingOf": "Контакты от {} и до {} показаны"
+    "showingOf": ""
   },
   "contribution": {
     "bankAccount": "Банковский счет",
@@ -189,12 +189,11 @@
     "manualPayment": "Вы платите вручную через банковский перевод прямо сейчас. Чтобы вам было проще управлять своим взносом, а нам было проще узнать, на какую сумму денег от наших участников мы можем рассчитывать из месяца в месяц, обновите автоматическую оплату с помощью прямого дебета.",
     "nextAmountChanging": "С {renewalDate} ваш взнос изменится на {nextAmount}",
     "paymentHistory": {
-      "amount": "Взнос",
-      "date": "Дата",
+      "status": {},
       "title": "Ваша история платежей"
     },
     "paymentSourceUpdateError": "Вы не можете обновить ваши банковские реквизиты, потомучто скоро платёж",
-    "prorateDecreaseMessage": "У вас осталось {monthsLeft} {месяцев} на ваш текущий взнос, ваш новый взнос начнется {renewalDate}.",
+    "prorateDecreaseMessage": "У вас осталось {monthsLeft} {months} на ваш текущий взнос, ваш новый взнос начнется {renewalDate}.",
     "prorateIncreaseMessage": "Ваше членство по-прежнему действует в течение {monthsLeft} {months} ​​под этим сообщением. Вы можете совершить разовый платеж в размере {oneOffPayment}, чтобы немедленно продлить свое членство и увеличить взнос.",
     "prorateNoText": "До тех пор вы останетесь на своем текущем взносе.",
     "prorateNoTitle": "Изменить мой взнос с {renewalDate}",
@@ -411,6 +410,7 @@
   },
   "membershipBuilder": {
     "steps": {
+      "accountConfirmation": {},
       "emails": {},
       "intro": {},
       "joinForm": {}
