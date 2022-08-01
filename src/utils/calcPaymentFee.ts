@@ -19,6 +19,11 @@ const stripeFees = {
     [PaymentMethod.StripeSEPA]: () => 0.35,
     [PaymentMethod.StripeBACS]: () => 0, // Not available
   },
+  ca: {
+    [PaymentMethod.StripeCard]: (amount: number) => 0.3 + 0.029 * amount,
+    [PaymentMethod.StripeSEPA]: () => 0, // Not available
+    [PaymentMethod.StripeBACS]: () => 0, // Not available
+  },
 } as const;
 
 const fees = {
