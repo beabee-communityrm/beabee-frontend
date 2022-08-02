@@ -211,7 +211,10 @@ const showLoginPrompt = computed(
 const showThanksMessage = ref(false);
 
 const isFormReadOnly = computed(
-  () => hasResponded.value && !callout.value?.allowUpdate
+  () =>
+    hasResponded.value &&
+    !callout.value?.allowUpdate &&
+    !callout.value?.allowMultiple
 );
 
 const formSubmission = computed(() =>
