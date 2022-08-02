@@ -16,33 +16,43 @@
 
     <div class="mb-5">
       <AppInput
-        v-model="resetPasswordData.password"
+        v-model="data.password"
         :label="t('resetPassword.newPassword')"
         :info-message="t('form.passwordInfo')"
         input-type="password"
-        :error-message="errorGenerator(resetPasswordValidation, 'password')"
-        @blur="resetPasswordValidation.password.$touch"
+        :error-message="errorGenerator(validation, 'password')"
+        @blur="validation.password.$touch"
       />
     </div>
 
     <div class="mb-6">
       <AppInput
-        v-model="resetPasswordData.repeatPassword"
+        v-model="data.repeatPassword"
         :label="t('resetPassword.confirmPassword')"
         input-type="password"
-        :error-message="
-          errorGenerator(resetPasswordValidation, 'repeatPassword')
-        "
-        @blur="resetPasswordValidation.repeatPassword.$touch"
+        :error-message="errorGenerator(validation, 'repeatPassword')"
+        @blur="validation.repeatPassword.$touch"
       />
     </div>
 
+    <MessageBox v-if="hasError" type="error" class="mb-4">
+      <p>
+        <i18n-t keypath="resetPassword.error">
+          <template #newLink>
+            <router-link to="/auth/forgot-password" class="underline">{{
+              t('resetPassword.errorLink')
+            }}</router-link>
+          </template>
+        </i18n-t>
+      </p>
+    </MessageBox>
+
     <AppButton
       variant="link"
-      :disabled="isFormInvalid || loading"
+      :disabled="validation.$invalid || loading"
       class="mb-4 w-full"
       type="submit"
-      @click="submitResetPassword(resetPasswordFlowId, router, redirectTo)"
+      @click="handleSubmit"
       >{{
         isSetPassword ? t('common.login') : t('resetPassword.changePassword')
       }}</AppButton
@@ -63,9 +73,16 @@
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import { errorGenerator } from '../../../utils/form-error-generator';
-import { useResetPassword } from './use-reset-password';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import { computed, reactive, ref } from 'vue';
+import { passwordValidationRule } from '../../../utils/form-validation/rules';
+import { helpers, sameAs } from '@vuelidate/validators';
+import useVuelidate from '@vuelidate/core';
+import { resetPassword } from '../../../utils/api/auth';
+import { updateCurrentUser } from '../../../store';
+import isInternalUrl from '../../../utils/is-internal-url';
+import MessageBox from '../../../components/MessageBox.vue';
 
 const { t } = useI18n();
 
@@ -76,11 +93,39 @@ const isSetPassword = route.params.type === 'set';
 const redirectTo = route.query.next as string | undefined;
 const resetPasswordFlowId = route.params.id as string;
 
-const {
-  loading,
-  isFormInvalid,
-  submitResetPassword,
-  resetPasswordValidation,
-  resetPasswordData,
-} = useResetPassword();
+const loading = ref(false);
+const hasError = ref(false);
+const data = reactive({ password: '', repeatPassword: '' });
+
+const rules = computed(() => ({
+  password: passwordValidationRule,
+  repeatPassword: {
+    sameAsPassword: helpers.withMessage(
+      t('form.errors.password.sameAs'),
+      sameAs(data.password)
+    ),
+  },
+}));
+
+const validation = useVuelidate(rules, data);
+
+async function handleSubmit() {
+  loading.value = true;
+  hasError.value = false;
+
+  try {
+    await resetPassword(data.password, resetPasswordFlowId);
+    await updateCurrentUser();
+    if (isInternalUrl(redirectTo)) {
+      // TODO: use router when legacy app is gone
+      window.location.href = redirectTo;
+    } else {
+      router.push({ path: '/profile', query: { passwordReset: 'true' } });
+    }
+  } catch (err) {
+    hasError.value = true;
+  }
+
+  loading.value = false;
+}
 </script>
