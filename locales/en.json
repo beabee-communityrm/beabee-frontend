@@ -696,6 +696,8 @@
     "changePassword": "Change password",
     "confirmPassword": "Confirm password",
     "description": "Set a new password to login.",
+    "error": "Password reset failed, the link might have expired. You could {newLink}.",
+    "errorLink": "request another link",
     "login": "Login to your account",
     "newPassword": "New password",
     "title": "Reset your password?"
