@@ -11,6 +11,7 @@ import { calloutsRoute } from '../modules/callouts/callouts.route';
 import { noticesRoute } from '../modules/notices/notices.route';
 import { adminRoute } from '../modules/admin/admin.route';
 import { membershipBuilderRoute } from '../modules/membership-builder/membership-builder.route';
+import i18n, { setLocale } from '../i18n';
 
 // routes
 
@@ -39,10 +40,14 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   // Block route for initial store load, this will only happen once
   await initStore;
+  await setLocale(
+    generalContent.value.locale,
+    generalContent.value.currencyCode
+  );
 
-  document.title = to.meta.pageTitle
-    ? to.meta.pageTitle + ' - ' + generalContent.value.organisationName
-    : generalContent.value.organisationName;
+  document.title =
+    (to.meta.pageTitle ? i18n.global.t(to.meta.pageTitle) + ' - ' : '') +
+    generalContent.value.organisationName;
 
   const user = currentUser.value;
 

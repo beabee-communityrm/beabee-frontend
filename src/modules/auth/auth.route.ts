@@ -1,7 +1,4 @@
 import { RouteRecordRaw } from 'vue-router';
-import i18n from '../../i18n';
-
-const { t } = i18n.global;
 
 export const authRoute: Array<RouteRecordRaw> = [
   {
@@ -19,7 +16,7 @@ export const authRoute: Array<RouteRecordRaw> = [
         component: () => import('./login/LoginPage.vue'),
         meta: {
           noAuth: true,
-          pageTitle: t('pageTitle.login'),
+          pageTitle: 'pageTitle.login',
         },
       },
       {
@@ -28,7 +25,7 @@ export const authRoute: Array<RouteRecordRaw> = [
         component: () => import('./forgot-password/ForgotPasswordPage.vue'),
         meta: {
           noAuth: true,
-          pageTitle: t('pageTitle.forgotPassword'),
+          pageTitle: 'pageTitle.forgotPassword',
         },
       },
       {
@@ -37,7 +34,7 @@ export const authRoute: Array<RouteRecordRaw> = [
         component: () => import('./reset-password/ResetPasswordPage.vue'),
         meta: {
           noAuth: true,
-          pageTitle: t('pageTitle.resetPassword'),
+          pageTitle: 'pageTitle.resetPassword',
         },
       },
     ],
