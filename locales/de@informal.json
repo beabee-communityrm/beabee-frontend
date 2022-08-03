@@ -1,6 +1,7 @@
 {
   "actions": {
     "back": "Zurück",
+    "chooseFile": "Datei auswählen",
     "continue": "Weiter",
     "delete": "Löschen",
     "edit": "Bearbeiten",
@@ -143,6 +144,7 @@
     "hello": "Hallo",
     "in": "in",
     "joined": "Mitglied seit",
+    "loading": "Lädt...",
     "login": "Login",
     "month": "Monat | Monaten",
     "monthly": "Monatlich",
@@ -239,9 +241,12 @@
     "manualPayment": "Du leistest deinen Beitrag aktuell manuell via Banküberweisung. Richte hier jetzt eine automatische Abbuchung via Lastschrift ein. Dann wird es für dich leichter, deine Beiträge zu verwalten. Und wir bekommen einen besseren Überblick, auf welche Beiträge wir uns monatlich verlassen können.",
     "nextAmountChanging": "Ab dem {renewalDate} ist dein Beitrag {nextAmount}.",
     "paymentHistory": {
-      "amount": "Betrag",
-      "date": "Datum",
       "empty": "Ältere Zahlungen und Rechnungen finden Sie hier.",
+      "status": {
+        "cancelled": "Gekündigt",
+        "failed": "Fehlgeschlagen",
+        "pending": "In Bearbeitung"
+      },
       "title": "Deine bisherigen Beiträge."
     },
     "paymentMethod": "Zahlungsart",
@@ -455,6 +460,7 @@
         "required": "Dieses Feld wird benötigt, wenn du eine Adresse eintragen willst."
       },
       "aggregator": "Es fehlt etwas! Bitte kontrolliere die obigen Felder.",
+      "aggregatorTop": "Hier fehlt etwas! Bitte ergänzen.",
       "email": {
         "invalid": "Ungültige E-Mail-Adresse",
         "required": "E-Mail-Adresse benötigt"
@@ -495,6 +501,9 @@
     },
     "saveChanges": "Änderungen speichern",
     "saved": "Gespeichert!",
+    "unsavedChanges": "Ungespeicherte Änderungen",
+    "updated": "Aktualisiert",
+    "uploading": "Es wird hochgeladen",
     "warning": "Ändere hier nur etwas, wenn du das Einverständnis hast. Änderungen werden auch den Nutzern angezeigt."
   },
   "homePage": {
@@ -576,10 +585,53 @@
   },
   "membershipBuilder": {
     "steps": {
-      "emails": {},
-      "intro": {},
-      "joinForm": {}
-    }
+      "accountConfirmation": {
+        "checkboxLabel": "Beschriftung Kontrollkästchen ",
+        "description": "Gestalte deinen Bestätigungsbildschirm",
+        "heading": "Überschrift",
+        "showMailOptIn": "Nach Adresse fragen",
+        "showNewsletterOptIn": "Nach Newsletterabonnement fragen",
+        "subheading": "Unterüberschrift",
+        "text": "Neue Mitglieder müssen ihre Registrierung bestätigen. Hier kannst du einstellen, wie der Bestätigungsbildschirm aussehen soll.",
+        "title": "Accountinformationen bestätigen",
+        "welcomeMessage": "Willkommensnachricht"
+      },
+      "emails": {
+        "bigTitle": "Willkommens- & Kündigungs-E-Mail",
+        "cancellationEmail": "Kündigungs-E-Mail",
+        "description": "Passe deine Willkommens- und Kündigungs-E-Mail an",
+        "text": "Alle E-Mails werden von deiner Support-E-Mail-Adresse gesendet und enthalten eine Standardsignatur. Du kannst beides in den E-Mail-Einstellungen anpassen.",
+        "title": "E-Mails",
+        "welcomeEmail": "Willkommens-E-Mail"
+      },
+      "intro": {
+        "description": "Heiße neue Mitglieder willkommen",
+        "message": "Nachricht",
+        "showWelcomeMessage": "Zeige Willkommensnachricht",
+        "text": "Neue Mitglieder bekommen eine Willkommensnachricht angezeigt. Mach sie für dich passend!",
+        "title": "Willkommensnachricht"
+      },
+      "joinForm": {
+        "accountConfirmation": "Accountinformationen bestätigen",
+        "backgroundImage": "Hintergrundbild",
+        "checkboxLabel": "Beschriftung Kontrollkästchen ",
+        "defaultAmount": "Standardbetrag",
+        "description": "Optimiere dein Registrierungsformular",
+        "formSubtitle": "Untertitel",
+        "formTitle": "Titel",
+        "heading": "Überschrift",
+        "minAmount": "Mindestbetrag",
+        "showAbsorbFee": "Nach Transaktionskosten fragen",
+        "showMailOptIn": "Nach Adresse fragen",
+        "showNewsletterOptIn": "Nach Newsletterabonnement fragen",
+        "subheading": "Unterüberschrift",
+        "suggestedAmounts": "Vorgeschlagene Beträge",
+        "text": "In diesem Abschnitt kannst du dein Registrierungsformular bearbeiten, optimieren und ansehen.",
+        "title": "Registrierung",
+        "welcomeMessage": "Willkommensnachricht"
+      }
+    },
+    "title": "Membership Builder"
   },
   "menu": {
     "admin": "Administration",
@@ -590,6 +642,7 @@
     "home": "Home",
     "legacyApp": "Alter Adminbereich",
     "logout": "Log out",
+    "membershipBuilder": "Membership Builder",
     "notices": "Hinweise",
     "settings": "Einstellungen",
     "yourInformation": "Deine Informationen",
@@ -643,6 +696,8 @@
     "changePassword": "Passwort ändern",
     "confirmPassword": "Passwort bestätigen",
     "description": "Neues Passwort eingeben, um fortzufahren.",
+    "error": "Das Zurücksetzen des Passworts ist schiefgelaufen. Der Link scheint abgelaufen zu sein. Du kannst {newLink}.",
+    "errorLink": "einen neuen Link anfordern",
     "login": "Einloggen",
     "newPassword": "Neues Passwort",
     "title": "Passwort aktualisieren?"

@@ -12,21 +12,19 @@
         <AppSubHeading class="mb-4">{{ stepT('welcomeEmail') }}</AppSubHeading>
         <div class="mb-4">
           <AppInput
-            v-model="welcomeEmail.subject"
+            v-model="validation.welcomeEmail.subject.$model"
             label="Subject"
             :error-message="
               validation.welcomeEmail.subject.$errors[0]?.$message
             "
             required
-            @blur="validation.welcomeEmail.subject.$touch"
           />
         </div>
         <RichTextEditor
-          v-model="welcomeEmail.body"
+          v-model="validation.welcomeEmail.body.$model"
           label="Message"
           :error-message="validation.welcomeEmail.body.$errors[0]?.$message"
           required
-          @blur="validation.welcomeEmail.body.$touch"
         />
       </div>
       <div>
@@ -41,23 +39,21 @@
         }}</AppSubHeading>
         <div class="mb-4">
           <AppInput
-            v-model="cancellationEmail.subject"
+            v-model="validation.cancellationEmail.subject.$model"
             label="Subject"
             :error-message="
               validation.cancellationEmail.subject.$errors[0]?.$message
             "
             required
-            @blur="validation.cancellationEmail.subject.$touch"
           />
         </div>
         <RichTextEditor
-          v-model="cancellationEmail.body"
+          v-model="validation.cancellationEmail.body.$model"
           label="Message"
           :error-message="
             validation.cancellationEmail.body.$errors[0]?.$message
           "
           required
-          @blur="validation.cancellationEmail.body.$touch"
         />
       </div>
       <div>

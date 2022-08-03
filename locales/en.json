@@ -241,9 +241,12 @@
     "manualPayment": "You are paying manually through bank transfer right now. To make it easier for you to manage your contribution and easier for us to know on how much money from our members we can rely on month on month, please update to paying automatically via direct debit.",
     "nextAmountChanging": "Your contribution will change to {nextAmount} on {renewalDate}.",
     "paymentHistory": {
-      "amount": "Amount",
-      "date": "Date",
       "empty": "Past payments and their invoices will show up here.",
+      "status": {
+        "cancelled": "Cancelled",
+        "failed": "Failed",
+        "pending": "Pending"
+      },
       "title": "Payment history"
     },
     "paymentMethod": "Payment method",
@@ -457,6 +460,7 @@
         "required": "This field is required if you want to add address"
       },
       "aggregator": "Something is missing! Please check the fields above.",
+      "aggregatorTop": "Something is missing! Please check for errors below.",
       "email": {
         "invalid": "Invalid email address",
         "required": "Email is required"
@@ -581,6 +585,17 @@
   },
   "membershipBuilder": {
     "steps": {
+      "accountConfirmation": {
+        "checkboxLabel": "Checkbox label",
+        "description": "Compose your confirmation screen",
+        "heading": "Heading",
+        "showMailOptIn": "Ask for postal address",
+        "showNewsletterOptIn": "Ask to subscribe to newsletter",
+        "subheading": "Subheading",
+        "text": "After joining, users will be asked to confirm their registration. Here you can set the details of the confirmation screen.",
+        "title": "Account confirmation",
+        "welcomeMessage": "Welcome message"
+      },
       "emails": {
         "bigTitle": "Welcome & cancellation emails",
         "cancellationEmail": "Cancellation email",
@@ -681,6 +696,8 @@
     "changePassword": "Change password",
     "confirmPassword": "Confirm password",
     "description": "Set a new password to login.",
+    "error": "Password reset failed, the link might have expired. You could {newLink}.",
+    "errorLink": "request another link",
     "login": "Login to your account",
     "newPassword": "New password",
     "title": "Reset your password?"

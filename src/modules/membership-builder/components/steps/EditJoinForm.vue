@@ -10,11 +10,10 @@
       <div>
         <div class="mb-4">
           <AppInput
-            v-model="joinContent.title"
+            v-model="validation.joinContent.title.$model"
             :label="stepT('formTitle')"
-            :error-message="validation.joinContent.title.$errors[0]?.$message"
             required
-            @blur="validation.joinContent.title.$touch"
+            :error-message="validation.joinContent.title.$errors[0]?.$message"
           />
         </div>
         <RichTextEditor
@@ -24,12 +23,13 @@
         />
 
         <AppImageUpload
-          v-model="backgroundUrl"
+          v-model="validation.backgroundUrl.$model"
           :label="stepT('backgroundImage')"
           :width="1440"
           :height="810"
           class="mb-4"
           required
+          :error-message="validation.backgroundUrl.$errors[0]?.$message"
         />
 
         <h4 class="font-semibold text-lg mb-4">
@@ -78,117 +78,11 @@
         </AuthBox>
       </div>
     </div>
-    <div v-if="setupContent" class="grid grid-cols-2 gap-8">
-      <div>
-        <AppHeading class="mb-4">{{ stepT('accountConfirmation') }}</AppHeading>
-        <AppInput
-          v-model="setupContent.welcome"
-          class="mb-4"
-          :label="stepT('welcomeMessage')"
-          required
-        />
-
-        <AppCheckbox
-          v-model="setupContent.showMailOptIn"
-          :label="stepT('showMailOptIn')"
-          class="font-semibold mb-4"
-        />
-
-        <template v-if="setupContent.showMailOptIn">
-          <div class="mb-4">
-            <AppInput
-              v-model="setupContent.mailTitle"
-              :label="stepT('heading')"
-              required
-              :error-message="
-                validation.setupContent.mailTitle.$errors[0]?.$message
-              "
-              @blur="validation.setupContent.mailTitle.$touch"
-            />
-          </div>
-          <div class="mb-4">
-            <AppTextArea
-              v-model="setupContent.mailText"
-              :label="stepT('subheading')"
-              required
-              :error-message="
-                validation.setupContent.mailText.$errors[0]?.$message
-              "
-              @blur="validation.setupContent.mailText.$touch"
-            />
-          </div>
-          <div class="mb-4">
-            <AppInput
-              v-model="setupContent.mailOptIn"
-              :label="stepT('checkboxLabel')"
-              required
-              :error-message="
-                validation.setupContent.mailOptIn.$errors[0]?.$message
-              "
-              @blur="validation.setupContent.mailOptIn.$touch"
-            />
-          </div>
-        </template>
-
-        <AppCheckbox
-          v-model="setupContent.showNewsletterOptIn"
-          :label="stepT('showNewsletterOptIn')"
-          class="font-semibold mb-4"
-        />
-
-        <template v-if="setupContent.showNewsletterOptIn">
-          <div class="mb-4">
-            <AppInput
-              v-model="setupContent.newsletterTitle"
-              :label="stepT('heading')"
-              required
-              :error-message="
-                validation.setupContent.newsletterTitle.$errors[0]?.$message
-              "
-              @blur="validation.setupContent.newsletterTitle.$touch"
-            />
-          </div>
-          <div class="mb-4">
-            <AppTextArea
-              v-model="setupContent.newsletterText"
-              :label="stepT('subheading')"
-              required
-              :error-message="
-                validation.setupContent.newsletterText.$errors[0]?.$message
-              "
-              @blur="validation.setupContent.newsletterText.$touch"
-            />
-          </div>
-          <div class="mb-4">
-            <AppInput
-              v-model="setupContent.newsletterOptIn"
-              :label="stepT('checkboxLabel')"
-              required
-              :error-message="
-                validation.setupContent.newsletterOptIn.$errors[0]?.$message
-              "
-              @blur="validation.setupContent.newsletterOptIn.$touch"
-            />
-          </div>
-        </template>
-      </div>
-      <div
-        class="p-4 pt-8 bg-center bg-cover"
-        :style="`background-image: url(${backgroundUrl})`"
-      >
-        <AuthBox>
-          <SetupForm :setup-content="setupContent" />
-        </AuthBox>
-      </div>
-    </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { computed, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
-import {
-  JoinContent,
-  JoinSetupContent,
-} from '../../../../utils/api/api.interface';
+import { JoinContent } from '../../../../utils/api/api.interface';
 import { fetchContent, updateContent } from '../../../../utils/api/content';
 import AppInput from '../../../../components/forms/AppInput.vue';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
@@ -199,14 +93,12 @@ import AppSelect from '../../../../components/forms/AppSelect.vue';
 import { ContributionPeriod } from '../../../../utils/enums/contribution-period.enum';
 import AppCheckbox from '../../../../components/forms/AppCheckbox.vue';
 import JoinForm from '../../../auth/join/components/JoinForm.vue';
-import AppTextArea from '../../../../components/forms/AppTextArea.vue';
-import SetupForm from '../../../auth/join/components/SetupForm.vue';
 import AuthBox from '../../../auth/AuthBox.vue';
 import AppImageUpload from '../../../../components/forms/AppImageUpload.vue';
 import { generalContent } from '../../../../store';
 import { MembershipBuilderEmitter } from '../../membership-builder.interface';
 import useVuelidate from '@vuelidate/core';
-import { required, requiredIf } from '@vuelidate/validators';
+import { required } from '@vuelidate/validators';
 import PeriodAmounts from '../PeriodAmounts.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
@@ -215,7 +107,6 @@ const props = defineProps<{
 }>();
 
 const joinContent = ref<JoinContent>();
-const setupContent = ref<JoinSetupContent>();
 const backgroundUrl = ref('');
 
 const { n, t } = useI18n();
@@ -248,10 +139,9 @@ const defaultAmounts = computed(() => {
 });
 
 async function handleUpdate() {
-  if (joinContent.value && setupContent.value) {
+  if (joinContent.value) {
     await Promise.all([
       updateContent('join', joinContent.value),
-      updateContent('join/setup', setupContent.value),
       updateContent('general', {
         ...generalContent.value,
         backgroundUrl: backgroundUrl.value || '',
@@ -262,32 +152,18 @@ async function handleUpdate() {
   props.emitter.emit('updated');
 }
 
-const rules = computed(() => {
-  const requiredIfNewsletter = requiredIf(
-    !!setupContent.value?.showNewsletterOptIn
-  );
-  const requiredIfMail = requiredIf(!!setupContent.value?.showMailOptIn);
-  return {
+const validation = useVuelidate(
+  {
     joinContent: {
       title: { required },
     },
-    setupContent: {
-      newsletterText: { required: requiredIfNewsletter },
-      newsletterOptIn: { required: requiredIfNewsletter },
-      newsletterTitle: { required: requiredIfNewsletter },
-      mailText: { required: requiredIfMail },
-      mailOptIn: { required: requiredIfMail },
-      mailTitle: { required: requiredIfMail },
-    },
     backgroundUrl: { required },
-  };
-});
-
-const validation = useVuelidate(rules, {
-  joinContent,
-  setupContent,
-  backgroundUrl,
-});
+  },
+  {
+    joinContent,
+    backgroundUrl,
+  }
+);
 
 watch(validation, () => {
   emit('update:error', validation.value.$errors.length > 0);
@@ -297,11 +173,10 @@ watch(validation, () => {
 onBeforeMount(async () => {
   props.emitter.on('update', handleUpdate);
   joinContent.value = await fetchContent('join');
-  setupContent.value = await fetchContent('join/setup');
   backgroundUrl.value = generalContent.value.backgroundUrl || '';
 
   watch(
-    [joinContent, setupContent, backgroundUrl],
+    [joinContent, backgroundUrl],
     () => {
       props.emitter.emit('dirty');
     },
