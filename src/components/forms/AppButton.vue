@@ -60,7 +60,7 @@ const variantClasses = {
     'hover:bg-danger-10',
     'text-danger',
   ],
-  text: ['underline text-link', '', ''],
+  text: ['underline text-link border-0', '', ''],
 } as const;
 
 const props = withDefaults(
