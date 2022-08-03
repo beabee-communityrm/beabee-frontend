@@ -1,5 +1,5 @@
 <template>
-  <div :class="errorMessage && 'ProseMirror-hasError'">
+  <div :class="hasError && 'ProseMirror-hasError'">
     <AppLabel v-if="label" :label="label" :required="required" />
 
     <div v-if="editor" class="mb-2 min-h-[2rem] h-auto">
@@ -56,17 +56,17 @@
     </div>
     <editor-content :editor="editor" class="content-message" />
     <div
-      v-if="errorMessage"
+      v-if="hasError"
       class="text-xs text-danger font-semibold mt-1.5"
       role="alert"
     >
-      {{ errorMessage }}
+      {{ validation.$errors[0].$message }}
     </div>
   </div>
 </template>
 
 <script lang="ts" setup="{ emit }">
-import { onBeforeUnmount, Ref, toRef, watch } from 'vue';
+import { computed, onBeforeUnmount, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useEditor, EditorContent, ChainedCommands } from '@tiptap/vue-3';
 import Link from '@tiptap/extension-link';
@@ -75,16 +75,17 @@ import StarterKit from '@tiptap/starter-kit';
 import Typeography from '@tiptap/extension-typography';
 import RichTextEditorButton from './RichTextEditorButton.vue';
 import AppLabel from '../forms/AppLabel.vue';
+import useVuelidate from '@vuelidate/core';
+import { helpers, requiredIf } from '@vuelidate/validators';
 
 const { t } = useI18n();
 
+const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
-  modelValue: unknown; // TODO: should be string but vuelidate $model is unknown
+  modelValue: string;
   label?: string;
   required?: boolean;
-  errorMessage?: string | Ref<string>;
 }>();
-const emit = defineEmits(['blur', 'update:modelValue']);
 
 const editor = useEditor({
   content: props.modelValue as string,
@@ -109,7 +110,7 @@ const editor = useEditor({
       );
     }
   },
-  onBlur: () => emit('blur'),
+  onBlur: () => validation.value.$touch(),
 });
 
 watch(toRef(props, 'modelValue'), (value) => {
@@ -117,6 +118,20 @@ watch(toRef(props, 'modelValue'), (value) => {
     editor.value.commands.setContent(value as string, false);
   }
 });
+
+const rules = computed(() => ({
+  value: {
+    required: helpers.withMessage(
+      t('form.errors.unknown.required'),
+      requiredIf(!!props.required)
+    ),
+  },
+}));
+
+const validation = useVuelidate(rules, {
+  value: toRef(props, 'modelValue'),
+} as any); // TODO: type error
+const hasError = computed(() => validation.value.$errors.length > 0);
 
 onBeforeUnmount(() => {
   editor.value?.destroy();

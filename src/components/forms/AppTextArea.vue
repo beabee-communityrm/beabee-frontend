@@ -9,17 +9,18 @@
       rounded
       focus:outline-none focus:shadow-input
     "
-    :class="dangerClasses"
-    v-bind="$attrs"
+    :class="hasError && 'bg-danger-10 border-danger-70'"
     :required="required"
+    v-bind="$attrs"
+    @blur="validation.value.$touch"
   />
 
   <div
-    v-if="errorMessage"
+    v-if="hasError"
     class="text-xs text-danger font-semibold mt-1.5"
     role="alert"
   >
-    {{ errorMessage }}
+    {{ validation.$errors[0].$message }}
   </div>
 
   <div v-if="infoMessage" class="mt-2 text-xs">
@@ -28,34 +29,46 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, Ref } from '@vue/reactivity';
+import { computed } from '@vue/reactivity';
+import useVuelidate from '@vuelidate/core';
+import { helpers, requiredIf } from '@vuelidate/validators';
+import { useI18n } from 'vue-i18n';
 import InfoMessage from '../InfoMessage.vue';
 import AppLabel from './AppLabel.vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = withDefaults(
   defineProps<{
-    modelValue?: any; // TODO: should be string but vuelidate $model is unknown
+    modelValue?: string;
     label?: string;
-    errorMessage?: string | Ref<string>;
+    name?: string;
     infoMessage?: string;
     required?: boolean;
   }>(),
   {
-    modelValue: '' as any,
+    modelValue: '',
     label: undefined,
-    errorMessage: undefined,
+    name: 'unknown',
     infoMessage: undefined,
-    required: false,
   }
 );
+
+const { t } = useI18n();
 
 const value = computed({
   get: () => props.modelValue,
   set: (newValue) => emit('update:modelValue', newValue),
 });
 
-const dangerClasses = computed(() => {
-  return props.errorMessage ? ['bg-danger-10', 'border-danger-70'] : null;
-});
+const rules = computed(() => ({
+  value: {
+    required: helpers.withMessage(
+      t(`form.errors.${props.name}.required`),
+      requiredIf(!!props.required)
+    ),
+  },
+}));
+
+const validation = useVuelidate(rules, { value } as any); // TODO: type problem
+const hasError = computed(() => validation.value.$errors.length > 0);
 </script>

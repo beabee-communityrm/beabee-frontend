@@ -2,20 +2,12 @@
   <template v-if="showNameFields">
     <div class="mb-3">
       <AppLabel :label="t('form.firstName')" class="font-normal" />
-      <AppInput
-        v-model="firstName"
-        :error-message="validation.firstName.$errors[0]?.$message"
-        @blur="validation.firstName.$touch"
-      />
+      <AppInput v-model="firstName" name="firstName" required />
     </div>
 
     <div class="mb-3">
       <AppLabel :label="t('form.lastName')" class="font-normal" />
-      <AppInput
-        v-model="lastName"
-        :error-message="validation.lastName.$errors[0]?.$message"
-        @blur="validation.lastName.$touch"
-      />
+      <AppInput v-model="lastName" name="lastName" required />
     </div>
   </template>
 
@@ -45,7 +37,6 @@ import AppInput from './forms/AppInput.vue';
 import AppLabel from './forms/AppLabel.vue';
 
 import theme from 'virtual:theme';
-import { helpers, requiredIf } from '@vuelidate/validators';
 
 const emit = defineEmits(['loaded']);
 
@@ -66,23 +57,7 @@ const error = ref('');
 const firstName = ref('');
 const lastName = ref('');
 
-const validation = useVuelidate(
-  {
-    firstName: {
-      required: helpers.withMessage(
-        t('form.errors.firstName.required'),
-        requiredIf(!!props.showNameFields)
-      ),
-    },
-    lastName: {
-      required: helpers.withMessage(
-        t('form.errors.lastName.required'),
-        requiredIf(!!props.showNameFields)
-      ),
-    },
-  },
-  { firstName, lastName }
-);
+const validation = useVuelidate();
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 let completePayment = ref(() => {});

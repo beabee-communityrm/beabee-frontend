@@ -15,8 +15,6 @@
           v-if="dataProxy.useCustomSlug"
           v-model="customSlug"
           required
-          :error-message="validation.slug.$errors[0]?.$message"
-          @blur="validation.slug.$touch"
         />
         <p class="mt-2 text-sm">
           {{ t('createCallout.steps.url.URLWillBe') }} {{ baseUrl }}/callouts/{{
@@ -50,8 +48,6 @@
           :label="inputT('title.label')"
           :placeholder="inputT('title.placeholder')"
           required
-          :error-message="validation.shareTitle.$errors[0]?.$message"
-          @blur="validation.shareTitle.$touch"
         />
       </div>
       <div
@@ -66,8 +62,6 @@
           :label="inputT('description.label')"
           :placeholder="inputT('description.placeholder')"
           required
-          :error-message="validation.shareDescription.$errors[0]?.$message"
-          @blur="validation.shareDescription.$touch"
         ></AppTextArea>
       </div>
       <div
@@ -79,11 +73,9 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity';
+import { computed, ref, watch } from 'vue';
 import useVuelidate from '@vuelidate/core';
-import { requiredIf } from '@vuelidate/validators';
 import slugify from 'slugify';
-import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../forms/AppInput.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
@@ -112,13 +104,7 @@ const customSlug = computed({
   set: (newSlug) => (dataProxy.value.slug = slugify(newSlug)),
 });
 
-const rules = computed(() => ({
-  slug: { required: requiredIf(dataProxy.value.useCustomSlug) },
-  shareTitle: { required: requiredIf(dataProxy.value.overrideShare) },
-  shareDescription: { required: requiredIf(dataProxy.value.overrideShare) },
-}));
-
-const validation = useVuelidate(rules, dataProxy);
+const validation = useVuelidate();
 
 watch(
   validation,

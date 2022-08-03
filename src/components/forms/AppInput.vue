@@ -1,8 +1,7 @@
 <template>
-  <AppLabel v-if="label" :label="label" :required="required" :for="inputType" />
+  <AppLabel v-if="label" :label="label" :required="required" />
   <input
-    :id="inputType"
-    v-model="value"
+    v-model.trim="value"
     class="
       p-2
       w-full
@@ -10,19 +9,21 @@
       rounded
       focus:outline-none focus:shadow-input
     "
-    :type="inputType"
-    :placeholder="placeholder"
-    :class="dangerClasses"
-    v-bind="$attrs"
+    :class="hasError && 'bg-danger-10 border-danger-70'"
+    :type="type"
+    :name="name"
     :required="required"
+    :min="min"
+    v-bind="$attrs"
+    @blur="validation.value.$touch"
   />
 
   <div
-    v-if="errorMessage"
+    v-if="hasError"
     class="text-xs text-danger font-semibold mt-1.5"
     role="alert"
   >
-    {{ errorMessage }}
+    {{ validation.value.$errors[0].$message }}
   </div>
 
   <div v-if="infoMessage" class="mt-2 text-xs">
@@ -31,38 +32,82 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, Ref } from '@vue/reactivity';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import useVuelidate from '@vuelidate/core';
+import { email, helpers, requiredIf, sameAs, url } from '@vuelidate/validators';
 import InfoMessage from '../InfoMessage.vue';
 import AppLabel from './AppLabel.vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = withDefaults(
   defineProps<{
-    modelValue?: unknown;
-    inputType?: 'password' | 'email' | 'text' | 'date' | 'number';
+    modelValue?: number | string;
+    type?: 'password' | 'email' | 'text' | 'date' | 'number' | 'url';
+    name?: string;
     label?: string;
-    errorMessage?: string | Ref<string>;
     infoMessage?: string;
     required?: boolean;
-    placeholder?: string;
+    min?: number | string;
+    sameAs?: number | string;
   }>(),
   {
-    modelValue: '' as any,
-    inputType: 'text',
+    modelValue: undefined,
+    type: 'text',
+    name: 'unknown',
     label: undefined,
-    errorMessage: undefined,
     infoMessage: undefined,
-    required: false,
-    placeholder: '',
+    min: undefined,
+    sameAs: undefined,
   }
 );
+
+const { t } = useI18n();
 
 const value = computed({
   get: () => props.modelValue,
   set: (value) => emit('update:modelValue', value),
 });
 
-const dangerClasses = computed(() => {
-  return props.errorMessage ? ['bg-danger-10', 'border-danger-70'] : null;
-});
+const errorT = (key: string) => t(`form.errors.${props.name}.${key}`);
+
+const rules = computed(() => ({
+  value: {
+    required: helpers.withMessage(
+      errorT('required'),
+      requiredIf(!!props.required)
+    ),
+    ...(props.type === 'email' && {
+      email: helpers.withMessage(errorT('invalid'), email),
+    }),
+    ...(props.type === 'url' && {
+      url: helpers.withMessage(errorT('invalid'), url),
+    }),
+    ...(props.type === 'password' && {
+      password: helpers.withMessage(errorT('invalid'), isPassword),
+    }),
+    ...(props.min !== undefined && {
+      min: helpers.withMessage(
+        errorT('min'),
+        (value: number | string) => value >= props.min
+      ),
+    }),
+    ...(props.sameAs !== undefined && {
+      sameAs: helpers.withMessage(errorT('sameAs'), sameAs(props.sameAs)),
+    }),
+  },
+}));
+
+const validation = useVuelidate(rules, { value } as any); // TODO: type problem
+const hasError = computed(() => validation.value.$errors.length > 0);
+
+function isPassword(value: string) {
+  if (!value) return true;
+  return (
+    value.length >= 8 &&
+    /[0-9]/.test(value) &&
+    /[A-Z]/.test(value) &&
+    /[a-z]/.test(value)
+  );
+}
 </script>

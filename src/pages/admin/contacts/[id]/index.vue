@@ -90,14 +90,12 @@ meta:
         <AppInput
           v-model="contactAnnotations.notes"
           :model-value="contactAnnotations.notes"
-          input-type="text"
           :label="t('contacts.data.notes')"
           class="mb-4"
         />
         <AppTextArea
           v-model="contactAnnotations.description"
           :model-value="contactAnnotations.description"
-          input-type="text"
           :label="t('contacts.data.description')"
           class="mb-4"
         />

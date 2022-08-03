@@ -19,21 +19,21 @@ meta:
 
     <div class="mb-5">
       <AppInput
-        v-model="loginData.email"
-        input-type="email"
+        v-model="data.email"
+        type="email"
+        name="email"
+        required
         :label="t('form.email')"
-        :error-message="errorGenerator(loginValidation, 'email')"
-        @blur="loginValidation.email.$touch"
       />
     </div>
 
     <div class="mb-3">
       <AppInput
-        v-model="loginData.password"
-        input-type="password"
+        v-model="data.password"
+        type="password"
+        name="password"
+        required
         :label="t('form.password')"
-        :error-message="errorGenerator(loginValidation, 'password')"
-        @blur="loginValidation.password.$touch"
       />
     </div>
 
@@ -43,7 +43,7 @@ meta:
       </router-link>
     </div>
 
-    <MessageBox v-if="hasLoginFormError" class="mb-4" />
+    <MessageBox v-if="validation.$errors.length > 0" class="mb-4" />
 
     <MessageBox v-if="hasCredentialError" class="mb-4">
       {{ t('login.wrongCredentials') }}
@@ -51,7 +51,7 @@ meta:
 
     <AppButton
       variant="link"
-      :disabled="isFormInvalid || loading"
+      :disabled="validation.$invalid || loading"
       type="submit"
       class="w-full"
       @click="submitLogin(redirectTo)"
@@ -64,13 +64,10 @@ meta:
 import AppInput from '../../components/forms/AppInput.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import MessageBox from '../../components/MessageBox.vue';
-import { errorGenerator } from '../../utils/form-error-generator';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
-import { helpers, required } from '@vuelidate/validators';
-import { computed, reactive, ref } from 'vue';
-import { emailValidationRule } from '../../utils/form-validation/rules';
+import { reactive, ref } from 'vue';
 import isInternalUrl from '../../utils/is-internal-url';
 import { updateCurrentUser } from '../../store';
 import { LoginData } from '../../utils/api/api.interface';
@@ -83,34 +80,19 @@ const redirectTo = route.query.next as string | undefined;
 
 const loading = ref(false);
 
-const loginData = reactive<LoginData>({
+const data = reactive<LoginData>({
   email: '',
   password: '',
 });
 
-const loginRules = computed(() => ({
-  email: emailValidationRule,
-  password: {
-    required: helpers.withMessage(t('form.errors.password.required'), required),
-  },
-}));
-
-const isFormInvalid = computed(() => {
-  return loginValidation.value.$invalid;
-});
-
-const hasLoginFormError = computed(() => {
-  return loginValidation.value.$errors.length;
-});
-
-const loginValidation = useVuelidate(loginRules, loginData);
+const validation = useVuelidate();
 
 const hasCredentialError = ref(false);
 
 const submitLogin = async (redirectTo?: string) => {
   loading.value = true;
   hasCredentialError.value = false;
-  login(loginData)
+  login(data)
     .then(updateCurrentUser)
     .then(() => {
       // TODO: use router when legacy app is gone

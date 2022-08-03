@@ -33,7 +33,7 @@
             "
             :min="minAmount"
             :class="{ 'bg-danger-10': hasError }"
-            @input="changeAmount(Number(handleInput($event)) || 0, true)"
+            @input="handleInput"
             @keydown.up.prevent="0 /* just stop caret moving */"
             @keyup.up="changeAmount(amount + 1)"
             @keyup.down="changeAmount(amount - 1)"
@@ -119,7 +119,6 @@ import { computed, toRefs } from '@vue/reactivity';
 import { useI18n } from 'vue-i18n';
 import { minValue } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
-import handleInput from '../../utils/handle-input';
 
 const { t, n, getNumberFormat, locale } = useI18n();
 
@@ -138,6 +137,10 @@ const amount = computed({
     validation.value.amount.$touch();
   },
 });
+
+function handleInput(event: Event) {
+  changeAmount(Number((event.target as HTMLInputElement).value) || 0, true);
+}
 
 function changeAmount(newAmount: number, allowInvalid = false) {
   amount.value = allowInvalid

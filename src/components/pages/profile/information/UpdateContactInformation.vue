@@ -25,7 +25,7 @@
       v-model:line2="information.addressLine2"
       v-model:postCode="information.postCode"
       v-model:cityOrTown="information.cityOrTown"
-      :is-address-required="information.deliveryOptIn"
+      :required="information.deliveryOptIn"
     />
 
     <MessageBox

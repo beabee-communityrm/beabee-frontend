@@ -27,9 +27,9 @@ meta:
         v-model="data.password"
         :label="t('resetPassword.newPassword')"
         :info-message="t('form.passwordInfo')"
-        input-type="password"
-        :error-message="errorGenerator(validation, 'password')"
-        @blur="validation.password.$touch"
+        type="password"
+        name="password"
+        required
       />
     </div>
 
@@ -37,9 +37,10 @@ meta:
       <AppInput
         v-model="data.repeatPassword"
         :label="t('resetPassword.confirmPassword')"
-        input-type="password"
-        :error-message="errorGenerator(validation, 'repeatPassword')"
-        @blur="validation.repeatPassword.$touch"
+        type="password"
+        name="confirmPassword"
+        :same-as="data.password"
+        required
       />
     </div>
 
@@ -78,14 +79,11 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { reactive, ref } from 'vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
-import { errorGenerator } from '../../../utils/form-error-generator';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { computed, reactive, ref } from 'vue';
-import { passwordValidationRule } from '../../../utils/form-validation/rules';
-import { helpers, sameAs } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import { resetPassword } from '../../../utils/api/auth';
 import { updateCurrentUser } from '../../../store';
@@ -111,17 +109,7 @@ const loading = ref(false);
 const hasError = ref(false);
 const data = reactive({ password: '', repeatPassword: '' });
 
-const rules = computed(() => ({
-  password: passwordValidationRule,
-  repeatPassword: {
-    sameAsPassword: helpers.withMessage(
-      t('form.errors.password.sameAs'),
-      sameAs(data.password)
-    ),
-  },
-}));
-
-const validation = useVuelidate(rules, data);
+const validation = useVuelidate();
 
 async function handleSubmit() {
   loading.value = true;

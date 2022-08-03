@@ -41,7 +41,7 @@ meta:
           v-model:line2="setupMemberData.addressLine2"
           v-model:postCode="setupMemberData.postCode"
           v-model:cityOrTown="setupMemberData.cityOrTown"
-          :is-address-required="setupMemberData.profile.deliveryOptIn"
+          :required="setupMemberData.profile.deliveryOptIn"
         />
       </template>
 

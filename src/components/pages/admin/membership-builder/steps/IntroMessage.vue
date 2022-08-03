@@ -17,13 +17,10 @@
       <div v-if="showIntroMessage" class="grid grid-cols-2 gap-8">
         <div>
           <RichTextEditor
-            v-model="validation.profileContent.introMessage.$model"
+            v-model="profileContent.introMessage"
             :label="stepT('message')"
             class="mb-4"
             required
-            :error-message="
-              validation.profileContent.introMessage.$errors[0]?.$message
-            "
           />
         </div>
         <div>
@@ -39,7 +36,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { computed, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
+import { onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../AppHeading.vue';
 import AppCheckbox from '../../../../forms/AppCheckbox.vue';
@@ -50,7 +47,6 @@ import WelcomeMessage from '../../../../welcome-message/WelcomeMessage.vue';
 import { currentUser } from '../../../../../store';
 import { MembershipBuilderEmitter } from '../membership-builder.interface';
 import useVuelidate from '@vuelidate/core';
-import { requiredIf } from '@vuelidate/validators';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
@@ -63,14 +59,7 @@ const stepT = (key: string) => t('membershipBuilder.steps.intro.' + key);
 const profileContent = ref<ProfileContent>();
 const showIntroMessage = ref(false);
 
-const rules = computed(() => ({
-  profileContent: {
-    introMessage: {
-      required: requiredIf(showIntroMessage.value),
-    },
-  },
-}));
-const validation = useVuelidate(rules, { profileContent });
+const validation = useVuelidate();
 watch(validation, () => {
   emit('update:error', validation.value.$errors.length > 0);
   emit('update:validated', !validation.value.$invalid);

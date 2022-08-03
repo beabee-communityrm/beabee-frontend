@@ -15,11 +15,9 @@
         <AppInput
           v-if="!dataProxy.startNow || mode === 'edit'"
           v-model="dataProxy.startDate"
-          inputType="date"
-          required
           :label="mode === 'edit' ? inputT('starts.label') : undefined"
-          :error-message="validation.startDate.$errors[0]?.$message"
-          @blur="validation.startDate.$touch"
+          type="date"
+          required
         />
       </div>
       <div class="col-span-1 text-sm text-grey mt-6" />
@@ -38,10 +36,9 @@
         <AppInput
           v-if="dataProxy.hasEndDate"
           v-model="dataProxy.endDate"
-          inputType="date"
+          type="date"
           required
-          :error-message="validation.endDate.$errors[0]?.$message"
-          @blur="validation.endDate.$touch"
+          :min="dataProxy.startDate"
         />
       </div>
     </div>
@@ -50,8 +47,7 @@
 
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { helpers, requiredIf } from '@vuelidate/validators';
-import { computed, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../forms/AppInput.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
@@ -66,24 +62,9 @@ const props = defineProps<{
 const { t } = useI18n();
 const inputT = (key: string) => t('createCallout.steps.dates.inputs.' + key);
 
-const isAfterStartDate = helpers.withMessage(
-  'End date must be after start date',
-  (value: string) => {
-    return !dataProxy.value.hasEndDate || value >= dataProxy.value.startDate;
-  }
-);
-
-const rules = computed(() => ({
-  startDate: { required: requiredIf(!dataProxy.value.startNow) },
-  endDate: {
-    required: requiredIf(dataProxy.value.hasEndDate),
-    minValue: isAfterStartDate,
-  },
-}));
-
 const dataProxy = ref(props.data);
 
-const validation = useVuelidate(rules, dataProxy);
+const validation = useVuelidate();
 
 watch(
   validation,
