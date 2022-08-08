@@ -1,7 +1,6 @@
 <route lang="yaml">
 name: adminNotices
 meta:
-  layout: Dashboard
   role: admin
   pageTitle: menu.notices
 </route>

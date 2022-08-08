@@ -1,7 +1,6 @@
 <route lang="yaml">
 name: admin
 meta:
-  layout: Dashboard
   role: admin
   pageTitle: menu.dashboard
 </route>

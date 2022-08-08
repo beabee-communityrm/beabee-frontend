@@ -95,7 +95,7 @@ import MessageBox from '../../../components/MessageBox.vue';
 const props = withDefaults(
   defineProps<{
     id: string;
-    mode: 'set' | 'reset';
+    mode?: 'set' | 'reset';
   }>(),
   { mode: 'reset' }
 );
