@@ -21,20 +21,21 @@
     <div class="mb-5">
       <AppInput
         v-model="password"
-        input-type="password"
+        type="password"
+        name="password"
+        required
         :label="t('form.newPassword')"
         :info-message="t('form.passwordInfo')"
-        :error-message="errorGenerator(passwordValidation, 'password')"
-        @blur="passwordValidation.password.$touch"
       />
     </div>
     <div class="mb-5">
       <AppInput
         v-model="confirmPassword"
-        input-type="password"
+        type="password"
+        name="confirmPassword"
+        required
+        :same-as="password"
         :label="t('form.newPasswordConfirm')"
-        :error-message="errorGenerator(passwordValidation, 'confirmPassword')"
-        @blur="passwordValidation.confirmPassword.$touch"
       />
     </div>
     <MessageBox v-if="hasFormError" type="error" class="mt-2" />
@@ -54,11 +55,8 @@
 </template>
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { helpers, sameAs } from '@vuelidate/validators';
 import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { passwordValidator } from '../../../../utils/form-validation/validators';
-import { errorGenerator } from '../../../../utils/form-error-generator';
 import { updateMember } from '../../../../utils/api/member';
 import AppButton from '../../../forms/AppButton.vue';
 import MessageBox from '../../../MessageBox.vue';
@@ -73,26 +71,9 @@ const saved = ref(false);
 const password = ref('');
 const confirmPassword = ref('');
 
-const rules = {
-  password: {
-    validPassword: helpers.withMessage(
-      t('form.errors.password.invalid'),
-      passwordValidator
-    ),
-  },
-  confirmPassword: {
-    sameAs: helpers.withMessage(
-      t('form.errors.password.sameAs'),
-      sameAs(password)
-    ),
-  },
-};
+const validation = useVuelidate();
 
-const passwordValidation = useVuelidate(rules, { password, confirmPassword });
-
-const hasFormError = computed(
-  () => passwordValidation.value.$errors.length > 0
-);
+const hasFormError = computed(() => validation.value.$errors.length > 0);
 
 const disableSubmit = computed(
   () => hasFormError.value || password.value === ''

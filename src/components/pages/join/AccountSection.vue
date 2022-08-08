@@ -14,33 +14,27 @@
     <div class="mb-5">
       <AppInput
         v-model="emailProxy"
-        input-type="email"
         :label="t('form.email')"
-        :error-message="errorGenerator(validation, 'email')"
-        @blur="validation.email.$touch"
+        type="email"
+        name="email"
+        required
       />
     </div>
 
     <AppInput
       v-model="passwordProxy"
-      input-type="password"
       :label="t('form.password')"
-      :error-message="errorGenerator(validation, 'password')"
+      type="password"
+      name="password"
+      required
       :info-message="t('form.passwordInfo')"
-      @blur="validation.password.$touch"
     />
   </section>
 </template>
 
 <script lang="ts" setup>
-import useVuelidate from '@vuelidate/core';
 import AppInput from '../../forms/AppInput.vue';
-import { errorGenerator } from '../../../utils/form-error-generator';
 import { useI18n } from 'vue-i18n';
-import {
-  emailValidationRule,
-  passwordValidationRule,
-} from '../../../utils/form-validation/rules';
 import { computed } from 'vue';
 import AppSubHeading from '../../AppSubHeading.vue';
 
@@ -61,12 +55,4 @@ const passwordProxy = computed({
 });
 
 const { t } = useI18n();
-
-const validation = useVuelidate(
-  {
-    email: emailValidationRule,
-    password: passwordValidationRule,
-  },
-  props
-);
 </script>

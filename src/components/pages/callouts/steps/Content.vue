@@ -16,8 +16,6 @@
         v-model="dataProxy.introText"
         :label="inputT('intro.label')"
         required
-        :error-message="validation.introText.$errors[0]?.$message"
-        @blur="validation.introText.$touch"
       />
     </div>
     <div
@@ -36,7 +34,6 @@
 </template>
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { helpers, required } from '@vuelidate/validators';
 import { onBeforeMount, ref, watch } from 'vue';
 import { FormBuilder as FormBuilderVue } from 'vue-formio';
 import { FormBuilder } from 'formiojs';
@@ -82,14 +79,7 @@ const inputT = (key: string) => t('createCallout.steps.content.inputs.' + key);
 const wasJustReplicated = route.query.replicated !== undefined;
 
 const dataProxy = ref(props.data);
-const validation = useVuelidate(
-  {
-    introText: {
-      required: helpers.withMessage('Introduction text is required', required),
-    },
-  },
-  dataProxy
-);
+const validation = useVuelidate();
 
 watch([validation, props.data.formSchema], () => {
   emit('update:error', validation.value.$errors.length > 0);

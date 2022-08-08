@@ -7,11 +7,12 @@
   </div>
   <div v-if="setupContent" class="grid grid-cols-2 gap-8">
     <div>
-      <AppInput
-        v-model="setupContent.welcome"
-        class="mb-4"
-        :label="stepT('welcomeMessage')"
-      />
+      <div class="mb-4">
+        <AppInput
+          v-model="setupContent.welcome"
+          :label="stepT('welcomeMessage')"
+        />
+      </div>
 
       <AppCheckbox
         v-model="setupContent.showMailOptIn"
@@ -22,32 +23,23 @@
       <template v-if="setupContent.showMailOptIn">
         <div class="mb-4">
           <AppInput
-            v-model="validation.setupContent.mailTitle.$model"
+            v-model="setupContent.mailTitle"
             :label="stepT('heading')"
             required
-            :error-message="
-              validation.setupContent.mailTitle.$errors[0]?.$message
-            "
           />
         </div>
         <div class="mb-4">
           <AppTextArea
-            v-model="validation.setupContent.mailText.$model"
+            v-model="setupContent.mailText"
             :label="stepT('subheading')"
             required
-            :error-message="
-              validation.setupContent.mailText.$errors[0]?.$message
-            "
           />
         </div>
         <div class="mb-4">
           <AppInput
-            v-model="validation.setupContent.mailOptIn.$model"
+            v-model="setupContent.mailOptIn"
             :label="stepT('checkboxLabel')"
             required
-            :error-message="
-              validation.setupContent.mailOptIn.$errors[0]?.$message
-            "
           />
         </div>
       </template>
@@ -61,32 +53,23 @@
       <template v-if="setupContent.showNewsletterOptIn">
         <div class="mb-4">
           <AppInput
-            v-model="validation.setupContent.newsletterTitle.$model"
+            v-model="setupContent.newsletterTitle"
             :label="stepT('heading')"
             required
-            :error-message="
-              validation.setupContent.newsletterTitle.$errors[0]?.$message
-            "
           />
         </div>
         <div class="mb-4">
           <AppTextArea
-            v-model="validation.setupContent.newsletterText.$model"
+            v-model="setupContent.newsletterText"
             :label="stepT('subheading')"
             required
-            :error-message="
-              validation.setupContent.newsletterText.$errors[0]?.$message
-            "
           />
         </div>
         <div class="mb-4">
           <AppInput
-            v-model="validation.setupContent.newsletterOptIn.$model"
+            v-model="setupContent.newsletterOptIn"
             :label="stepT('checkboxLabel')"
             required
-            :error-message="
-              validation.setupContent.newsletterOptIn.$errors[0]?.$message
-            "
           />
         </div>
       </template>
@@ -99,7 +82,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { computed, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
+import { onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
 import { JoinSetupContent } from '../../../../../utils/api/api.interface';
 import { fetchContent, updateContent } from '../../../../../utils/api/content';
 import AppInput from '../../../../forms/AppInput.vue';
@@ -111,7 +94,6 @@ import SetupForm from '../../../join/SetupForm.vue';
 import AuthBox from '../../../../AuthBox.vue';
 import { MembershipBuilderEmitter } from '../membership-builder.interface';
 import useVuelidate from '@vuelidate/core';
-import { requiredIf } from '@vuelidate/validators';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 
@@ -126,24 +108,7 @@ const { t } = useI18n();
 const stepT = (key: string) =>
   t('membershipBuilder.steps.accountConfirmation.' + key);
 
-const rules = computed(() => {
-  const requiredIfNewsletter = requiredIf(
-    !!setupContent.value?.showNewsletterOptIn
-  );
-  const requiredIfMail = requiredIf(!!setupContent.value?.showMailOptIn);
-  return {
-    setupContent: {
-      newsletterText: { required: requiredIfNewsletter },
-      newsletterOptIn: { required: requiredIfNewsletter },
-      newsletterTitle: { required: requiredIfNewsletter },
-      mailText: { required: requiredIfMail },
-      mailOptIn: { required: requiredIfMail },
-      mailTitle: { required: requiredIfMail },
-    },
-  };
-});
-
-const validation = useVuelidate(rules, { setupContent });
+const validation = useVuelidate();
 
 watch(validation, () => {
   emit('update:error', validation.value.$errors.length > 0);

@@ -20,8 +20,6 @@
           :label="inputT('title.label')"
           :placeholder="inputT('title.placeholder')"
           required
-          :error-message="validation.thankYouTitle.$errors[0]?.$message"
-          @blur="validation.thankYouTitle.$touch"
         />
       </div>
       <div
@@ -36,8 +34,6 @@
           :label="inputT('text.label')"
           :placeholder="inputT('text.placeholder')"
           required
-          :error-message="validation.thankYouText.$errors[0]?.$message"
-          @blur="validation.thankYouText.$touch"
         />
       </div>
       <div
@@ -51,9 +47,8 @@
           v-model="dataProxy.thankYouRedirect"
           :label="inputT('url.label')"
           :placeholder="inputT('url.placeholder')"
+          type="url"
           required
-          :error-message="validation.thankYouRedirect.$errors[0]?.$message"
-          @blur="validation.thankYouRedirect.$touch"
         />
       </div>
       <div
@@ -66,7 +61,6 @@
 
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { requiredIf, url } from '@vuelidate/validators';
 import { ref, watch, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../forms/AppInput.vue';
@@ -87,13 +81,7 @@ const showThankYouSection = computed(
   () => dataProxy.value.whenFinished === 'message'
 );
 
-const rules = computed(() => ({
-  thankYouTitle: { required: requiredIf(showThankYouSection.value) },
-  thankYouText: { required: requiredIf(showThankYouSection.value) },
-  thankYouRedirect: { required: requiredIf(!showThankYouSection.value), url },
-}));
-
-const validation = useVuelidate(rules, dataProxy);
+const validation = useVuelidate();
 
 watch(validation, () => {
   emit('update:error', validation.value.$errors.length > 0);

@@ -18,15 +18,15 @@ meta:
       <div class="mb-5">
         <AppInput
           v-model="forgotPasswordData.email"
-          input-type="email"
-          :error-message="errorGenerator(forgotPasswordValidation, 'email')"
-          @blur="forgotPasswordValidation.$touch"
+          type="email"
+          name="email"
+          required
         />
       </div>
 
       <AppButton
         variant="link"
-        :disabled="isFormInvalid || loading"
+        :disabled="validation.$invalid || loading"
         type="submit"
         class="w-full"
         @click="submitForgotPassword"
@@ -56,12 +56,10 @@ meta:
 <script lang="ts" setup>
 import AppInput from '../../components/forms/AppInput.vue';
 import AppButton from '../../components/forms/AppButton.vue';
-import { errorGenerator } from '../../utils/form-error-generator';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
-import { computed, reactive, ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { forgotPassword } from '../../utils/api/auth';
-import { emailValidationRule } from '../../utils/form-validation/rules';
 
 const { t } = useI18n();
 
@@ -72,18 +70,7 @@ const forgotPasswordData = reactive({
   email: '',
 });
 
-const forgotPasswordValidationRules = computed(() => ({
-  email: emailValidationRule,
-}));
-
-const forgotPasswordValidation = useVuelidate(
-  forgotPasswordValidationRules,
-  forgotPasswordData
-);
-
-const isFormInvalid = computed(() => {
-  return forgotPasswordValidation.value.$invalid;
-});
+const validation = useVuelidate();
 
 const submitForgotPassword = async () => {
   loading.value = true;

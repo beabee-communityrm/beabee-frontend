@@ -11,21 +11,9 @@
       <div>
         <AppSubHeading class="mb-4">{{ stepT('welcomeEmail') }}</AppSubHeading>
         <div class="mb-4">
-          <AppInput
-            v-model="validation.welcomeEmail.subject.$model"
-            label="Subject"
-            :error-message="
-              validation.welcomeEmail.subject.$errors[0]?.$message
-            "
-            required
-          />
+          <AppInput v-model="welcomeEmail.subject" label="Subject" required />
         </div>
-        <RichTextEditor
-          v-model="validation.welcomeEmail.body.$model"
-          label="Message"
-          :error-message="validation.welcomeEmail.body.$errors[0]?.$message"
-          required
-        />
+        <RichTextEditor v-model="welcomeEmail.body" label="Message" required />
       </div>
       <div>
         <EmailPreview :body="welcomeEmail.body" :footer="emailFooter" />
@@ -39,20 +27,14 @@
         }}</AppSubHeading>
         <div class="mb-4">
           <AppInput
-            v-model="validation.cancellationEmail.subject.$model"
+            v-model="cancellationEmail.subject"
             label="Subject"
-            :error-message="
-              validation.cancellationEmail.subject.$errors[0]?.$message
-            "
             required
           />
         </div>
         <RichTextEditor
-          v-model="validation.cancellationEmail.body.$model"
+          v-model="cancellationEmail.body"
           label="Message"
-          :error-message="
-            validation.cancellationEmail.body.$errors[0]?.$message
-          "
           required
         />
       </div>
@@ -65,7 +47,6 @@
 
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { required } from '@vuelidate/validators';
 import { onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../AppHeading.vue';
@@ -101,17 +82,7 @@ async function handleUpdate() {
   props.emitter.emit('updated');
 }
 
-const rules = {
-  welcomeEmail: {
-    subject: { required },
-    body: { required },
-  },
-  cancellationEmail: {
-    subject: { required },
-    body: { required },
-  },
-};
-const validation = useVuelidate(rules, { welcomeEmail, cancellationEmail });
+const validation = useVuelidate();
 watch(validation, () => {
   emit('update:error', validation.value.$errors.length > 0);
   emit('update:validated', !validation.value.$invalid);

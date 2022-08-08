@@ -10,10 +10,9 @@
       <div>
         <div class="mb-4">
           <AppInput
-            v-model="validation.joinContent.title.$model"
+            v-model="joinContent.title"
             :label="stepT('formTitle')"
             required
-            :error-message="validation.joinContent.title.$errors[0]?.$message"
           />
         </div>
         <RichTextEditor
@@ -50,9 +49,10 @@
             <AppLabel :label="stepT('minAmount')" />
             <AppInput
               v-model="joinContent.minMonthlyAmount"
-              input-type="number"
-              class="w-32 block mb-2"
-              min="1"
+              type="number"
+              :min="1"
+              required
+              class="w-32 block"
             />
           </div>
           <div class="flex-1">
@@ -153,16 +153,8 @@ async function handleUpdate() {
 }
 
 const validation = useVuelidate(
-  {
-    joinContent: {
-      title: { required },
-    },
-    backgroundUrl: { required },
-  },
-  {
-    joinContent,
-    backgroundUrl,
-  }
+  { backgroundUrl: { required } },
+  { backgroundUrl }
 );
 
 watch(validation, () => {
