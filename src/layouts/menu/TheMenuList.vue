@@ -13,6 +13,12 @@
         :section="section"
         :is-first="index === 0"
       />
+      <a href="/members" class="block px-2 xl:px-4 text-primary-80">
+        <TheMenuListItem
+          :icon="['fa', 'window-restore']"
+          :title="t('menu.legacyApp')"
+        />
+      </a>
     </div>
   </div>
   <div
