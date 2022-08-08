@@ -69,7 +69,10 @@ const value = computed({
   set: (value) => emit('update:modelValue', value),
 });
 
-const errorT = (key: string) => t(`form.errors.${props.name}.${key}`);
+function errorT(key: string, context?: Record<string, unknown>): string {
+  const keypath = `form.errors.${props.name}.${key}`;
+  return context ? t(keypath, context) : t(keypath);
+}
 
 const rules = computed(() => ({
   value: {
@@ -88,7 +91,7 @@ const rules = computed(() => ({
     }),
     ...(props.min !== undefined && {
       min: helpers.withMessage(
-        errorT('min'),
+        () => errorT('min', { min: props.min }),
         (value: number | string) => value >= props.min
       ),
     }),
