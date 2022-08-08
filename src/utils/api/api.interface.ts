@@ -347,10 +347,11 @@ export interface GetNoticeData {
   updatedAt: Date;
   status: ItemStatus;
   name: string;
+  starts?: Date;
   expires?: Date;
   enabled: boolean;
   text: string;
-  buttonText: string;
+  buttonText?: string;
   url?: string;
 }
 

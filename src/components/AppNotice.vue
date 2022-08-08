@@ -12,7 +12,10 @@
         </div>
       </div>
 
-      <div class="ml-auto hidden md:flex">
+      <div
+        v-if="notice.url && notice.buttonText"
+        class="ml-auto hidden md:flex"
+      >
         <AppButton :href="notice.url">{{ notice.buttonText }}</AppButton>
       </div>
     </div>
