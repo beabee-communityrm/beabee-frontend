@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { mix, toRgba, transparentize } from 'color2k';
+import { mix, parseToRgba, transparentize } from 'color2k';
 import { GeneralContent } from '../utils/api/api.interface';
 import { fetchContent } from '../utils/api/content';
 
@@ -7,18 +7,23 @@ function setCSSVar(name: string, value: string) {
   document.documentElement.style.setProperty(name, value);
 }
 
+function setColorVar(name: string, color: string) {
+  const [r, g, b] = parseToRgba(color);
+  setCSSVar(name, `${r}, ${g}, ${b}`);
+}
+
 function setShades(
   colorName: string,
   colorValue: string,
   levels: number[] = []
 ) {
-  setCSSVar(`--c-${colorName}`, toRgba(colorValue));
+  setColorVar(`--c-${colorName}`, colorValue);
   for (const level of levels) {
     const levelColor =
       level > 100
         ? mix(colorValue, 'black', level / 100 - 1)
         : mix(colorValue, 'white', 1 - level / 100);
-    setCSSVar(`--c-${colorName}-${level}`, levelColor);
+    setColorVar(`--c-${colorName}-${level}`, levelColor);
   }
 }
 
