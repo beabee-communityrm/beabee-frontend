@@ -1,8 +1,8 @@
 function shades(color, levels = []) {
   return Object.assign(
-    { DEFAULT: `var(--c-${color})` },
+    { DEFAULT: `rgba(var(--c-${color}), <alpha-value>)` },
     ...levels.map((level) => ({
-      [level]: `var(--c-${color}-${level})`,
+      [level]: `rgba(var(--c-${color}-${level}), <alpha-value>)`,
     }))
   );
 }
