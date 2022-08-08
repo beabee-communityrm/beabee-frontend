@@ -66,7 +66,12 @@ const { t } = useI18n();
 
 const value = computed({
   get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value),
+  set: (newValue) => {
+    emit(
+      'update:modelValue',
+      props.type === 'number' ? Number(newValue) : newValue
+    );
+  },
 });
 
 function errorT(key: string, context?: Record<string, unknown>): string {
