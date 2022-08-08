@@ -45,7 +45,7 @@ meta:
         />
       </template>
 
-      <template v-if="setupContent.showNewsletterOptIn">
+      <template v-if="showNewsletterOptIn">
         <p class="text-lg mb-1">
           {{ setupContent.newsletterTitle }}
         </p>
@@ -127,6 +127,8 @@ const setupContent = ref<JoinSetupContent>({
   mailOptIn: '',
 });
 
+const showNewsletterOptIn = ref(false);
+
 const saving = ref(false);
 
 const validation = useVuelidate();
@@ -176,10 +178,7 @@ onBeforeMount(async () => {
   setupMemberData.firstName = member.firstname;
   setupMemberData.lastName = member.lastname;
   setupMemberData.email = member.email;
-  setupMemberData.profile.newsletterOptIn =
-    member.profile.newsletterStatus === NewsletterStatus.Subscribed
-      ? true
-      : false;
+
   setupMemberData.profile.deliveryOptIn = member.profile.deliveryOptIn;
   if (member.profile.deliveryAddress) {
     setupMemberData.addressLine1 = member.profile.deliveryAddress.line1;
@@ -189,5 +188,9 @@ onBeforeMount(async () => {
   }
 
   setupContent.value = await fetchContent('join/setup');
+
+  showNewsletterOptIn.value =
+    setupContent.value.showNewsletterOptIn &&
+    member.profile.newsletterStatus !== NewsletterStatus.Subscribed;
 });
 </script>
