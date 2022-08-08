@@ -464,6 +464,8 @@
       "aggregatorTop": "Hier fehlt etwas! Bitte ergänzen.",
       "cityOrTown": {},
       "confirmPassword": {
+        "invalid": "Passwort ungültig",
+        "required": "Passwort benötigt",
         "sameAs": "Passwörter stimmen nicht überein"
       },
       "email": {

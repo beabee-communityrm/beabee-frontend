@@ -468,6 +468,8 @@
         "required": "City/Town is required"
       },
       "confirmPassword": {
+        "invalid": "Invalid password",
+        "required": "Password is required",
         "sameAs": "The passwords don't match"
       },
       "email": {
