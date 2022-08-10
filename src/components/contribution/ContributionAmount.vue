@@ -94,8 +94,8 @@
         "
         :class="
           definedAmount === amount
-            ? 'bg-link text-white'
-            : 'hover:bg-link-10 text-primary'
+            ? 'bg-link-30 text-link'
+            : 'hover:bg-link-70'
         "
         @click="changeAmount(definedAmount)"
       >
