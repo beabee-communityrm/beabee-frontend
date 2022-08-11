@@ -1,10 +1,11 @@
 <template>
-  <div class="flex border rounded">
+  <div class="flex border rounded divide-x divide-primary
+-40 border-primary-40">
     <label
       v-for="(period, index) in periods"
       :key="index"
       :for="period.name"
-      class="flex-grow relative"
+      class="flex-grow relative bg-white"
     >
       <input
         :id="period.name"
@@ -23,11 +24,9 @@
           font-semibold
           h-10
           cursor-pointer
-          border-primary-40
-          bg-white
         "
         :class="
-          period.name === modelValue ? 'bg-link-30 text-link border-link-70' : 'hover:bg-link-10'
+          period.name === modelValue ? 'bg-link text-white' : 'hover:bg-link-10'
         "
       >
         {{

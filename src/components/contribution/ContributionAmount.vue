@@ -71,10 +71,7 @@
         md:my-0
         grid grid-cols-3
         md:grid-cols-1
-        border border-primary-40
-        rounded
         overflow-hidden
-        bg-white
       "
     >
       <button
@@ -82,10 +79,21 @@
         :key="index"
         type="button"
         class="
-          border-primary-40 border-r
-          md:border-r-0 md:border-b
-          last:border-b-0 last:border-r-0
-          h-9
+          bg-white
+          border border-primary-40
+          first:rounded-l first:border-r-0
+          last:rounded-r last:rounded-l-none last:border-l-0 last:border-t
+          md:first:rounded-t
+          md:first:rounded-bl-none
+          md:first:border-r
+          md:first:border-b-0
+          md:last:rounded-b
+          md:last:rounded-tr-none
+          md:last:border-t-0
+          md:last:border-l
+          p-3
+          md:p-2
+          border-box
           flex
           items-center
           justify-center
@@ -94,8 +102,8 @@
         "
         :class="
           definedAmount === amount
-            ? 'bg-link-30 text-link'
-            : 'hover:bg-link-70'
+            ? 'bg-link-10 text-link font-bold border-link-70'
+            : 'hover:text-link'
         "
         @click="changeAmount(definedAmount)"
       >
@@ -183,7 +191,7 @@ const period = computed(() => {
 
 <style scoped>
 .amount-button {
-  @apply h-1/2  py-2 px-4 text-primary-70 hover:text-link border-primary-40;
+  @apply h-1/2 bg-white py-2 px-4 text-primary-70 hover:text-link border-primary-40;
   &.is-invalid {
     @apply text-grey cursor-not-allowed;
   }
