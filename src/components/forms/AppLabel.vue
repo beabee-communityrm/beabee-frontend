@@ -1,5 +1,5 @@
 <template>
-  <label class="block mb-1.5 font-semibold">
+  <label class="block mb-0.5 font-semibold">
     {{ label }} {{ required ? '*' : '' }}
   </label>
 </template>

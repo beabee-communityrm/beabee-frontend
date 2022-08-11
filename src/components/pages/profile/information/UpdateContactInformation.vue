@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="submitFormHandler('me')">
-    <AppHeading class="mt-5 mb-3">
+    <AppHeading class="mt-5 mb-5">
       {{ t('informationPage.contactInformation') }}
     </AppHeading>
 
@@ -10,7 +10,7 @@
       v-model:lastName="information.lastName"
     />
 
-    <AppHeading class="mt-5 mb-3">
+    <AppHeading class="mt-5 mb-5">
       {{ t('informationPage.deliveryAddress') }}
     </AppHeading>
 

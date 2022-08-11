@@ -8,6 +8,7 @@
       border border-primary-40
       rounded
       focus:outline-none focus:shadow-input
+      mb-1.5
     "
     :class="hasError && 'bg-danger-10 border-danger-70'"
     :type="type"
