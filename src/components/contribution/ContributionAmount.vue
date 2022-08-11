@@ -183,7 +183,7 @@ const period = computed(() => {
 
 <style scoped>
 .amount-button {
-  @apply h-1/2 bg-white py-2 px-4 text-primary-70 hover:text-link border-primary-40;
+  @apply h-1/2  py-2 px-4 text-primary-70 hover:text-link border-primary-40;
   &.is-invalid {
     @apply text-grey cursor-not-allowed;
   }
