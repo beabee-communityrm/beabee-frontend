@@ -79,15 +79,21 @@ export const adminMenu: MenuSection[] = [
       },
     ],
   },
-  /*{
+  {
     type: 'settings',
-    title: ('menu.settings',
+    title: 'menu.settings',
     items: [
       {
         title: 'menu.membershipBuilder',
         href: '/admin/membership-builder',
         icon: ['fa', 'hands-helping'],
       },
+      {
+        title: 'menu.adminSettings',
+        href: '/admin/settings',
+        icon: ['fa', 'cogs'],
+        isActive: /^\/admin\/settings.*/,
+      },
     ],
-  },*/
+  },
 ];

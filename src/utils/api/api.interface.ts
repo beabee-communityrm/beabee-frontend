@@ -269,6 +269,13 @@ export interface EmailContent {
   footer: string;
 }
 
+export interface ShareContent {
+  title: string;
+  description: string;
+  image: string;
+  twitterHandle: string;
+}
+
 interface BasicCalloutData {
   slug: string;
   title: string;

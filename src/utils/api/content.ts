@@ -6,6 +6,7 @@ import {
   JoinContent,
   JoinSetupContent,
   ProfileContent,
+  ShareContent,
 } from './api.interface';
 
 type ContentId =
@@ -14,7 +15,8 @@ type ContentId =
   | 'profile'
   | 'general'
   | 'contacts'
-  | 'email';
+  | 'email'
+  | 'share';
 
 type Content<Id extends ContentId> = Id extends 'join'
   ? JoinContent
@@ -28,6 +30,8 @@ type Content<Id extends ContentId> = Id extends 'join'
   ? ContactsContent
   : Id extends 'email'
   ? EmailContent
+  : Id extends 'share'
+  ? ShareContent
   : never;
 
 export async function fetchContent<Id extends ContentId>(
