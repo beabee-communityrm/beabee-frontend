@@ -52,7 +52,7 @@ export const initGeneralContent = fetchContent('general').then((content) => {
 
   setShades('primary', primaryColor, [5, 10, 20, 40, 70, 80]);
   setShades('body', theme.colors?.body || primaryColor, [40, 80]);
-  setShades('link', linkColor, [10, 70, 110]);
+  setShades('link', linkColor, [10, 30, 70, 110]);
   setShades('warning', theme.colors?.warning || '#f5cc5b', [10, 30, 70]);
   setShades('success', theme.colors?.success || '#86a960', [10, 30, 70, 110]);
   setShades('danger', theme.colors?.danger || '#ce3d3d', [10, 30, 70, 110]);
