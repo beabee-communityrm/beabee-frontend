@@ -36,6 +36,15 @@
     "supportInbox": "Benötigst du Hilfe? Schreib' uns eine E-Mail an:",
     "welcomeBack": "Willkommen zurück {firstName}!"
   },
+  "adminSettings": {
+    "general": {
+      "footer": {
+        "dataPrivacy": {},
+        "otherLinks": {}
+      },
+      "socialSharing": {}
+    }
+  },
   "callout": {
     "contactDetails": "Kontaktdaten",
     "form": {

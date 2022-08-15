@@ -11,14 +11,14 @@ meta:
       <div class="mb-4">
         <AppInput
           v-model="generalContent.organisationName"
-          label="Organisation name"
+          :label="t('adminSettings.general.organisationName')"
           required
         />
       </div>
       <div class="mb-4">
         <AppSelect
           v-model="generalContent.locale"
-          label="Language"
+          :label="t('adminSettings.general.language')"
           :items="locales"
           class="w-60"
           required
@@ -27,51 +27,65 @@ meta:
     </section>
 
     <section v-if="shareContent" class="mb-8">
-      <AppHeading class="mb-4">Social sharing</AppHeading>
+      <AppHeading class="mb-4">
+        {{ t('adminSettings.general.socialSharing.title') }}
+      </AppHeading>
       <p class="mb-4">
-        Configure what appears on social media when a link to your beabee
-        community is shared
+        {{ t('adminSettings.general.socialSharing.text') }}
       </p>
       <div class="mb-4">
-        <AppInput v-model="shareContent.title" label="Share title" required />
+        <AppInput
+          v-model="shareContent.title"
+          :label="t('adminSettings.general.socialSharing.title')"
+          required
+        />
       </div>
       <div class="mb-4">
         <AppTextArea
           v-model="shareContent.description"
-          label="Share description"
+          :label="t('adminSettings.general.socialSharing.description')"
           required
         />
       </div>
       <div class="mb-4">
         <AppImageUpload
           v-model="shareContent.image"
-          label="Share image"
+          :label="t('adminSettings.general.socialSharing.image')"
           :width="1200"
           :height="627"
           required
         />
       </div>
       <div class="mb-4">
-        <AppInput v-model="shareContent.twitterHandle" label="Twitter handle" />
+        <AppInput
+          v-model="shareContent.twitterHandle"
+          :label="t('adminSettings.general.socialSharing.twitterHandle')"
+        />
       </div>
     </section>
 
     <section class="mb-8">
-      <AppHeading class="mb-4">Footer</AppHeading>
-      <p class="mb-4">These links appear in beabee's footer and in emails</p>
+      <AppHeading class="mb-4">
+        {{ t('adminSettings.general.footer.title') }}
+      </AppHeading>
+      <p class="mb-4">
+        {{ t('adminSettings.general.footer.text') }}
+      </p>
       <div class="mb-4">
         <AppInput
           v-model="generalContent.siteUrl"
-          label="Main website URL"
+          :label="t('adminSettings.general.footer.siteUrl')"
           type="url"
           required
         />
       </div>
-      <h4 class="font-semibold text-lg mb-4">Data privacy</h4>
+      <h4 class="font-semibold text-lg mb-4">
+        {{ t('adminSettings.general.footer.dataPrivacy.title') }}
+      </h4>
       <div class="mb-4">
         <AppInput
           v-model="generalContent.privacyLink"
-          label="Privacy policy URL"
+          :label="t('adminSettings.general.footer.dataPrivacy.privacyUrl')"
           type="url"
           required
         />
@@ -79,18 +93,20 @@ meta:
       <div class="mb-4">
         <AppInput
           v-model="generalContent.termsLink"
-          label="Terms of service URL"
+          :label="t('adminSettings.general.footer.dataPrivacy.termsUrl')"
           type="url"
         />
       </div>
       <div class="mb-4">
         <AppInput
           v-model="generalContent.impressumLink"
-          label="Impressum URL"
+          :label="t('adminSettings.general.footer.dataPrivacy.impressumUrl')"
           type="url"
         />
       </div>
-      <h4 class="font-semibold text-lg mb-4">Other links</h4>
+      <h4 class="font-semibold text-lg mb-4">
+        {{ t('adminSettings.general.footer.otherLinks.title') }}
+      </h4>
       <div
         v-for="(link, i) in generalContent.footerLinks"
         :key="i"
@@ -99,14 +115,14 @@ meta:
         <div class="flex-1">
           <AppInput
             v-model="generalContent.footerLinks[i].text"
-            label="Link text"
+            :label="t('adminSettings.general.footer.otherLinks.linkText')"
             required
           />
         </div>
         <div class="flex-1">
           <AppInput
             v-model="generalContent.footerLinks[i].url"
-            label="URL"
+            :label="t('adminSettings.general.footer.otherLinks.url')"
             required
           />
         </div>
@@ -117,18 +133,23 @@ meta:
         </div>
       </div>
       <AppButton variant="primaryOutlined" @click="addLink">
-        Add another link
+        {{ t('adminSettings.general.footer.otherLinks.add') }}
       </AppButton>
     </section>
 
-    <MessageBox v-if="hasSaved" type="success" class="mb-4"> Saved </MessageBox>
+    <MessageBox v-if="hasSaved" type="success" class="mb-4">
+      {{ t('form.saved') }}
+    </MessageBox>
 
-    <AppButton type="submit" variant="link" :loading="saving">Update</AppButton>
+    <AppButton type="submit" variant="link" :loading="saving">
+      {{ t('actions.update') }}
+    </AppButton>
   </form>
 </template>
 
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import AppImageUpload from '../../../components/forms/AppImageUpload.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
@@ -139,6 +160,8 @@ import { fetchContent, updateContent } from '../../../utils/api/content';
 import { generalContent as storeGeneralContent } from '../../../store';
 import MessageBox from '../../../components/MessageBox.vue';
 import AppHeading from '../../../components/AppHeading.vue';
+
+const { t } = useI18n();
 
 const locales = [
   {

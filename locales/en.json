@@ -36,6 +36,38 @@
     "supportInbox": "Need help? Our support inbox is always open:",
     "welcomeBack": "Welcome back {firstName}!"
   },
+  "adminSettings": {
+    "general": {
+      "footer": {
+        "dataPrivacy": {
+          "impressumUrl": "Impressum URL",
+          "privacyUrl": "Privacy policy URL",
+          "termsUrl": "Terms of service URL",
+          "title": "Data privacy"
+        },
+        "otherLinks": {
+          "add": "Add another link",
+          "linkText": "Link text",
+          "title": "Other links",
+          "url": "URL"
+        },
+        "siteUrl": "Main website URL",
+        "text": "These links appear in beabee's footer and in emails",
+        "title": "Footer"
+      },
+      "label": "General",
+      "language": "Language",
+      "organisationName": "Organisation name",
+      "socialSharing": {
+        "description": "Share description",
+        "image": "Share image",
+        "text": "Configure what appears on social media when a link to your beabee community is shared",
+        "title": "Share title",
+        "twitterHandle": "Twitter handle"
+      }
+    },
+    "title": "Settings"
+  },
   "callout": {
     "contactDetails": "Contact details",
     "form": {

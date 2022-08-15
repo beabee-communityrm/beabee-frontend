@@ -24,6 +24,15 @@
     "supportInbox": "",
     "welcomeBack": ""
   },
+  "adminSettings": {
+    "general": {
+      "footer": {
+        "dataPrivacy": {},
+        "otherLinks": {}
+      },
+      "socialSharing": {}
+    }
+  },
   "callout": {
     "contactDetails": "Контактная информация",
     "form": {
