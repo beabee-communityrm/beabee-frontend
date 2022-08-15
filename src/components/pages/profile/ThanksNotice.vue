@@ -1,15 +1,10 @@
 <template>
   <div class="flex">
-    <img
-      class="w-16 mr-3"
-      src="../../../assets/images/logo.png"
-      :alt="generalContent.organisationName"
-    />
+    <AppLogo class="w-16 mr-3" />
 
     <slot />
   </div>
 </template>
-
 <script lang="ts" setup>
-import { generalContent } from '../../../store';
+import AppLogo from '../../AppLogo.vue';
 </script>

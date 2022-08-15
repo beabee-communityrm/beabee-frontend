@@ -204,6 +204,7 @@ export interface ContactsContent {
 
 export interface GeneralContent {
   organisationName: string;
+  logoUrl: string;
   siteUrl: string;
   supportEmail: string;
   privacyLink: string;

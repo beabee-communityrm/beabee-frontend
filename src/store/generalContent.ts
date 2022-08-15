@@ -29,6 +29,7 @@ function setShades(
 
 export const generalContent = ref<GeneralContent>({
   organisationName: '',
+  logoUrl: '',
   siteUrl: '',
   supportEmail: '',
   privacyLink: '',
