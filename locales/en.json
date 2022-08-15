@@ -57,6 +57,7 @@
       },
       "label": "General",
       "language": "Language",
+      "organisationLogo": "Organisation logo",
       "organisationName": "Organisation name",
       "socialSharing": {
         "description": "Share description",
