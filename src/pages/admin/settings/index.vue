@@ -91,6 +91,34 @@ meta:
         />
       </div>
       <h4 class="font-semibold text-lg mb-4">Other links</h4>
+      <div
+        v-for="(link, i) in generalContent.footerLinks"
+        :key="i"
+        class="flex gap-4 mb-4"
+      >
+        <div class="flex-1">
+          <AppInput
+            v-model="generalContent.footerLinks[i].text"
+            label="Link text"
+            required
+          />
+        </div>
+        <div class="flex-1">
+          <AppInput
+            v-model="generalContent.footerLinks[i].url"
+            label="URL"
+            required
+          />
+        </div>
+        <div class="flex-0 self-end">
+          <AppButton variant="danger" @click="removeLink(i)">
+            <font-awesome-icon :icon="['fa', 'trash']" />
+          </AppButton>
+        </div>
+      </div>
+      <AppButton variant="primaryOutlined" @click="addLink">
+        Add another link
+      </AppButton>
     </section>
 
     <MessageBox v-if="hasSaved" type="success" class="mb-4"> Saved </MessageBox>
@@ -131,6 +159,18 @@ const saving = ref(false);
 const hasSaved = ref(false);
 const generalContent = ref<GeneralContent>();
 const shareContent = ref<ShareContent>();
+
+function addLink() {
+  if (generalContent.value) {
+    generalContent.value.footerLinks.push({ text: '', url: '' });
+  }
+}
+
+function removeLink(i: number) {
+  if (generalContent.value) {
+    generalContent.value.footerLinks.splice(i, 1);
+  }
+}
 
 async function handleSubmit() {
   saving.value = true;
