@@ -25,6 +25,7 @@
     "welcomeBack": ""
   },
   "adminSettings": {
+    "email": {},
     "general": {
       "footer": {
         "dataPrivacy": {},

@@ -1,22 +1,27 @@
 <template>
   <AppLabel v-if="label" :label="label" :required="required" />
-  <input
-    v-model.trim="value"
-    class="
-      p-2
-      w-full
-      border border-primary-40
-      rounded
-      focus:outline-none focus:shadow-input
-    "
-    :class="hasError && 'bg-danger-10 border-danger-70'"
-    :type="type"
-    :name="name"
-    :required="required"
-    :min="min"
-    v-bind="$attrs"
-    @blur="validation.value.$touch"
-  />
+  <div class="flex items-center">
+    <div class="flex-1">
+      <input
+        v-model.trim="value"
+        class="
+          p-2
+          w-full
+          border border-primary-40
+          rounded
+          focus:outline-none focus:shadow-input
+        "
+        :class="hasError && 'bg-danger-10 border-danger-70'"
+        :type="type"
+        :name="name"
+        :required="required"
+        :min="min"
+        v-bind="$attrs"
+        @blur="validation.value.$touch"
+      />
+    </div>
+    <div v-if="$slots.suffix" class="flex-0 ml-2"><slot name="suffix" /></div>
+  </div>
 
   <div
     v-if="hasError"

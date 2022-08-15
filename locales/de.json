@@ -37,6 +37,7 @@
     "welcomeBack": "Willkommen zurück {firstName}!"
   },
   "adminSettings": {
+    "email": {},
     "general": {
       "footer": {
         "dataPrivacy": {},

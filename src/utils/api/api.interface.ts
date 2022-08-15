@@ -268,6 +268,8 @@ export interface ProfileContent {
 
 export interface EmailContent {
   footer: string;
+  supportEmail: string;
+  supportEmailName: string;
 }
 
 export interface ShareContent {

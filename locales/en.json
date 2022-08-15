@@ -37,6 +37,13 @@
     "welcomeBack": "Welcome back {firstName}!"
   },
   "adminSettings": {
+    "email": {
+      "fromEmail": "From email",
+      "fromName": "From name",
+      "label": "Email",
+      "text": "All email communication with your members will be sent from this email address.",
+      "title": "Set a general email for member support"
+    },
     "general": {
       "footer": {
         "dataPrivacy": {
