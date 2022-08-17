@@ -6,10 +6,9 @@
       justify-between
       items-baseline
       p-1
-      mb-1
+      pl-2 pb-1
       rounded
       text-sm
-      hover:font-semibold
       group
     "
     :class="selected && 'bg-white font-semibold'"
