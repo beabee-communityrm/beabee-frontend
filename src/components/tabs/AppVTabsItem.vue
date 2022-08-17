@@ -9,7 +9,6 @@
       mb-1
       rounded
       text-sm
-      hover:font-semibold
       group
     "
     :class="selected && 'bg-white font-semibold'"
