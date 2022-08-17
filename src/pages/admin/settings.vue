@@ -31,15 +31,15 @@ const router = useRouter();
 const tabs: TabItem[] = [
   {
     id: 'adminSettingsGeneral',
-    label: t('adminSettings.general'),
+    label: t('adminSettings.general.label'),
   },
   {
     id: 'adminSettingsEmail',
-    label: t('adminSettings.email'),
+    label: t('adminSettings.email.label'),
   },
   {
     id: 'adminSettingsTheme',
-    label: t('adminSettings.theme'),
+    label: t('adminSettings.theme.label'),
   },
 ].map((item) => ({
   ...item,

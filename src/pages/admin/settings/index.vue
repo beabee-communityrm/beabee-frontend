@@ -16,15 +16,6 @@ meta:
         />
       </div>
       <div class="mb-4">
-        <AppImageUpload
-          v-model="generalContent.logoUrl"
-          :label="t('adminSettings.general.organisationLogo')"
-          :width="400"
-          :height="400"
-          required
-        />
-      </div>
-      <div class="mb-4">
         <AppSelect
           v-model="generalContent.locale"
           :label="t('adminSettings.general.language')"
@@ -45,7 +36,7 @@ meta:
       <div class="mb-4">
         <AppInput
           v-model="shareContent.title"
-          :label="t('adminSettings.general.socialSharing.title')"
+          :label="t('adminSettings.general.socialSharing.shareTitle')"
           required
         />
       </div>

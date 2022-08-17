@@ -216,6 +216,7 @@ export interface GeneralContent {
   footerLinks: { text: string; url: string }[];
   theme: {
     colors?: {
+      _name?: string;
       primary?: string;
       link?: string;
       body?: string;
