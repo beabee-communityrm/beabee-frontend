@@ -64,14 +64,34 @@
       },
       "label": "General",
       "language": "Language",
-      "organisationLogo": "Organisation logo",
       "organisationName": "Organisation name",
       "socialSharing": {
         "description": "Share description",
         "image": "Share image",
+        "shareTitle": "Share title",
         "text": "Configure what appears on social media when a link to your beabee community is shared",
-        "title": "Share title",
+        "title": "Social sharing",
         "twitterHandle": "Twitter handle"
+      }
+    },
+    "theme": {
+      "colorNames": {
+        "body": "Text",
+        "danger": "Danger",
+        "link": "Link",
+        "primary": "Main color",
+        "success": "Success",
+        "warning": "Warning"
+      },
+      "colors": "Colors",
+      "customColors": "Custom colors",
+      "identity": "Identity",
+      "label": "Theme",
+      "logo": "Logo",
+      "presetColours": {
+        "aurora": "Aurora",
+        "lilac": "Lilac",
+        "overcast": "Overcast"
       }
     },
     "title": "Settings"
@@ -694,12 +714,13 @@
   },
   "menu": {
     "admin": "Administration",
+    "adminSettings": "Settings",
     "callouts": "Callouts",
     "community": "Community",
     "contribution": "Contribution",
     "dashboard": "Dashboard",
     "home": "Home",
-    "legacyApp": "Old admin",
+    "legacyApp": "Old dashboard",
     "logout": "Log out",
     "membershipBuilder": "Membership builder",
     "notices": "Notices",
