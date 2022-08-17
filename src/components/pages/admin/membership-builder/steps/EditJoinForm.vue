@@ -144,7 +144,6 @@ async function handleUpdate() {
     await Promise.all([
       updateContent('join', joinContent.value),
       updateContent('general', {
-        ...generalContent.value,
         backgroundUrl: backgroundUrl.value || '',
       }),
     ]);

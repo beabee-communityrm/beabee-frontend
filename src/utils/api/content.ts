@@ -42,7 +42,7 @@ export async function fetchContent<Id extends ContentId>(
 
 export async function updateContent<Id extends ContentId>(
   id: Id,
-  content: Content<Id>
+  content: Partial<Content<Id>>
 ): Promise<Content<Id>> {
-  return (await axios.put('/content/' + id, content)).data;
+  return (await axios.patch('/content/' + id, content)).data;
 }
