@@ -29,7 +29,7 @@
         :class="
           period.name === modelValue
             ? 'bg-link-10 !border-link text-link'
-            : 'hover:text-link'
+            : 'hover:text-link-110'
         "
       >
         {{

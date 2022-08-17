@@ -16,10 +16,13 @@
             font-semibold
             cursor-pointer
             text-left text-sm
-            p-2
+            p-1.5
+            bg-white
           "
           :class="
-            method === modelValue ? 'bg-link text-white' : 'hover:bg-link-10'
+            method === modelValue
+              ? 'bg-link-10 text-link-110 !border-link'
+              : 'hover:text-link'
           "
           type="button"
           @click="emit('update:modelValue', method)"
