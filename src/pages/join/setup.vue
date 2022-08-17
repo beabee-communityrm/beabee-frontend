@@ -50,14 +50,14 @@ meta:
           {{ setupContent.newsletterTitle }}
         </p>
 
-        <p class="mb-4 text-sm">
+        <p class="mb-2 text-sm">
           {{ setupContent.newsletterText }}
         </p>
 
         <AppCheckbox
           v-model="setupMemberData.profile.newsletterOptIn"
           :label="setupContent.newsletterOptIn"
-          class="mb-4 font-bold"
+          class="mb-4 font-semibold"
         />
       </template>
 

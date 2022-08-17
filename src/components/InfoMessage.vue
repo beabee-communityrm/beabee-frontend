@@ -1,8 +1,11 @@
 <template>
   <div class="flex text-body-80">
-    <FontAwesomeIcon class="text-xl -mt-0.5" :icon="['fas', 'info-circle']" />
+    <FontAwesomeIcon
+      class="text-base font-primary-80"
+      :icon="['fas', 'info-circle']"
+    />
 
-    <span class="ml-1 text-xs">{{ message }}</span>
+    <span class="ml-1 text-xs font-semibold">{{ message }}</span>
   </div>
 </template>
 

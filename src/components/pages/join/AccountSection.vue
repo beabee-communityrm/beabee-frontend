@@ -1,8 +1,8 @@
 <template>
-  <section class="mb-6">
-    <AppSubHeading class="mb-1">{{ t('join.memberAccount') }}</AppSubHeading>
+  <section class="mb-8">
+    <AppSubHeading>{{ t('join.memberAccount') }}</AppSubHeading>
 
-    <p class="mb-3 text-sm">
+    <p class="mb-4 text-sm">
       {{ t('join.memberAlready') }}
       <router-link
         to="/auth/login"
@@ -11,7 +11,7 @@
       >
     </p>
 
-    <div class="mb-5">
+    <div class="mb-3">
       <AppInput
         v-model="emailProxy"
         :label="t('form.email')"

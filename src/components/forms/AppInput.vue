@@ -27,7 +27,7 @@
     {{ validation.value.$errors[0].$message }}
   </div>
 
-  <div v-if="infoMessage" class="mt-2 text-xs">
+  <div v-if="infoMessage" class="text-xs">
     <InfoMessage :message="infoMessage" />
   </div>
 </template>
