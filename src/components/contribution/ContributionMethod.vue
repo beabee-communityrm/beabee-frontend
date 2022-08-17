@@ -1,6 +1,6 @@
 <template>
   <div v-if="methods.length > 1">
-    <AppSubHeading class="mb-3">{{ t('join.paymentMethod') }}</AppSubHeading>
+    <AppSubHeading class="mb-2">{{ t('join.paymentMethod') }}</AppSubHeading>
     <div
       class="grid grid-cols-3 gap-2"
       :class="methods.length > 2 ? 'grid-cols-3' : 'grid-cols-2'"
@@ -15,7 +15,7 @@
             border border-primary-40
             font-semibold
             cursor-pointer
-            text-left text-sm
+            text-left text-lg
             p-1.5
             bg-white
           "
@@ -28,6 +28,7 @@
           @click="emit('update:modelValue', method)"
         >
           <PaymentMethodIcon :method="method" /><span
+            class="text-xs"
             :class="methods.length > 2 ? 'block' : 'inline m-2'"
             >{{ t(`paymentMethods.${method}.label`) }}</span
           >

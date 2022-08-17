@@ -2,7 +2,7 @@
   <section class="mb-8">
     <AppSubHeading>{{ t('join.memberAccount') }}</AppSubHeading>
 
-    <p class="mb-4 text-sm">
+    <p class="mb-2 text-sm">
       {{ t('join.memberAlready') }}
       <router-link
         to="/auth/login"
