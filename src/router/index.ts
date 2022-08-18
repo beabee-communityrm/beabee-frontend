@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { currentUser, initStore, generalContent } from '../store';
-import i18n, { setLocale } from '../i18n';
+import i18n from '../i18n';
 
 import routes from '~pages';
 
@@ -15,10 +15,6 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   // Block route for initial store load, this will only happen once
   await initStore;
-  await setLocale(
-    generalContent.value.locale,
-    generalContent.value.currencyCode
-  );
 
   document.title =
     (to.meta.pageTitle ? i18n.global.t(to.meta.pageTitle) + ' - ' : '') +
