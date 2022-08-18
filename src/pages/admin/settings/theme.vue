@@ -7,7 +7,7 @@ meta:
 
 <template>
   <form @submit.prevent="handleSubmit">
-    <div class="grid grid-cols-2 gap-8 mb-8">
+    <div class="grid lg:grid-cols-2 gap-8 mb-8">
       <div>
         <AppHeading class="mb-4">
           {{ t('adminSettings.theme.identity') }}

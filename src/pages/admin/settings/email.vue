@@ -6,36 +6,38 @@ meta:
 </route>
 
 <template>
-  <form v-if="emailContent.footer" @submit.prevent="handleSubmit">
-    <AppHeading class="mb-4">{{ t('adminSettings.email.title') }}</AppHeading>
-    <p class="mb-4">{{ t('adminSettings.email.text') }}</p>
-    <div class="mb-4 max-w-[30rem]">
-      <AppInput
-        v-model="fromEmailName"
-        :label="t('adminSettings.email.fromEmail')"
-        required
-      >
-        <template #suffix>
-          <span class="font-semibold">{{ fromEmailDomain }}</span>
-        </template>
-      </AppInput>
-    </div>
-    <div class="mb-4" required>
-      <AppInput
-        v-model="emailContent.supportEmailName"
-        :label="t('adminSettings.email.fromName')"
-        required
-      />
-    </div>
+  <div class="grid lg:grid-cols-2 gap-8">
+    <form v-if="emailContent.footer" @submit.prevent="handleSubmit">
+      <AppHeading class="mb-4">{{ t('adminSettings.email.title') }}</AppHeading>
+      <p class="mb-4">{{ t('adminSettings.email.text') }}</p>
+      <div class="mb-4 max-w-[30rem]">
+        <AppInput
+          v-model="fromEmailName"
+          :label="t('adminSettings.email.fromEmail')"
+          required
+        >
+          <template #suffix>
+            <span class="font-semibold">{{ fromEmailDomain }}</span>
+          </template>
+        </AppInput>
+      </div>
+      <div class="mb-4" required>
+        <AppInput
+          v-model="emailContent.supportEmailName"
+          :label="t('adminSettings.email.fromName')"
+          required
+        />
+      </div>
 
-    <MessageBox v-if="hasSaved" type="success" class="mb-4">
-      {{ t('form.saved') }}
-    </MessageBox>
+      <MessageBox v-if="hasSaved" type="success" class="mb-4">
+        {{ t('form.saved') }}
+      </MessageBox>
 
-    <AppButton type="submit" variant="link" :loading="saving">
-      {{ t('actions.update') }}
-    </AppButton>
-  </form>
+      <AppButton type="submit" variant="link" :loading="saving">
+        {{ t('actions.update') }}
+      </AppButton>
+    </form>
+  </div>
 </template>
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref } from 'vue';
