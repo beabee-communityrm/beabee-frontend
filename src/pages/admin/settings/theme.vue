@@ -10,7 +10,7 @@ meta:
     <div class="grid lg:grid-cols-2 gap-8 mb-8">
       <div>
         <AppHeading class="mb-4">
-          {{ t('adminSettings.theme.identity') }}
+          {{ t('adminSettings.theme.fonts') }}
         </AppHeading>
       </div>
       <div>
@@ -30,7 +30,7 @@ meta:
             required
           />
           <span class="flex-1 ml-2">
-            {{ preset.name }}
+            {{ t('adminSettings.theme.presetColors.' + preset.name) }}
           </span>
           <span
             v-for="(color, name) in preset.colors"
@@ -113,19 +113,11 @@ const { t } = useI18n();
 
 const colorPresets = [
   {
-    name: 'Overcast',
+    name: 'default',
     colors: {
       primary: '#262453',
       link: '#43a796',
       body: '#262453',
-    },
-  },
-  {
-    name: 'Ugly',
-    colors: {
-      primary: 'chocolate',
-      link: 'purple',
-      body: 'black',
     },
   },
 ];

@@ -64,6 +64,7 @@
       },
       "label": "General",
       "language": "Language",
+      "logo": "Logo",
       "organisationName": "Organisation name",
       "socialSharing": {
         "description": "Share description",
@@ -79,19 +80,16 @@
         "body": "Text",
         "danger": "Danger",
         "link": "Link",
-        "primary": "Main color",
+        "primary": "Main",
         "success": "Success",
         "warning": "Warning"
       },
       "colors": "Colors",
-      "customColors": "Custom colors",
-      "identity": "Identity",
+      "customColors": "Custom",
+      "fonts": "Fonts",
       "label": "Theme",
-      "logo": "Logo",
-      "presetColours": {
-        "aurora": "Aurora",
-        "lilac": "Lilac",
-        "overcast": "Overcast"
+      "presetColors": {
+        "default": "Default"
       }
     },
     "title": "Settings"
