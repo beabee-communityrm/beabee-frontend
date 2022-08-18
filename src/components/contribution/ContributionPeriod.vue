@@ -26,11 +26,13 @@
           border border-primary-40
           rounded
         "
-        :class="
-          period.name === modelValue
+        :class="[period.name === modelValue
             ? 'bg-link-10 !border-link text-link font-bold'
-            : 'hover:text-link-110'
-        "
+            : 'hover:text-link-110',
+          period.name === 'monthly'
+            ? 'round-l'
+            : 'round-r'
+          ]"
       >
         {{
           period.name === 'monthly' ? t('common.monthly') : t('common.annually')
