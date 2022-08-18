@@ -11,16 +11,16 @@
       px-1
       mr-1
       mb-1
-      last-of-type:mb-0
       text-xs
       border border-white
+      select-none
     "
-    :class="hasRemoveIcon ? 'hover:border-primary-40' : ''"
+    :class="hasRemoveIcon ? '' : ''"
   >
     {{ props.tag }}
     <font-awesome-icon
       v-if="props.hasRemoveIcon"
-      class="inline-block cursor-pointer ml-2"
+      class="inline-block cursor-pointer ml-2 hover:text-link-110"
       icon="times"
       @click="$emit('click:removeTag')"
     />
