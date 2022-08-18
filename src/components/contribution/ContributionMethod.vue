@@ -2,7 +2,7 @@
   <div v-if="methods.length > 1">
     <AppSubHeading class="mb-2">{{ t('join.paymentMethod') }}</AppSubHeading>
     <div
-      class="grid grid-cols-3 gap-2"
+      class="grid grid-cols-3 gap-2 mb-6"
       :class="methods.length > 2 ? 'grid-cols-3' : 'grid-cols-2'"
     >
       <div v-for="method in methods" :key="method">
@@ -21,7 +21,7 @@
           "
           :class="
             method === modelValue
-              ? 'bg-link-10 text-link-110 !border-link'
+              ? 'bg-link-10 text-link !border-link'
               : 'hover:text-link'
           "
           type="button"

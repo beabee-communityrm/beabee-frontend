@@ -61,14 +61,14 @@ meta:
         />
       </template>
 
-      <MessageBox v-if="validation.$errors.length > 0" class="mt-6 -mb-4" />
+      <MessageBox v-if="validation.$errors.length > 0" class="mb-2" />
 
       <AppButton
         variant="link"
         type="submit"
         :loading="saving"
         :disabled="validation.$invalid"
-        class="mt-8 mb-3 w-full"
+        class="mb-3 w-full"
       >
         {{ t('joinSetup.continue') }}
       </AppButton>
