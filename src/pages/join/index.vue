@@ -24,10 +24,10 @@ meta:
         {{ t('joinPayment.willBeContributing', signUpDescription) }}
       </AppAlert>
 
-      <p class="mb-3">
+      <p class="mb-3 text-xs text-body-80 font-semibold">
         {{ t('joinPayment.note') }}
       </p>
-      <p class="mb-6">
+      <p class="mb-6 text-xs text-body-80 font-semibold">
         <i18n-t keypath="joinPayment.goBack">
           <template #back>
             <a
