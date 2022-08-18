@@ -56,15 +56,16 @@ watch(
 </script>
 
 <style>
-.vacp-color-picker {
+/* This needs more specificity to apply on production builds */
+.vacp-color-picker.vacp-color-picker {
   padding: 0;
   background-color: transparent;
-}
-.vacp-color-space {
-  height: 100px;
-}
-.vacp-copy-button,
-.vacp-color-inputs {
-  display: none;
+  .vacp-color-space {
+    height: 100px;
+  }
+  .vacp-copy-button,
+  .vacp-color-inputs {
+    display: none;
+  }
 }
 </style>
