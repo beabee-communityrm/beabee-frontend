@@ -46,8 +46,8 @@ const variantClasses = {
     'text-danger',
   ],
   primaryOutlined: [
-    'bg-white text-primary-80 border-primary-70',
-    'hover:bg-primary-10 hover:text-primary hover:border-primary',
+    'bg-white text-primary-80 border-primary-40',
+    'hover:bg-primary-10 hover:text-primary hover:border-primary-70',
     'text-primary',
   ],
   linkOutlined: [
@@ -90,8 +90,8 @@ const props = withDefaults(
 
 const buttonClasses = computed(() => {
   return [
-    'px-2 text-center cursor-pointer inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative border',
-    props.size === 'sm' ? 'h-8 text-sm' : 'h-10',
+    'px-3 py-2.5 text-center leading-tight cursor-pointer inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative border',
+    props.size === 'sm' ? 'py-2 px-2 text-sm' : 'py-2.5',
     variantClasses[props.variant][0],
     props.disabled
       ? 'cursor-not-allowed opacity-50'
