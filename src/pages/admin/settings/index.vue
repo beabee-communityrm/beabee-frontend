@@ -151,7 +151,16 @@ meta:
         {{ t('form.saved') }}
       </MessageBox>
 
-      <AppButton type="submit" variant="link" :loading="saving">
+      <MessageBox v-if="validation.$errors.length > 0" class="mb-4">
+        {{ t('form.errors.aggregator') }}
+      </MessageBox>
+
+      <AppButton
+        type="submit"
+        variant="link"
+        :loading="saving"
+        :disabled="validation.$invalid"
+      >
         {{ t('actions.update') }}
       </AppButton>
     </form>
@@ -171,8 +180,10 @@ import { fetchContent, updateContent } from '../../../utils/api/content';
 import { generalContent as storeGeneralContent } from '../../../store';
 import MessageBox from '../../../components/MessageBox.vue';
 import AppHeading from '../../../components/AppHeading.vue';
+import useVuelidate from '@vuelidate/core';
 
 const { t } = useI18n();
+const validation = useVuelidate();
 
 const locales = [
   {
