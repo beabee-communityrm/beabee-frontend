@@ -11,8 +11,8 @@
     margin: 0;
   }
 
-  p:empty {
-    @apply h-5;
+  p:empty::after {
+    content: '\00A0';
   }
 
   ul,
