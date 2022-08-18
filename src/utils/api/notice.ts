@@ -30,6 +30,7 @@ export async function fetchNotices(
       ...notice,
       createdAt: toDate(notice.createdAt),
       updatedAt: toDate(notice.updatedAt),
+      starts: toDate(notice.starts),
       expires: toDate(notice.expires),
     })),
   };
