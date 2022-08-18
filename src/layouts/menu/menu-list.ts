@@ -27,7 +27,6 @@ export const menu = computed(
         ],
       },
       {
-        title: 'menu.settings',
         type: 'settings',
         items: [
           {
@@ -81,7 +80,6 @@ export const adminMenu: MenuSection[] = [
   },
   {
     type: 'settings',
-    title: 'menu.settings',
     items: [
       {
         title: 'menu.membershipBuilder',
