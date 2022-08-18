@@ -525,6 +525,10 @@
       "cityOrTown": {
         "required": "City/Town is required"
       },
+      "color": {
+        "pattern": "Invalid color",
+        "required": "Color is required"
+      },
       "confirmPassword": {
         "invalid": "Invalid password",
         "required": "Password is required",
@@ -553,8 +557,7 @@
       },
       "unknown": {
         "min": "This field must be at least {min}",
-        "required": "This field is required",
-        "sameAs": "This field must match another field"
+        "required": "This field is required"
       }
     },
     "firstName": "First name",

@@ -318,6 +318,7 @@
       "addressLine1": {},
       "aggregator": "Чего-то нехватает! Пожалуйста проконтролируйте верхние поля ввода",
       "cityOrTown": {},
+      "color": {},
       "confirmPassword": {
         "invalid": "Некорректный Пароль",
         "required": "Нужен пароль",
