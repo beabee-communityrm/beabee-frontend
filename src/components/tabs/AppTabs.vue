@@ -6,7 +6,7 @@
         :to="item.to"
         class="relative inline-block p-3"
         :class="
-          selected === item.id && 'text-link font-bold border-b-2 border-link'
+          selected === item.id && 'text-body font-bold border-b-2 border-text'
         "
       >
         <span class="font-bold opacity-0">
@@ -22,7 +22,8 @@
             flex
             items-center
             justify-center
-            hover:font-bold
+            text-body-80
+            hover:text-body
           "
         >
           {{ item.label }}
