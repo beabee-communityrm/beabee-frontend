@@ -6,7 +6,7 @@
       justify-between
       items-baseline
       p-1
-      pl-2 pb-1
+      pl-2 pr-2 pb-2
       rounded
       text-sm
       group
