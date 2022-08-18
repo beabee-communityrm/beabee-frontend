@@ -20,7 +20,7 @@ meta:
         <label
           v-for="preset in colorPresets"
           :key="preset.name"
-          class="flex mb-2 items-center max-w-[20rem] cursor-pointer"
+          class="flex mb-2 items-center max-w-[15rem] cursor-pointer"
         >
           <input
             v-model="activePreset"
@@ -63,25 +63,7 @@ meta:
             <label class="block text-sm mb-2">
               {{ t('adminSettings.theme.colorNames.' + name) }}
             </label>
-            <div class="flex items-center mb-2">
-              <div
-                class="w-7 h-7 rounded-full mr-2"
-                :style="{ backgroundColor: customColors[name] }"
-              />
-              <div class="text-body-40 font-semibold text-xs">
-                {{ toHex(customColors[name]) }}
-              </div>
-            </div>
-            <ColorPicker
-              :id="name"
-              alpha-channel="hide"
-              :color="customColors[name]"
-              @color-change="changeColor(name, $event.colors.hex)"
-            >
-              <template #format-switch-button>
-                <font-awesome-icon :icon="['fa', 'sort']" />
-              </template>
-            </ColorPicker>
+            <AppColorInput :id="name" v-model="customColors[name]" />
           </div>
         </div>
       </div>
@@ -91,9 +73,28 @@ meta:
       {{ t('form.saved') }}
     </MessageBox>
 
-    <AppButton type="submit" variant="link" :loading="saving">
-      {{ t('actions.update') }}
-    </AppButton>
+    <MessageBox v-if="validation.$errors.length > 0" class="mb-4">
+      {{ t('form.errors.aggregator') }}
+    </MessageBox>
+
+    <div class="flex">
+      <AppButton
+        type="submit"
+        variant="link"
+        :loading="saving"
+        :disabled="validation.$invalid"
+      >
+        {{ t('actions.update') }}
+      </AppButton>
+      <AppButton
+        v-if="originalTheme"
+        variant="text"
+        class="ml-2"
+        @click="resetTheme"
+      >
+        {{ t('actions.reset') }}
+      </AppButton>
+    </div>
   </form>
 </template>
 
@@ -101,15 +102,17 @@ meta:
 import { computed, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
-import { fetchContent, updateContent } from '../../../utils/api/content';
-import { ColorPicker } from 'vue-accessible-color-picker';
-import { toHex } from 'color2k';
-import { getFullTheme, PartialTheme, Theme } from '../../../theme';
+import { updateContent } from '../../../utils/api/content';
+import { getFullTheme, Theme } from '../../../theme';
 import { generalContent } from '../../../store';
 import AppButton from '../../../components/forms/AppButton.vue';
 import MessageBox from '../../../components/MessageBox.vue';
+import AppColorInput from '../../../components/forms/AppColorInput.vue';
+import useVuelidate from '@vuelidate/core';
 
 const { t } = useI18n();
+
+const validation = useVuelidate();
 
 const colorPresets = [
   {
@@ -132,32 +135,27 @@ const visibleCustomColors = [
 ] as const;
 
 // Used to restore unsaved themes on exit
-let originalTheme: undefined | PartialTheme;
+let currentTheme = generalContent.value.theme;
 
 const activePreset = ref('');
 const customColors = ref<Theme['colors']>();
 const saving = ref(false);
 const hasSaved = ref(false);
 
-const activeColors = computed(
-  () =>
-    colorPresets.find((p) => p.name === activePreset.value)?.colors ||
-    customColors.value
+const activeColors = computed(() =>
+  activePreset.value === 'custom'
+    ? customColors.value
+    : colorPresets.find((p) => p.name === activePreset.value)?.colors
 );
 
 watch(
   activeColors,
   (colors) => {
     generalContent.value.theme = { colors };
+    hasSaved.value = false;
   },
   { deep: true }
 );
-
-function changeColor(name: keyof Theme['colors'], color: string) {
-  if (customColors.value) {
-    customColors.value[name] = color;
-  }
-}
 
 async function handleSubmit() {
   hasSaved.value = false;
@@ -170,39 +168,22 @@ async function handleSubmit() {
       },
     });
 
-    originalTheme = generalContent.value.theme;
+    currentTheme = generalContent.value.theme;
     hasSaved.value = true;
   } catch (err) {}
   saving.value = false;
 }
 
-onBeforeMount(async () => {
-  const generalContent = await fetchContent('general');
-  customColors.value = getFullTheme(generalContent.theme).colors;
-
+function resetTheme() {
+  customColors.value = getFullTheme(currentTheme).colors;
   activePreset.value =
-    colorPresets.find((p) => p.name === generalContent.theme.colors?._name)
-      ?.name || 'custom';
+    colorPresets.find((p) => p.name === currentTheme.colors?._name)?.name ||
+    'custom';
+}
 
-  originalTheme = generalContent.theme;
-});
+onBeforeMount(resetTheme);
 
 onBeforeUnmount(() => {
-  if (originalTheme) {
-    generalContent.value.theme = originalTheme;
-  }
+  generalContent.value.theme = currentTheme;
 });
 </script>
-
-<style>
-.vacp-color-picker {
-  padding: 0;
-  background-color: transparent;
-}
-.vacp-color-space {
-  height: 100px;
-}
-.vacp-copy-button {
-  display: none;
-}
-</style>

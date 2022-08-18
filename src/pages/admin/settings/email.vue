@@ -10,7 +10,7 @@ meta:
     <form v-if="emailContent.footer" @submit.prevent="handleSubmit">
       <AppHeading class="mb-4">{{ t('adminSettings.email.title') }}</AppHeading>
       <p class="mb-4">{{ t('adminSettings.email.text') }}</p>
-      <div class="mb-4 max-w-[30rem]">
+      <div class="mb-4 max-w-[25rem]">
         <AppInput
           v-model="fromEmailName"
           :label="t('adminSettings.email.fromEmail')"

@@ -4,6 +4,7 @@ import { generalContent } from './store';
 
 export type Theme = {
   colors: {
+    _name: string;
     primary: string;
     link: string;
     body: string;
@@ -51,6 +52,7 @@ export function getFullTheme(theme: PartialTheme): Theme {
 
   return {
     colors: {
+      _name: theme.colors?._name || 'custom',
       primary: primaryColor,
       body: theme.colors?.body || primaryColor,
       link: theme.colors?.link || primaryColor,
