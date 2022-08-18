@@ -8,10 +8,27 @@ meta:
 <template>
   <form @submit.prevent="handleSubmit">
     <div class="grid lg:grid-cols-2 gap-8 mb-8">
-      <div>
+      <div v-if="fonts">
         <AppHeading class="mb-4">
           {{ t('adminSettings.theme.fonts') }}
         </AppHeading>
+
+        <div class="mb-4">
+          <AppSelect
+            v-model="fonts.title"
+            :label="t('adminSettings.theme.titleFont')"
+            :items="availableFonts"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <AppSelect
+            v-model="fonts.body"
+            :label="t('adminSettings.theme.bodyFont')"
+            :items="availableFonts"
+            required
+          />
+        </div>
       </div>
       <div>
         <AppHeading class="mb-4">
@@ -86,12 +103,7 @@ meta:
       >
         {{ t('actions.update') }}
       </AppButton>
-      <AppButton
-        v-if="originalTheme"
-        variant="text"
-        class="ml-2"
-        @click="resetTheme"
-      >
+      <AppButton variant="text" class="ml-2" @click="resetTheme">
         {{ t('actions.reset') }}
       </AppButton>
     </div>
@@ -103,16 +115,23 @@ import { computed, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
 import { updateContent } from '../../../utils/api/content';
-import { getFullTheme, Theme } from '../../../theme';
+import { getFullTheme, Theme, validFonts } from '../../../theme';
 import { generalContent } from '../../../store';
 import AppButton from '../../../components/forms/AppButton.vue';
 import MessageBox from '../../../components/MessageBox.vue';
 import AppColorInput from '../../../components/forms/AppColorInput.vue';
 import useVuelidate from '@vuelidate/core';
+import AppSelect from '../../../components/forms/AppSelect.vue';
 
 const { t } = useI18n();
 
 const validation = useVuelidate();
+validFonts;
+
+const availableFonts = Object.entries(validFonts).map(([id, [label]]) => ({
+  id,
+  label,
+}));
 
 const colorPresets = [
   {
@@ -137,21 +156,26 @@ const visibleCustomColors = [
 // Used to restore unsaved themes on exit
 let currentTheme = generalContent.value.theme;
 
+const fonts = ref<Theme['fonts']>();
 const activePreset = ref('');
 const customColors = ref<Theme['colors']>();
+
 const saving = ref(false);
 const hasSaved = ref(false);
 
-const activeColors = computed(() =>
-  activePreset.value === 'custom'
-    ? customColors.value
-    : colorPresets.find((p) => p.name === activePreset.value)?.colors
-);
+const activeTheme = computed(() => {
+  const colors =
+    activePreset.value === 'custom'
+      ? customColors.value
+      : colorPresets.find((p) => p.name === activePreset.value)?.colors;
+
+  return { fonts: fonts.value, colors };
+});
 
 watch(
-  activeColors,
-  (colors) => {
-    generalContent.value.theme = { colors };
+  activeTheme,
+  (theme) => {
+    generalContent.value.theme = theme;
     hasSaved.value = false;
   },
   { deep: true }
@@ -163,9 +187,7 @@ async function handleSubmit() {
 
   try {
     generalContent.value = await updateContent('general', {
-      theme: {
-        colors: activeColors.value,
-      },
+      theme: activeTheme.value,
     });
 
     currentTheme = generalContent.value.theme;
@@ -175,7 +197,9 @@ async function handleSubmit() {
 }
 
 function resetTheme() {
-  customColors.value = getFullTheme(currentTheme).colors;
+  const theme = getFullTheme(currentTheme);
+  fonts.value = theme.fonts;
+  customColors.value = theme.colors;
   activePreset.value =
     colorPresets.find((p) => p.name === currentTheme.colors?._name)?.name ||
     'custom';

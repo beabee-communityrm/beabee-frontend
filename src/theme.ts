@@ -2,6 +2,14 @@ import { parseToRgba, mix, transparentize } from 'color2k';
 import { watch } from 'vue';
 import { generalContent } from './store';
 
+// [Font name, fallbacks]
+export const validFonts = {
+  'open-sans': ['Open Sans', 'sans-serif'],
+  rubik: ['Rubik', 'sans-serif'],
+};
+
+type FontId = keyof typeof validFonts;
+
 export type Theme = {
   colors: {
     _name: string;
@@ -15,12 +23,22 @@ export type Theme = {
     black: string;
   };
   fonts: {
-    title: string;
-    body: string;
+    title: FontId;
+    body: FontId;
   };
 };
 
-export type PartialTheme = { [T in keyof Theme]?: Partial<Theme[T]> };
+export type PartialTheme = {
+  colors?: Partial<Theme['colors']>;
+  fonts?: {
+    title?: string;
+    body?: string;
+  };
+};
+
+function getFont(s: string | undefined): FontId {
+  return s !== undefined && s in validFonts ? (s as FontId) : 'open-sans';
+}
 
 function setCSSVar(name: string, value: string) {
   document.documentElement.style.setProperty(name, value);
@@ -48,7 +66,7 @@ function setShades(
 
 export function getFullTheme(theme: PartialTheme): Theme {
   const primaryColor = theme.colors?.primary || '#262453';
-  const bodyFont = theme.fonts?.body || '"Open Sans", sans-serif';
+  const bodyFont = getFont(theme.fonts?.body);
 
   return {
     colors: {
@@ -64,7 +82,7 @@ export function getFullTheme(theme: PartialTheme): Theme {
     },
     fonts: {
       body: bodyFont,
-      title: theme.fonts?.title || bodyFont,
+      title: getFont(theme.fonts?.title || bodyFont),
     },
   };
 }
@@ -73,6 +91,8 @@ watch(
   () => generalContent.value.theme,
   (newTheme) => {
     const { colors, fonts } = getFullTheme(newTheme);
+
+    // Set colors
 
     setShades('primary', colors.primary, [5, 10, 20, 40, 70, 80]);
     setShades('body', colors.body, [40, 80]);
@@ -83,12 +103,22 @@ watch(
     setShades('white', colors.white || '#ffffff');
     setShades('black', colors.black || '#000000');
 
-    setCSSVar('--ff-body', fonts.body);
-    setCSSVar('--ff-title', fonts.title);
-
     setCSSVar(
       '--bs-input',
       '0 0 0 0.125em ' + transparentize(colors.link, 0.75)
     );
+
+    // Load fonts
+
+    setCSSVar('--ff-body', validFonts[fonts.body].join(','));
+    setCSSVar('--ff-title', validFonts[fonts.title].join(','));
+
+    import(`./assets/styles/fonts-${fonts.body}.css`);
+    if (fonts.title !== fonts.body) {
+      import(`./assets/styles/fonts-${fonts.title}.css`);
+    }
+  },
+  {
+    deep: true,
   }
 );
