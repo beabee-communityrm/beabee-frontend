@@ -5,8 +5,8 @@
         bg-white
         py-6
         md:py-8
-        px-5
-        md:px-6
+        px-6
+        md:px-8
         mx-auto
         rounded-md
         auth-box
