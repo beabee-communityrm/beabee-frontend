@@ -12,15 +12,6 @@ meta:
         <AppHeading class="mb-4">
           {{ t('adminSettings.theme.identity') }}
         </AppHeading>
-        <div class="mb-4">
-          <AppImageUpload
-            v-model="logoUrl"
-            :label="t('adminSettings.theme.logo')"
-            :width="400"
-            :height="400"
-            required
-          />
-        </div>
       </div>
       <div>
         <AppHeading class="mb-4">
@@ -110,7 +101,6 @@ meta:
 import { computed, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
-import AppImageUpload from '../../../components/forms/AppImageUpload.vue';
 import { fetchContent, updateContent } from '../../../utils/api/content';
 import { ColorPicker } from 'vue-accessible-color-picker';
 import { toHex } from 'color2k';
@@ -152,7 +142,6 @@ const visibleCustomColors = [
 // Used to restore unsaved themes on exit
 let originalTheme: undefined | PartialTheme;
 
-const logoUrl = ref('');
 const activePreset = ref('');
 const customColors = ref<Theme['colors']>();
 const saving = ref(false);
@@ -184,7 +173,6 @@ async function handleSubmit() {
 
   try {
     generalContent.value = await updateContent('general', {
-      logoUrl: logoUrl.value,
       theme: {
         colors: activeColors.value,
       },
@@ -198,7 +186,6 @@ async function handleSubmit() {
 
 onBeforeMount(async () => {
   const generalContent = await fetchContent('general');
-  logoUrl.value = generalContent.logoUrl;
   customColors.value = getFullTheme(generalContent.theme).colors;
 
   activePreset.value =
