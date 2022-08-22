@@ -181,6 +181,7 @@ import { generalContent as storeGeneralContent } from '../../../store';
 import MessageBox from '../../../components/MessageBox.vue';
 import AppHeading from '../../../components/AppHeading.vue';
 import useVuelidate from '@vuelidate/core';
+import axios from '../../../axios';
 
 const { t } = useI18n();
 const validation = useVuelidate();
@@ -229,6 +230,11 @@ async function handleSubmit() {
       );
       await updateContent('share', shareContent.value);
       hasSaved.value = true;
+
+      // Refresh the favicon
+      await axios.get('/favicon.png', { baseURL: '' });
+      const faviconEl = document.getElementById('favicon') as HTMLLinkElement;
+      faviconEl.href = faviconEl.href;
     }
   } catch (err) {}
   saving.value = false;
