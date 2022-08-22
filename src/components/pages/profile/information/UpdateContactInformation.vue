@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="submitFormHandler('me')">
-    <AppHeading class="mt-5 mb-5">
+    <AppHeading class="mt-6 mb-2">
       {{ t('informationPage.contactInformation') }}
     </AppHeading>
 
@@ -10,7 +10,7 @@
       v-model:lastName="information.lastName"
     />
 
-    <AppHeading class="mt-5 mb-5">
+    <AppHeading class="mt-6 mb-2">
       {{ t('informationPage.deliveryAddress') }}
     </AppHeading>
 
@@ -41,7 +41,7 @@
     <AppButton
       type="submit"
       :disabled="validation.$invalid"
-      class="mt-2"
+      class="mt-6"
       :loading="loading"
       variant="link"
       >{{ t('form.saveChanges') }}</AppButton
