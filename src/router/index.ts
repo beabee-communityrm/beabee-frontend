@@ -1,32 +1,8 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import { homeRoute } from '../modules/home/home.route';
-import { informationRoute } from '../modules/information/information.route';
-import { joinRoute } from '../modules/auth/join/join.route';
-import { authRoute } from '../modules/auth/auth.route';
-import { themeRoute } from '../modules/theme/theme.route';
-import { contributionRoute } from '../modules/contribution/contribution.route';
-import { contactsRoute } from '../modules/contacts/contacts.route';
+import { createRouter, createWebHistory } from 'vue-router';
 import { currentUser, initStore, generalContent } from '../store';
-import { calloutsRoute } from '../modules/callouts/callouts.route';
-import { noticesRoute } from '../modules/notices/notices.route';
-import { adminRoute } from '../modules/admin/admin.route';
-import { membershipBuilderRoute } from '../modules/membership-builder/membership-builder.route';
+import i18n, { setLocale } from '../i18n';
 
-// routes
-
-const routes: RouteRecordRaw[] = [
-  ...informationRoute,
-  ...joinRoute,
-  ...homeRoute,
-  ...authRoute,
-  ...themeRoute,
-  ...contributionRoute,
-  ...contactsRoute,
-  ...calloutsRoute,
-  ...noticesRoute,
-  ...adminRoute,
-  ...membershipBuilderRoute,
-];
+import routes from '~pages';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -39,10 +15,14 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   // Block route for initial store load, this will only happen once
   await initStore;
+  await setLocale(
+    generalContent.value.locale,
+    generalContent.value.currencyCode
+  );
 
-  document.title = to.meta.pageTitle
-    ? to.meta.pageTitle + ' - ' + generalContent.value.organisationName
-    : generalContent.value.organisationName;
+  document.title =
+    (to.meta.pageTitle ? i18n.global.t(to.meta.pageTitle) + ' - ' : '') +
+    generalContent.value.organisationName;
 
   const user = currentUser.value;
 

@@ -23,7 +23,7 @@
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
-import AuthBox from '../modules/auth/AuthBox.vue';
+import AuthBox from '../components/AuthBox.vue';
 import { generalContent } from '../store';
 import backgroundStyle from '../utils/backgroundStyle';
 

@@ -8,12 +8,12 @@
     >
       <input
         :id="period.name"
+        v-model="value"
         type="radio"
         :name="period.name"
         :value="period.name"
         class="absolute opacity-0 -z-10"
         :checked="period.name === modelValue"
-        @change="emit('update:modelValue', handleInput($event))"
       />
       <span
         class="
@@ -37,17 +37,21 @@
 </template>
 
 <script lang="ts" setup>
-import handleInput from '../../utils/handle-input';
 import { useI18n } from 'vue-i18n';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import { ContributionContent } from './contribution.interface';
+import { computed } from 'vue';
 
 const { t } = useI18n();
 
 const emit = defineEmits(['update:modelValue']);
-
-defineProps<{
+const props = defineProps<{
   modelValue: ContributionPeriod;
   periods: ContributionContent['periods'];
 }>();
+
+const value = computed({
+  get: () => props.modelValue,
+  set: (newPeriod) => emit('update:modelValue', newPeriod),
+});
 </script>

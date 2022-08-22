@@ -459,8 +459,15 @@
       "address": {
         "required": "Dieses Feld wird benötigt, wenn Sie eine Adresse eintragen wollen."
       },
+      "addressLine1": {},
       "aggregator": "Es fehlt etwas! Bitte kontrollieren Sie die obigen Felder.",
       "aggregatorTop": "Hier fehlt etwas! Bitte ergänzen.",
+      "cityOrTown": {},
+      "confirmPassword": {
+        "invalid": "Passwort ungültig",
+        "required": "Passwort benötigt",
+        "sameAs": "Passwörter stimmen nicht überein"
+      },
       "email": {
         "invalid": "Ungültige E-Mail-Adresse",
         "required": "E-Mail-Adresse benötigt"
@@ -478,7 +485,9 @@
         "invalid": "Passwort ungültig",
         "required": "Passwort benötigt",
         "sameAs": "Passwörter stimmen nicht überein"
-      }
+      },
+      "postCode": {},
+      "unknown": {}
     },
     "firstName": "Vorname",
     "lastName": "Nachname",

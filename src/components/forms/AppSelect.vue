@@ -1,5 +1,6 @@
 <template>
   <select
+    v-model="value"
     class="
       p-2
       w-full
@@ -8,7 +9,6 @@
       focus:outline-none focus:shadow-input
       bg-white
     "
-    @change="emit('update:modelValue', handleInput($event))"
   >
     <option
       v-for="item in items"
@@ -22,11 +22,10 @@
 </template>
 
 <script lang="ts" setup>
-import handleInput from '../../utils/handle-input';
+import { computed } from 'vue';
 
 const emit = defineEmits(['update:modelValue']);
-
-defineProps<{
+const props = defineProps<{
   modelValue: string | null;
   items: {
     id: string;
@@ -34,4 +33,9 @@ defineProps<{
     count?: string;
   }[];
 }>();
+
+const value = computed({
+  get: () => props.modelValue,
+  set: (newValue) => emit('update:modelValue', newValue),
+});
 </script>

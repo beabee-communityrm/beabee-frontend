@@ -459,8 +459,19 @@
       "address": {
         "required": "This field is required if you want to add address"
       },
+      "addressLine1": {
+        "required": "Address line 1 is required"
+      },
       "aggregator": "Something is missing! Please check the fields above.",
       "aggregatorTop": "Something is missing! Please check for errors below.",
+      "cityOrTown": {
+        "required": "City/Town is required"
+      },
+      "confirmPassword": {
+        "invalid": "Invalid password",
+        "required": "Password is required",
+        "sameAs": "The passwords don't match"
+      },
       "email": {
         "invalid": "Invalid email address",
         "required": "Email is required"
@@ -478,6 +489,14 @@
         "invalid": "Invalid password",
         "required": "Password is required",
         "sameAs": "The passwords don't match"
+      },
+      "postCode": {
+        "required": "Postcode is required"
+      },
+      "unknown": {
+        "min": "This field must be at least {min}",
+        "required": "This field is required",
+        "sameAs": "This field must match another field"
       }
     },
     "firstName": "First name",
