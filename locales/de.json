@@ -7,6 +7,7 @@
     "edit": "Bearbeiten",
     "publish": "Veröffentlichen",
     "replicate": "Kopieren",
+    "reset": "Zurücksetzen",
     "schedule": "Planen",
     "unpublish": "Veröffentlichung aufheben",
     "update": "Änderungen speichern",
@@ -37,18 +38,64 @@
     "welcomeBack": "Willkommen zurück {firstName}!"
   },
   "adminSettings": {
-    "email": {},
+    "email": {
+      "fromEmail": "E-Mail-Adresse",
+      "fromName": "Name",
+      "label": "E-Mail",
+      "text": "Der gesamte E-Mail-Verkehr mit Mitgliedern wird über diese E-Mail-Adresse abgewickelt.",
+      "title": "Lege eine E-Mail-Adresse für Mitglieder-Support fest"
+    },
     "general": {
       "footer": {
-        "dataPrivacy": {},
-        "otherLinks": {}
+        "dataPrivacy": {
+          "impressumUrl": "Link zum Impressum",
+          "privacyUrl": "Link zur Datenschutzerklärung",
+          "termsUrl": "Link zur AGB",
+          "title": "Rechtliches"
+        },
+        "otherLinks": {
+          "add": "Weiteren Link hinzufügen",
+          "linkText": "Link-Text",
+          "title": "Andere Links",
+          "url": "URL"
+        },
+        "siteUrl": "Website-URL",
+        "text": "Diese Links erscheinen im Footer in beabee und in E-Mails.",
+        "title": "Footer"
       },
-      "socialSharing": {}
+      "label": "Allgemein",
+      "language": "Sprache",
+      "logo": "Logo",
+      "organisationName": "Name der Organisation",
+      "socialSharing": {
+        "description": "Beschreibung",
+        "image": "Bild",
+        "shareTitle": "Überschrift",
+        "text": "Konfiguriere hier, was auf sozialen Medien erscheint, wenn ein Link zu Deiner beabee-Community geteilt wird.",
+        "title": "Soziale Netzwerke",
+        "twitterHandle": "Twitter-Handle"
+      }
     },
     "theme": {
-      "colorNames": {},
-      "presetColors": {}
-    }
+      "bodyFont": "Text",
+      "colorNames": {
+        "body": "Textfarbe",
+        "danger": "Gefahr",
+        "link": "Linkfarbe",
+        "primary": "Hauptfarbe",
+        "success": "Erfolgsnachricht",
+        "warning": "Warnung"
+      },
+      "colors": "Farben",
+      "customColors": "Benutzerdefinierte Farben",
+      "fonts": "Schriftarten",
+      "label": "Theme",
+      "presetColors": {
+        "default": "Standardfarben"
+      },
+      "titleFont": "Überschriften"
+    },
+    "title": "Einstellungen"
   },
   "callout": {
     "contactDetails": "Kontaktdaten",
@@ -481,7 +528,10 @@
       "cityOrTown": {
         "required": "Ort benötigt"
       },
-      "color": {},
+      "color": {
+        "pattern": "Ungültiger Farbcode",
+        "required": "Farbe benötigt"
+      },
       "confirmPassword": {
         "invalid": "Passwort ungültig",
         "required": "Passwort benötigt",
@@ -668,6 +718,7 @@
   },
   "menu": {
     "admin": "Administration",
+    "adminSettings": "Einstellungen",
     "callouts": "Callouts",
     "community": "Community",
     "contribution": "Beitrag",
