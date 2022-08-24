@@ -1,7 +1,7 @@
 <route lang="yaml">
 name: adminSettingsGeneral
 meta:
-  title: menu.adminSettings
+  pageTitle: menu.adminSettings
   role: admin
 </route>
 

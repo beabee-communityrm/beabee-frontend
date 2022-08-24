@@ -3,6 +3,7 @@ import { currentUser, initStore, generalContent } from '../store';
 import i18n from '../i18n';
 
 import routes from '~pages';
+import { watch } from 'vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -12,13 +13,15 @@ const router = createRouter({
   },
 });
 
+watch([i18n.global.locale, router.currentRoute], ([locale, route]) => {
+  document.title =
+    (route.meta.pageTitle ? i18n.global.t(route.meta.pageTitle) + ' - ' : '') +
+    generalContent.value.organisationName;
+});
+
 router.beforeEach(async (to, from, next) => {
   // Block route for initial store load, this will only happen once
   await initStore;
-
-  document.title =
-    (to.meta.pageTitle ? i18n.global.t(to.meta.pageTitle) + ' - ' : '') +
-    generalContent.value.organisationName;
 
   const user = currentUser.value;
 

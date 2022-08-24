@@ -1,7 +1,7 @@
 <route lang="yaml">
 name: adminSettingsEmail
 meta:
-  title: menu.adminSettings
+  pageTitle: menu.adminSettings
   role: admin
 </route>
 
