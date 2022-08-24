@@ -94,13 +94,13 @@ const rules = computed(() => ({
       requiredIf(!!props.required)
     ),
     ...(props.type === 'email' && {
-      email: helpers.withMessage(errorT('invalid'), email),
+      email: helpers.withMessage(errorT('email'), email),
     }),
     ...(props.type === 'url' && {
-      url: helpers.withMessage(errorT('invalid'), url),
+      url: helpers.withMessage(errorT('url'), url),
     }),
     ...(props.type === 'password' && {
-      password: helpers.withMessage(errorT('invalid'), isPassword),
+      password: helpers.withMessage(errorT('password'), isPassword),
     }),
     ...(props.min !== undefined && {
       min: helpers.withMessage(

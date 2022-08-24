@@ -133,6 +133,7 @@ meta:
             <AppInput
               v-model="generalContent.footerLinks![i].url"
               :label="t('adminSettings.general.footer.otherLinks.url')"
+              type="url"
               required
             />
           </div>
@@ -211,7 +212,7 @@ function addLink() {
     if (!generalContent.value.footerLinks) {
       generalContent.value.footerLinks = [];
     }
-    generalContent.value.footerLinks.push({ text: '', url: '' });
+    generalContent.value.footerLinks.push({ text: '', url: 'https://' });
   }
 }
 
