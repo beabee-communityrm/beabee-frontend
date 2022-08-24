@@ -533,12 +533,12 @@
         "required": "Color is required"
       },
       "confirmPassword": {
-        "invalid": "Invalid password",
+        "password": "Invalid password",
         "required": "Password is required",
         "sameAs": "The passwords don't match"
       },
       "email": {
-        "invalid": "Invalid email address",
+        "email": "Invalid email address",
         "required": "Email is required"
       },
       "firstName": {
@@ -551,7 +551,7 @@
         "required": "Name is required"
       },
       "password": {
-        "invalid": "Invalid password",
+        "password": "Invalid password",
         "required": "Password is required",
         "sameAs": "The passwords don't match"
       },
@@ -559,8 +559,14 @@
         "required": "Postcode is required"
       },
       "unknown": {
+        "email": "Invalid email address",
         "min": "This field must be at least {min}",
-        "required": "This field is required"
+        "required": "This field is required",
+        "url": "Invalid URL"
+      },
+      "url": {
+        "required": "URL is required",
+        "url": "Invalid URL"
       }
     },
     "firstName": "First name",

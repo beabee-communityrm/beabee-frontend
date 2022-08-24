@@ -533,12 +533,12 @@
         "required": "Farbe benötigt"
       },
       "confirmPassword": {
-        "invalid": "Passwort ungültig",
+        "password": "Passwort ungültig",
         "required": "Passwort benötigt",
         "sameAs": "Passwörter stimmen nicht überein"
       },
       "email": {
-        "invalid": "Ungültige E-Mail-Adresse",
+        "email": "Ungültige E-Mail-Adresse",
         "required": "E-Mail-Adresse benötigt"
       },
       "firstName": {
@@ -551,7 +551,7 @@
         "required": "Name benötigt"
       },
       "password": {
-        "invalid": "Passwort ungültig",
+        "password": "Passwort ungültig",
         "required": "Passwort benötigt",
         "sameAs": "Passwörter stimmen nicht überein"
       },
@@ -559,8 +559,14 @@
         "required": "Postleitzahl benötigt"
       },
       "unknown": {
+        "email": "Ungültige E-Mail-Adresse",
         "min": "Dieses Feld muss mindestens {min}",
-        "required": "Dieses Feld wird benötigt"
+        "required": "Dieses Feld wird benötigt",
+        "url": "Ungültige URL"
+      },
+      "url": {
+        "required": "URL benötigt",
+        "url": "Ungültige URL"
       }
     },
     "firstName": "Vorname",
