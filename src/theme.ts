@@ -4,8 +4,13 @@ import { generalContent } from './store';
 
 // [Font name, fallbacks]
 export const validFonts = {
+  'fira-sans': ['Fira Sans', 'sans-serif'],
+  'fira-sans-condensed': ['Fira Sans Condensed', 'sans-serif'],
+  'nunito-sans': ['Nunito Sans', 'sans-serif'],
   'open-sans': ['Open Sans', 'sans-serif'],
+  'roboto-slab': ['Roboto Slab', 'serif'],
   rubik: ['Rubik', 'sans-serif'],
+  ubuntu: ['Ubuntu', 'sans-serif'],
 };
 
 type FontId = keyof typeof validFonts;

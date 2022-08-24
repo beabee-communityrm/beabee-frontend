@@ -10,8 +10,13 @@
     "i18n": "node scripts/i18n"
   },
   "dependencies": {
+    "@fontsource/fira-sans": "^4.5.9",
+    "@fontsource/fira-sans-condensed": "^4.5.9",
+    "@fontsource/nunito-sans": "^4.5.9",
     "@fontsource/open-sans": "^4.5.2",
+    "@fontsource/roboto-slab": "^4.5.9",
     "@fontsource/rubik": "^4.5.11",
+    "@fontsource/ubuntu": "^4.5.11",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
