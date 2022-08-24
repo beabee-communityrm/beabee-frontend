@@ -91,10 +91,10 @@ meta:
     <Hint class="content-i18n" v-html="t('adminDashboard.hint2')" />
     <Hint class="content-i18n" v-html="t('adminDashboard.hint3')" />
   </div>
-  <p class="text-center text-sm mt-8">
-    {{ t('adminDashboard.supportInbox') }}
-    <a class="text-link" href="mailto:support@beabee.io">support@beabee.io</a>
-  </p>
+  <div
+    class="text-center text-sm mt-8 content-i18n"
+    v-html="t('adminDashboard.supportInbox')"
+  />
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';

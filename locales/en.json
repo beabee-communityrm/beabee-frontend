@@ -34,7 +34,7 @@
     },
     "responsesSoFar": "responses so far",
     "seeAllResponses": "See all responses",
-    "supportInbox": "Need help? Please visit [the beabee Help Center](https://wiki.beabee.io/help-center-english/) or use our support inbox:",
+    "supportInbox": "<p>Need help? Please visit <a href=\"https://wiki.beabee.io/help-center-english/\">the beabee Help Center</a> or use our support inbox: <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
     "welcomeBack": "Welcome back {firstName}!"
   },
   "adminSettings": {
