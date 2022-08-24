@@ -213,7 +213,7 @@ export interface GeneralContent {
   locale: string;
   currencyCode: string;
   hideContribution?: boolean;
-  footerLinks: { text: string; url: string }[];
+  footerLinks?: { text: string; url: string }[];
   theme: {
     colors?: {
       _name?: string;

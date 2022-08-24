@@ -124,14 +124,14 @@ meta:
         >
           <div class="flex-1">
             <AppInput
-              v-model="generalContent.footerLinks[i].text"
+              v-model="generalContent.footerLinks![i].text"
               :label="t('adminSettings.general.footer.otherLinks.linkText')"
               required
             />
           </div>
           <div class="flex-1">
             <AppInput
-              v-model="generalContent.footerLinks[i].url"
+              v-model="generalContent.footerLinks![i].url"
               :label="t('adminSettings.general.footer.otherLinks.url')"
               required
             />
@@ -208,12 +208,15 @@ const shareContent = ref<ShareContent>();
 
 function addLink() {
   if (generalContent.value) {
+    if (!generalContent.value.footerLinks) {
+      generalContent.value.footerLinks = [];
+    }
     generalContent.value.footerLinks.push({ text: '', url: '' });
   }
 }
 
 function removeLink(i: number) {
-  if (generalContent.value) {
+  if (generalContent.value?.footerLinks) {
     generalContent.value.footerLinks.splice(i, 1);
   }
 }
