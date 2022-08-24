@@ -24,6 +24,20 @@
     "supportInbox": "",
     "welcomeBack": ""
   },
+  "adminSettings": {
+    "email": {},
+    "general": {
+      "footer": {
+        "dataPrivacy": {},
+        "otherLinks": {}
+      },
+      "socialSharing": {}
+    },
+    "theme": {
+      "colorNames": {},
+      "presetColors": {}
+    }
+  },
   "callout": {
     "contactDetails": "Контактная информация",
     "form": {
@@ -307,6 +321,7 @@
       "addressLine1": {},
       "aggregator": "Чего-то нехватает! Пожалуйста проконтролируйте верхние поля ввода",
       "cityOrTown": {},
+      "color": {},
       "confirmPassword": {
         "invalid": "Некорректный Пароль",
         "required": "Нужен пароль",

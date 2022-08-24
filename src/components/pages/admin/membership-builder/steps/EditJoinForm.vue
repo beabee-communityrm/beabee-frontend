@@ -56,10 +56,11 @@
             />
           </div>
           <div class="flex-1">
-            <AppLabel :label="stepT('defaultAmount')" />
             <AppSelect
               v-model="selectedDefaultAmount"
+              :label="stepT('defaultAmount')"
               :items="defaultAmounts"
+              required
             />
           </div>
         </div>
@@ -143,7 +144,6 @@ async function handleUpdate() {
     await Promise.all([
       updateContent('join', joinContent.value),
       updateContent('general', {
-        ...generalContent.value,
         backgroundUrl: backgroundUrl.value || '',
       }),
     ]);

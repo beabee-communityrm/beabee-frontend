@@ -7,6 +7,7 @@
     "edit": "Edit",
     "publish": "Publish",
     "replicate": "Replicate",
+    "reset": "Reset",
     "schedule": "Schedule",
     "unpublish": "Unpublish",
     "update": "Update",
@@ -35,6 +36,66 @@
     "seeAllResponses": "See all responses",
     "supportInbox": "Need help? Our support inbox is always open:",
     "welcomeBack": "Welcome back {firstName}!"
+  },
+  "adminSettings": {
+    "email": {
+      "fromEmail": "From email",
+      "fromName": "From name",
+      "label": "Email",
+      "text": "All email communication with your members will be sent from this email address.",
+      "title": "Set a general email for member support"
+    },
+    "general": {
+      "footer": {
+        "dataPrivacy": {
+          "impressumUrl": "Impressum URL",
+          "privacyUrl": "Privacy policy URL",
+          "termsUrl": "Terms of service URL",
+          "title": "Data privacy"
+        },
+        "otherLinks": {
+          "add": "Add another link",
+          "linkText": "Link text",
+          "title": "Other links",
+          "url": "URL"
+        },
+        "siteUrl": "Main website URL",
+        "text": "These links appear in beabee's footer and in emails",
+        "title": "Footer"
+      },
+      "label": "General",
+      "language": "Language",
+      "logo": "Logo",
+      "organisationName": "Organisation name",
+      "socialSharing": {
+        "description": "Share description",
+        "image": "Share image",
+        "shareTitle": "Share title",
+        "text": "Configure what appears on social media when a link to your beabee community is shared",
+        "title": "Social sharing",
+        "twitterHandle": "Twitter handle"
+      }
+    },
+    "theme": {
+      "bodyFont": "Body text",
+      "colorNames": {
+        "body": "Text",
+        "danger": "Danger",
+        "link": "Links",
+        "primary": "Main",
+        "success": "Success",
+        "warning": "Warning"
+      },
+      "colors": "Colors",
+      "customColors": "Custom",
+      "fonts": "Fonts",
+      "label": "Theme",
+      "presetColors": {
+        "default": "Default"
+      },
+      "titleFont": "Title font"
+    },
+    "title": "Settings"
   },
   "callout": {
     "contactDetails": "Contact details",
@@ -467,6 +528,10 @@
       "cityOrTown": {
         "required": "City/Town is required"
       },
+      "color": {
+        "pattern": "Invalid color",
+        "required": "Color is required"
+      },
       "confirmPassword": {
         "invalid": "Invalid password",
         "required": "Password is required",
@@ -495,8 +560,7 @@
       },
       "unknown": {
         "min": "This field must be at least {min}",
-        "required": "This field is required",
-        "sameAs": "This field must match another field"
+        "required": "This field is required"
       }
     },
     "firstName": "First name",
@@ -654,12 +718,13 @@
   },
   "menu": {
     "admin": "Administration",
+    "adminSettings": "Settings",
     "callouts": "Callouts",
     "community": "Community",
     "contribution": "Contribution",
     "dashboard": "Dashboard",
     "home": "Home",
-    "legacyApp": "Old admin",
+    "legacyApp": "Old dashboard",
     "logout": "Log out",
     "membershipBuilder": "Membership builder",
     "notices": "Notices",

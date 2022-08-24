@@ -32,11 +32,7 @@
     </div>
 
     <!-- logo on small screens -->
-    <img
-      class="w-11"
-      src="../../assets/images/logo.png"
-      :alt="generalContent.organisationName"
-    />
+    <AppLogo class="w-11" />
   </div>
 
   <div
@@ -61,11 +57,7 @@
   >
     <div class="hidden my-10 text-center md:block">
       <!-- logo on bigger screens -->
-      <img
-        class="w-12 xl:w-20 md:inline-block"
-        src="../../assets/images/logo.png"
-        :alt="generalContent.organisationName"
-      />
+      <AppLogo class="w-12 xl:w-20 md:inline-block" />
     </div>
 
     <TheMenuList v-if="currentUser" />
@@ -75,8 +67,9 @@
 <script lang="ts" setup>
 import { ref } from '@vue/reactivity';
 import { useRoute, useRouter } from 'vue-router';
-import { currentUser, generalContent } from '../../store';
+import { currentUser } from '../../store';
 import TheMenuList from './TheMenuList.vue';
+import AppLogo from '../../components/AppLogo.vue';
 
 const route = useRoute();
 
