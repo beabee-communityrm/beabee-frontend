@@ -33,7 +33,7 @@
     },
     "responsesSoFar": "Antworten bisher",
     "seeAllResponses": "Alle Antworten anzeigen",
-    "supportInbox": "Benötigst du Hilfe? Schreib' uns eine E-Mail an:",
+    "supportInbox": "Benötigst du Hilfe? Besuche unser [beabee Help Center](https://wiki.beabee.io/beabee-help-center/) oder schreib' uns eine E-Mail an:",
     "welcomeBack": "Willkommen zurück {firstName}!"
   },
   "adminSettings": {
@@ -473,10 +473,15 @@
       "address": {
         "required": "Dieses Feld wird benötigt, wenn du eine Adresse eintragen willst."
       },
-      "addressLine1": {},
+      "addressLine1": {
+        "required": "Adresse benötigt"
+      },
       "aggregator": "Es fehlt etwas! Bitte kontrolliere die obigen Felder.",
       "aggregatorTop": "Hier fehlt etwas! Bitte ergänzen.",
-      "cityOrTown": {},
+      "cityOrTown": {
+        "required": "Ort benötigt"
+      },
+      "color": {},
       "confirmPassword": {
         "invalid": "Passwort ungültig",
         "required": "Passwort benötigt",
@@ -500,8 +505,13 @@
         "required": "Passwort benötigt",
         "sameAs": "Passwörter stimmen nicht überein"
       },
-      "postCode": {},
-      "unknown": {}
+      "postCode": {
+        "required": "Postleitzahl benötigt"
+      },
+      "unknown": {
+        "min": "Dieses Feld muss mindestens {min}",
+        "required": "Dieses Feld wird benötigt"
+      }
     },
     "firstName": "Vorname",
     "lastName": "Nachname",
