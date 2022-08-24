@@ -88,6 +88,7 @@
       },
       "colors": "Colors",
       "customColors": "Custom",
+      "fontNotListed": "<p>Don't see your font listed? Contact <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a> to get it added.</p>\n",
       "fonts": "Fonts",
       "label": "Theme",
       "presetColors": {

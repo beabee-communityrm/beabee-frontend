@@ -29,6 +29,10 @@ meta:
             required
           />
         </div>
+        <div
+          class="content-i18n text-sm text-body-80 font-semibold"
+          v-html="t('adminSettings.theme.fontNotListed')"
+        />
       </div>
       <div>
         <AppHeading class="mb-4">
