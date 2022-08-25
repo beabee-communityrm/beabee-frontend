@@ -12,7 +12,8 @@ const props = defineProps<{
 
 const email = computed(
   () =>
-    props.body.replace('*|FNAME|*', currentUser.value?.firstname || '') +
-    props.footer
+    props.body
+      .replace('*|FNAME|*', currentUser.value?.firstname || '')
+      .replace('*|LNAME|*', currentUser.value?.lastname || '') + props.footer
 );
 </script>
