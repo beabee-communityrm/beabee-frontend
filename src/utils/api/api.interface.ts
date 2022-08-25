@@ -204,6 +204,7 @@ export interface ContactsContent {
 
 export interface GeneralContent {
   organisationName: string;
+  logoUrl: string;
   siteUrl: string;
   supportEmail: string;
   privacyLink: string;
@@ -212,9 +213,10 @@ export interface GeneralContent {
   locale: string;
   currencyCode: string;
   hideContribution?: boolean;
-  footerLinks: { text: string; url: string }[];
+  footerLinks?: { text: string; url: string }[];
   theme: {
     colors?: {
+      _name?: string;
       primary?: string;
       link?: string;
       body?: string;
@@ -260,13 +262,20 @@ export interface JoinSetupContent {
 }
 
 export interface ProfileContent {
-  welcomeMessage: string;
-  footerMessage: string;
   introMessage: string;
 }
 
 export interface EmailContent {
   footer: string;
+  supportEmail: string;
+  supportEmailName: string;
+}
+
+export interface ShareContent {
+  title: string;
+  description: string;
+  image: string;
+  twitterHandle: string;
 }
 
 interface BasicCalloutData {

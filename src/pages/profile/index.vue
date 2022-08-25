@@ -13,11 +13,7 @@ meta:
     {{ t('homePage.passwordReset') }}
   </AppAlert>
 
-  <PageTitle
-    :title="`${t('common.hello')} ${user.firstname}!`"
-    :sub-title="profileContent.welcomeMessage"
-    no-collapse
-  />
+  <PageTitle :title="`${t('common.hello')} ${user.firstname}!`" no-collapse />
 
   <section
     v-if="showWelcomeMessage && profileContent.introMessage"
@@ -68,10 +64,6 @@ meta:
       >{{ t('homePage.manageContribution') }}</AppButton
     >
   </section>
-
-  <section class="hidden pt-20 mt-auto max-w-xs md:max-w-sm mx-auto">
-    <ThanksNotice>{{ profileContent.footerMessage }}</ThanksNotice>
-  </section>
 </template>
 
 <script lang="ts" setup>
@@ -81,7 +73,6 @@ import { useRoute } from 'vue-router';
 import NoticeContainer from '../../components/pages/profile/NoticeContainer.vue';
 import ContributionInfo from '../../components/pages/profile/ContributionInfo.vue';
 import QuickActions from '../../components/pages/profile/QuickActions.vue';
-import ThanksNotice from '../../components/pages/profile/ThanksNotice.vue';
 import SectionTitle from '../../components/pages/profile/SectionTitle.vue';
 import PageTitle from '../../components/PageTitle.vue';
 import AppButton from '../../components/forms/AppButton.vue';
@@ -111,8 +102,6 @@ const removeWelcomeMessage = () => {
 };
 
 const profileContent = ref<ProfileContent>({
-  welcomeMessage: '',
-  footerMessage: '',
   introMessage: '',
 });
 

@@ -6,6 +6,7 @@ import {
   JoinContent,
   JoinSetupContent,
   ProfileContent,
+  ShareContent,
 } from './api.interface';
 
 type ContentId =
@@ -14,7 +15,8 @@ type ContentId =
   | 'profile'
   | 'general'
   | 'contacts'
-  | 'email';
+  | 'email'
+  | 'share';
 
 type Content<Id extends ContentId> = Id extends 'join'
   ? JoinContent
@@ -28,6 +30,8 @@ type Content<Id extends ContentId> = Id extends 'join'
   ? ContactsContent
   : Id extends 'email'
   ? EmailContent
+  : Id extends 'share'
+  ? ShareContent
   : never;
 
 export async function fetchContent<Id extends ContentId>(
@@ -38,7 +42,7 @@ export async function fetchContent<Id extends ContentId>(
 
 export async function updateContent<Id extends ContentId>(
   id: Id,
-  content: Content<Id>
+  content: Partial<Content<Id>>
 ): Promise<Content<Id>> {
-  return (await axios.put('/content/' + id, content)).data;
+  return (await axios.patch('/content/' + id, content)).data;
 }

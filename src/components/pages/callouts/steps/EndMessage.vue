@@ -13,7 +13,7 @@
         />
       </div>
     </div>
-    <div class="grid grid-cols-2 gap-6 mt-5" v-show="showThankYouSection">
+    <div v-if="showThankYouSection" class="grid grid-cols-2 gap-6 mt-5">
       <div class="col-span-1 mb-5">
         <AppInput
           v-model="dataProxy.thankYouTitle"
@@ -27,7 +27,7 @@
         v-html="inputT('title.help')"
       />
     </div>
-    <div class="grid grid-cols-2 gap-6" v-show="showThankYouSection">
+    <div v-if="showThankYouSection" class="grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <RichTextEditor
           v-model="dataProxy.thankYouText"
@@ -41,7 +41,7 @@
         v-html="inputT('text.help')"
       />
     </div>
-    <div class="grid grid-cols-2 gap-6 mt-5" v-show="!showThankYouSection">
+    <div v-if="!showThankYouSection" class="grid grid-cols-2 gap-6 mt-5">
       <div class="col-span-1">
         <AppInput
           v-model="dataProxy.thankYouRedirect"

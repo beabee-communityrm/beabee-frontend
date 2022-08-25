@@ -7,6 +7,7 @@
     "edit": "Bearbeiten",
     "publish": "Veröffentlichen",
     "replicate": "Kopieren",
+    "reset": "Zurücksetzen",
     "schedule": "Planen",
     "unpublish": "Veröffentlichung aufheben",
     "update": "Änderungen speichern",
@@ -33,8 +34,69 @@
     },
     "responsesSoFar": "Antworten bisher",
     "seeAllResponses": "Alle Antworten anzeigen",
-    "supportInbox": "Benötigst du Hilfe? Schreib' uns eine E-Mail an:",
+    "supportInbox": "<p>Benötigst du Hilfe? Besuche unser <a href=\"https://wiki.beabee.io/beabee-help-center/\">beabee Help Center</a> oder schreib' uns eine E-Mail an: <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
     "welcomeBack": "Willkommen zurück {firstName}!"
+  },
+  "adminSettings": {
+    "email": {
+      "fromEmail": "E-Mail-Adresse",
+      "fromName": "Name",
+      "label": "E-Mail",
+      "text": "Der gesamte E-Mail-Verkehr mit Mitgliedern wird über diese E-Mail-Adresse abgewickelt.",
+      "title": "Lege eine E-Mail-Adresse für Mitglieder-Support fest"
+    },
+    "general": {
+      "footer": {
+        "dataPrivacy": {
+          "impressumUrl": "Link zum Impressum",
+          "privacyUrl": "Link zur Datenschutzerklärung",
+          "termsUrl": "Link zur AGB",
+          "title": "Rechtliches"
+        },
+        "otherLinks": {
+          "add": "Weiteren Link hinzufügen",
+          "linkText": "Link-Text",
+          "title": "Andere Links",
+          "url": "URL"
+        },
+        "siteUrl": "Website-URL",
+        "text": "Diese Links erscheinen im Footer in beabee und in E-Mails.",
+        "title": "Footer"
+      },
+      "label": "Allgemein",
+      "language": "Sprache",
+      "logo": "Logo",
+      "organisationName": "Name der Organisation",
+      "socialSharing": {
+        "description": "Beschreibung",
+        "image": "Bild",
+        "shareTitle": "Überschrift",
+        "text": "Konfiguriere hier, was auf sozialen Medien erscheint, wenn ein Link zu Deiner beabee-Community geteilt wird.",
+        "title": "Soziale Netzwerke",
+        "twitterHandle": "Twitter-Handle"
+      }
+    },
+    "theme": {
+      "bodyFont": "Text",
+      "colorNames": {
+        "body": "Textfarbe",
+        "danger": "Gefahr",
+        "link": "Linkfarbe",
+        "primary": "Hauptfarbe",
+        "success": "Erfolgsnachricht",
+        "warning": "Warnung"
+      },
+      "colors": "Farben",
+      "customColors": "Benutzerdefinierte Farben",
+      "fontNotListed": "<p>Keine passende Schrift dabei? Kontaktiere <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a> und wir fügen sie hinzu.</p>\n",
+      "fonts": "Schriftarten",
+      "label": "Theme",
+      "presetColors": {
+        "default": "Standardfarben"
+      },
+      "titleFont": "Überschriften"
+    },
+    "title": "Einstellungen"
   },
   "callout": {
     "contactDetails": "Kontaktdaten",
@@ -459,17 +521,25 @@
       "address": {
         "required": "Dieses Feld wird benötigt, wenn Sie eine Adresse eintragen wollen."
       },
-      "addressLine1": {},
+      "addressLine1": {
+        "required": "Adresse benötigt"
+      },
       "aggregator": "Es fehlt etwas! Bitte kontrollieren Sie die obigen Felder.",
       "aggregatorTop": "Hier fehlt etwas! Bitte ergänzen.",
-      "cityOrTown": {},
+      "cityOrTown": {
+        "required": "Ort benötigt"
+      },
+      "color": {
+        "pattern": "Ungültiger Farbcode",
+        "required": "Farbe benötigt"
+      },
       "confirmPassword": {
-        "invalid": "Passwort ungültig",
+        "password": "Passwort ungültig",
         "required": "Passwort benötigt",
         "sameAs": "Passwörter stimmen nicht überein"
       },
       "email": {
-        "invalid": "Ungültige E-Mail-Adresse",
+        "email": "Ungültige E-Mail-Adresse",
         "required": "E-Mail-Adresse benötigt"
       },
       "firstName": {
@@ -482,12 +552,23 @@
         "required": "Name benötigt"
       },
       "password": {
-        "invalid": "Passwort ungültig",
+        "password": "Passwort ungültig",
         "required": "Passwort benötigt",
         "sameAs": "Passwörter stimmen nicht überein"
       },
-      "postCode": {},
-      "unknown": {}
+      "postCode": {
+        "required": "Postleitzahl benötigt"
+      },
+      "unknown": {
+        "email": "Ungültige E-Mail-Adresse",
+        "min": "Dieses Feld muss mindestens {min}",
+        "required": "Dieses Feld wird benötigt",
+        "url": "Ungültige URL"
+      },
+      "url": {
+        "required": "URL benötigt",
+        "url": "Ungültige URL"
+      }
     },
     "firstName": "Vorname",
     "lastName": "Nachname",
@@ -644,6 +725,7 @@
   },
   "menu": {
     "admin": "Administration",
+    "adminSettings": "Einstellungen",
     "callouts": "Callouts",
     "community": "Community",
     "contribution": "Beitrag",
