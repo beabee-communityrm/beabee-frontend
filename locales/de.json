@@ -88,6 +88,7 @@
       },
       "colors": "Farben",
       "customColors": "Benutzerdefinierte Farben",
+      "fontNotListed": "<p>Keine passende Schrift dabei? Kontaktiere <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a> und wir fügen sie hinzu.</p>\n",
       "fonts": "Schriftarten",
       "label": "Theme",
       "presetColors": {
