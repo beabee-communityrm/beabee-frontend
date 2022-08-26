@@ -78,8 +78,8 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
     },
   },
   endMessage: {
-    name: 'End message',
-    description: 'Set a final thank you message or page to redirect',
+    name: t('createCallout.steps.endMessage.title'),
+    description: t('createCallout.steps.endMessage.description'),
     validated: data ? true : false,
     error: false,
     component: markRaw(StepEndMessage),

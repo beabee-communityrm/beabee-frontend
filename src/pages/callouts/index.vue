@@ -38,7 +38,7 @@ meta:
     class="w-full mt-2 whitespace-nowrap"
   >
     <template #empty>
-      <p>{{ t('callout.noArchivedCallouts') }}</p>
+      <p>{{ t('callouts.noArchivedCallouts') }}</p>
     </template>
 
     <template #name="{ item }">
