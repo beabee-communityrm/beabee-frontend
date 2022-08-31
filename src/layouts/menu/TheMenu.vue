@@ -14,7 +14,7 @@
         right-0
         opacity-30
         bg-black
-        left-[240px]
+        left-menu
       "
       :class="isMenuVisible ? 'block' : 'hidden'"
       @click="isMenuVisible = false"
@@ -32,11 +32,7 @@
     </div>
 
     <!-- logo on small screens -->
-    <img
-      class="w-11"
-      src="../../assets/images/logo.png"
-      :alt="generalContent.organisationName"
-    />
+    <AppLogo class="w-11" />
   </div>
 
   <div
@@ -45,7 +41,6 @@
       z-40
       md:static
       flex flex-col
-      px-4
       bottom-0
       bg-white
       transform
@@ -53,30 +48,28 @@
       -translate-x-full
       md:transform-none
       flex-none
-      w-[240px]
+      w-menu
+      md:w-16
+      xl:w-menu
+      transition-width
     "
     :class="{ 'top-[68px] translate-x-0': isMenuVisible }"
   >
     <div class="hidden my-10 text-center md:block">
       <!-- logo on bigger screens -->
-      <img
-        class="w-20 md:inline-block"
-        src="../../assets/images/logo.png"
-        :alt="generalContent.organisationName"
-      />
+      <AppLogo class="w-12 xl:w-20 md:inline-block" />
     </div>
 
-    <TheMenuList v-if="currentUser" :sections="menuSections" />
+    <TheMenuList v-if="currentUser" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from '@vue/reactivity';
 import { useRoute, useRouter } from 'vue-router';
-import { currentUser, generalContent } from '../../store';
-
-import menuSections from './menu-list';
+import { currentUser } from '../../store';
 import TheMenuList from './TheMenuList.vue';
+import AppLogo from '../../components/AppLogo.vue';
 
 const route = useRoute();
 

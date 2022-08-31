@@ -38,7 +38,7 @@ const { t } = useI18n();
 
 const props = withDefaults(
   defineProps<{
-    type: 'success' | 'warning' | 'error';
+    type?: 'success' | 'warning' | 'error';
   }>(),
   { type: 'error' }
 );

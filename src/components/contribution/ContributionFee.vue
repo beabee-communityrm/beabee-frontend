@@ -4,23 +4,23 @@
       {{ t('join.absorbFeeText', { fee: n(fee, 'currency') }) }}
     </p>
 
-    <div class="mb-4 flex flex-row items-baseline">
-      <input v-model="payFee" type="checkbox" :disabled="force" />
-      <p class="ml-2">
-        {{
-          t(force ? 'join.absorbFeeForce' : 'join.absorbFeeOptIn', {
-            fee: n(fee, 'currency'),
-            amount: n(amount, 'currency'),
-          })
-        }}
-      </p>
-    </div>
+    <AppCheckbox
+      v-model="payFee"
+      :disabled="force"
+      :label="
+        t(force ? 'join.absorbFeeForce' : 'join.absorbFeeOptIn', {
+          fee: n(fee, 'currency'),
+          amount: n(amount, 'currency'),
+        })
+      "
+    />
   </section>
 </template>
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import { computed } from '@vue/reactivity';
+import AppCheckbox from '../forms/AppCheckbox.vue';
 
 const { t, n } = useI18n();
 

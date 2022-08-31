@@ -1,4 +1,103 @@
 {
+  "actions": {
+    "back": "Zurück",
+    "chooseFile": "Datei auswählen",
+    "continue": "Weiter",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "publish": "Veröffentlichen",
+    "replicate": "Kopieren",
+    "reset": "Zurücksetzen",
+    "schedule": "Planen",
+    "unpublish": "Veröffentlichung aufheben",
+    "update": "Änderungen speichern",
+    "view": "Anzeigen"
+  },
+  "adminDashboard": {
+    "hint1": "<p>Das beabee-Handbuch für Community-Journalismus <a href=\"https://beabee.io/neu-handbuch-community-journalismus/\">„Lust auf Lokal” ist erschienen</a>. Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
+    "hint2": "<p>Im <a href=\"https://beabee.io/#blog\">Blog</a> auf unserer Website findest du viele Best-Practice-Beispiele anderer Redaktionen, von denen du dich inspierieren lassen kannst.</p>\n",
+    "hint3": "<p>Unsere Community-Meetups finden jeden dritten Donnerstag im Monat statt. Du willst dein Best-Practice-Beispiel mit anderen teilen? Schreib eine E-Mail an <a href=\"mailto:tobias.hauswurz{'@'}correctiv.org\">tobias.hauswurz{'@'}correctiv.org</a></p>\n",
+    "joinSlack": "Tritt der beabee-Community auf Slack bei!",
+    "latestCallout": {
+      "createNew": "Neuen Callout erstellen?",
+      "empty": "Es gibt aktuell keine aktiven Callouts.",
+      "title": "Letzer Callout"
+    },
+    "mostRecentMembers": {
+      "title": "Neueste Mitglieder"
+    },
+    "numbers": {
+      "averageContribution": "Durchschn. monatlicher Beitrag",
+      "newMembers": "Neue Mitglieder",
+      "revenue": "Einnahmen",
+      "title": "Überblick der letzten 30 Tage"
+    },
+    "responsesSoFar": "Antworten bisher",
+    "seeAllResponses": "Alle Antworten anzeigen",
+    "supportInbox": "<p>Benötigst du Hilfe? Besuche unser <a href=\"https://wiki.beabee.io/beabee-help-center/\">beabee Help Center</a> oder schreib' uns eine E-Mail an:  <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
+    "welcomeBack": "Willkommen zurück {firstName}!"
+  },
+  "adminSettings": {
+    "email": {
+      "fromEmail": "E-Mail-Adresse",
+      "fromName": "Name",
+      "label": "E-Mail",
+      "text": "Der gesamte E-Mail-Verkehr mit Mitgliedern wird über diese E-Mail-Adresse abgewickelt.",
+      "title": "Lege eine E-Mail-Adresse für Mitglieder-Support fest"
+    },
+    "general": {
+      "footer": {
+        "dataPrivacy": {
+          "impressumUrl": "Link zum Impressum",
+          "privacyUrl": "Link zur Datenschutzerklärung",
+          "termsUrl": "Link zur AGB",
+          "title": "Rechtliches"
+        },
+        "otherLinks": {
+          "add": "Weiteren Link hinzufügen",
+          "linkText": "Link-Text",
+          "title": "Andere Links",
+          "url": "URL"
+        },
+        "siteUrl": "Website-URL",
+        "text": "Diese Links erscheinen im Footer in beabee und in E-Mails.",
+        "title": "Footer"
+      },
+      "label": "Allgemein",
+      "language": "Sprache",
+      "logo": "Logo",
+      "organisationName": "Name der Organisation",
+      "socialSharing": {
+        "description": "Beschreibung",
+        "image": "Bild",
+        "shareTitle": "Überschrift",
+        "text": "Konfiguriere hier, was auf sozialen Medien erscheint, wenn ein Link zu Deiner beabee-Community geteilt wird.",
+        "title": "Soziale Netzwerke",
+        "twitterHandle": "Twitter-Handle"
+      }
+    },
+    "theme": {
+      "bodyFont": "Text",
+      "colorNames": {
+        "body": "Textfarbe",
+        "danger": "Gefahr",
+        "link": "Linkfarbe",
+        "primary": "Hauptfarbe",
+        "success": "Erfolgsnachricht",
+        "warning": "Warnung"
+      },
+      "colors": "Farben",
+      "customColors": "Benutzerdefinierte Farben",
+      "fontNotListed": "<p>Keine passende Schrift dabei? Kontaktiere <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a> und wir fügen sie hinzu.</p>\n",
+      "fonts": "Schriftarten",
+      "label": "Theme",
+      "presetColors": {
+        "default": "Standardfarben"
+      },
+      "titleFont": "Überschriften"
+    },
+    "title": "Einstellungen"
+  },
   "callout": {
     "contactDetails": "Kontaktdaten",
     "form": {
@@ -7,12 +106,67 @@
       "name": "Dein Name",
       "submittingResponseError": "Es gab ein Problem bei der Übermittlung deiner Antworten. Bitte versuche es erneut."
     },
+    "joinNow": "Mitglied werden",
+    "loginToYourAccount": "Einloggen",
+    "membersOnly": "An diesem Callout können nur zahlende Mitglieder teilnehmen. Um teilzunehmen",
+    "share": {
+      "address": "Diesen Callout per Link teilen:",
+      "services": "Diesen Callout auf einer der folgenden Plattformen teilen: "
+    },
     "status": {
       "endedOn": "am {date}",
       "endsIn": "Endet in {duration}",
       "startsIn": "startet in {duration}"
     },
+    "toContributionPage": "Meinen Beitrag ändern",
+    "updateContribution": "Bitte ändere deinen Beitrag. ",
     "youResponded": "Du hast geantwortet ♥"
+  },
+  "calloutAdmin": {
+    "deleted": "Callout gelöscht.",
+    "overview": "Überblick",
+    "responses": "Antworten"
+  },
+  "calloutAdminOverview": {
+    "actions": {
+      "confirmDelete": {
+        "actionNo": "Nein, gehe zurück.",
+        "actionYes": "Ja, bitte löschen.",
+        "text": "Bist du sicher, dass du diesen Callout löschen willst?",
+        "title": "Callout löschen?"
+      }
+    },
+    "created": "Gut gemacht! Dein Callout wurde erstellt.",
+    "dates": {
+      "ends": "Ende",
+      "label": "Termine",
+      "starts": "Start"
+    },
+    "settings": {
+      "answers": {
+        "editable": "Können bearbeitet werden",
+        "final": "Können nicht bearbeitet werden",
+        "label": "Antworten"
+      },
+      "contactInfo": {
+        "label": "Kontaktinformationen",
+        "optional": "Optional",
+        "required": "Benötigt"
+      },
+      "endsWith": {
+        "label": "Endet mit",
+        "message": "Dankesnachricht",
+        "redirect": "Weiterleitung"
+      },
+      "label": "Einstellungen",
+      "openTo": {
+        "everyone": "Alle",
+        "label": "Wer kann teilnehmen?",
+        "membersOnly": "Nur Mitglieder"
+      }
+    },
+    "summary": "Zusammenfassung",
+    "updated": "Änderungen gespeichert!"
   },
   "callouts": {
     "archive": "Archiv",
@@ -20,20 +174,40 @@
       "callout": "Callout",
       "endDate": "Enddatum"
     },
+    "noArchivedCallouts": "Keine Callouts",
     "search": "Callouts durchsuchen",
     "show": "Anzeigen",
     "showAll": "Alle",
     "showAnswered": "Beantwortet"
   },
+  "calloutsAdmin": {
+    "addCallout": "Callout anlegen",
+    "data": {
+      "expires": "Enddatum",
+      "responses": "Antworten",
+      "starts": "Startdatum",
+      "status": "Status",
+      "title": "Titel"
+    },
+    "filter": {
+      "all": "Alle Callouts",
+      "draft": "Entwürfe",
+      "ended": "Beendete Callouts",
+      "open": "Aktive Callouts",
+      "scheduled": "Geplante Callouts"
+    }
+  },
   "common": {
     "annually": "Jährlich",
     "backToHome": "Zurück zur Startseite",
     "contributing": "Dein Beitrag",
+    "copy": "Kopieren",
     "every": "pro",
     "goBack": "Zurück",
     "hello": "Hallo",
     "in": "in",
     "joined": "Mitglied seit",
+    "loading": "Lädt...",
     "login": "Login",
     "month": "Monat | Monaten",
     "monthly": "Monatlich",
@@ -48,8 +222,8 @@
     "share": "Teilen",
     "status": {
       "draft": "Entwurf",
-      "ended": "Geschlossen",
-      "open": "Öffnen",
+      "ended": "Beendet",
+      "open": "Aktiv",
       "scheduled": "Geplant"
     },
     "thankYou": "Vielen Dank!",
@@ -65,11 +239,7 @@
   "contactOverview": {
     "about": "Über",
     "annotation": {
-      "copy": {
-        "begin": "Alle hier eingegebenen Information sind",
-        "bold": "nur für Administratoren sichtbar.",
-        "end": "Nutzer bekommen das nicht angezeigt."
-      }
+      "copy": "<p>Alle hier eingegebenen Information sind <strong>nur für Administratoren sichtbar</strong>.\nNutzer bekommen das nicht angezeigt.</p>\n"
     },
     "contribution": "Beitrag",
     "information": "Information",
@@ -89,14 +259,16 @@
     "allContacts": "Alle Kontakte",
     "data": {
       "amount": "Betrag",
+      "annotationsCopy": "Änderungen gespeichert!",
       "contribution": "Beitrag",
       "contributionType": "Zahlungsart",
       "deliveryOptIn": "Postsendung",
       "description": "Beschreibung",
       "email": "E-Mail",
       "groups": "Gruppe",
-      "joined": "Mitglied seit",
+      "joined": "Kontakt seit",
       "lastSeen": "Zuletzt angemeldet",
+      "membershipStarts": "Mitglied seit",
       "name": "Name",
       "newsletter": "Newsletter",
       "notes": "Notizen",
@@ -110,6 +282,7 @@
       },
       "tags": "Tags"
     },
+    "noContacts": "Keine Kontakte",
     "noResults": "Keine Kontakte gefunden",
     "search": "Kontakte durchsuchen...",
     "showingOf": "{start} to {end} von {total} Kontakten werden angezeigt."
@@ -124,16 +297,22 @@
     "changeBankInfo": "Im nächsten Schritt kannst du deine neue Bankverbindung eingeben.",
     "contributing": "Dein Beitrag ist",
     "contributionUpdateError": "Du kannst deinen Beitrag aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
+    "dueToRenew": "Deine Mitgliedschaft wird am {renewalDate} erneuert.",
     "expired": "Deine Mitgliedschaft ist abgelaufen.",
     "expiredText": "Möchtest du deine Mitgliedschaft verlängern? Selbst kleinste Beträge helfen uns und unserer Arbeit. Danke!",
     "hasPendingPayment": "Deine Zahlung wird gerade verarbeitet.",
     "manualPayment": "Du leistest deinen Beitrag aktuell manuell via Banküberweisung. Richte hier jetzt eine automatische Abbuchung via Lastschrift ein. Dann wird es für dich leichter, deine Beiträge zu verwalten. Und wir bekommen einen besseren Überblick, auf welche Beiträge wir uns monatlich verlassen können.",
     "nextAmountChanging": "Ab dem {renewalDate} ist dein Beitrag {nextAmount}.",
     "paymentHistory": {
-      "amount": "Betrag",
-      "date": "Datum",
+      "empty": "Ältere Zahlungen und Rechnungen finden Sie hier.",
+      "status": {
+        "cancelled": "Gekündigt",
+        "failed": "Fehlgeschlagen",
+        "pending": "In Bearbeitung"
+      },
       "title": "Deine bisherigen Beiträge."
     },
+    "paymentMethod": "Zahlungsart",
     "paymentSourceUpdateError": "Du kannst deine Bankverbindung aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
     "prorateDecreaseMessage": "Dein Beitrag bleibt noch für {monthsLeft} {months} gleich. Der neue Beitrag wird am {renewalDate} zum ersten Mal eingezogen.",
     "prorateIncreaseMessage": "Deine Mitgliedschaft läuft noch {monthsLeft} {months} unter diesem Beitrag. Du kannst eine Einmalzahlung in Höhe von {oneOffPayment} leisten um deine Mitgliedschaft sofort zu erneuern und den Beitrag zu erhöhen.",
@@ -146,11 +325,173 @@
     "startedContribution": "Deine Mitgliedschaft hat begonnen.",
     "updateContribution": "Beitrag aktualisieren",
     "updatePaymentType": "Neuen Zahlungsweg einrichten",
-    "updatedContribution": "Ihr Beitrag wurde geändert.",
-    "updatedPaymentSource": "Deine Bankverbindung wurde geändert.",
+    "updatedContribution": "Dein Beitrag wurde geändert.",
+    "updatedPaymentSource": "Deine Zahlungsart wurde aktualisiert. ",
     "willExpire": "Deine Mitgliedschaft läuft in {expires} ab.",
     "willRenew": "Deine Mitgliedschaft verlängert sich am {renewalDate} automatisch.",
     "willRenewWithNewAmount": "Deine Mitgliedschaft verlängert sich am {renewalDate} automatisch. Dein Beitrag ist dann {nextAmount}."
+  },
+  "createCallout": {
+    "steps": {
+      "content": {
+        "description": "Entwerfe deinen Callout mit Fragen und Aufforderungen",
+        "inputs": {
+          "intro": {
+            "help": "<p>Die <strong>Einleitung</strong> erscheint über dem eigentlichen Callout. Erkläre darin, warum du den Callout machst, was das Ziel ist und wie die Antworten helfen. Gib so viel Kontext wie möglich, um den Teilnehmenden die Beantwortung zu erleichtern.</p>\n",
+            "label": "Einleitung"
+          }
+        },
+        "title": "Callout-Inhalt"
+      },
+      "dates": {
+        "description": "Plane, wann dein Callout live gehen soll und wie lange er aktiv bleiben soll",
+        "inputs": {
+          "expires": {
+            "label": "Wann soll der Callout enden?",
+            "opts": {
+              "never": "Nie, er soll nur manuell beendet werden",
+              "schedule": "Plane ein Enddatum"
+            }
+          },
+          "starts": {
+            "label": "Ab wann soll der Callout aktiv sein?",
+            "opts": {
+              "now": "Sofort",
+              "schedule": "Plane eine Startdatum"
+            }
+          }
+        },
+        "title": "Startdatum und Dauer"
+      },
+      "endMessage": {
+        "description": "Danke Nutzern für die Teilnahme oder leite sie auf eine andere Seite weiter.",
+        "inputs": {
+          "action": {
+            "label": "Wenn die Teilnehmer ihre Antworten abgeschickt haben",
+            "opts": {
+              "redirect": "Leite sie auf eine andere Seite weiter",
+              "showMessage": "Zeige eine Dankesnachricht"
+            }
+          },
+          "text": {
+            "help": "<p>Hier kannst du den Teilnehmern ausführlicher Danke sagen oder erklären, wie es jetzt mit den Antworten weitergeht.</p>\n",
+            "label": "Text",
+            "placeholder": "Erkläre den Teilnehmern, warum ihre Antworten wertvoll sind."
+          },
+          "title": {
+            "help": "<p>Die Teilnehmer sehen den <strong>Titel</strong> wenn sie ihre Antworten abgeschickt haben.</p>\n",
+            "label": "Titel",
+            "placeholder": "Danke!"
+          },
+          "url": {
+            "label": "URL für die Weiterleitung",
+            "placeholder": "https://example.com"
+          }
+        },
+        "title": "Nachricht am Ende"
+      },
+      "mailchimp": {
+        "description": "Mailchimp-Synchronisation einrichten",
+        "title": "Mailchimp-Synchronisation"
+      },
+      "titleAndImage": {
+        "description": "Gib deinem Callout einen Titel, eine Beschreibung und ein Bild.",
+        "inputs": {
+          "description": {
+            "help": "<p>Die <strong>Kurzbeschreibung</strong> ergänzt den Titel und sollte in wenigen Worten erklären, worum es bei dem Callout geht.</p>\n",
+            "label": "Kurzbeschreibung",
+            "placeholder": "Erkläre kurz und knapp, warum Menschen an dem Callout teilnehmen sollten."
+          },
+          "image": {
+            "help": "<p>Das <strong>Titelbild</strong> dient zur Illustration des Callouts.</p>\n",
+            "label": "Titelbild",
+            "placeholder": "https://"
+          },
+          "title": {
+            "help": "<p>Der <strong>Titel</strong> taucht immer dort auf, wo dein Callout erwähnt wird. Überlege dir einen guten Namen, der Interesse weckt.</p>\n",
+            "label": "Titel",
+            "placeholder": "Der Name deines Callouts."
+          }
+        },
+        "title": "Titel und Bild"
+      },
+      "url": {
+        "URLWillBe": "Die URL ist",
+        "description": "Passe die URL an und ",
+        "inputs": {
+          "description": {
+            "help": "<p>Die <strong>Social-Media-Beschreibung</strong> ist die Beschreibung, die beim Teilen auf Social Media unter dem Titel erscheint und hat keinen Einfluss auf die eigentliche Beschreibung des Callouts.</p>\n",
+            "label": "Social-Media-Beschreibung",
+            "placeholder": "Erkläre kurz und knapp, warum Menschen an dem Callout teilnehmen sollten."
+          },
+          "overrideShare": {
+            "label": "Callout-Titel und -Beschreibung zum Teilen verwenden?",
+            "opts": {
+              "no": "Nein, Titel und Beschreibung selbst festlegen.",
+              "yes": "Ja"
+            }
+          },
+          "slug": {
+            "help": "<p>Die URL-Endung wird für die Webadresse des Callouts benötigt.</p>\n",
+            "label": "URL-Endung",
+            "opts": {
+              "auto": "Automatisch aus Callout-Titel generieren",
+              "manual": "Benutzerdefinierte URL festlegen"
+            }
+          },
+          "title": {
+            "help": "<p>Der <strong>Social-Media-Titel</strong> ist der Titel, der beim Teilen des Callouts auf Social Media erscheint und hat keinen Einfluss auf den eigentlichen Titel des Callouts.</p>\n",
+            "label": "Social-Media-Titel",
+            "placeholder": "Der Name deines Callouts"
+          }
+        },
+        "title": "URL und Teilen"
+      },
+      "visibility": {
+        "description": "Entscheide, wer den Callout sehen kann.",
+        "inputs": {
+          "anonymous": {
+            "help": "<p>Wenn du <strong>anonyme Antworten</strong> erlaubst, werden Gastteilnehmer nicht nach ihren Kontaktdaten gefragt.</p>\n",
+            "label": "Sollen Gastteilnehmer anonym antworten können?",
+            "opts": {
+              "no": "Nein, Kontaktinformationen sind notwendig.",
+              "yes": "Ja, keine Kontaktdaten nötig."
+            }
+          },
+          "editable": {
+            "help": "<p>Wenn ja, können Teilnehmer vor dem Enddatum <strong>ihre abgeschickten Antworten bearbeiten</strong>.</p>\n",
+            "label": "Sollen Teilnehmer ihre Antworten bearbeiten können, solange der Callout aktiv ist?",
+            "opts": {
+              "no": "Nein, die Antworten können nicht bearbeitet werden.",
+              "yes": "Ja"
+            }
+          },
+          "visible": {
+            "help": "<p>Du kannst den Callout <strong>verstecken</strong>. Dann können Menschen mit dem richtigen Link den Callout beantworten.</p>\n",
+            "label": "Soll der Callout deinen Mitgliedern im Dashboard angezeigt werden?",
+            "opts": {
+              "no": "Nein, Callout nicht im Dashboard anzeigen.",
+              "yes": "Ja, Callout im Dashboard anzeigen."
+            }
+          },
+          "who": {
+            "help": "<p>Callouts können <strong>öffentlich</strong> oder nur für <strong>Mitglieder</strong> zugänglich sein.</p>\n",
+            "label": "Wer kann teilnehmen?",
+            "opts": {
+              "everyone": "Öffentlich",
+              "members": "Nur Mitglieder"
+            }
+          }
+        },
+        "title": "Sichtbarkeit"
+      }
+    },
+    "title": "Callout anlegen"
+  },
+  "editCallout": {
+    "replicated": "Dein Callout wurde kopiert! Du bearbeitest jetzt die Kopie. Bitte denke daran, den Bereich „Titel und Bild” zu bearbeiten.",
+    "title": "Callout bearbeiten",
+    "warning": "Vorsicht! Du bearbeitest einen veröffentlichten Callout. Wenn du Umfrageelemente bearbeitest riskierst du, Antworten unbrauchbar zu machen."
   },
   "footer": {
     "contactUs": "Kontaktiere uns unter",
@@ -163,9 +504,9 @@
     "terms": "Allgemeine Geschäftsbedingungen"
   },
   "forgotPassword": {
-    "checkInbox": "Bitte schaue in deinen Posteingang und befolge die Anleitung in der Email. Sollte die Email nicht auftauchen, checke deinen Spamordner. ",
-    "description": "Bitte gib deine Email-Adresse ein. Wir schicken dir dann die Anleitung zum Zurücksetzen deines Passworts.",
-    "message": "Gibt es einen Account mit der Email-Adresse {email}, bekommst du in Kürze eine Nachricht.",
+    "checkInbox": "Bitte schaue in deinen Posteingang und befolge die Anleitung in der E-Mail. Sollte die E-mail nicht auftauchen, checke deinen Spamordner. ",
+    "description": "Bitte gib deine E-Mail-Adresse ein. Wir schicken dir dann die Anleitung zum Zurücksetzen deines Passworts.",
+    "message": "Gibt es einen Account mit der E-mail-Adresse {email}, bekommst du in Kürze eine Nachricht.",
     "resetPassword": "Passwort zurücksetzen",
     "title": "Passwort vergessen?"
   },
@@ -176,15 +517,31 @@
     "cityOrTown": "Ort",
     "deliveryOptIn": "Einverständnis zur Postsendung",
     "description": "Bezeichnung",
-    "email": "Email",
+    "email": "E-Mail",
     "errors": {
       "address": {
         "required": "Dieses Feld wird benötigt, wenn du eine Adresse eintragen willst."
       },
+      "addressLine1": {
+        "required": "Adresse benötigt"
+      },
       "aggregator": "Es fehlt etwas! Bitte kontrolliere die obigen Felder.",
+      "aggregatorTop": "Hier fehlt etwas! Bitte ergänzen.",
+      "cityOrTown": {
+        "required": "Ort benötigt"
+      },
+      "color": {
+        "pattern": "Ungültiger Farbcode",
+        "required": "Farbe benötigt"
+      },
+      "confirmPassword": {
+        "password": "Passwort ungültig",
+        "required": "Passwort benötigt",
+        "sameAs": "Passwörter stimmen nicht überein"
+      },
       "email": {
-        "invalid": "Ungültige Email-Adresse",
-        "required": "Email-Adresse benötigt"
+        "email": "Ungültige E-Mail-Adresse",
+        "required": "E-Mail-Adresse benötigt"
       },
       "firstName": {
         "required": "Vorname benötigt"
@@ -196,9 +553,22 @@
         "required": "Name benötigt"
       },
       "password": {
-        "invalid": "Passwort ungültig",
+        "password": "Passwort ungültig",
         "required": "Passwort benötigt",
         "sameAs": "Passwörter stimmen nicht überein"
+      },
+      "postCode": {
+        "required": "Postleitzahl benötigt"
+      },
+      "unknown": {
+        "email": "Ungültige E-Mail-Adresse",
+        "min": "Dieses Feld muss mindestens {min}",
+        "required": "Dieses Feld wird benötigt",
+        "url": "Ungültige URL"
+      },
+      "url": {
+        "required": "URL benötigt",
+        "url": "Ungültige URL"
       }
     },
     "firstName": "Vorname",
@@ -210,8 +580,21 @@
     "passwordInfo": "Das Passwort muss aus mindestens acht Zeichen bestehen und mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten.",
     "phone": "Telefon",
     "postCode": "Postleitzahl",
+    "richtext": {
+      "bold": "Fett",
+      "bulletlist": "Aufzählungszeichen",
+      "heading": "Überschrift",
+      "italic": "Kursiv",
+      "link": "Link",
+      "numberedlist": "Nummerierung",
+      "strikethrough": "Durchstreichen",
+      "underline": "Unterstreichen"
+    },
     "saveChanges": "Änderungen speichern",
     "saved": "Gespeichert!",
+    "unsavedChanges": "Ungespeicherte Änderungen",
+    "updated": "Aktualisiert",
+    "uploading": "Es wird hochgeladen",
     "warning": "Ändere hier nur etwas, wenn du das Einverständnis hast. Änderungen werden auch den Nutzern angezeigt."
   },
   "homePage": {
@@ -224,7 +607,7 @@
     "quickActions": "Schnellaktionen",
     "title": "Home",
     "viewAllCallouts": "Alle Callouts anzeigen",
-    "viewOpenCallouts": "Offene Callouts anzeigen",
+    "viewOpenCallouts": "Aktive Callouts anzeigen",
     "welcome": "Herzlich willkommen {firstName}!",
     "yourProfile": "Dein Profil"
   },
@@ -245,13 +628,13 @@
     "contribution": "Beitrag",
     "errors": {
       "confirmEmail": {
-        "message": "Fast geschafft! Wir müssen nur noch deine Email-Adresse bestätigen, um fortzufahren.",
-        "proceed": "Wir haben dir eine Email geschickt. Bitte klicke auf den Bestätigungslink, um fortzufahren.",
-        "title": "Email-Adresse bestätigen"
+        "message": "Fast geschafft! Wir müssen nur noch deine E-Mail-Adresse bestätigen, um fortzufahren.",
+        "proceed": "Wir haben dir eine E-Mail geschickt. Bitte klicke auf den Bestätigungslink, um fortzufahren.",
+        "title": "E-Mail-Adresse bestätigen"
       },
       "duplicateEmail": {
-        "message": "Diese Email-Adresse ist bereits registriert. Bitte logge dich ein, um fortzufahren.",
-        "title": "Email-Adresse wiederholen"
+        "message": "Diese E-Mail-Adresse ist bereits registriert. Bitte logge dich ein, um fortzufahren.",
+        "title": "E-Mail-Adresse wiederholen"
       },
       "failed": {
         "backToJoin": "Zurück zur Registrierung",
@@ -266,7 +649,15 @@
     "noContribution": "Ich möchte jetzt keinen Beitrag leisten",
     "notice": "Indem du fortfährst, akzeptierst Du unsere",
     "now": "Jetzt Mitglied werden! ",
+    "paymentMethod": "Zahlungsart",
     "privacy": "Datenschutzerklärung"
+  },
+  "joinPayment": {
+    "genericError": "Upps! Etwas ist schiefgelaufen. Bitte wende dich an den Support, sollte das erneut passieren.",
+    "goBack": "Möchtest du etwas ändern? {back}",
+    "goBackButton": "Zurück zum letzten Schritt",
+    "note": "Du kannst deine Zahlungsdaten jederzeit in deinem Nutzer-Account ändern und dort auch sehen, wie viel du in der Vergangenheit bereits gezahlt hast. ",
+    "willBeContributing": "Du zahlst {amount}/{period}"
   },
   "joinSetup": {
     "confirmDetails": "Bitte bestätige deine Angaben:",
@@ -281,16 +672,69 @@
     "login": "Login",
     "notMember": "Noch kein Mitglied?",
     "title": "Einloggen",
-    "wrongCredentials": "Falsche Kombination von Passwort und Email."
+    "wrongCredentials": "Falsche Kombination von Passwort und E-Mail."
+  },
+  "membershipBuilder": {
+    "steps": {
+      "accountConfirmation": {
+        "checkboxLabel": "Beschriftung Kontrollkästchen ",
+        "description": "Gestalte deinen Bestätigungsbildschirm",
+        "heading": "Überschrift",
+        "showMailOptIn": "Nach Adresse fragen",
+        "showNewsletterOptIn": "Nach Newsletterabonnement fragen",
+        "subheading": "Unterüberschrift",
+        "text": "Neue Mitglieder müssen ihre Registrierung bestätigen. Hier kannst du einstellen, wie der Bestätigungsbildschirm aussehen soll.",
+        "title": "Accountinformationen bestätigen",
+        "welcomeMessage": "Willkommensnachricht"
+      },
+      "emails": {
+        "bigTitle": "Willkommens- & Kündigungs-E-Mail",
+        "cancellationEmail": "Kündigungs-E-Mail",
+        "description": "Passe deine Willkommens- und Kündigungs-E-Mail an",
+        "text": "Alle E-Mails werden von deiner Support-E-Mail-Adresse gesendet und enthalten eine Standardsignatur. Du kannst beides in den E-Mail-Einstellungen anpassen.",
+        "title": "E-Mails",
+        "welcomeEmail": "Willkommens-E-Mail"
+      },
+      "intro": {
+        "description": "Heiße neue Mitglieder willkommen",
+        "message": "Nachricht",
+        "showWelcomeMessage": "Zeige Willkommensnachricht",
+        "text": "Neue Mitglieder bekommen eine Willkommensnachricht angezeigt. Mach sie für dich passend!",
+        "title": "Willkommensnachricht"
+      },
+      "joinForm": {
+        "accountConfirmation": "Accountinformationen bestätigen",
+        "backgroundImage": "Hintergrundbild",
+        "checkboxLabel": "Beschriftung Kontrollkästchen ",
+        "defaultAmount": "Standardbetrag",
+        "description": "Optimiere dein Registrierungsformular",
+        "formSubtitle": "Untertitel",
+        "formTitle": "Titel",
+        "heading": "Überschrift",
+        "minAmount": "Mindestbetrag",
+        "showAbsorbFee": "Nach Transaktionskosten fragen",
+        "showMailOptIn": "Nach Adresse fragen",
+        "showNewsletterOptIn": "Nach Newsletterabonnement fragen",
+        "subheading": "Unterüberschrift",
+        "suggestedAmounts": "Vorgeschlagene Beträge",
+        "text": "In diesem Abschnitt kannst du dein Registrierungsformular bearbeiten, optimieren und ansehen.",
+        "title": "Registrierung",
+        "welcomeMessage": "Willkommensnachricht"
+      }
+    },
+    "title": "Membership Builder"
   },
   "menu": {
-    "admin": "Administrator",
-    "adminDashboard": "Dashboard",
+    "admin": "Administration",
+    "adminSettings": "Einstellungen",
     "callouts": "Callouts",
     "community": "Community",
     "contribution": "Beitrag",
+    "dashboard": "Dashboard",
     "home": "Home",
+    "legacyApp": "Alter Adminbereich",
     "logout": "Log out",
+    "membershipBuilder": "Membership Builder",
     "notices": "Hinweise",
     "settings": "Einstellungen",
     "yourInformation": "Deine Informationen",
@@ -309,8 +753,8 @@
     "success": "Sehr gut! Das hat funktioniert."
   },
   "pageTitle": {
-    "confirmEmail": "Email-Adresse bestätigen",
-    "duplicateEmail": "Email-Adresse duplizieren",
+    "confirmEmail": "E-Mail-Adresse bestätigen",
+    "duplicateEmail": "E-Mail-Adresse duplizieren",
     "failed": "Fehler",
     "forgotPassword": "Passwort vergessen",
     "join": "Mitglied werden",
@@ -318,10 +762,34 @@
     "resetPassword": "Passwort zurücksetzen",
     "setup": "Account fertigstellen"
   },
+  "paymentMethods": {
+    "gc_direct-debit": {
+      "changeLabel": "Lastschrift ändern",
+      "label": "Lastschrift",
+      "setLabel": "Deine Laschriftdaten"
+    },
+    "s_bacs": {
+      "changeLabel": "Lastschrift ändern",
+      "label": "Lastschrift",
+      "setLabel": "Deine Laschriftdaten"
+    },
+    "s_card": {
+      "changeLabel": "Kreditkartendetails ändern",
+      "label": "Kreditkarte",
+      "setLabel": "Deine Kreditkartendetails"
+    },
+    "s_sepa": {
+      "changeLabel": "Lastschrift ändern",
+      "label": "Lastschrift",
+      "setLabel": "Deine Laschriftdaten"
+    }
+  },
   "resetPassword": {
     "changePassword": "Passwort ändern",
     "confirmPassword": "Passwort bestätigen",
     "description": "Neues Passwort eingeben, um fortzufahren.",
+    "error": "Das Zurücksetzen des Passworts ist schiefgelaufen. Der Link scheint abgelaufen zu sein. Du kannst {newLink}.",
+    "errorLink": "einen neuen Link anfordern",
     "login": "Einloggen",
     "newPassword": "Neues Passwort",
     "title": "Passwort aktualisieren?"

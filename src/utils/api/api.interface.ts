@@ -2,6 +2,7 @@ import { ContributionPeriod } from '../enums/contribution-period.enum';
 import { ContributionType } from '../enums/contribution-type.enum';
 import { MembershipStatus } from '../enums/membership-status.enum';
 import { NewsletterStatus } from '../enums/newsletter-status.enum';
+import { PaymentMethod } from '../enums/payment-method.enum';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Noop {}
@@ -64,6 +65,11 @@ interface MemberData {
   lastname: string;
 }
 
+export interface PaymentFlowParams {
+  clientSecret?: string;
+  redirectUrl?: string;
+}
+
 interface MemberProfileData {
   telephone: string;
   twitter: string;
@@ -112,12 +118,39 @@ export interface UpdateMemberData extends Partial<MemberData> {
   profile?: UpdateMemberProfileData;
 }
 
-export interface PaymentSource {
-  type: 'direct-debit';
+export interface CardPaymentSource {
+  method: PaymentMethod.StripeCard;
+  last4: string;
+  expiryMonth: number;
+  expiryYear: number;
+}
+
+export interface GoCardlessDirectDebitPaymentSource {
+  method: PaymentMethod.GoCardlessDirectDebit;
   bankName: string;
   accountHolderName: string;
   accountNumberEnding: string;
 }
+
+export interface StripeBACSPaymentSource {
+  method: PaymentMethod.StripeBACS;
+  sortCode: string;
+  last4: string;
+}
+
+export interface StripeSEPAPaymentSource {
+  method: PaymentMethod.StripeSEPA;
+  country: string;
+  bankCode: string;
+  branchCode: string;
+  last4: string;
+}
+
+export type PaymentSource =
+  | CardPaymentSource
+  | GoCardlessDirectDebitPaymentSource
+  | StripeBACSPaymentSource
+  | StripeSEPAPaymentSource;
 
 export interface ContributionInfo {
   type: ContributionType;
@@ -133,20 +166,28 @@ export interface ContributionInfo {
   membershipExpiryDate?: Date;
 }
 
-export interface UpdateContributionData {
+export interface SetContributionData {
   amount: number;
   payFee: boolean;
   prorate: boolean;
+  period: ContributionPeriod;
 }
 
-export interface SetContributionData extends UpdateContributionData {
-  period: ContributionPeriod;
+export interface StartContributionData extends SetContributionData {
+  paymentMethod: PaymentMethod;
+}
+
+export enum PaymentStatus {
+  Pending = 'pending',
+  Successful = 'successful',
+  Failed = 'failed',
+  Cancelled = 'cancelled',
 }
 
 export interface GetPaymentData {
   chargeDate: string;
   amount: number;
-  status: string;
+  status: PaymentStatus;
 }
 
 export type GetPaymentsQuery = GetPaginatedQuery<'chargeDate'>;
@@ -156,15 +197,41 @@ export interface LoginData {
   password: string;
 }
 
+export interface ContactsContent {
+  tags: string[];
+  manualPaymentSources: string[];
+}
+
 export interface GeneralContent {
   organisationName: string;
+  logoUrl: string;
   siteUrl: string;
   supportEmail: string;
   privacyLink: string;
   termsLink?: string;
   impressumLink?: string;
+  locale: string;
   currencyCode: string;
-  footerLinks: { text: string; url: string }[];
+  hideContribution?: boolean;
+  footerLinks?: { text: string; url: string }[];
+  theme: {
+    colors?: {
+      _name?: string;
+      primary?: string;
+      link?: string;
+      body?: string;
+      success?: string;
+      warning?: string;
+      danger?: string;
+      white?: string;
+      black?: string;
+    };
+    fonts?: {
+      body?: string;
+      title?: string;
+    };
+  };
+  backgroundUrl?: string;
 }
 
 export interface JoinContent {
@@ -174,11 +241,12 @@ export interface JoinContent {
   initialPeriod: ContributionPeriod;
   minMonthlyAmount: number;
   periods: {
-    name: string;
+    name: ContributionPeriod;
     presetAmounts: number[];
   }[];
   showAbsorbFee: boolean;
   showNoContribution: boolean;
+  paymentMethods: PaymentMethod[];
 }
 
 export interface JoinSetupContent {
@@ -194,37 +262,65 @@ export interface JoinSetupContent {
 }
 
 export interface ProfileContent {
-  welcomeMessage: string;
-  footerMessage: string;
   introMessage: string;
 }
 
-export interface GetBasicCalloutData {
+export interface EmailContent {
+  footer: string;
+  supportEmail: string;
+  supportEmailName: string;
+}
+
+export interface ShareContent {
+  title: string;
+  description: string;
+  image: string;
+  twitterHandle: string;
+}
+
+interface BasicCalloutData {
   slug: string;
   title: string;
   excerpt: string;
-  status: ItemStatus;
-  access: 'member' | 'guest' | 'anonymous' | 'only-anonymous';
+  image: string;
+  starts: Date | null;
+  expires: Date | null;
   allowUpdate: boolean;
   allowMultiple: boolean;
-  image?: string;
-  starts?: Date;
-  expires?: Date;
+  access: 'member' | 'guest' | 'anonymous' | 'only-anonymous';
+  hidden: boolean;
+}
+
+interface MoreCalloutData extends BasicCalloutData {
+  formSchema: CalloutFormSchema;
+  intro: string;
+  thanksText: string;
+  thanksTitle: string;
+  thanksRedirect?: string;
+  shareTitle?: string;
+  shareDescription?: string;
+}
+
+export interface CalloutFormSchema {
+  components: unknown[];
+}
+
+export interface GetBasicCalloutData extends BasicCalloutData {
+  status: ItemStatus;
   hasAnswered?: boolean;
 }
+
+export interface GetMoreCalloutData
+  extends GetBasicCalloutData,
+    MoreCalloutData {}
+
+export type CreateCalloutData = MoreCalloutData;
+
+export type UpdateCalloutData = Omit<CreateCalloutData, 'slug'>;
 
 export interface GetCalloutsQuery
   extends GetPaginatedQuery<'title' | 'status' | 'answeredBy' | 'hidden'> {
   hasAnswered?: string;
-}
-
-export interface GetMoreCalloutData extends GetBasicCalloutData {
-  templateSchema: {
-    formSchema: any;
-    intro: string;
-    thanksText: string;
-    thanksTitle: string;
-  };
 }
 
 export type GetCalloutResponsesQuery = GetPaginatedQuery<'member'>;
@@ -260,17 +356,24 @@ export interface GetNoticeData {
   updatedAt: Date;
   status: ItemStatus;
   name: string;
+  starts?: Date;
   expires?: Date;
   enabled: boolean;
   text: string;
-  buttonText: string;
+  buttonText?: string;
   url?: string;
 }
 
-export interface SignupData extends SetContributionData {
+export interface SignupData extends StartContributionData {
   email: string;
   password: string;
   noContribution: boolean;
+}
+
+export interface CompleteSignupData {
+  paymentFlowId: string;
+  firstname?: string;
+  lastname?: string;
 }
 
 export interface GetSegmentData {
@@ -280,3 +383,21 @@ export interface GetSegmentData {
   order: number;
   memberCount: number;
 }
+
+export interface GetStatsQuery {
+  from: Date;
+  to: Date;
+}
+
+export interface GetStatsData {
+  newMembers: number;
+  averageContribution: number | null;
+  totalRevenue: number | null;
+}
+
+export interface GetEmailData {
+  subject: string;
+  body: string;
+}
+
+export type UpdateEmailData = GetEmailData;
