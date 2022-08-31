@@ -12,11 +12,7 @@ meta:
 
   <AuthBox>
     <div class="flex justify-center mb-10">
-      <img
-        class="h-[120px]"
-        src="../assets/images/logo.png"
-        :alt="generalContent.organisationName"
-      />
+      <AppLogo class="h-[120px]" />
     </div>
 
     <router-view />
@@ -28,6 +24,7 @@ import { useI18n } from 'vue-i18n';
 import { generalContent } from '../store';
 import AppButton from '../components/forms/AppButton.vue';
 import AuthBox from '../components/AuthBox.vue';
+import AppLogo from '../components/AppLogo.vue';
 
 const { t } = useI18n();
 </script>

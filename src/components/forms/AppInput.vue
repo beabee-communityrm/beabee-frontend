@@ -1,22 +1,28 @@
 <template>
   <AppLabel v-if="label" :label="label" :required="required" />
-  <input
-    v-model.trim="value"
-    class="
-      p-2
-      w-full
-      border border-primary-40
-      rounded
-      focus:outline-none focus:shadow-input
-    "
-    :class="hasError && 'bg-danger-10 border-danger-70'"
-    :type="type"
-    :name="name"
-    :required="required"
-    :min="min"
-    v-bind="$attrs"
-    @blur="validation.value.$touch"
-  />
+  <div class="flex items-center">
+    <div class="flex-1">
+      <input
+        v-model.trim="value"
+        class="
+          p-2
+          w-full
+          border border-primary-40
+          rounded
+          focus:outline-none focus:shadow-input
+        "
+        :class="hasError && 'bg-danger-10 border-danger-70'"
+        :type="type"
+        :name="name"
+        :required="required"
+        :min="min"
+        :pattern="pattern"
+        v-bind="$attrs"
+        @blur="validation.value.$touch"
+      />
+    </div>
+    <div v-if="$slots.suffix" class="flex-0 ml-2"><slot name="suffix" /></div>
+  </div>
 
   <div
     v-if="hasError"
@@ -50,6 +56,7 @@ const props = withDefaults(
     required?: boolean;
     min?: number | string;
     sameAs?: number | string;
+    pattern?: string;
   }>(),
   {
     modelValue: undefined,
@@ -59,6 +66,7 @@ const props = withDefaults(
     infoMessage: undefined,
     min: undefined,
     sameAs: undefined,
+    pattern: undefined,
   }
 );
 
@@ -86,13 +94,13 @@ const rules = computed(() => ({
       requiredIf(!!props.required)
     ),
     ...(props.type === 'email' && {
-      email: helpers.withMessage(errorT('invalid'), email),
+      email: helpers.withMessage(errorT('email'), email),
     }),
     ...(props.type === 'url' && {
-      url: helpers.withMessage(errorT('invalid'), url),
+      url: helpers.withMessage(errorT('url'), url),
     }),
     ...(props.type === 'password' && {
-      password: helpers.withMessage(errorT('invalid'), isPassword),
+      password: helpers.withMessage(errorT('password'), isPassword),
     }),
     ...(props.min !== undefined && {
       min: helpers.withMessage(
@@ -102,6 +110,13 @@ const rules = computed(() => ({
     }),
     ...(props.sameAs !== undefined && {
       sameAs: helpers.withMessage(errorT('sameAs'), sameAs(props.sameAs)),
+    }),
+    ...(props.pattern !== undefined && {
+      pattern: helpers.withMessage(
+        errorT('pattern'),
+        (value: number | string) =>
+          new RegExp(`^(?:${props.pattern})$`).test(value.toString())
+      ),
     }),
   },
 }));

@@ -24,6 +24,20 @@
     "supportInbox": "",
     "welcomeBack": ""
   },
+  "adminSettings": {
+    "email": {},
+    "general": {
+      "footer": {
+        "dataPrivacy": {},
+        "otherLinks": {}
+      },
+      "socialSharing": {}
+    },
+    "theme": {
+      "colorNames": {},
+      "presetColors": {}
+    }
+  },
   "callout": {
     "contactDetails": "Контактная информация",
     "form": {
@@ -307,13 +321,14 @@
       "addressLine1": {},
       "aggregator": "Чего-то нехватает! Пожалуйста проконтролируйте верхние поля ввода",
       "cityOrTown": {},
+      "color": {},
       "confirmPassword": {
-        "invalid": "Некорректный Пароль",
+        "password": "Некорректный Пароль",
         "required": "Нужен пароль",
         "sameAs": "Пароли не совпадают"
       },
       "email": {
-        "invalid": "Некорректное имя почтового ящика",
+        "email": "Некорректное имя почтового ящика",
         "required": "Нужен почтовый ящик"
       },
       "firstName": {
@@ -326,12 +341,15 @@
         "required": "Нужно Имя"
       },
       "password": {
-        "invalid": "Некорректный Пароль",
+        "password": "Некорректный Пароль",
         "required": "Нужен пароль",
         "sameAs": "Пароли не совпадают"
       },
       "postCode": {},
-      "unknown": {}
+      "unknown": {
+        "email": "Некорректное имя почтового ящика"
+      },
+      "url": {}
     },
     "firstName": "Имя",
     "lastName": "Фамилия",

@@ -7,7 +7,7 @@
           :src="imageUrl"
           :width="width"
           :height="height"
-          class="w-full h-auto"
+          class="w-full h-auto bg-white"
           :class="!imageUrl && 'invisible'"
         />
       </div>

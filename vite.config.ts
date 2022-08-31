@@ -20,7 +20,7 @@ export default ({ mode }) => {
     ],
     server: {
       proxy: {
-        '^/(api|login|upload|uploads)': {
+        '^/(api|login|upload|uploads|favicon.png)': {
           target: process.env.API_PROXY_URL,
           changeOrigin: true,
           cookieDomainRewrite: {

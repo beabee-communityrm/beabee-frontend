@@ -68,8 +68,10 @@ meta:
           </router-link>
         </div>
       </div>
-      <div
+      <a
+        href="https://join.slack.com/t/beabee-communityrm/shared_invite/zt-1ezksg2wz-uLgLv4FxmCepzBlvLzL6tQ"
         class="
+          block
           p-10
           bg-white
           text-link
@@ -83,7 +85,7 @@ meta:
         <p class="w-72 max-w-72 m-auto">
           {{ t('adminDashboard.joinSlack') }}
         </p>
-      </div>
+      </a>
     </div>
   </div>
   <div class="lg:flex gap-12 mt-8">
@@ -91,10 +93,10 @@ meta:
     <Hint class="content-i18n" v-html="t('adminDashboard.hint2')" />
     <Hint class="content-i18n" v-html="t('adminDashboard.hint3')" />
   </div>
-  <p class="text-center text-sm mt-8">
-    {{ t('adminDashboard.supportInbox') }}
-    <a class="text-link" href="mailto:support@beabee.io">support@beabee.io</a>
-  </p>
+  <div
+    class="text-center text-sm mt-8 content-i18n"
+    v-html="t('adminDashboard.supportInbox')"
+  />
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
