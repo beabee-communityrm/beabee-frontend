@@ -122,7 +122,7 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
     error: false,
     component: markRaw(StepDatesAndDuration),
     data: {
-      startNow: data ? true : false,
+      startNow: !data,
       hasEndDate: !!data?.expires,
       startDate: data?.starts ? format(data.starts, 'yyyy-MM-dd') : '',
       endDate: data?.expires ? format(data.expires, 'yyyy-MM-dd') : '',
