@@ -10,6 +10,7 @@
             ['members', inputT('who.opts.members')],
             ['everyone', inputT('who.opts.everyone')],
           ]"
+          required
         />
       </div>
       <div
@@ -30,6 +31,7 @@
             [true, inputT('anonymous.opts.yes')],
             [false, inputT('anonymous.opts.no')],
           ]"
+          required
         />
       </div>
       <div
@@ -47,6 +49,7 @@
             [true, inputT('visible.opts.yes')],
             [false, inputT('visible.opts.no')],
           ]"
+          required
         />
       </div>
       <div
@@ -64,6 +67,7 @@
             [true, inputT('editable.opts.yes')],
             [false, inputT('editable.opts.no')],
           ]"
+          required
         />
       </div>
       <div

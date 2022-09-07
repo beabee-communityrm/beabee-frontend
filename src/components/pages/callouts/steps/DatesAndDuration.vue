@@ -11,6 +11,7 @@
             [true, inputT('starts.opts.now')],
             [false, inputT('starts.opts.schedule')],
           ]"
+          required
         />
         <AppInput
           v-if="!dataProxy.startNow || mode === 'edit'"
@@ -32,6 +33,7 @@
             [false, inputT('expires.opts.never')],
             [true, inputT('expires.opts.schedule')],
           ]"
+          required
         />
         <AppInput
           v-if="dataProxy.hasEndDate"

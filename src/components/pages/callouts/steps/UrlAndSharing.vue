@@ -10,6 +10,7 @@
             [false, inputT('slug.opts.auto')],
             [true, inputT('slug.opts.manual')],
           ]"
+          required
         />
         <AppInput
           v-if="dataProxy.useCustomSlug"
@@ -37,6 +38,7 @@
             [false, inputT('overrideShare.opts.yes')],
             [true, inputT('overrideShare.opts.no')],
           ]"
+          required
         />
       </div>
       <div class="col-span-1 text-sm text-grey mt-6" />
