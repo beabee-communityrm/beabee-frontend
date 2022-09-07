@@ -41,7 +41,20 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
     component: markRaw(StepContent),
     data: {
       introText: data?.intro || '',
-      formSchema: data?.formSchema || { components: [] },
+      formSchema: data?.formSchema || {
+        components: [
+          {
+            type: 'button',
+            label: t('actions.submit'),
+            key: 'submit',
+            size: 'md',
+            block: false,
+            action: 'submit',
+            disableOnInvalid: true,
+            theme: 'primary',
+          },
+        ],
+      },
     },
   },
   titleAndImage: {
