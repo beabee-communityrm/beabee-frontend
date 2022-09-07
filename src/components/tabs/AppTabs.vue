@@ -9,23 +9,7 @@
           selected === item.id && 'text-body font-bold border-b-2 border-text'
         "
       >
-        <span class="font-bold opacity-0">
-          {{ item.label }}
-          <span v-if="item.count !== undefined" class="ml-1">
-            ({{ item.count }})
-          </span>
-        </span>
-        <span
-          class="
-            absolute
-            inset-0
-            flex
-            items-center
-            justify-center
-            text-body-80
-            hover:text-body
-          "
-        >
+        <span class="text-body-80 hover:text-body">
           {{ item.label }}
           <span v-if="item.count !== undefined" class="ml-1">
             ({{ item.count }})

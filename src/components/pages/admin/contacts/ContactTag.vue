@@ -15,7 +15,6 @@
       border border-white
       select-none
     "
-    :class="hasRemoveIcon ? '' : ''"
   >
     {{ props.tag }}
     <font-awesome-icon
