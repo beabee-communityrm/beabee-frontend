@@ -8,7 +8,7 @@
       <h1 class="text-2.5xl mb-5">{{ t('common.loading') }}</h1>
 
       <font-awesome-icon
-        class="text-[60px] text-body-40"
+        class="text-[60px] text-body-60"
         :icon="['fas', 'circle-notch']"
         spin
       />

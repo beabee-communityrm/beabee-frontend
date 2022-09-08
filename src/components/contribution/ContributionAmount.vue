@@ -14,7 +14,7 @@
       :class="hasError ? 'border-danger bg-danger-10' : 'bg-white'"
     >
       <div class="flex flex-1 px-6 py-3 items-baseline overflow-hidden">
-        <span class="text-body-40">{{ currencySign }}</span>
+        <span class="text-body-60">{{ currencySign }}</span>
         <div class="relative mx-1 overflow-hidden">
           <div class="text-6xl font-semibold">
             {{ amount || '0' }}
@@ -40,7 +40,7 @@
           />
         </div>
 
-        <div class="whitespace-nowrap text-body-40">/ {{ period }}</div>
+        <div class="whitespace-nowrap text-body-60">/ {{ period }}</div>
       </div>
 
       <div class="flex flex-none flex-col h-full text-sm">

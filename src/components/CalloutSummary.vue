@@ -28,7 +28,7 @@
       </div>
       <div class="flex flex-row flex-nowrap mt-3 md:mt-0">
         <div class="flex-col text-sm">
-          <p class="text-body-40">
+          <p class="text-body-60">
             <AppItemStatus :status="callout.status" /> -
             <span v-if="callout.expires">
               {{

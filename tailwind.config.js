@@ -13,7 +13,7 @@ module.exports = {
   theme: {
     colors: {
       primary: shades('primary', [5, 10, 20, 40, 70, 80]),
-      body: shades('body', [40, 80]),
+      body: shades('body', [60, 80]),
       link: shades('link', [10, 30, 70, 110]),
       warning: shades('warning', [10, 30, 70]),
       success: shades('success', [10, 30, 70, 110]),
