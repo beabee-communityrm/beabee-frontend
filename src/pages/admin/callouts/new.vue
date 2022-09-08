@@ -79,7 +79,7 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
       whoCanTakePart:
         !data || data.access === 'member' ? 'members' : 'everyone',
       allowAnonymousResponses: data?.access === 'anonymous',
-      showOnUserDashboards: data?.hidden || false,
+      showOnUserDashboards: !data?.hidden,
       usersCanEditAnswers: data?.allowUpdate || false,
     },
   },
