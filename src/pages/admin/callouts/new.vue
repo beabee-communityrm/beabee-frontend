@@ -90,7 +90,7 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
     error: false,
     component: markRaw(StepEndMessage),
     data: {
-      whenFinished: 'message',
+      whenFinished: data?.thanksRedirect ? 'redirect' : 'message',
       thankYouTitle: data?.thanksTitle || '',
       thankYouText: data?.thanksText || '',
       thankYouRedirect: data?.thanksRedirect || '',
