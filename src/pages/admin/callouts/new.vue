@@ -36,7 +36,7 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
   content: {
     name: t('createCallout.steps.content.title'),
     description: t('createCallout.steps.content.description'),
-    validated: data ? true : false,
+    validated: !!data,
     error: false,
     component: markRaw(StepContent),
     data: {
@@ -60,7 +60,7 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
   titleAndImage: {
     name: t('createCallout.steps.titleAndImage.title'),
     description: t('createCallout.steps.titleAndImage.description'),
-    validated: data ? true : false,
+    validated: !!data,
     error: false,
     component: markRaw(StepTitleAndImage),
     data: {
@@ -72,20 +72,13 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
   visibility: {
     name: t('createCallout.steps.visibility.title'),
     description: t('createCallout.steps.visibility.description'),
-    validated: data ? true : false,
+    validated: !!data,
     error: false,
     component: markRaw(StepVisibility),
     data: {
-      whoCanTakePart: data?.access
-        ? data?.access === 'member'
-          ? 'members'
-          : 'everyone'
-        : 'members',
-      allowAnonymousResponses: data?.access
-        ? data?.access === 'anonymous'
-          ? true
-          : false
-        : false,
+      whoCanTakePart:
+        !data || data.access === 'member' ? 'members' : 'everyone',
+      allowAnonymousResponses: data?.access === 'anonymous',
       showOnUserDashboards: data?.hidden || false,
       usersCanEditAnswers: data?.allowUpdate || false,
     },
@@ -93,29 +86,29 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
   endMessage: {
     name: t('createCallout.steps.endMessage.title'),
     description: t('createCallout.steps.endMessage.description'),
-    validated: data ? true : false,
+    validated: !!data,
     error: false,
     component: markRaw(StepEndMessage),
     data: {
       whenFinished: 'message',
-      thankYouTitle: data?.thanksTitle ? data?.thanksTitle : '',
-      thankYouText: data?.thanksText ? data?.thanksText : '',
-      thankYouRedirect: data?.thanksRedirect ? data?.thanksRedirect : '',
+      thankYouTitle: data?.thanksTitle || '',
+      thankYouText: data?.thanksText || '',
+      thankYouRedirect: data?.thanksRedirect || '',
     },
   },
   url: {
     name: t('createCallout.steps.url.title'),
     description: t('createCallout.steps.url.description'),
-    validated: data ? true : false,
+    validated: !!data,
     error: false,
     component: markRaw(StepUrlAndSharing),
     data: {
-      useCustomSlug: data ? true : false,
+      useCustomSlug: !!data,
       autoSlug: '',
       slug: data?.slug || '',
-      overrideShare: data?.shareTitle ? true : false,
-      shareTitle: data?.shareTitle ? data?.shareTitle : '',
-      shareDescription: data?.shareDescription ? data?.shareDescription : '',
+      overrideShare: !!data?.shareTitle,
+      shareTitle: data?.shareTitle || '',
+      shareDescription: data?.shareDescription || '',
     },
   },
   /*mailchimp: {
@@ -131,7 +124,7 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
   dates: {
     name: t('createCallout.steps.dates.title'),
     description: t('createCallout.steps.dates.description'),
-    validated: data ? true : false,
+    validated: !!data,
     error: false,
     component: markRaw(StepDatesAndDuration),
     data: {
