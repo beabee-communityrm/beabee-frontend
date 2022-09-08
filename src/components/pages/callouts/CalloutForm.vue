@@ -133,6 +133,7 @@ function makeCalloutData(steps: CalloutSteps): [string, UpdateCalloutData] {
         ? {
             thanksText: steps.endMessage.data.thankYouText,
             thanksTitle: steps.endMessage.data.thankYouTitle,
+            thanksRedirect: null,
           }
         : {
             thanksText: '',
