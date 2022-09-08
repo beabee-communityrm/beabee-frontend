@@ -58,7 +58,6 @@
 import { watch, ref, computed, reactive } from 'vue';
 import slugify from 'slugify';
 import { useI18n } from 'vue-i18n';
-
 import PageTitle from '../../PageTitle.vue';
 import AppHeading from '../../AppHeading.vue';
 import AppButton from '../../forms/AppButton.vue';
@@ -103,6 +102,10 @@ const isAllValid = computed(() =>
   stepsInOrder.value.every((step) => step.validated)
 );
 
+function parseDateTime(date: string, time: string): Date {
+  return new Date(date + 'T' + time);
+}
+
 function makeCalloutData(steps: CalloutSteps): [string, UpdateCalloutData] {
   return [
     steps.url.data.useCustomSlug
@@ -116,9 +119,9 @@ function makeCalloutData(steps: CalloutSteps): [string, UpdateCalloutData] {
       formSchema: steps.content.data.formSchema,
       starts: steps.dates.data.startNow
         ? new Date()
-        : parseISO(steps.dates.data.startDate),
+        : parseDateTime(steps.dates.data.startDate, steps.dates.data.startTime),
       expires: steps.dates.data.hasEndDate
-        ? parseISO(steps.dates.data.endDate)
+        ? parseDateTime(steps.dates.data.endDate, steps.dates.data.endTime)
         : null,
       allowUpdate: steps.visibility.data.usersCanEditAnswers,
       allowMultiple: false,

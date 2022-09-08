@@ -131,7 +131,9 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
       startNow: !data,
       hasEndDate: !!data?.expires,
       startDate: data?.starts ? format(data.starts, 'yyyy-MM-dd') : '',
+      startTime: data?.starts ? format(data.starts, 'HH:mm') : '',
       endDate: data?.expires ? format(data.expires, 'yyyy-MM-dd') : '',
+      endTime: data?.expires ? format(data.expires, 'HH:mm') : '',
     },
   },
 });
