@@ -1,4 +1,4 @@
-import { parseISO } from 'date-fns';
+import { parseJSON } from 'date-fns';
 import axios from '../../axios';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import { PaymentMethod } from '../enums/payment-method.enum';
@@ -21,7 +21,7 @@ import {
 function toDate(s: string): Date;
 function toDate(s: string | undefined): Date | undefined;
 function toDate(s: string | undefined): Date | undefined {
-  return s ? parseISO(s) : undefined;
+  return s ? parseJSON(s) : undefined;
 }
 
 // TODO: how to make this type safe?

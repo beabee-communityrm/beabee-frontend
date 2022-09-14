@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppLabel v-if="label" :label="label" />
+    <AppLabel v-if="label" :label="label" :required="required" />
     <label
       v-for="[value, optLabel] in options"
       :key="value.toString()"
@@ -14,6 +14,7 @@
         :value="value"
         :checked="modelValue === value"
         class="mr-1"
+        :required="required"
       />
       {{ optLabel }}
     </label>
@@ -31,6 +32,7 @@ const props = defineProps<{
   name: string;
   label?: string;
   inline?: boolean;
+  required?: boolean;
 }>();
 
 const selected = computed({

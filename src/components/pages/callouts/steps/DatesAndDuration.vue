@@ -2,23 +2,25 @@
   <div>
     <div class="grid grid-cols-2 gap-6">
       <div class="col-span-1">
+        <AppLabel :label="inputT('starts.label')" required />
         <AppRadioGroup
           v-if="mode === 'new'"
           v-model="dataProxy.startNow"
           name="calloutStartDate"
-          :label="inputT('starts.label')"
           :options="[
             [true, inputT('starts.opts.now')],
             [false, inputT('starts.opts.schedule')],
           ]"
-        />
-        <AppInput
-          v-if="!dataProxy.startNow || mode === 'edit'"
-          v-model="dataProxy.startDate"
-          :label="mode === 'edit' ? inputT('starts.label') : undefined"
-          type="date"
           required
         />
+        <div v-if="!dataProxy.startNow || mode === 'edit'" class="flex gap-2">
+          <div>
+            <AppInput v-model="dataProxy.startDate" type="date" required />
+          </div>
+          <div>
+            <AppInput v-model="dataProxy.startTime" type="time" required />
+          </div>
+        </div>
       </div>
       <div class="col-span-1 text-sm text-grey mt-6" />
     </div>
@@ -32,14 +34,16 @@
             [false, inputT('expires.opts.never')],
             [true, inputT('expires.opts.schedule')],
           ]"
-        />
-        <AppInput
-          v-if="dataProxy.hasEndDate"
-          v-model="dataProxy.endDate"
-          type="date"
           required
-          :min="dataProxy.startDate"
         />
+        <div v-if="dataProxy.hasEndDate" class="flex gap-2">
+          <div>
+            <AppInput v-model="dataProxy.endDate" type="date" required />
+          </div>
+          <div>
+            <AppInput v-model="dataProxy.endTime" type="time" required />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -50,6 +54,7 @@ import useVuelidate from '@vuelidate/core';
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../forms/AppInput.vue';
+import AppLabel from '../../../forms/AppLabel.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
 import { DateAndDurationStepProps } from '../callouts.interface';
 

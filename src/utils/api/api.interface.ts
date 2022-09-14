@@ -7,12 +7,19 @@ import { PaymentMethod } from '../enums/payment-method.enum';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Noop {}
 
+// Dates are serialized in API response
 export type Serial<T> = {
   [P in keyof T]: T[P] extends Date
     ? string
     : T[P] extends Date | undefined
     ? string | undefined
     : T[P];
+};
+
+// Allow null in place of possibly undefined fields, useful for create/update as
+// JSON serialisation removes undefined keys
+export type AllowNull<T> = {
+  [P in keyof T]: undefined extends T[P] ? T[P] | null : T[P];
 };
 
 export type PermissionType = 'member' | 'admin' | 'superadmin';
@@ -314,7 +321,7 @@ export interface GetMoreCalloutData
   extends GetBasicCalloutData,
     MoreCalloutData {}
 
-export type CreateCalloutData = MoreCalloutData;
+export type CreateCalloutData = AllowNull<MoreCalloutData>;
 
 export type UpdateCalloutData = Omit<CreateCalloutData, 'slug'>;
 
