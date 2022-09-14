@@ -49,7 +49,7 @@ const emit = defineEmits(['update:modelValue']);
 const props = withDefaults(
   defineProps<{
     modelValue?: number | string;
-    type?: 'password' | 'email' | 'text' | 'date' | 'number' | 'url';
+    type?: 'password' | 'email' | 'text' | 'date' | 'time' | 'number' | 'url';
     name?: string;
     label?: string;
     infoMessage?: string;

@@ -42,7 +42,9 @@ export interface DateAndDurationStepProps {
   hasEndDate: boolean;
   startNow: boolean;
   startDate: string;
+  startTime: string;
   endDate: string;
+  endTime: string;
 }
 
 export interface CalloutStep<T> extends Step {

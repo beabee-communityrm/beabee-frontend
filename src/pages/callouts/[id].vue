@@ -158,6 +158,8 @@ import GuestFields from '../../components/pages/callouts/GuestFields.vue';
 import SharingPanel from '../../components/pages/callouts/CalloutSharingPanel.vue';
 import axios from '../../axios';
 
+import 'formiojs/dist/formio.form.css';
+
 type FormSubmission = { data: CalloutResponseAnswers };
 
 const props = defineProps<{ id: string }>();
