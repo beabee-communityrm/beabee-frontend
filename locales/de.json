@@ -9,6 +9,7 @@
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
     "schedule": "Planen",
+    "submit": "Abschicken",
     "unpublish": "Veröffentlichung aufheben",
     "update": "Änderungen speichern",
     "view": "Anzeigen"
@@ -174,6 +175,7 @@
       "callout": "Callout",
       "endDate": "Enddatum"
     },
+    "noArchivedCallouts": "Keine Callouts",
     "search": "Callouts durchsuchen",
     "show": "Anzeigen",
     "showAll": "Alle",
@@ -403,8 +405,7 @@
           },
           "image": {
             "help": "<p>Das <strong>Titelbild</strong> dient zur Illustration des Callouts.</p>\n",
-            "label": "Titelbild",
-            "placeholder": "https://"
+            "label": "Titelbild"
           },
           "title": {
             "help": "<p>Der <strong>Titel</strong> taucht immer dort auf, wo dein Callout erwähnt wird. Überlege dir einen guten Namen, der Interesse weckt.</p>\n",

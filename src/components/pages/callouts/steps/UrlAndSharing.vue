@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid grid-cols-2 gap-6" v-if="mode === 'new'">
+    <div v-if="mode === 'new'" class="grid grid-cols-2 gap-6 mt-5">
       <div class="col-span-1">
         <AppRadioGroup
           v-model="dataProxy.useCustomSlug"
@@ -10,6 +10,7 @@
             [false, inputT('slug.opts.auto')],
             [true, inputT('slug.opts.manual')],
           ]"
+          required
         />
         <AppInput
           v-if="dataProxy.useCustomSlug"
@@ -27,7 +28,7 @@
         v-html="inputT('slug.help')"
       />
     </div>
-    <div class="grid grid-cols-2 gap-6 mt-6">
+    <div class="grid grid-cols-2 gap-6 mt-5">
       <div class="col-span-1">
         <AppRadioGroup
           v-model="dataProxy.overrideShare"
@@ -37,6 +38,7 @@
             [false, inputT('overrideShare.opts.yes')],
             [true, inputT('overrideShare.opts.no')],
           ]"
+          required
         />
       </div>
       <div class="col-span-1 text-sm text-grey mt-6" />
@@ -62,7 +64,7 @@
           :label="inputT('description.label')"
           :placeholder="inputT('description.placeholder')"
           required
-        ></AppTextArea>
+        />
       </div>
       <div
         class="col-span-1 text-sm text-grey mt-6"
