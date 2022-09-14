@@ -12,9 +12,7 @@
     <span
       v-if="item.count !== undefined"
       class="text-xs ml-2 font-semibold"
-      :class="
-        selected ? 'text-body' : 'text-body-60 group-hover:text-body-80'
-      "
+      :class="selected ? 'text-body' : 'text-body-60 group-hover:text-body-80'"
       >{{ item.count }}</span
     >
   </a>
