@@ -19,6 +19,7 @@ export default ({ mode }) => {
       pages(),
     ],
     server: {
+      port: 3000,
       proxy: {
         '^/(api|login|upload|uploads|favicon.png)': {
           target: process.env.API_PROXY_URL,

@@ -9,7 +9,7 @@ meta:
   <div v-if="callout" class="md:max-w-2xl">
     <h1 class="font-title text-4xl font-bold mb-6">{{ callout.title }}</h1>
     <div class="flex justify-between items-center mb-6">
-      <div class="flex items-center text-sm text-body-40 font-semibold">
+      <div class="flex items-center text-sm text-body-60 font-semibold">
         <div>
           <div class="flex flex-col">
             <AppItemStatus :status="callout.status" />

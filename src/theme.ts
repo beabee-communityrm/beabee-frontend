@@ -100,7 +100,7 @@ watch(
     // Set colors
 
     setShades('primary', colors.primary, [5, 10, 20, 40, 70, 80]);
-    setShades('body', colors.body, [40, 80]);
+    setShades('body', colors.body, [60, 80]);
     setShades('link', colors.link, [10, 70, 110]);
     setShades('warning', colors.warning || '#f5cc5b', [10, 30, 70]);
     setShades('success', colors.success || '#86a960', [10, 30, 70, 110]);

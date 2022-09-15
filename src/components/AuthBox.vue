@@ -4,9 +4,9 @@
       class="
         bg-white
         py-6
-        md:py-12
-        px-5
-        md:px-12
+        md:py-8
+        px-6
+        md:px-8
         mx-auto
         rounded-md
         auth-box
@@ -21,6 +21,6 @@
 <style scoped>
 .auth-box {
   box-shadow: 0 0 1rem 0.125rem rgba(51, 51, 51, 0.4);
-  max-width: 32rem;
+  max-width: 30rem;
 }
 </style>

@@ -84,7 +84,10 @@ meta:
     </div>
     <div class="row-span-3 max-w-xl">
       <AppHeading>{{ t('contactOverview.about') }}</AppHeading>
-      <div class="mb-5" v-html="t('contactOverview.annotation.copy')" />
+      <div
+        class="mb-5 text-sm text-body-80"
+        v-html="t('contactOverview.annotation.copy')"
+      />
 
       <form @submit.prevent="handleFormSubmit">
         <AppInput
@@ -107,7 +110,7 @@ meta:
         />
         <AppButton
           type="submit"
-          variant="link"
+          variant="primary"
           class="mt-4"
           :loading="loading"
           >{{ t('form.saveChanges') }}</AppButton
