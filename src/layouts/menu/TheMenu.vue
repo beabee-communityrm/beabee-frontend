@@ -22,7 +22,7 @@
 
     <div class="flex items-center cursor-pointer" @click="toggleMenu">
       <h1 class="text-2xl underline">
-        {{ route.meta.pageTitle }}
+        {{ t(route.meta.pageTitle) }}
       </h1>
 
       <font-awesome-icon
@@ -70,8 +70,10 @@ import { useRoute, useRouter } from 'vue-router';
 import { currentUser } from '../../store';
 import TheMenuList from './TheMenuList.vue';
 import AppLogo from '../../components/AppLogo.vue';
+import { useI18n } from 'vue-i18n';
 
 const route = useRoute();
+const { t } = useI18n();
 
 const isMenuVisible = ref(false);
 // Automatically hide menu on route change
