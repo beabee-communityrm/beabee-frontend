@@ -47,7 +47,7 @@ meta:
               `${member.firstname} ${member.lastname}`.trim() || member.email
             }}
           </router-link>
-          <span class="text-sm text-body-40 font-semibold">
+          <span class="text-sm text-body-60 font-semibold">
             {{
               t('common.timeAgo', {
                 time: formatDistanceLocale(new Date(), member.joined),

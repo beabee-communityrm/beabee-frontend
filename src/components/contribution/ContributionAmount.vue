@@ -14,7 +14,7 @@
       :class="hasError ? 'border-danger bg-danger-10' : 'bg-white'"
     >
       <div class="flex flex-1 px-6 py-3 items-baseline overflow-hidden">
-        <span class="text-primary-40">{{ currencySign }}</span>
+        <span class="text-body-60">{{ currencySign }}</span>
         <div class="relative mx-1 overflow-hidden">
           <div class="text-6xl font-semibold">
             {{ amount || '0' }}
@@ -23,7 +23,7 @@
             :value="amount"
             class="
               absolute
-              text-6xl text-primary
+              text-6xl text-body
               inset-0
               w-full
               h-full
@@ -40,7 +40,7 @@
           />
         </div>
 
-        <div class="whitespace-nowrap text-primary-40">/ {{ period }}</div>
+        <div class="whitespace-nowrap text-body-60">/ {{ period }}</div>
       </div>
 
       <div class="flex flex-none flex-col h-full text-sm">
@@ -71,10 +71,7 @@
         md:my-0
         grid grid-cols-3
         md:grid-cols-1
-        border border-primary-40
-        rounded
         overflow-hidden
-        bg-white
       "
     >
       <button
@@ -82,20 +79,31 @@
         :key="index"
         type="button"
         class="
-          border-primary-40 border-r
-          md:border-r-0 md:border-b
-          last:border-b-0 last:border-r-0
-          h-9
+          bg-white
+          text-sm
+          border border-primary-40
+          first:rounded-l first:border-r-0
+          last:rounded-r last:rounded-l-none last:border-l-0 last:border-t
+          md:first:rounded-t
+          md:first:rounded-bl-none
+          md:first:border-r
+          md:first:border-b-0
+          md:last:rounded-b
+          md:last:rounded-tr-none
+          md:last:border-t-0
+          md:last:border-l
+          p-3
+          md:p-2
+          border-box
           flex
           items-center
           justify-center
           font-semibold
-          fir
         "
         :class="
           definedAmount === amount
-            ? 'bg-link text-white'
-            : 'hover:bg-link-10 text-primary'
+            ? 'bg-link-10 !text-link font-bold !border-link'
+            : 'hover:text-link-110'
         "
         @click="changeAmount(definedAmount)"
       >

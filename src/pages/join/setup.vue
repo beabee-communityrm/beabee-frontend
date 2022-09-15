@@ -17,10 +17,10 @@ meta:
         "
       />
       <div
-        class="mb-6 content-message"
+        class="mb-2 content-message"
         v-html="t('joinSetup.confirmDetails')"
       />
-      <p class="mt-2 mb-4">
+      <p class="mt-2 mb-6">
         {{ setupContent.welcome }}
       </p>
 
@@ -50,25 +50,25 @@ meta:
           {{ setupContent.newsletterTitle }}
         </p>
 
-        <p class="mb-4 text-sm">
+        <p class="mb-2 text-sm">
           {{ setupContent.newsletterText }}
         </p>
 
         <AppCheckbox
           v-model="setupMemberData.profile.newsletterOptIn"
           :label="setupContent.newsletterOptIn"
-          class="mb-4 font-bold"
+          class="mb-6 font-semibold"
         />
       </template>
 
-      <MessageBox v-if="validation.$errors.length > 0" class="mb-4" />
+      <MessageBox v-if="validation.$errors.length > 0" class="mb-2" />
 
       <AppButton
         variant="link"
         type="submit"
         :loading="saving"
         :disabled="validation.$invalid"
-        class="w-full"
+        class="mb-3 w-full"
       >
         {{ t('joinSetup.continue') }}
       </AppButton>

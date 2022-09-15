@@ -74,7 +74,7 @@ function getRowClass(item: GetPaymentData) {
     case PaymentStatus.Failed:
       return 'text-danger';
     case PaymentStatus.Pending:
-      return 'text-body-40';
+      return 'text-body-60';
     default:
       return '';
   }

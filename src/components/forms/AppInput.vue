@@ -32,7 +32,7 @@
     {{ validation.value.$errors[0].$message }}
   </div>
 
-  <div v-if="infoMessage" class="mt-2 text-xs">
+  <div v-if="infoMessage" class="text-xs mt-1.5">
     <InfoMessage :message="infoMessage" />
   </div>
 </template>

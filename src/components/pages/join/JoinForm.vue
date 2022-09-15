@@ -36,14 +36,14 @@
       v-model:password="signUpData.password"
     />
 
-    <MessageBox v-if="validation.$errors.length > 0" class="mb-4" />
+    <MessageBox v-if="validation.$errors.length > 0" class="mb-2" />
 
     <AppButton
       :disabled="validation.$invalid"
       :loading="loading"
       variant="link"
       type="submit"
-      class="mb-4 w-full"
+      class="mb-3 w-full"
       >{{ buttonText }}</AppButton
     >
 

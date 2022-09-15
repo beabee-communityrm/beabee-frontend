@@ -24,6 +24,7 @@ meta:
     <div class="flex-1">
       <AppColor name="bg-link" shade="Link" />
       <AppColor name="bg-link-10" shade="10" />
+      <AppColor name="bg-link-30" shade="30" />
       <AppColor name="bg-link-70" shade="70" />
       <AppColor name="bg-link-110" shade="110" />
     </div>
