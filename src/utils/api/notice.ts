@@ -1,4 +1,4 @@
-import { parseISO } from 'date-fns';
+import { parseJSON } from 'date-fns';
 import axios from '../../axios';
 import {
   GetNoticeData,
@@ -11,7 +11,7 @@ import {
 function toDate(s: string): Date;
 function toDate(s: string | undefined): Date | undefined;
 function toDate(s: string | undefined): Date | undefined {
-  return s ? parseISO(s) : undefined;
+  return s ? parseJSON(s) : undefined;
 }
 
 export async function fetchNotices(

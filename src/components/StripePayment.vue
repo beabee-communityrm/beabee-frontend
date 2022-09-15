@@ -62,37 +62,48 @@ const validation = useVuelidate();
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 let completePayment = ref(() => {});
 
+// Fetch dynamic theming options, tailwind wraps colours in rgb()
+const style = getComputedStyle(document.body);
+function getColor(name: string): string {
+  const value = style.getPropertyValue(name);
+  return `rgb(${value})`;
+}
+
 const appearance: Appearance = {
   theme: 'flat',
   variables: {
-    colorDanger: theme.colors.danger.DEFAULT,
-    colorPrimary: theme.colors.link.DEFAULT,
-    colorText: theme.colors.body.DEFAULT,
-    colorBackground: theme.colors.white.DEFAULT,
+    colorDanger: getColor('--c-danger'),
+    colorPrimary: getColor('-c--primary'),
+    colorText: getColor('--c-body'),
+    colorBackground: getColor('--c-white'),
     borderRadius: theme.borderRadius.DEFAULT,
     fontLineHeight: theme.lineHeight.tight,
     fontSizeBase: theme.fontSize.base[0],
     fontSizeSm: theme.fontSize.sm[0],
-    //fontFamily: theme.fontFamily.body,
+    fontSizeXs: theme.fontSize.xs[0],
+    fontFamily: style.getPropertyValue('--ff-body'),
   },
   rules: {
     '.Input': {
-      border: '1px solid ' + theme.colors.primary['40'],
+      border: '1px solid ' + getColor('--c-primary-40'),
       padding: theme.spacing['2'],
       lineHeight: theme.lineHeight.tight,
     },
     '.Input:focus': {
-      boxShadow: theme.boxShadow.input,
+      boxShadow: style.getPropertyValue('--bs-input'),
     },
     '.Input--invalid': {
-      backgroundColor: theme.colors.danger['10'],
-      borderColor: theme.colors.danger['70'],
+      backgroundColor: getColor('--c-danger-10'),
+      borderColor: getColor('--c-danger-70'),
       color: 'inherit',
       boxShadow: 'none',
     },
     '.Label': {
       fontSize: theme.fontSize.base[0],
       marginBottom: theme.spacing['1.5'],
+    },
+    '.Error': {
+      fontSize: theme.fontSize.xs[0],
     },
   },
 };

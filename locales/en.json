@@ -9,6 +9,7 @@
     "replicate": "Replicate",
     "reset": "Reset",
     "schedule": "Schedule",
+    "submit": "Submit",
     "unpublish": "Unpublish",
     "update": "Update",
     "view": "View"
@@ -136,7 +137,7 @@
         "title": "Delete callout?"
       }
     },
-    "created": "Well done! Your callout was successfully created.",
+    "created": "Your new callout was successfully created.",
     "dates": {
       "ends": "Ends",
       "label": "Dates",
@@ -337,14 +338,14 @@
         "description": "Build your callout with questions and prompts",
         "inputs": {
           "intro": {
-            "help": "<p>The <strong>Introduction text</strong> appears alongside the callout, it should explain why you are doing this callout and give any context the user might need before answering.</p>\n",
+            "help": "<p>The <strong>Introduction text</strong> appears alongside the callout. It should explain why you are doing this callout and give any context the user might need before answering.</p>\n",
             "label": "Introduction text"
           }
         },
         "title": "Callout content"
       },
       "dates": {
-        "description": "Schedule when your callout will go live and how long for",
+        "description": "Schedule when your callout will go live and for how long",
         "inputs": {
           "expires": {
             "label": "When should this callout end?",
@@ -374,7 +375,7 @@
             }
           },
           "text": {
-            "help": "<p>Here you can thank them in more detail, let them know if and when they can expect updates or follow-ups.</p>\n",
+            "help": "<p>Here you can thank users in more detail and let them know when to expect updates or follow-ups.</p>\n",
             "label": "Thank you text",
             "placeholder": "Include more details about how valuable their input was..."
           },
@@ -398,14 +399,13 @@
         "description": "Set a title, description and image for the callout",
         "inputs": {
           "description": {
-            "help": "<p>The <strong>Short description</strong> expands on the title to explain what the callout is about. It is meant to quickly inform people what is inside in a few words.</p>\n",
+            "help": "<p>The <strong>Short description</strong> expands on the title to explain what the callout is about. It is meant to inform people what is inside in a few words.</p>\n",
             "label": "Short description",
-            "placeholder": "Quickly explain why people should do this callout."
+            "placeholder": "Quickly explain why people should open this callout."
           },
           "image": {
             "help": "<p>The <strong>Cover image</strong> will serve as an illustration for the callout on menus and forms.</p>\n",
-            "label": "Cover image",
-            "placeholder": "https://"
+            "label": "Cover image"
           },
           "title": {
             "help": "<p>The <strong>Title</strong> will appear on all the mentions of this callout. It's worth spending a while coming up with the right name to get people interested.</p>\n",
@@ -451,7 +451,7 @@
         "description": "Choose who will see your callout",
         "inputs": {
           "anonymous": {
-            "help": "<p>If you allow <strong>anonymous responses</strong>, guests will be not asked for their contact information.</p>\n",
+            "help": "<p>If you allow <strong>anonymous responses</strong>, guests will not be asked for their contact information.</p>\n",
             "label": "Should guests be able to answer anonymously?",
             "opts": {
               "no": "No, require contact details",
@@ -470,7 +470,7 @@
             "help": "<p>You can make the callout <strong>not appear</strong> to users if you only want it to be answered by people who you share the link with.</p>\n",
             "label": "Should it be visible in the users' dashboards?",
             "opts": {
-              "no": "No, it can only be access through its link",
+              "no": "No, it can only be accessed through its link",
               "yes": "Yes, show it to users"
             }
           },
@@ -489,7 +489,7 @@
     "title": "Create a callout"
   },
   "editCallout": {
-    "replicated": "Your callout was replicated! You are now editing the new copy. Be sure to edit the title in the \"Title and Image\" tab.",
+    "replicated": "Your callout was successfully replicated, and you are now editing the new copy. Be sure to edit the title in the \"Title and Image\" tab.",
     "title": "Edit callout",
     "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
@@ -520,13 +520,13 @@
     "email": "Email",
     "errors": {
       "address": {
-        "required": "This field is required if you want to add address"
+        "required": "This field is required if you want to add an address"
       },
       "addressLine1": {
         "required": "Address line 1 is required"
       },
-      "aggregator": "Something is missing! Please check the fields above.",
-      "aggregatorTop": "Something is missing! Please check for errors below.",
+      "aggregator": "Something is missing. Please check the fields above.",
+      "aggregatorTop": "Something is missing. Please check for errors below.",
       "cityOrTown": {
         "required": "City/Town is required"
       },
@@ -577,7 +577,7 @@
     "newPasswordConfirm": "Confirm new password",
     "notes": "Notes",
     "password": "Password",
-    "passwordInfo": "Set a secure password: 8+ characters at least one number, one uppercase and one lowercase letters.",
+    "passwordInfo": "Set a secure password: 8+ characters or longer, and it must include a number, uppercase and lowercase letters.",
     "phone": "Phone",
     "postCode": "Postcode",
     "richtext": {
@@ -595,7 +595,7 @@
     "unsavedChanges": "Unsaved changes",
     "updated": "Updated",
     "uploading": "Uploading...",
-    "warning": "Please only make updates to this page with the consent of the user. Changes you make here will also be visible to the user."
+    "warning": "You should get the user's consent before making updates to this page. All changes you make here will also be visible to the user."
   },
   "homePage": {
     "editProfile": "Edit your community profile",
@@ -608,7 +608,7 @@
     "title": "Home",
     "viewAllCallouts": "View all callouts",
     "viewOpenCallouts": "View open callouts",
-    "welcome": "Welcome abroad {firstName}!",
+    "welcome": "Welcome aboard {firstName}!",
     "yourProfile": "Your profile"
   },
   "informationPage": {
@@ -629,11 +629,11 @@
     "errors": {
       "confirmEmail": {
         "message": "Almost there! We just need to confirm your email address to finish setting up your membership.",
-        "proceed": "We've sent you an email please click the link to proceed",
+        "proceed": "We've sent you an email. Please click the link to proceed.",
         "title": "Confirm your email address"
       },
       "duplicateEmail": {
-        "message": "This email address is already registered you can login to proceed.",
+        "message": "This email address is already registered. You can login to proceed.",
         "title": "Duplicate email address"
       },
       "failed": {
@@ -749,8 +749,8 @@
     }
   },
   "notification": {
-    "error": "Oops, something went wrong! Try reloading the page.",
-    "success": "Well done! Your action was successful."
+    "error": "Something went wrong. Try reloading the page.",
+    "success": "Your action was successful."
   },
   "pageTitle": {
     "confirmEmail": "Confirm email",

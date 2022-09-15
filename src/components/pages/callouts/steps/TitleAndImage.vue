@@ -30,11 +30,11 @@
     </div>
     <div class="grid grid-cols-2 gap-6 mt-5">
       <div class="col-span-1">
-        <AppInput
+        <AppImageUpload
           v-model="dataProxy.coverImageURL"
           :label="inputT('image.label')"
-          :placeholder="inputT('image.placeholder')"
-          type="url"
+          :width="1440"
+          :height="900"
           required
         />
       </div>
@@ -50,6 +50,7 @@
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../forms/AppInput.vue';
+import AppImageUpload from '../../../forms/AppImageUpload.vue';
 import AppTextArea from '../../../forms/AppTextArea.vue';
 import useVuelidate from '@vuelidate/core';
 import { TitleAndImageStepProps } from '../callouts.interface';

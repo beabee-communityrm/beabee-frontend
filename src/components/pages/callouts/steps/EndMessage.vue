@@ -10,6 +10,7 @@
             ['message', inputT('action.opts.showMessage')],
             ['redirect', inputT('action.opts.redirect')],
           ]"
+          required
         />
       </div>
     </div>
