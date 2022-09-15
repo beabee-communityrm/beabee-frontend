@@ -1,8 +1,9 @@
 export interface Header {
   text: string;
+  value: string;
   sortable?: boolean;
   width?: string;
-  value: string;
+  wrap?: boolean;
   align?: 'left' | 'right' | 'center';
 }
 

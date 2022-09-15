@@ -1,28 +1,9 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import { homeRoute } from '../modules/home/home.route';
-import { informationRoute } from '../modules/information/information.route';
-import { joinRoute } from '../modules/auth/join/join.route';
-import { authRoute } from '../modules/auth/auth.route';
-import { themeRoute } from '../modules/theme/theme.route';
-import { contributionRoute } from '../modules/contribution/contribution.route';
-import { contactsRoute } from '../modules/contacts/contacts.route';
+import { createRouter, createWebHistory } from 'vue-router';
 import { currentUser, initStore, generalContent } from '../store';
-import { calloutsRoute } from '../modules/callouts/callouts.route';
-import { noticesRoute } from '../modules/notices/notices.route';
+import i18n from '../i18n';
 
-// routes
-
-const routes: RouteRecordRaw[] = [
-  ...informationRoute,
-  ...joinRoute,
-  ...homeRoute,
-  ...authRoute,
-  ...themeRoute,
-  ...contributionRoute,
-  ...contactsRoute,
-  ...calloutsRoute,
-  ...noticesRoute,
-];
+import routes from '~pages';
+import { watch } from 'vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -32,13 +13,15 @@ const router = createRouter({
   },
 });
 
+watch([i18n.global.locale, router.currentRoute], ([locale, route]) => {
+  document.title =
+    (route.meta.pageTitle ? i18n.global.t(route.meta.pageTitle) + ' - ' : '') +
+    generalContent.value.organisationName;
+});
+
 router.beforeEach(async (to, from, next) => {
   // Block route for initial store load, this will only happen once
   await initStore;
-
-  document.title = to.meta.pageTitle
-    ? to.meta.pageTitle + ' - ' + generalContent.value.organisationName
-    : generalContent.value.organisationName;
 
   const user = currentUser.value;
 

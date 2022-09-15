@@ -3,6 +3,25 @@
 const fs = require('fs');
 const path = require('path');
 const { google } = require('googleapis');
+const MarkdownIt = require('markdown-it');
+
+const simpleMd = new MarkdownIt('zero').enable(['emphasis', 'link']);
+
+const optHandlers = {
+  md: (data) => simpleMd.render(data),
+};
+
+function processKeyData(keyOpts, keyData) {
+  if (keyData !== undefined) {
+    return (
+      keyOpts
+        // Apply handlers
+        .reduce((data, opt) => optHandlers[opt](data), keyData || '')
+        // Santize special i18n character
+        .replace(/@/g, "{'@'}")
+    );
+  }
+}
 
 const auth = new google.auth.GoogleAuth({
   keyFile: path.join(__dirname, '.credentials.json'),
@@ -33,7 +52,8 @@ const sheets = google.sheets({ version: 'v4', auth });
   // Construct nested objects from a.b.c key paths
   for (const row of rows) {
     const keyParts = row.key.split('.');
-    const lastKeyPart = keyParts.pop();
+    const [lastKeyPart, ...keyOpts] = keyParts.pop().split(':');
+
     for (const locale of locales) {
       let localeDataPart = localeData[locale];
       for (const part of keyParts) {
@@ -42,7 +62,10 @@ const sheets = google.sheets({ version: 'v4', auth });
         }
         localeDataPart = localeDataPart[part];
       }
-      localeDataPart[lastKeyPart] = row[locale];
+      if (localeDataPart[lastKeyPart] !== undefined) {
+        console.log('Duplicate key ' + row.key);
+      }
+      localeDataPart[lastKeyPart] = processKeyData(keyOpts, row[locale]);
     }
   }
 

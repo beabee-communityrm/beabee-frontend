@@ -1,6 +1,6 @@
 <template>
   <span
-    :class="'inline-block w-2 h-2 rounded-full align-middle ' + iconColor"
+    :class="`inline-block ${iconSize} rounded-full align-middle ${iconColor}`"
   ></span>
 </template>
 
@@ -10,9 +10,11 @@ import { computed } from 'vue';
 const props = withDefaults(
   defineProps<{
     type: 'success' | 'warning' | 'error';
+    size?: 'large';
   }>(),
-  { type: 'success' }
+  { type: 'success', size: 'large' }
 );
 
+const iconSize = props.size === 'large' ? `w-4 h-4` : `w-2 h-2`;
 const iconColor = computed(() => `bg-${props.type}`);
 </script>

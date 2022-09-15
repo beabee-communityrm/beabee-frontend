@@ -1,10 +1,13 @@
 <template>
-  <form
-    class="relative"
-    @submit.prevent="emit('update:modelValue', searchText)"
-  >
-    <AppInput v-model="searchText" class="pr-12" :placeholder="placeholder" />
+  <form class="relative" @submit.prevent="submit">
+    <AppInput
+      v-model="searchText"
+      class="pr-12"
+      :placeholder="placeholder"
+      @blur="submit"
+    />
     <button
+      type="button"
       v-if="searchText.length > 0"
       class="
         absolute
@@ -38,6 +41,10 @@ const props = defineProps<{
 }>();
 
 const searchText = ref(props.modelValue);
+
+function submit() {
+  emit('update:modelValue', searchText.value);
+}
 
 watch(
   () => props.modelValue,

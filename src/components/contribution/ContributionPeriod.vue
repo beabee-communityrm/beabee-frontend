@@ -8,12 +8,12 @@
     >
       <input
         :id="period.name"
+        v-model="value"
         type="radio"
         :name="period.name"
         :value="period.name"
         class="absolute opacity-0 -z-10"
-        :checked="period.name === selectedPeriod"
-        @change="changePeriod(handleInput($event))"
+        :checked="period.name === modelValue"
       />
       <span
         class="
@@ -25,9 +25,7 @@
           cursor-pointer
         "
         :class="
-          period.name === selectedPeriod
-            ? 'bg-link text-white'
-            : 'hover:bg-link-10'
+          period.name === modelValue ? 'bg-link text-white' : 'hover:bg-link-10'
         "
       >
         {{
@@ -39,21 +37,21 @@
 </template>
 
 <script lang="ts" setup>
-import handleInput from '../../utils/handle-input';
 import { useI18n } from 'vue-i18n';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import { ContributionContent } from './contribution.interface';
+import { computed } from 'vue';
 
 const { t } = useI18n();
 
-const emit = defineEmits(['changePeriod']);
-
-defineProps<{
+const emit = defineEmits(['update:modelValue']);
+const props = defineProps<{
+  modelValue: ContributionPeriod;
   periods: ContributionContent['periods'];
-  selectedPeriod: ContributionPeriod;
 }>();
 
-const changePeriod = (period: string) => {
-  emit('changePeriod', period);
-};
+const value = computed({
+  get: () => props.modelValue,
+  set: (newPeriod) => emit('update:modelValue', newPeriod),
+});
 </script>

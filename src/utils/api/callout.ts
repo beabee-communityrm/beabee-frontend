@@ -9,6 +9,8 @@ import {
   GetCalloutResponseData,
   GetCalloutResponsesQuery,
   CreateCalloutResponseData,
+  CreateCalloutData,
+  UpdateCalloutData,
 } from './api.interface';
 
 // TODO: dedupe from member
@@ -51,6 +53,32 @@ export async function fetchCallout(id: string): Promise<GetMoreCalloutData> {
     '/callout/' + id
   );
   return toCallout(data);
+}
+
+export async function createCallout(
+  calloutData: CreateCalloutData
+): Promise<GetBasicCalloutData> {
+  const { data } = await axios.post<Serial<GetBasicCalloutData>>(
+    '/callout',
+    // TODO: passing calloutData directly is not safe, it could contain extra properties
+    calloutData
+  );
+  return toCallout(data);
+}
+
+export async function updateCallout(
+  slug: string,
+  calloutData: UpdateCalloutData
+): Promise<GetMoreCalloutData> {
+  const { data } = await axios.patch<Serial<GetMoreCalloutData>>(
+    '/callout/' + slug,
+    calloutData
+  );
+  return toCallout(data);
+}
+
+export async function deleteCallout(slug: string): Promise<void> {
+  await axios.delete('/callout/' + slug);
 }
 
 export async function fetchResponses(

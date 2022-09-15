@@ -11,7 +11,7 @@ const color = {
   draft: 'text-body-40',
   scheduled: 'text-warning',
   open: 'text-success',
-  ended: 'text-body',
+  ended: 'text-body-80',
 };
 defineProps<{
   status: ItemStatus;

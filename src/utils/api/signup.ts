@@ -1,37 +1,42 @@
 import axios from '../../axios';
 import { ContributionPeriod } from '../enums/contribution-period.enum';
-import { SignupData } from './api.interface';
+import {
+  CompleteSignupData,
+  PaymentFlowParams,
+  Serial,
+  SignupData,
+} from './api.interface';
 
-const completeUrls = {
-  loginUrl: import.meta.env.VITE_APP_BASE_URL + '/auth/login',
-  setPasswordUrl: import.meta.env.VITE_APP_BASE_URL + '/auth/set-password',
-  confirmUrl: import.meta.env.VITE_APP_BASE_URL + '/join/confirm-email',
-};
+export const completeUrl = import.meta.env.VITE_APP_BASE_URL + '/join/complete';
 
-export async function signUp(
-  data: SignupData
-): Promise<{ redirectUrl: string }> {
+export async function signUp(data: SignupData): Promise<PaymentFlowParams> {
   return (
-    await axios.post<{ redirectUrl: string }>('/signup', {
+    await axios.post<Serial<PaymentFlowParams>>('/signup', {
       email: data.email,
       password: data.password,
-      ...(data.noContribution
-        ? { complete: completeUrls }
-        : {
-            contribution: {
-              amount: data.amount,
-              period: data.period,
-              payFee: data.payFee && data.period === ContributionPeriod.Monthly,
-              prorate: false,
-              completeUrl: import.meta.env.VITE_APP_BASE_URL + '/join/complete',
-            },
-          }),
+      loginUrl: import.meta.env.VITE_APP_BASE_URL + '/auth/login',
+      setPasswordUrl: import.meta.env.VITE_APP_BASE_URL + '/auth/set-password',
+      confirmUrl: import.meta.env.VITE_APP_BASE_URL + '/join/confirm-email',
+      ...(!data.noContribution && {
+        contribution: {
+          amount: data.amount,
+          period: data.period,
+          payFee: data.payFee && data.period === ContributionPeriod.Monthly,
+          prorate: false,
+          paymentMethod: data.paymentMethod,
+          completeUrl,
+        },
+      }),
     })
   ).data;
 }
 
-export async function completeSignUp(redirectFlowId: string): Promise<void> {
-  await axios.post('/signup/complete', { redirectFlowId, ...completeUrls });
+export async function completeSignUp(data: CompleteSignupData): Promise<void> {
+  await axios.post('/signup/complete', {
+    paymentFlowId: data.paymentFlowId,
+    firstname: data.firstname,
+    lastname: data.lastname,
+  });
 }
 
 export async function confirmEmail(

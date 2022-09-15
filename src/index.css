@@ -1,50 +1,58 @@
-@import './assets/styles/fonts.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.content-message p,
-.content-message ul,
-.content-message ol {
-  margin: 0;
-}
+.content-message {
+  p,
+  ul,
+  ol {
+    margin: 0;
+  }
 
-.content-message ul {
-  @apply pl-3 list-inside list-disc;
-}
+  p:empty::after {
+    content: '\00A0';
+  }
 
-.content-message ol {
-  @apply pl-3 list-inside list-decimal;
-}
-
-.content-message a {
-  @apply text-link underline;
-}
-
-.callout-form {
-  & .form-group {
-    @apply mb-8 flex flex-col;
-
-    &.formio-component-button {
-      @apply block;
+  ul,
+  ol {
+    @apply ml-2 pl-6 list-none relative;
+    li::before {
+      @apply absolute left-0;
     }
   }
 
-  & .col-form-label {
-    @apply block text-xl font-semibold mb-2;
-
-    order: -2;
+  ul li::before {
+    @apply font-bold pl-1;
+    content: '•';
   }
 
-  & .form-text {
-    @apply mb-2 text-body-80;
-
-    order: -1;
+  ol {
+    counter-reset: list;
+    li::before {
+      counter-increment: list;
+      content: counter(list) '.';
+    }
   }
 
-  & .formio-editor-read-only-content,
-  & .form-control {
+  a {
+    @apply text-link underline;
+  }
+
+  h3 {
+    @apply font-title text-xl font-semibold;
+  }
+}
+
+.content-i18n {
+  a {
+    @apply text-link;
+  }
+}
+
+.callout-form,
+.callout-form-builder .formarea,
+.formio-dialog {
+  .form-control {
     @apply p-2 w-full bg-white border border-primary-40 rounded focus:outline-none focus:shadow-input;
 
     &.is-invalid {
@@ -52,49 +60,104 @@
     }
   }
 
-  & .form-check-input {
-    accent-color: theme('colors.link.DEFAULT');
-  }
-
-  & .form-check-inline {
-    @apply inline-block mr-4;
-  }
-
-  & .form-check-label {
-    @apply flex align-baseline mb-2;
-
-    & .form-check-input {
-      @apply flex-none mr-2;
-    }
-  }
-
-  & .btn {
-    @apply px-4 text-center cursor-pointer inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative h-10 bg-link text-white;
+  .btn:not(.component-settings-button):not(.formcomponent) {
+    @apply px-2 text-center cursor-pointer inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative h-10 bg-link text-white;
 
     &[disabled] {
       @apply opacity-50 cursor-not-allowed;
     }
 
     &:not([disabled]):hover {
-      @apply hover:bg-link-110;
+      @apply bg-link-110;
+    }
+
+    &.btn-success {
+      @apply bg-success;
+      &:not([disabled]):hover {
+        @apply bg-success-110;
+      }
+    }
+    &.btn-danger {
+      @apply bg-danger;
+      &:not([disabled]):hover {
+        @apply bg-danger-110;
+      }
+    }
+    &.btn-secondary {
+      @apply bg-white text-link border border-link;
+      &:not([disabled]):hover {
+        @apply bg-danger-10;
+      }
+    }
+
+    &.svg-inline--fa {
+      @apply box-content align-top box-content;
     }
   }
 
-  & .formio-select-autocomplete-input {
+  .choices__list {
+    @apply align-middle;
+  }
+
+  .formio-choices.form-group {
+    @apply mb-0;
+  }
+}
+
+.callout-form,
+.callout-form-builder .formarea,
+.formio-dialog .preview-panel {
+  .formio-hidden {
+    @apply hidden !important;
+  }
+
+  .form-group {
+    @apply mb-8 flex flex-col;
+
+    &.formio-component-button {
+      @apply block;
+    }
+  }
+
+  .col-form-label {
+    @apply block text-xl font-semibold mb-2 -order-2;
+  }
+
+  .form-text {
+    @apply mb-2 text-body-80 -order-1;
+  }
+
+  .formio-editor-read-only-content,
+  .form-check-input {
+    @apply accent-link;
+  }
+
+  .form-check-inline {
+    @apply inline-block mr-4;
+  }
+
+  .form-check-label {
+    @apply flex align-baseline mb-2;
+
+    .form-check-input {
+      @apply flex-none mr-2;
+    }
+  }
+
+  .formio-select-autocomplete-input {
     @apply opacity-0 absolute -z-10;
   }
 
-  & .formio-errors {
+  .formio-errors {
     @apply text-sm font-semibold mt-1.5;
 
-    & .form-text {
+    .form-text {
       @apply text-danger;
     }
   }
 
-  & .field-required::after {
+  .field-required::after {
     @apply text-danger;
-
     content: '*';
   }
 }
