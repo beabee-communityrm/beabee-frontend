@@ -1,4 +1,3 @@
-import { parseJSON } from 'date-fns';
 import axios from '../../axios';
 import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import { PaymentMethod } from '../enums/payment-method.enum';
@@ -18,37 +17,35 @@ import {
   UpdateMemberData,
 } from './api.interface';
 
-function toDate(s: string): Date;
-function toDate(s: string | undefined): Date | undefined;
-function toDate(s: string | undefined): Date | undefined {
-  return s ? parseJSON(s) : undefined;
-}
+import { deserializeDate } from '.';
 
 // TODO: how to make this type safe?
-export function toMember(data: any): any {
+export function deserializeMember(data: any): any {
   return {
     ...data,
-    joined: toDate(data.joined),
-    lastSeen: toDate(data.lastSeen),
+    joined: deserializeDate(data.joined),
+    lastSeen: deserializeDate(data.lastSeen),
     ...(data.contribution && {
-      contribution: toContrib(data.contribution),
+      contribution: deserializeContribution(data.contribution),
     }),
     ...(data.roles && {
       roles: data.roles.map((role: any) => ({
         role: role.role,
-        dateAdded: toDate(role.dateAdded),
-        dateExpires: toDate(role.dateExpires),
+        dateAdded: deserializeDate(role.dateAdded),
+        dateExpires: deserializeDate(role.dateExpires),
       })),
     }),
   };
 }
 
-function toContrib(data: Serial<ContributionInfo>): ContributionInfo {
+function deserializeContribution(
+  data: Serial<ContributionInfo>
+): ContributionInfo {
   return {
     ...data,
-    cancellationDate: toDate(data.cancellationDate),
-    membershipExpiryDate: toDate(data.membershipExpiryDate),
-    renewalDate: toDate(data.renewalDate),
+    cancellationDate: deserializeDate(data.cancellationDate),
+    membershipExpiryDate: deserializeDate(data.membershipExpiryDate),
+    renewalDate: deserializeDate(data.renewalDate),
   };
 }
 
@@ -69,7 +66,7 @@ export async function fetchMembers<With extends GetMemberWith>(
   });
   return {
     ...data,
-    items: data.items.map(toMember),
+    items: data.items.map(deserializeMember),
   };
 }
 export async function fetchMember(id: string): Promise<GetMemberData>;
@@ -84,7 +81,7 @@ export async function fetchMember<With extends GetMemberWith>(
   const { data } = await axios.get<Serial<GetMemberData>>(`/member/${id}`, {
     params: { with: _with },
   });
-  return toMember(data);
+  return deserializeMember(data);
 }
 
 export async function updateMember(
@@ -96,14 +93,14 @@ export async function updateMember(
     // TODO: passing memberData directly is not type safe, it could contain extra properties
     memberData
   );
-  return toMember(data);
+  return deserializeMember(data);
 }
 
 export async function fetchContribution(): Promise<ContributionInfo> {
   const { data } = await axios.get<Serial<ContributionInfo>>(
     '/member/me/contribution'
   );
-  return toContrib(data);
+  return deserializeContribution(data);
 }
 
 export async function updateContribution(
@@ -117,7 +114,7 @@ export async function updateContribution(
       prorate: dataIn.prorate && dataIn.period === ContributionPeriod.Annually,
     }
   );
-  return toContrib(data);
+  return deserializeContribution(data);
 }
 
 export const startContributionCompleteUrl =
@@ -147,7 +144,7 @@ export async function completeStartContribution(
     '/member/me/contribution/complete',
     { paymentFlowId }
   );
-  return toContrib(data);
+  return deserializeContribution(data);
 }
 export async function cancelContribution(): Promise<void> {
   await axios.post('/member/me/contribution/cancel');
@@ -174,7 +171,7 @@ export async function completeUpdatePaymentMethod(
     '/member/me/payment-method/complete',
     { paymentFlowId }
   );
-  return toContrib(data);
+  return deserializeContribution(data);
 }
 
 export async function fetchPayments(
@@ -185,7 +182,7 @@ export async function fetchPayments(
   return {
     ...data,
     items: data.items.map((item: any) => ({
-      chargeDate: toDate(item.chargeDate),
+      chargeDate: deserializeDate(item.chargeDate),
       amount: item.amount,
       status: item.status,
     })),

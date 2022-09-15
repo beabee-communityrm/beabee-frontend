@@ -8,7 +8,7 @@ import {
   Paginated,
   Serial,
 } from './api.interface';
-import { toMember } from './member';
+import { deserializeMember } from './member';
 
 export async function fetchSegments(): Promise<GetSegmentData[]> {
   return (await axios.get<Serial<GetSegmentData>[]>('/segments')).data;
@@ -34,6 +34,6 @@ export async function fetchSegmentMembers<With extends GetMemberWith>(
 
   return {
     ...data,
-    items: data.items.map(toMember),
+    items: data.items.map(deserializeMember),
   };
 }
