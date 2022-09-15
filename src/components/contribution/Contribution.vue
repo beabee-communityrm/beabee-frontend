@@ -2,7 +2,7 @@
   <ContributionPeriod_
     v-if="showPeriod"
     v-model="periodProxy"
-    class="mb-5"
+    class="mb-4"
     :periods="content.periods"
   />
 
@@ -11,7 +11,7 @@
     :is-monthly="isMonthly"
     :min-amount="minAmount"
     :defined-amounts="definedAmounts"
-    class="mb-5"
+    class="mb-8"
   />
 
   <!-- TODO: Needed for join form, can we rework UI? -->
@@ -21,7 +21,7 @@
     v-if="showPaymentMethod"
     v-model="paymentMethodProxy"
     :methods="content.paymentMethods"
-    class="mb-5"
+    class="mb-3"
   />
 
   <ContributionFee

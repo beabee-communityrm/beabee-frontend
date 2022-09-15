@@ -7,7 +7,7 @@
       :value="true"
       class="mt-1"
     />
-    <p class="ml-2">{{ label }}</p>
+    <p class="ml-2 font-semibold">{{ label }}</p>
   </label>
 </template>
 <script lang="ts" setup>

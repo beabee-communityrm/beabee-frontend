@@ -42,7 +42,7 @@ const props = withDefaults(
 
 // Different nav item styles: tuple is [normal, active] classes
 const itemClasses = {
-  main: ['text-primary-80 hover:bg-primary-5', 'text-primary-80 bg-primary-20'],
+  main: ['text-body-80 hover:bg-primary-5', 'text-body-80 bg-primary-20'],
   settings: [
     'text-grey-dark hover:bg-grey-lighter',
     'bg-primary-5 text-grey-darker',

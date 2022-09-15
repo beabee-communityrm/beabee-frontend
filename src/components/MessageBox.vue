@@ -20,7 +20,7 @@
         items-center
         flex-grow
         p-3
-        text-sm
+        text-xs
         font-semibold
         content-container
       "

@@ -15,7 +15,7 @@
       />
       <div class="px-2 xl:px-4">
         <div class="border-t border-primary-40 my-2" />
-        <a href="/members" class="block text-primary-80">
+        <a href="/members" class="block text-body-80">
           <TheMenuListItem
             :icon="['fa', 'window-restore']"
             :title="t('menu.legacyApp')"

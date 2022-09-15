@@ -1,6 +1,6 @@
 <template>
   <AppLabel v-if="label" :label="label" />
-  <div class="flex flex-row flex-wrap ml-0 mt-2 sm:mt-0">
+  <div class="flex flex-row flex-wrap mb-1 mt-1">
     <ContactTag
       v-for="tag in modelValue"
       :key="tag"

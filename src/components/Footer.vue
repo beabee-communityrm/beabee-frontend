@@ -5,7 +5,7 @@
         text-sm
         xs:flex xs:flex-row xs:flex-wrap
         pt-4
-        mt-8
+        mt-16
         border-t border-primary-40
       "
     >
