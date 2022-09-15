@@ -6,7 +6,7 @@ export interface MenuSection {
 
 export interface MenuItem {
   title: string;
-  href?: string;
+  href: string;
   icon: [string, string];
   isActive?: RegExp;
 }

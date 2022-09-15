@@ -85,7 +85,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import axios from 'axios';
 import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
@@ -111,6 +110,7 @@ import { currentUser } from '../../../../store/currentUser';
 import AppAlert from '../../../AppAlert.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
 import AppHeading from '../../../AppHeading.vue';
+import { isRequestError } from '../../../../utils/api';
 
 const validation = useVuelidate();
 
@@ -195,11 +195,7 @@ async function handleUpdate() {
 
     hasUpdated.value = true;
   } catch (err) {
-    if (
-      axios.isAxiosError(err) &&
-      err.response?.status === 400 &&
-      err.response.data.code === 'cant-update-contribution'
-    ) {
+    if (isRequestError(err, 'cant-update-contribution')) {
       cantUpdate.value = true;
     }
   }

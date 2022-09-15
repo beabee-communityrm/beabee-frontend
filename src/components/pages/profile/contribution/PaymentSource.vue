@@ -38,7 +38,6 @@
 </template>
 
 <script lang="ts" setup>
-import axios from 'axios';
 import { onBeforeMount, ref } from 'vue';
 import MessageBox from '../../../MessageBox.vue';
 import AppButton from '../../../forms/AppButton.vue';
@@ -54,6 +53,7 @@ import { PaymentMethod } from '../../../../utils/enums/payment-method.enum';
 import PaymentMethodIcon from '../../../payment-method/PaymentMethodIcon.vue';
 import { computed } from '@vue/reactivity';
 import AppHeading from '../../../AppHeading.vue';
+import { isRequestError } from '../../../../utils/api';
 
 const { t } = useI18n();
 
@@ -109,11 +109,7 @@ async function handleUpdate() {
     }
   } catch (err: unknown) {
     loading.value = false;
-    if (
-      axios.isAxiosError(err) &&
-      err.response?.status === 400 &&
-      err.response.data.code === 'cant-update-contribution'
-    ) {
+    if (isRequestError(err, 'cant-update-contribution')) {
       cantUpdate.value = true;
     }
   }
