@@ -385,6 +385,7 @@
             "placeholder": "Thank you!"
           },
           "url": {
+            "help": "<p>This could be your homepage or a first article about the topic of the callout.</p>\n",
             "label": "URL for redirect",
             "placeholder": "https://example.com"
           }
