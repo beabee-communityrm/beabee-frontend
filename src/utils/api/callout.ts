@@ -1,4 +1,4 @@
-import { parseJSON } from 'date-fns';
+import { deserializeDate } from '.';
 import axios from '../../axios';
 import {
   GetBasicCalloutData,
@@ -13,14 +13,7 @@ import {
   UpdateCalloutData,
 } from './api.interface';
 
-// TODO: dedupe from member
-function toDate(s: string): Date;
-function toDate(s: string | undefined): Date | undefined;
-function toDate(s: string | undefined): Date | undefined {
-  return s ? parseJSON(s) : undefined;
-}
-
-function toCallout<
+function deserializeCallout<
   S extends Serial<any>,
   T extends S extends Serial<infer U>
     ? U extends GetBasicCalloutData
@@ -30,8 +23,8 @@ function toCallout<
 >(callout: S): T {
   return {
     ...callout,
-    starts: toDate(callout.starts),
-    expires: toDate(callout.expires),
+    starts: deserializeDate(callout.starts),
+    expires: deserializeDate(callout.expires),
   };
 }
 
@@ -44,7 +37,7 @@ export async function fetchCallouts(
   );
   return {
     ...data,
-    items: data.items.map(toCallout),
+    items: data.items.map(deserializeCallout),
   };
 }
 
@@ -52,7 +45,7 @@ export async function fetchCallout(id: string): Promise<GetMoreCalloutData> {
   const { data } = await axios.get<Serial<GetMoreCalloutData>>(
     '/callout/' + id
   );
-  return toCallout(data);
+  return deserializeCallout(data);
 }
 
 export async function createCallout(
@@ -63,7 +56,7 @@ export async function createCallout(
     // TODO: passing calloutData directly is not safe, it could contain extra properties
     calloutData
   );
-  return toCallout(data);
+  return deserializeCallout(data);
 }
 
 export async function updateCallout(
@@ -74,7 +67,7 @@ export async function updateCallout(
     '/callout/' + slug,
     calloutData
   );
-  return toCallout(data);
+  return deserializeCallout(data);
 }
 
 export async function deleteCallout(slug: string): Promise<void> {
@@ -93,8 +86,8 @@ export async function fetchResponses(
     ...data,
     items: data.items.map((item) => ({
       ...item,
-      createdAt: toDate(item.createdAt),
-      updatedAt: toDate(item.updatedAt),
+      createdAt: deserializeDate(item.createdAt),
+      updatedAt: deserializeDate(item.updatedAt),
     })),
   };
 }

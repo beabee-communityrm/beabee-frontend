@@ -1,4 +1,4 @@
-import { parseJSON } from 'date-fns';
+import { deserializeDate } from '.';
 import axios from '../../axios';
 import {
   GetNoticeData,
@@ -6,13 +6,6 @@ import {
   Paginated,
   Serial,
 } from './api.interface';
-
-// TODO: dedupe from member
-function toDate(s: string): Date;
-function toDate(s: string | undefined): Date | undefined;
-function toDate(s: string | undefined): Date | undefined {
-  return s ? parseJSON(s) : undefined;
-}
 
 export async function fetchNotices(
   query?: GetNoticesQuery
@@ -28,10 +21,10 @@ export async function fetchNotices(
     ...data,
     items: data.items.map((notice) => ({
       ...notice,
-      createdAt: toDate(notice.createdAt),
-      updatedAt: toDate(notice.updatedAt),
-      starts: toDate(notice.starts),
-      expires: toDate(notice.expires),
+      createdAt: deserializeDate(notice.createdAt),
+      updatedAt: deserializeDate(notice.updatedAt),
+      starts: deserializeDate(notice.starts),
+      expires: deserializeDate(notice.expires),
     })),
   };
 }
