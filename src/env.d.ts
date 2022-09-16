@@ -12,6 +12,12 @@ declare module 'virtual:theme' {
   export default theme;
 }
 
+declare module 'vue-matomo' {
+  import { Plugin } from 'vue';
+  const plugin: Plugin;
+  export default plugin;
+}
+
 interface ImportMetaEnv {
   VITE_APP_BASE_URL: string;
   VITE_API_BASE_URL: string;

@@ -42,6 +42,7 @@
     "vue-accessible-color-picker": "^4.0.4",
     "vue-formio": "github:beabee-communityrm/vue-formio#feature/vue-3-upgrade",
     "vue-i18n": "^9.2.2",
+    "vue-matomo": "^4.2.0",
     "vue-router": "^4.1.4"
   },
   "devDependencies": {
