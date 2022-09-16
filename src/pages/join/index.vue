@@ -98,7 +98,9 @@ const joinContent = ref<JoinContent>({
 async function submitSignUp() {
   loading.value = true;
   try {
-    window._paq.push(['trackGoal', 2]);
+    if (window._paq) {
+      window._paq.push(['trackGoal', 2]);
+    }
 
     const data = await signUp(signUpData);
     if (data.redirectUrl) {
