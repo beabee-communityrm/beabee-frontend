@@ -18,6 +18,10 @@ declare module 'vue-matomo' {
   export default plugin;
 }
 
+interface Window {
+  _paq: any[];
+}
+
 interface ImportMetaEnv {
   VITE_APP_BASE_URL: string;
   VITE_API_BASE_URL: string;

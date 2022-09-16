@@ -11,6 +11,7 @@ import './index.css';
 import Icons from './plugins/icons';
 
 const app = createApp(App);
+
 app.use(VueMatomo, {
   host: 'https://stats2.xtreamlab.net',
   siteId: 1,
