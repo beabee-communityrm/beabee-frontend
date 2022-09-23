@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import { notifyError } from './plugins/notify';
+import env from './env';
 
-axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
+axios.defaults.baseURL = env.apiUrl;
 axios.defaults.withCredentials = true;
 
 const onResponseSuccess = (response: AxiosResponse) => response;

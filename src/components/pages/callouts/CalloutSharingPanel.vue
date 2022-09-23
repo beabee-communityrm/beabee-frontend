@@ -103,6 +103,7 @@
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
+import env from '../../../env';
 import AppButton from '../../forms/AppButton.vue';
 
 const { t } = useI18n();
@@ -111,8 +112,7 @@ const props = defineProps<{
   slug: string;
 }>();
 
-const baseUrl = import.meta.env.VITE_APP_BASE_URL;
-const calloutUrl = `${baseUrl}/callouts/${props.slug}`;
+const calloutUrl = `${env.baseUrl}/callouts/${props.slug}`;
 
 const copyToClipboard = () => navigator.clipboard.writeText(calloutUrl);
 </script>
