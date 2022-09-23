@@ -10,6 +10,6 @@ RUN NODE_ENV=production npm run build
 
 FROM nginx:1.18.0-alpine
 
-COPY docker-entrypoint.sh /docker-entrypoint.d/beabee-frontend.sh
+COPY docker-entrypoint.sh /docker-entrypoint.d/30-beabee-frontend.sh
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder --chown=nginx:nginx /opt/beabee-frontend/dist/ /usr/share/nginx/html
