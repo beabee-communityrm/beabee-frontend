@@ -8,7 +8,7 @@ import replace from '@rollup/plugin-replace';
 import theme from './plugins/theme';
 
 export default ({ command, mode }) => {
-  process.env = { ...process.env, ...loadEnv(mode, process.cwd(), '') };
+  const env = loadEnv(mode, process.cwd(), '');
 
   const plugins = [
     vue(),
@@ -24,7 +24,7 @@ export default ({ command, mode }) => {
       replace({
         values: {
           __appUrl__: 'http://localhost:3000',
-          __apiUrl__: process.env.API_BASE_URL || '',
+          __apiUrl__: env.API_BASE_URL,
         },
         preventAssignment: true,
       })
@@ -37,10 +37,10 @@ export default ({ command, mode }) => {
       port: 3000,
       proxy: {
         '^/(api|login|upload|uploads|favicon.png)': {
-          target: process.env.API_PROXY_URL,
+          target: env.API_PROXY_URL,
           changeOrigin: true,
           cookieDomainRewrite: {
-            [process.env.API_PROXY_COOKIE_DOMAIN]: 'localhost',
+            [env.API_PROXY_COOKIE_DOMAIN]: 'localhost',
           },
         },
       },
