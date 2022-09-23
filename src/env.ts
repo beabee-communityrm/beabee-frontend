@@ -1,4 +1,4 @@
 export default {
-  baseUrl: '__baseUrl__',
+  appUrl: '__appUrl__',
   apiUrl: '__apiUrl__',
 };

@@ -8,16 +8,16 @@ import {
   SignupData,
 } from './api.interface';
 
-export const completeUrl = env.baseUrl + '/join/complete';
+export const completeUrl = env.appUrl + '/join/complete';
 
 export async function signUp(data: SignupData): Promise<PaymentFlowParams> {
   return (
     await axios.post<Serial<PaymentFlowParams>>('/signup', {
       email: data.email,
       password: data.password,
-      loginUrl: env.baseUrl + '/auth/login',
-      setPasswordUrl: env.baseUrl + '/auth/set-password',
-      confirmUrl: env.baseUrl + '/join/confirm-email',
+      loginUrl: env.appUrl + '/auth/login',
+      setPasswordUrl: env.appUrl + '/auth/set-password',
+      confirmUrl: env.appUrl + '/join/confirm-email',
       ...(!data.noContribution && {
         contribution: {
           amount: data.amount,

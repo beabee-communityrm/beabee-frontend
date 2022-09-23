@@ -80,13 +80,13 @@ async function uploadFile(file: File) {
   uploading.value = true;
 
   const resp = await axios.post('/upload/', data, {
-    baseURL: env.baseUrl,
+    baseURL: env.appUrl,
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
 
-  const newUrl = `${env.baseUrl}/uploads/${props.width}x${props.height}/${resp.data.hash}`;
+  const newUrl = `${env.appUrl}/uploads/${props.width}x${props.height}/${resp.data.hash}`;
   emit('update:modelValue', newUrl);
 
   uploading.value = false;

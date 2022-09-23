@@ -16,7 +16,7 @@ export async function logout(): Promise<void> {
 export async function forgotPassword(email: string): Promise<void> {
   await axios.post('reset-password', {
     email,
-    resetUrl: env.baseUrl + '/auth/reset-password',
+    resetUrl: env.appUrl + '/auth/reset-password',
   });
 }
 

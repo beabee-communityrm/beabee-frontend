@@ -112,7 +112,7 @@ const props = defineProps<{
   slug: string;
 }>();
 
-const calloutUrl = `${env.baseUrl}/callouts/${props.slug}`;
+const calloutUrl = `${env.appUrl}/callouts/${props.slug}`;
 
 const copyToClipboard = () => navigator.clipboard.writeText(calloutUrl);
 </script>

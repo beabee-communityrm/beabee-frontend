@@ -12,7 +12,7 @@
     <p>
       <router-link :to="calloutLink">
         <font-awesome-icon icon="external-link-alt" />
-        <span class="text-link ml-2">{{ env.baseUrl }}{{ calloutLink }}</span>
+        <span class="text-link ml-2">{{ env.appUrl }}{{ calloutLink }}</span>
       </router-link>
     </p>
 

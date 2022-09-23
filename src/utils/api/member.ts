@@ -119,7 +119,7 @@ export async function updateContribution(
 }
 
 export const startContributionCompleteUrl =
-  env.baseUrl + '/profile/contribution/complete';
+  env.appUrl + '/profile/contribution/complete';
 
 export async function startContribution(
   dataIn: StartContributionData
@@ -152,7 +152,7 @@ export async function cancelContribution(): Promise<void> {
 }
 
 export const updatePaymentMethodCompleteUrl =
-  env.baseUrl + '/profile/contribution/payment-method/complete';
+  env.appUrl + '/profile/contribution/payment-method/complete';
 
 export async function updatePaymentMethod(
   paymentMethod?: PaymentMethod
