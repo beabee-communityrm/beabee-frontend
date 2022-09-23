@@ -3,21 +3,36 @@ import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueI18n from '@intlify/vite-plugin-vue-i18n';
 import pages from 'vite-plugin-pages';
+import replace from '@rollup/plugin-replace';
 
 import theme from './plugins/theme';
 
-export default ({ mode }) => {
+export default ({ command, mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd(), '') };
 
+  const plugins = [
+    vue(),
+    vueI18n({
+      include: path.resolve(__dirname, './locales/*'),
+    }),
+    theme(),
+    pages(),
+  ];
+
+  if (command === 'serve') {
+    plugins.push(
+      replace({
+        values: {
+          __appUrl__: 'http://localhost:3000',
+          __apiUrl__: process.env.API_BASE_URL || '',
+        },
+        preventAssignment: true,
+      })
+    );
+  }
+
   return defineConfig({
-    plugins: [
-      vue(),
-      vueI18n({
-        include: path.resolve(__dirname, './locales/*'),
-      }),
-      theme(),
-      pages(),
-    ],
+    plugins,
     server: {
       port: 3000,
       proxy: {
