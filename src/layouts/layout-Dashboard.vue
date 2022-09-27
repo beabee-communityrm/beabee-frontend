@@ -3,6 +3,7 @@
     <the-menu />
 
     <main
+      id="top"
       class="
         flex flex-col flex-grow
         px-4
