@@ -81,8 +81,15 @@ meta:
       </AppInfoList>
     </div>
     <div class="flex-0 flex flex-wrap lg:flex-col gap-2">
-      <ActionButton icon="eye" :to="calloutLink">
+      <ActionButton
+        v-if="callout.status === ItemStatus.Open"
+        icon="eye"
+        :to="`/callouts/${callout.slug}`"
+      >
         {{ t('actions.view') }}
+      </ActionButton>
+      <ActionButton v-else icon="eye" :to="`/callouts/${callout.slug}?preview`">
+        {{ t('actions.preview') }}
       </ActionButton>
       <ActionButton
         icon="pencil-alt"
@@ -119,7 +126,7 @@ meta:
   </div>
 </template>
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import {
@@ -151,8 +158,6 @@ const wasJustCreated = route.query.created !== undefined;
 const wasJustUpdated = route.query.updated !== undefined;
 
 const showDeleteModal = ref(false);
-
-const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
 
 const confirmDeleteCallout = () => {
   deleteCallout(props.callout.slug);

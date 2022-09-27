@@ -1,10 +1,10 @@
 <template>
   <div class="flex items-center px-4 font-semibold rounded" :class="alertClass">
-    <div v-if="slots.icon" class="mr-4 text-lg">
+    <div v-if="slots.icon" class="mr-4 text-lg flex-0">
       <slot name="icon" />
     </div>
 
-    <div class="py-4"><slot /></div>
+    <div class="flex-1 py-4"><slot /></div>
   </div>
 </template>
 
