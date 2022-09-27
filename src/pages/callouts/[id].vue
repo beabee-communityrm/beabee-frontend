@@ -74,13 +74,42 @@ meta:
         />
       </div>
     </div>
+
+    <AppAlert v-if="isPreview" variant="warning" class="mb-4">
+      <div class="flex items-center justify-between gap-4">
+        <span>{{ t('callout.showingPreview') }}</span>
+        <AppButton
+          :to="`/admin/callouts/edit/${callout.slug}`"
+          icon="pencil-alt"
+        >
+          {{ t('actions.edit') }}
+        </AppButton>
+      </div>
+    </AppAlert>
+
     <figure class="mb-6">
       <img class="w-full object-cover" :src="callout.image" />
     </figure>
+
     <div class="text-lg content-message mb-6" v-html="callout.intro" />
+
+    <div v-if="showLoginPrompt" class="my-12">
+      <p class="text-center">
+        {{ t('callout.membersOnly') }}
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 mt-6">
+        <AppButton class="w-full" variant="link" to="/join">
+          {{ t('callout.joinNow') }}
+        </AppButton>
+        <AppButton class="w-full" variant="linkOutlined" to="/auth/login">
+          {{ t('callout.loginToYourAccount') }}
+        </AppButton>
+      </div>
+    </div>
+
     <div
-      class="w-full text-center flex flex-col justify-center items-center mb-6"
-      v-if="canSeeButNotRespond"
+      v-if="showMemberOnlyPrompt"
+      class="w-full text-center flex flex-col justify-center items-center my-12"
     >
       <p class="w-full sm:w-2/3">
         {{ t('callout.membersOnly') }}
@@ -94,6 +123,7 @@ meta:
         {{ t('callout.toContributionPage') }}
       </AppButton>
     </div>
+
     <form
       v-if="showResponseForm"
       class="callout-form mt-10 pt-10 border-primary-40 border-t"
@@ -109,25 +139,12 @@ meta:
         :form="callout.formSchema"
         :submission="formSubmission"
         :options="formOpts"
-        @submit="(handleSubmitResponse as any)"
+        @submit="handleSubmitResponse as any"
       />
       <MessageBox v-if="formError" class="mt-4" type="error">
         {{ formError }}
       </MessageBox>
     </form>
-    <div v-if="showLoginPrompt" class="my-12">
-      <p class="text-center">
-        {{ t('callout.membersOnly') }}
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4 mt-6">
-        <AppButton class="w-full" variant="link" to="/join">
-          {{ t('callout.joinNow') }}
-        </AppButton>
-        <AppButton class="w-full" variant="linkOutlined" to="/auth/login">
-          {{ t('callout.loginToYourAccount') }}
-        </AppButton>
-      </div>
-    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -156,15 +173,20 @@ import MessageBox from '../../components/MessageBox.vue';
 import { currentUser } from '../../store';
 import GuestFields from '../../components/pages/callouts/GuestFields.vue';
 import SharingPanel from '../../components/pages/callouts/CalloutSharingPanel.vue';
+import AppAlert from '../../components/AppAlert.vue';
 import axios from '../../axios';
 
 import 'formiojs/dist/formio.form.css';
+import { useRoute } from 'vue-router';
 
 type FormSubmission = { data: CalloutResponseAnswers };
 
 const props = defineProps<{ id: string }>();
 
 const { t } = useI18n();
+const route = useRoute();
+
+const isPreview = route.query.preview === null;
 
 const callout = ref<GetMoreCalloutData>();
 const responses = ref<Paginated<GetCalloutResponseData>>();
@@ -183,8 +205,9 @@ const hasResponded = computed(
 
 const canRespond = computed(
   () =>
-    callout.value?.access !== 'member' ||
-    currentUser.value?.activeRoles.includes('member')
+    callout.value?.status === ItemStatus.Open &&
+    (callout.value?.access !== 'member' ||
+      currentUser.value?.activeRoles.includes('member'))
 );
 
 // edge-case where a member is:
@@ -193,10 +216,10 @@ const canRespond = computed(
 // 3. but not contributing (anymore)
 // and should be given some indication as
 // to why they can't reply to a callout
-const canSeeButNotRespond = computed(
+const showMemberOnlyPrompt = computed(
   () =>
+    !isPreview &&
     callout.value?.access === 'member' &&
-    currentUser.value &&
     !currentUser.value?.activeRoles.includes('member')
 );
 
@@ -204,8 +227,7 @@ const showResponseForm = computed(
   () =>
     responses.value &&
     !showThanksMessage.value &&
-    ((callout.value?.status === ItemStatus.Open && canRespond.value) ||
-      hasResponded.value)
+    (isPreview || canRespond.value || hasResponded.value)
 );
 
 const showGuestFields = computed(
@@ -220,6 +242,7 @@ const showThanksMessage = ref(false);
 
 const isFormReadOnly = computed(
   () =>
+    !isPreview &&
     hasResponded.value &&
     !callout.value?.allowUpdate &&
     !callout.value?.allowMultiple
@@ -252,6 +275,10 @@ const formOpts = computed(() => ({
 const formError = ref('');
 
 async function handleSubmitResponse(submission: FormSubmission) {
+  if (isPreview) {
+    return;
+  }
+
   formError.value = '';
   try {
     await createResponse(props.id, {
