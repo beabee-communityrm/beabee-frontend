@@ -50,15 +50,17 @@ meta:
         v-if="callout.status === ItemStatus.Open"
         :icon="showSharingPanel ? 'caret-down' : 'share'"
         variant="primaryOutlined"
-        @click="toggleSharePanel"
+        @click="showSharingPanel = !showSharingPanel"
         >{{ t('common.share') }}</AppButton
       >
     </div>
+
     <transition-group name="slide">
       <SharingPanel v-if="showSharingPanel" :slug="callout.slug" />
     </transition-group>
+
     <div
-      v-if="showThanksMessage"
+      v-show="hasResponded || hasSubmittedResponse"
       class="flex mb-6 bg-white rounded p-6 text-lg text-success"
     >
       <div class="flex-0 mr-4 text-2xl">
@@ -87,6 +89,19 @@ meta:
       </div>
     </AppAlert>
 
+    <AppAlert
+      v-if="!isPreview && showMemberOnlyPrompt && canAdmin"
+      variant="warning"
+      class="mb-4"
+    >
+      <div class="flex items-center justify-between gap-4">
+        <span>{{ t('callout.showMemberView') }}</span>
+        <AppButton :to="`/callouts/${callout.slug}?preview`" icon="eye">
+          {{ t('actions.preview') }}
+        </AppButton>
+      </div>
+    </AppAlert>
+
     <figure class="mb-6">
       <img class="w-full object-cover" :src="callout.image" />
     </figure>
@@ -107,11 +122,8 @@ meta:
       </div>
     </div>
 
-    <div
-      v-if="showMemberOnlyPrompt"
-      class="w-full text-center flex flex-col justify-center items-center my-12"
-    >
-      <p class="w-full sm:w-2/3">
+    <div v-if="showMemberOnlyPrompt" class="my-12 text-center">
+      <p>
         {{ t('callout.membersOnly') }}
         <b>{{ t('callout.updateContribution') }}</b>
       </p>
@@ -136,6 +148,7 @@ meta:
         v-model:email="guestEmail"
       />
       <Form
+        v-if="currentUserResponses /* Form.IO doesn't respect reactivity */"
         :form="callout.formSchema"
         :submission="formSubmission"
         :options="formOpts"
@@ -175,6 +188,7 @@ import GuestFields from '../../components/pages/callouts/GuestFields.vue';
 import SharingPanel from '../../components/pages/callouts/CalloutSharingPanel.vue';
 import AppAlert from '../../components/AppAlert.vue';
 import axios from '../../axios';
+import { canAdmin } from '../../utils/currentUserCan';
 
 import 'formiojs/dist/formio.form.css';
 import { useRoute } from 'vue-router';
@@ -186,21 +200,18 @@ const props = defineProps<{ id: string }>();
 const { t } = useI18n();
 const route = useRoute();
 
-const isPreview = route.query.preview === null;
+const isPreview = computed(() => route.query.preview === null);
 
 const callout = ref<GetMoreCalloutData>();
-const responses = ref<Paginated<GetCalloutResponseData>>();
+const currentUserResponses = ref<Paginated<GetCalloutResponseData>>();
 
 const guestName = ref('');
 const guestEmail = ref('');
 
 const showSharingPanel = ref(false);
-const toggleSharePanel = () => {
-  showSharingPanel.value = !showSharingPanel.value;
-};
 
 const hasResponded = computed(
-  () => !!responses.value && responses.value.count > 0
+  () => !!currentUserResponses.value && currentUserResponses.value.count > 0
 );
 
 const canRespond = computed(
@@ -210,24 +221,15 @@ const canRespond = computed(
       currentUser.value?.activeRoles.includes('member'))
 );
 
-// edge-case where a member is:
-// 1. logged in
-// 2. to a member-only callout
-// 3. but not contributing (anymore)
-// and should be given some indication as
-// to why they can't reply to a callout
 const showMemberOnlyPrompt = computed(
   () =>
-    !isPreview &&
+    !isPreview.value &&
     callout.value?.access === 'member' &&
     !currentUser.value?.activeRoles.includes('member')
 );
 
 const showResponseForm = computed(
-  () =>
-    responses.value &&
-    !showThanksMessage.value &&
-    (isPreview || canRespond.value || hasResponded.value)
+  () => isPreview.value || canRespond.value || hasResponded.value
 );
 
 const showGuestFields = computed(
@@ -238,31 +240,35 @@ const showLoginPrompt = computed(
   () => callout.value?.access === 'member' && !currentUser.value
 );
 
-const showThanksMessage = ref(false);
+const hasSubmittedResponse = ref(false);
 
 const isFormReadOnly = computed(
   () =>
-    !isPreview &&
-    hasResponded.value &&
-    !callout.value?.allowUpdate &&
-    !callout.value?.allowMultiple
+    hasSubmittedResponse.value ||
+    (!isPreview.value &&
+      hasResponded.value &&
+      !callout.value?.allowUpdate &&
+      !callout.value?.allowMultiple)
 );
 
-const formSubmission = computed(() =>
-  callout.value &&
-  !callout.value.allowMultiple &&
-  // Should use `hasResponded` but type narrowing fails
-  !!responses.value &&
-  responses.value.count > 0
-    ? { data: responses.value.items[0].answers }
-    : undefined
-);
+const formSubmission = computed(() => {
+  return !callout.value?.allowMultiple &&
+    // Should use `hasResponded` but type narrowing fails
+    !!currentUserResponses.value &&
+    currentUserResponses.value.count > 0
+    ? { data: currentUserResponses.value.items[0].answers }
+    : undefined;
+});
 
 const formOpts = computed(() => ({
   readOnly: isFormReadOnly.value,
   noAlerts: true,
   hooks: {
     beforeSubmit: (submission: FormSubmission, next: () => void) => {
+      if (isPreview.value) {
+        return;
+      }
+
       if (!showGuestFields.value || (guestName.value && guestEmail.value)) {
         next();
       } else {
@@ -275,10 +281,6 @@ const formOpts = computed(() => ({
 const formError = ref('');
 
 async function handleSubmitResponse(submission: FormSubmission) {
-  if (isPreview) {
-    return;
-  }
-
   formError.value = '';
   try {
     await createResponse(props.id, {
@@ -289,7 +291,8 @@ async function handleSubmitResponse(submission: FormSubmission) {
         }),
       answers: submission.data,
     });
-    showThanksMessage.value = true;
+    hasSubmittedResponse.value = true;
+    document.getElementById('top')?.scrollIntoView();
   } catch (err) {
     if (axios.isAxiosError(err) && err.response?.status === 400) {
       formError.value = t('callout.form.submittingResponseError');
@@ -301,11 +304,11 @@ async function handleSubmitResponse(submission: FormSubmission) {
 
 onBeforeMount(async () => {
   formError.value = '';
-  showThanksMessage.value = false;
+  hasSubmittedResponse.value = false;
 
   callout.value = await fetchCallout(props.id);
 
-  responses.value = currentUser.value
+  currentUserResponses.value = currentUser.value
     ? await fetchResponses(props.id, {
         rules: {
           condition: 'AND',
