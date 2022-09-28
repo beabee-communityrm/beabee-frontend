@@ -80,7 +80,7 @@ const { t } = useI18n();
 </script>
 
 /* TODO: fix relying on scoped */
-<style scoped>
+<style lang="postcss" scoped>
 a {
   @apply text-link;
 }

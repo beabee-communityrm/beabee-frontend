@@ -48,7 +48,7 @@ const formattedJoinedDate = computed(() => {
 });
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .title {
   @apply text-sm text-primary-80 font-semibold -mt-3 mb-3;
 }

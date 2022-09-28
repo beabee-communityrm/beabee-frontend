@@ -164,7 +164,7 @@ function setLink() {
 }
 </script>
 
-<style>
+<style lang="postcss">
 .ProseMirror {
   @apply p-2 min-h-[5rem] h-auto bg-white w-full border border-primary-40 rounded focus:outline-none focus:shadow-input;
 

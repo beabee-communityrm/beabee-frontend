@@ -38,7 +38,7 @@ onBeforeMount(() => {
 });
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .fade-leave-active {
   @apply transition ease-linear duration-200;
 }
