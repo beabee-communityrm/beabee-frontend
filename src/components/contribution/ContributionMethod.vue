@@ -21,8 +21,8 @@
           "
           :class="
             method === modelValue
-              ? 'bg-link-10 text-link !border-link'
-              : 'hover:text-link'
+              ? 'bg-link text-white !border-link-110'
+              : 'hover:bg-link-10 hover:border-link'
           "
           type="button"
           @click="emit('update:modelValue', method)"
