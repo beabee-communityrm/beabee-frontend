@@ -1,12 +1,18 @@
 name: Check code
 
-on: pull_request
+on: [pull_request, workflow_call]
 
 jobs:
-  check:
+  prettier:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actionsx/prettier@v2
-        with:
-          args: --check .
+      - uses: ./.github/actions/setup
+      - run: npx prettier -c .
+
+  vue-tsc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/setup
+      - run: npx vue-tsc --noEmit

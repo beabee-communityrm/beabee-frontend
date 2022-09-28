@@ -2,7 +2,7 @@
   <JoinHeader :title="joinContent.title" />
 
   <form v-bind="$attrs">
-    <div class="mb-3 content-message" v-html="joinContent.subtitle" />
+    <div class="content-message mb-3" v-html="joinContent.subtitle" />
 
     <AppSubHeading v-if="joinContent.showNoContribution" class="mb-1">
       {{ t('join.contribution') }}
@@ -51,7 +51,7 @@
   </form>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, toRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import { generalContent } from '../../../store';
@@ -66,10 +66,11 @@ import { JoinContent } from '../../../utils/api/api.interface';
 import JoinHeader from './JoinHeader.vue';
 import AppCheckbox from '../../forms/AppCheckbox.vue';
 
-const { t } = useI18n();
-const { signUpData, signUpDescription } = useJoin();
+const props = defineProps<{ joinContent: JoinContent; loading?: boolean }>();
 
-defineProps<{ joinContent: JoinContent; loading?: boolean }>();
+const { t } = useI18n();
+
+const { signUpData, signUpDescription } = useJoin(toRef(props, 'joinContent'));
 
 const buttonText = computed(() => {
   return signUpData.noContribution

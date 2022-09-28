@@ -1,16 +1,6 @@
 <template>
   <span
-    class="
-      h-7.5
-      bg-white
-      text-link
-      rounded
-      font-semibold
-      px-2
-      flex
-      items-center
-      text-xs
-    "
+    class="flex h-7.5 items-center rounded bg-white px-2 text-xs font-semibold text-link"
   >
     <slot />
   </span>

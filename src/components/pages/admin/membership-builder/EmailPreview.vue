@@ -1,5 +1,5 @@
 <template>
-  <div class="content-message shadow p-4 bg-white" v-html="email" />
+  <div class="content-message bg-white p-4 shadow" v-html="email" />
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue';

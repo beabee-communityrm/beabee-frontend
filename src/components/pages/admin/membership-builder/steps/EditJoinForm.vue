@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="grid grid-cols-2 gap-8 mb-8">
+    <div class="mb-8 grid grid-cols-2 gap-8">
       <div>
         <AppHeading class="mb-5">{{ stepT('title') }}</AppHeading>
         <p>{{ stepT('text') }}</p>
       </div>
     </div>
-    <div v-if="joinContent" class="grid grid-cols-2 gap-8 mb-12">
+    <div v-if="joinContent" class="mb-12 grid grid-cols-2 gap-8">
       <div>
         <div class="mb-4">
           <AppInput
@@ -31,10 +31,10 @@
           :error-message="validation.backgroundUrl.$errors[0]?.$message"
         />
 
-        <h4 class="font-semibold text-lg mb-4">
+        <h4 class="mb-4 text-lg font-semibold">
           {{ stepT('suggestedAmounts') }} *
         </h4>
-        <div class="flex gap-4 mb-4">
+        <div class="mb-4 flex gap-4">
           <PeriodAmounts
             v-for="(period, periodI) in joinContent.periods"
             :key="period.name"
@@ -44,7 +44,7 @@
             class="flex-1"
           />
         </div>
-        <div class="flex gap-4 mb-4">
+        <div class="mb-4 flex gap-4">
           <div class="flex-1">
             <AppLabel :label="stepT('minAmount')" />
             <AppInput
@@ -52,7 +52,7 @@
               type="number"
               :min="1"
               required
-              class="w-32 block"
+              class="block w-32"
             />
           </div>
           <div class="flex-1">
@@ -71,7 +71,7 @@
         />
       </div>
       <div
-        class="p-4 pt-8 bg-center bg-cover"
+        class="bg-cover bg-center p-4 pt-8"
         :style="`background-image: url(${backgroundUrl})`"
       >
         <AuthBox>

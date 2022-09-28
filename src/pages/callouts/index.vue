@@ -6,21 +6,21 @@ meta:
 
 <template>
   <PageTitle :title="t('menu.callouts')" />
-  <div class="flex -mx-3 mb-6 flex-wrap">
+  <div class="-mx-3 mb-6 flex flex-wrap">
     <CalloutCard
       v-for="callout in activeCallouts.items"
       :key="callout.slug"
       :callout="callout"
-      class="mb-5 mx-3"
+      class="mx-3 mb-5"
     />
   </div>
   <AppHeading>{{ t('callouts.archive') }}</AppHeading>
-  <div class="lg:flex justify-between items-center my-2">
+  <div class="my-2 items-center justify-between lg:flex">
     <AppSearchInput
       v-model="currentSearch"
       :placeholder="t('callouts.search')"
     />
-    <div class="text-sm font-semibold text-primary-80 uppercase my-2 lg:my-0">
+    <div class="my-2 text-sm font-semibold uppercase text-primary-80 lg:my-0">
       <span>{{ t('callouts.show') }}</span>
       <AppToggle
         v-model="currentShow"
@@ -35,7 +35,7 @@ meta:
   <AppTable
     :headers="headers"
     :items="archivedCallouts.items"
-    class="w-full mt-2 whitespace-nowrap"
+    class="mt-2 w-full whitespace-nowrap"
   >
     <template #empty>
       <p>{{ t('callouts.noArchivedCallouts') }}</p>
@@ -44,7 +44,7 @@ meta:
     <template #name="{ item }">
       <router-link
         :to="`/callouts/${item.slug}`"
-        class="text-base text-link font-bold"
+        class="text-base font-bold text-link"
         >{{ item.title }}</router-link
       >
     </template>

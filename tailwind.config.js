@@ -56,6 +56,7 @@ module.exports = {
       boxShadow: {
         DEFAULT: '0 0 8px 0 rgba(0, 0, 0, 0.2)',
         input: 'var(--bs-input)',
+        'auth-box': '0 0 1rem 0.125rem rgba(51, 51, 51, 0.4)',
       },
       fontSize: {
         '2.5xl': '1.75rem',

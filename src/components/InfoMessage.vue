@@ -1,7 +1,7 @@
 <template>
   <div class="flex text-body-80">
     <FontAwesomeIcon
-      class="text-base font-primary-80"
+      class="font-primary-80 text-base"
       :icon="['fas', 'info-circle']"
     />
 

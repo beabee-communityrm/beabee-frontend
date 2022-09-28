@@ -10,7 +10,7 @@
     <AppCheckbox
       v-model="showIntroMessage"
       :label="stepT('showWelcomeMessage')"
-      class="font-semibold mb-4"
+      class="mb-4 font-semibold"
     />
 
     <div v-if="showIntroMessage" class="grid grid-cols-2 gap-8">

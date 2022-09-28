@@ -241,6 +241,8 @@ export interface GeneralContent {
   backgroundUrl?: string;
 }
 
+export type StripeFeeCountry = 'eu' | 'gb' | 'ca';
+
 export interface JoinContent {
   title: string;
   subtitle: string;
@@ -254,6 +256,8 @@ export interface JoinContent {
   showAbsorbFee: boolean;
   showNoContribution: boolean;
   paymentMethods: PaymentMethod[];
+  stripePublicKey: string;
+  stripeCountry: StripeFeeCountry;
 }
 
 export interface JoinSetupContent {

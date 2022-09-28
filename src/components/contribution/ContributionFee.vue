@@ -1,6 +1,6 @@
 <template>
   <section class="mb-8">
-    <p class="leading-normal mb-2 text-sm">
+    <p class="mb-2 text-sm leading-normal">
       {{ t('join.absorbFeeText', { fee: n(fee, 'currency') }) }}
     </p>
 

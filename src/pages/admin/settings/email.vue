@@ -6,7 +6,7 @@ meta:
 </route>
 
 <template>
-  <div class="grid lg:grid-cols-2 gap-8">
+  <div class="grid gap-8 lg:grid-cols-2">
     <form v-if="emailContent.footer" @submit.prevent="handleSubmit">
       <AppHeading class="mb-4">{{ t('adminSettings.email.title') }}</AppHeading>
       <p class="mb-4">{{ t('adminSettings.email.text') }}</p>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid grid-cols-2 gap-6 mt-5">
+    <div class="mt-5 grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <AppInput
           v-model="dataProxy.title"
@@ -10,11 +10,11 @@
         />
       </div>
       <div
-        class="col-span-1 text-sm text-grey mt-6"
+        class="col-span-1 mt-6 text-sm text-grey"
         v-html="inputT('title.help')"
       />
     </div>
-    <div class="grid grid-cols-2 gap-6 mt-5">
+    <div class="mt-5 grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <AppTextArea
           v-model="dataProxy.description"
@@ -24,11 +24,11 @@
         />
       </div>
       <div
-        class="col-span-1 text-sm text-grey mt-6"
+        class="col-span-1 mt-6 text-sm text-grey"
         v-html="inputT('description.help')"
       />
     </div>
-    <div class="grid grid-cols-2 gap-6 mt-5">
+    <div class="mt-5 grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <AppImageUpload
           v-model="dataProxy.coverImageURL"
@@ -39,7 +39,7 @@
         />
       </div>
       <div
-        class="col-span-1 text-sm text-grey mt-6"
+        class="col-span-1 mt-6 text-sm text-grey"
         v-html="inputT('image.help')"
       />
     </div>

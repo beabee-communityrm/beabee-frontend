@@ -4,7 +4,7 @@
       contribution.type !== ContributionType.None &&
       contribution.membershipStatus !== MembershipStatus.None
     "
-    class="flex flex-col p-8 bg-white shadow"
+    class="flex flex-col bg-white p-8 shadow"
   >
     <template v-if="contribution.membershipStatus === MembershipStatus.Expired">
       <AppSubHeading class="mb-2">{{
@@ -23,7 +23,7 @@
         {{ n(contribution.amount!, 'currency') }}
       </div>
 
-      <div class="font-bold mb-1.5">{{ t('common.every') }} {{ period }}</div>
+      <div class="mb-1.5 font-bold">{{ t('common.every') }} {{ period }}</div>
 
       <div v-if="contribution.membershipStatus === MembershipStatus.Expiring">
         <i18n-t keypath="contribution.willExpire">
@@ -36,7 +36,7 @@
         v-else-if="contribution.membershipStatus === MembershipStatus.Active"
       >
         <p>{{ t('common.thankYou') }}</p>
-        <div class="mt-2 text-body-80 text-sm">
+        <div class="mt-2 text-sm text-body-80">
           <i18n-t
             v-if="contribution.hasPendingPayment"
             keypath="contribution.hasPendingPayment"

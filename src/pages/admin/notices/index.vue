@@ -23,7 +23,7 @@ meta:
     <template #name="{ item, value }">
       <a
         :href="'/tools/notices/' + item.id"
-        class="text-base text-link font-bold"
+        class="text-base font-bold text-link"
       >
         {{ value }}
       </a>

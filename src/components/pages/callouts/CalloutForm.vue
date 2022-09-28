@@ -24,7 +24,7 @@
         :mode="mode"
       />
 
-      <div v-if="mode === 'new'" class="flex mt-5">
+      <div v-if="mode === 'new'" class="mt-5 flex">
         <AppButton
           variant="linkOutlined"
           :disabled="selectedStepIndex === 0"

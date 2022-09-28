@@ -1,19 +1,10 @@
 <template>
-  <div class="flex flex-col min-h-screen md:flex-row relative">
+  <div class="relative flex min-h-screen flex-col md:flex-row">
     <the-menu />
 
     <main
       id="top"
-      class="
-        flex flex-col flex-grow
-        px-4
-        pt-5
-        pb-5
-        bg-primary-5
-        md:pt-14 md:px-10
-        w-full
-        max-w-[1400px]
-      "
+      class="flex w-full max-w-[1400px] flex-grow flex-col bg-primary-5 px-4 pt-5 pb-5 md:px-10 md:pt-14"
     >
       <router-view />
       <Footer />

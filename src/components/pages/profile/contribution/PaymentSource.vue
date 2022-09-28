@@ -29,6 +29,7 @@
     >
       <StripePayment
         :client-secret="stripeClientSecret"
+        :public-key="stripePublicKey"
         :email="email"
         :return-url="updatePaymentMethodCompleteUrl"
         @loaded="onStripeLoaded"
@@ -58,6 +59,7 @@ import { isRequestError } from '../../../../utils/api';
 const { t } = useI18n();
 
 const props = defineProps<{
+  stripePublicKey: string;
   paymentSource: PaymentSource;
   email: string;
 }>();
