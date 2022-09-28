@@ -1,20 +1,6 @@
 <template>
   <span
-    class="
-      bg-white
-      whitespace-nowrap
-      text-link
-      rounded
-      font-bold
-      inline-block
-      py-0.5
-      px-1
-      mr-1
-      mb-1
-      text-xs
-      border border-white
-      select-none
-    "
+    class="bg-white whitespace-nowrap text-link rounded font-bold inline-block py-0.5 px-1 mr-1 mb-1 text-xs border border-white select-none"
   >
     {{ props.tag }}
     <font-awesome-icon

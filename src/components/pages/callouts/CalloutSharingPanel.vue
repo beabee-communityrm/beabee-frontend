@@ -3,16 +3,7 @@
     {{ t('callout.share.address') }}
 
     <div
-      class="
-        justify-between
-        flex flex-row
-        items-center
-        bg-white
-        rounded
-        mt-2
-        mb-4
-        pl-3
-      "
+      class="justify-between flex flex-row items-center bg-white rounded mt-2 mb-4 pl-3"
     >
       <span class="text-link mr-2">{{ calloutUrl }}</span>
       <AppButton icon="copy" size="sm" @click="copyToClipboard">{{

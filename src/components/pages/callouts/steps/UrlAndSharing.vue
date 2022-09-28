@@ -85,8 +85,10 @@ import AppTextArea from '../../../forms/AppTextArea.vue';
 import { UrlAndSharingStepProps } from '../callouts.interface';
 
 const emit = defineEmits(['update:error', 'update:validated']);
-const props =
-  defineProps<{ data: UrlAndSharingStepProps; mode: 'edit' | 'new' }>();
+const props = defineProps<{
+  data: UrlAndSharingStepProps;
+  mode: 'edit' | 'new';
+}>();
 
 const { t } = useI18n();
 const inputT = (key: string) => t('createCallout.steps.url.inputs.' + key);

@@ -4,13 +4,7 @@
     <div class="flex-1">
       <input
         v-model.trim="value"
-        class="
-          p-2
-          w-full
-          border border-primary-40
-          rounded
-          focus:outline-none focus:shadow-input
-        "
+        class="p-2 w-full border border-primary-40 rounded focus:outline-none focus:shadow-input"
         :class="hasError && 'bg-danger-10 border-danger-70'"
         :type="type"
         :name="name"

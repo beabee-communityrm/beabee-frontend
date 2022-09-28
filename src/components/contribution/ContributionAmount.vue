@@ -1,16 +1,7 @@
 <template>
   <div class="grid grid-cols-12 gap-x-2 font-bold">
     <label
-      class="
-        col-span-12
-        md:col-span-8
-        border border-primary-40
-        rounded
-        flex
-        items-center
-        overflow-hidden
-        text-sm
-      "
+      class="col-span-12 md:col-span-8 border border-primary-40 rounded flex items-center overflow-hidden text-sm"
       :class="hasError ? 'border-danger bg-danger-10' : 'bg-white'"
     >
       <div class="flex flex-1 px-6 py-3 items-baseline overflow-hidden">
@@ -21,16 +12,7 @@
           </div>
           <input
             :value="amount"
-            class="
-              absolute
-              text-6xl text-body
-              inset-0
-              w-full
-              h-full
-              border-0
-              outline-none
-              font-semibold
-            "
+            class="absolute text-6xl text-body inset-0 w-full h-full border-0 outline-none font-semibold"
             :min="minAmount"
             :class="{ 'bg-danger-10': hasError }"
             @input="handleInput"
@@ -64,42 +46,13 @@
     </label>
 
     <div
-      class="
-        col-span-12
-        md:col-span-4
-        my-6
-        md:my-0
-        grid grid-cols-3
-        md:grid-cols-1
-        overflow-hidden
-      "
+      class="col-span-12 md:col-span-4 my-6 md:my-0 grid grid-cols-3 md:grid-cols-1 overflow-hidden"
     >
       <button
         v-for="(definedAmount, index) in definedAmounts"
         :key="index"
         type="button"
-        class="
-          bg-white
-          text-sm
-          border border-primary-40
-          first:rounded-l first:border-r-0
-          last:rounded-r last:rounded-l-none last:border-l-0 last:border-t
-          md:first:rounded-t
-          md:first:rounded-bl-none
-          md:first:border-r
-          md:first:border-b-0
-          md:last:rounded-b
-          md:last:rounded-tr-none
-          md:last:border-t-0
-          md:last:border-l
-          p-3
-          md:p-2
-          border-box
-          flex
-          items-center
-          justify-center
-          font-semibold
-        "
+        class="bg-white text-sm border border-primary-40 first:rounded-l first:border-r-0 last:rounded-r last:rounded-l-none last:border-l-0 last:border-t md:first:rounded-t md:first:rounded-bl-none md:first:border-r md:first:border-b-0 md:last:rounded-b md:last:rounded-tr-none md:last:border-t-0 md:last:border-l p-3 md:p-2 border-box flex items-center justify-center font-semibold"
         :class="
           definedAmount === amount
             ? 'bg-link !text-white font-bold !border-link-110'

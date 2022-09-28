@@ -1,16 +1,6 @@
 <template>
   <div
-    class="
-      callout-card
-      rounded
-      overflow-hidden
-      bg-white
-      cursor-pointer
-      shadow
-      group
-      w-full
-      md:max-w-[19rem]
-    "
+    class="callout-card rounded overflow-hidden bg-white cursor-pointer shadow group w-full md:max-w-[19rem]"
   >
     <router-link :to="`/callouts/${callout.slug}`" class="flex flex-col h-full">
       <div class="bg-primary-40 mb-2 h-36">
@@ -43,15 +33,7 @@
       </div>
 
       <div
-        class="
-          bg-primary-10
-          text-primary-80
-          px-5
-          h-11
-          flex
-          items-center
-          group-hover:bg-primary-20 group-hover:text-primary
-        "
+        class="bg-primary-10 text-primary-80 px-5 h-11 flex items-center group-hover:bg-primary-20 group-hover:text-primary"
       >
         <span class="mary-80 ml-auto font-semibold">{{
           t('common.participate')

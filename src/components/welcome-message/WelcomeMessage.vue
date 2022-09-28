@@ -12,13 +12,7 @@
     </div>
 
     <div
-      class="
-        content-message
-        text-sm
-        leading-5
-        whitespace-normal
-        md:text-base md:leading-5.5
-      "
+      class="content-message text-sm leading-5 whitespace-normal md:text-base md:leading-5.5"
       :class="!small && 'lg:leading-6'"
       v-html="text"
     />

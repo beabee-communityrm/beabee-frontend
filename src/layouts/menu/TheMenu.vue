@@ -3,19 +3,7 @@
   <div class="flex justify-between px-6 py-3 md:py-2 md:hidden">
     <!-- menu background overlay -->
     <div
-      class="
-        cursor-pointer
-        z-40
-        fixed
-        w-full
-        h-full
-        top-0
-        bottom-0
-        right-0
-        opacity-30
-        bg-black
-        left-menu
-      "
+      class="cursor-pointer z-40 fixed w-full h-full top-0 bottom-0 right-0 opacity-30 bg-black left-menu"
       :class="isMenuVisible ? 'block' : 'hidden'"
       @click="isMenuVisible = false"
     />
@@ -36,23 +24,7 @@
   </div>
 
   <div
-    class="
-      absolute
-      z-40
-      md:static
-      flex flex-col
-      bottom-0
-      bg-white
-      transform
-      transition-transform
-      -translate-x-full
-      md:transform-none
-      flex-none
-      w-menu
-      md:w-16
-      xl:w-menu
-      transition-width
-    "
+    class="absolute z-40 md:static flex flex-col bottom-0 bg-white transform transition-transform -translate-x-full md:transform-none flex-none w-menu md:w-16 xl:w-menu transition-width"
     :class="{ 'top-[68px] translate-x-0': isMenuVisible }"
   >
     <div class="hidden my-10 text-center md:block">

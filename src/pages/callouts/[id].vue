@@ -109,7 +109,7 @@ meta:
         :form="callout.formSchema"
         :submission="formSubmission"
         :options="formOpts"
-        @submit="(handleSubmitResponse as any)"
+        @submit="handleSubmitResponse as any"
       />
       <MessageBox v-if="formError" class="mt-4" type="error">
         {{ formError }}

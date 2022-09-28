@@ -70,17 +70,7 @@ meta:
       </div>
       <a
         href="https://join.slack.com/t/beabee-communityrm/shared_invite/zt-1ezksg2wz-uLgLv4FxmCepzBlvLzL6tQ"
-        class="
-          block
-          p-10
-          bg-white
-          text-link
-          font-light
-          text-2xl text-center
-          rounded
-          bg-[url('/src/assets/images/slack-bg.png')] bg-right-top bg-auto
-          md:bg-cover
-        "
+        class="block p-10 bg-white text-link font-light text-2xl text-center rounded bg-[url('/src/assets/images/slack-bg.png')] bg-right-top bg-auto md:bg-cover"
       >
         <p class="w-72 max-w-72 m-auto">
           {{ t('adminDashboard.joinSlack') }}

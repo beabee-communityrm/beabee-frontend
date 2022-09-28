@@ -7,18 +7,7 @@
     >
       <div v-for="method in methods" :key="method">
         <button
-          class="
-            w-full
-            h-full
-            min-h-[2.5rem]
-            rounded
-            border border-primary-40
-            font-semibold
-            cursor-pointer
-            text-left text-lg
-            p-1.5
-            bg-white
-          "
+          class="w-full h-full min-h-[2.5rem] rounded border border-primary-40 font-semibold cursor-pointer text-left text-lg p-1.5 bg-white"
           :class="
             method === modelValue
               ? 'bg-link text-white !border-link-110'

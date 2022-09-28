@@ -18,14 +18,7 @@
             page === modelValue && 'text-link bg-white font-bold border-link'
           "
           :disabled="page === modelValue"
-          class="
-            leading-none
-            border border-primary
-            rounded
-            mx-1
-            p-2
-            hover:font-bold hover:border-link
-          "
+          class="leading-none border border-primary rounded mx-1 p-2 hover:font-bold hover:border-link"
           @click="emit('update:modelValue', page)"
         >
           {{ page + 1 }}

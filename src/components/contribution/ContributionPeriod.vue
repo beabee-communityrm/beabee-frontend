@@ -16,15 +16,7 @@
         :checked="period.name === modelValue"
       />
       <span
-        class="
-          flex
-          justify-center
-          items-center
-          font-semibold
-          p-2.5
-          cursor-pointer
-          border border-primary-40
-        "
+        class="flex justify-center items-center font-semibold p-2.5 cursor-pointer border border-primary-40"
         :class="[
           period.name === modelValue
             ? 'bg-link text-white !border-link-110'

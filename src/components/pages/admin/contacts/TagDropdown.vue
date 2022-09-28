@@ -11,18 +11,7 @@
   </div>
   <div class="flex flex-col sm:flex-row">
     <div
-      class="
-        cursor-pointer
-        hover:bg-white
-        border border-primary-40
-        focus:shadow-input
-        rounded
-        align-middle
-        w-full
-        sm:w-1/2 sm:min-w-[17rem]
-        bg-white
-        p-2
-      "
+      class="cursor-pointer hover:bg-white border border-primary-40 focus:shadow-input rounded align-middle w-full sm:w-1/2 sm:min-w-[17rem] bg-white p-2"
       :class="isTagMenuVisible ? 'h-auto focus:shadow-input' : ''"
       @click="isTagMenuVisible = !isTagMenuVisible"
     >

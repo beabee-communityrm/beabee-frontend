@@ -1,13 +1,7 @@
 <template>
   <footer class="mt-auto">
     <div
-      class="
-        text-sm
-        xs:flex xs:flex-row xs:flex-wrap
-        pt-4
-        mt-16
-        border-t border-primary-40
-      "
+      class="text-sm xs:flex xs:flex-row xs:flex-wrap pt-4 mt-16 border-t border-primary-40"
     >
       <div class="w-full lg:w-auto mr-8 mb-6">
         <ul>

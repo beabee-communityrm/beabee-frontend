@@ -3,16 +3,7 @@
     <the-menu />
 
     <main
-      class="
-        flex flex-col flex-grow
-        px-4
-        pt-5
-        pb-5
-        bg-primary-5
-        md:pt-14 md:px-10
-        w-full
-        max-w-[1400px]
-      "
+      class="flex flex-col flex-grow px-4 pt-5 pb-5 bg-primary-5 md:pt-14 md:px-10 w-full max-w-[1400px]"
     >
       <router-view />
       <Footer />

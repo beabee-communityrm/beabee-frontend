@@ -1,22 +1,6 @@
 <template>
   <div
-    class="
-      px-1
-      py-2
-      my-0.5
-      rounded
-      flex
-      items-center
-      justify-start
-      md:justify-center
-      xl:justify-start
-      w-auto
-      md:w-12
-      xl:w-auto
-      md:overflow-x-hidden
-      xl:overflow-auto
-      font-semibold
-    "
+    class="px-1 py-2 my-0.5 rounded flex items-center justify-start md:justify-center xl:justify-start w-auto md:w-12 xl:w-auto md:overflow-x-hidden xl:overflow-auto font-semibold"
     :class="itemClass"
   >
     <font-awesome-icon class="inline-block h-4 fa-fw" :icon="icon" size="lg" />
