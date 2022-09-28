@@ -1,19 +1,10 @@
 <template>
   <div class="grid grid-cols-12 gap-x-2 font-bold">
     <label
-      class="
-        col-span-12
-        md:col-span-8
-        border border-primary-40
-        rounded
-        flex
-        items-center
-        overflow-hidden
-        text-sm
-      "
+      class="col-span-12 flex items-center overflow-hidden rounded border border-primary-40 text-sm md:col-span-8"
       :class="hasError ? 'border-danger bg-danger-10' : 'bg-white'"
     >
-      <div class="flex flex-1 px-6 py-3 items-baseline overflow-hidden">
+      <div class="flex flex-1 items-baseline overflow-hidden px-6 py-3">
         <span class="text-body-60">{{ currencySign }}</span>
         <div class="relative mx-1 overflow-hidden">
           <div class="text-6xl font-semibold">
@@ -21,16 +12,7 @@
           </div>
           <input
             :value="amount"
-            class="
-              absolute
-              text-6xl text-body
-              inset-0
-              w-full
-              h-full
-              border-0
-              outline-none
-              font-semibold
-            "
+            class="absolute inset-0 h-full w-full border-0 text-6xl font-semibold text-body outline-none"
             :min="minAmount"
             :class="{ 'bg-danger-10': hasError }"
             @input="handleInput"
@@ -43,7 +25,7 @@
         <div class="whitespace-nowrap text-body-60">/ {{ period }}</div>
       </div>
 
-      <div class="flex flex-none flex-col h-full text-sm">
+      <div class="flex h-full flex-none flex-col text-sm">
         <button
           class="amount-button border-l border-b"
           type="button"
@@ -64,46 +46,17 @@
     </label>
 
     <div
-      class="
-        col-span-12
-        md:col-span-4
-        my-6
-        md:my-0
-        grid grid-cols-3
-        md:grid-cols-1
-        overflow-hidden
-      "
+      class="col-span-12 my-6 grid grid-cols-3 overflow-hidden md:col-span-4 md:my-0 md:grid-cols-1"
     >
       <button
         v-for="(definedAmount, index) in definedAmounts"
         :key="index"
         type="button"
-        class="
-          bg-white
-          text-sm
-          border border-primary-40
-          first:rounded-l first:border-r-0
-          last:rounded-r last:rounded-l-none last:border-l-0 last:border-t
-          md:first:rounded-t
-          md:first:rounded-bl-none
-          md:first:border-r
-          md:first:border-b-0
-          md:last:rounded-b
-          md:last:rounded-tr-none
-          md:last:border-t-0
-          md:last:border-l
-          p-3
-          md:p-2
-          border-box
-          flex
-          items-center
-          justify-center
-          font-semibold
-        "
+        class="border-box flex items-center justify-center border border-primary-40 bg-white p-3 text-sm font-semibold first:rounded-l first:border-r-0 last:rounded-r last:rounded-l-none last:border-l-0 last:border-t md:p-2 md:first:rounded-t md:first:rounded-bl-none md:first:border-r md:first:border-b-0 md:last:rounded-b md:last:rounded-tr-none md:last:border-t-0 md:last:border-l"
         :class="
           definedAmount === amount
-            ? 'bg-link-10 !text-link font-bold !border-link'
-            : 'hover:text-link-110'
+            ? '!border-link-110 bg-link font-bold !text-white'
+            : 'hover:border-link hover:bg-link-10'
         "
         @click="changeAmount(definedAmount)"
       >
@@ -113,7 +66,7 @@
 
     <div
       v-if="hasError"
-      class="text-sm text-danger font-semibold mt-0 md:mt-1.5 col-span-12"
+      class="col-span-12 mt-0 text-sm font-semibold text-danger md:mt-1.5"
       role="alert"
     >
       {{ t('join.minimumContribution') }}
@@ -189,11 +142,11 @@ const period = computed(() => {
 });
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .amount-button {
-  @apply h-1/2 bg-white py-2 px-4 text-primary-70 hover:text-link border-primary-40;
+  @apply h-1/2 border-primary-40 bg-white py-2 px-4 text-primary-70 hover:bg-primary-5 hover:text-primary;
   &.is-invalid {
-    @apply text-grey cursor-not-allowed;
+    @apply cursor-not-allowed text-grey;
   }
 }
 </style>

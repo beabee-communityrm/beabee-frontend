@@ -1,25 +1,11 @@
 <template>
   <span
-    class="
-      bg-white
-      whitespace-nowrap
-      text-link
-      rounded
-      font-bold
-      inline-block
-      py-0.5
-      px-1
-      mr-1
-      mb-1
-      text-xs
-      border border-white
-      select-none
-    "
+    class="mr-1 mb-1 inline-block select-none whitespace-nowrap rounded border border-white bg-white py-0.5 px-1 text-xs font-bold text-link"
   >
     {{ props.tag }}
     <font-awesome-icon
       v-if="props.hasRemoveIcon"
-      class="inline-block cursor-pointer ml-2 hover:text-link-110"
+      class="ml-2 inline-block cursor-pointer hover:text-link-110"
       icon="times"
       @click="$emit('click:removeTag')"
     />

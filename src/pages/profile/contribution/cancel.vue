@@ -7,7 +7,7 @@ meta:
 <template>
   <PageTitle :title="t('menu.contribution')" />
 
-  <h3 class="text-2xl font-semibold text-body mb-4">
+  <h3 class="mb-4 text-2xl font-semibold text-body">
     {{ t('contribution.cancelMessage') }}
   </h3>
 

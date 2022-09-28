@@ -1,4 +1,4 @@
-import { computed, ComputedRef } from 'vue';
+import { StripeFeeCountry } from './api/api.interface';
 import { ContributionPeriod } from './enums/contribution-period.enum';
 import { PaymentMethod } from './enums/payment-method.enum';
 
@@ -26,17 +26,17 @@ const stripeFees = {
   },
 } as const;
 
-const fees = {
-  [PaymentMethod.GoCardlessDirectDebit]: (amount: number) => 0.2 + amount / 100,
-  ...stripeFees[import.meta.env.VITE_STRIPE_COUNTRY],
-} as const;
+const gcFee = (amount: number) => 0.2 + amount / 100;
 
-function calcPaymentFee(feeable: Feeable): ComputedRef<number> {
-  return computed(() =>
-    feeable.period === ContributionPeriod.Annually
-      ? 0
-      : fees[feeable.paymentMethod](feeable.amount)
-  );
+function calcPaymentFee(feeable: Feeable, country: StripeFeeCountry): number {
+  const feeFn =
+    feeable.paymentMethod === PaymentMethod.GoCardlessDirectDebit
+      ? gcFee
+      : stripeFees[country][feeable.paymentMethod];
+
+  return feeable.period === ContributionPeriod.Annually
+    ? 0
+    : feeFn(feeable.amount);
 }
 
 export default calcPaymentFee;
