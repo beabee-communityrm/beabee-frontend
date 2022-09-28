@@ -44,6 +44,7 @@ meta:
       </p>
       <StripePayment
         :client-secret="stripeClientSecret"
+        :public-key="joinContent.stripePublicKey"
         :email="signUpData.email"
         :return-url="completeUrl"
         show-name-fields
@@ -77,8 +78,6 @@ const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
-const { signUpData, signUpDescription } = useJoin();
-
 const loading = ref(false);
 const stripePaymentLoaded = ref(false);
 const stripeClientSecret = ref('');
@@ -93,7 +92,11 @@ const joinContent = ref<JoinContent>({
   subtitle: '',
   title: '',
   paymentMethods: [],
+  stripePublicKey: '',
+  stripeCountry: 'eu',
 });
+
+const { signUpData, signUpDescription } = useJoin(joinContent);
 
 async function submitSignUp() {
   loading.value = true;

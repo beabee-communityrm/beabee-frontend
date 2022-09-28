@@ -18,9 +18,8 @@
           required
         />
         <p class="mt-2 text-sm">
-          {{ t('createCallout.steps.url.URLWillBe') }} {{ baseUrl }}/callouts/{{
-            slug || '???'
-          }}
+          {{ t('createCallout.steps.url.URLWillBe') }}
+          {{ env.appUrl }}/callouts/{{ slug || '???' }}
         </p>
       </div>
       <div
@@ -83,6 +82,7 @@ import AppInput from '../../../forms/AppInput.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
 import AppTextArea from '../../../forms/AppTextArea.vue';
 import { UrlAndSharingStepProps } from '../callouts.interface';
+import env from '../../../../env';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
@@ -92,8 +92,6 @@ const props = defineProps<{
 
 const { t } = useI18n();
 const inputT = (key: string) => t('createCallout.steps.url.inputs.' + key);
-
-const baseUrl = import.meta.env.VITE_APP_BASE_URL;
 
 const dataProxy = ref(props.data);
 

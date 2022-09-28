@@ -8,4 +8,6 @@ export type ContributionContent = Pick<
   | 'showAbsorbFee'
   | 'periods'
   | 'paymentMethods'
+  | 'stripePublicKey'
+  | 'stripeCountry'
 >;

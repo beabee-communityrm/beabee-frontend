@@ -57,7 +57,7 @@ const props = withDefaults(
   { showPeriod: true, showPaymentMethod: true }
 );
 
-const fee = calcPaymentFee(props);
+const fee = computed(() => calcPaymentFee(props, props.content.stripeCountry));
 
 const emit = defineEmits([
   'update:amount',

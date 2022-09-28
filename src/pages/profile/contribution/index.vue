@@ -18,13 +18,18 @@ meta:
 
       <ContributionBox :contribution="contribution" class="mb-9" />
 
-      <UpdateContribution v-model="contribution" class="mb-7 md:mb-9" />
+      <UpdateContribution
+        v-model="contribution"
+        :content="content"
+        class="mb-7 md:mb-9"
+      />
 
       <PaymentSource
         v-if="contribution.paymentSource"
         class="mb-7 md:mb-9"
         :email="email"
         :payment-source="contribution.paymentSource"
+        :stripe-public-key="content.stripePublicKey"
       />
 
       <CancelContribution :contribution="contribution" />
@@ -51,12 +56,27 @@ import { ContributionInfo } from '../../../utils/api/api.interface';
 import { fetchContribution } from '../../../utils/api/member';
 import { MembershipStatus } from '../../../utils/enums/membership-status.enum';
 import { ContributionType } from '../../../utils/enums/contribution-type.enum';
+import { ContributionContent } from '../../../components/contribution/contribution.interface';
+import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
+import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
+import { fetchContent } from '../../../utils/api/content';
 
 const { t } = useI18n();
 
 const route = useRoute();
 const updatedPaymentSource = route.query.updatedPaymentSource !== undefined;
 const startedContribution = route.query.startedContribution !== undefined;
+
+const content = ref<ContributionContent>({
+  initialAmount: 5,
+  initialPeriod: ContributionPeriod.Monthly,
+  minMonthlyAmount: 5,
+  periods: [],
+  showAbsorbFee: true,
+  paymentMethods: [PaymentMethod.StripeCard],
+  stripePublicKey: '',
+  stripeCountry: 'eu',
+});
 
 const email = computed(() =>
   currentUser.value ? currentUser.value.email : ''
@@ -70,6 +90,7 @@ const contribution = ref<ContributionInfo>({
 
 onBeforeMount(async () => {
   isIniting.value = true;
+  content.value = await fetchContent('join');
   contribution.value = await fetchContribution();
   isIniting.value = false;
 });

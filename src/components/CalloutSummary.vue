@@ -12,7 +12,7 @@
     <p>
       <router-link :to="calloutLink">
         <font-awesome-icon icon="external-link-alt" />
-        <span class="ml-2 text-link">{{ baseUrl }}{{ calloutLink }}</span>
+        <span class="ml-2 text-link">{{ env.appUrl }}{{ calloutLink }}</span>
       </router-link>
     </p>
 
@@ -64,8 +64,8 @@ import {
   formatDistanceLocale,
 } from '../utils/dates/locale-date-formats';
 import AppSubHeading from './AppSubHeading.vue';
+import env from './../env';
 
-const baseUrl = import.meta.env.VITE_APP_BASE_URL;
 const { t } = useI18n();
 
 const props = defineProps<{

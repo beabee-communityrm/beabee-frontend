@@ -36,6 +36,7 @@ import { sameAs } from '@vuelidate/validators';
 import { ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import axios from '../../axios';
+import env from '../../env';
 import AppButton from './AppButton.vue';
 import AppLabel from './AppLabel.vue';
 
@@ -49,8 +50,6 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
-
-const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
 const inputRef = ref<HTMLInputElement>();
 const uploading = ref(false);
@@ -81,13 +80,13 @@ async function uploadFile(file: File) {
   uploading.value = true;
 
   const resp = await axios.post('/upload/', data, {
-    baseURL,
+    baseURL: env.appUrl,
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
 
-  const newUrl = `${baseURL}/uploads/${props.width}x${props.height}/${resp.data.hash}`;
+  const newUrl = `${env.appUrl}/uploads/${props.width}x${props.height}/${resp.data.hash}`;
   emit('update:modelValue', newUrl);
 
   uploading.value = false;
