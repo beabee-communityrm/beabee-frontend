@@ -3,12 +3,36 @@ name: Check code
 on: [pull_request, workflow_call]
 
 jobs:
-  check:
+  init:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm install prettier@2.7.1 prettier-plugin-tailwindcss@0.1.13
+          cache: 'npm'
+      - run: npm ci
+
+  prettier:
+    runs-on: ubuntu-latest
+    needs: [init]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      - run: npm ci
       - run: npx prettier -c .
+
+  vue-tsc:
+    runs-on: ubuntu-latest
+    needs: [init]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      - run: npm ci
+      - run: npx vue-tsc --noEmit
