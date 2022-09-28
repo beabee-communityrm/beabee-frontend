@@ -234,28 +234,26 @@ onBeforeMount(async () => {
 });
 
 watchEffect(async () => {
-  const rules: GetMembersQuery['rules'] | undefined = currentSearch.value
-    ? {
-        condition: 'OR',
-        rules: [
-          {
-            field: 'email',
-            operator: 'contains',
-            value: currentSearch.value,
-          },
-          {
-            field: 'firstname',
-            operator: 'contains',
-            value: currentSearch.value,
-          },
-          {
-            field: 'lastname',
-            operator: 'contains',
-            value: currentSearch.value,
-          },
-        ],
-      }
-    : undefined;
+  const rules: GetMembersQuery['rules'] = {
+    condition: 'OR',
+    rules: currentSearch.value.split(' ').flatMap((value) => [
+      {
+        field: 'email',
+        operator: 'contains',
+        value,
+      },
+      {
+        field: 'firstname',
+        operator: 'contains',
+        value,
+      },
+      {
+        field: 'lastname',
+        operator: 'contains',
+        value,
+      },
+    ]),
+  };
 
   const query = {
     offset: currentPage.value * currentPageSize.value,
