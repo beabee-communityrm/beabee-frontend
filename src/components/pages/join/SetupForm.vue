@@ -8,8 +8,8 @@
         })
       "
     />
-    <div class="content-message mb-6" v-html="t('joinSetup.confirmDetails')" />
-    <p class="mt-2 mb-4">
+    <div class="content-message mb-2" v-html="t('joinSetup.confirmDetails')" />
+    <p class="mt-2 mb-6">
       {{ setupContent.welcome }}
     </p>
 
@@ -34,30 +34,30 @@
       />
     </template>
 
-    <template v-if="setupContent.showNewsletterOptIn">
+    <template v-if="showNewsletterOptIn">
       <p class="mb-1 text-lg">
         {{ setupContent.newsletterTitle }}
       </p>
 
-      <p class="mb-4 text-sm">
+      <p class="mb-2 text-sm">
         {{ setupContent.newsletterText }}
       </p>
 
       <AppCheckbox
         v-model="setupMemberData.profile.newsletterOptIn"
         :label="setupContent.newsletterOptIn"
-        class="mb-4 font-bold"
+        class="mb-6 font-semibold"
       />
     </template>
 
-    <MessageBox v-if="validation.$errors.length > 0" class="mb-4" />
+    <MessageBox v-if="validation.$errors.length > 0" class="mb-2" />
 
     <AppButton
       variant="link"
       type="submit"
       :loading="loading"
       :disabled="validation.$invalid"
-      class="w-full"
+      class="mb-3 w-full"
     >
       {{ t('joinSetup.continue') }}
     </AppButton>
