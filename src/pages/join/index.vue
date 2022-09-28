@@ -24,14 +24,14 @@ meta:
         {{ t('joinPayment.willBeContributing', signUpDescription) }}
       </AppAlert>
 
-      <p class="mb-3 text-xs text-body-80 font-semibold">
+      <p class="mb-3 text-xs font-semibold text-body-80">
         {{ t('joinPayment.note') }}
       </p>
-      <p class="mb-6 text-xs text-body-80 font-semibold">
+      <p class="mb-6 text-xs font-semibold text-body-80">
         <i18n-t keypath="joinPayment.goBack">
           <template #back>
             <a
-              class="cursor-pointer underline text-link"
+              class="cursor-pointer text-link underline"
               @click="
                 stripeClientSecret = '';
                 stripePaymentLoaded = false;

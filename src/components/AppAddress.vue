@@ -18,7 +18,7 @@
   </div>
 
   <div class="grid grid-cols-6 gap-4">
-    <div class="mb-3 col-span-4">
+    <div class="col-span-4 mb-3">
       <AppInput
         :model-value="cityOrTown"
         :label="t('form.cityOrTown')"
@@ -28,7 +28,7 @@
       />
     </div>
 
-    <div class="mb-3 col-span-2">
+    <div class="col-span-2 mb-3">
       <AppInput
         :model-value="postCode"
         :label="t('form.postCode')"

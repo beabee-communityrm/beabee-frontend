@@ -1,11 +1,11 @@
 <template>
-  <div class="h-auto flex flex-col border border-primary-40 p-5 my-2">
+  <div class="my-2 flex h-auto flex-col border border-primary-40 p-5">
     {{ t('callout.share.address') }}
 
     <div
-      class="justify-between flex flex-row items-center bg-white rounded mt-2 mb-4 pl-3"
+      class="mt-2 mb-4 flex flex-row items-center justify-between rounded bg-white pl-3"
     >
-      <span class="text-link mr-2">{{ calloutUrl }}</span>
+      <span class="mr-2 text-link">{{ calloutUrl }}</span>
       <AppButton icon="copy" size="sm" @click="copyToClipboard">{{
         t('common.copy')
       }}</AppButton>
@@ -13,7 +13,7 @@
 
     {{ t('callout.share.services') }}
 
-    <div class="w-2/3 grid gap-2 grid-cols-3 grid-rows-2 mt-3">
+    <div class="mt-3 grid w-2/3 grid-cols-3 grid-rows-2 gap-2">
       <div>
         <a
           :href="

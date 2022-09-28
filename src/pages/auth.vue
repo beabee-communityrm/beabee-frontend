@@ -3,7 +3,7 @@ meta:
   layout: Auth
 </route>
 <template>
-  <div class="px-4 mb-5">
+  <div class="mb-5 px-4">
     <AppButton :href="generalContent.siteUrl" size="sm">
       ←
       {{ t('login.backTo', { newsroomName: generalContent.organisationName }) }}
@@ -11,7 +11,7 @@ meta:
   </div>
 
   <AuthBox>
-    <div class="flex justify-center mb-10">
+    <div class="mb-10 flex justify-center">
       <AppLogo class="h-[120px]" />
     </div>
 

@@ -2,7 +2,7 @@
   <p class="text-center text-xs">
     {{ t('join.notice') }}
     <a
-      class="text-link hover:text-primary underline"
+      class="text-link underline hover:text-primary"
       :href="privacyLink"
       target="_blank"
       rel="noreferrer"

@@ -1,6 +1,6 @@
 <template>
   <AppLabel v-if="label" :label="label" />
-  <div class="flex flex-row flex-wrap mb-1 mt-1">
+  <div class="mb-1 mt-1 flex flex-row flex-wrap">
     <ContactTag
       v-for="tag in modelValue"
       :key="tag"
@@ -11,13 +11,13 @@
   </div>
   <div class="flex flex-col sm:flex-row">
     <div
-      class="cursor-pointer hover:bg-white border border-primary-40 focus:shadow-input rounded align-middle w-full sm:w-1/2 sm:min-w-[17rem] bg-white p-2"
+      class="w-full cursor-pointer rounded border border-primary-40 bg-white p-2 align-middle hover:bg-white focus:shadow-input sm:w-1/2 sm:min-w-[17rem]"
       :class="isTagMenuVisible ? 'h-auto focus:shadow-input' : ''"
       @click="isTagMenuVisible = !isTagMenuVisible"
     >
       <p class="align-middle">
         <font-awesome-icon
-          class="inline-block cursor-pointer mr-2 ml-2"
+          class="mr-2 ml-2 inline-block cursor-pointer"
           icon="caret-down"
         />
         Pick a tag from the list below
@@ -26,11 +26,11 @@
         <p
           v-for="tag in availableTags"
           :key="tag"
-          class="hover:bg-primary-20 first:mt-2 p-2"
+          class="p-2 first:mt-2 hover:bg-primary-20"
           @click="handleAddTag(tag)"
         >
           <font-awesome-icon
-            class="inline-block cursor-pointer mr-2 ml-2"
+            class="mr-2 ml-2 inline-block cursor-pointer"
             icon="tag"
           />
           {{ tag }}

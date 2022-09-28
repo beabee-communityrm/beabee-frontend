@@ -2,23 +2,23 @@
   <div v-if="methods.length > 1">
     <AppSubHeading class="mb-2">{{ t('join.paymentMethod') }}</AppSubHeading>
     <div
-      class="grid grid-cols-3 gap-2 mb-6"
+      class="mb-6 grid grid-cols-3 gap-2"
       :class="methods.length > 2 ? 'grid-cols-3' : 'grid-cols-2'"
     >
       <div v-for="method in methods" :key="method">
         <button
-          class="w-full h-full min-h-[2.5rem] rounded border border-primary-40 font-semibold cursor-pointer text-left text-lg p-1.5 bg-white"
+          class="h-full min-h-[2.5rem] w-full cursor-pointer rounded border border-primary-40 bg-white p-1.5 text-left text-lg font-semibold"
           :class="
             method === modelValue
-              ? 'bg-link text-white !border-link-110'
-              : 'hover:bg-link-10 hover:border-link'
+              ? '!border-link-110 bg-link text-white'
+              : 'hover:border-link hover:bg-link-10'
           "
           type="button"
           @click="emit('update:modelValue', method)"
         >
           <PaymentMethodIcon :method="method" /><span
             class="text-xs"
-            :class="methods.length > 2 ? 'block' : 'inline m-2'"
+            :class="methods.length > 2 ? 'block' : 'm-2 inline'"
             >{{ t(`paymentMethods.${method}.label`) }}</span
           >
         </button>

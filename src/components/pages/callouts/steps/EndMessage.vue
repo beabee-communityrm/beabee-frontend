@@ -14,7 +14,7 @@
         />
       </div>
     </div>
-    <div v-if="showThankYouSection" class="grid grid-cols-2 gap-6 mt-5">
+    <div v-if="showThankYouSection" class="mt-5 grid grid-cols-2 gap-6">
       <div class="col-span-1 mb-5">
         <AppInput
           v-model="dataProxy.thankYouTitle"
@@ -24,7 +24,7 @@
         />
       </div>
       <div
-        class="col-span-1 text-sm text-grey mt-6"
+        class="col-span-1 mt-6 text-sm text-grey"
         v-html="inputT('title.help')"
       />
     </div>
@@ -38,11 +38,11 @@
         />
       </div>
       <div
-        class="col-span-1 text-sm text-grey mt-6"
+        class="col-span-1 mt-6 text-sm text-grey"
         v-html="inputT('text.help')"
       />
     </div>
-    <div v-if="!showThankYouSection" class="grid grid-cols-2 gap-6 mt-5">
+    <div v-if="!showThankYouSection" class="mt-5 grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <AppInput
           v-model="dataProxy.thankYouRedirect"
@@ -53,7 +53,7 @@
         />
       </div>
       <div
-        class="col-span-1 text-sm text-grey mt-6"
+        class="col-span-1 mt-6 text-sm text-grey"
         v-html="inputT('url.help')"
       />
     </div>

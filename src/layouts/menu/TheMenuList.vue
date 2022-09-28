@@ -6,7 +6,7 @@
       :section="section"
       :is-first="index === 0"
     />
-    <div v-if="canAdmin" class="bg-primary-10 py-2 mt-2">
+    <div v-if="canAdmin" class="mt-2 bg-primary-10 py-2">
       <TheMenuListSection
         v-for="(section, index) in adminMenu"
         :key="index"
@@ -14,7 +14,7 @@
         :is-first="index === 0"
       />
       <div class="px-2 xl:px-4">
-        <div class="border-t border-primary-40 my-2" />
+        <div class="my-2 border-t border-primary-40" />
         <a href="/members" class="block text-body-80">
           <TheMenuListItem
             :icon="['fa', 'window-restore']"
@@ -25,7 +25,7 @@
     </div>
   </div>
   <div
-    class="fixed bottom-0 left-0 px-1 py-2 border-t border-primary-40 bg-white w-menu md:w-16 xl:w-menu"
+    class="fixed bottom-0 left-0 w-menu border-t border-primary-40 bg-white px-1 py-2 md:w-16 xl:w-menu"
   >
     <a class="cursor-pointer" @click="doLogout">
       <TheMenuListItem

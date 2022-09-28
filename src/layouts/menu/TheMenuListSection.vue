@@ -3,7 +3,7 @@
     class="px-2 xl:px-4"
     :class="section.type === 'main' ? 'text-body-80' : 'text-grey-dark'"
   >
-    <div v-if="!isFirst" class="border-t border-primary-40 my-2" />
+    <div v-if="!isFirst" class="my-2 border-t border-primary-40" />
     <div v-if="section.title" class="pb-2 md:hidden xl:inline-block">
       {{ t(section.title) }}
     </div>

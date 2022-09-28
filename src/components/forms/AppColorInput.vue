@@ -1,7 +1,7 @@
 <template>
-  <div class="flex mb-2">
+  <div class="mb-2 flex">
     <div
-      class="w-7 h-7 mt-1.5 flex-0 rounded-full mr-2"
+      class="flex-0 mt-1.5 mr-2 h-7 w-7 rounded-full"
       :style="{ backgroundColor: modelValue }"
     />
     <div class="flex-1">

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="mode === 'new'" class="grid grid-cols-2 gap-6 mt-5">
+    <div v-if="mode === 'new'" class="mt-5 grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <AppRadioGroup
           v-model="dataProxy.useCustomSlug"
@@ -24,11 +24,11 @@
         </p>
       </div>
       <div
-        class="col-span-1 text-sm text-grey mt-6"
+        class="col-span-1 mt-6 text-sm text-grey"
         v-html="inputT('slug.help')"
       />
     </div>
-    <div class="grid grid-cols-2 gap-6 mt-5">
+    <div class="mt-5 grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <AppRadioGroup
           v-model="dataProxy.overrideShare"
@@ -41,9 +41,9 @@
           required
         />
       </div>
-      <div class="col-span-1 text-sm text-grey mt-6" />
+      <div class="col-span-1 mt-6 text-sm text-grey" />
     </div>
-    <div v-if="dataProxy.overrideShare" class="grid grid-cols-2 gap-6 mt-5">
+    <div v-if="dataProxy.overrideShare" class="mt-5 grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <AppInput
           v-model="dataProxy.shareTitle"
@@ -53,11 +53,11 @@
         />
       </div>
       <div
-        class="col-span-1 text-sm text-grey mt-6"
+        class="col-span-1 mt-6 text-sm text-grey"
         v-html="inputT('title.help')"
       />
     </div>
-    <div v-if="dataProxy.overrideShare" class="grid grid-cols-2 gap-6 mt-5">
+    <div v-if="dataProxy.overrideShare" class="mt-5 grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <AppTextArea
           v-model="dataProxy.shareDescription"
@@ -67,7 +67,7 @@
         />
       </div>
       <div
-        class="col-span-1 text-sm text-grey mt-6"
+        class="col-span-1 mt-6 text-sm text-grey"
         v-html="inputT('description.help')"
       />
     </div>

@@ -4,7 +4,7 @@
       v-for="(period, index) in periods"
       :key="index"
       :for="period.name"
-      class="flex-grow relative"
+      class="relative flex-grow"
     >
       <input
         :id="period.name"
@@ -12,15 +12,15 @@
         type="radio"
         :name="period.name"
         :value="period.name"
-        class="absolute opacity-0 -z-10"
+        class="absolute -z-10 opacity-0"
         :checked="period.name === modelValue"
       />
       <span
-        class="flex justify-center items-center font-semibold p-2.5 cursor-pointer border border-primary-40"
+        class="flex cursor-pointer items-center justify-center border border-primary-40 p-2.5 font-semibold"
         :class="[
           period.name === modelValue
-            ? 'bg-link text-white !border-link-110'
-            : 'hover:bg-link-10 hover:border-link',
+            ? '!border-link-110 bg-link text-white'
+            : 'hover:border-link hover:bg-link-10',
           period.name === 'monthly' ? 'rounded-l' : 'rounded-r',
         ]"
       >

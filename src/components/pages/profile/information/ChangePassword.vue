@@ -39,7 +39,7 @@
       />
     </div>
     <MessageBox v-if="hasFormError" type="error" class="mt-2" />
-    <div class="flex mt-2">
+    <div class="mt-2 flex">
       <AppButton
         type="submit"
         :disabled="disableSubmit"
