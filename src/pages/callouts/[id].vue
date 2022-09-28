@@ -83,6 +83,7 @@ meta:
         <AppButton
           :to="`/admin/callouts/edit/${callout.slug}`"
           icon="pencil-alt"
+          variant="linkOutlined"
         >
           {{ t('actions.edit') }}
         </AppButton>
@@ -96,7 +97,11 @@ meta:
     >
       <div class="flex items-center justify-between gap-4">
         <span>{{ t('callout.showMemberView') }}</span>
-        <AppButton :to="`/callouts/${callout.slug}?preview`" icon="eye">
+        <AppButton
+          :to="`/callouts/${callout.slug}?preview`"
+          icon="eye"
+          variant="linkOutlined"
+        >
           {{ t('actions.preview') }}
         </AppButton>
       </div>
