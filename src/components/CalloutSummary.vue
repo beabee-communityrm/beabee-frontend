@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex mb-4">
+    <div class="mb-4 flex">
       <div class="flex-1">
         <AppSubHeading>{{ callout.title }}</AppSubHeading>
         <p>{{ callout.excerpt }}</p>
@@ -12,21 +12,21 @@
     <p>
       <router-link :to="calloutLink">
         <font-awesome-icon icon="external-link-alt" />
-        <span class="text-link ml-2">{{ baseUrl }}{{ calloutLink }}</span>
+        <span class="ml-2 text-link">{{ env.appUrl }}{{ calloutLink }}</span>
       </router-link>
     </p>
 
     <div
       v-if="footer"
-      class="flex flex-col md:flex-row flex-1 justify-between items-end mt-3"
+      class="mt-3 flex flex-1 flex-col items-end justify-between md:flex-row"
     >
       <div class="flex-col">
         <!--<p><b>36</b> {{ t('adminDashboard.responsesSoFar') }}</p>-->
         <router-link :to="`/admin/callouts/view/${callout.slug}/responses`">
-          <p class="text-link text-sm">{{ t('See all responses') }}</p>
+          <p class="text-sm text-link">{{ t('See all responses') }}</p>
         </router-link>
       </div>
-      <div class="flex flex-row flex-nowrap mt-3 md:mt-0">
+      <div class="mt-3 flex flex-row flex-nowrap md:mt-0">
         <div class="flex-col text-sm">
           <p class="text-body-60">
             <AppItemStatus :status="callout.status" /> -
@@ -64,8 +64,8 @@ import {
   formatDistanceLocale,
 } from '../utils/dates/locale-date-formats';
 import AppSubHeading from './AppSubHeading.vue';
+import env from './../env';
 
-const baseUrl = import.meta.env.VITE_APP_BASE_URL;
 const { t } = useI18n();
 
 const props = defineProps<{

@@ -4,8 +4,8 @@
     <label
       v-for="[value, optLabel] in options"
       :key="value.toString()"
-      class="items-center mb-1"
-      :class="inline ? 'inline-flex mr-3' : 'flex'"
+      class="mb-1 items-center"
+      :class="inline ? 'mr-3 inline-flex' : 'flex'"
     >
       <input
         v-model="selected"

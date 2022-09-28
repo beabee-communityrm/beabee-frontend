@@ -6,7 +6,7 @@ meta:
 </route>
 
 <template>
-  <div v-if="contact" class="grid lg:grid-cols-2 gap-8">
+  <div v-if="contact" class="grid gap-8 lg:grid-cols-2">
     <div>
       <AppHeading>{{ t('contactOverview.overview') }}</AppHeading>
       <AppInfoList>

@@ -1,14 +1,14 @@
 <template>
-  <div class="flex rounded overflow-hidden">
+  <div class="flex overflow-hidden rounded">
     <div
-      class="flex items-center justify-center flex-shrink-0 w-12 text-white"
+      class="flex w-12 flex-shrink-0 items-center justify-center text-white"
       :class="iconClasses[type]"
     >
       <font-awesome-icon :icon="['fas', icon]" />
     </div>
 
     <div
-      class="flex items-center flex-grow p-3 text-xs font-semibold"
+      class="flex flex-grow items-center p-3 text-xs font-semibold"
       :class="contentClasses[type]"
     >
       <slot>{{ t('form.errors.aggregator') }}</slot>

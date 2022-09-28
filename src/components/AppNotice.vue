@@ -1,13 +1,13 @@
 <template>
   <a :href="notice.url">
-    <div class="mb-2 bg-white rounded p-4.5 flex shadow">
+    <div class="mb-2 flex rounded bg-white p-4.5 shadow">
       <div class="flex md:mt-1.5">
         <font-awesome-icon
-          class="text-warning text-xl md:mt-1 mr-2 self-start"
+          class="mr-2 self-start text-xl text-warning md:mt-1"
           :icon="['fas', 'bullhorn']"
         />
 
-        <div class="text-sm pr-3 md:text-lg">
+        <div class="pr-3 text-sm md:text-lg">
           {{ notice.text }}
         </div>
       </div>

@@ -1,6 +1,6 @@
 <template>
-  <div class="flex items-center px-4 font-semibold rounded" :class="alertClass">
-    <div v-if="slots.icon" class="mr-4 text-lg flex-0">
+  <div class="flex items-center rounded px-4 font-semibold" :class="alertClass">
+    <div v-if="slots.icon" class="flex-0 mr-4 text-lg">
       <slot name="icon" />
     </div>
 

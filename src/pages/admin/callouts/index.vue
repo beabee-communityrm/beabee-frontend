@@ -6,7 +6,7 @@ meta:
 </route>
 <template>
   <PageTitle :title="t('menu.callouts')" border>
-    <div class="flex-1 block lg:hidden">
+    <div class="block flex-1 lg:hidden">
       <AppSelect v-model="currentStatus" :items="statusItems" />
     </div>
     <div class="flex-0 ml-3">
@@ -24,7 +24,7 @@ meta:
   </AppAlert>
 
   <div class="md:flex">
-    <div class="flex-none hidden lg:block basis-[220px]">
+    <div class="hidden flex-none basis-[220px] lg:block">
       <AppVTabs v-model="currentStatus" :items="statusItems" />
     </div>
     <div class="flex-auto">
@@ -38,7 +38,7 @@ meta:
         v-model:sort="currentSort"
         :headers="headers"
         :items="calloutsTable.items"
-        class="w-full mt-2"
+        class="mt-2 w-full"
       >
         <template #header-hidden><font-awesome-icon icon="eye" /></template>
         <template #status="{ value }">
@@ -47,7 +47,7 @@ meta:
         <template #title="{ item, value }">
           <router-link
             :to="'/admin/callouts/view/' + item.slug"
-            class="text-base text-link font-bold"
+            class="text-base font-bold text-link"
           >
             {{ value }}
           </router-link>

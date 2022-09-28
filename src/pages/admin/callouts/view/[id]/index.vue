@@ -6,7 +6,7 @@ meta:
 </route>
 
 <template>
-  <div class="flex flex-col-reverse lg:flex-row lg:justify-between gap-8">
+  <div class="flex flex-col-reverse gap-8 lg:flex-row lg:justify-between">
     <div class="flex-initial basis-1/2">
       <AppAlert v-if="wasJustCreated || wasJustUpdated" class="mb-8">
         <template #icon>
@@ -80,7 +80,7 @@ meta:
         />
       </AppInfoList>
     </div>
-    <div class="flex-0 flex flex-wrap lg:flex-col gap-2">
+    <div class="flex-0 flex flex-wrap gap-2 lg:flex-col">
       <ActionButton
         v-if="callout.status === ItemStatus.Open"
         icon="eye"

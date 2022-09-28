@@ -21,7 +21,7 @@
     <span v-if="loading" class="absolute inset-0 bg-white opacity-30" />
     <font-awesome-icon
       v-if="loading"
-      class="text-2xl absolute"
+      class="absolute text-2xl"
       :class="loadingIconClasses"
       :icon="['fas', 'circle-notch']"
       spin

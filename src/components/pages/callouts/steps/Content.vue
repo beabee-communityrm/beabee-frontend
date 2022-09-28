@@ -19,7 +19,7 @@
       />
     </div>
     <div
-      class="col-span-1 text-sm text-grey mt-[4rem]"
+      class="col-span-1 mt-[4rem] text-sm text-grey"
       v-html="inputT('intro.help')"
     />
   </div>
@@ -130,18 +130,18 @@ onBeforeMount(() => {
   dom.watch();
 });
 </script>
-<style>
+<style lang="postcss">
 .callout-form-builder {
   .drag-and-drop-alert {
-    @apply p-4 border border-dashed border-primary mb-4;
+    @apply mb-4 border border-dashed border-primary p-4;
   }
 
   .formbuilder {
-    @apply flex flex-row-reverse gap-8 justify-end;
+    @apply flex flex-row-reverse justify-end gap-8;
   }
 
   .formarea {
-    @apply flex-1 max-w-2xl;
+    @apply max-w-2xl flex-1;
   }
 
   .formcomponents {
@@ -149,7 +149,7 @@ onBeforeMount(() => {
   }
 
   .formcomponent {
-    @apply block w-full px-2 bg-white border border-primary-70 text-primary-80 hover:bg-primary-10 hover:text-primary hover:border-primary rounded text-sm m-0 cursor-pointer !important;
+    @apply m-0 block w-full cursor-pointer rounded border border-primary-70 bg-white px-2 text-sm text-primary-80 hover:border-primary hover:bg-primary-10 hover:text-primary !important;
     &.gu-transit {
       @apply mb-4 text-base !important;
     }
@@ -161,7 +161,7 @@ onBeforeMount(() => {
   }
 
   #group-container-basic {
-    @apply flex flex-col gap-1 w-full p-0;
+    @apply flex w-full flex-col gap-1 p-0;
   }
 
   .component-settings-button {
@@ -170,19 +170,19 @@ onBeforeMount(() => {
 }
 
 .formio-dialog {
-  @apply text-body font-body text-sm !important;
+  @apply font-body text-sm text-body !important;
 
   .formio-dialog-content {
     @apply bg-grey-lighter !important;
   }
 
   .nav {
-    @apply flex flex-wrap mb-4 border-primary-40 border-b;
+    @apply mb-4 flex flex-wrap border-b border-primary-40;
   }
   .nav-item {
-    @apply p-3 leading-none text-sm;
+    @apply p-3 text-sm leading-none;
     &.active {
-      @apply text-link font-bold border-b-2 border-link;
+      @apply border-b-2 border-link font-bold text-link;
     }
 
     /* Hide API, Logic and Layout tabs */
@@ -212,7 +212,7 @@ onBeforeMount(() => {
   .table {
     @apply w-full border-collapse;
     thead {
-      @apply text-sm border-b border-primary-20;
+      @apply border-b border-primary-20 text-sm;
     }
     th {
       @apply text-left;
@@ -237,7 +237,7 @@ onBeforeMount(() => {
     @apply p-3;
   }
   .card-title {
-    @apply font-semibold text-base;
+    @apply text-base font-semibold;
   }
 
   .formio-component-tabs > .card {

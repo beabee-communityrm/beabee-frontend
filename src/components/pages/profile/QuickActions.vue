@@ -1,7 +1,7 @@
 <template>
   <SectionTitle>{{ t('homePage.quickActions') }}</SectionTitle>
 
-  <ul class="list-disc pl-4 font-semibold underline space-y-2 mt-4">
+  <ul class="mt-4 list-disc space-y-2 pl-4 font-semibold underline">
     <!--<li>
       <router-link to="/profile/edit">
         {{ t('homePage.editProfile') }}
