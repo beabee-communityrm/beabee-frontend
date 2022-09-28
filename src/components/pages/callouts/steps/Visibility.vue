@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid grid-cols-2 gap-6 mt-5">
+    <div class="mt-5 grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <AppRadioGroup
           v-model="dataProxy.whoCanTakePart"
@@ -14,13 +14,13 @@
         />
       </div>
       <div
-        class="col-span-1 text-sm text-grey mt-6"
+        class="col-span-1 mt-6 text-sm text-grey"
         v-html="inputT('who.help')"
       />
     </div>
     <div
       v-if="dataProxy.whoCanTakePart === 'everyone'"
-      class="grid grid-cols-2 gap-6 mt-5"
+      class="mt-5 grid grid-cols-2 gap-6"
     >
       <div class="col-span-1">
         <AppRadioGroup
@@ -35,11 +35,11 @@
         />
       </div>
       <div
-        class="col-span-1 text-sm text-grey mt-6"
+        class="col-span-1 mt-6 text-sm text-grey"
         v-html="inputT('anonymous.help')"
       />
     </div>
-    <div class="grid grid-cols-2 gap-6 mt-5">
+    <div class="mt-5 grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <AppRadioGroup
           v-model="dataProxy.showOnUserDashboards"
@@ -53,11 +53,11 @@
         />
       </div>
       <div
-        class="col-span-1 text-sm text-grey mt-6"
+        class="col-span-1 mt-6 text-sm text-grey"
         v-html="inputT('visible.help')"
       />
     </div>
-    <div class="grid grid-cols-2 gap-6 mt-5">
+    <div class="mt-5 grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <AppRadioGroup
           v-model="dataProxy.usersCanEditAnswers"
@@ -71,7 +71,7 @@
         />
       </div>
       <div
-        class="col-span-1 text-sm text-grey mt-6"
+        class="col-span-1 mt-6 text-sm text-grey"
         v-html="inputT('editable.help')"
       />
     </div>

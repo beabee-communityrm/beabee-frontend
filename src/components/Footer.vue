@@ -1,15 +1,9 @@
 <template>
   <footer class="mt-auto">
     <div
-      class="
-        text-sm
-        xs:flex xs:flex-row xs:flex-wrap
-        pt-4
-        mt-16
-        border-t border-primary-40
-      "
+      class="mt-16 border-t border-primary-40 pt-4 text-sm xs:flex xs:flex-row xs:flex-wrap"
     >
-      <div class="w-full lg:w-auto mr-8 mb-6">
+      <div class="mr-8 mb-6 w-full lg:w-auto">
         <ul>
           <li>
             <a class="text-base font-semibold" :href="generalContent.siteUrl">{{
@@ -49,7 +43,7 @@
           </li>
         </ul>
       </div>
-      <div class="xs:w-1/5 xs:ml-auto mb-6">
+      <div class="mb-6 xs:ml-auto xs:w-1/5">
         <ul>
           <li><a class="font-bold" href="https://beabee.io">beabee</a></li>
           <template v-if="canAdmin">

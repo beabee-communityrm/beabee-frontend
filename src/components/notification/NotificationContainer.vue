@@ -1,8 +1,8 @@
 <template>
   <div
-    class="fixed w-full md:w-1/2 top-2 z-50 right-1/2 transform translate-x-1/2"
+    class="fixed top-2 right-1/2 z-50 w-full translate-x-1/2 transform md:w-1/2"
   >
-    <div class="mx-4 md:mx-0 space-y-2">
+    <div class="mx-4 space-y-2 md:mx-0">
       <transition-group name="fade">
         <AppNotfication
           v-for="(notification, index) in notifications"
@@ -40,7 +40,7 @@ onBeforeMount(() => {
 
 <style lang="postcss" scoped>
 .fade-leave-active {
-  @apply transition ease-linear duration-200;
+  @apply transition duration-200 ease-linear;
 }
 
 .fade-leave-to {

@@ -8,7 +8,7 @@ meta:
 
 <template>
   <form @submit.prevent>
-    <h1 class="text-2.5xl mb-6">
+    <h1 class="mb-6 text-2.5xl">
       {{ mode === 'set' ? t('setPassword.title') : t('resetPassword.title') }}
     </h1>
 
@@ -71,7 +71,7 @@ meta:
       <router-link
         variant="link"
         to="/auth/login"
-        class="text-link underline font-semibold"
+        class="font-semibold text-link underline"
         >{{ t('resetPassword.login') }}</router-link
       >
     </div>

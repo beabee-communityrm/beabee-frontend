@@ -20,8 +20,8 @@
         })
       }}
     </p>
-    <label class="flex mb-2">
-      <div class="flex-none mr-1">
+    <label class="mb-2 flex">
+      <div class="mr-1 flex-none">
         <input v-model="prorate" type="radio" :value="true" />
       </div>
       <div class="flex-auto">
@@ -35,8 +35,8 @@
         </p>
       </div>
     </label>
-    <label class="flex mb-2">
-      <div class="flex-none mr-1">
+    <label class="mb-2 flex">
+      <div class="mr-1 flex-none">
         <input v-model="prorate" type="radio" :value="false" />
       </div>
       <div class="flex-auto">

@@ -7,7 +7,7 @@ meta:
 
 <template>
   <form @submit.prevent="handleSubmit">
-    <div class="grid lg:grid-cols-2 gap-8 mb-8">
+    <div class="mb-8 grid gap-8 lg:grid-cols-2">
       <div v-if="fonts">
         <AppHeading class="mb-4">
           {{ t('adminSettings.theme.fonts') }}
@@ -30,7 +30,7 @@ meta:
           />
         </div>
         <div
-          class="content-i18n text-sm text-body-80 font-semibold"
+          class="content-i18n text-sm font-semibold text-body-80"
           v-html="t('adminSettings.theme.fontNotListed')"
         />
       </div>
@@ -41,7 +41,7 @@ meta:
         <label
           v-for="preset in colorPresets"
           :key="preset.name"
-          class="flex mb-2 items-center max-w-[15rem] cursor-pointer"
+          class="mb-2 flex max-w-[15rem] cursor-pointer items-center"
         >
           <input
             v-model="activePreset"
@@ -50,18 +50,18 @@ meta:
             :value="preset.name"
             required
           />
-          <span class="flex-1 ml-2">
+          <span class="ml-2 flex-1">
             {{ t('adminSettings.theme.presetColors.' + preset.name) }}
           </span>
           <span
             v-for="(color, name) in preset.colors"
             :key="name"
-            class="w-8 h-8 rounded-full ml-2"
+            class="ml-2 h-8 w-8 rounded-full"
             :style="{ backgroundColor: color }"
           >
           </span>
         </label>
-        <label class="flex items-center h-8 mb-4 cursor-pointer">
+        <label class="mb-4 flex h-8 cursor-pointer items-center">
           <input
             id="colorPreset_custom"
             v-model="activePreset"
@@ -79,9 +79,9 @@ meta:
           <div
             v-for="name in visibleCustomColors"
             :key="name"
-            class="border border-primary-20 rounded p-2"
+            class="rounded border border-primary-20 p-2"
           >
-            <label class="block text-sm mb-2">
+            <label class="mb-2 block text-sm">
               {{ t('adminSettings.theme.colorNames.' + name) }}
             </label>
             <AppColorInput :id="name" v-model="customColors[name]" />

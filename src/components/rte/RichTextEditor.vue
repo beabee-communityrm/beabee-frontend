@@ -2,7 +2,7 @@
   <div :class="hasError && 'ProseMirror-hasError'">
     <AppLabel v-if="label" :label="label" :required="required" />
 
-    <div v-if="editor" class="mb-2 min-h-[2rem] h-auto">
+    <div v-if="editor" class="mb-2 h-auto min-h-[2rem]">
       <div class="flex flex-row">
         <RichTextEditorButton
           icon="bold"
@@ -57,7 +57,7 @@
     <editor-content :editor="editor" class="content-message" />
     <div
       v-if="hasError"
-      class="text-xs text-danger font-semibold mt-1.5"
+      class="mt-1.5 text-xs font-semibold text-danger"
       role="alert"
     >
       {{ validation.$errors[0].$message }}
@@ -166,10 +166,10 @@ function setLink() {
 
 <style lang="postcss">
 .ProseMirror {
-  @apply p-2 min-h-[5rem] h-auto bg-white w-full border border-primary-40 rounded focus:outline-none focus:shadow-input;
+  @apply h-auto min-h-[5rem] w-full rounded border border-primary-40 bg-white p-2 focus:shadow-input focus:outline-none;
 
   .ProseMirror-hasError & {
-    @apply bg-danger-10 border-danger-70;
+    @apply border-danger-70 bg-danger-10;
   }
 }
 </style>

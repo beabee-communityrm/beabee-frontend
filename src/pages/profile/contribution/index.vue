@@ -7,7 +7,7 @@ meta:
 <template>
   <PageTitle :title="t('menu.contribution')" />
 
-  <div v-if="!isIniting" class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
+  <div v-if="!isIniting" class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
     <div>
       <AppAlert v-if="updatedPaymentSource" class="mb-8">{{
         t('contribution.updatedPaymentSource')

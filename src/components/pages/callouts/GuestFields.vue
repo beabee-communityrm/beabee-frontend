@@ -1,13 +1,13 @@
 <template>
-  <h3 class="block text-xl font-semibold mb-2">
+  <h3 class="mb-2 block text-xl font-semibold">
     {{ t('callout.contactDetails') }}
   </h3>
-  <div class="rounded bg-primary-10 p-4 mb-8">
+  <div class="mb-8 rounded bg-primary-10 p-4">
     <p class="mb-3 text-sm">
       {{ t('join.memberAlready') }}
       <router-link
         to="/auth/login"
-        class="text-link hover:text-primary underline"
+        class="text-link underline hover:text-primary"
         >{{ t('join.login') }}</router-link
       >
     </p>

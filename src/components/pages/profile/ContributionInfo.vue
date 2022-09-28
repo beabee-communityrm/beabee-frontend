@@ -1,5 +1,5 @@
 <template>
-  <div class="flex pt-3 w-[17rem]">
+  <div class="flex w-[17rem] pt-3">
     <div class="flex-1">
       <div class="title uppercase">{{ t('common.joined') }}</div>
 
@@ -50,7 +50,7 @@ const formattedJoinedDate = computed(() => {
 
 <style lang="postcss" scoped>
 .title {
-  @apply text-sm text-primary-80 font-semibold -mt-3 mb-3;
+  @apply -mt-3 mb-3 text-sm font-semibold text-primary-80;
 }
 
 .content {

@@ -1,6 +1,6 @@
 <template>
   <main
-    class="min-h-screen bg-fixed bg-cover bg-center py-4"
+    class="min-h-screen bg-cover bg-fixed bg-center py-4"
     :style="backgroundStyle"
   >
     <router-view />

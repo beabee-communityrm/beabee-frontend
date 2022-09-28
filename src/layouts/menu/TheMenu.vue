@@ -1,32 +1,20 @@
 <template>
   <!-- menu container -->
-  <div class="flex justify-between px-6 py-3 md:py-2 md:hidden">
+  <div class="flex justify-between px-6 py-3 md:hidden md:py-2">
     <!-- menu background overlay -->
     <div
-      class="
-        cursor-pointer
-        z-40
-        fixed
-        w-full
-        h-full
-        top-0
-        bottom-0
-        right-0
-        opacity-30
-        bg-black
-        left-menu
-      "
+      class="fixed top-0 bottom-0 right-0 left-menu z-40 h-full w-full cursor-pointer bg-black opacity-30"
       :class="isMenuVisible ? 'block' : 'hidden'"
       @click="isMenuVisible = false"
     />
 
-    <div class="flex items-center cursor-pointer" @click="toggleMenu">
+    <div class="flex cursor-pointer items-center" @click="toggleMenu">
       <h1 class="text-2xl underline">
         {{ t(route.meta.pageTitle) }}
       </h1>
 
       <font-awesome-icon
-        class="inline-block ml-2"
+        class="ml-2 inline-block"
         :icon="['fas', isMenuVisible ? 'caret-up' : 'caret-down']"
       />
     </div>
@@ -36,28 +24,12 @@
   </div>
 
   <div
-    class="
-      absolute
-      z-40
-      md:static
-      flex flex-col
-      bottom-0
-      bg-white
-      transform
-      transition-transform
-      -translate-x-full
-      md:transform-none
-      flex-none
-      w-menu
-      md:w-16
-      xl:w-menu
-      transition-width
-    "
+    class="absolute bottom-0 z-40 flex w-menu flex-none -translate-x-full transform flex-col bg-white transition-transform transition-width md:static md:w-16 md:transform-none xl:w-menu"
     :class="{ 'top-[68px] translate-x-0': isMenuVisible }"
   >
-    <div class="hidden my-10 text-center md:block">
+    <div class="my-10 hidden text-center md:block">
       <!-- logo on bigger screens -->
-      <AppLogo class="w-12 xl:w-20 md:inline-block" />
+      <AppLogo class="w-12 md:inline-block xl:w-20" />
     </div>
 
     <TheMenuList v-if="currentUser" />

@@ -1,11 +1,11 @@
 <template>
   <table class="">
-    <thead v-if="!hideHeaders" class="text-sm border-b border-primary-20">
+    <thead v-if="!hideHeaders" class="border-b border-primary-20 text-sm">
       <tr class="align-bottom">
         <th
           v-for="(header, i) in headers"
           :key="i"
-          class="p-2 relative font-semibold text-body-80"
+          class="relative p-2 font-semibold text-body-80"
           :class="{
             'cursor-pointer': header.sortable,
             'font-bold text-primary': header.value === sort?.by,

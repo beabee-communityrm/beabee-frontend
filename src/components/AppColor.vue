@@ -1,7 +1,7 @@
 <template>
   <div>
     <span
-      class="w-10 h-10 rounded-full mb-1 mr-1 inline-block align-middle"
+      class="mb-1 mr-1 inline-block h-10 w-10 rounded-full align-middle"
       :class="name"
     />
     {{ shade }}

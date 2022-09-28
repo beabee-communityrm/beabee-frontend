@@ -8,7 +8,7 @@
         })
       "
     />
-    <div class="mb-6 content-message" v-html="t('joinSetup.confirmDetails')" />
+    <div class="content-message mb-6" v-html="t('joinSetup.confirmDetails')" />
     <p class="mt-2 mb-4">
       {{ setupContent.welcome }}
     </p>
@@ -35,7 +35,7 @@
     </template>
 
     <template v-if="setupContent.showNewsletterOptIn">
-      <p class="text-lg mb-1">
+      <p class="mb-1 text-lg">
         {{ setupContent.newsletterTitle }}
       </p>
 

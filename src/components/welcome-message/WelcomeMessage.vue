@@ -1,9 +1,9 @@
 <template>
-  <div class="bg-white rounded p-4 shadow relative" :class="!small && 'lg:p-8'">
+  <div class="relative rounded bg-white p-4 shadow" :class="!small && 'lg:p-8'">
     <div>
       <WelcomeIcon
-        class="float-left mb-4 mr-4 w-[4.5rem] h-auto md:w-[7.5rem]"
-        :class="!small && 'lg:w-[17rem] lg:mb-8 lg:mr-8'"
+        class="float-left mb-4 mr-4 h-auto w-[4.5rem] md:w-[7.5rem]"
+        :class="!small && 'lg:mb-8 lg:mr-8 lg:w-[17rem]'"
       />
 
       <AppSubHeading class="mb-4">
@@ -12,13 +12,7 @@
     </div>
 
     <div
-      class="
-        content-message
-        text-sm
-        leading-5
-        whitespace-normal
-        md:text-base md:leading-5.5
-      "
+      class="content-message whitespace-normal text-sm leading-5 md:text-base md:leading-5.5"
       :class="!small && 'lg:leading-6'"
       v-html="text"
     />
@@ -26,7 +20,7 @@
     <div class="clear-left" />
 
     <FontAwesomeIcon
-      class="text-2xl absolute top-4 right-4 cursor-pointer"
+      class="absolute top-4 right-4 cursor-pointer text-2xl"
       :icon="['fas', 'times']"
       @click="$emit('close')"
     />

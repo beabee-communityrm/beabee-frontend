@@ -9,21 +9,13 @@
     <button
       type="button"
       v-if="searchText.length > 0"
-      class="
-        absolute
-        right-5
-        w-8
-        h-full
-        color-red
-        text-primary-70
-        hover:text-primary-40
-      "
+      class="color-red absolute right-5 h-full w-8 text-primary-70 hover:text-primary-40"
       @click="emit('update:modelValue', '')"
     >
       <font-awesome-icon icon="times" />
     </button>
     <button
-      class="absolute right-0 w-8 h-full text-primary hover:text-primary-70"
+      class="absolute right-0 h-full w-8 text-primary hover:text-primary-70"
     >
       <font-awesome-icon icon="search" />
     </button>

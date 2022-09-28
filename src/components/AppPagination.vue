@@ -1,9 +1,9 @@
 <template>
-  <ul class="flex items-center -mx-2">
+  <ul class="-mx-2 flex items-center">
     <li>
       <button
         class="p-2"
-        :class="isFirst && 'opacity-25 hover:font-bold hover:border-link'"
+        :class="isFirst && 'opacity-25 hover:border-link hover:font-bold'"
         :disabled="isFirst"
         @click="emit('update:modelValue', modelValue - 1)"
       >
@@ -15,17 +15,10 @@
       <li>
         <button
           :class="
-            page === modelValue && 'text-link bg-white font-bold border-link'
+            page === modelValue && 'border-link bg-white font-bold text-link'
           "
           :disabled="page === modelValue"
-          class="
-            leading-none
-            border border-primary
-            rounded
-            mx-1
-            p-2
-            hover:font-bold hover:border-link
-          "
+          class="mx-1 rounded border border-primary p-2 leading-none hover:border-link hover:font-bold"
           @click="emit('update:modelValue', page)"
         >
           {{ page + 1 }}
@@ -35,7 +28,7 @@
     <li>
       <button
         class="p-2"
-        :class="isLast && 'opacity-25 hover:font-bold hover:border-link'"
+        :class="isLast && 'opacity-25 hover:border-link hover:font-bold'"
         :disabled="isLast"
         @click="emit('update:modelValue', modelValue + 1)"
       >

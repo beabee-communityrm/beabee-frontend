@@ -1,7 +1,7 @@
 <template>
   <a
     :href="item.to"
-    class="flex justify-between items-baseline p-2 rounded text-sm group"
+    class="group flex items-baseline justify-between rounded p-2 text-sm"
     :class="selected && 'bg-white font-semibold'"
     @click.prevent="emit('click', item.id)"
   >
@@ -11,7 +11,7 @@
     >
     <span
       v-if="item.count !== undefined"
-      class="text-xs ml-2 font-semibold"
+      class="ml-2 text-xs font-semibold"
       :class="selected ? 'text-body' : 'text-body-60 group-hover:text-body-80'"
       >{{ item.count }}</span
     >

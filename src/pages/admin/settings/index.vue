@@ -6,7 +6,7 @@ meta:
 </route>
 
 <template>
-  <div class="grid lg:grid-cols-2 gap-8">
+  <div class="grid gap-8 lg:grid-cols-2">
     <form v-if="generalContent" @submit.prevent="handleSubmit">
       <section class="mb-8">
         <div class="mb-4">
@@ -89,7 +89,7 @@ meta:
             required
           />
         </div>
-        <h4 class="font-semibold text-lg mb-4">
+        <h4 class="mb-4 text-lg font-semibold">
           {{ t('adminSettings.general.footer.dataPrivacy.title') }}
         </h4>
         <div class="mb-4">
@@ -114,13 +114,13 @@ meta:
             type="url"
           />
         </div>
-        <h4 class="font-semibold text-lg mb-4">
+        <h4 class="mb-4 text-lg font-semibold">
           {{ t('adminSettings.general.footer.otherLinks.title') }}
         </h4>
         <div
           v-for="(link, i) in generalContent.footerLinks"
           :key="i"
-          class="flex gap-4 mb-4"
+          class="mb-4 flex gap-4"
         >
           <div class="flex-1">
             <AppInput
