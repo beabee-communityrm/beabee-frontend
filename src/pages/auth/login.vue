@@ -8,11 +8,11 @@ meta:
 
 <template>
   <form @submit.prevent>
-    <h1 class="text-2.5xl font-title mb-2">{{ t('login.title') }}</h1>
+    <h1 class="mb-2 font-title text-2.5xl">{{ t('login.title') }}</h1>
 
     <div class="mb-5">
       <span>{{ t('login.notMember') }}</span>
-      <router-link to="/join" class="text-link underline ml-1 font-semibold">{{
+      <router-link to="/join" class="ml-1 font-semibold text-link underline">{{
         t('login.joinNow')
       }}</router-link>
     </div>
@@ -38,7 +38,7 @@ meta:
     </div>
 
     <div class="mb-8">
-      <router-link class="underline text-xs" to="/auth/forgot-password">
+      <router-link class="text-xs underline" to="/auth/forgot-password">
         {{ t('login.forgotPassword') }}
       </router-link>
     </div>

@@ -10,7 +10,7 @@
       {{ t('contacts.advancedSearch') }}
     </a>
   </div>
-  <div v-if="showAdvancedSearch" class="bg-primary-10 p-3 mt-1">
+  <div v-if="showAdvancedSearch" class="mt-1 bg-primary-10 p-3">
     Advanced search
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="opacity-30 stroke-current text-success max-w-[130px]"
+    class="stroke-current max-w-[130px] text-success opacity-30"
     viewBox="0 0 44.327 53.536"
   >
     <g

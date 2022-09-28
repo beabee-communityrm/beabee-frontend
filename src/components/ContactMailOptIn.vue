@@ -1,5 +1,5 @@
 <template>
-  <p class="text-lg mb-1">
+  <p class="mb-1 text-lg">
     {{ content.mailTitle }}
   </p>
 

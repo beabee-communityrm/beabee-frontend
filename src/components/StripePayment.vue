@@ -20,7 +20,7 @@
     :loading="loading"
     variant="link"
     type="submit"
-    class="w-full mt-4"
+    class="mt-4 w-full"
     @click="completePayment"
     >{{ t('actions.continue') }}</AppButton
   >
@@ -42,6 +42,7 @@ const emit = defineEmits(['loaded']);
 
 const props = defineProps<{
   clientSecret: string;
+  publicKey: string;
   email: string;
   returnUrl: string;
   showNameFields?: boolean;
@@ -109,7 +110,7 @@ const appearance: Appearance = {
 };
 
 onBeforeMount(async () => {
-  const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+  const stripe = await loadStripe(props.publicKey);
   if (stripe && divRef.value) {
     const elements = stripe.elements({
       clientSecret: props.clientSecret,

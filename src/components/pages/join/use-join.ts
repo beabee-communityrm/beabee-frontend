@@ -1,5 +1,6 @@
-import { reactive, computed } from 'vue';
+import { reactive, computed, Ref } from 'vue';
 import i18n from '../../../i18n';
+import { JoinContent } from '../../../utils/api/api.interface';
 import calcPaymentFee from '../../../utils/calcPaymentFee';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
@@ -17,18 +18,20 @@ const signUpData = reactive({
   paymentMethod: PaymentMethod.StripeCard,
 });
 
-const totalAmount = computed(
-  () =>
-    signUpData.amount +
-    (signUpData.payFee ? calcPaymentFee(signUpData).value : 0)
-);
+export function useJoin(content: Ref<JoinContent>) {
+  const signUpDescription = computed(() => {
+    const totalAmount =
+      signUpData.amount +
+      (signUpData.payFee
+        ? calcPaymentFee(signUpData, content.value.stripeCountry)
+        : 0);
 
-const signUpDescription = computed(() => ({
-  amount: n(totalAmount.value, 'currency'),
-  period:
-    signUpData.period === 'monthly' ? t('common.month') : t('common.year'),
-}));
+    return {
+      amount: n(totalAmount, 'currency'),
+      period:
+        signUpData.period === 'monthly' ? t('common.month') : t('common.year'),
+    };
+  });
 
-export function useJoin() {
   return { signUpDescription, signUpData };
 }

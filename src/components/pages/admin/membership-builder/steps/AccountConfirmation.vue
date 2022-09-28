@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-2 gap-8 mb-8">
+  <div class="mb-8 grid grid-cols-2 gap-8">
     <div>
       <AppHeading class="mb-5">{{ stepT('title') }}</AppHeading>
       <p>{{ stepT('text') }}</p>
@@ -17,7 +17,7 @@
       <AppCheckbox
         v-model="setupContent.showMailOptIn"
         :label="stepT('showMailOptIn')"
-        class="font-semibold mb-4"
+        class="mb-4 font-semibold"
       />
 
       <template v-if="setupContent.showMailOptIn">
@@ -47,7 +47,7 @@
       <AppCheckbox
         v-model="setupContent.showNewsletterOptIn"
         :label="stepT('showNewsletterOptIn')"
-        class="font-semibold mb-4"
+        class="mb-4 font-semibold"
       />
 
       <template v-if="setupContent.showNewsletterOptIn">
@@ -74,7 +74,7 @@
         </div>
       </template>
     </div>
-    <div class="p-4 pt-8 bg-center bg-cover">
+    <div class="bg-cover bg-center p-4 pt-8">
       <AuthBox>
         <SetupForm :setup-content="setupContent" />
       </AuthBox>
