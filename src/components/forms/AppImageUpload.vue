@@ -2,12 +2,12 @@
   <div>
     <AppLabel v-if="label" :label="label" :required="required" />
     <div class="flex items-start gap-4">
-      <div class="bg-grey-light flex-0 basis-28">
+      <div class="flex-0 basis-28 bg-grey-light">
         <img
           :src="imageUrl"
           :width="width"
           :height="height"
-          class="w-full h-auto bg-white"
+          class="h-auto w-full bg-white"
           :class="!imageUrl && 'invisible'"
         />
       </div>

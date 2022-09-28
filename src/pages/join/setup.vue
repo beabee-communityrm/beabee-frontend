@@ -17,7 +17,7 @@ meta:
         "
       />
       <div
-        class="mb-2 content-message"
+        class="content-message mb-2"
         v-html="t('joinSetup.confirmDetails')"
       />
       <p class="mt-2 mb-6">
@@ -46,7 +46,7 @@ meta:
       </template>
 
       <template v-if="showNewsletterOptIn">
-        <p class="text-lg mb-1">
+        <p class="mb-1 text-lg">
           {{ setupContent.newsletterTitle }}
         </p>
 

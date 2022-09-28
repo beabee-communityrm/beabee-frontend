@@ -2,7 +2,7 @@
   <JoinHeader :title="joinContent.title" />
 
   <form v-bind="$attrs">
-    <div class="mb-3 content-message" v-html="joinContent.subtitle" />
+    <div class="content-message mb-3" v-html="joinContent.subtitle" />
 
     <AppSubHeading v-if="joinContent.showNoContribution" class="mb-1">
       {{ t('join.contribution') }}

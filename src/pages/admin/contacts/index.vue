@@ -15,7 +15,7 @@ meta:
     </div>
   </PageTitle>
   <div class="md:flex">
-    <div class="flex-none hidden md:block basis-[220px]">
+    <div class="hidden flex-none basis-[220px] md:block">
       <AppVTabs v-model="currentSegment" :items="segmentItems" />
     </div>
     <div class="flex-auto">
@@ -24,7 +24,7 @@ meta:
         v-model:sort="currentSort"
         :headers="headers"
         :items="contactsTable.items"
-        class="w-full mt-2 whitespace-nowrap"
+        class="mt-2 w-full whitespace-nowrap"
       >
         <template #empty>
           <p>
@@ -36,13 +36,13 @@ meta:
         <template #firstname="{ item }">
           <router-link
             :to="'/admin/contacts/' + item.id"
-            class="text-base text-link font-bold"
+            class="text-base font-bold text-link"
           >
             {{ `${item.firstname} ${item.lastname}`.trim() || item.email }}
           </router-link>
           <p
             v-if="item.profile.description"
-            class="text-xs whitespace-normal mt-1"
+            class="mt-1 whitespace-normal text-xs"
           >
             {{ item.profile.description }}
           </p>
@@ -72,7 +72,7 @@ meta:
           {{ getMembershipStartDate(item) }}
         </template>
       </AppTable>
-      <div class="flex mt-4 items-center text-sm">
+      <div class="mt-4 flex items-center text-sm">
         <p class="flex-1">
           <i18n-t v-if="contactsTable.count > 0" keypath="contacts.showingOf">
             <template #start

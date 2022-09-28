@@ -1,11 +1,11 @@
 <template>
   <main
-    class="min-h-screen bg-fixed bg-cover bg-center py-4"
+    class="min-h-screen bg-cover bg-fixed bg-center py-4"
     :style="backgroundStyle"
   >
     <AuthBox class="text-center">
-      <AppLogo class="w-28 inline-block mb-5" />
-      <h1 class="text-2.5xl mb-5">{{ t('common.loading') }}</h1>
+      <AppLogo class="mb-5 inline-block w-28" />
+      <h1 class="mb-5 text-2.5xl">{{ t('common.loading') }}</h1>
 
       <font-awesome-icon
         class="text-[60px] text-body-60"

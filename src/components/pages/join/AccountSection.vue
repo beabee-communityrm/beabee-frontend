@@ -6,7 +6,7 @@
       {{ t('join.memberAlready') }}
       <router-link
         to="/auth/login"
-        class="text-link hover:text-primary underline"
+        class="text-link underline hover:text-primary"
         >{{ t('join.login') }}</router-link
       >
     </p>

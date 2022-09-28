@@ -20,7 +20,7 @@
     :loading="loading"
     variant="link"
     type="submit"
-    class="w-full mt-4"
+    class="mt-4 w-full"
     @click="completePayment"
     >{{ t('actions.continue') }}</AppButton
   >

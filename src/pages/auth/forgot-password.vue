@@ -8,7 +8,7 @@ meta:
 
 <template>
   <form @submit.prevent>
-    <h1 class="text-2.5xl mb-6">{{ t('forgotPassword.title') }}</h1>
+    <h1 class="mb-6 text-2.5xl">{{ t('forgotPassword.title') }}</h1>
 
     <template v-if="!isRequestSuccessful">
       <div class="mb-2">
@@ -36,7 +36,7 @@ meta:
 
     <template v-else>
       <!-- TODO: fix by adding appropriate formatting -->
-      <p class="mb-5 p-4 bg-primary-10 rounded">
+      <p class="mb-5 rounded bg-primary-10 p-4">
         <i18n-t keypath="forgotPassword.message">
           <template #email>
             <b>{{ forgotPasswordData.email }}</b>
