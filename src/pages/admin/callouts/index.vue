@@ -37,7 +37,7 @@ meta:
       <AppTable
         v-model:sort="currentSort"
         :headers="headers"
-        :items="calloutsTable.items"
+        :items="calloutsTable?.items || null"
         class="mt-2 w-full"
       >
         <template #header-hidden><font-awesome-icon icon="eye" /></template>
@@ -198,15 +198,12 @@ const currentStatus = computed({
   set: (filter) => router.push({ query: { ...route.query, filter } }),
 });
 
-const calloutsTable = ref<Paginated<GetBasicCalloutData>>({
-  total: 0,
-  count: 0,
-  offset: 0,
-  items: [],
-});
+const calloutsTable = ref<Paginated<GetBasicCalloutData>>();
 
 const totalPages = computed(() =>
-  Math.ceil(calloutsTable.value.total / currentPageSize.value)
+  calloutsTable.value
+    ? Math.ceil(calloutsTable.value.total / currentPageSize.value)
+    : 0
 );
 
 watchEffect(async () => {

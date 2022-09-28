@@ -28,10 +28,17 @@
     </thead>
 
     <tbody class="text-xs lg:text-sm">
-      <tr v-if="!items.length">
+      <tr v-if="items === null">
+        <td :colspan="headers.length" class="p-2">
+          <slot name="loading">
+            <p>{{ t('common.loading') }}</p>
+          </slot>
+        </td>
+      </tr>
+      <tr v-else-if="!items.length">
         <td :colspan="headers.length" class="p-2">
           <slot name="empty">
-            <p>Loading contents, please wait...</p>
+            <p>{{ t('common.noResults') }}</p>
           </slot>
         </td>
       </tr>
@@ -59,6 +66,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { Header, SortType } from './table.interface';
 
 interface Sort {
@@ -69,12 +77,14 @@ interface Sort {
 const props = defineProps<{
   sort?: Sort;
   headers: Header[];
-  items: any[]; // TODO: improve typing
+  items: any[] | null; // TODO: improve typing
   hideHeaders?: boolean;
   rowClass?: (item: any) => string;
 }>();
 
 const emit = defineEmits(['update:sort']);
+
+const { t } = useI18n();
 
 const sort = computed({
   get: () => props.sort,
