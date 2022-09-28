@@ -189,7 +189,7 @@ const period = computed(() => {
 });
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .amount-button {
   @apply h-1/2 bg-white py-2 px-4 text-primary-70 hover:text-primary hover:bg-primary-5 border-primary-40;
   &.is-invalid {

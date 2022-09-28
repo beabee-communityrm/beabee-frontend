@@ -55,7 +55,7 @@ watch(
 );
 </script>
 
-<style>
+<style lang="postcss">
 /* This needs more specificity to apply on production builds */
 .vacp-color-picker.vacp-color-picker {
   padding: 0;

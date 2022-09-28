@@ -9,7 +9,8 @@
         md:px-8
         mx-auto
         rounded-md
-        auth-box
+        shadow-auth-box
+        max-w-[30rem]
         mb-3
       "
     >
@@ -17,10 +18,3 @@
     </div>
   </div>
 </template>
-
-<style scoped>
-.auth-box {
-  box-shadow: 0 0 1rem 0.125rem rgba(51, 51, 51, 0.4);
-  max-width: 30rem;
-}
-</style>

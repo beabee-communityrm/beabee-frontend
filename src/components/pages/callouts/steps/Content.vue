@@ -130,7 +130,7 @@ onBeforeMount(() => {
   dom.watch();
 });
 </script>
-<style>
+<style lang="postcss">
 .callout-form-builder {
   .drag-and-drop-alert {
     @apply p-4 border border-dashed border-primary mb-4;
