@@ -27,8 +27,8 @@
         "
         :class="[
           period.name === modelValue
-            ? 'bg-link-10 !border-link text-link'
-            : 'hover:text-link-110',
+            ? 'bg-link text-white !border-link-110'
+            : 'hover:bg-link-10 hover:border-link',
           period.name === 'monthly' ? 'rounded-l' : 'rounded-r',
         ]"
       >
