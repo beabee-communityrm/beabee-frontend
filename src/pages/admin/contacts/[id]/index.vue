@@ -6,7 +6,7 @@ meta:
 </route>
 
 <template>
-  <div v-if="contact" class="grid gap-8 lg:grid-cols-2">
+  <div v-if="contact" class="grid gap-x-20 gap-y-8 lg:grid-cols-2">
     <div>
       <AppHeading>{{ t('contactOverview.overview') }}</AppHeading>
       <AppInfoList>
@@ -132,17 +132,29 @@ meta:
               ? formatLocale(role.dateExpires, 'P')
               : t('contacts.data.rolesCopy.today')
           }}
+          <AppButton variant="text" class="ml-2">Edit</AppButton>
         </AppInfoListItem>
       </AppInfoList>
+
+      <div class="mt-4">
+        <AppButton variant="primaryOutlined">Add role</AppButton>
+      </div>
     </div>
 
-    <div>
-      <form @submit.prevent="handleRoleFormSubmit">
+    <div
+      class="hidden flex justify-center border border-primary-20 flex-1 rounded py-4 px-10"
+    >
+      <form @submit.prevent="handleRoleFormSubmit" class="flex-initial">
+        <div class="my-3 py-3">
+          <AppSelect
+            v-model="newRole.role"
+            label="New role"
+            :items="roleOptions"
+          />
+        </div>
 
-        <AppSelect v-model="newRole.role" :items="roleOptions" />
-
-        <div class="grid grid-cols-2 gap-6">
-          <div class="col-span-1">
+        <div>
+          <div class="my-3 py-3">
             <AppLabel :label="inputT('starts.label')" required />
             <AppRadioGroup
               name="roleStartDate"
@@ -164,11 +176,8 @@ meta:
               -->
             </div>
           </div>
-          <div class="col-span-1 text-sm text-grey mt-6" />
-        </div>
 
-        <div class="grid grid-cols-2 gap-6 mt-5">
-          <div class="col-span-1">
+          <div class="my-3 py-3">
             <AppRadioGroup
               name="roleEndDate"
               v-model="newRoleHasEndDate"
@@ -187,22 +196,20 @@ meta:
               <div>
                 <AppInput v-model="newRole.dateExpires" type="time" required />
               </div>
-            -->
-            </div>
+            --></div>
           </div>
         </div>
 
-        <AppButton
-          type="submit"
-          variant="primary"
-          class="mt-4"
-          :loading="roleFormLoading"
-          >Add role</AppButton
-        >
+        <div class="flex my-3 py-3">
+          <AppButton type="submit" variant="primary" :loading="roleFormLoading"
+            >Add role</AppButton
+          >
+          <AppButton variant="text" class="ml-2">{{
+            t('form.cancel')
+          }}</AppButton>
+        </div>
       </form>
     </div>
-
-
 
     <div class="hidden">
       <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
@@ -301,7 +308,6 @@ const newRole = reactive({
 });
 const securityLink = ref('');
 
-
 async function handleFormSubmit() {
   noteFormLoading.value = true;
   try {
@@ -367,5 +373,4 @@ onBeforeMount(async () => {
 
   contactTags.value = (await fetchContent('contacts')).tags;
 });
-
 </script>
