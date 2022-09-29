@@ -81,15 +81,20 @@ meta:
       </AppInfoList>
     </div>
     <div class="flex-0 flex flex-wrap gap-2 lg:flex-col">
+      <ActionButton icon="eye" :to="`/callouts/${callout.slug}?preview`">
+        {{
+          callout.status === ItemStatus.Open ||
+          callout.status === ItemStatus.Ended
+            ? t('actions.view')
+            : t('actions.preview')
+        }}
+      </ActionButton>
       <ActionButton
         v-if="callout.status === ItemStatus.Open"
-        icon="eye"
+        icon="reply"
         :to="`/callouts/${callout.slug}`"
       >
-        {{ t('actions.view') }}
-      </ActionButton>
-      <ActionButton v-else icon="eye" :to="`/callouts/${callout.slug}?preview`">
-        {{ t('actions.preview') }}
+        {{ t('actions.participate') }}
       </ActionButton>
       <ActionButton
         icon="pencil-alt"

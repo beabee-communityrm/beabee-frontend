@@ -5,6 +5,7 @@
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
+    "participate": "Participate",
     "preview": "Preview",
     "publish": "Publish",
     "replicate": "Replicate",
@@ -217,7 +218,6 @@
     "monthly": "Monthly",
     "new": "new!",
     "no": "No",
-    "participate": "Participate",
     "role": {
       "admin": "Admin",
       "member": "Member",
