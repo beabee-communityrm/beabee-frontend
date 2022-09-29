@@ -5,6 +5,7 @@
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
+    "preview": "Preview",
     "publish": "Publish",
     "replicate": "Replicate",
     "reset": "Reset",
@@ -114,6 +115,8 @@
       "address": "Share this callout with the following address:",
       "services": "Or quickly share using one of these services:"
     },
+    "showMemberView": "As an admin you can preview what a member would see",
+    "showingPreview": "You are viewing a preview of a callout, you won't be able to submit a response",
     "status": {
       "endedOn": "on {date}",
       "endsIn": "Ends in {duration}",
@@ -214,6 +217,7 @@
     "monthly": "Monthly",
     "new": "new!",
     "no": "No",
+    "noResults": "No results found",
     "participate": "Participate",
     "role": {
       "admin": "Admin",
@@ -279,6 +283,20 @@
       "preferredChannel": "Preferred channel",
       "roles": "Roles",
       "rolesCopy": {
+        "expires": {
+          "label": "Expiry date for this role",
+          "opts": {
+            "never": "Never, unless manually closed",
+            "schedule": "Schedule an expiry date"
+          }
+        },
+        "starts": {
+          "label": "Start date for this role",
+          "opts": {
+            "now": "Now",
+            "schedule": "Schedule a start date"
+          }
+        },
         "today": "present"
       },
       "tags": "Tags"

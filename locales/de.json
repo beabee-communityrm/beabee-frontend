@@ -279,6 +279,20 @@
       "preferredChannel": "Bevorzugter Kanal",
       "roles": "Rolle",
       "rolesCopy": {
+        "expires": {
+          "label": "Wann soll der Callout enden?",
+          "opts": {
+            "never": "Nie, bis er manuell beendet wird",
+            "schedule": "Ein Enddatum festlegen"
+          }
+        },
+        "starts": {
+          "label": "Wann willst Du den Callout veröffentlichen?",
+          "opts": {
+            "now": "Sofort",
+            "schedule": "Ein Startdatum festlegen"
+          }
+        },
         "today": "heute"
       },
       "tags": "Tags"

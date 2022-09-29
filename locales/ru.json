@@ -178,6 +178,12 @@
       "preferredChannel": "Предпочтительный канал",
       "roles": "Роль",
       "rolesCopy": {
+        "expires": {
+          "opts": {}
+        },
+        "starts": {
+          "opts": {}
+        },
         "today": "сегодня"
       },
       "tags": "Теги"
