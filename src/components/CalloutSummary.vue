@@ -22,9 +22,7 @@
     >
       <div v-if="'responseCount' in callout" class="flex-1">
         <p>
-          {{
-            t('adminDashboard.responsesSoFar', { count: callout.responseCount })
-          }}
+          {{ t('adminDashboard.responsesSoFar', callout.responseCount) }}
         </p>
         <router-link :to="`/admin/callouts/view/${callout.slug}/responses`">
           <p class="text-sm text-link">{{ t('See all responses') }}</p>
