@@ -49,6 +49,16 @@ function deserializeContribution(
   };
 }
 
+function deserializeRole(
+  data: Serial<MemberRoleData>
+): MemberRoleData {
+  return {
+    ...data,
+    dateAdded: deserializeDate(role.dateAdded),
+    dateExpires: deserializeDate(role.dateExpires),
+  };
+}
+
 export async function fetchMembers(
   query: GetMembersQuery
 ): Promise<Paginated<GetMemberData>>;
@@ -94,6 +104,17 @@ export async function updateMember(
     memberData
   );
   return deserializeMember(data);
+}
+
+export async function addMemberRole(
+  id: string,
+  roleData: MemberRoleData
+): Promise<GetMemberData> {
+  const { data } = await axios.patch<Serial<GetMemberData>>(
+    `/member/${id}/role/add`,
+    roleData
+  );
+  return deserializeRole(data);
 }
 
 export async function fetchContribution(): Promise<ContributionInfo> {

@@ -260,7 +260,7 @@ import {
   GetMemberDataWith,
   MemberRoleData,
 } from '../../../../utils/api/api.interface';
-import { fetchMember, updateMember } from '../../../../utils/api/member';
+import { fetchMember, updateMember, addMemberRole } from '../../../../utils/api/member';
 import AppInfoList from '../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
@@ -326,8 +326,8 @@ async function handleRoleFormSubmit() {
   // TODO: append new role to contact.roles
   roleFormLoading.value = true;
   try {
-    await updateMember(props.contact.id, {
-      profile: { ...newRole },
+    await addMemberRole(props.contact.id, {
+      ...newRole },
     });
   } finally {
     roleFormLoading.value = false;
