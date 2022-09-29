@@ -2,7 +2,7 @@
   <div>
     <div class="mb-4 flex">
       <div class="flex-1">
-        <AppSubHeading>{{ callout.title }}</AppSubHeading>
+        <AppSubHeading v-if="edit">{{ callout.title }}</AppSubHeading>
         <p>{{ callout.excerpt }}</p>
       </div>
       <div class="flex-0 ml-4">
@@ -16,42 +16,49 @@
       </router-link>
     </p>
 
-    <div
-      v-if="footer"
-      class="mt-3 flex flex-1 flex-col items-end justify-between md:flex-row"
-    >
+    <div class="mt-3 flex flex-1 items-end justify-between md:flex-row">
       <div v-if="'responseCount' in callout" class="flex-1">
-        <p>
-          {{ t('adminDashboard.responsesSoFar', callout.responseCount) }}
-        </p>
+        <i18n-t
+          keypath="adminDashboard.responsesSoFar"
+          tag="p"
+          :plural="callout.responseCount"
+        >
+          <template #n>
+            <b>{{ callout.responseCount }}</b>
+          </template>
+        </i18n-t>
         <router-link :to="`/admin/callouts/view/${callout.slug}/responses`">
-          <p class="text-sm text-link">{{ t('See all responses') }}</p>
+          <p class="text-sm font-semibold text-link">
+            {{ t('adminDashboard.seeAllResponses') }}
+          </p>
         </router-link>
       </div>
-      <div class="mt-3 flex flex-row flex-nowrap md:mt-0">
-        <div class="flex-col text-sm">
-          <p class="text-body-60">
-            <AppItemStatus :status="callout.status" /> -
-            <span v-if="callout.expires">
-              {{
-                t('callout.status.endsIn', {
-                  duration: formatDistanceLocale(new Date(), callout.expires),
-                })
-              }}
-            </span>
-          </p>
-          <font-awesome-icon :icon="['far', 'calendar']" class="mr-2" />
-          {{
-            callout.starts
-              ? formatLocale(callout.starts, 'PP') + ' - '
-              : t('common.until')
-          }}
-          {{ callout.expires && formatLocale(callout.expires, 'PP') }}
-        </div>
-        <AppButton class="ml-2" :to="`/admin/callouts/edit/${callout.slug}`">{{
-          t('actions.edit')
-        }}</AppButton>
+      <div class="text-sm font-semibold">
+        <p class="text-body-60">
+          <AppItemStatus :status="callout.status" />
+          <span v-if="callout.expires" class="pl-2">
+            {{
+              t('callout.status.endsIn', {
+                duration: formatDistanceLocale(new Date(), callout.expires),
+              })
+            }}
+          </span>
+        </p>
+        <font-awesome-icon :icon="['far', 'calendar']" class="mr-2" />
+        {{
+          callout.starts
+            ? formatLocale(callout.starts, 'PP') + ' - '
+            : t('common.until')
+        }}
+        {{ callout.expires && formatLocale(callout.expires, 'PP') }}
       </div>
+      <AppButton
+        v-if="edit"
+        class="ml-2"
+        :to="`/admin/callouts/edit/${callout.slug}`"
+      >
+        {{ t('actions.edit') }}
+      </AppButton>
     </div>
   </div>
 </template>
@@ -72,7 +79,7 @@ const { t } = useI18n();
 
 const props = defineProps<{
   callout: GetCalloutData | GetCalloutDataWith<'responseCount'>;
-  footer?: boolean;
+  edit?: boolean;
 }>();
 
 const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
