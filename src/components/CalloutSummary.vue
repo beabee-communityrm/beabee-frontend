@@ -20,8 +20,12 @@
       v-if="footer"
       class="mt-3 flex flex-1 flex-col items-end justify-between md:flex-row"
     >
-      <div class="flex-col">
-        <!--<p><b>36</b> {{ t('adminDashboard.responsesSoFar') }}</p>-->
+      <div v-if="'responseCount' in callout" class="flex-1">
+        <p>
+          {{
+            t('adminDashboard.responsesSoFar', { count: callout.responseCount })
+          }}
+        </p>
         <router-link :to="`/admin/callouts/view/${callout.slug}/responses`">
           <p class="text-sm text-link">{{ t('See all responses') }}</p>
         </router-link>
@@ -56,7 +60,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
-import { GetCalloutData } from '../utils/api/api.interface';
+import { GetCalloutData, GetCalloutDataWith } from '../utils/api/api.interface';
 import AppButton from './forms/AppButton.vue';
 import AppItemStatus from './AppItemStatus.vue';
 import {
@@ -69,7 +73,7 @@ import env from './../env';
 const { t } = useI18n();
 
 const props = defineProps<{
-  callout: GetCalloutData;
+  callout: GetCalloutData | GetCalloutDataWith<'responseCount'>;
   footer?: boolean;
 }>();
 

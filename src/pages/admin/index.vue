@@ -96,9 +96,10 @@ import AppHeading from '../../components/AppHeading.vue';
 import KeyStat from '../../components/pages/admin/KeyStat.vue';
 import { onBeforeMount, ref } from 'vue';
 import {
-  GetCalloutData,
+  GetCalloutDataWith,
   GetMemberData,
   GetStatsData,
+  ItemStatus,
 } from '../../utils/api/api.interface';
 import { fetchMembers } from '../../utils/api/member';
 import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
@@ -112,7 +113,7 @@ const { n, t } = useI18n();
 
 const stats = ref<GetStatsData>();
 const recentMembers = ref<GetMemberData[]>([]);
-const latestCallout = ref<GetCalloutData | null>();
+const latestCallout = ref<GetCalloutDataWith<'responseCount'> | null>();
 
 onBeforeMount(async () => {
   fetchStats({
@@ -126,11 +127,24 @@ onBeforeMount(async () => {
     order: 'DESC',
   }).then((results) => (recentMembers.value = results.items));
 
-  fetchCallouts({
-    limit: 1,
-    sort: 'starts',
-    order: 'DESC',
-  }).then((results) => {
+  fetchCallouts(
+    {
+      limit: 1,
+      sort: 'starts',
+      order: 'DESC',
+      rules: {
+        condition: 'AND',
+        rules: [
+          {
+            field: 'status',
+            operator: 'equal',
+            value: ItemStatus.Open,
+          },
+        ],
+      },
+    },
+    ['responseCount']
+  ).then((results) => {
     latestCallout.value = results.count > 0 ? results.items[0] : null;
   });
 });
