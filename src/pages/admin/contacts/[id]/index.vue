@@ -125,7 +125,7 @@ meta:
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
       <AppInfoList v-for="role in contact.roles" :key="role.role">
         <AppInfoListItem :name="t(`common.role.${role.role}`)">
-          <AppRoundBadge :type="isRoleCurrent(role) ? 'success' : 'warning'" />
+          <AppRoundBadge :type="isRoleCurrent(role) ? 'success' : 'danger'" />
           {{ formatLocale(role.dateAdded, 'P') + ' → ' }}
           {{
             role.dateExpires
@@ -231,18 +231,10 @@ async function handleSecurityAction() {
   }
 }
 
-const isRoleCurrent = (role: MemberRoleData): boolean => {
+function isRoleCurrent(role: MemberRoleData): boolean {
   const now = new Date();
-  const roleWasAddedInThePast = role.dateAdded < now;
-  const roleHasNoExpiryDate = !role.dateExpires;
-  const roleExpiryDateInTheFuture = role.dateExpires
-    ? role.dateExpires > now
-    : false;
-  return roleWasAddedInThePast &&
-    (roleHasNoExpiryDate || roleExpiryDateInTheFuture)
-    ? true
-    : false;
-};
+  return role.dateAdded < now && (!role.dateExpires || role.dateExpires > now);
+}
 
 onBeforeMount(async () => {
   loading.value = false;
