@@ -6,7 +6,7 @@ meta:
 
 <template>
   <PageTitle :title="t('menu.callouts')" />
-  <div class="-mx-3 mb-6 flex flex-wrap">
+  <div v-if="activeCallouts" class="-mx-3 mb-6 flex flex-wrap">
     <CalloutCard
       v-for="callout in activeCallouts.items"
       :key="callout.slug"
@@ -14,6 +14,7 @@ meta:
       class="mx-3 mb-5"
     />
   </div>
+
   <AppHeading>{{ t('callouts.archive') }}</AppHeading>
   <div class="my-2 items-center justify-between lg:flex">
     <AppSearchInput
@@ -34,7 +35,7 @@ meta:
 
   <AppTable
     :headers="headers"
-    :items="archivedCallouts.items"
+    :items="archivedCallouts?.items || null"
     class="mt-2 w-full whitespace-nowrap"
   >
     <template #empty>
@@ -130,21 +131,13 @@ const currentShow = computed({
       query: { ...route.query, show, page: undefined },
     }),
 });
-const activeCallouts = ref<Paginated<GetBasicCalloutData>>({
-  total: 0,
-  count: 0,
-  offset: 0,
-  items: [],
-});
-const archivedCallouts = ref<Paginated<GetBasicCalloutData>>({
-  total: 0,
-  count: 0,
-  offset: 0,
-  items: [],
-});
+const activeCallouts = ref<Paginated<GetBasicCalloutData>>();
+const archivedCallouts = ref<Paginated<GetBasicCalloutData>>();
 
 const totalPages = computed(() =>
-  Math.ceil(archivedCallouts.value.total / pageSize)
+  archivedCallouts.value
+    ? Math.ceil(archivedCallouts.value.total / pageSize)
+    : 0
 );
 
 onBeforeMount(async () => {
