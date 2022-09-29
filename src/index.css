@@ -121,7 +121,7 @@
   }
 
   .formio-component-content h3 {
-    @apply text-xl font-semibold mb-2;
+    @apply mb-2 text-xl font-semibold;
   }
 
   .col-form-label {
