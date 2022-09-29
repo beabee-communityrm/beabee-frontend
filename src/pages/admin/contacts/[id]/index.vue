@@ -6,7 +6,7 @@ meta:
 </route>
 
 <template>
-  <div v-if="contact" class="grid lg:grid-cols-2 gap-8">
+  <div v-if="contact" class="grid gap-8 lg:grid-cols-2">
     <div>
       <AppHeading>{{ t('contactOverview.overview') }}</AppHeading>
       <AppInfoList>
@@ -112,7 +112,7 @@ meta:
           type="submit"
           variant="primary"
           class="mt-4"
-          :loading="loading"
+          :loading="noteFormLoading"
           >{{ t('form.saveChanges') }}</AppButton
         >
       </form>
@@ -135,6 +135,75 @@ meta:
         </AppInfoListItem>
       </AppInfoList>
     </div>
+
+    <div>
+      <form @submit.prevent="handleRoleFormSubmit">
+
+        <AppSelect v-model="newRole.role" :items="roleOptions" />
+
+        <div class="grid grid-cols-2 gap-6">
+          <div class="col-span-1">
+            <AppLabel :label="inputT('starts.label')" required />
+            <AppRadioGroup
+              name="roleStartDate"
+              v-model="newRoleHasStartDate"
+              :options="[
+                [false, inputT('starts.opts.now')],
+                [true, inputT('starts.opts.schedule')],
+              ]"
+              required
+            />
+            <div v-if="newRoleHasStartDate" class="flex gap-2">
+              <div>
+                <AppInput type="date" required />
+              </div>
+              <!--
+              <div>
+                <AppInput type="time" required />
+              </div>
+              -->
+            </div>
+          </div>
+          <div class="col-span-1 text-sm text-grey mt-6" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-6 mt-5">
+          <div class="col-span-1">
+            <AppRadioGroup
+              name="roleEndDate"
+              v-model="newRoleHasEndDate"
+              :label="inputT('expires.label')"
+              :options="[
+                [false, inputT('expires.opts.never')],
+                [true, inputT('expires.opts.schedule')],
+              ]"
+              required
+            />
+            <div v-if="newRoleHasEndDate" class="flex gap-2">
+              <div>
+                <AppInput v-model="newRole.dateExpires" type="date" required />
+              </div>
+              <!--
+              <div>
+                <AppInput v-model="newRole.dateExpires" type="time" required />
+              </div>
+            -->
+            </div>
+          </div>
+        </div>
+
+        <AppButton
+          type="submit"
+          variant="primary"
+          class="mt-4"
+          :loading="roleFormLoading"
+          >Add role</AppButton
+        >
+      </form>
+    </div>
+
+
+
     <div class="hidden">
       <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
       <p>{{ t('contactOverview.security.whatDoTheButtonsDo') }}</p>
@@ -143,7 +212,7 @@ meta:
           type="submit"
           variant="primaryOutlined"
           :disabled="securityButtonsDisabled"
-          :loading="loading"
+          :loading="noteFormLoading"
           class="mt-2"
           >{{ t('contactOverview.security.loginOverride') }}</AppButton
         >
@@ -151,7 +220,7 @@ meta:
           type="submit"
           variant="primaryOutlined"
           :disabled="securityButtonsDisabled"
-          :loading="loading"
+          :loading="noteFormLoading"
           class="mt-2 ml-6"
           >{{ t('contactOverview.security.resetPassword') }}</AppButton
         >
@@ -168,8 +237,11 @@ meta:
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../components/AppHeading.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
+import AppLabel from '../../../../components/forms/AppLabel.vue';
+import AppSelect from '../../../../components/forms/AppSelect.vue';
 import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
+import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
 import AppRoundBadge from '../../../../components/AppRoundBadge.vue';
 import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown.vue';
 import MessageBox from '../../../../components/MessageBox.vue';
@@ -189,16 +261,32 @@ import { fetchContent } from '../../../../utils/api/content';
 formatLocale;
 
 const { t, n } = useI18n();
+const inputT = (key: string) => t('contacts.data.rolesCopy.' + key);
 
 const props = defineProps<{
   contact: GetMemberData;
 }>();
 
+const newRoleHasStartDate = ref(false);
+const newRoleHasEndDate = ref(false);
+// FIXME: hardcoded
+const roleOptions = [
+  {
+    id: 'member',
+    label: 'Member',
+  },
+  {
+    id: 'admin',
+    label: 'Admin',
+  },
+];
+
 const contact = ref<GetMemberDataWith<
   'profile' | 'contribution' | 'roles'
 > | null>(null);
 const contactTags = ref<string[]>([]);
-const loading = ref(false);
+const roleFormLoading = ref(false);
+const noteFormLoading = ref(false);
 const hasSetAnnotations = ref(false);
 const securityButtonsDisabled = ref(false);
 const contactAnnotations = reactive({
@@ -206,28 +294,47 @@ const contactAnnotations = reactive({
   description: '',
   tags: [] as string[],
 });
+const newRole = reactive({
+  role: '',
+  dateAdded: '',
+  dateExpires: '',
+});
 const securityLink = ref('');
 
+
 async function handleFormSubmit() {
-  loading.value = true;
+  noteFormLoading.value = true;
   try {
     await updateMember(props.contact.id, {
       profile: { ...contactAnnotations },
     });
   } finally {
-    loading.value = false;
+    noteFormLoading.value = false;
+    hasSetAnnotations.value = true;
+  }
+}
+
+async function handleRoleFormSubmit() {
+  // TODO: append new role to contact.roles
+  roleFormLoading.value = true;
+  try {
+    await updateMember(props.contact.id, {
+      profile: { ...newRole },
+    });
+  } finally {
+    roleFormLoading.value = false;
     hasSetAnnotations.value = true;
   }
 }
 
 async function handleSecurityAction() {
   securityButtonsDisabled.value = true;
-  loading.value = true;
+  noteFormLoading.value = true;
   try {
     const response = await (() => 'https://reset-link.com')();
     securityLink.value = response;
   } finally {
-    loading.value = false;
+    noteFormLoading.value = false;
   }
 }
 
@@ -245,7 +352,8 @@ const isRoleCurrent = (role: MemberRoleData): boolean => {
 };
 
 onBeforeMount(async () => {
-  loading.value = false;
+  noteFormLoading.value = false;
+  roleFormLoading.value = false;
   securityButtonsDisabled.value = false;
 
   contact.value = await fetchMember(props.contact.id, [
@@ -259,4 +367,5 @@ onBeforeMount(async () => {
 
   contactTags.value = (await fetchContent('contacts')).tags;
 });
+
 </script>
