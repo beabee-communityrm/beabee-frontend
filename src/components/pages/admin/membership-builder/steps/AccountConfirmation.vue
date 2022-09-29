@@ -75,9 +75,11 @@
       </template>
     </div>
     <div class="bg-cover bg-center p-4 pt-8">
-      <AuthBox>
-        <SetupForm :setup-content="setupContent" />
-      </AuthBox>
+      <Suspense>
+        <AuthBox>
+          <SetupForm :setup-content="setupContent" />
+        </AuthBox>
+      </Suspense>
     </div>
   </div>
 </template>

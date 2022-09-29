@@ -217,6 +217,7 @@
     "monthly": "Monthly",
     "new": "new!",
     "no": "No",
+    "noResults": "No results found",
     "role": {
       "admin": "Admin",
       "member": "Member",
