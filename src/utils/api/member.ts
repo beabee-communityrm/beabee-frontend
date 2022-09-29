@@ -70,6 +70,7 @@ export async function fetchMembers<With extends GetMemberWith>(
     items: data.items.map(deserializeMember),
   };
 }
+
 export async function fetchMember(id: string): Promise<GetMemberData>;
 export async function fetchMember<With extends GetMemberWith>(
   id: string,

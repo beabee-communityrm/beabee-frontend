@@ -56,7 +56,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
-import { GetBasicCalloutData } from '../utils/api/api.interface';
+import { GetCalloutData } from '../utils/api/api.interface';
 import AppButton from './forms/AppButton.vue';
 import AppItemStatus from './AppItemStatus.vue';
 import {
@@ -69,7 +69,7 @@ import env from './../env';
 const { t } = useI18n();
 
 const props = defineProps<{
-  callout: GetBasicCalloutData;
+  callout: GetCalloutData;
   footer?: boolean;
 }>();
 

@@ -89,8 +89,8 @@ import AppAlert from '../../../components/AppAlert.vue';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
 import {
   Paginated,
-  GetBasicCalloutData,
   GetCalloutsQuery,
+  GetCalloutData,
 } from '../../../utils/api/api.interface';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import { fetchCallouts } from '../../../utils/api/callout';
@@ -198,7 +198,7 @@ const currentStatus = computed({
   set: (filter) => router.push({ query: { ...route.query, filter } }),
 });
 
-const calloutsTable = ref<Paginated<GetBasicCalloutData>>();
+const calloutsTable = ref<Paginated<GetCalloutData>>();
 
 const totalPages = computed(() =>
   calloutsTable.value

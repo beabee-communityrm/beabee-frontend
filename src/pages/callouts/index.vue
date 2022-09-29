@@ -84,7 +84,8 @@ import PageTitle from '../../components/PageTitle.vue';
 import AppHeading from '../../components/AppHeading.vue';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import {
-  GetBasicCalloutData,
+  GetCalloutData,
+  GetCalloutDataWith,
   GetCalloutsQuery,
   ItemStatus,
   Paginated,
@@ -131,8 +132,9 @@ const currentShow = computed({
       query: { ...route.query, show, page: undefined },
     }),
 });
-const activeCallouts = ref<Paginated<GetBasicCalloutData>>();
-const archivedCallouts = ref<Paginated<GetBasicCalloutData>>();
+
+const activeCallouts = ref<Paginated<GetCalloutData>>();
+const archivedCallouts = ref<Paginated<GetCalloutDataWith<'hasAnswered'>>>();
 
 const totalPages = computed(() =>
   archivedCallouts.value
@@ -170,7 +172,6 @@ watchEffect(async () => {
     limit: pageSize,
     sort: 'expires',
     order: 'DESC',
-    hasAnswered: 'me',
     rules: {
       condition: 'AND',
       rules: [
@@ -202,6 +203,6 @@ watchEffect(async () => {
     },
   };
 
-  archivedCallouts.value = await fetchCallouts(query);
+  archivedCallouts.value = await fetchCallouts(query, ['hasAnswered']);
 });
 </script>
