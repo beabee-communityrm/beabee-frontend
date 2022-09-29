@@ -116,8 +116,7 @@
       "address": "Share this callout with the following address:",
       "services": "Or quickly share using one of these services:"
     },
-    "showMemberView": "As an admin you can preview what a member would see",
-    "showingPreview": "You are viewing a preview of a callout, you won't be able to submit a response",
+    "showingPreview": "Response submission is disabled in preview mode",
     "status": {
       "endedOn": "on {date}",
       "endsIn": "Ends in {duration}",

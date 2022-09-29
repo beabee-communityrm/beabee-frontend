@@ -77,36 +77,6 @@ meta:
       </div>
     </div>
 
-    <AppAlert v-if="isPreview" variant="warning" class="mb-4">
-      <div class="flex items-center justify-between gap-4">
-        <span>{{ t('callout.showingPreview') }}</span>
-        <AppButton
-          :to="`/admin/callouts/edit/${callout.slug}`"
-          icon="pencil-alt"
-          variant="linkOutlined"
-        >
-          {{ t('actions.edit') }}
-        </AppButton>
-      </div>
-    </AppAlert>
-
-    <AppAlert
-      v-if="!isPreview && showMemberOnlyPrompt && canAdmin"
-      variant="warning"
-      class="mb-4"
-    >
-      <div class="flex items-center justify-between gap-4">
-        <span>{{ t('callout.showMemberView') }}</span>
-        <AppButton
-          :to="`/callouts/${callout.slug}?preview`"
-          icon="eye"
-          variant="linkOutlined"
-        >
-          {{ t('actions.preview') }}
-        </AppButton>
-      </div>
-    </AppAlert>
-
     <figure class="mb-6">
       <img class="w-full object-cover" :src="callout.image" />
     </figure>
@@ -159,6 +129,7 @@ meta:
         :options="formOpts"
         @submit="handleSubmitResponse as any"
       />
+      <InfoMessage v-if="isPreview" :message="t('callout.showingPreview')" />
       <MessageBox v-if="formError" class="mt-4" type="error">
         {{ formError }}
       </MessageBox>
@@ -191,9 +162,8 @@ import MessageBox from '../../components/MessageBox.vue';
 import { currentUser } from '../../store';
 import GuestFields from '../../components/pages/callouts/GuestFields.vue';
 import SharingPanel from '../../components/pages/callouts/CalloutSharingPanel.vue';
-import AppAlert from '../../components/AppAlert.vue';
 import axios from '../../axios';
-import { canAdmin } from '../../utils/currentUserCan';
+import InfoMessage from '../../components/InfoMessage.vue';
 
 import 'formiojs/dist/formio.form.css';
 import { useRoute } from 'vue-router';
