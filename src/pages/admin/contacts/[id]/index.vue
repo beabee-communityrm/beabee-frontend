@@ -137,12 +137,13 @@ meta:
       </AppInfoList>
 
       <div class="mt-4">
-        <AppButton variant="primaryOutlined">Add role</AppButton>
+        <AppButton variant="primaryOutlined" @click="isNewRoleFormVisible = true">Add role</AppButton>
       </div>
     </div>
 
     <div
-      class="hidden flex justify-center border border-primary-20 flex-1 rounded py-4 px-10"
+      v-if="isNewRoleFormVisible"
+      class="flex justify-center border border-primary-20 flex-1 rounded py-4 px-10"
     >
       <form @submit.prevent="handleRoleFormSubmit" class="flex-initial">
         <div class="my-3 py-3">
@@ -204,7 +205,7 @@ meta:
           <AppButton type="submit" variant="primary" :loading="roleFormLoading"
             >Add role</AppButton
           >
-          <AppButton variant="text" class="ml-2">{{
+          <AppButton variant="text" class="ml-2" @click="isNewRoleFormVisible = false">{{
             t('form.cancel')
           }}</AppButton>
         </div>
@@ -276,6 +277,7 @@ const props = defineProps<{
 
 const newRoleHasStartDate = ref(false);
 const newRoleHasEndDate = ref(false);
+const isNewRoleFormVisible = ref(false);
 // FIXME: hardcoded
 const roleOptions = [
   {
