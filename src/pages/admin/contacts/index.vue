@@ -23,7 +23,7 @@ meta:
       <AppTable
         v-model:sort="currentSort"
         :headers="headers"
-        :items="contactsTable.items"
+        :items="contactsTable?.items || null"
         class="mt-2 w-full whitespace-nowrap"
       >
         <template #empty>
@@ -72,7 +72,7 @@ meta:
           {{ getMembershipStartDate(item) }}
         </template>
       </AppTable>
-      <div class="mt-4 flex items-center text-sm">
+      <div v-if="contactsTable" class="mt-4 flex items-center text-sm">
         <p class="flex-1">
           <i18n-t v-if="contactsTable.count > 0" keypath="contacts.showingOf">
             <template #start
@@ -195,14 +195,11 @@ const currentSegment = computed({
 
 const segments = ref<GetSegmentData[]>([]);
 const contactsTotal = ref<number | null>(null);
-const contactsTable = ref<Paginated<GetMemberDataWith<'profile' | 'roles'>>>({
-  total: 0,
-  count: 0,
-  offset: 0,
-  items: [],
-});
+const contactsTable = ref<Paginated<GetMemberDataWith<'profile' | 'roles'>>>();
 const totalPages = computed(() =>
-  Math.ceil(contactsTable.value.total / currentPageSize.value)
+  contactsTable.value
+    ? Math.ceil(contactsTable.value.total / currentPageSize.value)
+    : 0
 );
 
 const segmentItems = computed(() => [
@@ -234,28 +231,26 @@ onBeforeMount(async () => {
 });
 
 watchEffect(async () => {
-  const rules: GetMembersQuery['rules'] | undefined = currentSearch.value
-    ? {
-        condition: 'OR',
-        rules: [
-          {
-            field: 'email',
-            operator: 'contains',
-            value: currentSearch.value,
-          },
-          {
-            field: 'firstname',
-            operator: 'contains',
-            value: currentSearch.value,
-          },
-          {
-            field: 'lastname',
-            operator: 'contains',
-            value: currentSearch.value,
-          },
-        ],
-      }
-    : undefined;
+  const rules: GetMembersQuery['rules'] = {
+    condition: 'OR',
+    rules: currentSearch.value.split(' ').flatMap((value) => [
+      {
+        field: 'email',
+        operator: 'contains',
+        value,
+      },
+      {
+        field: 'firstname',
+        operator: 'contains',
+        value,
+      },
+      {
+        field: 'lastname',
+        operator: 'contains',
+        value,
+      },
+    ]),
+  };
 
   const query = {
     offset: currentPage.value * currentPageSize.value,

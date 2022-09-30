@@ -91,15 +91,13 @@ meta:
 
       <form @submit.prevent="handleFormSubmit">
         <AppInput
-          v-model="contactAnnotations.notes"
-          :model-value="contactAnnotations.notes"
-          :label="t('contacts.data.notes')"
+          v-model="contactAnnotations.description"
+          :label="t('contacts.data.description')"
           class="mb-4"
         />
-        <AppTextArea
-          v-model="contactAnnotations.description"
-          :model-value="contactAnnotations.description"
-          :label="t('contacts.data.description')"
+        <RichTextEditor
+          v-model="contactAnnotations.notes"
+          :label="t('contacts.data.notes')"
           class="mb-4"
         />
         <TagDropdown
@@ -168,7 +166,6 @@ meta:
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../components/AppHeading.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
-import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import AppRoundBadge from '../../../../components/AppRoundBadge.vue';
 import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown.vue';
@@ -185,6 +182,7 @@ import AppInfoList from '../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
 import { fetchContent } from '../../../../utils/api/content';
+import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 
 formatLocale;
 
