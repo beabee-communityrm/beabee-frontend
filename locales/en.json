@@ -456,11 +456,12 @@
         "description": "Choose who will see your callout",
         "inputs": {
           "anonymous": {
-            "help": "<p>If you allow <strong>anonymous responses</strong>, guests will not be asked for their contact information.</p>\n",
-            "label": "Should guests be able to answer anonymously?",
+            "help": "<p>If you allow <strong>anonymous responses</strong>, users will not be asked for their contact information.</p>\n",
+            "label": "Should guests be asked for their contact information?",
             "opts": {
-              "no": "No, require contact details",
-              "yes": "Yes, contact info is not needed"
+              "none": "Yes, ask guests for their contact information",
+              "guests": "No, responses from guests can be anonymous",
+              "all": "All responses should be anonymous, including from members"
             }
           },
           "editable": {

@@ -14,7 +14,7 @@ export interface TitleAndImageStepProps {
 
 export interface VisibilityStepProps {
   whoCanTakePart: 'members' | 'everyone';
-  allowAnonymousResponses: boolean;
+  allowAnonymousResponses: 'none' | 'guests' | 'all';
   showOnUserDashboards: boolean;
   usersCanEditAnswers: boolean;
 }
