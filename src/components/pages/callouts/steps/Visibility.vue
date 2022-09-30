@@ -28,8 +28,9 @@
           name="allowAnonymousResponses"
           :label="inputT('anonymous.label')"
           :options="[
-            [true, inputT('anonymous.opts.yes')],
-            [false, inputT('anonymous.opts.no')],
+            ['none', inputT('anonymous.opts.none')],
+            ['guests', inputT('anonymous.opts.guests')],
+            ['all', inputT('anonymous.opts.all')],
           ]"
           required
         />

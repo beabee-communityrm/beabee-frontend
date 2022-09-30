@@ -128,9 +128,11 @@ function makeCalloutData(steps: CalloutSteps): [string, UpdateCalloutData] {
       access:
         steps.visibility.data.whoCanTakePart === 'members'
           ? 'member'
-          : steps.visibility.data.allowAnonymousResponses
+          : steps.visibility.data.allowAnonymousResponses === 'none'
+          ? 'guest'
+          : steps.visibility.data.allowAnonymousResponses === 'guests'
           ? 'anonymous'
-          : 'guest',
+          : 'only-anonymous',
       ...(steps.endMessage.data.whenFinished === 'message'
         ? {
             thanksText: steps.endMessage.data.thankYouText,
