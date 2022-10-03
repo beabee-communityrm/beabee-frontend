@@ -96,7 +96,7 @@ import AppHeading from '../../components/AppHeading.vue';
 import KeyStat from '../../components/pages/admin/KeyStat.vue';
 import { onBeforeMount, ref } from 'vue';
 import {
-  GetBasicCalloutData,
+  GetCalloutData,
   GetMemberData,
   GetStatsData,
 } from '../../utils/api/api.interface';
@@ -112,7 +112,7 @@ const { n, t } = useI18n();
 
 const stats = ref<GetStatsData>();
 const recentMembers = ref<GetMemberData[]>([]);
-const latestCallout = ref<GetBasicCalloutData | null>();
+const latestCallout = ref<GetCalloutData | null>();
 
 onBeforeMount(async () => {
   fetchStats({

@@ -80,7 +80,7 @@ import AppAlert from '../../components/AppAlert.vue';
 import CalloutCard from '../../components/CalloutCard.vue';
 import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
 import {
-  GetBasicCalloutData,
+  GetCalloutData,
   GetMemberData,
   ItemStatus,
   ProfileContent,
@@ -105,7 +105,7 @@ const profileContent = ref<ProfileContent>({
   introMessage: '',
 });
 
-const callouts = ref<GetBasicCalloutData[]>([]);
+const callouts = ref<GetCalloutData[]>([]);
 
 // This page is behind auth so currentUser can't be null
 // TODO: is there a nicer way to handle this?

@@ -8,10 +8,10 @@ meta:
 <template><div></div></template>
 <script lang="ts" setup>
 import { onBeforeMount } from 'vue';
-import { GetMoreCalloutData } from '../../../../../utils/api/api.interface';
+import { GetCalloutData } from '../../../../../utils/api/api.interface';
 
 const props = defineProps<{
-  callout: GetMoreCalloutData;
+  callout: GetCalloutData;
 }>();
 
 onBeforeMount(() => {

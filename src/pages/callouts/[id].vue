@@ -136,8 +136,8 @@ import { Form } from 'vue-formio';
 import { useI18n } from 'vue-i18n';
 import {
   CalloutResponseAnswers,
+  GetCalloutDataWith,
   GetCalloutResponseData,
-  GetMoreCalloutData,
   ItemStatus,
   Paginated,
 } from '../../utils/api/api.interface';
@@ -166,7 +166,7 @@ const props = defineProps<{ id: string }>();
 
 const { t } = useI18n();
 
-const callout = ref<GetMoreCalloutData>();
+const callout = ref<GetCalloutDataWith<'form'>>();
 const responses = ref<Paginated<GetCalloutResponseData>>();
 
 const guestName = ref('');
@@ -276,7 +276,7 @@ onBeforeMount(async () => {
   formError.value = '';
   showThanksMessage.value = false;
 
-  callout.value = await fetchCallout(props.id);
+  callout.value = await fetchCallout(props.id, ['form']);
 
   responses.value = currentUser.value
     ? await fetchResponses(props.id, {
