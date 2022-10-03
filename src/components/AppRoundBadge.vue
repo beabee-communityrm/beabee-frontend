@@ -9,7 +9,7 @@ import { computed } from 'vue';
 
 const props = withDefaults(
   defineProps<{
-    type: 'success' | 'warning' | 'error';
+    type: 'success' | 'warning' | 'danger';
     size?: 'large';
   }>(),
   { type: 'success', size: 'large' }

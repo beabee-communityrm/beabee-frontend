@@ -13,7 +13,7 @@ meta:
 import { ref, markRaw, onBeforeMount, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { fetchCallout } from '../../../utils/api/callout';
-import type { GetMoreCalloutData } from '../../../utils/api/api.interface';
+import type { GetCalloutDataWith } from '../../../utils/api/api.interface';
 
 import StepVisibility from '../../../components/pages/callouts/steps/Visibility.vue';
 import StepTitleAndImage from '../../../components/pages/callouts/steps/TitleAndImage.vue';
@@ -32,7 +32,7 @@ const { t } = useI18n();
 
 const steps: Ref<null | CalloutSteps> = ref(null);
 
-const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
+const makeStepsData = (data?: GetCalloutDataWith<'form'>): CalloutSteps => ({
   content: {
     name: t('createCallout.steps.content.title'),
     description: t('createCallout.steps.content.description'),
@@ -140,7 +140,7 @@ const makeStepsData = (data?: GetMoreCalloutData): CalloutSteps => ({
 
 onBeforeMount(async () => {
   steps.value = props.id
-    ? makeStepsData(await fetchCallout(props.id))
+    ? makeStepsData(await fetchCallout(props.id, ['form']))
     : makeStepsData();
 });
 </script>
