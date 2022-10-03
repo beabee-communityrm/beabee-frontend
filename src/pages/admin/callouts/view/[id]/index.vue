@@ -104,16 +104,13 @@ meta:
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
-import {
-  GetCalloutDataWith,
-  ItemStatus,
-} from '../../../../../utils/api/api.interface';
+import { GetCalloutDataWith } from '../../../../../utils/api/api.interface';
 import { deleteCallout } from '../../../../../utils/api/callout';
 import AppHeading from '../../../../../components/AppHeading.vue';
 import AppInfoList from '../../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../../components/AppInfoListItem.vue';
 import ActionButton from '../../../../../components/pages/callouts/ActionButton.vue';
-import CalloutSummary from '../../../../../components/CalloutSummary.vue';
+import CalloutSummary from '../../../../../components/callout/CalloutSummary.vue';
 import AppAlert from '../../../../../components/AppAlert.vue';
 import { createCallout } from '../../../../../utils/api/callout';
 import AppConfirmDialog from '../../../../../components/AppConfirmDialog.vue';

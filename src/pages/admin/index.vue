@@ -105,7 +105,7 @@ import { fetchMembers } from '../../utils/api/member';
 import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
 import Hint from '../../components/pages/admin/Hint.vue';
 import { fetchCallouts } from '../../utils/api/callout';
-import CalloutSummary from '../../components/CalloutSummary.vue';
+import CalloutSummary from '../../components/callout/CalloutSummary.vue';
 import { fetchStats } from '../../utils/api/stats';
 import { subDays } from 'date-fns';
 
