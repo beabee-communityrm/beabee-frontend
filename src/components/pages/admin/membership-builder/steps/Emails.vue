@@ -7,41 +7,19 @@
       </div>
     </div>
 
-    <div v-if="welcomeEmail" class="mb-8 grid grid-cols-2 gap-8">
-      <div>
-        <AppSubHeading class="mb-4">{{ stepT('welcomeEmail') }}</AppSubHeading>
-        <div class="mb-4">
-          <AppInput v-model="welcomeEmail.subject" label="Subject" required />
-        </div>
-        <RichTextEditor v-model="welcomeEmail.body" label="Message" required />
-      </div>
-      <div>
-        <EmailPreview :body="welcomeEmail.body" :footer="emailFooter" />
-      </div>
-    </div>
+    <EmailEditor
+      v-if="welcomeEmail !== undefined"
+      :label="stepT('welcomeEmail')"
+      :email="welcomeEmail"
+      :footer="emailFooter"
+    />
 
-    <div v-if="cancellationEmail" class="grid grid-cols-2 gap-8">
-      <div>
-        <AppSubHeading class="mb-4">{{
-          stepT('cancellationEmail')
-        }}</AppSubHeading>
-        <div class="mb-4">
-          <AppInput
-            v-model="cancellationEmail.subject"
-            label="Subject"
-            required
-          />
-        </div>
-        <RichTextEditor
-          v-model="cancellationEmail.body"
-          label="Message"
-          required
-        />
-      </div>
-      <div>
-        <EmailPreview :body="cancellationEmail.body" :footer="emailFooter" />
-      </div>
-    </div>
+    <EmailEditor
+      v-if="cancellationEmail !== undefined"
+      :label="stepT('cancellationEmail')"
+      :email="cancellationEmail"
+      :footer="emailFooter"
+    />
   </div>
 </template>
 
@@ -50,14 +28,12 @@ import useVuelidate from '@vuelidate/core';
 import { onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../AppHeading.vue';
-import AppSubHeading from '../../../../AppSubHeading.vue';
-import AppInput from '../../../../forms/AppInput.vue';
-import RichTextEditor from '../../../../rte/RichTextEditor.vue';
 import { GetEmailData } from '../../../../../utils/api/api.interface';
 import { fetchContent } from '../../../../../utils/api/content';
 import { fetchEmail, updateEmail } from '../../../../../utils/api/email';
 import { MembershipBuilderEmitter } from '../membership-builder.interface';
-import EmailPreview from '../EmailPreview.vue';
+import EmailEditor from '../EmailEditor.vue';
+import { isRequestError } from '../../../../../utils/api';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
@@ -67,16 +43,16 @@ const props = defineProps<{
 const { t } = useI18n();
 const stepT = (key: string) => t('membershipBuilder.steps.emails.' + key);
 
-const welcomeEmail = ref<GetEmailData>();
-const cancellationEmail = ref<GetEmailData>();
+const welcomeEmail = ref<GetEmailData | false>();
+const cancellationEmail = ref<GetEmailData | false>();
 const emailFooter = ref('');
 
 async function handleUpdate() {
-  if (welcomeEmail.value && cancellationEmail.value) {
-    await Promise.all([
-      await updateEmail('welcome', welcomeEmail.value),
-      await updateEmail('cancelled-contribution', cancellationEmail.value),
-    ]);
+  if (welcomeEmail.value) {
+    await updateEmail('welcome', welcomeEmail.value);
+  }
+  if (cancellationEmail.value) {
+    await updateEmail('cancelled-contribution', cancellationEmail.value);
   }
 
   props.emitter.emit('updated');
@@ -88,10 +64,22 @@ watch(validation, () => {
   emit('update:validated', !validation.value.$invalid);
 });
 
+async function loadEmail(id: string): Promise<GetEmailData | false> {
+  try {
+    return await fetchEmail(id);
+  } catch (err) {
+    if (isRequestError(err, 'external-email-template')) {
+      return false;
+    }
+    return { body: '', subject: '' };
+  }
+}
+
 onBeforeMount(async () => {
   props.emitter.on('update', handleUpdate);
-  welcomeEmail.value = await fetchEmail('welcome');
-  cancellationEmail.value = await fetchEmail('cancelled-contribution');
+  welcomeEmail.value = await loadEmail('welcome');
+  cancellationEmail.value = await loadEmail('cancelled-contribution');
+
   emailFooter.value = (await fetchContent('email')).footer;
 
   watch(
