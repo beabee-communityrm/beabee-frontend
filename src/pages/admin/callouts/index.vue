@@ -89,8 +89,8 @@ import AppAlert from '../../../components/AppAlert.vue';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
 import {
   Paginated,
-  GetBasicCalloutData,
   GetCalloutsQuery,
+  GetCalloutDataWith,
 } from '../../../utils/api/api.interface';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import { fetchCallouts } from '../../../utils/api/callout';
@@ -149,6 +149,10 @@ const headers: Header[] = [
     text: '',
   },
   {
+    value: 'responseCount',
+    text: t('calloutsAdmin.data.responses'),
+  },
+  {
     value: 'starts',
     text: t('calloutsAdmin.data.starts'),
     align: 'right',
@@ -198,7 +202,7 @@ const currentStatus = computed({
   set: (filter) => router.push({ query: { ...route.query, filter } }),
 });
 
-const calloutsTable = ref<Paginated<GetBasicCalloutData>>();
+const calloutsTable = ref<Paginated<GetCalloutDataWith<'responseCount'>>>();
 
 const totalPages = computed(() =>
   calloutsTable.value
@@ -230,12 +234,15 @@ watchEffect(async () => {
         : []),
     ],
   } as NonNullable<GetCalloutsQuery['rules']>;
-  calloutsTable.value = await fetchCallouts({
-    limit: currentPageSize.value,
-    offset: currentPage.value * currentPageSize.value,
-    sort: currentSort.value.by,
-    order: currentSort.value.type,
-    rules: rules.rules.length > 0 ? rules : undefined,
-  });
+  calloutsTable.value = await fetchCallouts(
+    {
+      limit: currentPageSize.value,
+      offset: currentPage.value * currentPageSize.value,
+      sort: currentSort.value.by,
+      order: currentSort.value.type,
+      rules: rules.rules.length > 0 ? rules : undefined,
+    },
+    ['responseCount']
+  );
 });
 </script>

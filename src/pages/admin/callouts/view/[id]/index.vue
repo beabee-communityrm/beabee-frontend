@@ -123,7 +123,7 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import {
-  GetMoreCalloutData,
+  GetCalloutDataWith,
   ItemStatus,
 } from '../../../../../utils/api/api.interface';
 import { deleteCallout } from '../../../../../utils/api/callout';
@@ -141,7 +141,7 @@ import { createCallout } from '../../../../../utils/api/callout';
 import AppConfirmDialog from '../../../../../components/AppConfirmDialog.vue';
 
 const props = defineProps<{
-  callout: GetMoreCalloutData;
+  callout: GetCalloutDataWith<'form'>;
 }>();
 const { t } = useI18n();
 

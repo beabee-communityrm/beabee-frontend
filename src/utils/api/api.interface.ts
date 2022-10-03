@@ -103,8 +103,6 @@ export interface MemberRoleData extends UpdateMemberRoleData {
   role: PermissionType;
 }
 
-export type GetMemberWith = 'profile' | 'contribution' | 'roles';
-
 export interface GetMemberData extends MemberData {
   id: string;
   joined: Date;
@@ -113,6 +111,8 @@ export interface GetMemberData extends MemberData {
   contributionPeriod?: ContributionPeriod;
   activeRoles: PermissionType[];
 }
+
+export type GetMemberWith = 'profile' | 'contribution' | 'roles';
 
 export type GetMemberDataWith<With extends GetMemberWith> = GetMemberData &
   ('profile' extends With ? { profile: MemberProfileData } : Noop) &
@@ -294,7 +294,7 @@ export interface ShareContent {
   twitterHandle: string;
 }
 
-interface BasicCalloutData {
+interface CalloutData {
   slug: string;
   title: string;
   excerpt: string;
@@ -307,7 +307,7 @@ interface BasicCalloutData {
   hidden: boolean;
 }
 
-interface MoreCalloutData extends BasicCalloutData {
+interface CalloutFormData {
   formSchema: CalloutFormSchema;
   intro: string;
   thanksText: string;
@@ -317,27 +317,28 @@ interface MoreCalloutData extends BasicCalloutData {
   shareDescription?: string;
 }
 
+export interface GetCalloutData extends CalloutData {
+  status: ItemStatus;
+}
+
 export interface CalloutFormSchema {
   components: unknown[];
 }
 
-export interface GetBasicCalloutData extends BasicCalloutData {
-  status: ItemStatus;
-  hasAnswered?: boolean;
-}
+export type GetCalloutWith = 'form' | 'responseCount' | 'hasAnswered';
 
-export interface GetMoreCalloutData
-  extends GetBasicCalloutData,
-    MoreCalloutData {}
+export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
+  ('responseCount' extends With ? { responseCount: number } : Noop) &
+  ('hasAnswered' extends With ? { hasAnswered: boolean } : Noop) &
+  ('form' extends With ? CalloutFormData : Noop);
 
-export type CreateCalloutData = AllowNull<MoreCalloutData>;
+export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
 
 export type UpdateCalloutData = Omit<CreateCalloutData, 'slug'>;
 
-export interface GetCalloutsQuery
-  extends GetPaginatedQuery<'title' | 'status' | 'answeredBy' | 'hidden'> {
-  hasAnswered?: string;
-}
+export type GetCalloutsQuery = GetPaginatedQuery<
+  'title' | 'status' | 'answeredBy' | 'hidden'
+>;
 
 export type GetCalloutResponsesQuery = GetPaginatedQuery<'member'>;
 
