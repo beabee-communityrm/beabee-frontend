@@ -1,41 +1,31 @@
 <template>
   <div
-    class="
-      callout-card
-      rounded
-      overflow-hidden
-      bg-white
-      cursor-pointer
-      shadow
-      group
-      w-full
-      md:max-w-[19rem]
-    "
+    class="callout-card group w-full cursor-pointer overflow-hidden rounded bg-white shadow md:max-w-[19rem]"
   >
-    <router-link :to="`/callouts/${callout.slug}`" class="flex flex-col h-full">
-      <div class="bg-primary-40 mb-2 h-36">
+    <router-link :to="`/callouts/${callout.slug}`" class="flex h-full flex-col">
+      <div class="mb-2 h-36 bg-primary-40">
         <img
           v-if="callout.image"
-          class="object-cover h-full w-full"
+          class="h-full w-full object-cover"
           :src="callout.image"
           :alt="callout.title"
         />
       </div>
 
-      <div class="px-4 flex-grow">
-        <h3 class="font-title text-2xl leading-tight font-semibold mb-2">
+      <div class="flex-grow px-4">
+        <h3 class="mb-2 font-title text-2xl font-semibold leading-tight">
           {{ callout.title }}
         </h3>
 
-        <p class="text-sm leading-tight mb-2">{{ callout.excerpt }}</p>
+        <p class="mb-2 text-sm leading-tight">{{ callout.excerpt }}</p>
 
-        <div class="flex items-end text-sm mb-3">
-          <div v-if="callout.expires" class="flex flex-col ml-auto">
+        <div class="mb-3 flex items-end text-sm">
+          <div v-if="callout.expires" class="ml-auto flex flex-col">
             <span class="font-semibold">{{
               `${t('common.until')} ${formattedExpiresDate}`
             }}</span>
 
-            <span class="text-body-80 text-right">{{
+            <span class="text-right text-body-80">{{
               `${t('common.timeIn', { time: expiresIn })}`
             }}</span>
           </div>
@@ -43,15 +33,7 @@
       </div>
 
       <div
-        class="
-          bg-primary-10
-          text-primary-80
-          px-5
-          h-11
-          flex
-          items-center
-          group-hover:bg-primary-20 group-hover:text-primary
-        "
+        class="flex h-11 items-center bg-primary-10 px-5 text-primary-80 group-hover:bg-primary-20 group-hover:text-primary"
       >
         <span class="mary-80 ml-auto font-semibold">{{
           t('common.participate')
@@ -67,12 +49,12 @@ import { ref } from '@vue/reactivity';
 import { onBeforeMount } from '@vue/runtime-core';
 import { useI18n } from 'vue-i18n';
 import { formatDistanceLocale } from '../utils/dates/locale-date-formats';
-import { GetBasicCalloutData } from '../utils/api/api.interface';
+import { GetCalloutData } from '../utils/api/api.interface';
 
 const { t } = useI18n();
 
 const props = defineProps<{
-  callout: GetBasicCalloutData;
+  callout: GetCalloutData;
 }>();
 
 const formattedExpiresDate = ref('');

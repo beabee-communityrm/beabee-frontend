@@ -1,8 +1,8 @@
 <template>
-  <header class="flex mb-4">
+  <header class="mb-4 flex">
     <AppLogo class="w-16 flex-none self-start" />
-    <div class="self-center flex flex-col ml-4">
-      <h1 class="font-semibold font-title text-2xl">
+    <div class="ml-4 flex flex-col self-center">
+      <h1 class="font-title text-2xl font-semibold">
         {{ title }}
       </h1>
     </div>

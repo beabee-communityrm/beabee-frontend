@@ -5,7 +5,7 @@ meta:
   pageTitle: Theme settings
 </route>
 <template>
-  <h2 class="font-title text-2xl mb-2">Colours</h2>
+  <h2 class="mb-2 font-title text-2xl">Colours</h2>
   <div class="flex bg-white p-4">
     <div class="flex-1">
       <AppColor name="bg-primary" shade="Primary" />

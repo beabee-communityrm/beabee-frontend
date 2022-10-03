@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="grid grid-cols-2 gap-8 mb-8">
+    <div class="mb-8 grid grid-cols-2 gap-8">
       <div>
         <AppHeading class="mb-5">{{ stepT('bigTitle') }}</AppHeading>
         <p>{{ stepT('text') }}</p>
       </div>
     </div>
 
-    <div v-if="welcomeEmail" class="grid grid-cols-2 gap-8 mb-8">
+    <div v-if="welcomeEmail" class="mb-8 grid grid-cols-2 gap-8">
       <div>
         <AppSubHeading class="mb-4">{{ stepT('welcomeEmail') }}</AppSubHeading>
         <div class="mb-4">

@@ -2,11 +2,11 @@
   <AuthBox>
     <div :class="{ relative: showPattern }" class="px-1 md:px-7">
       <template v-if="showPattern">
-        <NoticeBg class="absolute w-1/3 right-5 top-2 md:-top-4" />
+        <NoticeBg class="absolute right-5 top-2 w-1/3 md:-top-4" />
       </template>
 
       <header>
-        <h1 class="text-3xl md:text-5xl font-extrabold font-title mb-6">
+        <h1 class="mb-6 font-title text-3xl font-extrabold md:text-5xl">
           <slot name="header" />
         </h1>
       </header>

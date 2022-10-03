@@ -8,8 +8,8 @@
         })
       "
     />
-    <div class="mb-6 content-message" v-html="t('joinSetup.confirmDetails')" />
-    <p class="mt-2 mb-4">
+    <div class="content-message mb-2" v-html="t('joinSetup.confirmDetails')" />
+    <p class="mt-2 mb-6">
       {{ setupContent.welcome }}
     </p>
 
@@ -34,30 +34,30 @@
       />
     </template>
 
-    <template v-if="setupContent.showNewsletterOptIn">
-      <p class="text-lg mb-1">
+    <template v-if="showNewsletterOptIn">
+      <p class="mb-1 text-lg">
         {{ setupContent.newsletterTitle }}
       </p>
 
-      <p class="mb-4 text-sm">
+      <p class="mb-2 text-sm">
         {{ setupContent.newsletterText }}
       </p>
 
       <AppCheckbox
         v-model="setupMemberData.profile.newsletterOptIn"
         :label="setupContent.newsletterOptIn"
-        class="mb-4 font-bold"
+        class="mb-6 font-semibold"
       />
     </template>
 
-    <MessageBox v-if="validation.$errors.length > 0" class="mb-4" />
+    <MessageBox v-if="validation.$errors.length > 0" class="mb-2" />
 
     <AppButton
       variant="link"
       type="submit"
       :loading="loading"
       :disabled="validation.$invalid"
-      class="w-full"
+      class="mb-3 w-full"
     >
       {{ t('joinSetup.continue') }}
     </AppButton>
@@ -65,7 +65,7 @@
 </template>
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { onBeforeMount, reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { JoinSetupContent } from '../../../utils/api/api.interface';
 import JoinHeader from './JoinHeader.vue';
@@ -80,7 +80,7 @@ import { NewsletterStatus } from '../../../utils/enums/newsletter-status.enum';
 import { SetupMemberData } from './join.interface';
 
 const emit = defineEmits(['submit']);
-defineProps<{
+const props = defineProps<{
   setupContent: JoinSetupContent;
   loading?: boolean;
 }>();
@@ -88,36 +88,25 @@ defineProps<{
 const { t } = useI18n();
 const validation = useVuelidate({ $stopPropagation: true });
 
+const member = await fetchMember('me', ['profile']);
+
 const setupMemberData = reactive<SetupMemberData>({
-  email: '',
-  firstName: '',
-  lastName: '',
+  email: member.email,
+  firstName: member.firstname,
+  lastName: member.lastname,
   profile: {
     newsletterOptIn: false,
-    deliveryOptIn: false,
+    deliveryOptIn: member.profile.deliveryOptIn,
   },
-  addressLine1: '',
-  addressLine2: '',
-  cityOrTown: '',
-  postCode: '',
+  addressLine1: member.profile.deliveryAddress?.line1 || '',
+  addressLine2: member.profile.deliveryAddress?.line2 || '',
+  cityOrTown: member.profile.deliveryAddress?.city || '',
+  postCode: member.profile.deliveryAddress?.postcode || '',
 });
 
-onBeforeMount(async () => {
-  const member = await fetchMember('me', ['profile']);
-
-  setupMemberData.firstName = member.firstname;
-  setupMemberData.lastName = member.lastname;
-  setupMemberData.email = member.email;
-  setupMemberData.profile.newsletterOptIn =
-    member.profile.newsletterStatus === NewsletterStatus.Subscribed
-      ? true
-      : false;
-  setupMemberData.profile.deliveryOptIn = member.profile.deliveryOptIn;
-  if (member.profile.deliveryAddress) {
-    setupMemberData.addressLine1 = member.profile.deliveryAddress.line1;
-    setupMemberData.addressLine2 = member.profile.deliveryAddress.line2 || '';
-    setupMemberData.cityOrTown = member.profile.deliveryAddress.city;
-    setupMemberData.postCode = member.profile.deliveryAddress.postcode;
-  }
-});
+const showNewsletterOptIn = computed(
+  () =>
+    props.setupContent.showNewsletterOptIn &&
+    member.profile.newsletterStatus !== NewsletterStatus.Subscribed
+);
 </script>

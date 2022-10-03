@@ -18,6 +18,7 @@ import {
 } from './api.interface';
 
 import { deserializeDate } from '.';
+import env from '../../env';
 
 // TODO: how to make this type safe?
 export function deserializeMember(data: any): any {
@@ -69,6 +70,7 @@ export async function fetchMembers<With extends GetMemberWith>(
     items: data.items.map(deserializeMember),
   };
 }
+
 export async function fetchMember(id: string): Promise<GetMemberData>;
 export async function fetchMember<With extends GetMemberWith>(
   id: string,
@@ -118,7 +120,7 @@ export async function updateContribution(
 }
 
 export const startContributionCompleteUrl =
-  import.meta.env.VITE_APP_BASE_URL + '/profile/contribution/complete';
+  env.appUrl + '/profile/contribution/complete';
 
 export async function startContribution(
   dataIn: StartContributionData
@@ -151,8 +153,7 @@ export async function cancelContribution(): Promise<void> {
 }
 
 export const updatePaymentMethodCompleteUrl =
-  import.meta.env.VITE_APP_BASE_URL +
-  '/profile/contribution/payment-method/complete';
+  env.appUrl + '/profile/contribution/payment-method/complete';
 
 export async function updatePaymentMethod(
   paymentMethod?: PaymentMethod

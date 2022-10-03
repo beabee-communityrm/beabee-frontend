@@ -6,7 +6,7 @@ meta:
 </route>
 
 <template>
-  <div v-if="contact" class="grid lg:grid-cols-2 gap-8">
+  <div v-if="contact" class="grid gap-8 lg:grid-cols-2">
     <div>
       <AppHeading>{{ t('contactOverview.overview') }}</AppHeading>
       <AppInfoList>
@@ -91,15 +91,13 @@ meta:
 
       <form @submit.prevent="handleFormSubmit">
         <AppInput
-          v-model="contactAnnotations.notes"
-          :model-value="contactAnnotations.notes"
-          :label="t('contacts.data.notes')"
+          v-model="contactAnnotations.description"
+          :label="t('contacts.data.description')"
           class="mb-4"
         />
-        <AppTextArea
-          v-model="contactAnnotations.description"
-          :model-value="contactAnnotations.description"
-          :label="t('contacts.data.description')"
+        <RichTextEditor
+          v-model="contactAnnotations.notes"
+          :label="t('contacts.data.notes')"
           class="mb-4"
         />
         <TagDropdown
@@ -125,7 +123,7 @@ meta:
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
       <AppInfoList v-for="role in contact.roles" :key="role.role">
         <AppInfoListItem :name="t(`common.role.${role.role}`)">
-          <AppRoundBadge :type="isRoleCurrent(role) ? 'success' : 'warning'" />
+          <AppRoundBadge :type="isRoleCurrent(role) ? 'success' : 'danger'" />
           {{ formatLocale(role.dateAdded, 'P') + ' → ' }}
           {{
             role.dateExpires
@@ -168,7 +166,6 @@ meta:
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../components/AppHeading.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
-import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import AppRoundBadge from '../../../../components/AppRoundBadge.vue';
 import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown.vue';
@@ -185,6 +182,7 @@ import AppInfoList from '../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
 import { fetchContent } from '../../../../utils/api/content';
+import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 
 formatLocale;
 
@@ -231,18 +229,10 @@ async function handleSecurityAction() {
   }
 }
 
-const isRoleCurrent = (role: MemberRoleData): boolean => {
+function isRoleCurrent(role: MemberRoleData): boolean {
   const now = new Date();
-  const roleWasAddedInThePast = role.dateAdded < now;
-  const roleHasNoExpiryDate = !role.dateExpires;
-  const roleExpiryDateInTheFuture = role.dateExpires
-    ? role.dateExpires > now
-    : false;
-  return roleWasAddedInThePast &&
-    (roleHasNoExpiryDate || roleExpiryDateInTheFuture)
-    ? true
-    : false;
-};
+  return role.dateAdded < now && (!role.dateExpires || role.dateExpires > now);
+}
 
 onBeforeMount(async () => {
   loading.value = false;

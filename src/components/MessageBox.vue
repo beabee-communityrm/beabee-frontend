@@ -1,29 +1,15 @@
 <template>
-  <div class="flex rounded overflow-hidden" :class="type">
+  <div class="flex overflow-hidden rounded">
     <div
-      class="
-        flex
-        items-center
-        justify-center
-        flex-shrink-0
-        w-12
-        text-white
-        icon-container
-      "
+      class="flex w-12 flex-shrink-0 items-center justify-center text-white"
+      :class="iconClasses[type]"
     >
       <font-awesome-icon :icon="['fas', icon]" />
     </div>
 
     <div
-      class="
-        flex
-        items-center
-        flex-grow
-        p-3
-        text-xs
-        font-semibold
-        content-container
-      "
+      class="flex flex-grow items-center p-3 text-xs font-semibold"
+      :class="contentClasses[type]"
     >
       <slot>{{ t('form.errors.aggregator') }}</slot>
     </div>
@@ -46,30 +32,16 @@ const props = withDefaults(
 const icon = computed(() =>
   props.type === 'success' ? 'check' : 'exclamation'
 );
+
+const iconClasses = {
+  success: 'bg-success-30',
+  warning: 'bg-warning-70',
+  error: 'bg-danger-30',
+};
+
+const contentClasses = {
+  success: 'bg-success-10 text-success',
+  warning: 'bg-warning-10 text-primary-80',
+  error: 'bg-danger-10 text-danger',
+};
 </script>
-
-<style scoped>
-.success .icon-container {
-  @apply bg-success-30;
-}
-
-.success .content-container {
-  @apply bg-success-10 text-success;
-}
-
-.error .icon-container {
-  @apply bg-danger-30;
-}
-
-.error .content-container {
-  @apply bg-danger-10 text-danger;
-}
-
-.warning .icon-container {
-  @apply bg-warning-70;
-}
-
-.warning .content-container {
-  @apply bg-warning-10 text-primary-80;
-}
-</style>

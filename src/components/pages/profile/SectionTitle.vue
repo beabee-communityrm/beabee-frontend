@@ -1,8 +1,8 @@
 <template>
-  <div class="flex h-8 items-center mb-6 md:hidden">
+  <div class="mb-6 flex h-8 items-center md:hidden">
     <span class="h-px flex-grow bg-primary-20" />
     <h2
-      class="text-sm text-primary-40 font-semibold uppercase text-center px-3"
+      class="px-3 text-center text-sm font-semibold uppercase text-primary-40"
     >
       <slot />
     </h2>

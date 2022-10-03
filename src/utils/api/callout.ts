@@ -1,26 +1,21 @@
 import { deserializeDate } from '.';
 import axios from '../../axios';
 import {
-  GetBasicCalloutData,
   GetCalloutsQuery,
   Paginated,
-  GetMoreCalloutData,
   Serial,
   GetCalloutResponseData,
   GetCalloutResponsesQuery,
   CreateCalloutResponseData,
   CreateCalloutData,
   UpdateCalloutData,
+  GetCalloutWith,
+  GetCalloutDataWith,
+  GetCalloutData,
 } from './api.interface';
 
-function deserializeCallout<
-  S extends Serial<any>,
-  T extends S extends Serial<infer U>
-    ? U extends GetBasicCalloutData
-      ? U
-      : never
-    : never
->(callout: S): T {
+// TODO: how to make this type safe?
+function deserializeCallout(callout: any): any {
   return {
     ...callout,
     starts: deserializeDate(callout.starts),
@@ -29,11 +24,19 @@ function deserializeCallout<
 }
 
 export async function fetchCallouts(
-  query?: GetCalloutsQuery
-): Promise<Paginated<GetBasicCalloutData>> {
-  const { data } = await axios.get<Paginated<Serial<GetBasicCalloutData>>>(
+  query: GetCalloutsQuery
+): Promise<Paginated<GetCalloutData>>;
+export async function fetchCallouts<With extends GetCalloutWith>(
+  query: GetCalloutsQuery,
+  _with: readonly With[]
+): Promise<Paginated<GetCalloutDataWith<With>>>;
+export async function fetchCallouts<With extends GetCalloutWith>(
+  query?: GetCalloutsQuery,
+  _with?: readonly With[]
+): Promise<Paginated<GetCalloutDataWith<With>>> {
+  const { data } = await axios.get<Paginated<Serial<GetCalloutDataWith<With>>>>(
     '/callout',
-    { params: query }
+    { params: { with: _with, ...query } }
   );
   return {
     ...data,
@@ -41,17 +44,26 @@ export async function fetchCallouts(
   };
 }
 
-export async function fetchCallout(id: string): Promise<GetMoreCalloutData> {
-  const { data } = await axios.get<Serial<GetMoreCalloutData>>(
-    '/callout/' + id
+export async function fetchCallout(id: string): Promise<GetCalloutData>;
+export async function fetchCallout<With extends GetCalloutWith>(
+  id: string,
+  _with: readonly With[]
+): Promise<GetCalloutDataWith<With>>;
+export async function fetchCallout<With extends GetCalloutWith>(
+  id: string,
+  _with?: readonly With[]
+): Promise<GetCalloutDataWith<With>> {
+  const { data } = await axios.get<Serial<GetCalloutDataWith<With>>>(
+    '/callout/' + id,
+    { params: { with: _with } }
   );
   return deserializeCallout(data);
 }
 
 export async function createCallout(
   calloutData: CreateCalloutData
-): Promise<GetBasicCalloutData> {
-  const { data } = await axios.post<Serial<GetBasicCalloutData>>(
+): Promise<GetCalloutData> {
+  const { data } = await axios.post<Serial<GetCalloutData>>(
     '/callout',
     // TODO: passing calloutData directly is not safe, it could contain extra properties
     calloutData
@@ -62,8 +74,8 @@ export async function createCallout(
 export async function updateCallout(
   slug: string,
   calloutData: UpdateCalloutData
-): Promise<GetMoreCalloutData> {
-  const { data } = await axios.patch<Serial<GetMoreCalloutData>>(
+): Promise<GetCalloutData> {
+  const { data } = await axios.patch<Serial<GetCalloutData>>(
     '/callout/' + slug,
     calloutData
   );
