@@ -11,36 +11,7 @@ meta:
     <div class="mb-6 flex items-center justify-between">
       <div class="flex items-center text-sm font-semibold text-body-60">
         <div>
-          <div class="flex flex-col">
-            <AppItemStatus :status="callout.status" />
-            <span
-              v-if="callout.status === ItemStatus.Scheduled && callout.starts"
-            >
-              {{
-                t('callout.status.startsIn', {
-                  duration: formatDistanceLocale(callout.starts, new Date()),
-                })
-              }}
-            </span>
-            <span
-              v-else-if="callout.status === ItemStatus.Open && callout.expires"
-            >
-              {{
-                t('callout.status.endsIn', {
-                  duration: formatDistanceLocale(callout.expires, new Date()),
-                })
-              }}
-            </span>
-            <span
-              v-else-if="callout.status === ItemStatus.Ended && callout.expires"
-            >
-              {{
-                t('callout.status.endedOn', {
-                  date: formatLocale(callout.expires, 'P'),
-                })
-              }}
-            </span>
-          </div>
+          <CalloutStatus :callout="callout" />
         </div>
         <div v-if="hasResponded" class="border-body-40 ml-3 w-32 border-l pl-3">
           {{ t('callout.youResponded') }}
@@ -159,6 +130,7 @@ import SharingPanel from '../../components/pages/callouts/CalloutSharingPanel.vu
 import axios from '../../axios';
 
 import 'formiojs/dist/formio.form.css';
+import CalloutStatus from '../../components/callout/CalloutStatus.vue';
 
 type FormSubmission = { data: CalloutResponseAnswers };
 
