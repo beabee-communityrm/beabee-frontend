@@ -36,7 +36,7 @@
         class="flex h-11 items-center bg-primary-10 px-5 text-primary-80 group-hover:bg-primary-20 group-hover:text-primary"
       >
         <span class="mary-80 ml-auto font-semibold">{{
-          t('common.participate')
+          t('actions.participate')
         }}</span>
       </div>
     </router-link>

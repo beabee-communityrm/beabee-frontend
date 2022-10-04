@@ -1,5 +1,7 @@
 {
-  "actions": {},
+  "actions": {
+    "participate": "Участвовать"
+  },
   "adminDashboard": {
     "hint1": "",
     "hint2": "",
@@ -114,7 +116,6 @@
     "monthly": "ежемесячно",
     "new": "Новый/Новое/Новая",
     "no": "Нет",
-    "participate": "Участвовать",
     "role": {
       "admin": "Администратор",
       "member": "Учасник",

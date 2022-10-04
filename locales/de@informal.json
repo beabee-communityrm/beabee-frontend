@@ -5,6 +5,7 @@
     "continue": "Weiter",
     "delete": "Löschen",
     "edit": "Bearbeiten",
+    "participate": "Teilnehmen",
     "publish": "Veröffentlichen",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
@@ -214,7 +215,6 @@
     "monthly": "Monatlich",
     "new": "neu!",
     "no": "Nein",
-    "participate": "Teilnehmen",
     "role": {
       "admin": "Admin",
       "member": "Mitglied",
