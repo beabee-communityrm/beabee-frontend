@@ -130,18 +130,24 @@ meta:
               ? formatLocale(role.dateExpires, 'P')
               : t('contacts.data.rolesCopy.today')
           }}
-          <AppButton variant="text" class="ml-2" @click="openEditRoleForm(role)">Edit</AppButton>
+          <AppButton variant="text" class="ml-2" @click="openEditRoleForm(role)"
+            >Edit</AppButton
+          >
         </AppInfoListItem>
       </AppInfoList>
 
       <div class="mt-4">
-        <AppButton variant="primaryOutlined" @click="isNewRoleFormVisible = true">Add role</AppButton>
+        <AppButton
+          variant="primaryOutlined"
+          @click="isNewRoleFormVisible = true"
+          >Add role</AppButton
+        >
       </div>
     </div>
 
     <div
       v-if="isNewRoleFormVisible"
-      class="flex justify-center border border-primary-20 flex-1 rounded py-4 px-10"
+      class="flex flex-1 justify-center rounded border border-primary-20 py-4 px-10"
     >
       <form @submit.prevent="handleNewRoleFormSubmit" class="flex-initial">
         <div class="my-3 py-3">
@@ -199,20 +205,26 @@ meta:
           </div>
         </div>
 
-        <div class="flex my-3 py-3">
-          <AppButton type="submit" variant="primary" :loading="newRoleFormLoading"
+        <div class="my-3 flex py-3">
+          <AppButton
+            type="submit"
+            variant="primary"
+            :loading="newRoleFormLoading"
             >Add role</AppButton
           >
-          <AppButton variant="text" class="ml-2" @click="isNewRoleFormVisible = false">{{
-            t('form.cancel')
-          }}</AppButton>
+          <AppButton
+            variant="text"
+            class="ml-2"
+            @click="isNewRoleFormVisible = false"
+            >{{ t('form.cancel') }}</AppButton
+          >
         </div>
       </form>
     </div>
 
     <div
       v-if="isEditRoleFormVisible"
-      class="flex justify-center border border-primary-20 flex-1 rounded py-4 px-10"
+      class="flex flex-1 justify-center rounded border border-primary-20 py-4 px-10"
     >
       <form @submit.prevent="handleEditRoleFormSubmit" class="flex-initial">
         <!--
@@ -243,7 +255,11 @@ meta:
           <div class="my-3 py-3">
             <div class="flex gap-2">
               <div>
-                <AppDateInput v-model="editRole.dateExpires" type="date" required />
+                <AppDateInput
+                  v-model="editRole.dateExpires"
+                  type="date"
+                  required
+                />
               </div>
               <!--
               <div>
@@ -253,22 +269,25 @@ meta:
           </div>
         </div>
 
-        <div class="flex my-3 py-3">
-          <AppButton type="submit" variant="primary" :loading="editRoleFormLoading"
+        <div class="my-3 flex py-3">
+          <AppButton
+            type="submit"
+            variant="primary"
+            :loading="editRoleFormLoading"
             >Save role</AppButton
           >
-          <AppButton variant="text" class="ml-2" @click="isEditRoleFormVisible = false">{{
-            t('form.cancel')
-          }}</AppButton>
+          <AppButton
+            variant="text"
+            class="ml-2"
+            @click="isEditRoleFormVisible = false"
+            >{{ t('form.cancel') }}</AppButton
+          >
           <AppButton variant="danger" class="ml-2" @click="handleDeleteRole">
             Delete role
           </AppButton>
         </div>
       </form>
     </div>
-
-
-
 
     <div class="hidden">
       <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
@@ -319,7 +338,13 @@ import {
   GetMemberDataWith,
   MemberRoleData,
 } from '../../../../utils/api/api.interface';
-import { fetchMember, updateMember, addMemberRole, updateRole, deleteRole } from '../../../../utils/api/member';
+import {
+  fetchMember,
+  updateMember,
+  addMemberRole,
+  updateRole,
+  deleteRole,
+} from '../../../../utils/api/member';
 import AppInfoList from '../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
@@ -401,7 +426,7 @@ async function handleNewRoleFormSubmit() {
   try {
     await updateRole(props.contact.id, newRole.role, {
       dateAdded: newRole.dateAdded,
-      dateExpires: newRole.dateExpires
+      dateExpires: newRole.dateExpires,
     });
   } finally {
     newRoleFormLoading.value = false;
@@ -414,7 +439,7 @@ async function handleEditRoleFormSubmit() {
   try {
     await updateRole(props.contact.id, editRole.role, {
       dateAdded: editRole.dateAdded,
-      dateExpires: editRole.dateExpires
+      dateExpires: editRole.dateExpires,
     });
   } finally {
     editRoleFormLoading.value = false;
@@ -437,7 +462,6 @@ async function handleDeleteRole(role) {
     isEditRoleFormVisible.value = false;
   }
 }
-
 
 async function handleSecurityAction() {
   securityButtonsDisabled.value = true;

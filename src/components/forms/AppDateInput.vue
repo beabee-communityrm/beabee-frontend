@@ -3,7 +3,7 @@
     v-model="dateText"
     type="date"
     required
-    @change='modelValue = new Date($event.target.value)'
+    @change="modelValue = new Date($event.target.value)"
   />
 </template>
 
@@ -20,7 +20,6 @@ const props = defineProps<{
 
 const validation = useVuelidate();
 const dateText = ref(props.modelValue);
-
 
 watch(
   dateText,
