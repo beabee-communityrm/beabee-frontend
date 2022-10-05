@@ -130,7 +130,7 @@ meta:
               ? formatLocale(role.dateExpires, 'P')
               : t('contacts.data.rolesCopy.today')
           }}
-          <AppButton variant="text" class="ml-2">Edit</AppButton>
+          <AppButton variant="text" class="ml-2" @click="openEditRoleForm(role)">Edit</AppButton>
         </AppInfoListItem>
       </AppInfoList>
 
@@ -143,7 +143,7 @@ meta:
       v-if="isNewRoleFormVisible"
       class="flex justify-center border border-primary-20 flex-1 rounded py-4 px-10"
     >
-      <form @submit.prevent="handleRoleFormSubmit" class="flex-initial">
+      <form @submit.prevent="handleNewRoleFormSubmit" class="flex-initial">
         <div class="my-3 py-3">
           <AppSelect
             v-model="newRole.role"
@@ -200,7 +200,7 @@ meta:
         </div>
 
         <div class="flex my-3 py-3">
-          <AppButton type="submit" variant="primary" :loading="roleFormLoading"
+          <AppButton type="submit" variant="primary" :loading="newRoleFormLoading"
             >Add role</AppButton
           >
           <AppButton variant="text" class="ml-2" @click="isNewRoleFormVisible = false">{{
@@ -209,6 +209,66 @@ meta:
         </div>
       </form>
     </div>
+
+    <div
+      v-if="isEditRoleFormVisible"
+      class="flex justify-center border border-primary-20 flex-1 rounded py-4 px-10"
+    >
+      <form @submit.prevent="handleEditRoleFormSubmit" class="flex-initial">
+        <!--
+        <div class="my-3 py-3">
+          <AppSelect
+            v-model="editRole.role"
+            label="Role"
+            :items="roleOptions"
+          />
+        </div>
+      -->
+
+        <div>
+          <div class="my-3 py-3">
+            <AppLabel :label="inputT('starts.label')" required />
+            <div class="flex gap-2">
+              <div>
+                <AppDateInput v-model="editRole.dateAdded" />
+              </div>
+              <!--
+              <div>
+                <AppInput type="time" required />
+              </div>
+              -->
+            </div>
+          </div>
+
+          <div class="my-3 py-3">
+            <div class="flex gap-2">
+              <div>
+                <AppDateInput v-model="editRole.dateExpires" type="date" required />
+              </div>
+              <!--
+              <div>
+                <AppInput v-model="editRole.dateExpires" type="time" required />
+              </div>
+            --></div>
+          </div>
+        </div>
+
+        <div class="flex my-3 py-3">
+          <AppButton type="submit" variant="primary" :loading="editRoleFormLoading"
+            >Save role</AppButton
+          >
+          <AppButton variant="text" class="ml-2" @click="isEditRoleFormVisible = false">{{
+            t('form.cancel')
+          }}</AppButton>
+          <AppButton variant="danger" class="ml-2" @click="handleDeleteRole">
+            Delete role
+          </AppButton>
+        </div>
+      </form>
+    </div>
+
+
+
 
     <div class="hidden">
       <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
@@ -248,6 +308,7 @@ import AppSelect from '../../../../components/forms/AppSelect.vue';
 import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
+import AppDateInput from '../../../../components/forms/AppDateInput.vue';
 import AppRoundBadge from '../../../../components/AppRoundBadge.vue';
 import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown.vue';
 import MessageBox from '../../../../components/MessageBox.vue';
@@ -258,7 +319,7 @@ import {
   GetMemberDataWith,
   MemberRoleData,
 } from '../../../../utils/api/api.interface';
-import { fetchMember, updateMember, addMemberRole } from '../../../../utils/api/member';
+import { fetchMember, updateMember, addMemberRole, updateRole, deleteRole } from '../../../../utils/api/member';
 import AppInfoList from '../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
@@ -277,6 +338,7 @@ const props = defineProps<{
 const newRoleHasStartDate = ref(false);
 const newRoleHasEndDate = ref(false);
 const isNewRoleFormVisible = ref(false);
+const isEditRoleFormVisible = ref(false);
 // FIXME: hardcoded
 const roleOptions = [
   {
@@ -293,7 +355,8 @@ const contact = ref<GetMemberDataWith<
   'profile' | 'contribution' | 'roles'
 > | null>(null);
 const contactTags = ref<string[]>([]);
-const roleFormLoading = ref(false);
+const editRoleFormLoading = ref(false);
+const newRoleFormLoading = ref(false);
 const noteFormLoading = ref(false);
 const hasSetAnnotations = ref(false);
 const securityButtonsDisabled = ref(false);
@@ -303,6 +366,11 @@ const contactAnnotations = reactive({
   tags: [] as string[],
 });
 const newRole = reactive({
+  role: '',
+  dateAdded: '',
+  dateExpires: '',
+});
+const editRole = reactive({
   role: '',
   dateAdded: '',
   dateExpires: '',
@@ -321,18 +389,55 @@ async function handleFormSubmit() {
   }
 }
 
-async function handleRoleFormSubmit() {
-  // TODO: append new role to contact.roles
-  roleFormLoading.value = true;
+async function handleNewRoleFormSubmit() {
+  newRoleFormLoading.value = true;
+  if (!newRole.dateAdded) {
+    newRole.dateAdded = new Date();
+  }
+  if (!newRole.dateExpires) {
+    newRole.dateExpires = new Date();
+    newRole.dateExpires.setFullYear(newRole.dateExpires.getFullYear() + 10);
+  }
   try {
-    await addMemberRole(props.contact.id, {
-      ...newRole },
+    await updateRole(props.contact.id, newRole.role, {
+      dateAdded: newRole.dateAdded,
+      dateExpires: newRole.dateExpires
     });
   } finally {
-    roleFormLoading.value = false;
-    hasSetAnnotations.value = true;
+    newRoleFormLoading.value = false;
+    isNewRoleFormVisible.value = false;
   }
 }
+
+async function handleEditRoleFormSubmit() {
+  editRoleFormLoading.value = true;
+  try {
+    await updateRole(props.contact.id, editRole.role, {
+      dateAdded: editRole.dateAdded,
+      dateExpires: editRole.dateExpires
+    });
+  } finally {
+    editRoleFormLoading.value = false;
+    isEditRoleFormVisible.value = false;
+  }
+}
+
+async function openEditRoleForm(role) {
+  editRole.role = role.role;
+  editRole.dateAdded = role.dateAdded;
+  editRole.dateExpires = role.dateExpires;
+  isEditRoleFormVisible.value = true;
+}
+
+async function handleDeleteRole(role) {
+  try {
+    await deleteRole(props.contact.id, editRole.role);
+  } finally {
+    editRoleFormLoading.value = false;
+    isEditRoleFormVisible.value = false;
+  }
+}
+
 
 async function handleSecurityAction() {
   securityButtonsDisabled.value = true;
@@ -352,7 +457,8 @@ function isRoleCurrent(role: MemberRoleData): boolean {
 
 onBeforeMount(async () => {
   noteFormLoading.value = false;
-  roleFormLoading.value = false;
+  newRoleFormLoading.value = false;
+  editRoleFormLoading.value = false;
   securityButtonsDisabled.value = false;
 
   contact.value = await fetchMember(props.contact.id, [

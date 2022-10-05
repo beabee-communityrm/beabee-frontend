@@ -57,16 +57,6 @@ function deserializeContribution(
   };
 }
 
-function deserializeRole(
-  data: Serial<MemberRoleData>
-): MemberRoleData {
-  return {
-    ...data,
-    dateAdded: deserializeDate(role.dateAdded),
-    dateExpires: deserializeDate(role.dateExpires),
-  };
-}
-
 export async function fetchMembers(
   query: GetMembersQuery
 ): Promise<Paginated<GetMemberData>>;
