@@ -1,11 +1,17 @@
 <template>
-  <div v-for="(arg, i) in filter.operator.args" :key="i">
+  <div v-for="(arg, i) in args" :key="i">
     <AppInput v-model="filter.values[i]" :type="arg.type" required />
   </div>
 </template>
 <script lang="ts" setup>
-import { Filter } from './contacts.interface';
+import { Filter, filters, operators } from './contacts.interface';
 import AppInput from '../../../forms/AppInput.vue';
+import { computed } from '@vue/reactivity';
 
-defineProps<{ filter: Filter }>();
+const props = defineProps<{ filter: Filter }>();
+
+const args = computed(
+  () =>
+    operators[filters[props.filter.id].type][props.filter.operator]?.args || []
+);
 </script>

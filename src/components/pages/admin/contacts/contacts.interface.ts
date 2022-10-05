@@ -1,4 +1,24 @@
-export const operators = {
+export type FilterValue = string | number;
+
+export type FilterType = 'text' | 'date';
+
+export type FilterOperatorId =
+  | 'equal'
+  | 'contains'
+  | 'begins_with'
+  | 'ends_with'
+  | 'between'
+  | 'less'
+  | 'greater';
+
+export interface FilterOperatorParams {
+  args: { type: 'text' | 'date' }[];
+}
+
+export const operators: Record<
+  FilterType,
+  Partial<Record<FilterOperatorId, FilterOperatorParams>>
+> = {
   text: {
     equal: { args: [{ type: 'text' }] },
     contains: { args: [{ type: 'text' }] },
@@ -11,7 +31,7 @@ export const operators = {
     less: { args: [{ type: 'date' }] },
     greater: { args: [{ type: 'date' }] },
   },
-} as const;
+};
 
 export const filters = {
   firstname: {
@@ -30,35 +50,23 @@ export const filters = {
 
 type FilterId = keyof typeof filters;
 
-export type FilterValue = string | number;
-
-export interface FilterOperator {
-  args: { type: 'date' | 'text' }[];
+export interface EmptyFilter {
+  id: '';
+  operator: '';
+  values: [];
 }
 
-type FilterOperators<Id extends FilterId> =
-  typeof operators[typeof filters[Id]['type']];
-type FilterOperatorId<Id extends FilterId> = keyof FilterOperators<Id>;
+export interface Filter {
+  id: FilterId;
+  operator: FilterOperatorId;
+  values: FilterValue[];
+}
+export function emptyFilter(): EmptyFilter {
+  return { id: '', operator: '', values: [] };
+}
 
-export class Filter<Id extends FilterId = FilterId> {
-  id: Id;
-  operatorId: FilterOperatorId<Id>;
-  values: FilterValue[] = [];
-
-  constructor(id: Id) {
-    this.id = id;
-    this.operatorId = this.initialOperatorId;
-  }
-
-  get operator(): FilterOperator {
-    return this.operators[this.operatorId] as FilterOperator;
-  }
-
-  get operators(): FilterOperators<Id> {
-    return operators[filters[this.id].type] as FilterOperators<Id>;
-  }
-
-  get initialOperatorId(): FilterOperatorId<Id> {
-    return Object.keys(this.operators)[0] as FilterOperatorId<Id>;
-  }
+export function getOperators(
+  filter: Filter
+): Partial<Record<FilterOperatorId, FilterOperatorParams>> {
+  return operators[filters[filter.id].type];
 }

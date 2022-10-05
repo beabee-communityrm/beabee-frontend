@@ -1,7 +1,5 @@
 <template>
-  <li
-    class="group relative -mx-4 flex items-start gap-2 border-b border-primary-40 bg-primary-10 px-4 py-6 first:border-t"
-  >
+  <div class="flex items-start gap-2">
     <button
       @click="emit('remove')"
       class="my-[1px] -ml-2 p-2 leading-tight text-primary-80 hover:text-primary"
@@ -9,32 +7,33 @@
     >
       <font-awesome-icon :icon="['fa', 'times']" />
     </button>
-    <AppSelect v-model="filterId" :items="filterItems" required />
-    <template v-if="modelValue?.id">
+    <AppSelect v-model="filter.id" :items="filterItems" required />
+    <template v-if="filter.id">
       <AppSelect
-        v-if="modelValue.id"
-        v-model="modelValue.operatorId"
+        v-model="filter.operator"
         :items="fieldOperatorItems"
+        required
       />
-      <SearchBoxFilterArgs :filter="modelValue" />
+      <SearchBoxFilterArgs :filter="filter" />
     </template>
-    <span
-      class="absolute bottom-full left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded bg-primary-70 px-2 py-1 font-bold uppercase text-white group-first:hidden"
-      >{{ matchWord }}</span
-    >
-  </li>
+  </div>
 </template>
 <script lang="ts" setup>
-import { computed, watch } from 'vue';
+import { computed, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppSelect from '../../../forms/AppSelect.vue';
-import { Filter, filters, operators } from './contacts.interface';
+import {
+  EmptyFilter,
+  Filter,
+  filters,
+  getOperators,
+  operators,
+} from './contacts.interface';
 import SearchBoxFilterArgs from './SearchBoxFilterArgs.vue';
 
-const emit = defineEmits(['update:modelValue', 'remove']);
+const emit = defineEmits(['change', 'remove']);
 const props = defineProps<{
-  modelValue: Filter | null;
-  matchWord: string;
+  filter: Filter | EmptyFilter;
 }>();
 
 const { t } = useI18n();
@@ -60,24 +59,32 @@ const typeOperatorItems = Object.fromEntries(
   ])
 );
 
-const fieldOperatorItems = computed(() =>
-  props.modelValue?.id
-    ? typeOperatorItems[filters[props.modelValue.id].type]
-    : []
+const activeFilter = computed(
+  () => props.filter.id && filters[props.filter.id]
 );
 
-const filterId = computed({
-  get: () => props.modelValue?.id || '',
-  set: (id) => emit('update:modelValue', id ? new Filter(id) : null),
-});
+const fieldOperatorItems = computed(() =>
+  activeFilter.value ? typeOperatorItems[activeFilter.value.type] : []
+);
 
 watch(
-  () => props.modelValue?.operatorId,
-  () => {
-    if (props.modelValue?.id) {
-      props.modelValue.values = new Array(
-        props.modelValue.operator.args.length
-      ).fill(undefined);
+  () => props.filter.id,
+  (id) => {
+    props.filter.operator = id ? 'equal' : '';
+    props.filter.values = [];
+  }
+);
+
+watch(
+  () => props.filter.operator,
+  (operator, oldOperator) => {
+    if (props.filter.id) {
+      const operators = getOperators(props.filter);
+      const newArgs = (operator && operators[operator]?.args.length) || 0;
+      const oldArgs = (oldOperator && operators[oldOperator]?.args.length) || 0;
+      if (newArgs !== oldArgs) {
+        props.filter.values = new Array(newArgs);
+      }
     }
   }
 );

@@ -29,20 +29,21 @@ type GetPaginatedQueryRuleOperator =
   | 'contains'
   | 'begins_with'
   | 'ends_with'
+  | 'between'
   | 'less'
   | 'greater';
 
-interface GetPaginatedQueryRuleGroup<T> {
-  condition: 'AND' | 'OR';
-  rules: (GetPaginatedQueryRuleGroup<T> | GetPaginatedQueryRule<T>)[];
-}
-
 type GetPaginatedQueryRuleValue = string | number | boolean;
 
-interface GetPaginatedQueryRule<T> {
+export interface GetPaginatedQueryRule<T> {
   field: T;
   operator: GetPaginatedQueryRuleOperator;
   value: GetPaginatedQueryRuleValue | GetPaginatedQueryRuleValue[];
+}
+
+export interface GetPaginatedQueryRuleGroup<T> {
+  condition: 'AND' | 'OR';
+  rules: (GetPaginatedQueryRuleGroup<T> | GetPaginatedQueryRule<T>)[];
 }
 
 export interface GetPaginatedQuery<T> {
@@ -122,17 +123,16 @@ export type GetMemberDataWith<With extends GetMemberWith> = GetMemberData &
   ('contribution' extends With ? { contribution: ContributionInfo } : Noop) &
   ('roles' extends With ? { roles: MemberRoleData[] } : Noop);
 
-export type GetMembersQuery = GetPaginatedQuery<
+export type GetMembersQueryFields =
   | 'firstname'
   | 'lastname'
   | 'email'
-  | 'joined'
-  | 'lastSeen'
-  | 'contributionType'
-  | 'contributionMonthlyAmount'
-  | 'contributionPeriod'
-  | 'deliveryOptIn'
->;
+  | 'joined';
+// | 'contributionType'
+// | 'contributionMonthlyAmount'
+// | 'contributionPeriod'
+// | 'deliveryOptIn';
+export type GetMembersQuery = GetPaginatedQuery<GetMembersQueryFields>;
 
 export type UpdateMemberProfileData = Partial<MemberProfileData>;
 

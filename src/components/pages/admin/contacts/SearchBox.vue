@@ -4,7 +4,7 @@
     <AppSearchInput v-model="searchText" :placeholder="t('contacts.search')" />
     <button
       class="ml-2 flex items-center rounded border border-primary-40 px-3 text-sm font-semibold"
-      @click="showAdvancedSearch = !showAdvancedSearch"
+      @click="toggleAdvancedSearch"
       :class="
         showAdvancedSearch &&
         'relative rounded-b-none border border-b-primary/0'
@@ -24,7 +24,7 @@
   <form
     v-if="showAdvancedSearch"
     class="mt-2 mb-8 border border-primary-40 p-4"
-    @submit.prevent="handleSearch"
+    @submit.prevent="handleAdvancedSearch"
   >
     <p class="mb-3">
       <b>{{ t('advancedSearch.createFilters') }}</b>
@@ -44,13 +44,17 @@
 
     <div class="relative mb-8">
       <ul class="mb-3 text-sm">
-        <SearchBoxFilter
+        <li
           v-for="(filter, i) in filters"
           :key="i"
-          v-model="filters[i]"
-          :match-word="matchWord"
-          @remove="removeFilter(i)"
-        />
+          class="group relative -mx-4 gap-2 border-b border-primary-40 bg-primary-10 px-4 py-6 first:border-t"
+        >
+          <SearchBoxFilter :filter="filter" @remove="removeFilter(i)" />
+          <span
+            class="absolute bottom-full left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded bg-primary-70 px-2 py-1 font-bold uppercase text-white group-first:hidden"
+            >{{ matchWord }}</span
+          >
+        </li>
       </ul>
       <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
         <AppButton
@@ -66,7 +70,7 @@
 
     <div class="flex gap-2">
       <div class="flex-1">
-        <AppButton variant="text" @click="showAdvancedSearch = false">
+        <AppButton variant="text" @click="toggleAdvancedSearch">
           {{ t('actions.cancel') }}
         </AppButton>
       </div>
@@ -83,13 +87,17 @@
 
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { computed, reactive, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { GetMembersQuery } from '../../../../utils/api/api.interface';
+import {
+  GetMembersQuery,
+  GetMembersQueryFields,
+  GetPaginatedQueryRule,
+} from '../../../../utils/api/api.interface';
 import AppButton from '../../../forms/AppButton.vue';
 import AppSearchInput from '../../../forms/AppSearchInput.vue';
 import AppSelect from '../../../forms/AppSelect.vue';
-import { Filter } from './contacts.interface';
+import { emptyFilter, EmptyFilter, Filter } from './contacts.interface';
 import SearchBoxFilter from './SearchBoxFilter.vue';
 
 const emit = defineEmits(['update:search', 'update:rules']);
@@ -105,36 +113,58 @@ const searchText = computed({
   get: () => props.search,
   set: (text) => emit('update:search', text),
 });
-const showAdvancedSearch = ref(true);
+const showAdvancedSearch = ref(false);
 
 const matchType = ref<'all' | 'any'>('all');
 const matchWord = computed(() => (matchType.value === 'all' ? 'AND' : 'OR'));
 
-const filters = reactive<(null | Filter)[]>([null]);
+const filters = ref<(EmptyFilter | Filter)[]>([]);
 
 function removeFilter(i: number) {
-  if (i === 0 && filters.length === 1) {
-    filters[0] = null;
-  } else {
-    filters.splice(i, 1);
+  filters.value.splice(i, 1);
+  if (filters.value.length === 0) {
+    addFilter();
   }
 }
 
 function addFilter() {
-  filters.push(null);
+  filters.value.push(emptyFilter());
 }
 
-function handleSearch() {
-  console.log('here');
+function toggleAdvancedSearch() {
+  if (props.rules) {
+    matchType.value = props.rules.condition === 'AND' ? 'all' : 'any';
+
+    // TODO: how to handle groups?
+    const rulesWithoutGroups = props.rules.rules.filter(
+      (rule) => 'operator' in rule
+    ) as GetPaginatedQueryRule<GetMembersQueryFields>[];
+
+    filters.value = rulesWithoutGroups.map(
+      (rule) =>
+        ({
+          id: rule.field,
+          operator: rule.operator,
+          values: Array.isArray(rule.value) ? rule.value : [rule.value],
+        } as Filter)
+    );
+  } else {
+    matchType.value = 'all';
+    filters.value = [emptyFilter()];
+  }
+
+  showAdvancedSearch.value = !showAdvancedSearch.value;
+}
+
+function handleAdvancedSearch() {
   const rules: GetMembersQuery['rules'] = {
     condition: matchType.value === 'all' ? 'AND' : 'OR',
-    rules: (filters as Filter[]).map((filter) => ({
+    rules: (filters.value as Filter[]).map((filter) => ({
       field: filter.id,
-      operator: filter.operatorId,
+      operator: filter.operator,
       value: filter.values,
     })),
   };
-  console.log(rules);
   emit('update:rules', rules);
 }
 </script>
