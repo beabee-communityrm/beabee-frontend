@@ -116,7 +116,10 @@ meta:
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
-import { GetCalloutDataWith } from '../../../../../utils/api/api.interface';
+import {
+  GetCalloutDataWith,
+  ItemStatus,
+} from '../../../../../utils/api/api.interface';
 import { deleteCallout } from '../../../../../utils/api/callout';
 import AppHeading from '../../../../../components/AppHeading.vue';
 import AppInfoList from '../../../../../components/AppInfoList.vue';
