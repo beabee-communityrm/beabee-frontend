@@ -48,7 +48,7 @@ export const filters = {
   },
 } as const;
 
-type FilterId = keyof typeof filters;
+export type FilterId = keyof typeof filters;
 
 export interface EmptyFilter {
   id: '';

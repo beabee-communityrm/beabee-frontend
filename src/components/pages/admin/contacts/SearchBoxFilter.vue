@@ -7,24 +7,32 @@
     >
       <font-awesome-icon :icon="['fa', 'times']" />
     </button>
-    <AppSelect v-model="filter.id" :items="filterItems" required />
+    <AppSelect
+      :model-value="filter.id"
+      :items="filterItems"
+      required
+      @update:model-value="changeFilter"
+    />
     <template v-if="filter.id">
       <AppSelect
-        v-model="filter.operator"
+        :model-value="filter.operator"
         :items="fieldOperatorItems"
         required
+        @update:model-value="changeOperator"
       />
       <SearchBoxFilterArgs :filter="filter" />
     </template>
   </div>
 </template>
 <script lang="ts" setup>
-import { computed, toRef, watch } from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppSelect from '../../../forms/AppSelect.vue';
 import {
   EmptyFilter,
   Filter,
+  FilterId,
+  FilterOperatorId,
   filters,
   getOperators,
   operators,
@@ -67,25 +75,23 @@ const fieldOperatorItems = computed(() =>
   activeFilter.value ? typeOperatorItems[activeFilter.value.type] : []
 );
 
-watch(
-  () => props.filter.id,
-  (id) => {
-    props.filter.operator = id ? 'equal' : '';
-    props.filter.values = [];
-  }
-);
+function changeFilter(id: FilterId) {
+  props.filter.id = id;
+  props.filter.operator = 'equal';
+  props.filter.values = [];
+}
 
-watch(
-  () => props.filter.operator,
-  (operator, oldOperator) => {
-    if (props.filter.id) {
-      const operators = getOperators(props.filter);
-      const newArgs = (operator && operators[operator]?.args.length) || 0;
-      const oldArgs = (oldOperator && operators[oldOperator]?.args.length) || 0;
-      if (newArgs !== oldArgs) {
-        props.filter.values = new Array(newArgs);
-      }
+function changeOperator(operator: FilterOperatorId) {
+  if (props.filter.id) {
+    const oldOperator = props.filter.operator;
+    const operators = getOperators(props.filter);
+    const newArgs = (operator && operators[operator]?.args.length) || 0;
+    const oldArgs = (oldOperator && operators[oldOperator]?.args.length) || 0;
+
+    props.filter.operator = operator;
+    if (newArgs !== oldArgs) {
+      props.filter.values = new Array(newArgs);
     }
   }
-);
+}
 </script>

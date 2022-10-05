@@ -52,7 +52,7 @@
           <SearchBoxFilter :filter="filter" @remove="removeFilter(i)" />
           <span
             class="absolute bottom-full left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded bg-primary-70 px-2 py-1 font-bold uppercase text-white group-first:hidden"
-            >{{ matchWord }}</span
+            >{{ t('advancedSearch.matchWord.' + matchType) }}</span
           >
         </li>
       </ul>
@@ -82,12 +82,26 @@
       </AppButton>
     </div>
   </form>
-  <div v-else>Summarise search</div>
+  <ul
+    v-else-if="currentFilters"
+    class="my-2 flex flex-wrap items-center gap-2 text-sm text-body-80"
+  >
+    <template v-for="(filter, i) in currentFilters" :key="i">
+      <li class="rounded-full border border-primary-70 px-2 py-1">
+        <b>{{ t('contacts.filters.' + filter.id) }}</b>
+        {{ t('advancedSearch.operators.' + filter.operator) }}
+        <b>{{ filter.values }}</b>
+      </li>
+      <li class="font-bold uppercase last:hidden">
+        {{ t('advancedSearch.matchWord.' + currentMatchType) }}
+      </li>
+    </template>
+  </ul>
 </template>
 
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import {
   GetMembersQuery,
@@ -113,11 +127,31 @@ const searchText = computed({
   get: () => props.search,
   set: (text) => emit('update:search', text),
 });
+
 const showAdvancedSearch = ref(false);
 
-const matchType = ref<'all' | 'any'>('all');
-const matchWord = computed(() => (matchType.value === 'all' ? 'AND' : 'OR'));
+const currentMatchType = computed(() =>
+  props.rules?.condition === 'OR' ? 'any' : 'all'
+);
+const currentFilters = computed(() => {
+  if (props.rules) {
+    // TODO: how to handle groups?
+    const rulesWithoutGroups = props.rules.rules.filter(
+      (rule) => 'operator' in rule
+    ) as GetPaginatedQueryRule<GetMembersQueryFields>[];
 
+    return rulesWithoutGroups.map(
+      (rule) =>
+        ({
+          id: rule.field,
+          operator: rule.operator,
+          values: Array.isArray(rule.value) ? rule.value : [rule.value],
+        } as Filter)
+    );
+  }
+});
+
+const matchType = ref<'all' | 'any'>('all');
 const filters = ref<(EmptyFilter | Filter)[]>([]);
 
 function removeFilter(i: number) {
@@ -131,28 +165,15 @@ function addFilter() {
   filters.value.push(emptyFilter());
 }
 
+function reset() {
+  matchType.value = currentMatchType.value;
+  filters.value = currentFilters.value || [emptyFilter()];
+}
+
+watch(() => props.rules, reset);
+
 function toggleAdvancedSearch() {
-  if (props.rules) {
-    matchType.value = props.rules.condition === 'AND' ? 'all' : 'any';
-
-    // TODO: how to handle groups?
-    const rulesWithoutGroups = props.rules.rules.filter(
-      (rule) => 'operator' in rule
-    ) as GetPaginatedQueryRule<GetMembersQueryFields>[];
-
-    filters.value = rulesWithoutGroups.map(
-      (rule) =>
-        ({
-          id: rule.field,
-          operator: rule.operator,
-          values: Array.isArray(rule.value) ? rule.value : [rule.value],
-        } as Filter)
-    );
-  } else {
-    matchType.value = 'all';
-    filters.value = [emptyFilter()];
-  }
-
+  reset();
   showAdvancedSearch.value = !showAdvancedSearch.value;
 }
 
