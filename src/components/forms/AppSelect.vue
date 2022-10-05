@@ -3,7 +3,7 @@
     <AppLabel v-if="label" :label="label" :required="required" />
     <select
       v-model="value"
-      class="w-full rounded border border-primary-40 bg-white p-2 focus:shadow-input focus:outline-none"
+      class="w-full rounded border border-primary-40 bg-white p-2 leading-tight focus:shadow-input focus:outline-none"
       :class="inputClass"
       :required="required"
     >
