@@ -38,6 +38,11 @@
       "presetColors": {}
     }
   },
+  "advancedSearch": {
+    "matchType": {},
+    "matchWord": {},
+    "operators": {}
+  },
   "callout": {
     "contactDetails": "Контактная информация",
     "form": {
@@ -181,6 +186,10 @@
         "today": "сегодня"
       },
       "tags": "Теги"
+    },
+    "filters": {
+      "email": "Почтовый ящик",
+      "joined": "Участник с"
     },
     "noContacts": "",
     "noResults": "Контактов не найдено",

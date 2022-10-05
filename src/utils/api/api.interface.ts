@@ -24,17 +24,25 @@ export type AllowNull<T> = {
 
 export type PermissionType = 'member' | 'admin' | 'superadmin';
 
-type GetPaginatedQueryRuleOperator = 'equal' | 'contains';
+type GetPaginatedQueryRuleOperator =
+  | 'equal'
+  | 'contains'
+  | 'begins_with'
+  | 'ends_with'
+  | 'less'
+  | 'greater';
 
 interface GetPaginatedQueryRuleGroup<T> {
   condition: 'AND' | 'OR';
   rules: (GetPaginatedQueryRuleGroup<T> | GetPaginatedQueryRule<T>)[];
 }
 
+type GetPaginatedQueryRuleValue = string | number | boolean;
+
 interface GetPaginatedQueryRule<T> {
   field: T;
   operator: GetPaginatedQueryRuleOperator;
-  value: string | number | boolean;
+  value: GetPaginatedQueryRuleValue | GetPaginatedQueryRuleValue[];
 }
 
 export interface GetPaginatedQuery<T> {
@@ -115,7 +123,15 @@ export type GetMemberDataWith<With extends GetMemberWith> = GetMemberData &
   ('roles' extends With ? { roles: MemberRoleData[] } : Noop);
 
 export type GetMembersQuery = GetPaginatedQuery<
-  'firstname' | 'lastname' | 'email'
+  | 'firstname'
+  | 'lastname'
+  | 'email'
+  | 'joined'
+  | 'lastSeen'
+  | 'contributionType'
+  | 'contributionMonthlyAmount'
+  | 'contributionPeriod'
+  | 'deliveryOptIn'
 >;
 
 export type UpdateMemberProfileData = Partial<MemberProfileData>;

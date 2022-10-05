@@ -1,87 +1,82 @@
 <template>
   <li
-    class="group relative -mx-4 flex items-center gap-2 border-b border-primary-40 bg-primary-10 px-4 py-6 first:border-t"
+    class="group relative -mx-4 flex items-start gap-2 border-b border-primary-40 bg-primary-10 px-4 py-6 first:border-t"
   >
     <button
       @click="emit('remove')"
-      class="mr-2 text-primary-80 hover:text-primary"
+      class="my-[1px] -ml-2 p-2 leading-tight text-primary-80 hover:text-primary"
+      type="button"
     >
       <font-awesome-icon :icon="['fa', 'times']" />
     </button>
-    <AppSelect v-model="filter.field" :items="fieldItems" required />
-    <template v-if="filter.field">
+    <AppSelect v-model="filterId" :items="filterItems" required />
+    <template v-if="modelValue?.id">
       <AppSelect
-        v-if="filter.field"
-        v-model="filter.operator"
+        v-if="modelValue.id"
+        v-model="modelValue.operatorId"
         :items="fieldOperatorItems"
       />
-      <SearchBoxFilterArgs
-        :operator="filter.operator"
-        :values="filter.values"
-      />
+      <SearchBoxFilterArgs :filter="modelValue" />
     </template>
     <span
-      class="absolute bottom-full left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded bg-primary-70 px-2 py-1 font-bold text-white group-first:hidden"
+      class="absolute bottom-full left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded bg-primary-70 px-2 py-1 font-bold uppercase text-white group-first:hidden"
       >{{ matchWord }}</span
     >
   </li>
 </template>
 <script lang="ts" setup>
 import { computed, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import AppSelect from '../../../forms/AppSelect.vue';
-import {
-  Filter,
-  fields,
-  typeOperators,
-  EmptyFilter,
-  operators,
-} from './contacts.interface';
+import { Filter, filters, operators } from './contacts.interface';
 import SearchBoxFilterArgs from './SearchBoxFilterArgs.vue';
 
-const emit = defineEmits(['remove']);
+const emit = defineEmits(['update:modelValue', 'remove']);
 const props = defineProps<{
-  filter: Filter | EmptyFilter;
+  modelValue: Filter | null;
   matchWord: string;
 }>();
 
-const fieldItems = [
+const { t } = useI18n();
+
+const filterItems = [
   {
     id: '',
-    label: 'Select a field',
+    label: t('advancedSearch.selectFilter'),
   },
-  ...Object.entries(fields).map(([fieldId, field]) => ({
-    id: fieldId,
-    label: fieldId,
+  ...Object.keys(filters).map((id) => ({
+    id,
+    label: t('contacts.filters.' + id),
   })),
 ];
 
 const typeOperatorItems = Object.fromEntries(
-  Object.entries(typeOperators).map(([type, operators]) => [
+  Object.entries(operators).map(([type, typeOperators]) => [
     type,
-    operators.map((operator) => ({ id: operator, label: operator })),
+    Object.entries(typeOperators).map(([operator]) => ({
+      id: operator,
+      label: t('advancedSearch.operators.' + operator),
+    })),
   ])
 );
 
 const fieldOperatorItems = computed(() =>
-  props.filter.field ? typeOperatorItems[fields[props.filter.field].type] : []
+  props.modelValue?.id
+    ? typeOperatorItems[filters[props.modelValue.id].type]
+    : []
 );
 
-watch(
-  () => props.filter.field,
-  () => {
-    // Use instead of watch cb arg for type narrowing
-    if (props.filter.field) {
-      props.filter.operator = typeOperators[fields[props.filter.field].type][0];
-    }
-  }
-);
+const filterId = computed({
+  get: () => props.modelValue?.id || '',
+  set: (id) => emit('update:modelValue', id ? new Filter(id) : null),
+});
 
 watch(
-  () => props.filter.field && props.filter.operator,
+  () => props.modelValue?.operatorId,
   () => {
-    if (props.filter.field) {
-      props.filter.values = new Array(
-        operators[props.filter.operator].args.length
+    if (props.modelValue?.id) {
+      props.modelValue.values = new Array(
+        props.modelValue.operator.args.length
       ).fill(undefined);
     }
   }

@@ -1,10 +1,13 @@
 {
   "actions": {
     "back": "Back",
+    "cancel": "Cancel",
     "chooseFile": "Choose file",
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
+    "participate": "Participate",
+    "preview": "Preview",
     "publish": "Publish",
     "replicate": "Replicate",
     "reset": "Reset",
@@ -98,6 +101,32 @@
       "titleFont": "Title font"
     },
     "title": "Settings"
+  },
+  "advancedSearch": {
+    "addRule": "Add rule",
+    "createFilters": "Create filters for your search",
+    "matchAfter": "of the following",
+    "matchBefore": "Match",
+    "matchType": {
+      "all": "all",
+      "any": "any"
+    },
+    "matchWord": {
+      "all": "AND",
+      "any": "OR"
+    },
+    "operators": {
+      "begins_with": "begins with",
+      "between": "between",
+      "contains": "contains",
+      "ends_with": "ends with",
+      "equal": "is",
+      "greater": "after",
+      "less": "before"
+    },
+    "saveAsSegment": "Save as segment",
+    "selectFilter": "Select a filter",
+    "showResults": "Show results"
   },
   "callout": {
     "contactDetails": "Contact details",
@@ -283,6 +312,12 @@
         "today": "present"
       },
       "tags": "Tags"
+    },
+    "filters": {
+      "email": "Email",
+      "firstname": "First name",
+      "joined": "Joined",
+      "lastname": "Last name"
     },
     "noContacts": "No contacts added yet",
     "noResults": "No contacts found",

@@ -19,7 +19,7 @@ meta:
       <AppVTabs v-model="currentSegment" :items="segmentItems" />
     </div>
     <div class="flex-auto">
-      <SearchBox v-model="currentSearch" />
+      <SearchBox v-model:search="currentSearch" v-model:rules="currentRules" />
       <AppTable
         v-model:sort="currentSort"
         :headers="headers"
@@ -188,6 +188,12 @@ const currentSearch = computed({
   set: (s) => router.push({ query: { ...route.query, s } }),
 });
 
+const currentRules = computed<GetMembersQuery['rules']>({
+  get: () => (route.query.r ? JSON.parse(route.query.r as string) : undefined),
+  set: (r) =>
+    router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
+});
+
 const currentSegment = computed({
   get: () => (route.query.segment as string) || '',
   set: (segment) => router.push({ query: { segment: segment || undefined } }),
@@ -231,7 +237,7 @@ onBeforeMount(async () => {
 });
 
 watchEffect(async () => {
-  const rules: GetMembersQuery['rules'] = {
+  const searchRules: GetMembersQuery['rules'] = {
     condition: 'OR',
     rules: currentSearch.value.split(' ').flatMap((value) => [
       {
@@ -251,6 +257,13 @@ watchEffect(async () => {
       },
     ]),
   };
+
+  const rules: GetMembersQuery['rules'] = currentRules.value
+    ? {
+        condition: 'AND',
+        rules: [currentRules.value, searchRules],
+      }
+    : searchRules;
 
   const query = {
     offset: currentPage.value * currentPageSize.value,

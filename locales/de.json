@@ -99,6 +99,11 @@
     },
     "title": "Einstellungen"
   },
+  "advancedSearch": {
+    "matchType": {},
+    "matchWord": {},
+    "operators": {}
+  },
   "callout": {
     "contactDetails": "Kontaktdaten",
     "form": {
@@ -283,6 +288,10 @@
         "today": "heute"
       },
       "tags": "Tags"
+    },
+    "filters": {
+      "email": "E-Mail",
+      "joined": "Kontakt seit"
     },
     "noContacts": "Keine Kontakte",
     "noResults": "Keine Kontakte gefunden",

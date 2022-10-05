@@ -20,19 +20,26 @@
       />
     </button>
   </div>
-  <div v-if="showAdvancedSearch" class="mt-2 mb-8 border border-primary-40 p-4">
-    <p class="mb-3"><b>Create filters for your search</b></p>
+
+  <form
+    v-if="showAdvancedSearch"
+    class="mt-2 mb-8 border border-primary-40 p-4"
+    @submit.prevent="handleSearch"
+  >
+    <p class="mb-3">
+      <b>{{ t('advancedSearch.createFilters') }}</b>
+    </p>
     <div class="mb-3 flex items-center gap-2 text-sm text-body-80">
-      <span>Match</span>
+      <span>{{ t('advancedSearch.matchBefore') }}</span>
       <AppSelect
         v-model="matchType"
         :items="[
-          { id: 'all', label: 'All' },
-          { id: 'any', label: 'Any' },
+          { id: 'all', label: t('advancedSearch.matchType.all') },
+          { id: 'any', label: t('advancedSearch.matchType.any') },
         ]"
         input-class="font-bold uppercase"
       />
-      <span>of the following</span>
+      <span>{{ t('advancedSearch.matchAfter') }}</span>
     </div>
 
     <div class="relative mb-8">
@@ -40,7 +47,7 @@
         <SearchBoxFilter
           v-for="(filter, i) in filters"
           :key="i"
-          :filter="filter"
+          v-model="filters[i]"
           :match-word="matchWord"
           @remove="removeFilter(i)"
         />
@@ -52,65 +59,82 @@
           size="sm"
           @click="addFilter"
         >
-          Add rule
+          {{ t('advancedSearch.addRule') }}
         </AppButton>
       </div>
     </div>
 
     <div class="flex gap-2">
       <div class="flex-1">
-        <AppButton variant="text" @click="showAdvancedSearch = false"
-          >Cancel</AppButton
-        >
+        <AppButton variant="text" @click="showAdvancedSearch = false">
+          {{ t('actions.cancel') }}
+        </AppButton>
       </div>
-      <AppButton variant="primaryOutlined">Save as segment</AppButton>
-      <AppButton variant="link">Show results</AppButton>
+      <AppButton variant="primaryOutlined" :disabled="validation.$invalid">
+        {{ t('advancedSearch.saveAsSegment') }}
+      </AppButton>
+      <AppButton variant="link" :disabled="validation.$invalid" type="submit">
+        {{ t('advancedSearch.showResults') }}
+      </AppButton>
     </div>
-  </div>
+  </form>
+  <div v-else>Summarise search</div>
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive, ref, watch } from 'vue';
+import useVuelidate from '@vuelidate/core';
+import { computed, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { GetMembersQuery } from '../../../../utils/api/api.interface';
 import AppButton from '../../../forms/AppButton.vue';
 import AppSearchInput from '../../../forms/AppSearchInput.vue';
 import AppSelect from '../../../forms/AppSelect.vue';
-import { EmptyFilter, Filter } from './contacts.interface';
+import { Filter } from './contacts.interface';
 import SearchBoxFilter from './SearchBoxFilter.vue';
 
-const { t } = useI18n();
-
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:search', 'update:rules']);
 const props = defineProps<{
-  modelValue: string;
+  search: string;
+  rules: GetMembersQuery['rules'] | undefined;
 }>();
 
+const { t } = useI18n();
+const validation = useVuelidate();
+
 const searchText = computed({
-  get: () => props.modelValue,
-  set: (text) => emit('update:modelValue', text),
+  get: () => props.search,
+  set: (text) => emit('update:search', text),
 });
 const showAdvancedSearch = ref(true);
 
 const matchType = ref<'all' | 'any'>('all');
 const matchWord = computed(() => (matchType.value === 'all' ? 'AND' : 'OR'));
 
-function newFilter(): EmptyFilter {
-  return { field: '' };
-}
-
-const filters = reactive<(EmptyFilter | Filter)[]>([newFilter()]);
-
-watch(filters, () => console.log(filters));
+const filters = reactive<(null | Filter)[]>([null]);
 
 function removeFilter(i: number) {
   if (i === 0 && filters.length === 1) {
-    filters[0] = newFilter();
+    filters[0] = null;
   } else {
     filters.splice(i, 1);
   }
 }
 
 function addFilter() {
-  filters.push(newFilter());
+  filters.push(null);
+}
+
+function handleSearch() {
+  console.log('here');
+  const rules: GetMembersQuery['rules'] = {
+    condition: matchType.value === 'all' ? 'AND' : 'OR',
+    rules: (filters as Filter[]).map((filter) => ({
+      field: filter.id,
+      operator: filter.operatorId,
+      value: filter.values,
+    })),
+  };
+  console.log(rules);
+  emit('update:rules', rules);
 }
 </script>

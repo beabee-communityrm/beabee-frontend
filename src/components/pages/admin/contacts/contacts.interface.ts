@@ -1,55 +1,64 @@
 export const operators = {
-  contains: {
-    args: [{ type: 'text' }],
+  text: {
+    equal: { args: [{ type: 'text' }] },
+    contains: { args: [{ type: 'text' }] },
+    begins_with: { args: [{ type: 'text' }] },
+    ends_with: { args: [{ type: 'text' }] },
   },
-  between: {
-    args: [{ type: 'text' }, { type: 'text' }],
-  },
-  startswith: {
-    args: [{ type: 'text' }],
-  },
-  endswith: {
-    args: [{ type: 'text' }],
-  },
-  before: {
-    args: [{ type: 'date' }],
-  },
-  after: {
-    args: [{ type: 'date' }],
-  },
-  equals: {
-    args: [{ type: 'text' }],
+  date: {
+    equal: { args: [{ type: 'date' }] },
+    between: { args: [{ type: 'date' }, { type: 'date' }] },
+    less: { args: [{ type: 'date' }] },
+    greater: { args: [{ type: 'date' }] },
   },
 } as const;
 
-export const typeOperators = {
-  string: ['contains', 'startswith', 'endswith', 'equals'],
-  date: ['between', 'before', 'after'],
-} as const;
-
-export const fields = {
+export const filters = {
   firstname: {
-    type: 'string',
+    type: 'text',
   },
   lastname: {
-    type: 'string',
+    type: 'text',
+  },
+  email: {
+    type: 'text',
   },
   joined: {
     type: 'date',
   },
 } as const;
 
-type FieldId = keyof typeof fields;
+type FilterId = keyof typeof filters;
 
-export type OperatorId = keyof typeof operators;
-export type OperatorValue = string | number | undefined;
+export type FilterValue = string | number;
 
-export interface EmptyFilter {
-  field: '';
+export interface FilterOperator {
+  args: { type: 'date' | 'text' }[];
 }
 
-export interface Filter {
-  field: FieldId;
-  operator: OperatorId;
-  values: OperatorValue[];
+type FilterOperators<Id extends FilterId> =
+  typeof operators[typeof filters[Id]['type']];
+type FilterOperatorId<Id extends FilterId> = keyof FilterOperators<Id>;
+
+export class Filter<Id extends FilterId = FilterId> {
+  id: Id;
+  operatorId: FilterOperatorId<Id>;
+  values: FilterValue[] = [];
+
+  constructor(id: Id) {
+    this.id = id;
+    this.operatorId = this.initialOperatorId;
+  }
+
+  get operator(): FilterOperator {
+    return this.operators[this.operatorId] as FilterOperator;
+  }
+
+  get operators(): FilterOperators<Id> {
+    return operators[filters[this.id].type] as FilterOperators<Id>;
+  }
+
+  get initialOperatorId(): FilterOperatorId<Id> {
+    return Object.keys(this.operators)[0] as FilterOperatorId<Id>;
+  }
 }
