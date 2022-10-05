@@ -60,7 +60,7 @@ meta:
     <div class="flex-1 basis-7/12">
       <AppHeading>{{ t('adminDashboard.latestCallout.title') }}</AppHeading>
       <div class="mt-4 mb-8 block rounded bg-white p-4">
-        <CalloutSummary v-if="latestCallout" :callout="latestCallout" footer />
+        <CalloutSummary v-if="latestCallout" :callout="latestCallout" edit />
         <div v-else-if="latestCallout === null">
           {{ t('adminDashboard.latestCallout.empty') }}
           <router-link to="/admin/callouts/new" class="text-link">
@@ -96,15 +96,16 @@ import AppHeading from '../../components/AppHeading.vue';
 import KeyStat from '../../components/pages/admin/KeyStat.vue';
 import { onBeforeMount, ref } from 'vue';
 import {
-  GetCalloutData,
+  GetCalloutDataWith,
   GetMemberData,
   GetStatsData,
+  ItemStatus,
 } from '../../utils/api/api.interface';
 import { fetchMembers } from '../../utils/api/member';
 import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
 import Hint from '../../components/pages/admin/Hint.vue';
 import { fetchCallouts } from '../../utils/api/callout';
-import CalloutSummary from '../../components/CalloutSummary.vue';
+import CalloutSummary from '../../components/callout/CalloutSummary.vue';
 import { fetchStats } from '../../utils/api/stats';
 import { subDays } from 'date-fns';
 
@@ -112,7 +113,7 @@ const { n, t } = useI18n();
 
 const stats = ref<GetStatsData>();
 const recentMembers = ref<GetMemberData[]>([]);
-const latestCallout = ref<GetCalloutData | null>();
+const latestCallout = ref<GetCalloutDataWith<'responseCount'> | null>();
 
 onBeforeMount(async () => {
   fetchStats({
@@ -126,11 +127,24 @@ onBeforeMount(async () => {
     order: 'DESC',
   }).then((results) => (recentMembers.value = results.items));
 
-  fetchCallouts({
-    limit: 1,
-    sort: 'starts',
-    order: 'DESC',
-  }).then((results) => {
+  fetchCallouts(
+    {
+      limit: 1,
+      sort: 'starts',
+      order: 'DESC',
+      rules: {
+        condition: 'AND',
+        rules: [
+          {
+            field: 'status',
+            operator: 'equal',
+            value: ItemStatus.Open,
+          },
+        ],
+      },
+    },
+    ['responseCount']
+  ).then((results) => {
     latestCallout.value = results.count > 0 ? results.items[0] : null;
   });
 });

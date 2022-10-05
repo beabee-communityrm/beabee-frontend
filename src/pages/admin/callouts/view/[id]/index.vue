@@ -21,27 +21,9 @@ meta:
 
       <AppHeading>{{ t('calloutAdminOverview.summary') }}</AppHeading>
 
-      <CalloutSummary :callout="callout" class="mb-8" />
-
-      <AppHeading>{{ t('calloutAdminOverview.dates.label') }}</AppHeading>
-      <AppInfoList class="mb-8">
-        <AppInfoListItem :name="t('calloutAdminOverview.dates.starts')">
-          <span v-if="callout.starts">
-            {{ formatLocale(callout.starts, 'PPP') }}
-            <span
-              v-if="callout.status === ItemStatus.Scheduled"
-              class="font-normal"
-              >({{ t('common.in') }}
-              {{ formatDistanceLocale(new Date(), callout.starts) }})</span
-            >
-          </span>
-          <span v-else>–</span>
-        </AppInfoListItem>
-        <AppInfoListItem
-          :name="t('calloutAdminOverview.dates.ends')"
-          :value="callout.expires && formatLocale(callout.expires, 'PPP')"
-        />
-      </AppInfoList>
+      <div class="mb-8 rounded bg-white p-4">
+        <CalloutSummary :callout="callout" />
+      </div>
 
       <AppHeading>{{ t('calloutAdminOverview.settings.label') }}</AppHeading>
       <AppInfoList>
@@ -134,20 +116,13 @@ meta:
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
-import {
-  GetCalloutDataWith,
-  ItemStatus,
-} from '../../../../../utils/api/api.interface';
+import { GetCalloutDataWith } from '../../../../../utils/api/api.interface';
 import { deleteCallout } from '../../../../../utils/api/callout';
 import AppHeading from '../../../../../components/AppHeading.vue';
 import AppInfoList from '../../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../../components/AppInfoListItem.vue';
-import {
-  formatLocale,
-  formatDistanceLocale,
-} from '../../../../../utils/dates/locale-date-formats';
 import ActionButton from '../../../../../components/pages/callouts/ActionButton.vue';
-import CalloutSummary from '../../../../../components/CalloutSummary.vue';
+import CalloutSummary from '../../../../../components/callout/CalloutSummary.vue';
 import AppAlert from '../../../../../components/AppAlert.vue';
 import { createCallout } from '../../../../../utils/api/callout';
 import AppConfirmDialog from '../../../../../components/AppConfirmDialog.vue';
