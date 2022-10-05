@@ -63,8 +63,20 @@ meta:
       </AppInfoList>
     </div>
     <div class="flex-0 flex flex-wrap gap-2 lg:flex-col">
-      <ActionButton icon="eye" :to="calloutLink">
-        {{ t('actions.view') }}
+      <ActionButton icon="eye" :to="`/callouts/${callout.slug}?preview`">
+        {{
+          callout.status === ItemStatus.Open ||
+          callout.status === ItemStatus.Ended
+            ? t('actions.view')
+            : t('actions.preview')
+        }}
+      </ActionButton>
+      <ActionButton
+        v-if="callout.status === ItemStatus.Open"
+        icon="reply"
+        :to="`/callouts/${callout.slug}`"
+      >
+        {{ t('actions.participate') }}
       </ActionButton>
       <ActionButton
         icon="pencil-alt"
@@ -101,10 +113,13 @@ meta:
   </div>
 </template>
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
-import { GetCalloutDataWith } from '../../../../../utils/api/api.interface';
+import {
+  GetCalloutDataWith,
+  ItemStatus,
+} from '../../../../../utils/api/api.interface';
 import { deleteCallout } from '../../../../../utils/api/callout';
 import AppHeading from '../../../../../components/AppHeading.vue';
 import AppInfoList from '../../../../../components/AppInfoList.vue';
@@ -126,8 +141,6 @@ const wasJustCreated = route.query.created !== undefined;
 const wasJustUpdated = route.query.updated !== undefined;
 
 const showDeleteModal = ref(false);
-
-const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
 
 const confirmDeleteCallout = () => {
   deleteCallout(props.callout.slug);

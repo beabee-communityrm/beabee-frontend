@@ -3,6 +3,7 @@
     <the-menu />
 
     <main
+      id="top"
       class="flex w-full max-w-[1400px] flex-grow flex-col bg-primary-5 px-4 pt-5 pb-5 md:px-10 md:pt-14"
     >
       <router-view />
