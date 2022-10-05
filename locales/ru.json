@@ -39,6 +39,12 @@
     }
   },
   "advancedSearch": {
+    "filters": {
+      "email": "Почтовый ящик",
+      "firstname": "Имя",
+      "joined": "Участник с",
+      "lastname": "Фамилия"
+    },
     "matchType": {},
     "matchWord": {},
     "operators": {}
@@ -186,10 +192,6 @@
         "today": "сегодня"
       },
       "tags": "Теги"
-    },
-    "filters": {
-      "email": "Почтовый ящик",
-      "joined": "Участник с"
     },
     "noContacts": "",
     "noResults": "Контактов не найдено",

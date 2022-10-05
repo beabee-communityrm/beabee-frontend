@@ -88,9 +88,9 @@
   >
     <template v-for="(filter, i) in currentFilters" :key="i">
       <li class="rounded-full border border-primary-70 px-2 py-1">
-        <b>{{ t('contacts.filters.' + filter.id) }}</b>
+        <b>{{ t('advancedSearch.filters.' + filter.id) }}</b>
         {{ t('advancedSearch.operators.' + filter.operator) }}
-        <b>{{ filter.values }}</b>
+        <SearchBoxFilterArgs :filter="filter" readonly />
       </li>
       <li class="font-bold uppercase last:hidden">
         {{ t('advancedSearch.matchWord.' + currentMatchType) }}
@@ -113,6 +113,7 @@ import AppSearchInput from '../../../forms/AppSearchInput.vue';
 import AppSelect from '../../../forms/AppSelect.vue';
 import { emptyFilter, EmptyFilter, Filter } from './contacts.interface';
 import SearchBoxFilter from './SearchBoxFilter.vue';
+import SearchBoxFilterArgs from './SearchBoxFilterArgs.vue';
 
 const emit = defineEmits(['update:search', 'update:rules']);
 const props = defineProps<{

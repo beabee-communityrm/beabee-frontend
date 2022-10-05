@@ -12,7 +12,7 @@ export type FilterOperatorId =
   | 'greater';
 
 export interface FilterOperatorParams {
-  args: { type: 'text' | 'date' }[];
+  args: number;
 }
 
 export const operators: Record<
@@ -20,16 +20,16 @@ export const operators: Record<
   Partial<Record<FilterOperatorId, FilterOperatorParams>>
 > = {
   text: {
-    equal: { args: [{ type: 'text' }] },
-    contains: { args: [{ type: 'text' }] },
-    begins_with: { args: [{ type: 'text' }] },
-    ends_with: { args: [{ type: 'text' }] },
+    equal: { args: 1 },
+    contains: { args: 1 },
+    begins_with: { args: 1 },
+    ends_with: { args: 1 },
   },
   date: {
-    equal: { args: [{ type: 'date' }] },
-    between: { args: [{ type: 'date' }, { type: 'date' }] },
-    less: { args: [{ type: 'date' }] },
-    greater: { args: [{ type: 'date' }] },
+    equal: { args: 1 },
+    between: { args: 2 },
+    less: { args: 1 },
+    greater: { args: 1 },
   },
 };
 

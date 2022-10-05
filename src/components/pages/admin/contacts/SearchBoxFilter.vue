@@ -1,8 +1,8 @@
 <template>
-  <div class="flex items-start gap-2">
+  <div class="flex items-center gap-2">
     <button
       @click="emit('remove')"
-      class="my-[1px] -ml-2 p-2 leading-tight text-primary-80 hover:text-primary"
+      class="-ml-2 p-2 leading-tight text-primary-80 hover:text-primary"
       type="button"
     >
       <font-awesome-icon :icon="['fa', 'times']" />
@@ -53,7 +53,7 @@ const filterItems = [
   },
   ...Object.keys(filters).map((id) => ({
     id,
-    label: t('contacts.filters.' + id),
+    label: t('advancedSearch.filters.' + id),
   })),
 ];
 
@@ -85,8 +85,8 @@ function changeOperator(operator: FilterOperatorId) {
   if (props.filter.id) {
     const oldOperator = props.filter.operator;
     const operators = getOperators(props.filter);
-    const newArgs = (operator && operators[operator]?.args.length) || 0;
-    const oldArgs = (oldOperator && operators[oldOperator]?.args.length) || 0;
+    const newArgs = (operator && operators[operator]?.args) || 0;
+    const oldArgs = (oldOperator && operators[oldOperator]?.args) || 0;
 
     props.filter.operator = operator;
     if (newArgs !== oldArgs) {

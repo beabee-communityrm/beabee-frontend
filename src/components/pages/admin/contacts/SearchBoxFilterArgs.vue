@@ -1,17 +1,25 @@
 <template>
-  <div v-for="(arg, i) in args" :key="i">
-    <AppInput v-model="filter.values[i]" :type="arg.type" required />
-  </div>
+  <component
+    :is="operatorComponents[filter.operator]"
+    :values="filter.values"
+    :type="filters[filter.id].type"
+    :readonly="!!readonly"
+  />
 </template>
 <script lang="ts" setup>
-import { Filter, filters, operators } from './contacts.interface';
-import AppInput from '../../../forms/AppInput.vue';
-import { computed } from '@vue/reactivity';
+import { Filter, filters } from './contacts.interface';
+import Between from './operators/Between.vue';
+import SingleArg from './operators/SingleArg.vue';
 
-const props = defineProps<{ filter: Filter }>();
+defineProps<{ filter: Filter; readonly?: boolean }>();
 
-const args = computed(
-  () =>
-    operators[filters[props.filter.id].type][props.filter.operator]?.args || []
-);
+const operatorComponents = {
+  equal: SingleArg,
+  contains: SingleArg,
+  begins_with: SingleArg,
+  ends_with: SingleArg,
+  between: Between,
+  less: SingleArg,
+  greater: SingleArg,
+} as const;
 </script>

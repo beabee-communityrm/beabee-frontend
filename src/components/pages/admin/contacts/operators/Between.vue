@@ -1,0 +1,14 @@
+<template>
+  <ArgInput v-model="values[0]" :type="type" :readonly="readonly" />
+  {{ t('advancedSearch.matchWord.all') }}
+  <ArgInput v-model="values[1]" :type="type" :readonly="readonly" />
+</template>
+<script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
+import { FilterType, FilterValue } from '../contacts.interface';
+import ArgInput from './ArgInput.vue';
+
+const { t } = useI18n();
+
+defineProps<{ values: FilterValue[]; type: FilterType; readonly: boolean }>();
+</script>

@@ -105,6 +105,12 @@
   "advancedSearch": {
     "addRule": "Add rule",
     "createFilters": "Create filters for your search",
+    "filters": {
+      "email": "Email",
+      "firstname": "First name",
+      "joined": "Joined",
+      "lastname": "Last name"
+    },
     "matchAfter": "of the following",
     "matchBefore": "Match",
     "matchType": {
@@ -112,8 +118,8 @@
       "any": "any"
     },
     "matchWord": {
-      "all": "AND",
-      "any": "OR"
+      "all": "and",
+      "any": "or"
     },
     "operators": {
       "begins_with": "begins with",
@@ -312,12 +318,6 @@
         "today": "present"
       },
       "tags": "Tags"
-    },
-    "filters": {
-      "email": "Email",
-      "firstname": "First name",
-      "joined": "Joined",
-      "lastname": "Last name"
     },
     "noContacts": "No contacts added yet",
     "noResults": "No contacts found",
