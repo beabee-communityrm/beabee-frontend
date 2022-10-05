@@ -19,7 +19,7 @@
   </div>
 
   <div
-    v-if="hasError"
+    v-if="hasError && !hideErrorMessage"
     class="mt-1.5 text-xs font-semibold text-danger"
     role="alert"
   >
@@ -51,6 +51,7 @@ const props = withDefaults(
     min?: number | string;
     sameAs?: number | string;
     pattern?: string;
+    hideErrorMessage?: boolean;
   }>(),
   {
     modelValue: undefined,
