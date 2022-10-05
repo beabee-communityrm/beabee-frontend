@@ -7,7 +7,7 @@ meta:
 <template>
   <AppAlert v-if="isPasswordReset" class="mb-8">
     <template #icon>
-      <font-awesome-icon class="transform -rotate-90" :icon="['fas', 'key']" />
+      <font-awesome-icon class="-rotate-90 transform" :icon="['fas', 'key']" />
     </template>
 
     {{ t('homePage.passwordReset') }}
@@ -36,12 +36,12 @@ meta:
   <section v-if="callouts.length" class="mb-6 lg:mr-6">
     <SectionTitle>{{ t('homePage.openCallouts') }}</SectionTitle>
 
-    <div class="flex -mx-3 my-6 flex-wrap">
+    <div class="-mx-3 my-6 flex flex-wrap">
       <CalloutCard
         v-for="callout in callouts"
         :key="callout.slug"
         :callout="callout"
-        class="mb-5 mx-3"
+        class="mx-3 mb-5"
       />
     </div>
 
@@ -53,7 +53,7 @@ meta:
   <section>
     <SectionTitle>{{ t('homePage.yourProfile') }}</SectionTitle>
 
-    <div class="flex mb-4">
+    <div class="mb-4 flex">
       <ContributionInfo :member="user" />
     </div>
 
@@ -80,7 +80,7 @@ import AppAlert from '../../components/AppAlert.vue';
 import CalloutCard from '../../components/CalloutCard.vue';
 import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
 import {
-  GetBasicCalloutData,
+  GetCalloutData,
   GetMemberData,
   ItemStatus,
   ProfileContent,
@@ -105,7 +105,7 @@ const profileContent = ref<ProfileContent>({
   introMessage: '',
 });
 
-const callouts = ref<GetBasicCalloutData[]>([]);
+const callouts = ref<GetCalloutData[]>([]);
 
 // This page is behind auth so currentUser can't be null
 // TODO: is there a nicer way to handle this?

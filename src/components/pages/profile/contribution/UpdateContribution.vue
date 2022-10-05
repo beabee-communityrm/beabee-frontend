@@ -77,6 +77,7 @@
       }}</AppHeading>
       <StripePayment
         :client-secret="stripeClientSecret"
+        :public-key="content.stripePublicKey"
         :email="email"
         :return-url="startContributionCompleteUrl"
         @loaded="onStripeLoaded"
@@ -119,16 +120,8 @@ const { t, n } = useI18n();
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   modelValue: ContributionInfo;
+  content: ContributionContent;
 }>();
-
-const content = ref<ContributionContent>({
-  initialAmount: 5,
-  initialPeriod: ContributionPeriod.Monthly,
-  minMonthlyAmount: 5,
-  periods: [],
-  showAbsorbFee: true,
-  paymentMethods: [PaymentMethod.StripeCard],
-});
 
 const newContribution = reactive({
   amount: 5,
@@ -225,26 +218,23 @@ function reset() {
 }
 
 watch(
-  [props, content],
+  props,
   () => {
     newContribution.amount =
-      props.modelValue.amount || content.value.initialAmount;
+      props.modelValue.amount || props.content.initialAmount;
     newContribution.period =
-      props.modelValue.period || content.value.initialPeriod;
-    newContribution.payFee = content.value.showAbsorbFee
+      props.modelValue.period || props.content.initialPeriod;
+    newContribution.payFee = props.content.showAbsorbFee
       ? props.modelValue.payFee === undefined
         ? true
         : props.modelValue.payFee
       : false;
     newContribution.prorate = true;
     newContribution.paymentMethod =
-      props.modelValue.paymentSource?.method || content.value.paymentMethods[0];
+      props.modelValue.paymentSource?.method || props.content.paymentMethods[0];
   },
   { immediate: true }
 );
 
-onBeforeMount(async () => {
-  reset();
-  content.value = await fetchContent('join');
-});
+onBeforeMount(reset);
 </script>

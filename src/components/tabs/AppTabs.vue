@@ -1,12 +1,12 @@
 <template>
   <AppSelect v-model="selectedItem" :items="items" class="mb-4 md:hidden" />
-  <ul class="border-primary-40 border-b mb-4 md:-mx-2 hidden md:flex text-sm">
+  <ul class="mb-4 hidden border-b border-primary-40 text-sm md:-mx-2 md:flex">
     <li v-for="item in items" :key="item.id">
       <router-link
         :to="item.to"
         class="relative inline-block p-3"
         :class="
-          selected === item.id && 'text-body font-bold border-b-2 border-text'
+          selected === item.id && 'border-text border-b-2 font-bold text-body'
         "
       >
         <span class="text-body-80 hover:text-body">

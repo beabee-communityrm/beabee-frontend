@@ -9,15 +9,19 @@ import {
   GetMemberWith,
   GetPaymentData,
   GetPaymentsQuery,
+  MemberRoleData,
   Paginated,
   PaymentFlowParams,
+  PermissionType,
   Serial,
   SetContributionData,
   StartContributionData,
   UpdateMemberData,
+  UpdateMemberRoleData,
 } from './api.interface';
 
 import { deserializeDate } from '.';
+import env from '../../env';
 
 // TODO: how to make this type safe?
 export function deserializeMember(data: any): any {
@@ -29,12 +33,16 @@ export function deserializeMember(data: any): any {
       contribution: deserializeContribution(data.contribution),
     }),
     ...(data.roles && {
-      roles: data.roles.map((role: any) => ({
-        role: role.role,
-        dateAdded: deserializeDate(role.dateAdded),
-        dateExpires: deserializeDate(role.dateExpires),
-      })),
+      roles: data.roles.map(deserializeRole),
     }),
+  };
+}
+
+function deserializeRole(data: Serial<MemberRoleData>): MemberRoleData {
+  return {
+    role: data.role,
+    dateAdded: deserializeDate(data.dateAdded),
+    dateExpires: data.dateExpires ? deserializeDate(data.dateExpires) : null,
   };
 }
 
@@ -79,6 +87,7 @@ export async function fetchMembers<With extends GetMemberWith>(
     items: data.items.map(deserializeMember),
   };
 }
+
 export async function fetchMember(id: string): Promise<GetMemberData>;
 export async function fetchMember<With extends GetMemberWith>(
   id: string,
@@ -139,7 +148,7 @@ export async function updateContribution(
 }
 
 export const startContributionCompleteUrl =
-  import.meta.env.VITE_APP_BASE_URL + '/profile/contribution/complete';
+  env.appUrl + '/profile/contribution/complete';
 
 export async function startContribution(
   dataIn: StartContributionData
@@ -172,8 +181,7 @@ export async function cancelContribution(): Promise<void> {
 }
 
 export const updatePaymentMethodCompleteUrl =
-  import.meta.env.VITE_APP_BASE_URL +
-  '/profile/contribution/payment-method/complete';
+  env.appUrl + '/profile/contribution/payment-method/complete';
 
 export async function updatePaymentMethod(
   paymentMethod?: PaymentMethod
@@ -208,4 +216,23 @@ export async function fetchPayments(
       status: item.status,
     })),
   };
+}
+
+export async function updateRole(
+  id: string,
+  role: PermissionType,
+  dataIn: UpdateMemberRoleData
+): Promise<MemberRoleData> {
+  const { data } = await axios.put<Serial<MemberRoleData>>(
+    `/member/${id}/role/${role}`,
+    dataIn
+  );
+  return deserializeRole(data);
+}
+
+export async function deleteRole(
+  id: string,
+  role: PermissionType
+): Promise<void> {
+  await axios.delete(`/member/${id}/role/${role}`);
 }

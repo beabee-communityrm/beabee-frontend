@@ -6,21 +6,22 @@ meta:
 
 <template>
   <PageTitle :title="t('menu.callouts')" />
-  <div class="flex -mx-3 mb-6 flex-wrap">
+  <div v-if="activeCallouts" class="-mx-3 mb-6 flex flex-wrap">
     <CalloutCard
       v-for="callout in activeCallouts.items"
       :key="callout.slug"
       :callout="callout"
-      class="mb-5 mx-3"
+      class="mx-3 mb-5"
     />
   </div>
+
   <AppHeading>{{ t('callouts.archive') }}</AppHeading>
-  <div class="lg:flex justify-between items-center my-2">
+  <div class="my-2 items-center justify-between lg:flex">
     <AppSearchInput
       v-model="currentSearch"
       :placeholder="t('callouts.search')"
     />
-    <div class="text-sm font-semibold text-primary-80 uppercase my-2 lg:my-0">
+    <div class="my-2 text-sm font-semibold uppercase text-primary-80 lg:my-0">
       <span>{{ t('callouts.show') }}</span>
       <AppToggle
         v-model="currentShow"
@@ -34,8 +35,8 @@ meta:
 
   <AppTable
     :headers="headers"
-    :items="archivedCallouts.items"
-    class="w-full mt-2 whitespace-nowrap"
+    :items="archivedCallouts?.items || null"
+    class="mt-2 w-full whitespace-nowrap"
   >
     <template #empty>
       <p>{{ t('callouts.noArchivedCallouts') }}</p>
@@ -44,7 +45,7 @@ meta:
     <template #name="{ item }">
       <router-link
         :to="`/callouts/${item.slug}`"
-        class="text-base text-link font-bold"
+        class="text-base font-bold text-link"
         >{{ item.title }}</router-link
       >
     </template>
@@ -83,7 +84,8 @@ import PageTitle from '../../components/PageTitle.vue';
 import AppHeading from '../../components/AppHeading.vue';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import {
-  GetBasicCalloutData,
+  GetCalloutData,
+  GetCalloutDataWith,
   GetCalloutsQuery,
   ItemStatus,
   Paginated,
@@ -130,21 +132,14 @@ const currentShow = computed({
       query: { ...route.query, show, page: undefined },
     }),
 });
-const activeCallouts = ref<Paginated<GetBasicCalloutData>>({
-  total: 0,
-  count: 0,
-  offset: 0,
-  items: [],
-});
-const archivedCallouts = ref<Paginated<GetBasicCalloutData>>({
-  total: 0,
-  count: 0,
-  offset: 0,
-  items: [],
-});
+
+const activeCallouts = ref<Paginated<GetCalloutData>>();
+const archivedCallouts = ref<Paginated<GetCalloutDataWith<'hasAnswered'>>>();
 
 const totalPages = computed(() =>
-  Math.ceil(archivedCallouts.value.total / pageSize)
+  archivedCallouts.value
+    ? Math.ceil(archivedCallouts.value.total / pageSize)
+    : 0
 );
 
 onBeforeMount(async () => {
@@ -177,7 +172,6 @@ watchEffect(async () => {
     limit: pageSize,
     sort: 'expires',
     order: 'DESC',
-    hasAnswered: 'me',
     rules: {
       condition: 'AND',
       rules: [
@@ -209,6 +203,6 @@ watchEffect(async () => {
     },
   };
 
-  archivedCallouts.value = await fetchCallouts(query);
+  archivedCallouts.value = await fetchCallouts(query, ['hasAnswered']);
 });
 </script>

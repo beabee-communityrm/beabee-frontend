@@ -1,7 +1,7 @@
 <template>
-  <div class="flex py-4 pl-4 pr-3.5 text-white rounded" :class="bgColorClass">
+  <div class="flex rounded py-4 pl-4 pr-3.5 text-white" :class="bgColorClass">
     <div>
-      <FontAwesomeIcon class="text-lg mt-1.5" :icon="['fas', icon]" />
+      <FontAwesomeIcon class="mt-1.5 text-lg" :icon="['fas', icon]" />
     </div>
 
     <div class="ml-4 flex-grow pr-3">
@@ -16,7 +16,7 @@
 
     <div>
       <FontAwesomeIcon
-        class="text-xl cursor-pointer"
+        class="cursor-pointer text-xl"
         :icon="['fas', 'times']"
         @click="removeItem"
       />

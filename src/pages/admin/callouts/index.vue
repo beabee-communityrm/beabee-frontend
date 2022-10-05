@@ -6,7 +6,7 @@ meta:
 </route>
 <template>
   <PageTitle :title="t('menu.callouts')" border>
-    <div class="flex-1 block lg:hidden">
+    <div class="block flex-1 lg:hidden">
       <AppSelect v-model="currentStatus" :items="statusItems" />
     </div>
     <div class="flex-0 ml-3">
@@ -24,7 +24,7 @@ meta:
   </AppAlert>
 
   <div class="md:flex">
-    <div class="flex-none hidden lg:block basis-[220px]">
+    <div class="hidden flex-none basis-[220px] lg:block">
       <AppVTabs v-model="currentStatus" :items="statusItems" />
     </div>
     <div class="flex-auto">
@@ -37,8 +37,8 @@ meta:
       <AppTable
         v-model:sort="currentSort"
         :headers="headers"
-        :items="calloutsTable.items"
-        class="w-full mt-2"
+        :items="calloutsTable?.items || null"
+        class="mt-2 w-full"
       >
         <template #header-hidden><font-awesome-icon icon="eye" /></template>
         <template #status="{ value }">
@@ -47,7 +47,7 @@ meta:
         <template #title="{ item, value }">
           <router-link
             :to="'/admin/callouts/view/' + item.slug"
-            class="text-base text-link font-bold"
+            class="text-base font-bold text-link"
           >
             {{ value }}
           </router-link>
@@ -89,8 +89,8 @@ import AppAlert from '../../../components/AppAlert.vue';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
 import {
   Paginated,
-  GetBasicCalloutData,
   GetCalloutsQuery,
+  GetCalloutDataWith,
 } from '../../../utils/api/api.interface';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import { fetchCallouts } from '../../../utils/api/callout';
@@ -149,6 +149,10 @@ const headers: Header[] = [
     text: '',
   },
   {
+    value: 'responseCount',
+    text: t('calloutsAdmin.data.responses'),
+  },
+  {
     value: 'starts',
     text: t('calloutsAdmin.data.starts'),
     align: 'right',
@@ -198,15 +202,12 @@ const currentStatus = computed({
   set: (filter) => router.push({ query: { ...route.query, filter } }),
 });
 
-const calloutsTable = ref<Paginated<GetBasicCalloutData>>({
-  total: 0,
-  count: 0,
-  offset: 0,
-  items: [],
-});
+const calloutsTable = ref<Paginated<GetCalloutDataWith<'responseCount'>>>();
 
 const totalPages = computed(() =>
-  Math.ceil(calloutsTable.value.total / currentPageSize.value)
+  calloutsTable.value
+    ? Math.ceil(calloutsTable.value.total / currentPageSize.value)
+    : 0
 );
 
 watchEffect(async () => {
@@ -233,12 +234,15 @@ watchEffect(async () => {
         : []),
     ],
   } as NonNullable<GetCalloutsQuery['rules']>;
-  calloutsTable.value = await fetchCallouts({
-    limit: currentPageSize.value,
-    offset: currentPage.value * currentPageSize.value,
-    sort: currentSort.value.by,
-    order: currentSort.value.type,
-    rules: rules.rules.length > 0 ? rules : undefined,
-  });
+  calloutsTable.value = await fetchCallouts(
+    {
+      limit: currentPageSize.value,
+      offset: currentPage.value * currentPageSize.value,
+      sort: currentSort.value.by,
+      order: currentSort.value.type,
+      rules: rules.rules.length > 0 ? rules : undefined,
+    },
+    ['responseCount']
+  );
 });
 </script>

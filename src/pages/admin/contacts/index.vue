@@ -15,7 +15,7 @@ meta:
     </div>
   </PageTitle>
   <div class="md:flex">
-    <div class="flex-none hidden md:block basis-[220px]">
+    <div class="hidden flex-none basis-[220px] md:block">
       <AppVTabs v-model="currentSegment" :items="segmentItems" />
     </div>
     <div class="flex-auto">
@@ -23,8 +23,8 @@ meta:
       <AppTable
         v-model:sort="currentSort"
         :headers="headers"
-        :items="contactsTable.items"
-        class="w-full mt-2 whitespace-nowrap"
+        :items="contactsTable?.items || null"
+        class="mt-2 w-full whitespace-nowrap"
       >
         <template #empty>
           <p>
@@ -36,13 +36,13 @@ meta:
         <template #firstname="{ item }">
           <router-link
             :to="'/admin/contacts/' + item.id"
-            class="text-base text-link font-bold"
+            class="text-base font-bold text-link"
           >
             {{ `${item.firstname} ${item.lastname}`.trim() || item.email }}
           </router-link>
           <p
             v-if="item.profile.description"
-            class="text-xs whitespace-normal mt-1"
+            class="mt-1 whitespace-normal text-xs"
           >
             {{ item.profile.description }}
           </p>
@@ -72,7 +72,7 @@ meta:
           {{ getMembershipStartDate(item) }}
         </template>
       </AppTable>
-      <div class="flex mt-4 items-center text-sm">
+      <div v-if="contactsTable" class="mt-4 flex items-center text-sm">
         <p class="flex-1">
           <i18n-t v-if="contactsTable.count > 0" keypath="contacts.showingOf">
             <template #start
@@ -195,14 +195,11 @@ const currentSegment = computed({
 
 const segments = ref<GetSegmentData[]>([]);
 const contactsTotal = ref<number | null>(null);
-const contactsTable = ref<Paginated<GetMemberDataWith<'profile' | 'roles'>>>({
-  total: 0,
-  count: 0,
-  offset: 0,
-  items: [],
-});
+const contactsTable = ref<Paginated<GetMemberDataWith<'profile' | 'roles'>>>();
 const totalPages = computed(() =>
-  Math.ceil(contactsTable.value.total / currentPageSize.value)
+  contactsTable.value
+    ? Math.ceil(contactsTable.value.total / currentPageSize.value)
+    : 0
 );
 
 const segmentItems = computed(() => [
@@ -234,28 +231,26 @@ onBeforeMount(async () => {
 });
 
 watchEffect(async () => {
-  const rules: GetMembersQuery['rules'] | undefined = currentSearch.value
-    ? {
-        condition: 'OR',
-        rules: [
-          {
-            field: 'email',
-            operator: 'contains',
-            value: currentSearch.value,
-          },
-          {
-            field: 'firstname',
-            operator: 'contains',
-            value: currentSearch.value,
-          },
-          {
-            field: 'lastname',
-            operator: 'contains',
-            value: currentSearch.value,
-          },
-        ],
-      }
-    : undefined;
+  const rules: GetMembersQuery['rules'] = {
+    condition: 'OR',
+    rules: currentSearch.value.split(' ').flatMap((value) => [
+      {
+        field: 'email',
+        operator: 'contains',
+        value,
+      },
+      {
+        field: 'firstname',
+        operator: 'contains',
+        value,
+      },
+      {
+        field: 'lastname',
+        operator: 'contains',
+        value,
+      },
+    ]),
+  };
 
   const query = {
     offset: currentPage.value * currentPageSize.value,

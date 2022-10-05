@@ -7,9 +7,9 @@ meta:
 
 <template>
   <div v-if="callout" class="md:max-w-2xl">
-    <h1 class="font-title text-4xl font-bold mb-6">{{ callout.title }}</h1>
-    <div class="flex justify-between items-center mb-6">
-      <div class="flex items-center text-sm text-body-60 font-semibold">
+    <h1 class="mb-6 font-title text-4xl font-bold">{{ callout.title }}</h1>
+    <div class="mb-6 flex items-center justify-between">
+      <div class="flex items-center text-sm font-semibold text-body-60">
         <div>
           <div class="flex flex-col">
             <AppItemStatus :status="callout.status" />
@@ -42,7 +42,7 @@ meta:
             </span>
           </div>
         </div>
-        <div v-if="hasResponded" class="border-body-40 border-l ml-3 pl-3 w-32">
+        <div v-if="hasResponded" class="border-body-40 ml-3 w-32 border-l pl-3">
           {{ t('callout.youResponded') }}
         </div>
       </div>
@@ -59,7 +59,7 @@ meta:
     </transition-group>
     <div
       v-if="showThanksMessage"
-      class="flex mb-6 bg-white rounded p-6 text-lg text-success"
+      class="mb-6 flex rounded bg-white p-6 text-lg text-success"
     >
       <div class="flex-0 mr-4 text-2xl">
         <font-awesome-icon icon="thumbs-up" />
@@ -69,7 +69,7 @@ meta:
           {{ callout.thanksTitle }}
         </h3>
         <div
-          class="font-normal text-body-80 content-message"
+          class="content-message font-normal text-body-80"
           v-html="callout.thanksText"
         />
       </div>
@@ -77,9 +77,9 @@ meta:
     <figure class="mb-6">
       <img class="w-full object-cover" :src="callout.image" />
     </figure>
-    <div class="text-lg content-message mb-6" v-html="callout.intro" />
+    <div class="content-message mb-6 text-lg" v-html="callout.intro" />
     <div
-      class="w-full text-center flex flex-col justify-center items-center mb-6"
+      class="mb-6 flex w-full flex-col items-center justify-center text-center"
       v-if="canSeeButNotRespond"
     >
       <p class="w-full sm:w-2/3">
@@ -87,7 +87,7 @@ meta:
         <b>{{ t('callout.updateContribution') }}</b>
       </p>
       <AppButton
-        class="w-full sm:w-1/2 mt-4"
+        class="mt-4 w-full sm:w-1/2"
         variant="link"
         to="/profile/contribution"
       >
@@ -96,7 +96,7 @@ meta:
     </div>
     <form
       v-if="showResponseForm"
-      class="callout-form mt-10 pt-10 border-primary-40 border-t"
+      class="callout-form mt-10 border-t border-primary-40 pt-10"
       :class="{ 'opacity-50': isFormReadOnly }"
       @submit.prevent
     >
@@ -109,7 +109,7 @@ meta:
         :form="callout.formSchema"
         :submission="formSubmission"
         :options="formOpts"
-        @submit="(handleSubmitResponse as any)"
+        @submit="handleSubmitResponse as any"
       />
       <MessageBox v-if="formError" class="mt-4" type="error">
         {{ formError }}
@@ -119,7 +119,7 @@ meta:
       <p class="text-center">
         {{ t('callout.membersOnly') }}
       </p>
-      <div class="flex flex-col sm:flex-row gap-4 mt-6">
+      <div class="mt-6 flex flex-col gap-4 sm:flex-row">
         <AppButton class="w-full" variant="link" to="/join">
           {{ t('callout.joinNow') }}
         </AppButton>
@@ -136,8 +136,8 @@ import { Form } from 'vue-formio';
 import { useI18n } from 'vue-i18n';
 import {
   CalloutResponseAnswers,
+  GetCalloutDataWith,
   GetCalloutResponseData,
-  GetMoreCalloutData,
   ItemStatus,
   Paginated,
 } from '../../utils/api/api.interface';
@@ -166,7 +166,7 @@ const props = defineProps<{ id: string }>();
 
 const { t } = useI18n();
 
-const callout = ref<GetMoreCalloutData>();
+const callout = ref<GetCalloutDataWith<'form'>>();
 const responses = ref<Paginated<GetCalloutResponseData>>();
 
 const guestName = ref('');
@@ -276,7 +276,7 @@ onBeforeMount(async () => {
   formError.value = '';
   showThanksMessage.value = false;
 
-  callout.value = await fetchCallout(props.id);
+  callout.value = await fetchCallout(props.id, ['form']);
 
   responses.value = currentUser.value
     ? await fetchResponses(props.id, {

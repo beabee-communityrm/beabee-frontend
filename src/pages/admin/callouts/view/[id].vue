@@ -24,7 +24,7 @@ import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import PageTitle from '../../../../components/PageTitle.vue';
 import AppTabs from '../../../../components/tabs/AppTabs.vue';
-import { GetMoreCalloutData } from '../../../../utils/api/api.interface';
+import { GetCalloutDataWith } from '../../../../utils/api/api.interface';
 import { fetchCallout, fetchResponses } from '../../../../utils/api/callout';
 
 const props = defineProps<{ id: string }>();
@@ -32,7 +32,7 @@ const props = defineProps<{ id: string }>();
 const route = useRoute();
 const { t } = useI18n();
 
-const callout = ref<GetMoreCalloutData>();
+const callout = ref<GetCalloutDataWith<'form'>>();
 const responseCount = ref(-1);
 
 const tabs = computed(() =>
@@ -56,7 +56,7 @@ const tabs = computed(() =>
 );
 
 onBeforeMount(async () => {
-  callout.value = await fetchCallout(props.id);
+  callout.value = await fetchCallout(props.id, ['form']);
   responseCount.value = (await fetchResponses(props.id, { limit: 1 })).total;
 });
 </script>

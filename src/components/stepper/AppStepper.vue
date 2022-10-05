@@ -9,9 +9,9 @@
         :class="
           stepIndex === modelValue
             ? 'bg-white'
-            : 'bg-primary-5 hover:bg-primary-10 cursor-pointer'
+            : 'cursor-pointer bg-primary-5 hover:bg-primary-10'
         "
-        class="p-4 my-1 rounded"
+        class="my-1 rounded p-4"
         @click="emit('update:modelValue', stepIndex)"
       >
         <h4
@@ -25,7 +25,7 @@
           "
         >
           <span
-            class="inline-block w-4 h-4 border-2 rounded-full align-middle mr-2"
+            class="mr-2 inline-block h-4 w-4 rounded-full border-2 align-middle"
             :class="{
               'bg-link': step.validated,
               'border-link': step.validated || stepIndex === modelValue,
@@ -34,7 +34,7 @@
           />
           {{ step.name }}
         </h4>
-        <p class="text-sm text-grey mt-1">{{ step.description }}</p>
+        <p class="mt-1 text-sm text-grey">{{ step.description }}</p>
       </div>
     </div>
   </div>

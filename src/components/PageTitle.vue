@@ -1,8 +1,8 @@
 <template>
-  <div class="mb-5" :class="{ 'border-primary-40 border-b pb-3': border }">
+  <div class="mb-5" :class="{ 'border-b border-primary-40 pb-3': border }">
     <div class="flex justify-between">
       <h1
-        class="font-light text-2.5xl text-primary-80"
+        class="text-2.5xl font-light text-primary-80"
         :class="{ 'hidden md:block': !noCollapse }"
       >
         {{ title }}

@@ -1,6 +1,6 @@
 <template>
   <AppModal :open="open" @close="$emit('close')">
-    <header class="flex items-center justify-between mb-4">
+    <header class="mb-4 flex items-center justify-between">
       <h3 class="text-2xl font-semibold text-danger">
         <slot name="title" />
       </h3>

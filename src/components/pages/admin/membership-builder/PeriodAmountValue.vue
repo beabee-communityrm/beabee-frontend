@@ -5,7 +5,7 @@
       type="number"
       :min="minAmount"
       required
-      class="w-32 block"
+      class="block w-32"
     />
   </div>
 </template>
