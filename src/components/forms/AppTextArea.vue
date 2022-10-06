@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import { helpers, requiredIf } from '@vuelidate/validators';
 import { useI18n } from 'vue-i18n';
@@ -63,6 +63,7 @@ const rules = computed(() => ({
   },
 }));
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const validation = useVuelidate(rules, { value } as any); // TODO: type problem
 const hasError = computed(() => validation.value.$errors.length > 0);
 </script>

@@ -59,7 +59,7 @@ import { Step } from '../../../components/stepper/stepper.interface';
 import EditJoinForm from '../../../components/pages/admin/membership-builder/steps/EditJoinForm.vue';
 import AccountConfirmation from '../../../components/pages/admin/membership-builder/steps/AccountConfirmation.vue';
 import IntroMessage from '../../../components/pages/admin/membership-builder/steps/IntroMessage.vue';
-import Emails from '../../../components/pages/admin/membership-builder/steps/Emails.vue';
+import Emails from '../../../components/pages/admin/membership-builder/steps/EmailsStep.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import { MembershipBuilderEmitter } from '../../../components/pages/admin/membership-builder/membership-builder.interface';
 import useVuelidate from '@vuelidate/core';

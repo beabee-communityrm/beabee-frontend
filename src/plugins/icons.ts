@@ -62,6 +62,7 @@ import {
   faWindowRestore,
   faSort,
   faPlus,
+  faReply,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -121,7 +122,8 @@ library.add(
   faChartLine,
   faWindowRestore,
   faSort,
-  faPlus
+  faPlus,
+  faReply
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

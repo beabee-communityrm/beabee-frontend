@@ -52,7 +52,7 @@ import StripePayment from '../../../StripePayment.vue';
 import AppModal from '../../../AppModal.vue';
 import { PaymentMethod } from '../../../../utils/enums/payment-method.enum';
 import PaymentMethodIcon from '../../../payment-method/PaymentMethodIcon.vue';
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import AppHeading from '../../../AppHeading.vue';
 import { isRequestError } from '../../../../utils/api';
 
@@ -82,6 +82,8 @@ const paymentSourceDescription = computed(() => {
       return `${source.country}••${source.bankCode}${source.branchCode}••••${source.last4}`;
     case PaymentMethod.GoCardlessDirectDebit:
       return `${source.accountHolderName}, ${source.bankName}, ••••••••••${source.accountNumberEnding}`;
+    default:
+      return '';
   }
 });
 

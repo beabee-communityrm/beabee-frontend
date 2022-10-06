@@ -79,9 +79,9 @@ meta:
     </div>
   </div>
   <div class="mt-8 gap-12 lg:flex">
-    <Hint class="content-i18n" v-html="t('adminDashboard.hint1')" />
-    <Hint class="content-i18n" v-html="t('adminDashboard.hint2')" />
-    <Hint class="content-i18n" v-html="t('adminDashboard.hint3')" />
+    <HintBox class="content-i18n" :hint="t('adminDashboard.hint1')" />
+    <HintBox class="content-i18n" :hint="t('adminDashboard.hint2')" />
+    <HintBox class="content-i18n" :hint="t('adminDashboard.hint3')" />
   </div>
   <div
     class="content-i18n mt-8 text-center text-sm"
@@ -103,7 +103,7 @@ import {
 } from '../../utils/api/api.interface';
 import { fetchMembers } from '../../utils/api/member';
 import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
-import Hint from '../../components/pages/admin/Hint.vue';
+import HintBox from '../../components/pages/admin/HintBox.vue';
 import { fetchCallouts } from '../../utils/api/callout';
 import CalloutSummary from '../../components/callout/CalloutSummary.vue';
 import { fetchStats } from '../../utils/api/stats';

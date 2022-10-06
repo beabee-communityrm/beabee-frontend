@@ -149,6 +149,7 @@
       "address": "Share this callout with the following address:",
       "services": "Or quickly share using one of these services:"
     },
+    "showingPreview": "Response submission is disabled in preview mode",
     "status": {
       "endedOn": "on {date}",
       "endsIn": "Ends in {duration}",
@@ -250,7 +251,6 @@
     "new": "new!",
     "no": "No",
     "noResults": "No results found",
-    "participate": "Participate",
     "role": {
       "admin": "Admin",
       "member": "Member",

@@ -7,8 +7,8 @@
       @blur="submit"
     />
     <button
-      type="button"
       v-if="searchText.length > 0"
+      type="button"
       class="absolute right-5 top-0 h-full w-8 text-primary hover:text-primary-70"
       @click="emit('update:modelValue', '')"
     >

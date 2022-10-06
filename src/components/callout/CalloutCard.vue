@@ -36,7 +36,7 @@
         class="flex h-11 items-center bg-primary-10 px-5 text-primary-80 group-hover:bg-primary-20 group-hover:text-primary"
       >
         <span class="mary-80 ml-auto font-semibold">{{
-          t('common.participate')
+          t('actions.participate')
         }}</span>
       </div>
     </router-link>
@@ -45,8 +45,7 @@
 
 <script lang="ts" setup>
 import { format } from 'date-fns';
-import { ref } from '@vue/reactivity';
-import { onBeforeMount } from '@vue/runtime-core';
+import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
 import { GetCalloutData } from '../../utils/api/api.interface';

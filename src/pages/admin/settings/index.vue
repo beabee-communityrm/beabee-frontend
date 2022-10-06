@@ -238,8 +238,11 @@ async function handleSubmit() {
       // Refresh the favicon
       await axios.get('/favicon.png', { baseURL: '' });
       const faviconEl = document.getElementById('favicon') as HTMLLinkElement;
+      // This just forces the browser to reload the image
+      // eslint-disable-next-line no-self-assign
       faviconEl.href = faviconEl.href;
     }
+    // eslint-disable-next-line no-empty
   } catch (err) {}
   saving.value = false;
 }

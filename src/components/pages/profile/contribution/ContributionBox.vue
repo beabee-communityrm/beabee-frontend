@@ -65,7 +65,7 @@ import {
   formatDistanceLocale,
   formatLocale,
 } from '../../../../utils/dates/locale-date-formats';
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import { ContributionPeriod } from '../../../../utils/enums/contribution-period.enum';
 import { ContributionInfo } from '../../../../utils/api/api.interface';
 import { MembershipStatus } from '../../../../utils/enums/membership-status.enum';
