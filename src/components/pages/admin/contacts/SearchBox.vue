@@ -137,7 +137,17 @@ const showAdvancedSearch = ref(false);
 const currentMatchType = computed(() =>
   props.rules?.condition === 'OR' ? 'any' : 'all'
 );
-function getCurrentFilters() {
+
+function convertRuleToFilter(
+  rule: GetPaginatedQueryRule<GetMembersQueryFields>
+): Filter {
+  return {
+    id: rule.field,
+    operator: rule.operator,
+    values: Array.isArray(rule.value) ? rule.value : [rule.value],
+  };
+}
+function getCurrentFilters(): Filter[] | null {
   if (!props.rules) {
     return null;
   }
@@ -147,14 +157,7 @@ function getCurrentFilters() {
     (rule) => 'operator' in rule
   ) as GetPaginatedQueryRule<GetMembersQueryFields>[];
 
-  return rulesWithoutGroups.map(
-    (rule) =>
-      ({
-        id: rule.field,
-        operator: rule.operator,
-        values: Array.isArray(rule.value) ? rule.value : [rule.value],
-      } as Filter)
-  );
+  return rulesWithoutGroups.map(convertRuleToFilter);
 }
 
 const currentFilters = computed(getCurrentFilters);

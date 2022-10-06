@@ -15,11 +15,13 @@
     />
     <template v-if="modelValue.id">
       <AppSelect
+        v-if="fieldOperatorItems.length > 1"
         :model-value="modelValue.operator"
         :items="fieldOperatorItems"
         required
         @update:model-value="changeOperator"
       />
+      <span v-else>{{ fieldOperatorItems[0].label }}</span>
       <SearchBoxFilterArgs :filter="modelValue" />
     </template>
   </div>

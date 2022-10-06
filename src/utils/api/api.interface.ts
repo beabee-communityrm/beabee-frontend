@@ -24,16 +24,25 @@ export type AllowNull<T> = {
 
 export type PermissionType = 'member' | 'admin' | 'superadmin';
 
-type GetPaginatedQueryRuleOperator =
+export type GetPaginatedQueryRuleOperator =
   | 'equal'
-  | 'contains'
-  | 'begins_with'
-  | 'ends_with'
-  | 'between'
+  | 'not_equal'
   | 'less'
-  | 'greater';
+  | 'less_or_equal'
+  | 'greater'
+  | 'greater_or_equal'
+  | 'between'
+  | 'not_between'
+  | 'begins_with'
+  | 'not_begins_with'
+  | 'contains'
+  | 'not_contains'
+  | 'ends_with'
+  | 'not_ends_with'
+  | 'is_empty'
+  | 'is_not_empty';
 
-type GetPaginatedQueryRuleValue = string | number | boolean;
+export type GetPaginatedQueryRuleValue = string | number | boolean;
 
 export interface GetPaginatedQueryRule<T> {
   field: T;
@@ -127,11 +136,19 @@ export type GetMembersQueryFields =
   | 'firstname'
   | 'lastname'
   | 'email'
-  | 'joined';
-// | 'contributionType'
-// | 'contributionMonthlyAmount'
-// | 'contributionPeriod'
-// | 'deliveryOptIn';
+  | 'joined'
+  | 'lastSeen'
+  | 'contributionType'
+  | 'contributionMonthlyAmount'
+  | 'contributionPeriod'
+  | 'deliveryOptIn'
+  | 'newsletterStatus'
+  | 'activePermission'
+  | 'activeMembership'
+  | 'membershipStarts'
+  | 'membershipExpires'
+  | 'manualPaymentSource'
+  | 'tags';
 export type GetMembersQuery = GetPaginatedQuery<GetMembersQueryFields>;
 
 export type UpdateMemberProfileData = Partial<MemberProfileData>;
@@ -407,8 +424,7 @@ export interface CompleteSignupData {
 export interface GetSegmentData {
   id: string;
   name: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ruleGroup: any; // TODO: add types
+  ruleGroup: GetPaginatedQueryRuleGroup<GetMembersQueryFields>;
   order: number;
   memberCount: number;
 }

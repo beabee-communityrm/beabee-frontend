@@ -1,15 +1,23 @@
-export type FilterValue = string | number;
+import {
+  GetPaginatedQueryRuleOperator,
+  GetPaginatedQueryRuleValue,
+} from '../../../../utils/api/api.interface';
 
-export type FilterType = 'text' | 'date';
+export interface FilterArgs {
+  type: FilterType;
+  options?: string[];
+}
 
-export type FilterOperatorId =
-  | 'equal'
-  | 'contains'
-  | 'begins_with'
-  | 'ends_with'
-  | 'between'
-  | 'less'
-  | 'greater';
+export type FilterType =
+  | 'text'
+  | 'date'
+  | 'number'
+  | 'boolean'
+  | 'array'
+  | 'enum';
+
+export type FilterOperatorId = GetPaginatedQueryRuleOperator;
+export type FilterValue = GetPaginatedQueryRuleValue;
 
 export interface FilterOperatorParams {
   args: number;
@@ -31,6 +39,20 @@ export const operators: Record<
     less: { args: 1 },
     greater: { args: 1 },
   },
+  number: {
+    equal: { args: 1 },
+    less: { args: 1 },
+    greater: { args: 1 },
+  },
+  boolean: {
+    equal: { args: 1 },
+  },
+  array: {
+    contains: { args: 1 },
+  },
+  enum: {
+    equal: { args: 1 },
+  },
 };
 
 export const filters = {
@@ -45,6 +67,45 @@ export const filters = {
   },
   joined: {
     type: 'date',
+  },
+  lastSeen: {
+    type: 'date',
+  },
+  contributionType: {
+    type: 'enum',
+    options: ['Automatic', 'Gift', 'Manual', 'None'],
+  },
+  contributionMonthlyAmount: {
+    type: 'number',
+  },
+  contributionPeriod: {
+    type: 'enum',
+    options: ['monthly', 'annual'],
+  },
+  deliveryOptIn: {
+    type: 'boolean',
+  },
+  newsletterStatus: {
+    type: 'text',
+  },
+  activePermission: {
+    type: 'enum',
+    options: ['member', 'admin', 'superadmin'],
+  },
+  activeMembership: {
+    type: 'boolean',
+  },
+  membershipStarts: {
+    type: 'date',
+  },
+  membershipExpires: {
+    type: 'date',
+  },
+  manualPaymentSource: {
+    type: 'text',
+  },
+  tags: {
+    type: 'array',
   },
 } as const;
 

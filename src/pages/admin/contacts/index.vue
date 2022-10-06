@@ -113,10 +113,7 @@ import { Header, SortType } from '../../../components/table/table.interface';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import AppPagination from '../../../components/AppPagination.vue';
-import {
-  fetchSegmentMembers,
-  fetchSegments,
-} from '../../../utils/api/segments';
+import { fetchSegments } from '../../../utils/api/segments';
 import AppButton from '../../../components/forms/AppButton.vue';
 import SearchBox from '../../../components/pages/admin/contacts/SearchBox.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
@@ -189,7 +186,16 @@ const currentSearch = computed({
 });
 
 const currentRules = computed<GetMembersQuery['rules']>({
-  get: () => (route.query.r ? JSON.parse(route.query.r as string) : undefined),
+  get: () => {
+    if (route.query.r) {
+      return JSON.parse(route.query.r as string);
+    } else if (currentSegment.value) {
+      return segments.value.find((s) => s.id === currentSegment.value)
+        ?.ruleGroup;
+    } else {
+      return undefined;
+    }
+  },
   set: (r) =>
     router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
 });
@@ -273,11 +279,6 @@ watchEffect(async () => {
     }),
   };
 
-  contactsTable.value = currentSegment.value
-    ? await fetchSegmentMembers(currentSegment.value, query, [
-        'profile',
-        'roles',
-      ])
-    : await fetchMembers(query, ['profile', 'roles']);
+  contactsTable.value = await fetchMembers(query, ['profile', 'roles']);
 });
 </script>

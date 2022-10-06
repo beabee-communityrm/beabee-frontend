@@ -1,24 +1,60 @@
 <template>
   <b v-if="readonly">
-    {{ type === 'date' ? formatLocale(new Date(modelValue), 'P') : modelValue }}
+    {{
+      args.type === 'date'
+        ? formatLocale(new Date(modelValue as string), 'P')
+        : modelValue
+    }}
   </b>
-  <AppInput v-else v-model="value" :type="type" required hide-error-message />
+  <template v-else>
+    <AppRadioGroup
+      v-if="args.type === 'boolean'"
+      v-model="value"
+      name=""
+      :options="[
+        [true, 'Yes'],
+        [false, 'No'],
+      ]"
+      class="flex gap-2"
+    />
+    <AppSelect
+      v-else-if="args.type === 'enum'"
+      v-model="value"
+      :items="args.options?.map((opt) => ({ id: opt, label: opt })) || []"
+    />
+    <AppInput
+      v-else-if="args.type === 'array'"
+      v-model="value"
+      type="text"
+      required
+      hide-error-message
+    />
+    <AppInput
+      v-else
+      v-model="value"
+      :type="args.type"
+      required
+      hide-error-message
+    />
+  </template>
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { formatLocale } from '../../../../../utils/dates/locale-date-formats';
 import AppInput from '../../../../forms/AppInput.vue';
-import { FilterType, FilterValue } from '../contacts.interface';
+import { FilterArgs, FilterValue } from '../contacts.interface';
+import AppRadioGroup from '../../../../forms/AppRadioGroup.vue';
+import AppSelect from '../../../../forms/AppSelect.vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   modelValue: FilterValue;
-  type: FilterType;
+  args: FilterArgs;
   readonly: boolean;
 }>();
 
 const value = computed({
-  get: () => props.modelValue,
+  get: () => props.modelValue as any,
   set: (modelValue) => emit('update:modelValue', modelValue),
 });
 </script>
