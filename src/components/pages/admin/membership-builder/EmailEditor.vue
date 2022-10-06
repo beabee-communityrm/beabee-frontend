@@ -18,7 +18,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { currentUser } from '../../../../store';
 import AppSubHeading from '../../../AppSubHeading.vue';
 import AppInput from '../../../forms/AppInput.vue';
@@ -31,6 +31,9 @@ const props = defineProps<{
   email: { body: string; subject: string } | false;
   footer: string;
 }>();
+
+// Allows us to mutate the props directly
+const email = ref(props.email);
 
 const emailBody = computed(
   () =>
