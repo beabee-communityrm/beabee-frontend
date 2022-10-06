@@ -5,7 +5,7 @@
   <AppInput v-else v-model="value" :type="type" required hide-error-message />
 </template>
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import { formatLocale } from '../../../../../utils/dates/locale-date-formats';
 import AppInput from '../../../../forms/AppInput.vue';
 import { FilterType, FilterValue } from '../contacts.interface';

@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <ArgInput v-model="values[0]" :type="type" :readonly="readonly" />
   {{ t('advancedSearch.matchWord.all') }}
@@ -7,8 +8,6 @@
 import { useI18n } from 'vue-i18n';
 import { FilterType, FilterValue } from '../contacts.interface';
 import ArgInput from './ArgInput.vue';
-
 const { t } = useI18n();
-
 defineProps<{ values: FilterValue[]; type: FilterType; readonly: boolean }>();
 </script>

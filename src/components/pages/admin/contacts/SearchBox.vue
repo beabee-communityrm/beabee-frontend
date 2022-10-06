@@ -1,14 +1,13 @@
 <template>
   <div class="flex">
-    <!--<div class="flex-1">actions</div>-->
     <AppSearchInput v-model="searchText" :placeholder="t('contacts.search')" />
     <button
       class="ml-2 flex items-center rounded border border-primary-40 px-3 text-sm font-semibold"
-      @click="toggleAdvancedSearch"
       :class="
         showAdvancedSearch &&
         'relative rounded-b-none border border-b-primary/0'
       "
+      @click="toggleAdvancedSearch"
     >
       {{ t('contacts.advancedSearch') }}
       <font-awesome-icon
@@ -49,7 +48,11 @@
           :key="i"
           class="group relative -mx-4 gap-2 border-b border-primary-40 bg-primary-10 px-4 py-6 first:border-t"
         >
-          <SearchBoxFilter :filter="filter" @remove="removeFilter(i)" />
+          <SearchBoxFilter
+            :model-value="filter"
+            @update:model-value="filters[i] = $event"
+            @remove="removeFilter(i)"
+          />
           <span
             class="absolute bottom-full left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded bg-primary-70 px-2 py-1 font-bold uppercase text-white group-first:hidden"
             >{{ t('advancedSearch.matchWord.' + matchType) }}</span
@@ -84,7 +87,7 @@
   </form>
   <ul
     v-else-if="currentFilters"
-    class="my-2 flex flex-wrap items-center gap-2 text-sm text-body-80"
+    class="my-4 flex flex-wrap items-center gap-2 text-sm text-body-80"
   >
     <template v-for="(filter, i) in currentFilters" :key="i">
       <li class="rounded-full border border-primary-70 px-2 py-1">
@@ -134,23 +137,27 @@ const showAdvancedSearch = ref(false);
 const currentMatchType = computed(() =>
   props.rules?.condition === 'OR' ? 'any' : 'all'
 );
-const currentFilters = computed(() => {
-  if (props.rules) {
-    // TODO: how to handle groups?
-    const rulesWithoutGroups = props.rules.rules.filter(
-      (rule) => 'operator' in rule
-    ) as GetPaginatedQueryRule<GetMembersQueryFields>[];
-
-    return rulesWithoutGroups.map(
-      (rule) =>
-        ({
-          id: rule.field,
-          operator: rule.operator,
-          values: Array.isArray(rule.value) ? rule.value : [rule.value],
-        } as Filter)
-    );
+function getCurrentFilters() {
+  if (!props.rules) {
+    return null;
   }
-});
+
+  // TODO: how to handle groups?
+  const rulesWithoutGroups = props.rules.rules.filter(
+    (rule) => 'operator' in rule
+  ) as GetPaginatedQueryRule<GetMembersQueryFields>[];
+
+  return rulesWithoutGroups.map(
+    (rule) =>
+      ({
+        id: rule.field,
+        operator: rule.operator,
+        values: Array.isArray(rule.value) ? rule.value : [rule.value],
+      } as Filter)
+  );
+}
+
+const currentFilters = computed(getCurrentFilters);
 
 const matchType = ref<'all' | 'any'>('all');
 const filters = ref<(EmptyFilter | Filter)[]>([]);
@@ -168,7 +175,7 @@ function addFilter() {
 
 function reset() {
   matchType.value = currentMatchType.value;
-  filters.value = currentFilters.value || [emptyFilter()];
+  filters.value = getCurrentFilters() || [emptyFilter()];
 }
 
 watch(() => props.rules, reset);

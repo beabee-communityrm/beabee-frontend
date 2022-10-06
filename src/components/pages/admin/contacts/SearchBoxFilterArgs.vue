@@ -8,7 +8,7 @@
 </template>
 <script lang="ts" setup>
 import { Filter, filters } from './contacts.interface';
-import Between from './operators/Between.vue';
+import BetweenArgs from './operators/BetweenArgs.vue';
 import SingleArg from './operators/SingleArg.vue';
 
 defineProps<{ filter: Filter; readonly?: boolean }>();
@@ -18,7 +18,7 @@ const operatorComponents = {
   contains: SingleArg,
   begins_with: SingleArg,
   ends_with: SingleArg,
-  between: Between,
+  between: BetweenArgs,
   less: SingleArg,
   greater: SingleArg,
 } as const;

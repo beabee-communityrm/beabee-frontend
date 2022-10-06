@@ -1,26 +1,26 @@
 <template>
   <div class="flex items-center gap-2">
     <button
-      @click="emit('remove')"
       class="-ml-2 p-2 leading-tight text-primary-80 hover:text-primary"
       type="button"
+      @click="emit('remove')"
     >
       <font-awesome-icon :icon="['fa', 'times']" />
     </button>
     <AppSelect
-      :model-value="filter.id"
+      :model-value="modelValue.id"
       :items="filterItems"
       required
       @update:model-value="changeFilter"
     />
-    <template v-if="filter.id">
+    <template v-if="modelValue.id">
       <AppSelect
-        :model-value="filter.operator"
+        :model-value="modelValue.operator"
         :items="fieldOperatorItems"
         required
         @update:model-value="changeOperator"
       />
-      <SearchBoxFilterArgs :filter="filter" />
+      <SearchBoxFilterArgs :filter="modelValue" />
     </template>
   </div>
 </template>
@@ -39,9 +39,9 @@ import {
 } from './contacts.interface';
 import SearchBoxFilterArgs from './SearchBoxFilterArgs.vue';
 
-const emit = defineEmits(['change', 'remove']);
+const emit = defineEmits(['update:modelValue', 'remove']);
 const props = defineProps<{
-  filter: Filter | EmptyFilter;
+  modelValue: Filter | EmptyFilter;
 }>();
 
 const { t } = useI18n();
@@ -68,7 +68,7 @@ const typeOperatorItems = Object.fromEntries(
 );
 
 const activeFilter = computed(
-  () => props.filter.id && filters[props.filter.id]
+  () => props.modelValue.id && filters[props.modelValue.id]
 );
 
 const fieldOperatorItems = computed(() =>
@@ -76,22 +76,21 @@ const fieldOperatorItems = computed(() =>
 );
 
 function changeFilter(id: FilterId) {
-  props.filter.id = id;
-  props.filter.operator = 'equal';
-  props.filter.values = [];
+  emit('update:modelValue', { id, operator: 'equal', values: [] });
 }
 
 function changeOperator(operator: FilterOperatorId) {
-  if (props.filter.id) {
-    const oldOperator = props.filter.operator;
-    const operators = getOperators(props.filter);
+  if (props.modelValue.id) {
+    const oldOperator = props.modelValue.operator;
+    const operators = getOperators(props.modelValue);
     const newArgs = (operator && operators[operator]?.args) || 0;
     const oldArgs = (oldOperator && operators[oldOperator]?.args) || 0;
 
-    props.filter.operator = operator;
-    if (newArgs !== oldArgs) {
-      props.filter.values = new Array(newArgs);
-    }
+    emit('update:modelValue', {
+      ...props.modelValue,
+      operator,
+      ...(newArgs !== oldArgs && { values: new Array(newArgs) }),
+    });
   }
 }
 </script>
