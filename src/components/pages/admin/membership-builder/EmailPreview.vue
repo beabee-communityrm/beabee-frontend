@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable-next-line vue/no-v-html -->
   <div class="content-message bg-white p-4 shadow" v-html="email" />
 </template>
 <script lang="ts" setup>

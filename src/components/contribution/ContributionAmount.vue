@@ -76,7 +76,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, toRefs } from '@vue/reactivity';
+import { computed, toRefs } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { minValue } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';

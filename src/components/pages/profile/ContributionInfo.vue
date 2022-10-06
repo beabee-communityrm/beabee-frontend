@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';

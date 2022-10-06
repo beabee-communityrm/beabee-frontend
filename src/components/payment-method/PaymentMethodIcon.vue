@@ -5,14 +5,14 @@
 <script lang="ts" setup>
 import { PaymentMethod } from '../../utils/enums/payment-method.enum';
 import BACS from './icons/BACS.vue';
-import Card from './icons/Card.vue';
+import CreditCard from './icons/CreditCard.vue';
 import DirectDebit from './icons/DirectDebit.vue';
 import SEPA from './icons/SEPA.vue';
 
 defineProps<{ method: PaymentMethod }>();
 
 const icons = {
-  [PaymentMethod.StripeCard]: Card,
+  [PaymentMethod.StripeCard]: CreditCard,
   [PaymentMethod.StripeSEPA]: SEPA,
   [PaymentMethod.StripeBACS]: BACS,
   [PaymentMethod.GoCardlessDirectDebit]: DirectDebit,
