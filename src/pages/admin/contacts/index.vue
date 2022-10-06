@@ -230,9 +230,7 @@ function getMembershipStartDate(member: GetMemberDataWith<'roles'>): string {
 
 onBeforeMount(async () => {
   // Load the total if in a segment, otherwise it will be updated automatically below
-  if (currentSegment.value) {
-    contactsTotal.value = (await fetchMembers({ limit: 1 })).total;
-  }
+  contactsTotal.value = (await fetchMembers({ limit: 1 })).total;
   segments.value = await fetchSegments();
 });
 
@@ -281,10 +279,5 @@ watchEffect(async () => {
         'roles',
       ])
     : await fetchMembers(query, ['profile', 'roles']);
-
-  // Update all contacts total if no segment
-  if (!currentSegment.value) {
-    contactsTotal.value = contactsTable.value.total;
-  }
 });
 </script>
