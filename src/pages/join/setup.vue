@@ -10,8 +10,8 @@ meta:
     <AuthBox>
       <SetupForm
         :setup-content="setupContent"
-        @submit="completeSetup"
         :loading="saving"
+        @submit="completeSetup"
       />
     </AuthBox>
   </Suspense>

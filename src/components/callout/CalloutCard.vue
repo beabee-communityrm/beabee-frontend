@@ -45,8 +45,7 @@
 
 <script lang="ts" setup>
 import { format } from 'date-fns';
-import { ref } from '@vue/reactivity';
-import { onBeforeMount } from '@vue/runtime-core';
+import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
 import { GetCalloutData } from '../../utils/api/api.interface';

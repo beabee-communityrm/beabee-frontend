@@ -56,7 +56,7 @@ import AppAddress from '../../../AppAddress.vue';
 import ContactMailOptIn from '../../../ContactMailOptIn.vue';
 import { useI18n } from 'vue-i18n';
 import { useInformation } from './use-information';
-import { onBeforeMount } from '@vue/runtime-core';
+import { onBeforeMount } from 'vue';
 import AppHeading from '../../../AppHeading.vue';
 import useVuelidate from '@vuelidate/core';
 

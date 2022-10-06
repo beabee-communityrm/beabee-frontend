@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import { Notification, NotificationType } from './notification.interface';
 
 const props = defineProps({

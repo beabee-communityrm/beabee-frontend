@@ -30,6 +30,7 @@ onBeforeMount(async () => {
       });
       router.replace('/join/confirm-email');
       return;
+      // eslint-disable-next-line no-empty
     } catch (err) {}
   }
 
