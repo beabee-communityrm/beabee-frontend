@@ -6,6 +6,7 @@
     "delete": "Löschen",
     "edit": "Bearbeiten",
     "participate": "Teilnehmen",
+    "preview": "Vorschau",
     "publish": "Veröffentlichen",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
@@ -115,6 +116,7 @@
       "address": "Diesen Callout per Link teilen:",
       "services": "Diesen Callout auf einer der folgenden Plattformen teilen: "
     },
+    "showingPreview": "Antworten sind im Vorschaumodus deaktiviert",
     "status": {
       "endedOn": "am {date}",
       "endsIn": "Endet in {duration}",
