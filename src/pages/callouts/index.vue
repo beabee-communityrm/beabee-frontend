@@ -90,7 +90,7 @@ import {
   ItemStatus,
   Paginated,
 } from '../../utils/api/api.interface';
-import CalloutCard from '../../components/CalloutCard.vue';
+import CalloutCard from '../../components/callout/CalloutCard.vue';
 import AppSearchInput from '../../components/forms/AppSearchInput.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { fetchCallouts } from '../../utils/api/callout';

@@ -14,7 +14,7 @@
   </router-link>
 </template>
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
 
 const props = defineProps({

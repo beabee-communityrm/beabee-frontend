@@ -13,7 +13,7 @@ const router = createRouter({
   },
 });
 
-watch([i18n.global.locale, router.currentRoute], ([locale, route]) => {
+watch([i18n.global.locale, router.currentRoute], ([, route]) => {
   document.title =
     (route.meta.pageTitle ? i18n.global.t(route.meta.pageTitle) + ' - ' : '') +
     generalContent.value.organisationName;

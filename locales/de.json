@@ -5,6 +5,8 @@
     "continue": "Weiter",
     "delete": "Löschen",
     "edit": "Bearbeiten",
+    "participate": "Teilnehmen",
+    "preview": "Vorschau",
     "publish": "Veröffentlichen",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
@@ -33,7 +35,7 @@
       "revenue": "Einnahmen",
       "title": "Überblick der letzten 30 Tage"
     },
-    "responsesSoFar": "Antworten bisher",
+    "responsesSoFar": "{n} Antwort bisher | {n} Antworten bisher",
     "seeAllResponses": "Alle Antworten anzeigen",
     "supportInbox": "<p>Benötigst du Hilfe? Besuche unser <a href=\"https://wiki.beabee.io/beabee-help-center/\">beabee Help Center</a> oder schreib' uns eine E-Mail an: <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
     "welcomeBack": "Willkommen zurück {firstName}!"
@@ -114,6 +116,7 @@
       "address": "Diesen Callout per Link teilen:",
       "services": "Diesen Callout auf einer der folgenden Plattformen teilen: "
     },
+    "showingPreview": "Antworten sind im Vorschaumodus deaktiviert",
     "status": {
       "endedOn": "am {date}",
       "endsIn": "Endet in {duration}",
@@ -214,7 +217,7 @@
     "monthly": "Monatlich",
     "new": "neu!",
     "no": "Nein",
-    "participate": "Teilnehmen",
+    "noResults": "Keine Ergebnisse gefunden",
     "role": {
       "admin": "Admin",
       "member": "Mitglied",

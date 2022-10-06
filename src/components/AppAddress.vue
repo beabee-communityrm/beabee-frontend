@@ -5,7 +5,7 @@
       :label="t('form.addressLine1')"
       name="addressLine1"
       :required="required"
-      @update:modelValue="$emit('update:line1', $event)"
+      @update:model-value="$emit('update:line1', $event)"
     />
   </div>
 
@@ -13,7 +13,7 @@
     <AppInput
       :model-value="line2"
       :label="t('form.addressLine2')"
-      @update:modelValue="$emit('update:line2', $event)"
+      @update:model-value="$emit('update:line2', $event)"
     />
   </div>
 
@@ -24,7 +24,7 @@
         :label="t('form.cityOrTown')"
         name="cityOrTown"
         :required="required"
-        @update:modelValue="$emit('update:cityOrTown', $event)"
+        @update:model-value="$emit('update:cityOrTown', $event)"
       />
     </div>
 
@@ -34,7 +34,7 @@
         :label="t('form.postCode')"
         name="postCode"
         :required="required"
-        @update:modelValue="$emit('update:postCode', $event)"
+        @update:model-value="$emit('update:postCode', $event)"
       />
     </div>
   </div>

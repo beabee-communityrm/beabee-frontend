@@ -130,6 +130,7 @@ const rules = computed(() => ({
 
 const validation = useVuelidate(rules, {
   value: toRef(props, 'modelValue'),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } as any); // TODO: type error
 const hasError = computed(() => validation.value.$errors.length > 0);
 

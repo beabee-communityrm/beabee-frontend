@@ -5,6 +5,8 @@
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
+    "participate": "Participate",
+    "preview": "Preview",
     "publish": "Publish",
     "replicate": "Replicate",
     "reset": "Reset",
@@ -33,7 +35,7 @@
       "revenue": "Revenue",
       "title": "Numbers for the last 30 days"
     },
-    "responsesSoFar": "responses so far",
+    "responsesSoFar": "{n} response so far | {n} responses so far",
     "seeAllResponses": "See all responses",
     "supportInbox": "<p>Need help? Please visit <a href=\"https://wiki.beabee.io/help-center-english/\">the beabee Help Center</a> or use our support inbox: <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
     "welcomeBack": "Welcome back {firstName}!"
@@ -114,6 +116,7 @@
       "address": "Share this callout with the following address:",
       "services": "Or quickly share using one of these services:"
     },
+    "showingPreview": "Response submission is disabled in preview mode",
     "status": {
       "endedOn": "on {date}",
       "endsIn": "Ends in {duration}",
@@ -215,7 +218,6 @@
     "new": "new!",
     "no": "No",
     "noResults": "No results found",
-    "participate": "Participate",
     "role": {
       "admin": "Admin",
       "member": "Member",
