@@ -121,113 +121,129 @@ meta:
 
     <div>
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
-      <AppInfoList v-for="role in contact.roles" :key="role.role">
-        <AppInfoListItem :name="t(`common.role.${role.role}`)">
-          <AppRoundBadge :type="isRoleCurrent(role) ? 'success' : 'danger'" />
+      <div v-for="role in contact.roles" :key="role.role">
+        <div
+          class="mt-4 flex items-center rounded border border-primary-20 px-2.5 py-1"
+        >
+          <AppRoundBadge
+            :type="isRoleCurrent(role) ? 'success' : 'danger'"
+            class="mx-2"
+          />
+          <strong class="mx-2 text-sm font-bold uppercase">
+            {{ t(`common.role.${role.role}`) }}
+          </strong>
           {{ formatLocale(role.dateAdded, 'P') + ' → ' }}
           {{
             role.dateExpires
               ? formatLocale(role.dateExpires, 'P')
               : t('contacts.data.rolesCopy.today')
           }}
-          <AppButton variant="text" class="ml-2" @click="openEditRoleForm(role)"
-            >Edit</AppButton
-          >
-        </AppInfoListItem>
-      </AppInfoList>
-
-      <div class="mt-4">
-        <AppButton
-          variant="primaryOutlined"
-          @click="isNewRoleFormVisible = true"
-          >Add role</AppButton
-        >
-      </div>
-    </div>
-
-    <div
-      v-if="isNewRoleFormVisible"
-      class="flex flex-1 justify-center rounded border border-primary-20 py-4 px-10"
-    >
-      <form @submit.prevent="handleNewRoleFormSubmit" class="flex-initial">
-        <div class="my-3 py-3">
-          <AppSelect
-            v-model="newRole.role"
-            label="New role"
-            :items="roleOptions"
-          />
+          <div class="ml-auto">
+            <AppButton variant="text" size="sm" @click="openEditRoleForm(role)"
+              >Edit</AppButton
+            >
+            <AppButton variant="dangerText" size="sm" @click="handleDeleteRole">
+              Delete role
+            </AppButton>
+          </div>
         </div>
-
         <div>
+          <AppButton
+            variant="primaryOutlined"
+            @click="isNewRoleFormVisible = true"
+            class="w-full !bg-primary-5"
+            >Add role</AppButton
+          >
+        </div>
+      </div>
+
+      <div
+        v-if="isNewRoleFormVisible"
+        class="flex flex-1 justify-center rounded border border-primary-20 py-4 px-10"
+      >
+        <form @submit.prevent="handleNewRoleFormSubmit" class="flex-initial">
           <div class="my-3 py-3">
-            <AppLabel :label="inputT('starts.label')" required />
-            <AppRadioGroup
-              name="roleStartDate"
-              v-model="newRoleHasStartDate"
-              :options="[
-                [false, inputT('starts.opts.now')],
-                [true, inputT('starts.opts.schedule')],
-              ]"
-              required
+            <AppSelect
+              v-model="newRole.role"
+              label="New role"
+              :items="roleOptions"
             />
-            <div v-if="newRoleHasStartDate" class="flex gap-2">
-              <div>
-                <AppInput type="date" required />
-              </div>
-              <!--
+          </div>
+
+          <div>
+            <div class="my-3 py-3">
+              <AppLabel :label="inputT('starts.label')" required />
+              <AppRadioGroup
+                name="roleStartDate"
+                v-model="newRoleHasStartDate"
+                :options="[
+                  [false, inputT('starts.opts.now')],
+                  [true, inputT('starts.opts.schedule')],
+                ]"
+                required
+              />
+              <div v-if="newRoleHasStartDate" class="flex gap-2">
+                <div>
+                  <AppInput type="date" required />
+                </div>
+                <!--
               <div>
                 <AppInput type="time" required />
               </div>
-              -->
+              --></div>
             </div>
-          </div>
 
-          <div class="my-3 py-3">
-            <AppRadioGroup
-              name="roleEndDate"
-              v-model="newRoleHasEndDate"
-              :label="inputT('expires.label')"
-              :options="[
-                [false, inputT('expires.opts.never')],
-                [true, inputT('expires.opts.schedule')],
-              ]"
-              required
-            />
-            <div v-if="newRoleHasEndDate" class="flex gap-2">
-              <div>
-                <AppInput v-model="newRole.dateExpires" type="date" required />
-              </div>
-              <!--
+            <div class="my-3 py-3">
+              <AppRadioGroup
+                name="roleEndDate"
+                v-model="newRoleHasEndDate"
+                :label="inputT('expires.label')"
+                :options="[
+                  [false, inputT('expires.opts.never')],
+                  [true, inputT('expires.opts.schedule')],
+                ]"
+                required
+              />
+              <div v-if="newRoleHasEndDate" class="flex gap-2">
+                <div>
+                  <AppInput
+                    v-model="newRole.dateExpires"
+                    type="date"
+                    required
+                  />
+                </div>
+                <!--
               <div>
                 <AppInput v-model="newRole.dateExpires" type="time" required />
               </div>
-            --></div>
+            -->
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="my-3 flex py-3">
-          <AppButton
-            type="submit"
-            variant="primary"
-            :loading="newRoleFormLoading"
-            >Add role</AppButton
-          >
-          <AppButton
-            variant="text"
-            class="ml-2"
-            @click="isNewRoleFormVisible = false"
-            >{{ t('form.cancel') }}</AppButton
-          >
-        </div>
-      </form>
-    </div>
+          <div class="my-3 flex py-3">
+            <AppButton
+              type="submit"
+              variant="primary"
+              :loading="newRoleFormLoading"
+              >Add role</AppButton
+            >
+            <AppButton
+              variant="text"
+              class="ml-2"
+              @click="isNewRoleFormVisible = false"
+              >{{ t('form.cancel') }}</AppButton
+            >
+          </div>
+        </form>
+      </div>
 
-    <div
-      v-if="isEditRoleFormVisible"
-      class="flex flex-1 justify-center rounded border border-primary-20 py-4 px-10"
-    >
-      <form @submit.prevent="handleEditRoleFormSubmit" class="flex-initial">
-        <!--
+      <div
+        v-if="isEditRoleFormVisible"
+        class="flex flex-1 justify-center rounded border border-primary-20 py-4 px-10"
+      >
+        <form @submit.prevent="handleEditRoleFormSubmit" class="flex-initial">
+          <!--
         <div class="my-3 py-3">
           <AppSelect
             v-model="editRole.role"
@@ -237,56 +253,54 @@ meta:
         </div>
       -->
 
-        <div>
-          <div class="my-3 py-3">
-            <AppLabel :label="inputT('starts.label')" required />
-            <div class="flex gap-2">
-              <div>
-                <AppDateInput v-model="editRole.dateAdded" />
-              </div>
-              <!--
+          <div>
+            <div class="my-3 py-3">
+              <AppLabel :label="inputT('starts.label')" required />
+              <div class="flex gap-2">
+                <div>
+                  <AppDateInput v-model="editRole.dateAdded" />
+                </div>
+                <!--
               <div>
                 <AppInput type="time" required />
               </div>
-              -->
+              --></div>
             </div>
-          </div>
 
-          <div class="my-3 py-3">
-            <div class="flex gap-2">
-              <div>
-                <AppDateInput
-                  v-model="editRole.dateExpires"
-                  type="date"
-                  required
-                />
-              </div>
-              <!--
+            <div class="my-3 py-3">
+              <div class="flex gap-2">
+                <div>
+                  <AppDateInput
+                    v-model="editRole.dateExpires"
+                    type="date"
+                    required
+                  />
+                </div>
+                <!--
               <div>
                 <AppInput v-model="editRole.dateExpires" type="time" required />
               </div>
-            --></div>
+            -->
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="my-3 flex py-3">
-          <AppButton
-            type="submit"
-            variant="primary"
-            :loading="editRoleFormLoading"
-            >Save role</AppButton
-          >
-          <AppButton
-            variant="text"
-            class="ml-2"
-            @click="isEditRoleFormVisible = false"
-            >{{ t('form.cancel') }}</AppButton
-          >
-          <AppButton variant="danger" class="ml-2" @click="handleDeleteRole">
-            Delete role
-          </AppButton>
-        </div>
-      </form>
+          <div class="my-3 flex py-3">
+            <AppButton
+              type="submit"
+              variant="primary"
+              :loading="editRoleFormLoading"
+              >Save role</AppButton
+            >
+            <AppButton
+              variant="text"
+              class="ml-2"
+              @click="isEditRoleFormVisible = false"
+              >{{ t('form.cancel') }}</AppButton
+            >
+          </div>
+        </form>
+      </div>
     </div>
 
     <div class="hidden">
