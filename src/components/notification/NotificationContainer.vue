@@ -19,7 +19,7 @@
 import { emitter } from '../../plugins/notify';
 import { Notification } from './notification.interface';
 import { reactive } from 'vue';
-import { onBeforeMount } from '@vue/runtime-core';
+import { onBeforeMount } from 'vue';
 import AppNotfication from './AppNotification.vue';
 
 const notifications = reactive<Notification[]>([]);

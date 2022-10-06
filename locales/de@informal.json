@@ -5,6 +5,7 @@
     "continue": "Weiter",
     "delete": "Löschen",
     "edit": "Bearbeiten",
+    "participate": "Teilnehmen",
     "publish": "Veröffentlichen",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
@@ -33,7 +34,7 @@
       "revenue": "Einnahmen",
       "title": "Überblick der letzten 30 Tage"
     },
-    "responsesSoFar": "Antworten bisher",
+    "responsesSoFar": "{n} Antworten bisher",
     "seeAllResponses": "Alle Antworten anzeigen",
     "supportInbox": "<p>Benötigst du Hilfe? Besuche unser <a href=\"https://wiki.beabee.io/beabee-help-center/\">beabee Help Center</a> oder schreib' uns eine E-Mail an:  <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
     "welcomeBack": "Willkommen zurück {firstName}!"
@@ -214,7 +215,7 @@
     "monthly": "Monatlich",
     "new": "neu!",
     "no": "Nein",
-    "participate": "Teilnehmen",
+    "noResults": "Keine Ergebnisse gefunden",
     "role": {
       "admin": "Admin",
       "member": "Mitglied",

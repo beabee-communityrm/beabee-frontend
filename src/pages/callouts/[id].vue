@@ -11,36 +11,7 @@ meta:
     <div class="mb-6 flex items-center justify-between">
       <div class="flex items-center text-sm font-semibold text-body-60">
         <div>
-          <div class="flex flex-col">
-            <AppItemStatus :status="callout.status" />
-            <span
-              v-if="callout.status === ItemStatus.Scheduled && callout.starts"
-            >
-              {{
-                t('callout.status.startsIn', {
-                  duration: formatDistanceLocale(callout.starts, new Date()),
-                })
-              }}
-            </span>
-            <span
-              v-else-if="callout.status === ItemStatus.Open && callout.expires"
-            >
-              {{
-                t('callout.status.endsIn', {
-                  duration: formatDistanceLocale(callout.expires, new Date()),
-                })
-              }}
-            </span>
-            <span
-              v-else-if="callout.status === ItemStatus.Ended && callout.expires"
-            >
-              {{
-                t('callout.status.endedOn', {
-                  date: formatLocale(callout.expires, 'P'),
-                })
-              }}
-            </span>
-          </div>
+          <CalloutStatus :callout="callout" />
         </div>
         <div v-if="hasResponded" class="border-body-40 ml-3 w-32 border-l pl-3">
           {{ t('callout.youResponded') }}
@@ -50,15 +21,17 @@ meta:
         v-if="callout.status === ItemStatus.Open"
         :icon="showSharingPanel ? 'caret-down' : 'share'"
         variant="primaryOutlined"
-        @click="toggleSharePanel"
+        @click="showSharingPanel = !showSharingPanel"
         >{{ t('common.share') }}</AppButton
       >
     </div>
+
     <transition-group name="slide">
       <SharingPanel v-if="showSharingPanel" :slug="callout.slug" />
     </transition-group>
+
     <div
-      v-if="showThanksMessage"
+      v-show="hasResponded || hasSubmittedResponse"
       class="mb-6 flex rounded bg-white p-6 text-lg text-success"
     >
       <div class="flex-0 mr-4 text-2xl">
@@ -74,47 +47,13 @@ meta:
         />
       </div>
     </div>
+
     <figure class="mb-6">
       <img class="w-full object-cover" :src="callout.image" />
     </figure>
+
     <div class="content-message mb-6 text-lg" v-html="callout.intro" />
-    <div
-      class="mb-6 flex w-full flex-col items-center justify-center text-center"
-      v-if="canSeeButNotRespond"
-    >
-      <p class="w-full sm:w-2/3">
-        {{ t('callout.membersOnly') }}
-        <b>{{ t('callout.updateContribution') }}</b>
-      </p>
-      <AppButton
-        class="mt-4 w-full sm:w-1/2"
-        variant="link"
-        to="/profile/contribution"
-      >
-        {{ t('callout.toContributionPage') }}
-      </AppButton>
-    </div>
-    <form
-      v-if="showResponseForm"
-      class="callout-form mt-10 border-t border-primary-40 pt-10"
-      :class="{ 'opacity-50': isFormReadOnly }"
-      @submit.prevent
-    >
-      <GuestFields
-        v-if="showGuestFields"
-        v-model:name="guestName"
-        v-model:email="guestEmail"
-      />
-      <Form
-        :form="callout.formSchema"
-        :submission="formSubmission"
-        :options="formOpts"
-        @submit="handleSubmitResponse as any"
-      />
-      <MessageBox v-if="formError" class="mt-4" type="error">
-        {{ formError }}
-      </MessageBox>
-    </form>
+
     <div v-if="showLoginPrompt" class="my-12">
       <p class="text-center">
         {{ t('callout.membersOnly') }}
@@ -128,6 +67,44 @@ meta:
         </AppButton>
       </div>
     </div>
+
+    <div v-if="showMemberOnlyPrompt" class="my-12 text-center">
+      <p>
+        {{ t('callout.membersOnly') }}
+        <b>{{ t('callout.updateContribution') }}</b>
+      </p>
+      <AppButton
+        class="mt-4 w-full sm:w-1/2"
+        variant="link"
+        to="/profile/contribution"
+      >
+        {{ t('callout.toContributionPage') }}
+      </AppButton>
+    </div>
+
+    <form
+      v-if="showResponseForm"
+      class="callout-form mt-10 border-t border-primary-40 pt-10"
+      :class="{ 'opacity-50': isFormReadOnly }"
+      @submit.prevent
+    >
+      <GuestFields
+        v-if="showGuestFields"
+        v-model:name="guestName"
+        v-model:email="guestEmail"
+      />
+      <Form
+        v-if="currentUserResponses /* Form.IO doesn't respect reactivity */"
+        :form="callout.formSchema"
+        :submission="formSubmission"
+        :options="formOpts"
+        @submit="handleSubmitResponse as any"
+      />
+      <InfoMessage v-if="isPreview" :message="t('callout.showingPreview')" />
+      <MessageBox v-if="formError" class="mt-4" type="error">
+        {{ formError }}
+      </MessageBox>
+    </form>
   </div>
 </template>
 <script lang="ts" setup>
@@ -146,66 +123,55 @@ import {
   fetchCallout,
   fetchResponses,
 } from '../../utils/api/callout';
-import {
-  formatLocale,
-  formatDistanceLocale,
-} from '../../utils/dates/locale-date-formats';
 import AppButton from '../../components/forms/AppButton.vue';
-import AppItemStatus from '../../components/AppItemStatus.vue';
 import MessageBox from '../../components/MessageBox.vue';
 import { currentUser } from '../../store';
 import GuestFields from '../../components/pages/callouts/GuestFields.vue';
 import SharingPanel from '../../components/pages/callouts/CalloutSharingPanel.vue';
 import axios from '../../axios';
+import InfoMessage from '../../components/InfoMessage.vue';
 
 import 'formiojs/dist/formio.form.css';
+import { useRoute } from 'vue-router';
+import CalloutStatus from '../../components/callout/CalloutStatus.vue';
 
 type FormSubmission = { data: CalloutResponseAnswers };
 
 const props = defineProps<{ id: string }>();
 
 const { t } = useI18n();
+const route = useRoute();
+
+const isPreview = computed(() => route.query.preview === null);
 
 const callout = ref<GetCalloutDataWith<'form'>>();
-const responses = ref<Paginated<GetCalloutResponseData>>();
+const currentUserResponses = ref<Paginated<GetCalloutResponseData>>();
 
 const guestName = ref('');
 const guestEmail = ref('');
 
 const showSharingPanel = ref(false);
-const toggleSharePanel = () => {
-  showSharingPanel.value = !showSharingPanel.value;
-};
 
 const hasResponded = computed(
-  () => !!responses.value && responses.value.count > 0
+  () => !!currentUserResponses.value && currentUserResponses.value.count > 0
 );
 
 const canRespond = computed(
   () =>
-    callout.value?.access !== 'member' ||
-    currentUser.value?.activeRoles.includes('member')
+    callout.value?.status === ItemStatus.Open &&
+    (callout.value?.access !== 'member' ||
+      currentUser.value?.activeRoles.includes('member'))
 );
 
-// edge-case where a member is:
-// 1. logged in
-// 2. to a member-only callout
-// 3. but not contributing (anymore)
-// and should be given some indication as
-// to why they can't reply to a callout
-const canSeeButNotRespond = computed(
+const showMemberOnlyPrompt = computed(
   () =>
+    !isPreview.value &&
     callout.value?.access === 'member' &&
-    currentUser.value &&
     !currentUser.value?.activeRoles.includes('member')
 );
 
 const showResponseForm = computed(
-  () =>
-    responses.value &&
-    !showThanksMessage.value &&
-    ((callout.value?.status === ItemStatus.Open && canRespond.value) ||
-      hasResponded.value)
+  () => isPreview.value || canRespond.value || hasResponded.value
 );
 
 const showGuestFields = computed(
@@ -216,30 +182,35 @@ const showLoginPrompt = computed(
   () => callout.value?.access === 'member' && !currentUser.value
 );
 
-const showThanksMessage = ref(false);
+const hasSubmittedResponse = ref(false);
 
 const isFormReadOnly = computed(
   () =>
-    hasResponded.value &&
-    !callout.value?.allowUpdate &&
-    !callout.value?.allowMultiple
+    hasSubmittedResponse.value ||
+    (!isPreview.value &&
+      hasResponded.value &&
+      !callout.value?.allowUpdate &&
+      !callout.value?.allowMultiple)
 );
 
-const formSubmission = computed(() =>
-  callout.value &&
-  !callout.value.allowMultiple &&
-  // Should use `hasResponded` but type narrowing fails
-  !!responses.value &&
-  responses.value.count > 0
-    ? { data: responses.value.items[0].answers }
-    : undefined
-);
+const formSubmission = computed(() => {
+  return !callout.value?.allowMultiple &&
+    // Should use `hasResponded` but type narrowing fails
+    !!currentUserResponses.value &&
+    currentUserResponses.value.count > 0
+    ? { data: currentUserResponses.value.items[0].answers }
+    : undefined;
+});
 
 const formOpts = computed(() => ({
   readOnly: isFormReadOnly.value,
   noAlerts: true,
   hooks: {
     beforeSubmit: (submission: FormSubmission, next: () => void) => {
+      if (isPreview.value) {
+        return;
+      }
+
       if (!showGuestFields.value || (guestName.value && guestEmail.value)) {
         next();
       } else {
@@ -262,7 +233,8 @@ async function handleSubmitResponse(submission: FormSubmission) {
         }),
       answers: submission.data,
     });
-    showThanksMessage.value = true;
+    hasSubmittedResponse.value = true;
+    document.getElementById('top')?.scrollIntoView();
   } catch (err) {
     if (axios.isAxiosError(err) && err.response?.status === 400) {
       formError.value = t('callout.form.submittingResponseError');
@@ -274,11 +246,11 @@ async function handleSubmitResponse(submission: FormSubmission) {
 
 onBeforeMount(async () => {
   formError.value = '';
-  showThanksMessage.value = false;
+  hasSubmittedResponse.value = false;
 
   callout.value = await fetchCallout(props.id, ['form']);
 
-  responses.value = currentUser.value
+  currentUserResponses.value = currentUser.value
     ? await fetchResponses(props.id, {
         rules: {
           condition: 'AND',

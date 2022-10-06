@@ -111,12 +111,17 @@
     @apply hidden !important;
   }
 
+  .formio-component-content,
   .form-group {
     @apply mb-8 flex flex-col;
 
     &.formio-component-button {
       @apply block;
     }
+  }
+
+  .formio-component-content h3 {
+    @apply mb-2 text-xl font-semibold;
   }
 
   .col-form-label {
