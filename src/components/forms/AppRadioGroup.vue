@@ -32,7 +32,7 @@ const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   modelValue: string | boolean | number | null;
   options: [string | boolean | number, string][];
-  name: string;
+  name?: string;
   label?: string;
   inline?: boolean;
   required?: boolean;
@@ -42,6 +42,10 @@ const selected = computed({
   get: () => props.modelValue,
   set: (newValue) => emit('update:modelValue', newValue),
 });
+
+// Use a random name to group the inputs if no name provider
+const uniqueName = Math.random().toString(16).substring(2);
+const name = computed(() => props.name || uniqueName);
 
 const isRequired = computed(() => !!props.required);
 useVuelidate(

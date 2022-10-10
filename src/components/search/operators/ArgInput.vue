@@ -9,7 +9,6 @@
   <AppRadioGroup
     v-else-if="args.type === 'boolean'"
     v-model="value"
-    name=""
     :options="[
       [true, 'Yes'],
       [false, 'No'],

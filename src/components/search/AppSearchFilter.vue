@@ -28,7 +28,6 @@
     <template v-if="filter.id">
       <AppRadioGroup
         :model-value="filter.inclusive"
-        name=""
         :options="[
           [true, 'inc'],
           [false, 'exc'],
