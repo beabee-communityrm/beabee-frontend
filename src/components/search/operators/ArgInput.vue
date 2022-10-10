@@ -15,11 +15,13 @@
       [false, 'No'],
     ]"
     class="flex gap-2"
+    required
   />
   <AppSelect
     v-else-if="args.type === 'enum'"
     v-model="value"
     :items="args.options?.map((opt) => ({ id: opt, label: opt })) || []"
+    required
   />
   <AppInput
     v-else-if="args.type === 'array'"
