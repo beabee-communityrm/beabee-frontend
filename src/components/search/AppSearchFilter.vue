@@ -66,7 +66,7 @@ import {
 import AppSearchFilterArgs from './AppSearchFilterArgs.vue';
 import { filters } from '../pages/admin/contacts/contacts.interface';
 
-const emit = defineEmits(['update', 'remove']);
+const emit = defineEmits(['update:filter', 'remove']);
 const props = defineProps<{
   filters: Filters;
   filter: Filter | EmptyFilter;
@@ -109,7 +109,7 @@ const fieldOperatorItems = computed(() =>
 );
 
 function changeFilter(id: string) {
-  emit('update', {
+  emit('update:filter', {
     id,
     operator: 'equal',
     inclusive: true,
@@ -124,7 +124,7 @@ function changeOperator(operator: FilterOperator, inclusive: boolean) {
     const newArgs = (operator && operators[operator]?.args) || 0;
     const oldArgs = (oldOperator && operators[oldOperator]?.args) || 0;
 
-    emit('update', {
+    emit('update:filter', {
       id: props.filter.id,
       operator,
       inclusive,
