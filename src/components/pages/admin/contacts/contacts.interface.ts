@@ -13,9 +13,6 @@ export const filters: Filters = {
   joined: {
     type: 'date',
   },
-  lastSeen: {
-    type: 'date',
-  },
   contributionType: {
     type: 'enum',
     options: ['Automatic', 'Gift', 'Manual', 'None'],

@@ -22,8 +22,11 @@
 </template>
 
 <script lang="ts" setup>
+import useVuelidate from '@vuelidate/core';
+import { requiredIf } from '@vuelidate/validators';
 import { computed } from 'vue';
 import AppLabel from './AppLabel.vue';
+
 const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps<{
@@ -39,4 +42,14 @@ const selected = computed({
   get: () => props.modelValue,
   set: (newValue) => emit('update:modelValue', newValue),
 });
+
+const isRequired = computed(() => !!props.required);
+useVuelidate(
+  {
+    value: {
+      required: requiredIf(isRequired),
+    },
+  } as any,
+  { value: selected } as any
+);
 </script>

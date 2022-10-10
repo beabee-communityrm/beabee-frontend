@@ -111,7 +111,14 @@
     },
     "matchType": {},
     "matchWord": {},
-    "operators": {}
+    "operators": {
+      "array": {},
+      "boolean": {},
+      "date": {},
+      "enum": {},
+      "number": {},
+      "text": {}
+    }
   },
   "callout": {
     "contactDetails": "Kontaktdaten",
@@ -271,7 +278,6 @@
   },
   "contacts": {
     "addContact": "Kontakt hinzufügen",
-    "advancedSearch": "Erweiterte Suche",
     "allContacts": "Alle Kontakte",
     "data": {
       "amount": "Betrag",

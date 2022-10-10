@@ -111,7 +111,14 @@
     },
     "matchType": {},
     "matchWord": {},
-    "operators": {}
+    "operators": {
+      "array": {},
+      "boolean": {},
+      "date": {},
+      "enum": {},
+      "number": {},
+      "text": {}
+    }
   },
   "callout": {
     "contactDetails": "Kontaktdaten",

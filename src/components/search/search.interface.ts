@@ -31,7 +31,6 @@ export const operators: Record<
     contains: { args: 1 },
     begins_with: { args: 1 },
     ends_with: { args: 1 },
-    is_empty: { args: 0 },
   },
   date: {
     equal: { args: 1 },
@@ -40,15 +39,14 @@ export const operators: Record<
     less_or_equal: { args: 1 },
     greater: { args: 1 },
     greater_or_equal: { args: 1 },
-    is_empty: { args: 0 },
   },
   number: {
     equal: { args: 1 },
+    between: { args: 2 },
     less: { args: 1 },
     less_or_equal: { args: 1 },
     greater: { args: 1 },
     greater_or_equal: { args: 1 },
-    is_empty: { args: 0 },
   },
   boolean: {
     equal: { args: 1 },
@@ -63,6 +61,7 @@ export const operators: Record<
 
 export interface FilterArgs {
   type: FilterType;
+  nullable?: boolean;
   options?: string[];
 }
 

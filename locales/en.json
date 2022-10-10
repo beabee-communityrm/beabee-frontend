@@ -134,13 +134,38 @@
       "any": "or"
     },
     "operators": {
-      "begins_with": "begins with",
-      "between": "between",
-      "contains": "contains",
-      "ends_with": "ends with",
-      "equal": "is",
-      "greater": "after",
-      "less": "before"
+      "array": {
+        "contains": "includes"
+      },
+      "boolean": {
+        "equal": "is"
+      },
+      "date": {
+        "between": "between",
+        "equal": "is",
+        "greater": "after",
+        "greater_or_equal": "after or on",
+        "less": "before",
+        "less_or_equal": "before or on"
+      },
+      "enum": {
+        "equal": "is"
+      },
+      "is_empty": "is empty",
+      "number": {
+        "between": "between",
+        "equal": "is",
+        "greater": "more than",
+        "greater_or_equal": "more than or equal to",
+        "less": "less than",
+        "less_or_equal": "less than or equal to"
+      },
+      "text": {
+        "begins_with": "begins with",
+        "contains": "contains",
+        "ends_with": "ends with",
+        "equal": "is"
+      }
     },
     "saveAsSegment": "Save as segment",
     "selectFilter": "Select a filter",
