@@ -1,10 +1,6 @@
 <template>
   <b v-if="readonly">
-    {{
-      args.type === 'date'
-        ? formatLocale(new Date(modelValue as string), 'P')
-        : modelValue
-    }}
+    {{ readonlyValue }}
   </b>
   <AppRadioGroup
     v-else-if="args.type === 'boolean'"
@@ -29,6 +25,7 @@
     required
     hide-error-message
   />
+  <DateInput v-else-if="args.type === 'date'" v-model="value" />
   <AppInput
     v-else
     v-model="value"
@@ -44,6 +41,7 @@ import AppInput from '../../forms/AppInput.vue';
 import { FilterArgs, FilterValue } from '../search.interface';
 import AppRadioGroup from '../../forms/AppRadioGroup.vue';
 import AppSelect from '../../forms/AppSelect.vue';
+import DateInput from './DateInput.vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
@@ -55,5 +53,18 @@ const props = defineProps<{
 const value = computed({
   get: () => props.modelValue as any,
   set: (modelValue) => emit('update:modelValue', modelValue),
+});
+
+const readonlyValue = computed(() => {
+  if (props.args.type === 'date') {
+    const date = props.modelValue as string;
+    if (date.startsWith('$now')) {
+      return props.modelValue;
+    } else {
+      return formatLocale(new Date(date), 'P');
+    }
+  } else {
+    return props.modelValue;
+  }
 });
 </script>
