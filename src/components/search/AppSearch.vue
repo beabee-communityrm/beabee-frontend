@@ -9,7 +9,7 @@
       "
       @click="toggleAdvancedSearch"
     >
-      {{ t('contacts.advancedSearch') }}
+      {{ t('advancedSearch.button') }}
       <font-awesome-icon
         class="ml-2"
         :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
@@ -28,6 +28,7 @@
     <p class="mb-3">
       <b>{{ t('advancedSearch.createFilters') }}</b>
     </p>
+
     <div class="mb-3 flex items-center gap-2 text-sm text-body-80">
       <span>{{ t('advancedSearch.matchBefore') }}</span>
       <AppSelect
@@ -44,13 +45,13 @@
     <div class="relative mb-8">
       <ul class="mb-3 text-sm">
         <li
-          v-for="(filter, i) in filters"
+          v-for="(filter, i) in selectedFilters"
           :key="i"
           class="group relative -mx-4 gap-2 border-b border-primary-40 bg-primary-10 px-4 py-6 first:border-t"
         >
-          <SearchBoxFilter
-            :model-value="filter"
-            @update:model-value="filters[i] = $event"
+          <AppSearchFilter
+            v-model:filter="selectedFilters[i]"
+            :filters="filters"
             @remove="removeFilter(i)"
           />
           <span
@@ -91,10 +92,7 @@
   >
     <template v-for="(filter, i) in currentFilters" :key="i">
       <li class="rounded-full border border-primary-70 px-2 py-1">
-        <b>{{ t('advancedSearch.filters.' + filter.id) }}</b>
-        {{ t('advancedSearch.operators.' + filter.operator) }}
-        {{ filter.inclusive ? '' : 'not' }}
-        <SearchBoxFilterArgs :filter="filter" readonly />
+        <AppSearchFilter :filters="filters" :filter="filter" readonly />
       </li>
       <li class="font-bold uppercase last:hidden">
         {{ t('advancedSearch.matchWord.' + currentMatchType) }}
@@ -108,27 +106,27 @@ import useVuelidate from '@vuelidate/core';
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import {
-  GetMembersQuery,
-  GetMembersQueryFields,
+  GetPaginatedQuery,
   GetPaginatedQueryRule,
   GetPaginatedQueryRuleOperator,
-} from '../../../../utils/api/api.interface';
-import AppButton from '../../../forms/AppButton.vue';
-import AppSearchInput from '../../../forms/AppSearchInput.vue';
-import AppSelect from '../../../forms/AppSelect.vue';
+} from '../../utils/api/api.interface';
+import AppButton from '../forms/AppButton.vue';
+import AppSearchInput from '../forms/AppSearchInput.vue';
+import AppSelect from '../forms/AppSelect.vue';
 import {
   emptyFilter,
   EmptyFilter,
   Filter,
-  FilterOperatorId,
-} from './contacts.interface';
-import SearchBoxFilter from './SearchBoxFilter.vue';
-import SearchBoxFilterArgs from './SearchBoxFilterArgs.vue';
+  FilterOperator,
+  Filters,
+} from './search.interface';
+import AppSearchFilter from './AppSearchFilter.vue';
 
 const emit = defineEmits(['update:search', 'update:rules']);
 const props = defineProps<{
+  filters: Filters;
   search: string;
-  rules: GetMembersQuery['rules'] | undefined;
+  rules: GetPaginatedQuery<string>['rules'] | undefined;
 }>();
 
 const { t } = useI18n();
@@ -145,16 +143,15 @@ const currentMatchType = computed(() =>
   props.rules?.condition === 'OR' ? 'any' : 'all'
 );
 
-function convertRuleToFilter(
-  rule: GetPaginatedQueryRule<GetMembersQueryFields>
-): Filter {
+function convertRuleToFilter(rule: GetPaginatedQueryRule<string>): Filter {
   return {
     id: rule.field,
-    operator: rule.operator.replace('not_', '') as FilterOperatorId,
+    operator: rule.operator.replace('not_', '') as FilterOperator,
     inclusive: !rule.operator.startsWith('not_'),
     values: Array.isArray(rule.value) ? rule.value : [rule.value],
   };
 }
+
 function getCurrentFilters(): Filter[] | null {
   if (!props.rules) {
     return null;
@@ -163,30 +160,29 @@ function getCurrentFilters(): Filter[] | null {
   // TODO: how to handle groups?
   const rulesWithoutGroups = props.rules.rules.filter(
     (rule) => 'operator' in rule
-  ) as GetPaginatedQueryRule<GetMembersQueryFields>[];
+  ) as GetPaginatedQueryRule<string>[];
 
   return rulesWithoutGroups.map(convertRuleToFilter);
 }
 
-const currentFilters = computed(getCurrentFilters);
-
 const matchType = ref<'all' | 'any'>('all');
-const filters = ref<(EmptyFilter | Filter)[]>([]);
+const currentFilters = computed(getCurrentFilters);
+const selectedFilters = ref<(EmptyFilter | Filter)[]>([]);
 
 function removeFilter(i: number) {
-  filters.value.splice(i, 1);
-  if (filters.value.length === 0) {
+  selectedFilters.value.splice(i, 1);
+  if (selectedFilters.value.length === 0) {
     addFilter();
   }
 }
 
 function addFilter() {
-  filters.value.push(emptyFilter());
+  selectedFilters.value.push(emptyFilter());
 }
 
 function reset() {
   matchType.value = currentMatchType.value;
-  filters.value = getCurrentFilters() || [emptyFilter()];
+  selectedFilters.value = getCurrentFilters() || [emptyFilter()];
 }
 
 watch(() => props.rules, reset);
@@ -197,9 +193,9 @@ function toggleAdvancedSearch() {
 }
 
 function handleAdvancedSearch() {
-  const rules: GetMembersQuery['rules'] = {
+  const rules: GetPaginatedQuery<string>['rules'] = {
     condition: matchType.value === 'all' ? 'AND' : 'OR',
-    rules: (filters.value as Filter[]).map((filter) => ({
+    rules: (selectedFilters.value as Filter[]).map((filter) => ({
       field: filter.id,
       operator: ((filter.inclusive
         ? ''

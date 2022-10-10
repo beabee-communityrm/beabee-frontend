@@ -102,6 +102,7 @@
     "title": "Einstellungen"
   },
   "advancedSearch": {
+    "button": "Erweiterte Suche",
     "filters": {
       "email": "E-Mail",
       "firstname": "Vorname",
@@ -270,7 +271,6 @@
   },
   "contacts": {
     "addContact": "Kontakt hinzufügen",
-    "advancedSearch": "Erweiterte Suche",
     "allContacts": "Alle Kontakte",
     "data": {
       "amount": "Betrag",

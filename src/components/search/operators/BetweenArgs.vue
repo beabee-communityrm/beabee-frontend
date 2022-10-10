@@ -6,7 +6,7 @@
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
-import { FilterArgs, FilterValue } from '../contacts.interface';
+import { FilterArgs, FilterValue } from '../search.interface';
 import ArgInput from './ArgInput.vue';
 const { t } = useI18n();
 defineProps<{ values: FilterValue[]; args: FilterArgs; readonly: boolean }>();

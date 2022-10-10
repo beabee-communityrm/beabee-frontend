@@ -41,6 +41,7 @@
     }
   },
   "advancedSearch": {
+    "button": "Расширенный поиск",
     "filters": {
       "email": "Почтовый ящик",
       "firstname": "Имя",
@@ -168,7 +169,6 @@
   },
   "contacts": {
     "addContact": "Добавить контакт",
-    "advancedSearch": "Расширенный поиск",
     "allContacts": "Все контакты",
     "data": {
       "amount": "Сумма",

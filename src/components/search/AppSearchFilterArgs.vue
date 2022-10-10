@@ -2,17 +2,17 @@
   <component
     :is="operatorComponents[filter.operator]"
     :values="filter.values"
-    :args="filters[filter.id]"
+    :args="args"
     :readonly="!!readonly"
   />
 </template>
 <script lang="ts" setup>
-import { Filter, filters } from './contacts.interface';
+import { Filter, FilterArgs } from './search.interface';
 import BetweenArgs from './operators/BetweenArgs.vue';
 import SingleArg from './operators/SingleArg.vue';
 import NoArg from './operators/NoArg.vue';
 
-defineProps<{ filter: Filter; readonly?: boolean }>();
+defineProps<{ filter: Filter; args: FilterArgs; readonly?: boolean }>();
 
 const operatorComponents = {
   equal: SingleArg,

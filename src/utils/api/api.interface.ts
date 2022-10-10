@@ -132,7 +132,7 @@ export type GetMemberDataWith<With extends GetMemberWith> = GetMemberData &
   ('contribution' extends With ? { contribution: ContributionInfo } : Noop) &
   ('roles' extends With ? { roles: MemberRoleData[] } : Noop);
 
-export type GetMembersQueryFields =
+type GetMembersQueryFields =
   | 'firstname'
   | 'lastname'
   | 'email'

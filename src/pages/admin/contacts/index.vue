@@ -19,7 +19,11 @@ meta:
       <AppVTabs v-model="currentSegment" :items="segmentItems" />
     </div>
     <div class="flex-auto">
-      <SearchBox v-model:search="currentSearch" v-model:rules="currentRules" />
+      <AppSearch
+        v-model:search="currentSearch"
+        v-model:rules="currentRules"
+        :filters="filters"
+      />
       <AppTable
         v-model:sort="currentSort"
         :headers="headers"
@@ -115,10 +119,11 @@ import { ContributionPeriod } from '../../../utils/enums/contribution-period.enu
 import AppPagination from '../../../components/AppPagination.vue';
 import { fetchSegments } from '../../../utils/api/segments';
 import AppButton from '../../../components/forms/AppButton.vue';
-import SearchBox from '../../../components/pages/admin/contacts/SearchBox.vue';
+import AppSearch from '../../../components/search/AppSearch.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
 import ContactTag from '../../../components/pages/admin/contacts/ContactTag.vue';
+import { filters } from '../../../components/pages/admin/contacts/contacts.interface';
 
 const { t, n } = useI18n();
 

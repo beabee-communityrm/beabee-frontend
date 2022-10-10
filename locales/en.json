@@ -104,12 +104,24 @@
   },
   "advancedSearch": {
     "addRule": "Add rule",
+    "button": "Advanced",
     "createFilters": "Create filters for your search",
     "filters": {
+      "activeMembership": "Active membership",
+      "activePermission": "Active role",
+      "contributionMonthlyAmount": "Contribution monthly amount",
+      "contributionPeriod": "Contribution period",
+      "contributionType": "Contribution type",
+      "deliveryOptIn": "Delivery opt in",
       "email": "Email",
       "firstname": "First name",
       "joined": "Joined",
-      "lastname": "Last name"
+      "lastname": "Last name",
+      "manualPaymentSource": "Manual payment source",
+      "membershipExpires": "Membership expires",
+      "membershipStarts": "Membership starts",
+      "newsletterStatus": "Newsletter status",
+      "tags": "Tags"
     },
     "matchAfter": "of the following",
     "matchBefore": "Match",
@@ -292,7 +304,6 @@
   },
   "contacts": {
     "addContact": "Add contact",
-    "advancedSearch": "Advanced",
     "allContacts": "All contacts",
     "data": {
       "amount": "Amount",
