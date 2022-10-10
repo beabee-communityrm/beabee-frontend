@@ -107,7 +107,7 @@ function changeFilter(id: string) {
     id,
     operator: 'equal',
     inclusive: true,
-    values: [],
+    values: [''], // TODO: doesn't respect filter type (text, date, number, etc.)
   } as Filter);
 }
 
@@ -122,7 +122,9 @@ function changeOperator(operator: FilterOperator, inclusive: boolean) {
       id: props.filter.id,
       operator,
       inclusive,
-      values: newArgs === oldArgs ? props.filter.values : new Array(newArgs),
+      values:
+        // TODO: doesn't respect filter type (text, date, number, etc.)
+        newArgs === oldArgs ? props.filter.values : new Array(newArgs).fill(''),
     } as Filter);
   }
 }
