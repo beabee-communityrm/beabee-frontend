@@ -455,6 +455,7 @@
     "yourInformation": "Твой аккаунт",
     "yourProfile": "Твой профиль"
   },
+  "notFound": {},
   "notices": {
     "addNotice": "Добавить уведомление",
     "data": {
