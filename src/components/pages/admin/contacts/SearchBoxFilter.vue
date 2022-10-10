@@ -14,12 +14,23 @@
       @update:model-value="changeFilter"
     />
     <template v-if="modelValue.id">
+      <AppRadioGroup
+        :model-value="modelValue.inclusive"
+        name=""
+        :options="[
+          [true, 'inc'],
+          [false, 'exc'],
+        ]"
+        @update:model-value="
+          modelValue.operator && changeOperator(modelValue.operator, $event)
+        "
+      />
       <AppSelect
         v-if="fieldOperatorItems.length > 1"
         :model-value="modelValue.operator"
         :items="fieldOperatorItems"
         required
-        @update:model-value="changeOperator"
+        @update:model-value="changeOperator($event, modelValue.inclusive)"
       />
       <span v-else>{{ fieldOperatorItems[0].label }}</span>
       <SearchBoxFilterArgs :filter="modelValue" />
@@ -29,6 +40,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
 import AppSelect from '../../../forms/AppSelect.vue';
 import {
   EmptyFilter,
@@ -78,10 +90,15 @@ const fieldOperatorItems = computed(() =>
 );
 
 function changeFilter(id: FilterId) {
-  emit('update:modelValue', { id, operator: 'equal', values: [] });
+  emit('update:modelValue', {
+    id,
+    operator: 'equal',
+    inclusive: true,
+    values: [],
+  } as Filter);
 }
 
-function changeOperator(operator: FilterOperatorId) {
+function changeOperator(operator: FilterOperatorId, inclusive: boolean) {
   if (props.modelValue.id) {
     const oldOperator = props.modelValue.operator;
     const operators = getOperators(props.modelValue);
@@ -89,10 +106,12 @@ function changeOperator(operator: FilterOperatorId) {
     const oldArgs = (oldOperator && operators[oldOperator]?.args) || 0;
 
     emit('update:modelValue', {
-      ...props.modelValue,
+      id: props.modelValue.id,
       operator,
-      ...(newArgs !== oldArgs && { values: new Array(newArgs) }),
-    });
+      inclusive,
+      values:
+        newArgs === oldArgs ? props.modelValue.values : new Array(newArgs),
+    } as Filter);
   }
 }
 </script>

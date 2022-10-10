@@ -93,6 +93,7 @@
       <li class="rounded-full border border-primary-70 px-2 py-1">
         <b>{{ t('advancedSearch.filters.' + filter.id) }}</b>
         {{ t('advancedSearch.operators.' + filter.operator) }}
+        {{ filter.inclusive ? '' : 'not' }}
         <SearchBoxFilterArgs :filter="filter" readonly />
       </li>
       <li class="font-bold uppercase last:hidden">
@@ -110,11 +111,17 @@ import {
   GetMembersQuery,
   GetMembersQueryFields,
   GetPaginatedQueryRule,
+  GetPaginatedQueryRuleOperator,
 } from '../../../../utils/api/api.interface';
 import AppButton from '../../../forms/AppButton.vue';
 import AppSearchInput from '../../../forms/AppSearchInput.vue';
 import AppSelect from '../../../forms/AppSelect.vue';
-import { emptyFilter, EmptyFilter, Filter } from './contacts.interface';
+import {
+  emptyFilter,
+  EmptyFilter,
+  Filter,
+  FilterOperatorId,
+} from './contacts.interface';
 import SearchBoxFilter from './SearchBoxFilter.vue';
 import SearchBoxFilterArgs from './SearchBoxFilterArgs.vue';
 
@@ -143,7 +150,8 @@ function convertRuleToFilter(
 ): Filter {
   return {
     id: rule.field,
-    operator: rule.operator,
+    operator: rule.operator.replace('not_', '') as FilterOperatorId,
+    inclusive: !rule.operator.startsWith('not_'),
     values: Array.isArray(rule.value) ? rule.value : [rule.value],
   };
 }
@@ -193,7 +201,11 @@ function handleAdvancedSearch() {
     condition: matchType.value === 'all' ? 'AND' : 'OR',
     rules: (filters.value as Filter[]).map((filter) => ({
       field: filter.id,
-      operator: filter.operator,
+      operator: ((filter.inclusive
+        ? ''
+        : filter.operator === 'is_empty'
+        ? 'is_not'
+        : 'not_') + filter.operator) as GetPaginatedQueryRuleOperator,
       value: filter.values,
     })),
   };

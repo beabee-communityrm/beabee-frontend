@@ -16,8 +16,12 @@ export type FilterType =
   | 'array'
   | 'enum';
 
-export type FilterOperatorId = GetPaginatedQueryRuleOperator;
 export type FilterValue = GetPaginatedQueryRuleValue;
+
+export type FilterOperatorId = Exclude<
+  GetPaginatedQueryRuleOperator,
+  `${'is_not' | 'not'}_${string}`
+>;
 
 export interface FilterOperatorParams {
   args: number;
@@ -114,16 +118,18 @@ export type FilterId = keyof typeof filters;
 export interface EmptyFilter {
   id: '';
   operator: '';
+  inclusive: true;
   values: [];
 }
 
 export interface Filter {
   id: FilterId;
   operator: FilterOperatorId;
+  inclusive: boolean;
   values: FilterValue[];
 }
 export function emptyFilter(): EmptyFilter {
-  return { id: '', operator: '', values: [] };
+  return { id: '', operator: '', inclusive: true, values: [] };
 }
 
 export function getOperators(
