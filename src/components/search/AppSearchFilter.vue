@@ -1,7 +1,7 @@
 <template>
   <template v-if="readonly">
     <template v-if="filter.id">
-      <b>{{ filterT(filter.id) }}</b>
+      <b>{{ filters[filter.id].label }}</b>
       {{ operatorT(filters[filter.id].type, filter.operator) }}
       {{ filter.inclusive ? '' : 'not' }}
       <AppSearchFilterArgs
@@ -63,7 +63,6 @@ import {
   operators,
 } from './search.interface';
 import AppSearchFilterArgs from './AppSearchFilterArgs.vue';
-import { filters } from '../pages/admin/contacts/contacts.interface';
 
 const emit = defineEmits(['update:filter', 'remove']);
 const props = defineProps<{
@@ -74,10 +73,6 @@ const props = defineProps<{
 
 const { t } = useI18n();
 
-function filterT(id: string) {
-  return t('advancedSearch.filters.' + id);
-}
-
 function operatorT(type: FilterType, operator: FilterOperator) {
   return t(`advancedSearch.operators.${type}.${operator}`);
 }
@@ -87,9 +82,9 @@ const filterItems = computed(() => [
     id: '',
     label: t('advancedSearch.selectFilter'),
   },
-  ...Object.keys(props.filters).map((id) => ({
+  ...Object.entries(props.filters).map(([id, filter]) => ({
     id,
-    label: filterT(id),
+    label: filter.label,
   })),
 ]);
 
@@ -104,7 +99,7 @@ const typeOperatorItems = Object.fromEntries(
 );
 
 const fieldOperatorItems = computed(() =>
-  props.filter.id ? typeOperatorItems[filters[props.filter.id].type] : []
+  props.filter.id ? typeOperatorItems[props.filters[props.filter.id].type] : []
 );
 
 function changeFilter(id: string) {

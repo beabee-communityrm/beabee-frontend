@@ -103,12 +103,6 @@
   },
   "advancedSearch": {
     "button": "Erweiterte Suche",
-    "filters": {
-      "email": "E-Mail",
-      "firstname": "Vorname",
-      "joined": "Kontakt seit",
-      "lastname": "Nachname"
-    },
     "matchType": {},
     "matchWord": {},
     "operators": {
@@ -265,7 +259,9 @@
       "copy": "<p>Alle hier eingegebenen Information sind <strong>nur für Administratoren sichtbar</strong>.\nNutzer bekommen das nicht angezeigt.</p>\n"
     },
     "contribution": "Beitrag",
+    "contributionType": "Zahlungsart",
     "information": "Information",
+    "newsletter": "Newsletter",
     "overview": "Überblick",
     "roles": "Rolle",
     "security": {
@@ -283,16 +279,16 @@
       "amount": "Betrag",
       "annotationsCopy": "Änderungen gespeichert!",
       "contribution": "Beitrag",
-      "contributionType": "Zahlungsart",
       "deliveryOptIn": "Postsendung",
       "description": "Beschreibung",
       "email": "E-Mail",
+      "firstname": "Vorname",
       "groups": "Gruppe",
       "joined": "Kontakt seit",
       "lastSeen": "Zuletzt angemeldet",
+      "lastname": "Nachname",
       "membershipStarts": "Mitglied seit",
       "name": "Name",
-      "newsletter": "Newsletter",
       "notes": "Notizen",
       "payingFee": "Übernimmt Transaktionskosten?",
       "period": "Zeitraum",

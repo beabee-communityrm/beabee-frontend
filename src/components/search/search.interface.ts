@@ -61,6 +61,7 @@ export const operators: Record<
 
 export interface FilterArgs {
   type: FilterType;
+  label: string;
   nullable?: boolean;
   options?: string[];
 }

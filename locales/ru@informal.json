@@ -42,12 +42,6 @@
   },
   "advancedSearch": {
     "button": "Расширенный поиск",
-    "filters": {
-      "email": "Почтовый ящик",
-      "firstname": "Имя",
-      "joined": "Участник с",
-      "lastname": "Фамилия"
-    },
     "matchType": {},
     "matchWord": {},
     "operators": {
@@ -163,7 +157,9 @@
       "copy": "<p>Вся информация, добавленная в этот раздел, <strong>видна только администраторам</strong>. Участники никогда не увидят их в своем профиле или личном кабинете.</p>\n"
     },
     "contribution": "Взнос",
+    "contributionType": "Вид оплаты",
     "information": "Информация",
+    "newsletter": "Новости",
     "overview": "Обзор",
     "roles": "Роль",
     "security": {
@@ -181,15 +177,15 @@
       "amount": "Сумма",
       "annotationsCopy": "",
       "contribution": "Взнос",
-      "contributionType": "Вид оплаты",
       "deliveryOptIn": "Отправка письма",
       "description": "Описание",
       "email": "Почтовый ящик",
+      "firstname": "Имя",
       "groups": "Группа",
       "joined": "Участник с",
       "lastSeen": "Последний раз онлайн",
+      "lastname": "Фамилия",
       "name": "Имя",
-      "newsletter": "Новости",
       "notes": "Примечания",
       "payingFee": "Оплатить Транзакцию?",
       "period": "Период",
