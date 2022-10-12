@@ -97,5 +97,6 @@ export const filters: Ref<Filters> = computed(() => ({
   tags: {
     type: 'array',
     label: t('contacts.data.tags'),
+    nullable: true,
   },
 }));
