@@ -458,6 +458,7 @@
     "yourInformation": "Ваш аккаунт",
     "yourProfile": "Ваш профиль"
   },
+  "notFound": {},
   "notices": {
     "addNotice": "Добавить уведомление",
     "data": {
