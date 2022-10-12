@@ -32,9 +32,9 @@
     class="mt-2 mb-8 border border-primary-40 p-4"
     @submit.prevent="handleAdvancedSearch"
   >
-    <p class="mb-3">
-      <b>{{ t('advancedSearch.createFilters') }}</b>
-    </p>
+    <h4 class="mb-3 font-semibold">
+      {{ t('advancedSearch.createFilters') }}
+    </h4>
 
     <div class="mb-3 flex items-center gap-2 text-sm text-body-80">
       <span>{{ t('advancedSearch.matchBefore') }}</span>
