@@ -140,7 +140,7 @@ function convertRuleToFilter(rule: GetPaginatedQueryRule<string>): Filter {
   return {
     id: rule.field,
     operator: rule.operator,
-    values: Array.isArray(rule.value) ? rule.value : [rule.value],
+    values: Array.isArray(rule.value) ? [...rule.value] : [rule.value],
   };
 }
 
