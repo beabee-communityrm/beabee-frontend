@@ -40,6 +40,20 @@
       "presetColors": {}
     }
   },
+  "advancedSearch": {
+    "button": "Расширенный поиск",
+    "matchType": {},
+    "matchWord": {},
+    "operators": {
+      "all": {},
+      "array": {},
+      "boolean": {},
+      "date": {},
+      "enum": {},
+      "number": {},
+      "text": {}
+    }
+  },
   "callout": {
     "contactDetails": "Контактная информация",
     "form": {
@@ -115,6 +129,7 @@
     "month": "Месяц/Месяцев",
     "monthly": "ежемесячно",
     "new": "Новый/Новое/Новая",
+    "newsletterStatus": {},
     "no": "Нет",
     "role": {
       "admin": "Администратор",
@@ -144,7 +159,9 @@
       "copy": "<p>Вся информация, добавленная в этот раздел, <strong>видна только администраторам</strong>. Участники никогда не увидят их в своем профиле или личном кабинете.</p>\n"
     },
     "contribution": "Взнос",
+    "contributionType": "Вид оплаты",
     "information": "Информация",
+    "newsletter": "Новости",
     "overview": "Обзор",
     "roles": "Роль",
     "security": {
@@ -157,21 +174,20 @@
   },
   "contacts": {
     "addContact": "Добавить контакт",
-    "advancedSearch": "Расширенный поиск",
     "allContacts": "Все контакты",
     "data": {
       "amount": "Сумма",
       "annotationsCopy": "",
       "contribution": "Взнос",
-      "contributionType": "Вид оплаты",
       "deliveryOptIn": "Отправка письма",
       "description": "Описание",
       "email": "Почтовый ящик",
+      "firstname": "Имя",
       "groups": "Группа",
       "joined": "Участник с",
       "lastSeen": "Последний раз онлайн",
+      "lastname": "Фамилия",
       "name": "Имя",
-      "newsletter": "Новости",
       "notes": "Примечания",
       "payingFee": "Оплатить Транзакцию?",
       "period": "Период",
@@ -179,6 +195,12 @@
       "preferredChannel": "Предпочтительный канал",
       "roles": "Роль",
       "rolesCopy": {
+        "expires": {
+          "opts": {}
+        },
+        "starts": {
+          "opts": {}
+        },
         "today": "сегодня"
       },
       "tags": "Теги"
@@ -455,6 +477,7 @@
     "yourInformation": "Твой аккаунт",
     "yourProfile": "Твой профиль"
   },
+  "notFound": {},
   "notices": {
     "addNotice": "Добавить уведомление",
     "data": {

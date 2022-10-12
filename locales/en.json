@@ -1,6 +1,7 @@
 {
   "actions": {
     "back": "Back",
+    "cancel": "Cancel",
     "chooseFile": "Choose file",
     "continue": "Continue",
     "delete": "Delete",
@@ -100,6 +101,71 @@
       "titleFont": "Title font"
     },
     "title": "Settings"
+  },
+  "advancedSearch": {
+    "addRule": "Add rule",
+    "button": "Advanced",
+    "createFilters": "Create filters for your search",
+    "matchAfter": "of the following",
+    "matchBefore": "Match",
+    "matchType": {
+      "all": "all",
+      "any": "any"
+    },
+    "matchWord": {
+      "all": "and",
+      "any": "or"
+    },
+    "operators": {
+      "all": {
+        "is_empty": "is empty",
+        "is_not_empty": "isn't empty"
+      },
+      "array": {
+        "contains": "includes",
+        "not_contains": "doesn't include"
+      },
+      "boolean": {
+        "equal": "is"
+      },
+      "date": {
+        "between": "between",
+        "equal": "is",
+        "greater": "after",
+        "greater_or_equal": "after or on",
+        "less": "before",
+        "less_or_equal": "before or on",
+        "not_between": "isn't between",
+        "not_equal": "is not"
+      },
+      "enum": {
+        "equal": "is",
+        "not_equal": "is not"
+      },
+      "number": {
+        "between": "between",
+        "equal": "is",
+        "greater": "more than",
+        "greater_or_equal": "at least",
+        "less": "less than",
+        "less_or_equal": "at most",
+        "not_between": "isn't between",
+        "not_equal": "isn't"
+      },
+      "text": {
+        "begins_with": "begins with",
+        "contains": "contains",
+        "ends_with": "ends with",
+        "equal": "is",
+        "not_begins_with": "doesn't begin with",
+        "not_contains": "doesn't contain",
+        "not_ends_with": "doesn't end with",
+        "not_equal": "is not"
+      }
+    },
+    "saveAsSegment": "Save as segment",
+    "selectFilter": "Select a filter",
+    "showResults": "Show results"
   },
   "callout": {
     "contactDetails": "Contact details",
@@ -216,6 +282,12 @@
     "month": "month | months",
     "monthly": "Monthly",
     "new": "new!",
+    "newsletterStatus": {
+      "cleaned": "Cleaned",
+      "none": "None",
+      "subscribed": "Subscribed",
+      "unsubscribed": "Unsubscribed"
+    },
     "no": "No",
     "noResults": "No results found",
     "role": {
@@ -246,7 +318,9 @@
       "copy": "<p>All information added in this section is <strong>visible for admins only</strong>. Members will never see these in their profile or member area.</p>\n"
     },
     "contribution": "Contribution",
+    "contributionType": "Type",
     "information": "Information",
+    "newsletter": "Newsletter",
     "overview": "Overview",
     "roles": "Roles",
     "security": {
@@ -744,6 +818,10 @@
     "yourInformation": "Your information",
     "yourProfile": "Your profile"
   },
+  "notFound": {
+    "goBack": "Go back to home",
+    "text": "This page doesn't exist. If you think this is a mistake please contact {support}."
+  },
   "notices": {
     "addNotice": "Add notice",
     "data": {
@@ -763,6 +841,7 @@
     "forgotPassword": "Forgot password",
     "join": "Join",
     "login": "Login",
+    "notFound": "Page not found",
     "resetPassword": "Reset password",
     "setup": "Setup"
   },
