@@ -18,7 +18,7 @@
         class="absolute -left-[1px] top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-[1px]"
       />
     </button>
-    <div v-if="numResults !== undefined" class="flex-1 text-right">
+    <div v-if="numResults !== undefined" class="flex-1 self-center text-right">
       <i18n-t keypath="contacts.numResults" :plural="numResults">
         <template #n>
           <b>{{ n(numResults) }}</b>
@@ -129,7 +129,7 @@ const props = defineProps<{
   filters: Filters;
   search: string;
   rules: GetPaginatedQuery<string>['rules'] | undefined;
-  numResults: number | undefined;
+  numResults?: number;
 }>();
 
 const { n, t } = useI18n();
