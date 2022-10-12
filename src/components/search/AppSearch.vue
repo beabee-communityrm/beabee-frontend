@@ -18,6 +18,13 @@
         class="absolute -left-[1px] top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-[1px]"
       />
     </button>
+    <div v-if="numResults !== undefined" class="flex-1 text-right">
+      <i18n-t keypath="contacts.numResults" :plural="numResults">
+        <template #n>
+          <b>{{ n(numResults) }}</b>
+        </template>
+      </i18n-t>
+    </div>
   </div>
 
   <form
@@ -72,12 +79,7 @@
       </div>
     </div>
 
-    <div class="flex gap-2">
-      <div class="flex-1">
-        <AppButton variant="text" @click="toggleAdvancedSearch">
-          {{ t('actions.cancel') }}
-        </AppButton>
-      </div>
+    <div class="flex justify-end gap-2">
       <AppButton variant="primaryOutlined" :disabled="validation.$invalid">
         {{ t('advancedSearch.saveAsSegment') }}
       </AppButton>
@@ -124,9 +126,10 @@ const props = defineProps<{
   filters: Filters;
   search: string;
   rules: GetPaginatedQuery<string>['rules'] | undefined;
+  numResults: number | undefined;
 }>();
 
-const { t } = useI18n();
+const { n, t } = useI18n();
 const validation = useVuelidate();
 
 const searchText = computed({

@@ -369,6 +369,7 @@
     },
     "noContacts": "No contacts added yet",
     "noResults": "No contacts found",
+    "numResults": "{n} contact found | {n} contacts found",
     "search": "Search contacts...",
     "showingOf": "Showing {start} to {end} contacts out of {total}"
   },

@@ -23,6 +23,7 @@ meta:
         v-model:search="currentSearch"
         v-model:rules="currentRules"
         :filters="filters"
+        :num-results="contactsTable?.total"
       />
       <AppTable
         v-model:sort="currentSort"
