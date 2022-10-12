@@ -19,16 +19,15 @@ export interface FilterOperatorParams {
 }
 
 const equal = { args: 1 };
-const not_equal = { args: 2 };
 
-const equalityOperators = { equal, not_equal };
+const equalityOperators = { equal, not_equal: { args: 1 } };
 const numericOperators = {
-  equal,
-  not_equal,
+  ...equalityOperators,
   between: { args: 2 },
+  not_between: { args: 2 },
   less: { args: 1 },
-  less_or_equal: { args: 1 },
   greater: { args: 1 },
+  less_or_equal: { args: 1 },
   greater_or_equal: { args: 1 },
 };
 const arrayOperators = {
@@ -44,8 +43,8 @@ export const operators: Record<
     ...equalityOperators,
     ...arrayOperators,
     begins_with: { args: 1 },
-    not_begins_with: { args: 1 },
     ends_with: { args: 1 },
+    not_begins_with: { args: 1 },
     not_ends_with: { args: 1 },
   },
   date: numericOperators,
@@ -60,7 +59,7 @@ export interface FilterArgs {
   label: string;
   prefix?: string;
   nullable?: boolean;
-  options?: string[];
+  options?: { id: string; label: string }[];
 }
 
 export type Filters = Record<string, FilterArgs>;

@@ -1,6 +1,7 @@
 {
   "actions": {
     "back": "Zurück",
+    "cancel": "Abbrechen",
     "chooseFile": "Datei auswählen",
     "continue": "Weiter",
     "delete": "Löschen",
@@ -106,6 +107,7 @@
     "matchType": {},
     "matchWord": {},
     "operators": {
+      "all": {},
       "array": {},
       "boolean": {},
       "date": {},
@@ -229,6 +231,7 @@
     "month": "Monat | Monaten",
     "monthly": "Monatlich",
     "new": "neu!",
+    "newsletterStatus": {},
     "no": "Nein",
     "noResults": "Keine Ergebnisse gefunden",
     "role": {
@@ -279,6 +282,7 @@
       "amount": "Betrag",
       "annotationsCopy": "Änderungen gespeichert!",
       "contribution": "Beitrag",
+      "contributionType": "Beitragsart",
       "deliveryOptIn": "Postsendung",
       "description": "Beschreibung",
       "email": "E-Mail",

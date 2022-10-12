@@ -1,21 +1,19 @@
 <template>
-  <b v-if="readonly">
-    {{ readonlyValue }}
-  </b>
+  <b v-if="readonly">{{ args.prefix }}{{ readonlyValue }}</b>
   <AppRadioGroup
     v-else-if="args.type === 'boolean'"
     v-model="value"
     :options="[
-      [true, 'Yes'],
-      [false, 'No'],
+      [true, t('common.yes')],
+      [false, t('common.no')],
     ]"
-    class="flex gap-2"
+    inline
     required
   />
   <AppSelect
     v-else-if="args.type === 'enum'"
     v-model="value"
-    :items="args.options?.map((opt) => ({ id: opt, label: opt })) || []"
+    :items="args.options || []"
     required
   />
   <AppInput
@@ -43,6 +41,7 @@ import { FilterArgs, FilterValue } from '../search.interface';
 import AppRadioGroup from '../../forms/AppRadioGroup.vue';
 import AppSelect from '../../forms/AppSelect.vue';
 import DateInput from './DateInput.vue';
+import { useI18n } from 'vue-i18n';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
@@ -51,21 +50,34 @@ const props = defineProps<{
   readonly: boolean;
 }>();
 
+const { t } = useI18n();
+
 const value = computed({
   get: () => props.modelValue as any,
   set: (modelValue) => emit('update:modelValue', modelValue),
 });
 
 const readonlyValue = computed(() => {
-  if (props.args.type === 'date') {
-    const date = props.modelValue as string;
-    if (date.startsWith('$now')) {
-      return props.modelValue;
-    } else {
-      return formatLocale(new Date(date), 'P');
+  switch (props.args.type) {
+    case 'date': {
+      const date = props.modelValue as string;
+      if (date.startsWith('$now')) {
+        return props.modelValue;
+      } else {
+        return formatLocale(new Date(date), 'P');
+      }
     }
-  } else {
-    return props.modelValue;
+    case 'boolean':
+      return props.modelValue === true ? t('common.yes') : t('common.no');
+
+    case 'enum':
+      return (
+        props.args.options?.find((opt) => opt.id === props.modelValue)?.label ||
+        props.modelValue
+      );
+
+    default:
+      return props.modelValue;
   }
 });
 </script>

@@ -4,8 +4,8 @@
     <label
       v-for="[value, optLabel] in options"
       :key="value.toString()"
-      class="mb-1 items-center"
-      :class="inline ? 'mr-3 inline-flex' : 'flex'"
+      class="items-center"
+      :class="inline ? 'mr-3 inline-flex' : 'mb-1 flex'"
     >
       <input
         v-model="selected"
@@ -13,7 +13,7 @@
         :name="name"
         :value="value"
         :checked="modelValue === value"
-        class="mr-1"
+        class="mr-1 -mb-1"
         :required="required"
       />
       {{ optLabel }}

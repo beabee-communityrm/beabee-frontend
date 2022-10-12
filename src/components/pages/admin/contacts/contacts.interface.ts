@@ -1,6 +1,8 @@
 import { computed, Ref } from 'vue';
 import i18n from '../../../../i18n';
 import { generalContent } from '../../../../store';
+import { ContributionPeriod } from '../../../../utils/enums/contribution-period.enum';
+import { NewsletterStatus } from '../../../../utils/enums/newsletter-status.enum';
 import { Filters } from '../../../search/search.interface';
 
 const { t } = i18n.global;
@@ -24,8 +26,11 @@ export const filters: Ref<Filters> = computed(() => ({
   },
   contributionType: {
     type: 'enum',
-    options: ['Automatic', 'Gift', 'Manual', 'None'],
     label: t('contacts.data.contributionType'),
+    options: ['Automatic', 'Gift', 'Manual', 'None'].map((id) => ({
+      id,
+      label: id,
+    })),
   },
   contributionMonthlyAmount: {
     type: 'number',
@@ -34,7 +39,10 @@ export const filters: Ref<Filters> = computed(() => ({
   },
   contributionPeriod: {
     type: 'enum',
-    options: ['monthly', 'annual'],
+    options: [
+      { id: ContributionPeriod.Monthly, label: t('common.monthly') },
+      { id: ContributionPeriod.Annually, label: t('common.annually') },
+    ],
     label: t('contacts.data.contributionPeriod'),
   },
   deliveryOptIn: {
@@ -42,12 +50,31 @@ export const filters: Ref<Filters> = computed(() => ({
     label: t('contacts.data.deliveryOptIn'),
   },
   newsletterStatus: {
-    type: 'text',
+    type: 'enum',
     label: t('contacts.data.newsletterStatus'),
+    options: [
+      {
+        id: NewsletterStatus.Subscribed,
+        label: t('common.newsletterStatus.subscribed'),
+      },
+      {
+        id: NewsletterStatus.Unsubscribed,
+        label: t('common.newsletterStatus.unsubscribed'),
+      },
+      {
+        id: NewsletterStatus.Cleaned,
+        label: t('common.newsletterStatus.cleaned'),
+      },
+      { id: NewsletterStatus.None, label: t('common.newsletterStatus.none') },
+    ],
   },
   activePermission: {
     type: 'enum',
-    options: ['member', 'admin', 'superadmin'],
+    options: [
+      { id: 'member', label: t('common.role.member') },
+      { id: 'admin', label: t('common.role.admin') },
+      { id: 'superadmin', label: t('common.role.superadmin') },
+    ],
     label: t('contacts.data.activePermission'),
   },
   activeMembership: {

@@ -146,9 +146,9 @@
         "between": "between",
         "equal": "is",
         "greater": "more than",
-        "greater_or_equal": "more than or equal to",
+        "greater_or_equal": "at least",
         "less": "less than",
-        "less_or_equal": "less than or equal to",
+        "less_or_equal": "at most",
         "not_between": "isn't between",
         "not_equal": "isn't"
       },
@@ -282,6 +282,12 @@
     "month": "month | months",
     "monthly": "Monthly",
     "new": "new!",
+    "newsletterStatus": {
+      "cleaned": "Cleaned",
+      "none": "None",
+      "subscribed": "Subscribed",
+      "unsubscribed": "Unsubscribed"
+    },
     "no": "No",
     "noResults": "No results found",
     "role": {
