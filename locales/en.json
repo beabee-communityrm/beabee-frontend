@@ -825,6 +825,10 @@
     "yourInformation": "Your information",
     "yourProfile": "Your profile"
   },
+  "notFound": {
+    "goBack": "Go back to home",
+    "text": "This page doesn't exist. If you think this is a mistake please contact {support}."
+  },
   "notices": {
     "addNotice": "Add notice",
     "data": {
@@ -844,6 +848,7 @@
     "forgotPassword": "Forgot password",
     "join": "Join",
     "login": "Login",
+    "notFound": "Page not found",
     "resetPassword": "Reset password",
     "setup": "Setup"
   },

@@ -195,6 +195,12 @@
       "preferredChannel": "Предпочтительный канал",
       "roles": "Роль",
       "rolesCopy": {
+        "expires": {
+          "opts": {}
+        },
+        "starts": {
+          "opts": {}
+        },
         "today": "сегодня"
       },
       "tags": "Теги"
@@ -471,6 +477,7 @@
     "yourInformation": "Твой аккаунт",
     "yourProfile": "Твой профиль"
   },
+  "notFound": {},
   "notices": {
     "addNotice": "Добавить уведомление",
     "data": {

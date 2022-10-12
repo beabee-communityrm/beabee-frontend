@@ -195,6 +195,12 @@
       "preferredChannel": "Предпочтительный канал",
       "roles": "Роль",
       "rolesCopy": {
+        "expires": {
+          "opts": {}
+        },
+        "starts": {
+          "opts": {}
+        },
         "today": "сегодня"
       },
       "tags": "Теги"
@@ -474,6 +480,7 @@
     "yourInformation": "Ваш аккаунт",
     "yourProfile": "Ваш профиль"
   },
+  "notFound": {},
   "notices": {
     "addNotice": "Добавить уведомление",
     "data": {
@@ -493,6 +500,7 @@
     "forgotPassword": "Забыли пароль",
     "join": "Стать участником",
     "login": "Войти",
+    "notFound": "Seite nicht gefunden",
     "resetPassword": "Сбросить пароль",
     "setup": "Создать аккаунт"
   },
