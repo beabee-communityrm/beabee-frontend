@@ -19,7 +19,7 @@
       <font-awesome-icon :icon="['fa', 'times']" />
     </button>
     <AppSelect
-      :model-value="filter.id"
+      :model-value="filter.id || ''"
       :items="filterItems"
       required
       @update:model-value="changeFilter"
@@ -47,6 +47,7 @@ import {
   FilterOperator,
   Filters,
   FilterType,
+  nullableOperators,
   operators,
 } from './search.interface';
 import AppSearchFilterArgs from './AppSearchFilterArgs.vue';
@@ -60,7 +61,12 @@ const props = defineProps<{
 
 const { t } = useI18n();
 
-function operatorT(type: FilterType, operator: FilterOperator) {
+function operatorT(type: FilterType | 'all', operator: FilterOperator) {
+  // TODO: move translations to search.interface.ts
+  if (operator === 'is_empty' || operator === 'is_not_empty') {
+    type = 'all';
+  }
+
   return t(`advancedSearch.operators.${type}.${operator}`);
 }
 
@@ -85,9 +91,24 @@ const operatorItems = Object.fromEntries(
   ])
 );
 
-const filterOperatorItems = computed(() =>
-  props.filter.id ? operatorItems[props.filters[props.filter.id].type] : []
+const nullableOperatorItems = Object.entries(nullableOperators).map(
+  ([operator]) => ({
+    id: operator,
+    label: operatorT('all', operator as FilterOperator),
+  })
 );
+
+const filterOperatorItems = computed(() => {
+  if (props.filter.id) {
+    const args = props.filters[props.filter.id];
+    return [
+      ...operatorItems[args.type],
+      ...(args.nullable ? nullableOperatorItems : []),
+    ];
+  } else {
+    return [];
+  }
+});
 
 function changeFilter(id: string) {
   emit('update:filter', {

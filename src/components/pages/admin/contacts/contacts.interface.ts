@@ -92,6 +92,7 @@ export const filters: Ref<Filters> = computed(() => ({
   manualPaymentSource: {
     type: 'text',
     label: t('contacts.data.manualPaymentSource'),
+    nullable: true,
   },
   tags: {
     type: 'array',

@@ -13,13 +13,14 @@
   <AppSelect
     v-else-if="args.type === 'enum'"
     v-model="value"
-    :items="args.options || []"
+    :items="args.options"
     required
   />
   <AppInput
     v-else-if="args.type === 'array'"
     v-model="value"
     type="text"
+    :prefix="args.prefix"
     required
     hide-error-message
   />
@@ -72,7 +73,7 @@ const readonlyValue = computed(() => {
 
     case 'enum':
       return (
-        props.args.options?.find((opt) => opt.id === props.modelValue)?.label ||
+        props.args.options.find((opt) => opt.id === props.modelValue)?.label ||
         props.modelValue
       );
 

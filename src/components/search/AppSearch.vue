@@ -32,7 +32,7 @@
     <div class="mb-3 flex items-center gap-2 text-sm text-body-80">
       <span>{{ t('advancedSearch.matchBefore') }}</span>
       <AppSelect
-        v-model="matchType"
+        v-model="selectedMatchType"
         :items="[
           { id: 'all', label: t('advancedSearch.matchType.all') },
           { id: 'any', label: t('advancedSearch.matchType.any') },
@@ -56,7 +56,7 @@
           />
           <span
             class="absolute bottom-full left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded bg-primary-70 px-2 py-1 font-bold uppercase text-white group-first:hidden"
-            >{{ t('advancedSearch.matchWord.' + matchType) }}</span
+            >{{ t('advancedSearch.matchWord.' + selectedMatchType) }}</span
           >
         </li>
       </ul>
@@ -105,14 +105,18 @@
 import useVuelidate from '@vuelidate/core';
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import {
-  GetPaginatedQuery,
-  GetPaginatedQueryRule,
-} from '../../utils/api/api.interface';
+import { GetPaginatedQuery } from '../../utils/api/api.interface';
 import AppButton from '../forms/AppButton.vue';
 import AppSearchInput from '../forms/AppSearchInput.vue';
 import AppSelect from '../forms/AppSelect.vue';
-import { emptyFilter, EmptyFilter, Filter, Filters } from './search.interface';
+import {
+  convertFiltersToRules,
+  convertRulesToFilters,
+  emptyFilter,
+  EmptyFilter,
+  Filter,
+  Filters,
+} from './search.interface';
 import AppSearchFilter from './AppSearchFilter.vue';
 
 const emit = defineEmits(['update:search', 'update:rules']);
@@ -132,34 +136,13 @@ const searchText = computed({
 
 const showAdvancedSearch = ref(false);
 
+const selectedMatchType = ref<'all' | 'any'>('all');
+const selectedFilters = ref<(EmptyFilter | Filter)[]>([]);
+
 const currentMatchType = computed(() =>
   props.rules?.condition === 'OR' ? 'any' : 'all'
 );
-
-function convertRuleToFilter(rule: GetPaginatedQueryRule<string>): Filter {
-  return {
-    id: rule.field,
-    operator: rule.operator,
-    values: Array.isArray(rule.value) ? [...rule.value] : [rule.value],
-  };
-}
-
-function getCurrentFilters(): Filter[] | null {
-  if (!props.rules) {
-    return null;
-  }
-
-  // TODO: how to handle groups?
-  const rulesWithoutGroups = props.rules.rules.filter(
-    (rule) => 'operator' in rule
-  ) as GetPaginatedQueryRule<string>[];
-
-  return rulesWithoutGroups.map(convertRuleToFilter);
-}
-
-const matchType = ref<'all' | 'any'>('all');
-const currentFilters = computed(getCurrentFilters);
-const selectedFilters = ref<(EmptyFilter | Filter)[]>([]);
+const currentFilters = computed(() => convertRulesToFilters(props.rules));
 
 function removeFilter(i: number) {
   selectedFilters.value.splice(i, 1);
@@ -173,8 +156,8 @@ function addFilter() {
 }
 
 function reset() {
-  matchType.value = currentMatchType.value;
-  selectedFilters.value = getCurrentFilters() || [emptyFilter()];
+  selectedMatchType.value = currentMatchType.value;
+  selectedFilters.value = convertRulesToFilters(props.rules) || [emptyFilter()];
 }
 
 watch(() => props.rules, reset);
@@ -185,14 +168,12 @@ function toggleAdvancedSearch() {
 }
 
 function handleAdvancedSearch() {
-  const rules: GetPaginatedQuery<string>['rules'] = {
-    condition: matchType.value === 'all' ? 'AND' : 'OR',
-    rules: (selectedFilters.value as Filter[]).map((filter) => ({
-      field: filter.id,
-      operator: filter.operator,
-      value: filter.values,
-    })),
-  };
-  emit('update:rules', rules);
+  emit(
+    'update:rules',
+    convertFiltersToRules(
+      selectedMatchType.value,
+      selectedFilters.value as Filter[]
+    )
+  );
 }
 </script>

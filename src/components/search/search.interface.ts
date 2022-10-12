@@ -1,4 +1,7 @@
 import {
+  GetPaginatedQuery,
+  GetPaginatedQueryRule,
+  GetPaginatedQueryRuleGroup,
   GetPaginatedQueryRuleOperator,
   GetPaginatedQueryRuleValue,
 } from '../../utils/api/api.interface';
@@ -35,6 +38,11 @@ const arrayOperators = {
   not_contains: { args: 1 },
 };
 
+export const nullableOperators = {
+  is_empty: { args: 0 },
+  is_not_empty: { args: 0 },
+};
+
 export const operators: Record<
   FilterType,
   Partial<Record<FilterOperator, FilterOperatorParams>>
@@ -54,13 +62,23 @@ export const operators: Record<
   enum: equalityOperators,
 };
 
-export interface FilterArgs {
+interface BaseFilterArgs {
   type: FilterType;
   label: string;
   prefix?: string;
   nullable?: boolean;
-  options?: { id: string; label: string }[];
 }
+
+interface EnumFilterArgs extends BaseFilterArgs {
+  type: 'enum';
+  options: { id: string; label: string }[];
+}
+
+interface OtherFilterArgs extends BaseFilterArgs {
+  type: Exclude<FilterType, 'enum'>;
+}
+
+export type FilterArgs = EnumFilterArgs | OtherFilterArgs;
 
 export type Filters = Record<string, FilterArgs>;
 
@@ -78,4 +96,37 @@ export interface EmptyFilter {
 
 export function emptyFilter(): EmptyFilter {
   return { id: null, operator: '', values: [] };
+}
+
+export function convertRulesToFilters(
+  rules: GetPaginatedQuery<string>['rules']
+): Filter[] | null {
+  if (!rules) {
+    return null;
+  }
+
+  // TODO: how to handle groups?
+  const rulesWithoutGroups = rules.rules.filter(
+    (rule) => 'operator' in rule
+  ) as GetPaginatedQueryRule<string>[];
+
+  return rulesWithoutGroups.map((rule) => ({
+    id: rule.field,
+    operator: rule.operator,
+    values: Array.isArray(rule.value) ? [...rule.value] : [rule.value],
+  }));
+}
+
+export function convertFiltersToRules(
+  matchType: 'all' | 'any',
+  filters: Filter[]
+): GetPaginatedQueryRuleGroup<string> {
+  return {
+    condition: matchType === 'all' ? 'AND' : 'OR',
+    rules: filters.map((filter) => ({
+      field: filter.id,
+      operator: filter.operator,
+      value: filter.values,
+    })),
+  };
 }
