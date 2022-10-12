@@ -2,14 +2,20 @@
   <AppLabel v-if="label" :label="label" :required="required" />
   <div class="flex items-center">
     <div
-      class="flex flex-1 items-center overflow-hidden rounded border border-primary-40 bg-white focus-within:shadow-input"
+      class="flex items-center overflow-hidden rounded border border-primary-40 bg-white focus-within:shadow-input"
+      :class="hasError && 'border-danger-70 bg-danger-10'"
     >
       <span v-if="prefix" class="flex-0 px-2">{{ prefix }}</span>
-      <div class="flex-1" :class="prefix && 'border-l border-primary-40'">
+      <div
+        class="flex-1"
+        :class="{
+          'border-l border-primary-40': prefix,
+          'border-danger-70': hasError,
+        }"
+      >
         <input
           v-model.trim="value"
-          class="w-full bg-white p-2 leading-tight focus:outline-none"
-          :class="hasError && 'border-danger-70 bg-danger-10'"
+          class="w-full bg-white/0 p-2 leading-tight focus:outline-none"
           :type="type"
           :name="name"
           :required="required"
