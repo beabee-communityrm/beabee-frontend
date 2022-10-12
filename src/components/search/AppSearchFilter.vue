@@ -1,6 +1,6 @@
 <template>
   <template v-if="readonly">
-    <template v-if="filter.id">
+    <template v-if="filter">
       <b>{{ filters[filter.id].label }}</b>
       {{ operatorT(filters[filter.id].type, filter.operator) }}
       <AppSearchFilterArgs
@@ -22,12 +22,12 @@
       <font-awesome-icon :icon="['fa', 'times']" />
     </button>
     <AppSelect
-      :model-value="filter.id || ''"
+      :model-value="filter?.id || ''"
       :items="filterItems"
       required
       @update:model-value="changeFilter"
     />
-    <template v-if="filter.id">
+    <template v-if="filter">
       <AppSelect
         v-if="filterOperatorItems.length > 1"
         :model-value="filter.operator"
@@ -45,7 +45,6 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppSelect from '../forms/AppSelect.vue';
 import {
-  EmptyFilter,
   Filter,
   FilterOperator,
   Filters,
@@ -58,7 +57,7 @@ import AppSearchFilterArgs from './AppSearchFilterArgs.vue';
 const emit = defineEmits(['update:filter', 'remove']);
 const props = defineProps<{
   filters: Filters;
-  filter: Filter | EmptyFilter;
+  filter: Filter | null;
   readonly?: boolean;
 }>();
 
@@ -102,7 +101,7 @@ const nullableOperatorItems = Object.entries(nullableOperators).map(
 );
 
 const filterOperatorItems = computed(() => {
-  if (props.filter.id) {
+  if (props.filter) {
     const args = props.filters[props.filter.id];
     return [
       ...operatorItems[args.type],
@@ -122,7 +121,7 @@ function changeFilter(id: string) {
 }
 
 function changeOperator(operator: FilterOperator) {
-  if (props.filter.id) {
+  if (props.filter) {
     const oldOperator = props.filter.operator;
     const typeOperators = operators[props.filters[props.filter.id].type];
     const newArgs = (operator && typeOperators[operator]?.args) || 0;

@@ -119,8 +119,6 @@ import AppSelect from '../forms/AppSelect.vue';
 import {
   convertFiltersToRules,
   convertRulesToFilters,
-  emptyFilter,
-  EmptyFilter,
   Filter,
   Filters,
 } from './search.interface';
@@ -145,7 +143,7 @@ const searchText = computed({
 const showAdvancedSearch = ref(false);
 
 const selectedMatchType = ref<'all' | 'any'>('all');
-const selectedFilters = ref<(EmptyFilter | Filter)[]>([]);
+const selectedFilters = ref<(null | Filter)[]>([]);
 
 const currentMatchType = computed(() =>
   props.rules?.condition === 'OR' ? 'any' : 'all'
@@ -164,12 +162,13 @@ function removeFilter(i: number) {
 }
 
 function addFilter() {
-  selectedFilters.value.push(emptyFilter());
+  selectedFilters.value.push(null);
 }
 
 function reset() {
   selectedMatchType.value = currentMatchType.value;
-  selectedFilters.value = convertRulesToFilters(props.rules) || [emptyFilter()];
+  const filters = convertRulesToFilters(props.rules);
+  selectedFilters.value = filters && filters.length > 0 ? filters : [null];
 }
 
 watch(() => props.rules, reset);
@@ -184,7 +183,7 @@ function handleAdvancedSearch() {
     'update:rules',
     convertFiltersToRules(
       selectedMatchType.value,
-      selectedFilters.value as Filter[]
+      selectedFilters.value.filter((f) => !!f) as Filter[]
     )
   );
 }

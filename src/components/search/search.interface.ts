@@ -87,16 +87,6 @@ export interface Filter {
   values: FilterValue[];
 }
 
-export interface EmptyFilter {
-  id: null;
-  operator: '';
-  values: [];
-}
-
-export function emptyFilter(): EmptyFilter {
-  return { id: null, operator: '', values: [] };
-}
-
 export function convertRulesToFilters(
   rules: GetPaginatedQuery<string>['rules']
 ): Filter[] | null {
