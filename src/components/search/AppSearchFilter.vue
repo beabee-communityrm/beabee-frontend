@@ -8,6 +8,9 @@
         :args="filters[filter.id]"
         readonly
       />
+      <button type="button" class="-mr-2 px-2" @click="emit('remove')">
+        <font-awesome-icon :icon="['fa', 'times']" />
+      </button>
     </template>
   </template>
   <div v-else class="flex items-center gap-2">

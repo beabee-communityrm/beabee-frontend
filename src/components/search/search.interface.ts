@@ -1,7 +1,6 @@
 import {
   GetPaginatedQuery,
   GetPaginatedQueryRule,
-  GetPaginatedQueryRuleGroup,
   GetPaginatedQueryRuleOperator,
   GetPaginatedQueryRuleValue,
 } from '../../utils/api/api.interface';
@@ -120,7 +119,7 @@ export function convertRulesToFilters(
 export function convertFiltersToRules(
   matchType: 'all' | 'any',
   filters: Filter[]
-): GetPaginatedQueryRuleGroup<string> {
+): GetPaginatedQuery<string>['rules'] {
   return {
     condition: matchType === 'all' ? 'AND' : 'OR',
     rules: filters.map((filter) => ({

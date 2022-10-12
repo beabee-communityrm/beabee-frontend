@@ -94,7 +94,12 @@
   >
     <template v-for="(filter, i) in currentFilters" :key="i">
       <li class="rounded-full border border-primary-70 px-2 py-1">
-        <AppSearchFilter :filters="filters" :filter="filter" readonly />
+        <AppSearchFilter
+          :filters="filters"
+          :filter="filter"
+          readonly
+          @remove="removeFilter(i)"
+        />
       </li>
       <li class="font-bold uppercase last:hidden">
         {{ t('advancedSearch.matchWord.' + currentMatchType) }}
@@ -149,8 +154,12 @@ const currentFilters = computed(() => convertRulesToFilters(props.rules));
 
 function removeFilter(i: number) {
   selectedFilters.value.splice(i, 1);
-  if (selectedFilters.value.length === 0) {
-    addFilter();
+  if (showAdvancedSearch.value) {
+    if (selectedFilters.value.length === 0) {
+      addFilter();
+    }
+  } else {
+    handleAdvancedSearch();
   }
 }
 
