@@ -103,18 +103,69 @@
     "title": "Einstellungen"
   },
   "advancedSearch": {
+    "addRule": "Filter hinzufügen",
     "button": "Erweiterte Suche",
-    "matchType": {},
-    "matchWord": {},
+    "createFilters": "Filter für die Suche erstellen",
+    "matchAfter": "der folgenden Filter enthalten",
+    "matchBefore": "Ergebnisse sollen",
+    "matchType": {
+      "all": "alle",
+      "any": "mindestens einen"
+    },
+    "matchWord": {
+      "all": "und",
+      "any": "oder"
+    },
     "operators": {
-      "all": {},
-      "array": {},
-      "boolean": {},
-      "date": {},
-      "enum": {},
-      "number": {},
-      "text": {}
-    }
+      "all": {
+        "is_empty": "ist leer",
+        "is_not_empty": "ist nicht leer"
+      },
+      "array": {
+        "contains": "enthält",
+        "not_contains": "enthält nicht"
+      },
+      "boolean": {
+        "equal": "ist"
+      },
+      "date": {
+        "between": "zwischen",
+        "equal": "ist",
+        "greater": "nach",
+        "greater_or_equal": "nach oder am",
+        "less": "vor",
+        "less_or_equal": "vor oder am",
+        "not_between": "nicht zwischen",
+        "not_equal": "ist nicht"
+      },
+      "enum": {
+        "equal": "ist",
+        "not_equal": "ist nicht"
+      },
+      "number": {
+        "between": "zwischen",
+        "equal": "ist",
+        "greater": "mehr als",
+        "greater_or_equal": "mindestens",
+        "less": "weniger als",
+        "less_or_equal": "höchstens",
+        "not_between": "nicht zwischen",
+        "not_equal": "ist nicht"
+      },
+      "text": {
+        "begins_with": "beginnt mit",
+        "contains": "enthält",
+        "ends_with": "endet mit",
+        "equal": "ist",
+        "not_begins_with": "beginnt nicht mit",
+        "not_contains": "enthält nicht",
+        "not_ends_with": "endet nicht mit",
+        "not_equal": "ist nicht"
+      }
+    },
+    "saveAsSegment": "Als Segment speichern",
+    "selectFilter": "Filter auswählen",
+    "showResults": "Suchen"
   },
   "callout": {
     "contactDetails": "Kontaktdaten",
@@ -231,7 +282,12 @@
     "month": "Monat | Monaten",
     "monthly": "Monatlich",
     "new": "neu!",
-    "newsletterStatus": {},
+    "newsletterStatus": {
+      "cleaned": "Bereinigt",
+      "none": "Kein Status",
+      "subscribed": "Subscribed",
+      "unsubscribed": "Unsubscribed"
+    },
     "no": "Nein",
     "noResults": "Keine Ergebnisse gefunden",
     "role": {
@@ -279,9 +335,13 @@
     "addContact": "Kontakt hinzufügen",
     "allContacts": "Alle Kontakte",
     "data": {
+      "activeMembership": "Aktive Mitgliedschaft",
+      "activePermission": "Aktive Rolle",
       "amount": "Betrag",
       "annotationsCopy": "Änderungen gespeichert!",
       "contribution": "Beitrag",
+      "contributionMonthlyAmount": "Monatlicher Beitrag",
+      "contributionPeriod": "Zahlweise",
       "contributionType": "Beitragsart",
       "deliveryOptIn": "Postsendung",
       "description": "Beschreibung",
@@ -291,8 +351,11 @@
       "joined": "Kontakt seit",
       "lastSeen": "Zuletzt angemeldet",
       "lastname": "Nachname",
+      "manualPaymentSource": "Manuelles Zahlungsmittel",
+      "membershipExpires": "Mitglied bis",
       "membershipStarts": "Mitglied seit",
       "name": "Name",
+      "newsletterStatus": "Newsletter-Status",
       "notes": "Notizen",
       "payingFee": "Übernimmt Transaktionskosten?",
       "period": "Zeitraum",
