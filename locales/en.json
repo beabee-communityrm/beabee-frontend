@@ -117,8 +117,13 @@
       "any": "or"
     },
     "operators": {
+      "all": {
+        "is_empty": "is empty",
+        "is_not_empty": "isn't empty"
+      },
       "array": {
-        "contains": "includes"
+        "contains": "includes",
+        "not_contains": "doesn't include"
       },
       "boolean": {
         "equal": "is"
@@ -129,25 +134,33 @@
         "greater": "after",
         "greater_or_equal": "after or on",
         "less": "before",
-        "less_or_equal": "before or on"
+        "less_or_equal": "before or on",
+        "not_between": "isn't between",
+        "not_equal": "is not"
       },
       "enum": {
-        "equal": "is"
+        "equal": "is",
+        "not_equal": "is not"
       },
-      "is_empty": "is empty",
       "number": {
         "between": "between",
         "equal": "is",
         "greater": "more than",
         "greater_or_equal": "more than or equal to",
         "less": "less than",
-        "less_or_equal": "less than or equal to"
+        "less_or_equal": "less than or equal to",
+        "not_between": "isn't between",
+        "not_equal": "isn't"
       },
       "text": {
         "begins_with": "begins with",
         "contains": "contains",
         "ends_with": "ends with",
-        "equal": "is"
+        "equal": "is",
+        "not_begins_with": "doesn't begin with",
+        "not_contains": "doesn't contain",
+        "not_ends_with": "doesn't end with",
+        "not_equal": "is not"
       }
     },
     "saveAsSegment": "Save as segment",

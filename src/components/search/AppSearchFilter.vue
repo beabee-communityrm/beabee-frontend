@@ -3,7 +3,6 @@
     <template v-if="filter.id">
       <b>{{ filters[filter.id].label }}</b>
       {{ operatorT(filters[filter.id].type, filter.operator) }}
-      {{ filter.inclusive ? '' : 'not' }}
       <AppSearchFilterArgs
         :filter="filter"
         :args="filters[filter.id]"
@@ -26,24 +25,14 @@
       @update:model-value="changeFilter"
     />
     <template v-if="filter.id">
-      <AppRadioGroup
-        :model-value="filter.inclusive"
-        :options="[
-          [true, 'inc'],
-          [false, 'exc'],
-        ]"
-        @update:model-value="
-          filter.operator && changeOperator(filter.operator, $event)
-        "
-      />
       <AppSelect
-        v-if="fieldOperatorItems.length > 1"
+        v-if="filterOperatorItems.length > 1"
         :model-value="filter.operator"
-        :items="fieldOperatorItems"
+        :items="filterOperatorItems"
         required
-        @update:model-value="changeOperator($event, filter.inclusive)"
+        @update:model-value="changeOperator($event)"
       />
-      <span v-else>{{ fieldOperatorItems[0].label }}</span>
+      <span v-else>{{ filterOperatorItems[0].label }}</span>
       <AppSearchFilterArgs :filter="filter" :args="filters[filter.id]" />
     </template>
   </div>
@@ -51,7 +40,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppRadioGroup from '../forms/AppRadioGroup.vue';
 import AppSelect from '../forms/AppSelect.vue';
 import {
   EmptyFilter,
@@ -59,7 +47,6 @@ import {
   FilterOperator,
   Filters,
   FilterType,
-  getOperators,
   operators,
 } from './search.interface';
 import AppSearchFilterArgs from './AppSearchFilterArgs.vue';
@@ -88,7 +75,7 @@ const filterItems = computed(() => [
   })),
 ]);
 
-const typeOperatorItems = Object.fromEntries(
+const operatorItems = Object.fromEntries(
   Object.entries(operators).map(([type, typeOperators]) => [
     type,
     Object.entries(typeOperators).map(([operator]) => ({
@@ -98,30 +85,28 @@ const typeOperatorItems = Object.fromEntries(
   ])
 );
 
-const fieldOperatorItems = computed(() =>
-  props.filter.id ? typeOperatorItems[props.filters[props.filter.id].type] : []
+const filterOperatorItems = computed(() =>
+  props.filter.id ? operatorItems[props.filters[props.filter.id].type] : []
 );
 
 function changeFilter(id: string) {
   emit('update:filter', {
     id,
     operator: 'equal',
-    inclusive: true,
     values: [''], // TODO: doesn't respect filter type (text, date, number, etc.)
   } as Filter);
 }
 
-function changeOperator(operator: FilterOperator, inclusive: boolean) {
+function changeOperator(operator: FilterOperator) {
   if (props.filter.id) {
     const oldOperator = props.filter.operator;
-    const operators = getOperators(props.filters[props.filter.id].type);
-    const newArgs = (operator && operators[operator]?.args) || 0;
-    const oldArgs = (oldOperator && operators[oldOperator]?.args) || 0;
+    const typeOperators = operators[props.filters[props.filter.id].type];
+    const newArgs = (operator && typeOperators[operator]?.args) || 0;
+    const oldArgs = (oldOperator && typeOperators[oldOperator]?.args) || 0;
 
     emit('update:filter', {
       id: props.filter.id,
       operator,
-      inclusive,
       values:
         // TODO: doesn't respect filter type (text, date, number, etc.)
         newArgs === oldArgs ? props.filter.values : new Array(newArgs).fill(''),

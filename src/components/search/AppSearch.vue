@@ -108,18 +108,11 @@ import { useI18n } from 'vue-i18n';
 import {
   GetPaginatedQuery,
   GetPaginatedQueryRule,
-  GetPaginatedQueryRuleOperator,
 } from '../../utils/api/api.interface';
 import AppButton from '../forms/AppButton.vue';
 import AppSearchInput from '../forms/AppSearchInput.vue';
 import AppSelect from '../forms/AppSelect.vue';
-import {
-  emptyFilter,
-  EmptyFilter,
-  Filter,
-  FilterOperator,
-  Filters,
-} from './search.interface';
+import { emptyFilter, EmptyFilter, Filter, Filters } from './search.interface';
 import AppSearchFilter from './AppSearchFilter.vue';
 
 const emit = defineEmits(['update:search', 'update:rules']);
@@ -146,8 +139,7 @@ const currentMatchType = computed(() =>
 function convertRuleToFilter(rule: GetPaginatedQueryRule<string>): Filter {
   return {
     id: rule.field,
-    operator: rule.operator.replace('not_', '') as FilterOperator,
-    inclusive: !rule.operator.startsWith('not_'),
+    operator: rule.operator,
     values: Array.isArray(rule.value) ? rule.value : [rule.value],
   };
 }
@@ -197,11 +189,7 @@ function handleAdvancedSearch() {
     condition: matchType.value === 'all' ? 'AND' : 'OR',
     rules: (selectedFilters.value as Filter[]).map((filter) => ({
       field: filter.id,
-      operator: ((filter.inclusive
-        ? ''
-        : filter.operator === 'is_empty'
-        ? 'is_not'
-        : 'not_') + filter.operator) as GetPaginatedQueryRuleOperator,
+      operator: filter.operator,
       value: filter.values,
     })),
   };

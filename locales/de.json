@@ -106,6 +106,7 @@
     "matchType": {},
     "matchWord": {},
     "operators": {
+      "all": {},
       "array": {},
       "boolean": {},
       "date": {},
