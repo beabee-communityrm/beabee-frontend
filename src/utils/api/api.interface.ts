@@ -252,6 +252,7 @@ export interface GeneralContent {
   impressumLink?: string;
   locale: string;
   currencyCode: string;
+  currencySymbol: string;
   hideContribution?: boolean;
   footerLinks?: { text: string; url: string }[];
   theme: {
