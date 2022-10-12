@@ -167,7 +167,8 @@ const showMemberOnlyPrompt = computed(
   () =>
     !isPreview.value &&
     callout.value?.access === 'member' &&
-    !currentUser.value?.activeRoles.includes('member')
+    currentUser.value &&
+    !currentUser.value.activeRoles.includes('member')
 );
 
 const showResponseForm = computed(
