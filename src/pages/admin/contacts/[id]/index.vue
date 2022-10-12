@@ -121,44 +121,8 @@ meta:
 
     <div>
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
-      <div v-for="role in contact.roles" :key="role.role">
-        <div
-          class="mt-4 flex items-center rounded border border-primary-20 px-2.5 py-1"
-        >
-          <AppRoundBadge
-            :type="isRoleCurrent(role) ? 'success' : 'danger'"
-            class="mx-2"
-          />
-          <strong class="mx-2 text-sm font-bold uppercase">
-            {{ t(`common.role.${role.role}`) }}
-          </strong>
-          {{ formatLocale(role.dateAdded, 'P') + ' → ' }}
-          {{
-            role.dateExpires
-              ? formatLocale(role.dateExpires, 'P')
-              : t('contacts.data.rolesCopy.today')
-          }}
-          <div class="ml-auto">
-            <AppButton variant="text" size="sm" @click="openEditRoleForm(role)"
-              >Edit</AppButton
-            >
-            <AppButton variant="dangerText" size="sm" @click="handleDeleteRole">
-              Delete role
-            </AppButton>
-          </div>
-        </div>
-        <div>
-          <AppButton
-            variant="primaryOutlined"
-            @click="newRoleFormVisible = true"
-            class="w-full !bg-primary-5"
-            >Add role</AppButton
-          >
-        </div>
-      </div>
+      <RoleEditor :contact="contact" />
     </div>
-
-    <RoleEdit ref="newRoleForm" type="new" :visible="newRoleFormVisible" />
 
     <div class="hidden">
       <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
@@ -198,10 +162,8 @@ import AppSelect from '../../../../components/forms/AppSelect.vue';
 import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
-import AppDateInput from '../../../../components/forms/AppDateInput.vue';
-import AppRoundBadge from '../../../../components/AppRoundBadge.vue';
 import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown.vue';
-import RoleEdit from '../../../../components/pages/admin/contacts/RoleEdit.vue';
+import RoleEditor from '../../../../components/pages/admin/contacts/RoleEditor.vue';
 import MessageBox from '../../../../components/MessageBox.vue';
 import { onBeforeMount, ref, reactive } from 'vue';
 import { ContributionType } from '../../../../utils/enums/contribution-type.enum';
@@ -210,13 +172,7 @@ import {
   GetMemberDataWith,
   MemberRoleData,
 } from '../../../../utils/api/api.interface';
-import {
-  fetchMember,
-  updateMember,
-  addMemberRole,
-  updateRole,
-  deleteRole,
-} from '../../../../utils/api/member';
+import { fetchMember, updateMember, } from '../../../../utils/api/member';
 import AppInfoList from '../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
@@ -259,15 +215,6 @@ async function handleFormSubmit() {
   }
 }
 
-async function handleDeleteRole(role) {
-  try {
-    await deleteRole(props.contact.id, editRole.role);
-  } finally {
-    editRoleFormLoading.value = false;
-    isEditRoleFormVisible.value = false;
-  }
-}
-
 async function handleSecurityAction() {
   securityButtonsDisabled.value = true;
   noteFormLoading.value = true;
@@ -277,11 +224,6 @@ async function handleSecurityAction() {
   } finally {
     noteFormLoading.value = false;
   }
-}
-
-function isRoleCurrent(role: MemberRoleData): boolean {
-  const now = new Date();
-  return role.dateAdded < now && (!role.dateExpires || role.dateExpires > now);
 }
 
 onBeforeMount(async () => {
