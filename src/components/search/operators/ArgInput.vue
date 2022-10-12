@@ -30,6 +30,7 @@
     v-else
     v-model="value"
     :type="args.type"
+    :prefix="args.prefix"
     required
     hide-error-message
   />

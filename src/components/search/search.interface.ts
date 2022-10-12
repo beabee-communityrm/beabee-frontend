@@ -58,6 +58,7 @@ export const operators: Record<
 export interface FilterArgs {
   type: FilterType;
   label: string;
+  prefix?: string;
   nullable?: boolean;
   options?: string[];
 }

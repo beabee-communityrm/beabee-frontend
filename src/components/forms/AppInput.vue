@@ -1,21 +1,26 @@
 <template>
   <AppLabel v-if="label" :label="label" :required="required" />
   <div class="flex items-center">
-    <div class="flex-1">
-      <input
-        v-model.trim="value"
-        class="w-full rounded border border-primary-40 p-2 leading-tight focus:shadow-input focus:outline-none"
-        :class="hasError && 'border-danger-70 bg-danger-10'"
-        :type="type"
-        :name="name"
-        :required="required"
-        :min="min"
-        :pattern="pattern"
-        v-bind="$attrs"
-        @blur="validation.value.$touch"
-      />
+    <div
+      class="flex flex-1 items-center overflow-hidden rounded border border-primary-40 bg-white focus-within:shadow-input"
+    >
+      <span v-if="prefix" class="flex-0 px-2">{{ prefix }}</span>
+      <div class="flex-1" :class="prefix && 'border-l border-primary-40'">
+        <input
+          v-model.trim="value"
+          class="w-full bg-white p-2 leading-tight focus:outline-none"
+          :class="hasError && 'border-danger-70 bg-danger-10'"
+          :type="type"
+          :name="name"
+          :required="required"
+          :min="min"
+          :pattern="pattern"
+          v-bind="$attrs"
+          @blur="validation.value.$touch"
+        />
+      </div>
     </div>
-    <div v-if="$slots.suffix" class="flex-0 ml-2"><slot name="suffix" /></div>
+    <div v-if="$slots.after" class="flex-0 ml-2"><slot name="after" /></div>
   </div>
 
   <div
@@ -52,6 +57,7 @@ const props = withDefaults(
     sameAs?: number | string;
     pattern?: string;
     hideErrorMessage?: boolean;
+    prefix?: string;
   }>(),
   {
     modelValue: undefined,
@@ -62,6 +68,7 @@ const props = withDefaults(
     min: undefined,
     sameAs: undefined,
     pattern: undefined,
+    prefix: undefined,
   }
 );
 

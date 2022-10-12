@@ -1,5 +1,6 @@
 import { computed, Ref } from 'vue';
 import i18n from '../../../../i18n';
+import { generalContent } from '../../../../store';
 import { Filters } from '../../../search/search.interface';
 
 const { t } = i18n.global;
@@ -29,6 +30,7 @@ export const filters: Ref<Filters> = computed(() => ({
   contributionMonthlyAmount: {
     type: 'number',
     label: t('contacts.data.contributionMonthlyAmount'),
+    prefix: generalContent.value.currencySymbol,
   },
   contributionPeriod: {
     type: 'enum',
