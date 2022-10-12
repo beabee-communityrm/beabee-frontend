@@ -11,6 +11,7 @@ export const generalContent = ref<GeneralContent>({
   termsLink: '',
   locale: '',
   currencyCode: '',
+  currencySymbol: '',
   footerLinks: [],
   theme: {},
 });

@@ -5,7 +5,7 @@
       :class="hasError ? 'border-danger bg-danger-10' : 'bg-white'"
     >
       <div class="flex flex-1 items-baseline overflow-hidden px-6 py-3">
-        <span class="text-body-60">{{ currencySign }}</span>
+        <span class="text-body-60">{{ generalContent.currencySymbol }}</span>
         <div class="relative mx-1 overflow-hidden">
           <div class="text-6xl font-semibold">
             {{ amount || '0' }}
@@ -80,8 +80,9 @@ import { computed, toRefs } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { minValue } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
+import { generalContent } from '../../store';
 
-const { t, n, getNumberFormat, locale } = useI18n();
+const { t, n } = useI18n();
 
 const emits = defineEmits(['update:modelValue']);
 const props = defineProps<{
@@ -118,24 +119,6 @@ const rules = computed(() => ({
 }));
 
 const validation = useVuelidate(rules, { amount });
-
-// hacky way to get the currency sign because
-// setting `part` to `true` threw an error:
-// n(100, { key: 'currency', part: true })
-const currencySign = computed(() => {
-  const { style, currency } = getNumberFormat(locale.value).currency;
-
-  let formatter = new Intl.NumberFormat(locale.value, {
-    style,
-    currency,
-  });
-
-  const currencySignObject = formatter
-    .formatToParts(0)
-    .find((item) => item.type === 'currency');
-
-  return currencySignObject?.value;
-});
 
 const period = computed(() => {
   return props.isMonthly ? t('common.month') : t('common.year');
