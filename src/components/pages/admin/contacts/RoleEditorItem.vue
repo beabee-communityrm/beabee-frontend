@@ -25,25 +25,25 @@
       <form @submit.prevent="handleFormSubmit" class="flex-initial">
         <div>
           <div class="my-2 py-1">
-            <AppLabel :label="inputT('starts.label')" required />
+            <AppLabel :label="inputT('starts.label')" />
             <div class="flex gap-2">
               <div>
-                <AppInput v-model="editRole.startDate" type="date" required />
+                <AppInput v-model="editRole.startDate" type="date" />
               </div>
               <div>
-                <AppInput v-model="editRole.startTime" type="time" required />
+                <AppInput v-model="editRole.startTime" type="time" />
               </div>
             </div>
           </div>
 
           <div class="my-2 py-1">
-            <AppLabel :label="inputT('expires.label')" required />
+            <AppLabel :label="inputT('expires.label')" />
             <div class="flex gap-2">
               <div>
-                <AppInput v-model="editRole.endDate" type="date" required />
+                <AppInput v-model="editRole.endDate" type="date" />
               </div>
               <div>
-                <AppInput v-model="editRole.endTime" type="time" required />
+                <AppInput v-model="editRole.endTime" type="time" />
               </div>
             </div>
           </div>
@@ -113,15 +113,14 @@ async function handleFormSubmit() {
   loading.value = true;
   try {
     await updateRole(props.contact.id, editRole.role, {
-      dateAdded: roleHasStartDate.value
-        ? parseDateTime(editRole.startDate, editRole.startTime)
-        : new Date(),
-      dateExpires: roleHasEndDate.value
+      dateAdded: parseDateTime(editRole.startDate, editRole.startTime),
+      dateExpires: editRole.endDate
         ? parseDateTime(editRole.endDate, editRole.endTime)
         : null,
     });
   } finally {
     // TODO: update item view
+    console.log(result);
     loading.value = false;
     formVisible.value = false;
   }
@@ -142,6 +141,10 @@ function isRoleCurrent(role: MemberRoleData): boolean {
   return role.dateAdded < now && (!role.dateExpires || role.dateExpires > now);
 }
 
+function parseDateTime(date: string, time: string): Date {
+  return new Date(date + 'T' + time);
+}
+
 onBeforeMount(async () => {
   loading.value = false;
   editRole.role = props.role.role;
@@ -151,6 +154,5 @@ onBeforeMount(async () => {
     editRole.endDate = props.role.dateExpires.toLocaleDateString();
     editRole.endTime = props.role.dateExpires.toLocaleTimeString();
   }
-  console.log(editRole);
 });
 </script>
