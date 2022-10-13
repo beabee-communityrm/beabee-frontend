@@ -105,17 +105,6 @@ export async function updateMember(
   return deserializeMember(data);
 }
 
-export async function addMemberRole(
-  id: string,
-  roleData: MemberRoleData
-): Promise<GetMemberData> {
-  const { data } = await axios.patch<Serial<GetMemberData>>(
-    `/member/${id}/role/add`,
-    roleData
-  );
-  return deserializeRole(data);
-}
-
 export async function fetchContribution(): Promise<ContributionInfo> {
   const { data } = await axios.get<Serial<ContributionInfo>>(
     '/member/me/contribution'
