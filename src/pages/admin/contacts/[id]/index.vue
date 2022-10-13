@@ -121,7 +121,7 @@ meta:
 
     <div>
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
-      <RoleEditor :contact="contact" />
+      <RoleEditor :contact="contact" class="mt-4" />
     </div>
 
     <div class="hidden">
@@ -133,7 +133,7 @@ meta:
           variant="primaryOutlined"
           :disabled="securityButtonsDisabled"
           :loading="noteFormLoading"
-          class="mt-2"
+          class="mt-4"
           >{{ t('contactOverview.security.loginOverride') }}</AppButton
         >
         <AppButton
@@ -172,7 +172,7 @@ import {
   GetMemberDataWith,
   MemberRoleData,
 } from '../../../../utils/api/api.interface';
-import { fetchMember, updateMember, } from '../../../../utils/api/member';
+import { fetchMember, updateMember } from '../../../../utils/api/member';
 import AppInfoList from '../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';

@@ -4,7 +4,7 @@
       <RoleEditorItem :role="role" :contact="contact" />
     </div>
 
-    <div>
+    <div class="mt-3">
       <AppButton
         variant="primaryOutlined"
         @click="formVisible = true"
@@ -15,10 +15,10 @@
 
     <div
       v-if="formVisible"
-      class="flex flex-1 justify-center rounded border border-primary-20 py-4 px-10"
+      class="flex flex-1 rounded border border-primary-20 bg-primary-10 p-4"
     >
       <form @submit.prevent="handleFormSubmit" class="flex-initial">
-        <div class="my-3 py-3">
+        <div class="my-2 py-1">
           <AppSelect
             v-model="newRole.role"
             label="New role"
@@ -27,7 +27,7 @@
         </div>
 
         <div>
-          <div class="my-3 py-3">
+          <div class="my-2 py-1">
             <AppLabel :label="inputT('starts.label')" required />
             <AppRadioGroup
               name="roleStartDate"
@@ -48,7 +48,7 @@
             </div>
           </div>
 
-          <div class="my-3 py-3">
+          <div class="my-2 py-1">
             <AppRadioGroup
               name="roleEndDate"
               v-model="roleHasEndDate"

@@ -1,16 +1,11 @@
 <template>
-  <div>
-    <div
-      class="mt-4 flex items-center rounded border border-primary-20 px-2.5 py-1"
-    >
-      <AppRoundBadge
-        :type="isRoleCurrent(role) ? 'success' : 'danger'"
-        class="mx-2"
-      />
-      <strong class="mx-2 text-sm font-bold uppercase">
+  <div class="mt-3 rounded border border-primary-20 bg-primary-10">
+    <div class="flex items-center bg-primary-5 px-4 py-1 text-sm">
+      <AppRoundBadge :type="isRoleCurrent(role) ? 'success' : 'danger'" />
+      <strong class="mx-2 font-bold uppercase text-body-80">
         {{ t(`common.role.${role.role}`) }}
       </strong>
-      {{ formatLocale(role.dateAdded, 'P') + ' → ' }}
+      <span>{{ formatLocale(role.dateAdded, 'P') + ' → ' }}</span>
       {{
         role.dateExpires
           ? formatLocale(role.dateExpires, 'P')
@@ -21,18 +16,15 @@
           >Edit</AppButton
         >
         <AppButton variant="dangerText" size="sm" @click="handleDeleteRole">
-          Delete role
+          Delete
         </AppButton>
       </div>
     </div>
 
-    <div
-      v-if="formVisible"
-      class="flex flex-1 justify-center rounded border border-primary-20 py-4 px-10"
-    >
+    <div v-if="formVisible" class="flex flex-1 p-4">
       <form @submit.prevent="handleFormSubmit" class="flex-initial">
         <div>
-          <div class="my-3 py-3">
+          <div class="my-2 py-1">
             <AppLabel :label="inputT('starts.label')" required />
             <div class="flex gap-2">
               <div>
@@ -44,7 +36,7 @@
             </div>
           </div>
 
-          <div class="my-3 py-3">
+          <div class="my-2 py-1">
             <AppLabel :label="inputT('expires.label')" required />
             <div class="flex gap-2">
               <div>
