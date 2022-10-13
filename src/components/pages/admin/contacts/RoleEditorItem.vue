@@ -121,10 +121,8 @@ async function handleFormSubmit() {
   loading.value = true;
   try {
     await updateRole(props.contact.id, editRole.role, {
-      dateAdded: roleHasStartDate.value
-        ? parseDateTime(editRole.startDate, editRole.startTime)
-        : new Date(),
-      dateExpires: roleHasEndDate.value
+      dateAdded: parseDateTime(editRole.startDate, editRole.startTime),
+      dateExpires: editRole.endDate
         ? parseDateTime(editRole.endDate, editRole.endTime)
         : null,
     });
@@ -148,6 +146,10 @@ async function handleDeleteRole(role) {
 function isRoleCurrent(role: MemberRoleData): boolean {
   const now = new Date();
   return role.dateAdded < now && (!role.dateExpires || role.dateExpires > now);
+}
+
+function parseDateTime(date: string, time: string): Date {
+  return new Date(date + 'T' + time);
 }
 
 onBeforeMount(async () => {
