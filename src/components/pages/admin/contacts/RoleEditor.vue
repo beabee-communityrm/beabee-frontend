@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="role in contact.roles" :key="role.role">
-      <RoleEditorItem :role="role" />
+      <RoleEditorItem :role="role" :contact="contact" />
     </div>
 
     <div>
@@ -33,13 +33,12 @@
             />
             <div v-if="roleHasStartDate" class="flex gap-2">
               <div>
-                <AppInput type="date" required />
+                <AppInput v-model="newRole.startDate" type="date" required />
               </div>
-              <!--
-            <div>
-              <AppInput type="time" required />
+              <div>
+                <AppInput v-model="newRole.startTime" type="time" required />
+              </div>
             </div>
-            --></div>
           </div>
 
           <div class="my-3 py-3">
@@ -55,13 +54,11 @@
             />
             <div v-if="roleHasEndDate" class="flex gap-2">
               <div>
-                <AppInput v-model="newRole.dateExpires" type="date" required />
+                <AppInput v-model="newRole.endDate" type="date" required />
               </div>
-              <!--
-            <div>
-              <AppInput v-model="newRole.dateExpires" type="time" required />
-            </div>
-          -->
+              <div>
+                <AppInput v-model="newRole.endTime" type="time" required />
+              </div>
             </div>
           </div>
         </div>
@@ -85,7 +82,6 @@ import AppInput from '../../../../components/forms/AppInput.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import AppSelect from '../../../../components/forms/AppSelect.vue';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
-import AppDateInput from '../../../../components/forms/AppDateInput.vue';
 import RoleEditorItem from '../../../../components/pages/admin/contacts/RoleEditorItem.vue';
 import { GetMemberData, MemberRoleData } from '../../../../utils/api/api.interface';
 import { updateRole } from '../../../../utils/api/member';
@@ -103,10 +99,14 @@ const inputT = (key: string) => t('contacts.data.rolesCopy.' + key);
 
 const loading = ref(false);
 const formVisible = ref(false);
+const roleHasStartDate = ref(false);
+const roleHasEndDate = ref(false);
 const newRole = reactive({
   role: '',
-  dateAdded: '',
-  dateExpires: '',
+  startDate: '',
+  startTime: '',
+  endDate: '',
+  endTime: '',
 });
 
 // FIXME: hardcoded
@@ -119,26 +119,31 @@ const roleOptions = [
     id: 'admin',
     label: 'Admin',
   },
+  {
+    id: 'superadmin',
+    label: 'Superadmin',
+  },
 ];
 
 async function handleFormSubmit() {
   loading.value = true;
-  if (!newRole.dateAdded) {
-    newRole.dateAdded = new Date();
-  }
-  if (!newRole.dateExpires) {
-    newRole.dateExpires = new Date();
-    newRole.dateExpires.setFullYear(newRole.dateExpires.getFullYear() + 10);
-  }
   try {
     await updateRole(props.contact.id, newRole.role, {
-      dateAdded: newRole.dateAdded,
-      dateExpires: newRole.dateExpires,
+      dateAdded: roleHasStartDate.value
+        ? parseDateTime(newRole.startDate, newRole.startTime)
+        : new Date(),
+      dateExpires: roleHasEndDate.value
+        ? parseDateTime(newRole.endDate, newRole.endTime)
+        : null
     });
   } finally {
     loading.value = false;
     formVisible.value = false;
   }
+}
+
+function parseDateTime(date: string, time: string): Date {
+  return new Date(date + 'T' + time);
 }
 
 onBeforeMount(async () => {

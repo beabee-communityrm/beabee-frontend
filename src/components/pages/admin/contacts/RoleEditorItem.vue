@@ -80,7 +80,6 @@ import AppInput from '../../../../components/forms/AppInput.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import AppSelect from '../../../../components/forms/AppSelect.vue';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
-import AppDateInput from '../../../../components/forms/AppDateInput.vue';
 import AppRoundBadge from '../../../../components/AppRoundBadge.vue';
 import { MemberRoleData } from '../../../../utils/api/api.interface';
 import { updateRole, deleteRole } from '../../../../utils/api/member';
@@ -92,6 +91,7 @@ import { formatLocale } from '../../../../utils/dates/locale-date-formats';
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   role: MemberRoleData;
+  contact: GetMemberData;
 }>() ;
 
 const { t, n } = useI18n();
@@ -129,7 +129,7 @@ async function handleFormSubmit() {
 
 async function handleDeleteRole(role) {
   try {
-    await deleteRole(props.contact.id, editRole.role);
+    await deleteRole(props.contact.id, props.role.role);
   } finally {
     loading.value = false;
     formVisible.value = false;
