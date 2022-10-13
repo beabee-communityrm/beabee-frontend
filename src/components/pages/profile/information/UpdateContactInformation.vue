@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submitFormHandler('me')">
+  <form @submit.prevent="handleSubmit()">
     <AppHeading class="mt-6 mb-2">
       {{ t('informationPage.contactInformation') }}
     </AppHeading>
@@ -8,17 +8,32 @@
       v-model:email="information.emailAddress"
       v-model:firstName="information.firstName"
       v-model:lastName="information.lastName"
+      :optional-names="isAdmin"
     />
 
     <AppHeading class="mt-6 mb-2">
       {{ t('informationPage.deliveryAddress') }}
     </AppHeading>
 
-    <ContactMailOptIn
-      v-if="infoContent.showMailOptIn"
-      v-model="information.deliveryOptIn"
-      :content="infoContent"
-    />
+    <template v-if="infoContent.showMailOptIn">
+      <AppRadioGroup
+        v-if="isAdmin"
+        v-model="information.deliveryOptIn"
+        name="deliveryOptIn"
+        :label="t('contactInformation.deliveryOptIn')"
+        :options="[
+          [true, t('common.yes')],
+          [false, t('common.no')],
+        ]"
+        class="mb-4"
+        inline
+      />
+      <ContactMailOptIn
+        v-else
+        v-model="information.deliveryOptIn"
+        :content="infoContent"
+      />
+    </template>
 
     <AppAddress
       v-model:line1="information.addressLine1"
@@ -55,23 +70,81 @@ import MessageBox from '../../../MessageBox.vue';
 import AppAddress from '../../../AppAddress.vue';
 import ContactMailOptIn from '../../../ContactMailOptIn.vue';
 import { useI18n } from 'vue-i18n';
-import { useInformation } from './use-information';
-import { onBeforeMount } from 'vue';
+import { computed, reactive, ref, toRef, watch } from 'vue';
 import AppHeading from '../../../AppHeading.vue';
 import useVuelidate from '@vuelidate/core';
+import { fetchContent } from '../../../../utils/api/content';
+import { fetchMember, updateMember } from '../../../../utils/api/member';
+import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
+
+const props = defineProps<{
+  id: string;
+}>();
 
 const { t } = useI18n();
 
-const {
-  information,
-  submitFormHandler,
-  initPage,
-  isSaved,
-  loading,
-  infoContent,
-} = useInformation();
+const isAdmin = computed(() => props.id !== 'me');
+const loading = ref(false);
+const isSaved = ref(false);
+
+const infoContent = await fetchContent('join/setup');
+
+const information = reactive({
+  emailAddress: '',
+  firstName: '',
+  lastName: '',
+  deliveryOptIn: false,
+  addressLine1: '',
+  addressLine2: '' as string | undefined,
+  cityOrTown: '',
+  postCode: '',
+});
+
+watch(
+  toRef(props, 'id'),
+  async (id) => {
+    const member = await fetchMember(id, ['profile']);
+
+    information.emailAddress = member.email;
+    information.firstName = member.firstname;
+    information.lastName = member.lastname;
+    information.deliveryOptIn = member.profile.deliveryOptIn;
+
+    const address = member.profile.deliveryAddress;
+    information.addressLine1 = address?.line1 || '';
+    information.addressLine2 = address?.line2 || '';
+    information.cityOrTown = address?.city || '';
+    information.postCode = address?.postcode || '';
+  },
+  { immediate: true }
+);
 
 const validation = useVuelidate();
 
-onBeforeMount(() => initPage('me'));
+async function handleSubmit() {
+  loading.value = true;
+  isSaved.value = false;
+
+  try {
+    await updateMember(props.id, {
+      email: information.emailAddress,
+      firstname: information.firstName,
+      lastname: information.lastName,
+      profile: {
+        ...(infoContent.showMailOptIn && {
+          deliveryOptIn: information.deliveryOptIn,
+        }),
+        deliveryAddress: {
+          line1: information.addressLine1,
+          line2: information.addressLine2,
+          city: information.cityOrTown,
+          postcode: information.postCode,
+        },
+      },
+    });
+    isSaved.value = true;
+  } finally {
+    loading.value = false;
+  }
+}
 </script>
