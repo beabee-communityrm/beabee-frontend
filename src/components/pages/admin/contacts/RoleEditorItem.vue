@@ -33,25 +33,25 @@
       <form @submit.prevent="handleFormSubmit" class="flex-initial">
         <div>
           <div class="my-3 py-3">
-            <AppLabel :label="inputT('starts.label')" required />
+            <AppLabel :label="inputT('starts.label')" />
             <div class="flex gap-2">
               <div>
-                <AppInput v-model="editRole.startDate" type="date" required />
+                <AppInput v-model="editRole.startDate" type="date" />
               </div>
               <div>
-                <AppInput v-model="editRole.startTime" type="time" required />
+                <AppInput v-model="editRole.startTime" type="time" />
               </div>
             </div>
           </div>
 
           <div class="my-3 py-3">
-            <AppLabel :label="inputT('expires.label')" required />
+            <AppLabel :label="inputT('expires.label')" />
             <div class="flex gap-2">
               <div>
-                <AppInput v-model="editRole.endDate" type="date" required />
+                <AppInput v-model="editRole.endDate" type="date" />
               </div>
               <div>
-                <AppInput v-model="editRole.endTime" type="time" required />
+                <AppInput v-model="editRole.endTime" type="time" />
               </div>
             </div>
           </div>
@@ -128,6 +128,7 @@ async function handleFormSubmit() {
     });
   } finally {
     // TODO: update item view
+    console.log(result)
     loading.value = false;
     formVisible.value = false;
   }
@@ -161,6 +162,5 @@ onBeforeMount(async () => {
     editRole.endDate = props.role.dateExpires.toLocaleDateString();
     editRole.endTime = props.role.dateExpires.toLocaleTimeString();
   }
-  console.log(editRole);
 });
 </script>
