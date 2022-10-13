@@ -13,10 +13,17 @@
       >
     </div>
 
-    <div v-if="formVisible" class="flex flex-1 justify-center rounded border border-primary-20 py-4 px-10" >
+    <div
+      v-if="formVisible"
+      class="flex flex-1 justify-center rounded border border-primary-20 py-4 px-10"
+    >
       <form @submit.prevent="handleFormSubmit" class="flex-initial">
         <div class="my-3 py-3">
-          <AppSelect v-model="newRole.role" label="New role" :items="roleOptions" />
+          <AppSelect
+            v-model="newRole.role"
+            label="New role"
+            :items="roleOptions"
+          />
         </div>
 
         <div>
@@ -83,7 +90,10 @@ import AppButton from '../../../../components/forms/AppButton.vue';
 import AppSelect from '../../../../components/forms/AppSelect.vue';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
 import RoleEditorItem from '../../../../components/pages/admin/contacts/RoleEditorItem.vue';
-import { GetMemberData, MemberRoleData } from '../../../../utils/api/api.interface';
+import {
+  GetMemberData,
+  MemberRoleData,
+} from '../../../../utils/api/api.interface';
 import { updateRole } from '../../../../utils/api/member';
 import { onBeforeMount, ref, reactive } from 'vue';
 import { computed } from 'vue';
@@ -91,8 +101,8 @@ import { useI18n } from 'vue-i18n';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
-    contact: GetMemberData;
-  }>();
+  contact: GetMemberData;
+}>();
 
 const { t, n } = useI18n();
 const inputT = (key: string) => t('contacts.data.rolesCopy.' + key);
@@ -134,7 +144,7 @@ async function handleFormSubmit() {
         : new Date(),
       dateExpires: roleHasEndDate.value
         ? parseDateTime(newRole.endDate, newRole.endTime)
-        : null
+        : null,
     });
   } finally {
     loading.value = false;

@@ -31,40 +31,36 @@
       class="flex flex-1 justify-center rounded border border-primary-20 py-4 px-10"
     >
       <form @submit.prevent="handleFormSubmit" class="flex-initial">
-
         <div>
           <div class="my-3 py-3">
             <AppLabel :label="inputT('starts.label')" required />
             <div class="flex gap-2">
               <div>
-                <AppInput v-model="role.dateAdded" type="date" required />
+                <AppInput v-model="editRole.startDate" type="date" required />
               </div>
-              <!--
-            <div>
-              <AppInput type="time" required />
+              <div>
+                <AppInput v-model="editRole.startTime" type="time" required />
+              </div>
             </div>
-            --></div>
           </div>
 
           <div class="my-3 py-3">
             <AppLabel :label="inputT('expires.label')" required />
             <div class="flex gap-2">
               <div>
-                <AppInput v-model="role.dateExpires" type="date" required />
+                <AppInput v-model="editRole.endDate" type="date" required />
               </div>
-              <!--
-            <div>
-              <AppInput v-model="role.dateExpires" type="time" required />
-            </div>
-          -->
+              <div>
+                <AppInput v-model="editRole.endTime" type="time" required />
+              </div>
             </div>
           </div>
         </div>
 
         <div class="my-3 flex py-3">
-          <AppButton type="submit" variant="primary" :loading="loading"
-            >Add role</AppButton
-          >
+          <AppButton type="submit" variant="primary" :loading="loading">{{
+            t('form.save')
+          }}</AppButton>
           <AppButton variant="text" class="ml-2" @click="formVisible = false">{{
             t('form.cancel')
           }}</AppButton>
@@ -92,7 +88,14 @@ const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   role: MemberRoleData;
   contact: GetMemberData;
-}>() ;
+}>();
+const editRole = reactive({
+  role: '',
+  startDate: '',
+  startTime: '',
+  endDate: '',
+  endTime: '',
+});
 
 const { t, n } = useI18n();
 const inputT = (key: string) => t('contacts.data.rolesCopy.' + key);
@@ -118,10 +121,15 @@ async function handleFormSubmit() {
   loading.value = true;
   try {
     await updateRole(props.contact.id, editRole.role, {
-      dateAdded: editRole.dateAdded,
-      dateExpires: editRole.dateExpires,
+      dateAdded: roleHasStartDate.value
+        ? parseDateTime(editRole.startDate, editRole.startTime)
+        : new Date(),
+      dateExpires: roleHasEndDate.value
+        ? parseDateTime(editRole.endDate, editRole.endTime)
+        : null,
     });
   } finally {
+    // TODO: update item view
     loading.value = false;
     formVisible.value = false;
   }
@@ -131,6 +139,7 @@ async function handleDeleteRole(role) {
   try {
     await deleteRole(props.contact.id, props.role.role);
   } finally {
+    // TODO: Remove item from view
     loading.value = false;
     formVisible.value = false;
   }
@@ -143,5 +152,13 @@ function isRoleCurrent(role: MemberRoleData): boolean {
 
 onBeforeMount(async () => {
   loading.value = false;
+  editRole.role = props.role.role;
+  editRole.startDate = props.role.dateAdded.toLocaleDateString();
+  editRole.startTime = props.role.dateAdded.toLocaleTimeString();
+  if (props.role.dateExpires) {
+    editRole.endDate = props.role.dateExpires.toLocaleDateString();
+    editRole.endTime = props.role.dateExpires.toLocaleTimeString();
+  }
+  console.log(editRole);
 });
 </script>
