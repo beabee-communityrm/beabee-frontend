@@ -92,10 +92,7 @@ watch([validation, props.data.formSchema], () => {
 
 const formOpts = {
   builder: {
-    advanced: false,
     data: false,
-    layout: false,
-    resource: false,
     premium: false,
   },
 };
@@ -156,7 +153,6 @@ onBeforeMount(() => {
     }
   }
 
-  .form-builder-group-header,
   .builder-sidebar_search {
     @apply hidden;
   }
@@ -184,14 +180,6 @@ onBeforeMount(() => {
     @apply p-3 text-sm leading-none;
     &.active {
       @apply border-b-2 border-link font-bold text-link;
-    }
-
-    /* Hide API, Logic and Layout tabs */
-    &:nth-child(4),
-    &:nth-child(6),
-    &:nth-child(7),
-    &:nth-child(8) {
-      @apply hidden;
     }
   }
   .nav-link {
@@ -254,57 +242,6 @@ onBeforeMount(() => {
 
   /* Hide first row (contains a header and link to help) */
   .component-edit-container > .row:first-child {
-    @apply hidden;
-  }
-
-  /* Hide lots of options */
-  .formio-component-labelPosition,
-  .formio-component-tooltip,
-  .formio-component-prefix,
-  .formio-component-suffix,
-  .formio-component-widget\.type,
-  .formio-component-inputMask,
-  .formio-component-displayMask,
-  .formio-component-customClass,
-  .formio-component-autocomplete,
-  .formio-component-tabindex,
-  .formio-component-allowMultipleMasks,
-  .formio-component-hidden,
-  .formio-component-hideLabel,
-  .formio-component-showWordCount,
-  .formio-component-showCharCount,
-  .formio-component-mask,
-  .formio-component-autofocus,
-  .formio-component-spellcheck,
-  .formio-component-disabled,
-  .formio-component-tableView,
-  .formio-component-modalEdit,
-  .formio-component-theme,
-  .formio-component-size,
-  .formio-component-leftIcon,
-  .formio-component-rightIcon,
-  .formio-component-shortcut,
-  .formio-component-action,
-  .formio-component-saveOnEnter,
-  .formio-component-block,
-  .formio-component-editor,
-  .formio-component-inputType,
-  .formio-component-labelMargin,
-  .formio-component-labelWidth,
-  .formio-component-optionsLabelPosition,
-  .formio-component-persistent,
-  .formio-component-inputFormat,
-  .formio-component-dbIndex,
-  .formio-component-redrawOn,
-  .formio-component-calculateServer,
-  .formio-component-allowCalculateOverride,
-  .formio-component-customDefaultValuePanel,
-  .formio-component-calculateValuePanel,
-  .formio-component-protected,
-  .formio-component-multiple,
-  .formio-component-encrypted,
-  .formio-component-clearOnHide,
-  .formio-component-validateOn {
     @apply hidden;
   }
 }
