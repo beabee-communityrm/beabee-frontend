@@ -92,6 +92,7 @@ async function handleSubmit() {
   try {
     await updateContent('email', emailContent.value);
     hasSaved.value = true;
+    // eslint-disable-next-line no-empty
   } catch (err) {}
   saving.value = false;
 }

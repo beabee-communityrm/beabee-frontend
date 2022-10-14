@@ -15,13 +15,13 @@ import { useI18n } from 'vue-i18n';
 import { fetchCallout } from '../../../utils/api/callout';
 import type { GetCalloutDataWith } from '../../../utils/api/api.interface';
 
-import StepVisibility from '../../../components/pages/callouts/steps/Visibility.vue';
+import StepVisibility from '../../../components/pages/callouts/steps/VisibilityStep.vue';
 import StepTitleAndImage from '../../../components/pages/callouts/steps/TitleAndImage.vue';
 import StepEndMessage from '../../../components/pages/callouts/steps/EndMessage.vue';
 import StepUrlAndSharing from '../../../components/pages/callouts/steps/UrlAndSharing.vue';
 // import StepMailchimpSync from '../components/steps/MailchimpSync.vue';
 import StepDatesAndDuration from '../../../components/pages/callouts/steps/DatesAndDuration.vue';
-import StepContent from '../../../components/pages/callouts/steps/Content.vue';
+import StepContent from '../../../components/pages/callouts/steps/ContentStep.vue';
 import { CalloutSteps } from '../../../components/pages/callouts/callouts.interface';
 import CalloutForm from '../../../components/pages/callouts/CalloutForm.vue';
 import { format } from 'date-fns';

@@ -196,6 +196,7 @@ async function handleSubmit() {
 
     currentTheme = generalContent.value.theme;
     hasSaved.value = true;
+    // eslint-disable-next-line no-empty
   } catch (err) {}
   saving.value = false;
 }

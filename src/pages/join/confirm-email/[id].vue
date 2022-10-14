@@ -11,6 +11,7 @@ meta:
 import { onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 import { updateCurrentUser } from '../../../store';
+import { isRequestError } from '../../../utils/api';
 import { confirmEmail } from '../../../utils/api/signup';
 
 const props = defineProps<{ id: string }>();
@@ -24,8 +25,8 @@ onBeforeMount(() => {
       // TODO: Cable: use old complete page
       window.location.href = '/profile/complete';
     })
-    .catch((error) => {
-      if (error.response?.data?.code === 'duplicate-email') {
+    .catch((error: unknown) => {
+      if (isRequestError(error, 'duplicate-email')) {
         router.replace('/join/duplicate-email');
       } else {
         router.replace('/join/failed');
