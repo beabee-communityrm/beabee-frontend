@@ -28,6 +28,7 @@ onBeforeMount(async () => {
         query: { updatedPaymentSource: null },
       });
       return;
+      // eslint-disable-next-line no-empty
     } catch (err) {}
   }
 

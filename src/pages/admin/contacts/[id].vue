@@ -33,8 +33,8 @@ import { fetchMember } from '../../../utils/api/member';
 import AppTabs from '../../../components/tabs/AppTabs.vue';
 import { useI18n } from 'vue-i18n';
 
+const props = defineProps<{ id: string }>();
 const route = useRoute();
-
 const { t } = useI18n();
 
 const contact = ref<GetMemberData | undefined>();
@@ -66,6 +66,6 @@ const tabs = computed(() =>
 );
 
 onBeforeMount(async () => {
-  contact.value = await fetchMember(route.params.id as string);
+  contact.value = await fetchMember(props.id as string);
 });
 </script>

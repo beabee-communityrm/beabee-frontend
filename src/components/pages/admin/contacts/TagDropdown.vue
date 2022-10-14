@@ -42,7 +42,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import ContactTag from './ContactTag.vue';
 import AppLabel from '../../../forms/AppLabel.vue';
 

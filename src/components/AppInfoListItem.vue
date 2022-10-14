@@ -7,7 +7,7 @@
   </dt>
 </template>
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 const props = defineProps<{
   name: string;
   value?: unknown;

@@ -7,6 +7,7 @@ axios.defaults.withCredentials = true;
 
 const onResponseSuccess = (response: AxiosResponse) => response;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onResponseError = (error: any) => {
   if (!error.response) return notifyError();
 
