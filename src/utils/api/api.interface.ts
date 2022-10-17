@@ -1,8 +1,13 @@
-import { ContributionPeriod } from '../enums/contribution-period.enum';
-import { ContributionType } from '../enums/contribution-type.enum';
-import { MembershipStatus } from '../enums/membership-status.enum';
-import { NewsletterStatus } from '../enums/newsletter-status.enum';
-import { PaymentMethod } from '../enums/payment-method.enum';
+import {
+  ContributionPeriod,
+  ContributionType,
+  GetPaginatedQuery,
+  GetPaginatedQueryRuleGroup,
+  MembershipStatus,
+  NewsletterStatus,
+  PaymentMethod,
+} from '@beabee/beabee-common';
+import { ContactFilterName } from '@beabee/beabee-common/dist/types/search/contacts';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Noop {}
@@ -23,45 +28,6 @@ export type AllowNull<T> = {
 };
 
 export type PermissionType = 'member' | 'admin' | 'superadmin';
-
-export type GetPaginatedQueryRuleOperator =
-  | 'equal'
-  | 'not_equal'
-  | 'less'
-  | 'less_or_equal'
-  | 'greater'
-  | 'greater_or_equal'
-  | 'between'
-  | 'not_between'
-  | 'begins_with'
-  | 'not_begins_with'
-  | 'contains'
-  | 'not_contains'
-  | 'ends_with'
-  | 'not_ends_with'
-  | 'is_empty'
-  | 'is_not_empty';
-
-export type GetPaginatedQueryRuleValue = string | number | boolean;
-
-export interface GetPaginatedQueryRule<T> {
-  field: T;
-  operator: GetPaginatedQueryRuleOperator;
-  value: GetPaginatedQueryRuleValue | GetPaginatedQueryRuleValue[];
-}
-
-export interface GetPaginatedQueryRuleGroup<T> {
-  condition: 'AND' | 'OR';
-  rules: (GetPaginatedQueryRuleGroup<T> | GetPaginatedQueryRule<T>)[];
-}
-
-export interface GetPaginatedQuery<T> {
-  limit?: number;
-  offset?: number;
-  sort?: string;
-  order?: 'ASC' | 'DESC';
-  rules?: GetPaginatedQueryRuleGroup<T>;
-}
 
 export interface Paginated<T> {
   items: T[];
@@ -132,24 +98,7 @@ export type GetMemberDataWith<With extends GetMemberWith> = GetMemberData &
   ('contribution' extends With ? { contribution: ContributionInfo } : Noop) &
   ('roles' extends With ? { roles: MemberRoleData[] } : Noop);
 
-type GetMembersQueryFields =
-  | 'firstname'
-  | 'lastname'
-  | 'email'
-  | 'joined'
-  | 'lastSeen'
-  | 'contributionType'
-  | 'contributionMonthlyAmount'
-  | 'contributionPeriod'
-  | 'deliveryOptIn'
-  | 'newsletterStatus'
-  | 'activePermission'
-  | 'activeMembership'
-  | 'membershipStarts'
-  | 'membershipExpires'
-  | 'manualPaymentSource'
-  | 'tags';
-export type GetMembersQuery = GetPaginatedQuery<GetMembersQueryFields>;
+export type GetMembersQuery = GetPaginatedQuery<ContactFilterName>;
 
 export type UpdateMemberProfileData = Partial<MemberProfileData>;
 
@@ -425,7 +374,7 @@ export interface CompleteSignupData {
 export interface GetSegmentData {
   id: string;
   name: string;
-  ruleGroup: GetPaginatedQueryRuleGroup<GetMembersQueryFields>;
+  ruleGroup: GetPaginatedQueryRuleGroup<ContactFilterName>;
   order: number;
   memberCount: number;
 }

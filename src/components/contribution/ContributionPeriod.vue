@@ -34,7 +34,7 @@
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
-import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
+import { ContributionPeriod } from '@beabee/beabee-common';
 import { ContributionContent } from './contribution.interface';
 import { computed } from 'vue';
 

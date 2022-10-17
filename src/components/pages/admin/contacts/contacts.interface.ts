@@ -1,9 +1,8 @@
 import { computed, Ref } from 'vue';
 import i18n from '../../../../i18n';
 import { generalContent } from '../../../../store';
-import { ContributionPeriod } from '../../../../utils/enums/contribution-period.enum';
-import { NewsletterStatus } from '../../../../utils/enums/newsletter-status.enum';
-import { Filters } from '../../../search/search.interface';
+
+import { ContributionPeriod, NewsletterStatus } from '@beabee/beabee-common';
 
 const { t } = i18n.global;
 

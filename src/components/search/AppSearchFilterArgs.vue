@@ -7,7 +7,8 @@
   />
 </template>
 <script lang="ts" setup>
-import { Filter, FilterArgs } from './search.interface';
+import { Filter, FilterArgs } from '@beabee/beabee-common';
+
 import BetweenArgs from './operators/BetweenArgs.vue';
 import SingleArg from './operators/SingleArg.vue';
 import NoArg from './operators/NoArg.vue';

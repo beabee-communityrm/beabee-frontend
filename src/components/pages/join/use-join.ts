@@ -1,9 +1,8 @@
+import { ContributionPeriod, PaymentMethod } from '@beabee/beabee-common';
 import { reactive, computed, Ref } from 'vue';
 import i18n from '../../../i18n';
 import { JoinContent } from '../../../utils/api/api.interface';
 import calcPaymentFee from '../../../utils/calcPaymentFee';
-import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
-import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
 
 const { n, t } = i18n.global;
 

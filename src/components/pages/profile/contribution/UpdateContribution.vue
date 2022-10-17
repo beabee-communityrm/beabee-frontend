@@ -94,11 +94,13 @@ import AppButton from '../../../forms/AppButton.vue';
 import ProrateContribution from './ProrateContribution.vue';
 import MessageBox from '../../../MessageBox.vue';
 import { ContributionContent } from '../../../contribution/contribution.interface';
-import { ContributionPeriod } from '../../../../utils/enums/contribution-period.enum';
+import {
+  ContributionPeriod,
+  ContributionType,
+  MembershipStatus,
+  PaymentMethod,
+} from '@beabee/beabee-common';
 import { ContributionInfo } from '../../../../utils/api/api.interface';
-import { PaymentMethod } from '../../../../utils/enums/payment-method.enum';
-import { ContributionType } from '../../../../utils/enums/contribution-type.enum';
-import { MembershipStatus } from '../../../../utils/enums/membership-status.enum';
 import {
   startContribution,
   startContributionCompleteUrl,

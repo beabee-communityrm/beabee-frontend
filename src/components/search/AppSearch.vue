@@ -109,20 +109,21 @@
 </template>
 
 <script lang="ts" setup>
-import useVuelidate from '@vuelidate/core';
-import { computed, ref, watch } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { GetPaginatedQuery } from '../../utils/api/api.interface';
-import AppButton from '../forms/AppButton.vue';
-import AppSearchInput from '../forms/AppSearchInput.vue';
-import AppSelect from '../forms/AppSelect.vue';
 import {
   convertFiltersToRules,
   convertRulesToFilters,
   Filter,
   Filters,
-} from './search.interface';
+  GetPaginatedQuery,
+} from '@beabee/beabee-common';
+import useVuelidate from '@vuelidate/core';
+import { computed, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import AppButton from '../forms/AppButton.vue';
+import AppSearchInput from '../forms/AppSearchInput.vue';
+import AppSelect from '../forms/AppSelect.vue';
 import AppSearchFilter from './AppSearchFilter.vue';
+import { filters } from '../pages/admin/contacts/contacts.interface';
 
 const emit = defineEmits(['update:search', 'update:rules']);
 const props = defineProps<{

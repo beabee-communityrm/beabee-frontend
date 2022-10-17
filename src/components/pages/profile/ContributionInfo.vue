@@ -25,9 +25,9 @@
 </template>
 
 <script lang="ts" setup>
+import { ContributionPeriod } from '@beabee/beabee-common';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import { GetMemberData } from '../../../utils/api/api.interface';
 

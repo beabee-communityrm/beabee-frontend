@@ -102,6 +102,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { ContributionPeriod } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
@@ -116,7 +117,6 @@ import { fetchMembers } from '../../../utils/api/member';
 import AppTable from '../../../components/table/AppTable.vue';
 import { Header, SortType } from '../../../components/table/table.interface';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
-import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import AppPagination from '../../../components/AppPagination.vue';
 import { fetchSegments } from '../../../utils/api/segments';
 import AppButton from '../../../components/forms/AppButton.vue';

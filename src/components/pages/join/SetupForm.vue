@@ -64,6 +64,7 @@
   </form>
 </template>
 <script lang="ts" setup>
+import { NewsletterStatus } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { computed, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -76,7 +77,6 @@ import ContactInformation from '../../ContactInformation.vue';
 import ContactMailOptIn from '../../ContactMailOptIn.vue';
 import AppCheckbox from '../../forms/AppCheckbox.vue';
 import { fetchMember } from '../../../utils/api/member';
-import { NewsletterStatus } from '../../../utils/enums/newsletter-status.enum';
 import { SetupMemberData } from './join.interface';
 
 const emit = defineEmits(['submit']);

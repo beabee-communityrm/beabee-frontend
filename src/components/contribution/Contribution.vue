@@ -40,8 +40,7 @@ import ContributionPeriod_ from './ContributionPeriod.vue';
 import ContributionAmount from './ContributionAmount.vue';
 import ContributionFee from './ContributionFee.vue';
 import ContributionMethod from './ContributionMethod.vue';
-import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
-import { PaymentMethod } from '../../utils/enums/payment-method.enum';
+import { ContributionPeriod, PaymentMethod } from '@beabee/beabee-common';
 import { ContributionContent } from './contribution.interface';
 import calcPaymentFee from '../../utils/calcPaymentFee';
 

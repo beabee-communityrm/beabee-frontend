@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ContributionPeriod, PaymentMethod } from '@beabee/beabee-common';
+
 import axios from '../../axios';
-import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
-import { PaymentMethod } from '../enums/payment-method.enum';
 import {
   ContributionInfo,
   GetMemberData,

@@ -10,6 +10,7 @@
     "i18n": "node scripts/i18n"
   },
   "dependencies": {
+    "@beabee/beabee-common": "^0.0.2",
     "@fontsource/fira-sans": "^4.5.9",
     "@fontsource/fira-sans-condensed": "^4.5.9",
     "@fontsource/nunito-sans": "^4.5.9",

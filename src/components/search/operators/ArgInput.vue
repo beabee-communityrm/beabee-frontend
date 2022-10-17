@@ -35,10 +35,10 @@
   />
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { FilterValue, FilterArgs } from '@beabee/beabee-common';
+import { computed, readonly } from 'vue';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import AppInput from '../../forms/AppInput.vue';
-import { FilterArgs, FilterValue } from '../search.interface';
 import AppRadioGroup from '../../forms/AppRadioGroup.vue';
 import AppSelect from '../../forms/AppSelect.vue';
 import DateInput from './DateInput.vue';

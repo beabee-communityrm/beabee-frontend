@@ -163,6 +163,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { ContributionType } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../components/AppHeading.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
@@ -171,7 +172,6 @@ import AppRoundBadge from '../../../../components/AppRoundBadge.vue';
 import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown.vue';
 import MessageBox from '../../../../components/MessageBox.vue';
 import { onBeforeMount, ref, reactive } from 'vue';
-import { ContributionType } from '../../../../utils/enums/contribution-type.enum';
 import {
   GetMemberData,
   GetMemberDataWith,

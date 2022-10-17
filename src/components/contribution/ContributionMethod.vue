@@ -28,7 +28,7 @@
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
-import { PaymentMethod } from '../../utils/enums/payment-method.enum';
+import { PaymentMethod } from '@beabee/beabee-common';
 import PaymentMethodIcon from '../payment-method/PaymentMethodIcon.vue';
 import AppSubHeading from '../AppSubHeading.vue';
 
