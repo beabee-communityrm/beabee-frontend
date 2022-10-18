@@ -84,7 +84,7 @@ meta:
 
     <form
       v-if="showResponseForm"
-      class="callout-form mt-10 border-t border-primary-40 pt-10"
+      class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg"
       :class="{ 'opacity-50': isFormReadOnly }"
       @submit.prevent
     >
