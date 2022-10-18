@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+.formio-component-content,
+.formio-dialog .formio-component-html .ck-content,
 .content-message {
   p,
   ul,
@@ -46,6 +48,13 @@
 .content-i18n {
   a {
     @apply text-link;
+  }
+}
+
+.formio-component-content,
+.formio-dialog .formio-component-html .ck-content {
+  h3 {
+    @apply mb-2;
   }
 }
 
@@ -120,12 +129,8 @@
     }
   }
 
-  .formio-component-content h3 {
-    @apply mb-2 text-xl font-semibold;
-  }
-
   .col-form-label {
-    @apply -order-2 mb-2 block text-xl font-semibold;
+    @apply -order-2 mb-2 block font-title text-xl font-semibold;
   }
 
   .form-text {
