@@ -99,6 +99,10 @@
       }
     }
 
+    &.btn-block {
+      @apply w-full;
+    }
+
     &.svg-inline--fa {
       @apply box-content box-content align-top;
     }
