@@ -115,7 +115,7 @@ export type GetMemberDataWith<With extends GetMemberWith> = GetMemberData &
   ('roles' extends With ? { roles: MemberRoleData[] } : Noop);
 
 export type GetMembersQuery = GetPaginatedQuery<
-  'firstname' | 'lastname' | 'email'
+  'firstname' | 'lastname' | 'email' | 'activeMembership'
 >;
 
 export type UpdateMemberProfileData = Partial<MemberProfileData>;
