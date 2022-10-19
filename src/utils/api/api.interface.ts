@@ -6,6 +6,8 @@ import {
   MembershipStatus,
   NewsletterStatus,
   PaymentMethod,
+  PaymentStatus,
+  PermissionType,
 } from '@beabee/beabee-common';
 import { ContactFilterName } from '@beabee/beabee-common/dist/types/search/contacts';
 
@@ -26,8 +28,6 @@ export type Serial<T> = {
 export type AllowNull<T> = {
   [P in keyof T]: undefined extends T[P] ? T[P] | null : T[P];
 };
-
-export type PermissionType = 'member' | 'admin' | 'superadmin';
 
 export interface Paginated<T> {
   items: T[];
@@ -164,13 +164,6 @@ export interface SetContributionData {
 
 export interface StartContributionData extends SetContributionData {
   paymentMethod: PaymentMethod;
-}
-
-export enum PaymentStatus {
-  Pending = 'pending',
-  Successful = 'successful',
-  Failed = 'failed',
-  Cancelled = 'cancelled',
 }
 
 export interface GetPaymentData {

@@ -32,6 +32,7 @@
 </template>
 
 <script lang="ts" setup>
+import { PaymentStatus } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import { computed, ref, watchEffect } from 'vue';
 
@@ -40,7 +41,7 @@ import AppPagination from '../../../AppPagination.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
 
 import { fetchPayments } from '../../../../utils/api/member';
-import { Paginated, PaymentStatus } from '../../../../utils/api/api.interface';
+import { Paginated } from '../../../../utils/api/api.interface';
 import { GetPaymentData } from '../../../../utils/api/api.interface';
 import { Header, SortType } from '../../../table/table.interface';
 import AppHeading from '../../../AppHeading.vue';
