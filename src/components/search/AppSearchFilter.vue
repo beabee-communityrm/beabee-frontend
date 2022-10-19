@@ -2,10 +2,9 @@
   <template v-if="readonly">
     <template v-if="filter">
       <b>{{ filterItems[filter.id].label }}</b>
-      {{ operatorT(filters[filter.id].type, filter.operator) }}
+      {{ operatorT(filterItems[filter.id].type, filter.operator) }}
       <AppSearchFilterArgs
         :filter="filter"
-        :args="filters[filter.id]"
         :item="filterItems[filter.id]"
         readonly
       />
@@ -37,11 +36,7 @@
         @update:model-value="changeOperator($event)"
       />
       <span v-else>{{ filterOperatorItems[0].label }}</span>
-      <AppSearchFilterArgs
-        :filter="filter"
-        :args="filters[filter.id]"
-        :item="filterItems[filter.id]"
-      />
+      <AppSearchFilterArgs :filter="filter" :item="filterItems[filter.id]" />
     </template>
   </div>
 </template>
@@ -52,7 +47,6 @@ import AppSelect from '../forms/AppSelect.vue';
 import {
   Filter,
   FilterOperator,
-  Filters,
   FilterType,
   nullableOperators,
   operators,
@@ -62,7 +56,6 @@ import { FilterGroup, FilterItems } from './search.interface';
 
 const emit = defineEmits(['update:filter', 'remove']);
 const props = defineProps<{
-  filters: Filters;
   filterGroups: FilterGroup[];
   filterItems: FilterItems;
   filter: Filter | null;
@@ -113,7 +106,7 @@ const nullableOperatorItems = Object.entries(nullableOperators).map(
 
 const filterOperatorItems = computed(() => {
   if (props.filter) {
-    const args = props.filters[props.filter.id];
+    const args = props.filterItems[props.filter.id];
     return [
       ...operatorItems[args.type],
       ...(args.nullable ? nullableOperatorItems : []),
@@ -134,7 +127,7 @@ function changeFilter(id: string) {
 function changeOperator(operator: FilterOperator) {
   if (props.filter) {
     const oldOperator = props.filter.operator;
-    const typeOperators = operators[props.filters[props.filter.id].type];
+    const typeOperators = operators[props.filterItems[props.filter.id].type];
     const newArgs = (operator && typeOperators[operator]?.args) || 0;
     const oldArgs = (oldOperator && typeOperators[oldOperator]?.args) || 0;
 

@@ -22,7 +22,6 @@ meta:
       <AppSearch
         v-model:search="currentSearch"
         v-model:rules="currentRules"
-        :filters="filters"
         :filter-groups="filterGroups"
         :filter-items="filterItems"
         :num-results="contactsTable?.total"
@@ -127,7 +126,6 @@ import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
 import ContactTag from '../../../components/pages/admin/contacts/ContactTag.vue';
 import {
-  filters,
   filterGroups,
   filterItems,
 } from '../../../components/pages/admin/contacts/contacts.interface';

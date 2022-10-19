@@ -60,7 +60,6 @@
             v-model:filter="selectedFilters[i]"
             :filter-groups="filterGroups"
             :filter-items="filterItems"
-            :filters="filters"
             @remove="removeFilter(i)"
           />
           <span
@@ -97,7 +96,6 @@
     <template v-for="(filter, i) in currentFilters" :key="i">
       <li class="rounded-full border border-primary-70 px-2 py-1">
         <AppSearchFilter
-          :filters="filters"
           :filter-groups="filterGroups"
           :filter-items="filterItems"
           :filter="filter"
@@ -117,7 +115,6 @@ import {
   convertFiltersToRules,
   convertRulesToFilters,
   Filter,
-  Filters,
   GetPaginatedQuery,
 } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
@@ -131,7 +128,6 @@ import { FilterGroup, FilterItems } from './search.interface';
 
 const emit = defineEmits(['update:search', 'update:rules']);
 const props = defineProps<{
-  filters: Filters;
   filterItems: FilterItems;
   filterGroups: FilterGroup[];
   search: string;

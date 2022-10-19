@@ -2,13 +2,12 @@
   <component
     :is="operatorComponents[filter.operator]"
     :values="filter.values"
-    :args="args"
     :item="item"
     :readonly="!!readonly"
   />
 </template>
 <script lang="ts" setup>
-import { Filter, FilterArgs } from '@beabee/beabee-common';
+import { Filter } from '@beabee/beabee-common';
 
 import BetweenArgs from './operators/BetweenArgs.vue';
 import SingleArg from './operators/SingleArg.vue';
@@ -17,7 +16,6 @@ import { FilterItem } from './search.interface';
 
 defineProps<{
   filter: Filter;
-  args: FilterArgs;
   item: FilterItem;
   readonly?: boolean;
 }>();
