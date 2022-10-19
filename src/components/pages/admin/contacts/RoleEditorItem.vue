@@ -37,7 +37,16 @@
           </div>
 
           <div class="my-2 py-1">
-            <AppLabel :label="t('contacts.data.rolesCopy.expires.label')" />
+            <AppRadioGroup
+              name="roleEndDate"
+              v-model="roleHasEndDate"
+              :label="t('contacts.data.rolesCopy.expires.label')"
+              :options="[
+                [false, t('contacts.data.rolesCopy.expires.opts.never')],
+                [true, t('contacts.data.rolesCopy.expires.opts.schedule')],
+              ]"
+              required
+            />
             <div class="flex gap-2">
               <div>
                 <AppInput v-model="editRole.endDate" type="date" />
@@ -92,7 +101,6 @@ const editRole = reactive({
 const { t, n } = useI18n();
 
 const formVisible = ref(false);
-const roleHasStartDate = ref(false);
 const roleHasEndDate = ref(false);
 const loading = ref(false);
 
@@ -113,13 +121,12 @@ async function handleFormSubmit() {
   try {
     await updateRole(props.contact.id, editRole.role, {
       dateAdded: parseDateTime(editRole.startDate, editRole.startTime),
-      dateExpires: editRole.endDate
+      dateExpires: roleHasEndDate.value
         ? parseDateTime(editRole.endDate, editRole.endTime)
         : null,
     });
   } finally {
     // TODO: update item view
-    console.log(result);
     loading.value = false;
     formVisible.value = false;
   }
@@ -158,6 +165,9 @@ onBeforeMount(async () => {
       .toISOString()
       .split('T')[1]
       .split('.')[0];
+  }
+  if (editRole.endDate) {
+    roleHasEndDate.value = true;
   }
 });
 </script>
