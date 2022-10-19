@@ -110,7 +110,7 @@ meta:
           type="submit"
           variant="primary"
           class="mt-4"
-          :loading="noteFormLoading"
+          :loading="loading"
           >{{ t('form.saveChanges') }}</AppButton
         >
       </form>
@@ -132,7 +132,7 @@ meta:
           type="submit"
           variant="primaryOutlined"
           :disabled="securityButtonsDisabled"
-          :loading="noteFormLoading"
+          :loading="loading"
           class="mt-4"
           >{{ t('contactOverview.security.loginOverride') }}</AppButton
         >
@@ -140,7 +140,7 @@ meta:
           type="submit"
           variant="primaryOutlined"
           :disabled="securityButtonsDisabled"
-          :loading="noteFormLoading"
+          :loading="loading"
           class="mt-2 ml-6"
           >{{ t('contactOverview.security.resetPassword') }}</AppButton
         >
@@ -192,7 +192,7 @@ const contact = ref<GetMemberDataWith<
   'profile' | 'contribution' | 'roles'
 > | null>(null);
 const contactTags = ref<string[]>([]);
-const noteFormLoading = ref(false);
+const loading = ref(false);
 const hasSetAnnotations = ref(false);
 const securityButtonsDisabled = ref(false);
 const contactAnnotations = reactive({
@@ -204,31 +204,31 @@ const securityLink = ref('');
 const newRoleFormVisible = ref(false);
 
 async function handleFormSubmit() {
-  noteFormLoading.value = true;
+  loading.value = true;
   try {
     await updateMember(props.contact.id, {
       profile: { ...contactAnnotations },
     });
   } finally {
-    noteFormLoading.value = false;
+    loading.value = false;
     hasSetAnnotations.value = true;
   }
 }
 
 async function handleSecurityAction() {
   securityButtonsDisabled.value = true;
-  noteFormLoading.value = true;
+  loading.value = true;
   try {
     const response = await (() => 'https://reset-link.com')();
     securityLink.value = response;
   } finally {
-    noteFormLoading.value = false;
+    loading.value = false;
   }
 }
 
 onBeforeMount(async () => {
-  noteFormLoading.value = false;
   newRoleFormVisible.value = false;
+  loading.value = false;
   securityButtonsDisabled.value = false;
 
   contact.value = await fetchMember(props.contact.id, [
