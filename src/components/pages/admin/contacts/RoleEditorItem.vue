@@ -148,11 +148,17 @@ function parseDateTime(date: string, time: string): Date {
 onBeforeMount(async () => {
   loading.value = false;
   editRole.role = props.role.role;
-  editRole.startDate = props.role.dateAdded.toLocaleDateString();
-  editRole.startTime = props.role.dateAdded.toLocaleTimeString();
+  editRole.startDate = props.role.dateAdded.toISOString().split('T')[0];
+  editRole.startTime = props.role.dateAdded
+    .toISOString()
+    .split('T')[1]
+    .split('.')[0];
   if (props.role.dateExpires) {
-    editRole.endDate = props.role.dateExpires.toLocaleDateString();
-    editRole.endTime = props.role.dateExpires.toLocaleTimeString();
+    editRole.endDate = props.role.dateExpires.toISOString().split('T')[0];
+    editRole.endTime = props.role.dateExpires
+      .toISOString()
+      .split('T')[1]
+      .split('.')[0];
   }
 });
 </script>
