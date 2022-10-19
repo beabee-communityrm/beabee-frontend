@@ -1,11 +1,12 @@
 <template>
   <template v-if="readonly">
     <template v-if="filter">
-      <b>{{ filters[filter.id].label }}</b>
+      <b>{{ filterItems[filter.id].label }}</b>
       {{ operatorT(filters[filter.id].type, filter.operator) }}
       <AppSearchFilterArgs
         :filter="filter"
         :args="filters[filter.id]"
+        :item="filterItems[filter.id]"
         readonly
       />
       <button type="button" class="-mr-2 px-2" @click="emit('remove')">
@@ -23,7 +24,7 @@
     </button>
     <AppSelect
       :model-value="filter?.id || ''"
-      :items="filterItems"
+      :items="filterGroupsWithDefault"
       required
       @update:model-value="changeFilter"
     />
@@ -36,7 +37,11 @@
         @update:model-value="changeOperator($event)"
       />
       <span v-else>{{ filterOperatorItems[0].label }}</span>
-      <AppSearchFilterArgs :filter="filter" :args="filters[filter.id]" />
+      <AppSearchFilterArgs
+        :filter="filter"
+        :args="filters[filter.id]"
+        :item="filterItems[filter.id]"
+      />
     </template>
   </div>
 </template>
@@ -51,12 +56,15 @@ import {
   FilterType,
   nullableOperators,
   operators,
-} from './search.interface';
+} from '@beabee/beabee-common';
 import AppSearchFilterArgs from './AppSearchFilterArgs.vue';
+import { FilterGroup, FilterItems } from './search.interface';
 
 const emit = defineEmits(['update:filter', 'remove']);
 const props = defineProps<{
   filters: Filters;
+  filterGroups: FilterGroup[];
+  filterItems: FilterItems;
   filter: Filter | null;
   readonly?: boolean;
 }>();
@@ -72,14 +80,17 @@ function operatorT(type: FilterType | 'all', operator: FilterOperator) {
   return t(`advancedSearch.operators.${type}.${operator}`);
 }
 
-const filterItems = computed(() => [
+const filterGroupsWithDefault = computed(() => [
   {
     id: '',
     label: t('advancedSearch.selectFilter'),
   },
-  ...Object.entries(props.filters).map(([id, filter]) => ({
-    id,
-    label: filter.label,
+  ...props.filterGroups.map((group) => ({
+    label: group.label,
+    items: group.items.map((id) => ({
+      id,
+      label: props.filterItems[id].label,
+    })),
   })),
 ]);
 

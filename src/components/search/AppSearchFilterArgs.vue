@@ -3,6 +3,7 @@
     :is="operatorComponents[filter.operator]"
     :values="filter.values"
     :args="args"
+    :item="item"
     :readonly="!!readonly"
   />
 </template>
@@ -12,8 +13,14 @@ import { Filter, FilterArgs } from '@beabee/beabee-common';
 import BetweenArgs from './operators/BetweenArgs.vue';
 import SingleArg from './operators/SingleArg.vue';
 import NoArg from './operators/NoArg.vue';
+import { FilterItem } from './search.interface';
 
-defineProps<{ filter: Filter; args: FilterArgs; readonly?: boolean }>();
+defineProps<{
+  filter: Filter;
+  args: FilterArgs;
+  item: FilterItem;
+  readonly?: boolean;
+}>();
 
 const operatorComponents = {
   equal: SingleArg,

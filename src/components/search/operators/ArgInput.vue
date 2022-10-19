@@ -1,5 +1,5 @@
 <template>
-  <b v-if="readonly">{{ args.prefix }}{{ readonlyValue }}</b>
+  <b v-if="readonly">{{ item.prefix }}{{ readonlyValue }}</b>
   <AppRadioGroup
     v-else-if="args.type === 'boolean'"
     v-model="value"
@@ -13,14 +13,14 @@
   <AppSelect
     v-else-if="args.type === 'enum'"
     v-model="value"
-    :items="args.options"
+    :items="item.options || []"
     required
   />
   <AppInput
     v-else-if="args.type === 'array'"
     v-model="value"
     type="text"
-    :prefix="args.prefix"
+    :prefix="item.prefix"
     required
     hide-error-message
   />
@@ -29,25 +29,27 @@
     v-else
     v-model="value"
     :type="args.type"
-    :prefix="args.prefix"
+    :prefix="item.prefix"
     required
     hide-error-message
   />
 </template>
 <script lang="ts" setup>
 import { FilterValue, FilterArgs } from '@beabee/beabee-common';
-import { computed, readonly } from 'vue';
+import { computed } from 'vue';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import AppInput from '../../forms/AppInput.vue';
 import AppRadioGroup from '../../forms/AppRadioGroup.vue';
 import AppSelect from '../../forms/AppSelect.vue';
 import DateInput from './DateInput.vue';
 import { useI18n } from 'vue-i18n';
+import { FilterItem } from '../search.interface';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   modelValue: FilterValue;
   args: FilterArgs;
+  item: FilterItem;
   readonly: boolean;
 }>();
 
@@ -73,7 +75,7 @@ const readonlyValue = computed(() => {
 
     case 'enum':
       return (
-        props.args.options.find((opt) => opt.id === props.modelValue)?.label ||
+        props.item.options?.find((opt) => opt.id === props.modelValue)?.label ||
         props.modelValue
       );
 

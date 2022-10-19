@@ -58,6 +58,8 @@
         >
           <AppSearchFilter
             v-model:filter="selectedFilters[i]"
+            :filter-groups="filterGroups"
+            :filter-items="filterItems"
             :filters="filters"
             @remove="removeFilter(i)"
           />
@@ -96,6 +98,8 @@
       <li class="rounded-full border border-primary-70 px-2 py-1">
         <AppSearchFilter
           :filters="filters"
+          :filter-groups="filterGroups"
+          :filter-items="filterItems"
           :filter="filter"
           readonly
           @remove="removeFilter(i)"
@@ -123,11 +127,13 @@ import AppButton from '../forms/AppButton.vue';
 import AppSearchInput from '../forms/AppSearchInput.vue';
 import AppSelect from '../forms/AppSelect.vue';
 import AppSearchFilter from './AppSearchFilter.vue';
-import { filters } from '../pages/admin/contacts/contacts.interface';
+import { FilterGroup, FilterItems } from './search.interface';
 
 const emit = defineEmits(['update:search', 'update:rules']);
 const props = defineProps<{
   filters: Filters;
+  filterItems: FilterItems;
+  filterGroups: FilterGroup[];
   search: string;
   rules: GetPaginatedQuery<string>['rules'] | undefined;
   numResults?: number;
