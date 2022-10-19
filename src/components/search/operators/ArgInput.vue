@@ -76,7 +76,7 @@ const readonlyValue = computed(() => {
 
     case 'enum':
       return (
-        props.item.options?.find((opt) => opt.id === props.modelValue)?.label ||
+        props.item.options.find((opt) => opt.id === props.modelValue)?.label ||
         props.modelValue
       );
 
