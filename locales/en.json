@@ -271,6 +271,12 @@
     "annually": "Annually",
     "backToHome": "Back to home",
     "contributing": "Contributing",
+    "contributionType": {
+      "automatic": "Automatic",
+      "gift": "Gift",
+      "manual": "Manual",
+      "none": "None"
+    },
     "copy": "Copy",
     "every": "every",
     "goBack": "Go back",
