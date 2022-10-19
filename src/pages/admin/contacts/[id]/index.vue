@@ -182,7 +182,6 @@ import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 formatLocale;
 
 const { t, n } = useI18n();
-const inputT = (key: string) => t('contacts.data.rolesCopy.' + key);
 
 const props = defineProps<{
   contact: GetMemberData;
@@ -201,7 +200,6 @@ const contactAnnotations = reactive({
   tags: [] as string[],
 });
 const securityLink = ref('');
-const newRoleFormVisible = ref(false);
 
 async function handleFormSubmit() {
   loading.value = true;
@@ -227,7 +225,6 @@ async function handleSecurityAction() {
 }
 
 onBeforeMount(async () => {
-  newRoleFormVisible.value = false;
   loading.value = false;
   securityButtonsDisabled.value = false;
 

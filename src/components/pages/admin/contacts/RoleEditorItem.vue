@@ -25,7 +25,7 @@
       <form @submit.prevent="handleFormSubmit" class="flex-initial">
         <div>
           <div class="my-2 py-1">
-            <AppLabel :label="inputT('starts.label')" />
+            <AppLabel :label="t('contacts.data.rolesCopy.starts.label')" />
             <div class="flex gap-2">
               <div>
                 <AppInput v-model="editRole.startDate" type="date" />
@@ -37,7 +37,7 @@
           </div>
 
           <div class="my-2 py-1">
-            <AppLabel :label="inputT('expires.label')" />
+            <AppLabel :label="t('contacts.data.rolesCopy.expires.label')" />
             <div class="flex gap-2">
               <div>
                 <AppInput v-model="editRole.endDate" type="date" />
@@ -90,7 +90,6 @@ const editRole = reactive({
 });
 
 const { t, n } = useI18n();
-const inputT = (key: string) => t('contacts.data.rolesCopy.' + key);
 
 const formVisible = ref(false);
 const roleHasStartDate = ref(false);
