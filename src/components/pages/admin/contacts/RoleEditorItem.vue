@@ -1,14 +1,14 @@
 <template>
   <div class="mt-3 rounded border border-primary-20 bg-primary-10">
     <div class="flex items-center bg-primary-5 px-4 py-1 text-sm">
-      <AppRoundBadge :type="isRoleCurrent(role) ? 'success' : 'danger'" />
+      <AppRoundBadge :type="isRoleCurrent(editRole) ? 'success' : 'danger'" />
       <strong class="mx-2 font-bold uppercase text-body-80">
-        {{ t(`common.role.${role.role}`) }}
+        {{ t(`common.role.${editRole.role}`) }}
       </strong>
-      <span>{{ formatLocale(role.dateAdded, 'P') + ' → ' }}</span>
+      <span>{{ formatLocale(editRole.dateAdded, 'P') + ' → ' }}</span>
       {{
         role.dateExpires
-          ? formatLocale(role.dateExpires, 'P')
+          ? formatLocale(editRole.dateExpires, 'P')
           : t('contacts.data.rolesCopy.today')
       }}
       <div class="ml-auto">
@@ -22,7 +22,7 @@
     </div>
 
     <div v-if="formVisible" class="flex flex-1 p-4">
-      <form @submit.prevent="handleFormSubmit" class="flex-initial">
+      <form class="flex-initial" @submit.prevent="handleFormSubmit">
         <div>
           <div class="my-2 py-1">
             <AppLabel :label="inputT('starts.label')" />
@@ -66,17 +66,13 @@
 import AppLabel from '../../../../components/forms/AppLabel.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
-import AppSelect from '../../../../components/forms/AppSelect.vue';
-import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
 import AppRoundBadge from '../../../../components/AppRoundBadge.vue';
 import { MemberRoleData } from '../../../../utils/api/api.interface';
 import { updateRole, deleteRole } from '../../../../utils/api/member';
 import { onBeforeMount, ref, reactive } from 'vue';
-import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
 
-const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   role: MemberRoleData;
   contact: GetMemberData;
@@ -89,25 +85,11 @@ const editRole = reactive({
   endTime: '',
 });
 
-const { t, n } = useI18n();
+const { t } = useI18n();
 const inputT = (key: string) => t('contacts.data.rolesCopy.' + key);
 
 const formVisible = ref(false);
-const roleHasStartDate = ref(false);
-const roleHasEndDate = ref(false);
 const loading = ref(false);
-
-// FIXME: hardcoded
-const roleOptions = [
-  {
-    id: 'member',
-    label: 'Member',
-  },
-  {
-    id: 'admin',
-    label: 'Admin',
-  },
-];
 
 async function handleFormSubmit() {
   loading.value = true;
@@ -120,13 +102,12 @@ async function handleFormSubmit() {
     });
   } finally {
     // TODO: update item view
-    console.log(result);
     loading.value = false;
     formVisible.value = false;
   }
 }
 
-async function handleDeleteRole(role) {
+async function handleDeleteRole() {
   try {
     await deleteRole(props.contact.id, props.role.role);
   } finally {
