@@ -25,7 +25,7 @@
       <form class="flex-initial" @submit.prevent="handleFormSubmit">
         <div>
           <div class="my-2 py-1">
-            <AppLabel :label="inputT('starts.label')" />
+            <AppLabel :label="t('contacts.data.rolesCopy.starts.label')" />
             <div class="flex gap-2">
               <div>
                 <AppInput v-model="editRole.startDate" type="date" />
@@ -37,7 +37,16 @@
           </div>
 
           <div class="my-2 py-1">
-            <AppLabel :label="inputT('expires.label')" />
+            <AppRadioGroup
+              v-model="roleHasEndDate"
+              name="roleEndDate"
+              :label="t('contacts.data.rolesCopy.expires.label')"
+              :options="[
+                [false, t('contacts.data.rolesCopy.expires.opts.never')],
+                [true, t('contacts.data.rolesCopy.expires.opts.schedule')],
+              ]"
+              required
+            />
             <div class="flex gap-2">
               <div>
                 <AppInput v-model="editRole.endDate" type="date" />
@@ -86,9 +95,8 @@ const editRole = reactive({
 });
 
 const { t } = useI18n();
-const inputT = (key: string) => t('contacts.data.rolesCopy.' + key);
-
 const formVisible = ref(false);
+const roleHasEndDate = ref(false);
 const loading = ref(false);
 
 async function handleFormSubmit() {
@@ -96,7 +104,7 @@ async function handleFormSubmit() {
   try {
     await updateRole(props.contact.id, editRole.role, {
       dateAdded: parseDateTime(editRole.startDate, editRole.startTime),
-      dateExpires: editRole.endDate
+      dateExpires: roleHasEndDate.value
         ? parseDateTime(editRole.endDate, editRole.endTime)
         : null,
     });
@@ -129,11 +137,20 @@ function parseDateTime(date: string, time: string): Date {
 onBeforeMount(async () => {
   loading.value = false;
   editRole.role = props.role.role;
-  editRole.startDate = props.role.dateAdded.toLocaleDateString();
-  editRole.startTime = props.role.dateAdded.toLocaleTimeString();
+  editRole.startDate = props.role.dateAdded.toISOString().split('T')[0];
+  editRole.startTime = props.role.dateAdded
+    .toISOString()
+    .split('T')[1]
+    .split('.')[0];
   if (props.role.dateExpires) {
-    editRole.endDate = props.role.dateExpires.toLocaleDateString();
-    editRole.endTime = props.role.dateExpires.toLocaleTimeString();
+    editRole.endDate = props.role.dateExpires.toISOString().split('T')[0];
+    editRole.endTime = props.role.dateExpires
+      .toISOString()
+      .split('T')[1]
+      .split('.')[0];
+  }
+  if (editRole.endDate) {
+    roleHasEndDate.value = true;
   }
 });
 </script>
