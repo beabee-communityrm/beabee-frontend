@@ -1,14 +1,14 @@
 <template>
   <div class="mt-3 rounded border border-primary-20 bg-primary-10">
     <div class="flex items-center bg-primary-5 px-4 py-1 text-sm">
-      <AppRoundBadge :type="isRoleCurrent(editRole) ? 'success' : 'danger'" />
+      <AppRoundBadge :type="isRoleCurrent(role) ? 'success' : 'danger'" />
       <strong class="mx-2 font-bold uppercase text-body-80">
-        {{ t(`common.role.${editRole.role}`) }}
+        {{ t(`common.role.${role.role}`) }}
       </strong>
-      <span>{{ formatLocale(editRole.dateAdded, 'P') + ' → ' }}</span>
+      <span>{{ formatLocale(role.dateAdded, 'P') + ' → ' }}</span>
       {{
         role.dateExpires
-          ? formatLocale(editRole.dateExpires, 'P')
+          ? formatLocale(role.dateExpires, 'P')
           : t('contacts.data.rolesCopy.today')
       }}
       <div class="ml-auto">
@@ -86,6 +86,7 @@ const props = defineProps<{
   role: MemberRoleData;
   contact: GetMemberData;
 }>();
+const emit = defineEmits(['update:role']);
 const editRole = reactive({
   role: '',
   startDate: '',
@@ -101,15 +102,19 @@ const loading = ref(false);
 
 async function handleFormSubmit() {
   loading.value = true;
+  let savedRole;
   try {
-    await updateRole(props.contact.id, editRole.role, {
+    savedRole = await updateRole(props.contact.id, editRole.role, {
       dateAdded: parseDateTime(editRole.startDate, editRole.startTime),
       dateExpires: roleHasEndDate.value
         ? parseDateTime(editRole.endDate, editRole.endTime)
         : null,
     });
   } finally {
-    // TODO: update item view
+    if (savedRole) {
+      emit('update:role', savedRole);
+      console.log(savedRole);
+    }
     loading.value = false;
     formVisible.value = false;
   }
