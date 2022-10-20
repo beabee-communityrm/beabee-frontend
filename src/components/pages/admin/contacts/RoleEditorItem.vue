@@ -86,7 +86,7 @@ const props = defineProps<{
   role: MemberRoleData;
   contact: GetMemberData;
 }>();
-const emit = defineEmits(['update:role']);
+const emit = defineEmits(['update']);
 const editRole = reactive({
   role: '',
   startDate: '',
@@ -102,19 +102,15 @@ const loading = ref(false);
 
 async function handleFormSubmit() {
   loading.value = true;
-  let savedRole;
   try {
-    savedRole = await updateRole(props.contact.id, editRole.role, {
+    await updateRole(props.contact.id, editRole.role, {
       dateAdded: parseDateTime(editRole.startDate, editRole.startTime),
       dateExpires: roleHasEndDate.value
         ? parseDateTime(editRole.endDate, editRole.endTime)
         : null,
     });
   } finally {
-    if (savedRole) {
-      emit('update:role', savedRole);
-      console.log(savedRole);
-    }
+    emit('update');
     loading.value = false;
     formVisible.value = false;
   }
@@ -124,7 +120,7 @@ async function handleDeleteRole() {
   try {
     await deleteRole(props.contact.id, props.role.role);
   } finally {
-    // TODO: Remove item from view
+    emit('update');
     loading.value = false;
     formVisible.value = false;
   }

@@ -121,7 +121,7 @@ meta:
 
     <div>
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
-      <RoleEditor :contact="contact" class="mt-4" />
+      <RoleEditor :contact="contact" class="mt-4" @update="handleUpdate" />
     </div>
 
     <div class="hidden">
@@ -222,6 +222,14 @@ async function handleSecurityAction() {
   } finally {
     loading.value = false;
   }
+}
+
+async function handleUpdate() {
+  contact.value = await fetchMember(props.contact.id, [
+    'profile',
+    'contribution',
+    'roles',
+  ]);
 }
 
 onBeforeMount(async () => {

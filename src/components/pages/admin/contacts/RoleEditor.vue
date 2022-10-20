@@ -1,7 +1,15 @@
 <template>
   <div>
-    <div v-for="role in contact.roles" :key="role.role">
-      <RoleEditorItem :role="role" :contact="contact" />
+    <div
+      v-for="role in contact.roles"
+      :key="role.role + role.dateAdded.toJSON()"
+    >
+      <RoleEditorItem
+        :role="role"
+        :contact="contact"
+        @update="emit('update')"
+        :key="role.role + role.dateAdded.toJSON()"
+      />
     </div>
 
     <div class="mt-3">
@@ -99,7 +107,7 @@ import { onBeforeMount, ref, reactive } from 'vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update']);
 const props = defineProps<{
   contact: GetMemberData;
 }>();
@@ -147,6 +155,7 @@ async function handleFormSubmit() {
         : null,
     });
   } finally {
+    emit('update');
     loading.value = false;
     formVisible.value = false;
   }
