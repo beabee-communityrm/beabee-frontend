@@ -142,13 +142,13 @@ onBeforeMount(async () => {
   editRole.startTime = props.role.dateAdded
     .toISOString()
     .split('T')[1]
-    .split('.')[0];
+    .slice(0, 5);
   if (props.role.dateExpires) {
     editRole.endDate = props.role.dateExpires.toISOString().split('T')[0];
     editRole.endTime = props.role.dateExpires
       .toISOString()
       .split('T')[1]
-      .split('.')[0];
+      .slice(0, 5);
   }
   if (editRole.endDate) {
     roleHasEndDate.value = true;
