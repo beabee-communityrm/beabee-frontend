@@ -15,9 +15,33 @@
         <AppButton variant="text" size="sm" @click="formVisible = true"
           >Edit</AppButton
         >
-        <AppButton variant="dangerText" size="sm" @click="handleDeleteRole">
+        <AppButton
+          variant="dangerText"
+          size="sm"
+          @click="showDeleteModal = true"
+        >
           Delete
         </AppButton>
+
+        <AppConfirmDialog
+          v-if="showDeleteModal"
+          open
+          @close="showDeleteModal = false"
+          @confirm="handleDeleteRole"
+        >
+          <template #title>
+            {{ t('calloutAdminOverview.actions.confirmDelete.title') }}
+          </template>
+          <template #text>
+            {{ t('calloutAdminOverview.actions.confirmDelete.text') }}
+          </template>
+          <template #button-cancel-text>
+            {{ t('calloutAdminOverview.actions.confirmDelete.actionNo') }}
+          </template>
+          <template #button-confirm-text>
+            {{ t('calloutAdminOverview.actions.confirmDelete.actionYes') }}
+          </template>
+        </AppConfirmDialog>
       </div>
     </div>
 
@@ -76,6 +100,8 @@ import AppLabel from '../../../../components/forms/AppLabel.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import AppRoundBadge from '../../../../components/AppRoundBadge.vue';
+import AppConfirmDialog from '../../../../components/AppConfirmDialog.vue';
+import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
 import { MemberRoleData } from '../../../../utils/api/api.interface';
 import { updateRole, deleteRole } from '../../../../utils/api/member';
 import { onBeforeMount, ref, reactive } from 'vue';
@@ -98,6 +124,7 @@ const editRole = reactive({
 const { t } = useI18n();
 const formVisible = ref(false);
 const roleHasEndDate = ref(false);
+const showDeleteModal = ref(false);
 const loading = ref(false);
 
 async function handleFormSubmit() {
