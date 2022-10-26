@@ -367,8 +367,7 @@
       "period": "Period",
       "phone": "Phone",
       "preferredChannel": "Preferred channel",
-      "roles": "Roles",
-      "rolesCopy": {
+      "roles": {
         "add": "Add role",
         "confirmDelete": {
           "actionNo": "No, go back",
@@ -392,6 +391,7 @@
             "schedule": "Schedule a start date"
           }
         },
+        "title": "Roles",
         "today": "present"
       },
       "tags": "Tags"

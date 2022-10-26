@@ -17,7 +17,7 @@
         variant="primaryOutlined"
         @click="formVisible = true"
         class="w-full !bg-primary-5"
-        >{{ t('contacts.data.rolesCopy.add') }}</AppButton
+        >{{ t('contacts.data.roles.add') }}</AppButton
       >
     </div>
 
@@ -79,9 +79,9 @@
         </div>
 
         <div class="my-3 flex py-3">
-          <AppButton type="submit" variant="primary" :loading="loading"
-            >{{ t('contacts.data.rolesCopy.add') }}</AppButton
-          >
+          <AppButton type="submit" variant="primary" :loading="loading">{{
+            t('contacts.data.roles.add')
+          }}</AppButton>
           <AppButton variant="text" class="ml-2" @click="formVisible = false">{{
             t('form.cancel')
           }}</AppButton>
@@ -113,7 +113,7 @@ const props = defineProps<{
 }>();
 
 const { t, n } = useI18n();
-const inputT = (key: string) => t('contacts.data.rolesCopy.' + key);
+const inputT = (key: string) => t('contacts.data.roles.' + key);
 
 const loading = ref(false);
 const formVisible = ref(false);

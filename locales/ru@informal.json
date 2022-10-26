@@ -194,8 +194,7 @@
       "period": "Период",
       "phone": "Телефон",
       "preferredChannel": "Предпочтительный канал",
-      "roles": "Роль",
-      "rolesCopy": {
+      "roles": {
         "confirmDelete": {},
         "expires": {
           "opts": {}
@@ -203,6 +202,7 @@
         "starts": {
           "opts": {}
         },
+        "title": "Роль",
         "today": "сегодня"
       },
       "tags": "Теги"

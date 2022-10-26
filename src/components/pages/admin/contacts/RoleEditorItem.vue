@@ -9,7 +9,7 @@
       {{
         role.dateExpires
           ? formatLocale(role.dateExpires, 'P')
-          : t('contacts.data.rolesCopy.today')
+          : t('contacts.data.roles.today')
       }}
       <div class="ml-auto">
         <AppButton variant="text" size="sm" @click="formVisible = true"
@@ -30,16 +30,16 @@
           @confirm="handleDeleteRole"
         >
           <template #title>
-            {{ t('contacts.data.rolesCopy.confirmDelete.title') }}
+            {{ t('contacts.data.roles.confirmDelete.title') }}
           </template>
           <template #text>
-            {{ t('contacts.data.rolesCopy.confirmDelete.text') }}
+            {{ t('contacts.data.roles.confirmDelete.text') }}
           </template>
           <template #button-cancel-text>
-            {{ t('contacts.data.rolesCopy.confirmDelete.actionNo') }}
+            {{ t('contacts.data.roles.confirmDelete.actionNo') }}
           </template>
           <template #button-confirm-text>
-            {{ t('contacts.data.rolesCopy.confirmDelete.actionYes') }}
+            {{ t('contacts.data.roles.confirmDelete.actionYes') }}
           </template>
         </AppConfirmDialog>
       </div>
@@ -49,7 +49,7 @@
       <form class="flex-initial" @submit.prevent="handleFormSubmit">
         <div>
           <div class="my-2 py-1">
-            <AppLabel :label="t('contacts.data.rolesCopy.starts.label')" />
+            <AppLabel :label="t('contacts.data.roles.starts.label')" />
             <div class="flex gap-2">
               <div>
                 <AppInput v-model="editRole.startDate" type="date" />
@@ -64,10 +64,10 @@
             <AppRadioGroup
               v-model="roleHasEndDate"
               name="roleEndDate"
-              :label="t('contacts.data.rolesCopy.expires.label')"
+              :label="t('contacts.data.roles.expires.label')"
               :options="[
-                [false, t('contacts.data.rolesCopy.expires.opts.never')],
-                [true, t('contacts.data.rolesCopy.expires.opts.schedule')],
+                [false, t('contacts.data.roles.expires.opts.never')],
+                [true, t('contacts.data.roles.expires.opts.schedule')],
               ]"
               required
             />
