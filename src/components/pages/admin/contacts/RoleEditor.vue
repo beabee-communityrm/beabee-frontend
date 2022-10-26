@@ -17,7 +17,7 @@
         variant="primaryOutlined"
         @click="formVisible = true"
         class="w-full !bg-primary-5"
-        >Add role</AppButton
+        >{{ t('contacts.data.rolesCopy.add') }}</AppButton
       >
     </div>
 
@@ -80,7 +80,7 @@
 
         <div class="my-3 flex py-3">
           <AppButton type="submit" variant="primary" :loading="loading"
-            >Add role</AppButton
+            >{{ t('contacts.data.rolesCopy.add') }}</AppButton
           >
           <AppButton variant="text" class="ml-2" @click="formVisible = false">{{
             t('form.cancel')

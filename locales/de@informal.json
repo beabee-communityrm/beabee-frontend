@@ -1,10 +1,13 @@
 {
   "actions": {
     "back": "Zurück",
+    "cancel": "Abbrechen",
     "chooseFile": "Datei auswählen",
     "continue": "Weiter",
     "delete": "Löschen",
     "edit": "Bearbeiten",
+    "participate": "Teilnehmen",
+    "preview": "Vorschau",
     "publish": "Veröffentlichen",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
@@ -33,7 +36,7 @@
       "revenue": "Einnahmen",
       "title": "Überblick der letzten 30 Tage"
     },
-    "responsesSoFar": "Antworten bisher",
+    "responsesSoFar": "{n} Antworten bisher",
     "seeAllResponses": "Alle Antworten anzeigen",
     "supportInbox": "<p>Benötigst du Hilfe? Besuche unser <a href=\"https://wiki.beabee.io/beabee-help-center/\">beabee Help Center</a> oder schreib' uns eine E-Mail an:  <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
     "welcomeBack": "Willkommen zurück {firstName}!"
@@ -99,6 +102,71 @@
     },
     "title": "Einstellungen"
   },
+  "advancedSearch": {
+    "addRule": "Filter hinzufügen",
+    "button": "Erweiterte Suche",
+    "createFilters": "Filter für die Suche erstellen",
+    "matchAfter": "der folgenden Filter enthalten",
+    "matchBefore": "Ergebnisse sollen",
+    "matchType": {
+      "all": "alle",
+      "any": "mindestens einen"
+    },
+    "matchWord": {
+      "all": "und",
+      "any": "oder"
+    },
+    "operators": {
+      "all": {
+        "is_empty": "ist leer",
+        "is_not_empty": "ist nicht leer"
+      },
+      "array": {
+        "contains": "enthält",
+        "not_contains": "enthält nicht"
+      },
+      "boolean": {
+        "equal": "ist"
+      },
+      "date": {
+        "between": "zwischen",
+        "equal": "ist",
+        "greater": "nach",
+        "greater_or_equal": "nach oder am",
+        "less": "vor",
+        "less_or_equal": "vor oder am",
+        "not_between": "nicht zwischen",
+        "not_equal": "ist nicht"
+      },
+      "enum": {
+        "equal": "ist",
+        "not_equal": "ist nicht"
+      },
+      "number": {
+        "between": "zwischen",
+        "equal": "ist",
+        "greater": "mehr als",
+        "greater_or_equal": "mindestens",
+        "less": "weniger als",
+        "less_or_equal": "höchstens",
+        "not_between": "nicht zwischen",
+        "not_equal": "ist nicht"
+      },
+      "text": {
+        "begins_with": "beginnt mit",
+        "contains": "enthält",
+        "ends_with": "endet mit",
+        "equal": "ist",
+        "not_begins_with": "beginnt nicht mit",
+        "not_contains": "enthält nicht",
+        "not_ends_with": "endet nicht mit",
+        "not_equal": "ist nicht"
+      }
+    },
+    "saveAsSegment": "Als Segment speichern",
+    "selectFilter": "Filter auswählen",
+    "showResults": "Suchen"
+  },
   "callout": {
     "contactDetails": "Kontaktdaten",
     "form": {
@@ -114,6 +182,7 @@
       "address": "Diesen Callout per Link teilen:",
       "services": "Diesen Callout auf einer der folgenden Plattformen teilen: "
     },
+    "showingPreview": "Antworten sind im Vorschaumodus deaktiviert",
     "status": {
       "endedOn": "am {date}",
       "endsIn": "Endet in {duration}",
@@ -202,6 +271,7 @@
     "annually": "Jährlich",
     "backToHome": "Zurück zur Startseite",
     "contributing": "Dein Beitrag",
+    "contributionType": {},
     "copy": "Kopieren",
     "every": "pro",
     "goBack": "Zurück",
@@ -213,8 +283,14 @@
     "month": "Monat | Monaten",
     "monthly": "Monatlich",
     "new": "neu!",
+    "newsletterStatus": {
+      "cleaned": "Bereinigt",
+      "none": "Kein Status",
+      "subscribed": "Subscribed",
+      "unsubscribed": "Unsubscribed"
+    },
     "no": "Nein",
-    "participate": "Teilnehmen",
+    "noResults": "Keine Ergebnisse gefunden",
     "role": {
       "admin": "Admin",
       "member": "Mitglied",
@@ -243,7 +319,9 @@
       "copy": "<p>Alle hier eingegebenen Information sind <strong>nur für Administratoren sichtbar</strong>.\nNutzer bekommen das nicht angezeigt.</p>\n"
     },
     "contribution": "Beitrag",
+    "contributionType": "Zahlungsart",
     "information": "Information",
+    "newsletter": "Newsletter",
     "overview": "Überblick",
     "roles": "Rolle",
     "security": {
@@ -256,22 +334,29 @@
   },
   "contacts": {
     "addContact": "Kontakt hinzufügen",
-    "advancedSearch": "Erweiterte Suche",
     "allContacts": "Alle Kontakte",
     "data": {
+      "activeMembership": "Aktive Mitgliedschaft",
+      "activePermission": "Aktive Rolle",
       "amount": "Betrag",
       "annotationsCopy": "Änderungen gespeichert!",
       "contribution": "Beitrag",
-      "contributionType": "Zahlungsart",
+      "contributionMonthlyAmount": "Monatlicher Beitrag",
+      "contributionPeriod": "Zahlweise",
+      "contributionType": "Beitragsart",
       "deliveryOptIn": "Postsendung",
       "description": "Beschreibung",
       "email": "E-Mail",
+      "firstname": "Vorname",
       "groups": "Gruppe",
       "joined": "Kontakt seit",
       "lastSeen": "Zuletzt angemeldet",
+      "lastname": "Nachname",
+      "manualPaymentSource": "Manuelles Zahlungsmittel",
+      "membershipExpires": "Mitglied bis",
       "membershipStarts": "Mitglied seit",
       "name": "Name",
-      "newsletter": "Newsletter",
+      "newsletterStatus": "Newsletter-Status",
       "notes": "Notizen",
       "payingFee": "Übernimmt Transaktionskosten?",
       "period": "Zeitraum",
@@ -279,6 +364,7 @@
       "preferredChannel": "Bevorzugter Kanal",
       "roles": "Rolle",
       "rolesCopy": {
+        "confirmDelete": {},
         "expires": {
           "label": "Wann soll der Callout enden?",
           "opts": {
@@ -755,6 +841,10 @@
     "yourInformation": "Deine Informationen",
     "yourProfile": "Dein Profil"
   },
+  "notFound": {
+    "goBack": "Zurück zum Dashboard",
+    "text": "Diese Seite existiert nicht. Wenn Du glaubst, dass das ein Fehler ist kontaktiere {support}."
+  },
   "notices": {
     "addNotice": "Hinweis hinzufügen",
     "data": {
@@ -774,6 +864,7 @@
     "forgotPassword": "Passwort vergessen",
     "join": "Mitglied werden",
     "login": "Login",
+    "notFound": "Seite nicht gefunden",
     "resetPassword": "Passwort zurücksetzen",
     "setup": "Account fertigstellen"
   },

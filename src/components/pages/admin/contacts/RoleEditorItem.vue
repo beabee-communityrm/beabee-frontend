@@ -30,16 +30,16 @@
           @confirm="handleDeleteRole"
         >
           <template #title>
-            {{ t('calloutAdminOverview.actions.confirmDelete.title') }}
+            {{ t('contacts.data.rolesCopy.confirmDelete.title') }}
           </template>
           <template #text>
-            {{ t('calloutAdminOverview.actions.confirmDelete.text') }}
+            {{ t('contacts.data.rolesCopy.confirmDelete.text') }}
           </template>
           <template #button-cancel-text>
-            {{ t('calloutAdminOverview.actions.confirmDelete.actionNo') }}
+            {{ t('contacts.data.rolesCopy.confirmDelete.actionNo') }}
           </template>
           <template #button-confirm-text>
-            {{ t('calloutAdminOverview.actions.confirmDelete.actionYes') }}
+            {{ t('contacts.data.rolesCopy.confirmDelete.actionYes') }}
           </template>
         </AppConfirmDialog>
       </div>
@@ -84,7 +84,7 @@
 
         <div class="my-3 flex py-3">
           <AppButton type="submit" variant="primary" :loading="loading">{{
-            t('form.save')
+            t('form.saveChanges')
           }}</AppButton>
           <AppButton variant="text" class="ml-2" @click="formVisible = false">{{
             t('form.cancel')

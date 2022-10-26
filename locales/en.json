@@ -1,10 +1,12 @@
 {
   "actions": {
     "back": "Back",
+    "cancel": "Cancel",
     "chooseFile": "Choose file",
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
+    "participate": "Participate",
     "preview": "Preview",
     "publish": "Publish",
     "replicate": "Replicate",
@@ -34,7 +36,7 @@
       "revenue": "Revenue",
       "title": "Numbers for the last 30 days"
     },
-    "responsesSoFar": "responses so far",
+    "responsesSoFar": "{n} response so far | {n} responses so far",
     "seeAllResponses": "See all responses",
     "supportInbox": "<p>Need help? Please visit <a href=\"https://wiki.beabee.io/help-center-english/\">the beabee Help Center</a> or use our support inbox: <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
     "welcomeBack": "Welcome back {firstName}!"
@@ -100,6 +102,71 @@
     },
     "title": "Settings"
   },
+  "advancedSearch": {
+    "addRule": "Add rule",
+    "button": "Advanced",
+    "createFilters": "Create filters for your search",
+    "matchAfter": "of the following",
+    "matchBefore": "Match",
+    "matchType": {
+      "all": "all",
+      "any": "any"
+    },
+    "matchWord": {
+      "all": "and",
+      "any": "or"
+    },
+    "operators": {
+      "all": {
+        "is_empty": "is empty",
+        "is_not_empty": "isn't empty"
+      },
+      "array": {
+        "contains": "includes",
+        "not_contains": "doesn't include"
+      },
+      "boolean": {
+        "equal": "is"
+      },
+      "date": {
+        "between": "between",
+        "equal": "is",
+        "greater": "after",
+        "greater_or_equal": "after or on",
+        "less": "before",
+        "less_or_equal": "before or on",
+        "not_between": "isn't between",
+        "not_equal": "is not"
+      },
+      "enum": {
+        "equal": "is",
+        "not_equal": "is not"
+      },
+      "number": {
+        "between": "between",
+        "equal": "is",
+        "greater": "more than",
+        "greater_or_equal": "at least",
+        "less": "less than",
+        "less_or_equal": "at most",
+        "not_between": "isn't between",
+        "not_equal": "isn't"
+      },
+      "text": {
+        "begins_with": "begins with",
+        "contains": "contains",
+        "ends_with": "ends with",
+        "equal": "is",
+        "not_begins_with": "doesn't begin with",
+        "not_contains": "doesn't contain",
+        "not_ends_with": "doesn't end with",
+        "not_equal": "is not"
+      }
+    },
+    "saveAsSegment": "Save as segment",
+    "selectFilter": "Select a filter",
+    "showResults": "Show results"
+  },
   "callout": {
     "contactDetails": "Contact details",
     "form": {
@@ -115,8 +182,7 @@
       "address": "Share this callout with the following address:",
       "services": "Or quickly share using one of these services:"
     },
-    "showMemberView": "As an admin you can preview what a member would see",
-    "showingPreview": "You are viewing a preview of a callout, you won't be able to submit a response",
+    "showingPreview": "Response submission is disabled in preview mode",
     "status": {
       "endedOn": "on {date}",
       "endsIn": "Ends in {duration}",
@@ -205,6 +271,12 @@
     "annually": "Annually",
     "backToHome": "Back to home",
     "contributing": "Contributing",
+    "contributionType": {
+      "automatic": "Automatic",
+      "gift": "Gift",
+      "manual": "Manual",
+      "none": "None"
+    },
     "copy": "Copy",
     "every": "every",
     "goBack": "Go back",
@@ -216,9 +288,14 @@
     "month": "month | months",
     "monthly": "Monthly",
     "new": "new!",
+    "newsletterStatus": {
+      "cleaned": "Cleaned",
+      "none": "None",
+      "subscribed": "Subscribed",
+      "unsubscribed": "Unsubscribed"
+    },
     "no": "No",
     "noResults": "No results found",
-    "participate": "Participate",
     "role": {
       "admin": "Admin",
       "member": "Member",
@@ -247,7 +324,9 @@
       "copy": "<p>All information added in this section is <strong>visible for admins only</strong>. Members will never see these in their profile or member area.</p>\n"
     },
     "contribution": "Contribution",
+    "contributionType": "Type",
     "information": "Information",
+    "newsletter": "Newsletter",
     "overview": "Overview",
     "roles": "Roles",
     "security": {
@@ -260,22 +339,29 @@
   },
   "contacts": {
     "addContact": "Add contact",
-    "advancedSearch": "Advanced",
     "allContacts": "All contacts",
     "data": {
+      "activeMembership": "Active membership",
+      "activePermission": "Active role",
       "amount": "Amount",
       "annotationsCopy": "Contact successfully updated",
       "contribution": "Contribution",
-      "contributionType": "Type",
-      "deliveryOptIn": "Delivery opt-in?",
+      "contributionMonthlyAmount": "Contribution monthly amount",
+      "contributionPeriod": "Contribution period",
+      "contributionType": "Contribution type",
+      "deliveryOptIn": "Delivery opt-in",
       "description": "Description",
       "email": "Email",
+      "firstname": "First name",
       "groups": "Groups",
       "joined": "Joined",
       "lastSeen": "Last seen",
+      "lastname": "Last name",
+      "manualPaymentSource": "Manual payment source",
+      "membershipExpires": "Member until",
       "membershipStarts": "Member since",
       "name": "Name",
-      "newsletter": "Newsletter",
+      "newsletterStatus": "Newsletter status",
       "notes": "Notes",
       "payingFee": "Paying fee?",
       "period": "Period",
@@ -283,6 +369,15 @@
       "preferredChannel": "Preferred channel",
       "roles": "Roles",
       "rolesCopy": {
+        "add": "Add role",
+        "confirmDelete": {
+          "actionNo": "No, go back",
+          "actionYes": "Yes, remove it",
+          "text": "Are you sure you want to remove this role?",
+          "title": "Remove role"
+        },
+        "delete": "Delete",
+        "edit": "Edit",
         "expires": {
           "label": "Expiry date for this role",
           "opts": {
@@ -303,6 +398,7 @@
     },
     "noContacts": "No contacts added yet",
     "noResults": "No contacts found",
+    "numResults": "{n} contact found | {n} contacts found",
     "search": "Search contacts...",
     "showingOf": "Showing {start} to {end} contacts out of {total}"
   },
@@ -759,6 +855,10 @@
     "yourInformation": "Your information",
     "yourProfile": "Your profile"
   },
+  "notFound": {
+    "goBack": "Go back to home",
+    "text": "This page doesn't exist. If you think this is a mistake please contact {support}."
+  },
   "notices": {
     "addNotice": "Add notice",
     "data": {
@@ -778,6 +878,7 @@
     "forgotPassword": "Forgot password",
     "join": "Join",
     "login": "Login",
+    "notFound": "Page not found",
     "resetPassword": "Reset password",
     "setup": "Setup"
   },
