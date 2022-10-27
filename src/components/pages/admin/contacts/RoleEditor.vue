@@ -5,18 +5,18 @@
       :key="role.role + role.dateAdded.toJSON()"
     >
       <RoleEditorItem
+        :key="role.role + role.dateAdded.toJSON()"
         :role="role"
         :contact="contact"
         @update="emit('update')"
-        :key="role.role + role.dateAdded.toJSON()"
       />
     </div>
 
     <div class="mt-3">
       <AppButton
+        class="w-full !bg-primary-5"
         variant="primaryOutlined"
         @click="formVisible = true"
-        class="w-full !bg-primary-5"
         >{{ t('contacts.data.roles.add') }}</AppButton
       >
     </div>
@@ -25,7 +25,7 @@
       v-if="formVisible"
       class="flex flex-1 rounded border border-primary-20 bg-primary-10 p-4"
     >
-      <form @submit.prevent="handleFormSubmit" class="flex-initial">
+      <form class="flex-initial" @submit.prevent="handleFormSubmit">
         <div class="my-2 py-1">
           <AppSelect
             v-model="newRole.role"
@@ -38,8 +38,8 @@
           <div class="my-2 py-1">
             <AppLabel :label="inputT('starts.label')" required />
             <AppRadioGroup
-              name="roleStartDate"
               v-model="roleHasStartDate"
+              name="roleStartDate"
               :options="[
                 [false, inputT('starts.opts.now')],
                 [true, inputT('starts.opts.schedule')],
@@ -58,8 +58,8 @@
 
           <div class="my-2 py-1">
             <AppRadioGroup
-              name="roleEndDate"
               v-model="roleHasEndDate"
+              name="roleEndDate"
               :label="inputT('expires.label')"
               :options="[
                 [false, inputT('expires.opts.never')],
@@ -98,13 +98,9 @@ import AppButton from '../../../../components/forms/AppButton.vue';
 import AppSelect from '../../../../components/forms/AppSelect.vue';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
 import RoleEditorItem from '../../../../components/pages/admin/contacts/RoleEditorItem.vue';
-import {
-  GetMemberData,
-  MemberRoleData,
-} from '../../../../utils/api/api.interface';
+import { GetMemberData } from '../../../../utils/api/api.interface';
 import { updateRole } from '../../../../utils/api/member';
 import { onBeforeMount, ref, reactive } from 'vue';
-import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const emit = defineEmits(['update']);
@@ -112,7 +108,7 @@ const props = defineProps<{
   contact: GetMemberData;
 }>();
 
-const { t, n } = useI18n();
+const { t } = useI18n();
 const inputT = (key: string) => t('contacts.data.roles.' + key);
 
 const loading = ref(false);
