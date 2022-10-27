@@ -115,6 +115,7 @@ const rules = computed(() => ({
   },
 }));
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const validation = useVuelidate(rules, { value } as any); // TODO: type problem
 const hasError = computed(() => validation.value.$errors.length > 0);
 

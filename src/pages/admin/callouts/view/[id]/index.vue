@@ -21,27 +21,9 @@ meta:
 
       <AppHeading>{{ t('calloutAdminOverview.summary') }}</AppHeading>
 
-      <CalloutSummary :callout="callout" class="mb-8" />
-
-      <AppHeading>{{ t('calloutAdminOverview.dates.label') }}</AppHeading>
-      <AppInfoList class="mb-8">
-        <AppInfoListItem :name="t('calloutAdminOverview.dates.starts')">
-          <span v-if="callout.starts">
-            {{ formatLocale(callout.starts, 'PPP') }}
-            <span
-              v-if="callout.status === ItemStatus.Scheduled"
-              class="font-normal"
-              >({{ t('common.in') }}
-              {{ formatDistanceLocale(new Date(), callout.starts) }})</span
-            >
-          </span>
-          <span v-else>–</span>
-        </AppInfoListItem>
-        <AppInfoListItem
-          :name="t('calloutAdminOverview.dates.ends')"
-          :value="callout.expires && formatLocale(callout.expires, 'PPP')"
-        />
-      </AppInfoList>
+      <div class="mb-8 rounded bg-white p-4">
+        <CalloutSummary :callout="callout" />
+      </div>
 
       <AppHeading>{{ t('calloutAdminOverview.settings.label') }}</AppHeading>
       <AppInfoList>
@@ -81,8 +63,20 @@ meta:
       </AppInfoList>
     </div>
     <div class="flex-0 flex flex-wrap gap-2 lg:flex-col">
-      <ActionButton icon="eye" :to="calloutLink">
-        {{ t('actions.view') }}
+      <ActionButton icon="eye" :to="`/callouts/${callout.slug}?preview`">
+        {{
+          callout.status === ItemStatus.Open ||
+          callout.status === ItemStatus.Ended
+            ? t('actions.view')
+            : t('actions.preview')
+        }}
+      </ActionButton>
+      <ActionButton
+        v-if="callout.status === ItemStatus.Open"
+        icon="reply"
+        :to="`/callouts/${callout.slug}`"
+      >
+        {{ t('actions.participate') }}
       </ActionButton>
       <ActionButton
         icon="pencil-alt"
@@ -119,7 +113,7 @@ meta:
   </div>
 </template>
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import {
@@ -130,12 +124,8 @@ import { deleteCallout } from '../../../../../utils/api/callout';
 import AppHeading from '../../../../../components/AppHeading.vue';
 import AppInfoList from '../../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../../components/AppInfoListItem.vue';
-import {
-  formatLocale,
-  formatDistanceLocale,
-} from '../../../../../utils/dates/locale-date-formats';
 import ActionButton from '../../../../../components/pages/callouts/ActionButton.vue';
-import CalloutSummary from '../../../../../components/CalloutSummary.vue';
+import CalloutSummary from '../../../../../components/callout/CalloutSummary.vue';
 import AppAlert from '../../../../../components/AppAlert.vue';
 import { createCallout } from '../../../../../utils/api/callout';
 import AppConfirmDialog from '../../../../../components/AppConfirmDialog.vue';
@@ -151,8 +141,6 @@ const wasJustCreated = route.query.created !== undefined;
 const wasJustUpdated = route.query.updated !== undefined;
 
 const showDeleteModal = ref(false);
-
-const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
 
 const confirmDeleteCallout = () => {
   deleteCallout(props.callout.slug);

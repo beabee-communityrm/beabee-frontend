@@ -77,8 +77,10 @@ interface Sort {
 const props = defineProps<{
   sort?: Sort;
   headers: Header[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   items: any[] | null; // TODO: improve typing
   hideHeaders?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   rowClass?: (item: any) => string;
 }>();
 

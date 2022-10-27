@@ -56,6 +56,7 @@ import {
   faBars,
   faTimesCircle,
   faPlus,
+  IconName,
 } from '@fortawesome/free-solid-svg-icons';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
 
@@ -121,10 +122,10 @@ onBeforeMount(() => {
     faBars,
     faPlus,
     // Use different icon names so they match
-    { ...faTimesCircle, iconName: 'times-circle-o' as any },
-    { ...faDotCircle, iconName: 'dot-circle-o' as any },
+    { ...faTimesCircle, iconName: 'times-circle-o' as IconName },
+    { ...faDotCircle, iconName: 'dot-circle-o' as IconName },
     { ...faArrowsAlt, iconName: 'arrows' },
-    { ...faTimes, iconName: 'remove' as any }
+    { ...faTimes, iconName: 'remove' as IconName }
   );
   // This will automatically replace all <i> tags with the icons above
   dom.watch();

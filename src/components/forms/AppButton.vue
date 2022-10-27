@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 
 // Variant classes for [base, hover, loading icon]
 const variantClasses = {

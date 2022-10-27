@@ -77,7 +77,7 @@ import SectionTitle from '../../components/pages/profile/SectionTitle.vue';
 import PageTitle from '../../components/PageTitle.vue';
 import AppButton from '../../components/forms/AppButton.vue';
 import AppAlert from '../../components/AppAlert.vue';
-import CalloutCard from '../../components/CalloutCard.vue';
+import CalloutCard from '../../components/callout/CalloutCard.vue';
 import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
 import {
   GetCalloutData,

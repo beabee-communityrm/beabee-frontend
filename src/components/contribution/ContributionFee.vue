@@ -19,7 +19,7 @@
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import AppCheckbox from '../forms/AppCheckbox.vue';
 
 const { t, n } = useI18n();
