@@ -19,8 +19,8 @@
       </p>
     </div>
     <div
-      class="mt-3 grid grid-cols-2 gap-6"
       v-show="dataProxy.useMailchimpSync"
+      class="mt-3 grid grid-cols-2 gap-6"
     >
       <div class="col-span-1">
         <p>

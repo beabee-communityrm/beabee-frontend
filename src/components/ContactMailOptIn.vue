@@ -14,7 +14,7 @@
   />
 </template>
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import AppCheckbox from './forms/AppCheckbox.vue';
 
 const emit = defineEmits(['update:modelValue']);

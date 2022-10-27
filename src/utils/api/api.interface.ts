@@ -224,6 +224,7 @@ export interface GeneralContent {
   impressumLink?: string;
   locale: string;
   currencyCode: string;
+  currencySymbol: string;
   hideContribution?: boolean;
   footerLinks?: { text: string; url: string }[];
   theme: {
@@ -396,7 +397,8 @@ export interface CompleteSignupData {
 export interface GetSegmentData {
   id: string;
   name: string;
-  ruleGroup: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ruleGroup: any; // TODO: add types
   order: number;
   memberCount: number;
 }

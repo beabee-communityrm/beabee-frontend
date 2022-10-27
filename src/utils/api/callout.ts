@@ -15,6 +15,7 @@ import {
 } from './api.interface';
 
 // TODO: how to make this type safe?
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function deserializeCallout(callout: any): any {
   return {
     ...callout,
