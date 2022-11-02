@@ -27,6 +27,10 @@
         <AppSelect label="Source" :items="periodOptions" />
       </div>
 
+      <div class="flex-1">
+        <AppInput label="Reference" />
+      </div>
+
       <AppButton
         :disabled="!canSubmit || validation.$invalid"
         type="submit"
