@@ -8,7 +8,10 @@ meta:
 <template>
   <div class="grid lg:grid-cols-2 xl:grid-cols-3">
     <Suspense>
-      <UpdateContribution v-model="contact.contribution" :content="content" />
+      <EditManualContribution
+        v-model="contact.contribution"
+        :content="content"
+      />
     </Suspense>
   </div>
 </template>
@@ -24,7 +27,7 @@ import { ContributionPeriod } from '../../../../utils/enums/contribution-period.
 import { PaymentMethod } from '../../../../utils/enums/payment-method.enum';
 import { fetchMember } from '../../../../utils/api/member';
 import { fetchContent } from '../../../../utils/api/content';
-import UpdateContribution from '../../../../components/pages/profile/contribution/UpdateContribution.vue';
+import EditManualContribution from '../../../../components/pages/profile/contribution/EditManualContribution.vue';
 
 // const { t } = useI18n();
 
