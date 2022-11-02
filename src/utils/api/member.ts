@@ -4,6 +4,7 @@ import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import { PaymentMethod } from '../enums/payment-method.enum';
 import {
   ContributionInfo,
+  ForceUpdateContributionData,
   GetMemberData,
   GetMemberDataWith,
   GetMembersQuery,
@@ -115,6 +116,23 @@ export async function updateContribution(
       amount: dataIn.amount,
       payFee: dataIn.payFee && dataIn.period === ContributionPeriod.Monthly,
       prorate: dataIn.prorate && dataIn.period === ContributionPeriod.Annually,
+    }
+  );
+  return deserializeContribution(data);
+}
+
+export async function forceUpdateContribution(
+  id: string,
+  dataIn: ForceUpdateContributionData
+): Promise<ContributionInfo> {
+  const { data } = await axios.patch<Serial<ContributionInfo>>(
+    `/member/${id}/contribution/force`,
+    {
+      type: dataIn.type,
+      amount: dataIn.amount,
+      period: dataIn.period,
+      source: dataIn.source,
+      reference: dataIn.reference,
     }
   );
   return deserializeContribution(data);

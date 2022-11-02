@@ -180,6 +180,14 @@ export interface SetContributionData {
   period: ContributionPeriod;
 }
 
+export interface ForceUpdateContributionData {
+  type: ContributionType.Manual | ContributionType.None;
+  amount: number | null;
+  period: ContributionPeriod | null;
+  source?: string;
+  reference?: string;
+}
+
 export interface StartContributionData extends SetContributionData {
   paymentMethod: PaymentMethod;
 }
