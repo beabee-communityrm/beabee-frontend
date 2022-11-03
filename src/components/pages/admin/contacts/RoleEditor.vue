@@ -102,11 +102,8 @@ import AppButton from '../../../../components/forms/AppButton.vue';
 import AppSelect from '../../../../components/forms/AppSelect.vue';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
 import RoleEditorItem from '../../../../components/pages/admin/contacts/RoleEditorItem.vue';
-import {
-  GetMemberDataWith,
-  MemberRoleData,
-} from '../../../../utils/api/api.interface';
-import { EditableRole } from 'roles.interface.ts';
+import { GetMemberDataWith } from '../../../../utils/api/api.interface';
+import { EditableRole } from './roles.interface';
 import { updateRole } from '../../../../utils/api/member';
 import { onBeforeMount, ref, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';

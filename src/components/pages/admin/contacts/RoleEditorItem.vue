@@ -110,7 +110,7 @@ import {
   MemberRoleData,
   GetMemberData,
 } from '../../../../utils/api/api.interface';
-import { EditableRole } from 'roles.interface.ts';
+import { EditableRole } from './roles.interface';
 import { updateRole, deleteRole } from '../../../../utils/api/member';
 import { onBeforeMount, ref, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';

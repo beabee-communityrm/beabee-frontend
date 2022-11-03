@@ -1,4 +1,6 @@
-interface EditableRole {
+import { PermissionType } from '../../../../utils/api/api.interface';
+
+export interface EditableRole {
   role: PermissionType | '';
   startDate: string;
   startTime: string;
