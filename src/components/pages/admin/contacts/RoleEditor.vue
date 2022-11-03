@@ -109,6 +109,7 @@ import {
   GetMemberData,
   MemberRoleData,
 } from '../../../../utils/api/api.interface';
+import { EditableRole } from 'roles.interface.ts';
 import { updateRole } from '../../../../utils/api/member';
 import { onBeforeMount, ref, reactive } from 'vue';
 import { computed } from 'vue';
@@ -128,7 +129,7 @@ const loading = ref(false);
 const formVisible = ref(false);
 const roleHasStartDate = ref(false);
 const roleHasEndDate = ref(false);
-const newRole = reactive({
+const newRole = reactive<EditableRole>({
   role: '',
   startDate: '',
   startTime: '',
@@ -153,6 +154,7 @@ const roleOptions = [
 ];
 
 async function handleFormSubmit() {
+  if (!newRole.role) return;
   loading.value = true;
   try {
     await updateRole(props.contact.id, newRole.role, {

@@ -107,6 +107,7 @@ import AppRoundBadge from '../../../../components/AppRoundBadge.vue';
 import AppConfirmDialog from '../../../../components/AppConfirmDialog.vue';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
 import { MemberRoleData } from '../../../../utils/api/api.interface';
+import { EditableRole } from 'roles.interface.ts';
 import { updateRole, deleteRole } from '../../../../utils/api/member';
 import { onBeforeMount, ref, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -118,7 +119,7 @@ const props = defineProps<{
   contact: GetMemberData;
 }>();
 const emit = defineEmits(['update']);
-const editRole = reactive({
+const editRole = reactive<EditableRole>({
   role: '',
   startDate: '',
   startTime: '',
