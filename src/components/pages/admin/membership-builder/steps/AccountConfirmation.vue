@@ -24,21 +24,21 @@
         <div class="mb-4">
           <AppInput
             v-model="setupContent.mailTitle"
-            :label="stepT('heading')"
+            :label="stepT('optInTitle')"
             required
           />
         </div>
         <div class="mb-4">
-          <AppTextArea
+          <RichTextEditor
             v-model="setupContent.mailText"
-            :label="stepT('subheading')"
+            :label="stepT('optInText')"
             required
           />
         </div>
         <div class="mb-4">
           <AppInput
             v-model="setupContent.mailOptIn"
-            :label="stepT('checkboxLabel')"
+            :label="stepT('optInLabel')"
             required
           />
         </div>
@@ -54,21 +54,21 @@
         <div class="mb-4">
           <AppInput
             v-model="setupContent.newsletterTitle"
-            :label="stepT('heading')"
+            :label="stepT('optInTitle')"
             required
           />
         </div>
         <div class="mb-4">
-          <AppTextArea
+          <RichTextEditor
             v-model="setupContent.newsletterText"
-            :label="stepT('subheading')"
+            :label="stepT('optInText')"
             required
           />
         </div>
         <div class="mb-4">
           <AppInput
             v-model="setupContent.newsletterOptIn"
-            :label="stepT('checkboxLabel')"
+            :label="stepT('optInLabel')"
             required
           />
         </div>
@@ -91,11 +91,11 @@ import AppInput from '../../../../forms/AppInput.vue';
 import AppHeading from '../../../../AppHeading.vue';
 import { useI18n } from 'vue-i18n';
 import AppCheckbox from '../../../../forms/AppCheckbox.vue';
-import AppTextArea from '../../../../forms/AppTextArea.vue';
 import SetupForm from '../../../join/SetupForm.vue';
 import AuthBox from '../../../../AuthBox.vue';
 import { MembershipBuilderEmitter } from '../membership-builder.interface';
 import useVuelidate from '@vuelidate/core';
+import RichTextEditor from '../../../../rte/RichTextEditor.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 

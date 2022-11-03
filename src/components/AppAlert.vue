@@ -13,7 +13,7 @@ import { computed } from 'vue';
 
 const props = withDefaults(
   defineProps<{
-    variant: 'success' | 'warning' | 'danger' | 'info';
+    variant?: 'success' | 'warning' | 'danger' | 'info';
   }>(),
   { variant: 'success' }
 );
