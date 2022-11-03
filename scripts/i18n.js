@@ -54,9 +54,7 @@ async function loadSheet(name) {
     .map((row) =>
       Object.fromEntries(headers.map((header, i) => [header, row[i]]))
     )
-    .filter((row) => row.key)
-    // Sort by key for predictable output
-    .sort((a, b) => (a.key < b.key ? -1 : 1));
+    .filter((row) => row.key);
 
   // Add locales to data
   const locales = headers.filter((h) => h !== 'key' && !h.startsWith('!'));
@@ -87,6 +85,15 @@ async function loadSheet(name) {
   }
 }
 
+// Recursively sort for predictable output
+function sortObject(obj) {
+  const ret = {};
+  for (const key of Object.keys(obj).sort()) {
+    ret[key] = typeof obj[key] === 'object' ? sortObject(obj[key]) : obj[key];
+  }
+  return ret;
+}
+
 (async () => {
   await loadSheet('Sheet1');
 
@@ -100,7 +107,7 @@ async function loadSheet(name) {
     console.log('Updating ' + locale);
     fs.writeFileSync(
       path.join(__dirname, '../locales', locale + '.json'),
-      JSON.stringify(localeData[locale], null, 2) + '\n'
+      JSON.stringify(sortObject(localeData[locale]), null, 2) + '\n'
     );
   }
 })().catch((err) => {
