@@ -103,7 +103,7 @@ import AppSelect from '../../../../components/forms/AppSelect.vue';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
 import RoleEditorItem from '../../../../components/pages/admin/contacts/RoleEditorItem.vue';
 import {
-  GetMemberData,
+  GetMemberDataWith,
   MemberRoleData,
 } from '../../../../utils/api/api.interface';
 import { EditableRole } from 'roles.interface.ts';
@@ -115,7 +115,7 @@ import useVuelidate from '@vuelidate/core';
 
 const emit = defineEmits(['update']);
 const props = defineProps<{
-  contact: GetMemberData;
+  contact: GetMemberDataWith<'roles'>;
 }>();
 
 const { t, n } = useI18n();

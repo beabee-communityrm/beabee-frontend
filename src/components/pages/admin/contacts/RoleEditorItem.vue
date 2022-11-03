@@ -106,7 +106,10 @@ import AppButton from '../../../../components/forms/AppButton.vue';
 import AppRoundBadge from '../../../../components/AppRoundBadge.vue';
 import AppConfirmDialog from '../../../../components/AppConfirmDialog.vue';
 import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
-import { MemberRoleData } from '../../../../utils/api/api.interface';
+import {
+  MemberRoleData,
+  GetMemberData,
+} from '../../../../utils/api/api.interface';
 import { EditableRole } from 'roles.interface.ts';
 import { updateRole, deleteRole } from '../../../../utils/api/member';
 import { onBeforeMount, ref, reactive } from 'vue';
