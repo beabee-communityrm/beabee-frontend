@@ -82,6 +82,13 @@
           <AppButton type="submit" variant="primary" :loading="loading">{{
             t('contacts.data.roles.add')
           }}</AppButton>
+          <AppButton
+            type="submit"
+            variant="primary"
+            :loading="loading"
+            :disabled="validation.$invalid"
+            >{{ t('contacts.data.roles.add') }}</AppButton
+          >
           <AppButton variant="text" class="ml-2" @click="formVisible = false">{{
             t('form.cancel')
           }}</AppButton>
@@ -106,6 +113,7 @@ import { updateRole } from '../../../../utils/api/member';
 import { onBeforeMount, ref, reactive } from 'vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import useVuelidate from '@vuelidate/core';
 
 const emit = defineEmits(['update']);
 const props = defineProps<{
@@ -113,6 +121,7 @@ const props = defineProps<{
 }>();
 
 const { t, n } = useI18n();
+const validation = useVuelidate();
 const inputT = (key: string) => t('contacts.data.roles.' + key);
 
 const loading = ref(false);

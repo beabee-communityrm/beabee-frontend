@@ -83,9 +83,13 @@
         </div>
 
         <div class="my-3 flex py-3">
-          <AppButton type="submit" variant="primary" :loading="loading">{{
-            t('form.saveChanges')
-          }}</AppButton>
+          <AppButton
+            type="submit"
+            variant="primary"
+            :loading="loading"
+            :disabled="validation.$invalid"
+            >{{ t('form.saveChanges') }}</AppButton
+          >
           <AppButton variant="text" class="ml-2" @click="formVisible = false">{{
             t('form.cancel')
           }}</AppButton>
@@ -107,6 +111,7 @@ import { updateRole, deleteRole } from '../../../../utils/api/member';
 import { onBeforeMount, ref, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
+import useVuelidate from '@vuelidate/core';
 
 const props = defineProps<{
   role: MemberRoleData;
@@ -122,6 +127,7 @@ const editRole = reactive({
 });
 
 const { t } = useI18n();
+const validation = useVuelidate();
 const formVisible = ref(false);
 const roleHasEndDate = ref(false);
 const showDeleteModal = ref(false);
