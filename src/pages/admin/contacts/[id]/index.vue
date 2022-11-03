@@ -157,11 +157,7 @@ meta:
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../components/AppHeading.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
-import AppLabel from '../../../../components/forms/AppLabel.vue';
-import AppSelect from '../../../../components/forms/AppSelect.vue';
-import AppTextArea from '../../../../components/forms/AppTextArea.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
-import AppRadioGroup from '../../../../components/forms/AppRadioGroup.vue';
 import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown.vue';
 import RoleEditor from '../../../../components/pages/admin/contacts/RoleEditor.vue';
 import MessageBox from '../../../../components/MessageBox.vue';
@@ -170,7 +166,6 @@ import { ContributionType } from '../../../../utils/enums/contribution-type.enum
 import {
   GetMemberData,
   GetMemberDataWith,
-  MemberRoleData,
 } from '../../../../utils/api/api.interface';
 import { fetchMember, updateMember } from '../../../../utils/api/member';
 import AppInfoList from '../../../../components/AppInfoList.vue';
