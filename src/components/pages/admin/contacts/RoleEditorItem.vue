@@ -12,15 +12,15 @@
           : t('contacts.data.roles.today')
       }}
       <div class="ml-auto">
-        <AppButton variant="text" size="sm" @click="formVisible = true"
-          >Edit</AppButton
-        >
+        <AppButton variant="text" size="sm" @click="formVisible = true">{{
+          t('actions.edit')
+        }}</AppButton>
         <AppButton
           variant="dangerText"
           size="sm"
           @click="showDeleteModal = true"
         >
-          Delete
+          {{ t('actions.delete') }}
         </AppButton>
 
         <AppConfirmDialog

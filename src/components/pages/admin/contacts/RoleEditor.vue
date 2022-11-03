@@ -137,19 +137,18 @@ const newRole = reactive<EditableRole>({
   endTime: '',
 });
 
-// FIXME: hardcoded
 const roleOptions = [
   {
     id: 'member',
-    label: 'Member',
+    label: t('common.role.member'),
   },
   {
     id: 'admin',
-    label: 'Admin',
+    label: t('common.role.admin'),
   },
   {
     id: 'superadmin',
-    label: 'Superadmin',
+    label: t('common.role.superadmin'),
   },
 ];
 
