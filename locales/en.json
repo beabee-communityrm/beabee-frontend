@@ -361,6 +361,7 @@
       "membershipExpires": "Member until",
       "membershipStarts": "Member since",
       "name": "Name",
+      "newsletter": "Newsletter",
       "newsletterStatus": "Newsletter status",
       "notes": "Notes",
       "payingFee": "Paying fee?",
@@ -769,12 +770,12 @@
   "membershipBuilder": {
     "steps": {
       "accountConfirmation": {
-        "checkboxLabel": "Checkbox label",
         "description": "Compose your confirmation screen",
-        "heading": "Heading",
+        "optInLabel": "Checkbox label",
+        "optInText": "Text",
+        "optInTitle": "Heading",
         "showMailOptIn": "Ask for postal address",
         "showNewsletterOptIn": "Ask to subscribe to newsletter",
-        "subheading": "Subheading",
         "text": "After joining, users will be asked to confirm their registration. Here you can set the details of the confirmation screen.",
         "title": "Account confirmation",
         "welcomeMessage": "Welcome message"
@@ -795,23 +796,16 @@
         "title": "Welcome message"
       },
       "joinForm": {
-        "accountConfirmation": "Account confirmation",
         "backgroundImage": "Background image",
-        "checkboxLabel": "Checkbox label",
         "defaultAmount": "Default amount",
         "description": "Fine tune your membership join form",
         "formSubtitle": "Subtitle",
         "formTitle": "Title",
-        "heading": "Heading",
         "minAmount": "Minimum amount",
         "showAbsorbFee": "Ask about processing fee",
-        "showMailOptIn": "Ask for postal address",
-        "showNewsletterOptIn": "Ask to subscribe to newsletter",
-        "subheading": "Subheading",
         "suggestedAmounts": "Suggested contribution amounts",
         "text": "In this section you can edit, fine tune and preview your membership join form.",
-        "title": "Join form",
-        "welcomeMessage": "Welcome message"
+        "title": "Join form"
       }
     },
     "title": "Membership builder"

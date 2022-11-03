@@ -1,21 +1,15 @@
 <template>
-  <p class="mb-1 text-lg">
-    {{ content.mailTitle }}
-  </p>
-
-  <p class="mb-4 text-sm">
-    {{ content.mailText }}
-  </p>
-
-  <AppCheckbox
+  <AppOptIn
     v-model="optIn"
+    :title="content.mailTitle"
+    :text="content.mailText"
     :label="content.mailOptIn"
-    class="mb-4 font-bold"
+    class="mb-4"
   />
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue';
-import AppCheckbox from './forms/AppCheckbox.vue';
+import AppOptIn from './AppOptIn.vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{

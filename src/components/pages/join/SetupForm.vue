@@ -34,21 +34,14 @@
       />
     </template>
 
-    <template v-if="showNewsletterOptIn">
-      <p class="mb-1 text-lg">
-        {{ setupContent.newsletterTitle }}
-      </p>
-
-      <p class="mb-2 text-sm">
-        {{ setupContent.newsletterText }}
-      </p>
-
-      <AppCheckbox
-        v-model="setupMemberData.profile.newsletterOptIn"
-        :label="setupContent.newsletterOptIn"
-        class="mb-6 font-semibold"
-      />
-    </template>
+    <AppOptIn
+      v-if="showNewsletterOptIn"
+      v-model="setupMemberData.profile.newsletterOptIn"
+      :title="setupContent.newsletterTitle"
+      :text="setupContent.newsletterText"
+      :label="setupContent.newsletterOptIn"
+      class="mb-6"
+    />
 
     <MessageBox v-if="validation.$errors.length > 0" class="mb-2" />
 
@@ -75,9 +68,9 @@ import AppButton from '../../forms/AppButton.vue';
 import MessageBox from '../../MessageBox.vue';
 import ContactInformation from '../../ContactInformation.vue';
 import ContactMailOptIn from '../../ContactMailOptIn.vue';
-import AppCheckbox from '../../forms/AppCheckbox.vue';
 import { fetchMember } from '../../../utils/api/member';
 import { SetupMemberData } from './join.interface';
+import AppOptIn from '../../AppOptIn.vue';
 
 const emit = defineEmits(['submit']);
 const props = defineProps<{

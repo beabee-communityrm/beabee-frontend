@@ -36,8 +36,8 @@
       <ProrateContribution
         v-model="newContribution.prorate"
         :new-amount="newContribution.amount"
-        :old-amount="modelValue.amount!"
-        :renewal-date="modelValue.renewalDate!"
+        :old-amount="modelValue.amount || 0"
+        :renewal-date="modelValue.renewalDate || new Date()"
       />
 
       <MessageBox v-if="hasUpdated" class="mb-4" type="success">

@@ -356,6 +356,7 @@
       "membershipExpires": "Mitglied bis",
       "membershipStarts": "Mitglied seit",
       "name": "Name",
+      "newsletter": "Newsletter",
       "newsletterStatus": "Newsletter-Status",
       "notes": "Notizen",
       "payingFee": "Übernimmt Transaktionskosten?",
@@ -763,12 +764,12 @@
   "membershipBuilder": {
     "steps": {
       "accountConfirmation": {
-        "checkboxLabel": "Beschriftung Kontrollkästchen ",
         "description": "Stelle ein, welche persönlichen Informationen Du über deine Mitglieder sammeln willst.",
-        "heading": "Überschrift",
+        "optInLabel": "Beschriftung Kontrollkästchen ",
+        "optInText": "Text",
+        "optInTitle": "Überschrift",
         "showMailOptIn": "Nach Adresse fragen",
         "showNewsletterOptIn": "Nach Newsletterabonnement fragen",
-        "subheading": "Unterüberschrift",
         "text": "Neue Mitglieder müssen ihre Registrierung in folgendem Bildschirm bestätigen. Außerdem werden hier persönliche Informationen abgefragt.",
         "title": "Persönliche Informationen abfragen",
         "welcomeMessage": "Willkommensnachricht"
@@ -789,23 +790,16 @@
         "title": "Willkommensnachricht"
       },
       "joinForm": {
-        "accountConfirmation": "Persönliche Informationen abfragen",
         "backgroundImage": "Hintergrundbild",
-        "checkboxLabel": "Beschriftung Kontrollkästchen ",
         "defaultAmount": "Standardbeitrag",
         "description": "Optimiere dein Registrierungsformular",
         "formSubtitle": "Untertitel",
         "formTitle": "Titel",
-        "heading": "Überschrift",
         "minAmount": "Mindestbeitrag",
         "showAbsorbFee": "Um Übernahme der Transaktionskosten bitten",
-        "showMailOptIn": "Nach Adresse fragen",
-        "showNewsletterOptIn": "Nach Newsletterabonnement fragen",
-        "subheading": "Unterüberschrift",
         "suggestedAmounts": "Beiträge vorschlagen",
         "text": "In diesem Abschnitt kannst du dein Registrierungsformular bearbeiten, optimieren und ansehen.",
-        "title": "Registrierung",
-        "welcomeMessage": "Willkommensnachricht"
+        "title": "Registrierung"
       }
     },
     "title": "Membership Builder"

@@ -13,7 +13,9 @@ meta:
   <div class="grid lg:grid-cols-2 xl:grid-cols-3">
     <div>
       <ChangePassword />
-      <UpdateContactInformation />
+      <Suspense>
+        <UpdateContactInformation id="me" />
+      </Suspense>
     </div>
   </div>
 </template>
