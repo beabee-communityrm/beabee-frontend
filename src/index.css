@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+.formio-component-content,
+.formio-dialog .formio-component-html .ck-content,
 .content-message {
   p,
   ul,
@@ -49,6 +51,13 @@
   }
 }
 
+.formio-component-content,
+.formio-dialog .formio-component-html .ck-content {
+  h3 {
+    @apply mb-2;
+  }
+}
+
 .callout-form,
 .callout-form-builder .formarea,
 .formio-dialog {
@@ -90,6 +99,10 @@
       }
     }
 
+    &.btn-block {
+      @apply w-full;
+    }
+
     &.svg-inline--fa {
       @apply box-content box-content align-top;
     }
@@ -120,12 +133,8 @@
     }
   }
 
-  .formio-component-content h3 {
-    @apply mb-2 text-xl font-semibold;
-  }
-
   .col-form-label {
-    @apply -order-2 mb-2 block text-xl font-semibold;
+    @apply -order-2 mb-2 block font-title text-xl font-semibold;
   }
 
   .form-text {
