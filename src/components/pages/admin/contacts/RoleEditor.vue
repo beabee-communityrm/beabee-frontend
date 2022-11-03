@@ -79,9 +79,6 @@
         </div>
 
         <div class="my-3 flex py-3">
-          <AppButton type="submit" variant="primary" :loading="loading">{{
-            t('contacts.data.roles.add')
-          }}</AppButton>
           <AppButton
             type="submit"
             variant="primary"
