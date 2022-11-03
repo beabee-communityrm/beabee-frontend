@@ -139,6 +139,7 @@ const showDeleteModal = ref(false);
 const loading = ref(false);
 
 async function handleFormSubmit() {
+  if (!editRole.role) return;
   loading.value = true;
   try {
     await updateRole(props.contact.id, editRole.role, {
