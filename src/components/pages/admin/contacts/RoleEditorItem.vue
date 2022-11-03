@@ -112,6 +112,7 @@ import { updateRole, deleteRole } from '../../../../utils/api/member';
 import { onBeforeMount, ref, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
+import { format } from 'date-fns';
 import useVuelidate from '@vuelidate/core';
 
 const props = defineProps<{
@@ -172,17 +173,11 @@ function parseDateTime(date: string, time: string): Date {
 onBeforeMount(async () => {
   loading.value = false;
   editRole.role = props.role.role;
-  editRole.startDate = props.role.dateAdded.toISOString().split('T')[0];
-  editRole.startTime = props.role.dateAdded
-    .toISOString()
-    .split('T')[1]
-    .slice(0, 5);
+  editRole.startDate = format(props.role.dateAdded, 'yyyy-MM-dd');
+  editRole.startTime = format(props.role.dateAdded, 'HH:mm');
   if (props.role.dateExpires) {
-    editRole.endDate = props.role.dateExpires.toISOString().split('T')[0];
-    editRole.endTime = props.role.dateExpires
-      .toISOString()
-      .split('T')[1]
-      .slice(0, 5);
+    editRole.endDate = format(props.role.dateExpires, 'yyyy-MM-dd');
+    editRole.endTime = format(props.role.dateExpires, 'HH:mm');
   }
   if (editRole.endDate) {
     roleHasEndDate.value = true;
