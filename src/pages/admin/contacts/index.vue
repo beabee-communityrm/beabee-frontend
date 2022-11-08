@@ -252,23 +252,26 @@ onBeforeMount(async () => {
 watchEffect(async () => {
   const searchRules: GetMembersQuery['rules'] = {
     condition: 'OR',
-    rules: currentSearch.value.split(' ').flatMap((value) => [
-      {
-        field: 'email',
-        operator: 'contains' as const,
-        value: [value],
-      },
-      {
-        field: 'firstname',
-        operator: 'contains' as const,
-        value: [value],
-      },
-      {
-        field: 'lastname',
-        operator: 'contains' as const,
-        value: [value],
-      },
-    ]),
+    rules: currentSearch.value
+      .split(' ')
+      .filter((v) => !!v)
+      .flatMap((value) => [
+        {
+          field: 'email',
+          operator: 'contains' as const,
+          value: [value],
+        },
+        {
+          field: 'firstname',
+          operator: 'contains' as const,
+          value: [value],
+        },
+        {
+          field: 'lastname',
+          operator: 'contains' as const,
+          value: [value],
+        },
+      ]),
   };
 
   const rules: GetMembersQuery['rules'] = currentRules.value
