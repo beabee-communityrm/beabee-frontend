@@ -125,6 +125,10 @@ onBeforeMount(async () => {
     limit: 5,
     sort: 'joined',
     order: 'DESC',
+    rules: {
+      condition: 'AND',
+      rules: [{ field: 'activeMembership', operator: 'equal', value: true }],
+    },
   }).then((results) => (recentMembers.value = results.items));
 
   fetchCallouts(
