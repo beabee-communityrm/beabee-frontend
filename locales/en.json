@@ -301,15 +301,16 @@
         "expires": {
           "label": "Expiry date for this role",
           "opts": {
-            "never": "Never, unless manually closed",
-            "schedule": "Schedule an expiry date"
+            "never": "Never",
+            "schedule": "Set an expiry date"
           }
         },
+        "new": "New role",
         "starts": {
           "label": "Start date for this role",
           "opts": {
             "now": "Now",
-            "schedule": "Schedule a start date"
+            "schedule": "Set a start date"
           }
         },
         "title": "Roles",
