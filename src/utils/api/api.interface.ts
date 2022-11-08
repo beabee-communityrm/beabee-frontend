@@ -1,15 +1,15 @@
 import {
   ContributionPeriod,
   ContributionType,
-  GetPaginatedQuery,
-  GetPaginatedQueryRuleGroup,
+  ItemStatus,
   MembershipStatus,
   NewsletterStatus,
+  PaginatedQuery,
   PaymentMethod,
   PaymentStatus,
   PermissionType,
+  RuleGroup,
 } from '@beabee/beabee-common';
-import { ContactFilterName } from '@beabee/beabee-common/dist/types/search/contacts';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Noop {}
@@ -29,25 +29,11 @@ export type AllowNull<T> = {
   [P in keyof T]: undefined extends T[P] ? T[P] | null : T[P];
 };
 
-export interface Paginated<T> {
-  items: T[];
-  offset: number;
-  count: number;
-  total: number;
-}
-
 export interface Address {
   line1: string;
   line2?: string | undefined;
   city: string;
   postcode: string;
-}
-
-export enum ItemStatus {
-  Draft = 'draft',
-  Scheduled = 'scheduled',
-  Open = 'open',
-  Ended = 'ended',
 }
 
 interface MemberData {
@@ -98,7 +84,7 @@ export type GetMemberDataWith<With extends GetMemberWith> = GetMemberData &
   ('contribution' extends With ? { contribution: ContributionInfo } : Noop) &
   ('roles' extends With ? { roles: MemberRoleData[] } : Noop);
 
-export type GetMembersQuery = GetPaginatedQuery<ContactFilterName>;
+export type GetMembersQuery = PaginatedQuery; // TODO: constrain fields
 
 export type UpdateMemberProfileData = Partial<MemberProfileData>;
 
@@ -172,7 +158,7 @@ export interface GetPaymentData {
   status: PaymentStatus;
 }
 
-export type GetPaymentsQuery = GetPaginatedQuery<'chargeDate'>;
+export type GetPaymentsQuery = PaginatedQuery; // TODO: constrain fields
 
 export interface LoginData {
   email: string;
@@ -307,11 +293,8 @@ export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
 
 export type UpdateCalloutData = Omit<CreateCalloutData, 'slug'>;
 
-export type GetCalloutsQuery = GetPaginatedQuery<
-  'title' | 'status' | 'answeredBy' | 'hidden'
->;
-
-export type GetCalloutResponsesQuery = GetPaginatedQuery<'member'>;
+export type GetCalloutsQuery = PaginatedQuery; // TODO: constrain fields
+export type GetCalloutResponsesQuery = PaginatedQuery; // TODO: constrain fields
 
 type CalloutResponseAnswer =
   | string
@@ -334,9 +317,7 @@ export interface CreateCalloutResponseData {
   answers: CalloutResponseAnswers;
 }
 
-export type GetNoticesQuery = GetPaginatedQuery<
-  'name' | 'status' | 'createdAt' | 'updatedAt'
->;
+export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 
 export interface GetNoticeData {
   id: string;
@@ -367,7 +348,7 @@ export interface CompleteSignupData {
 export interface GetSegmentData {
   id: string;
   name: string;
-  ruleGroup: GetPaginatedQueryRuleGroup<ContactFilterName>;
+  ruleGroup: RuleGroup;
   order: number;
   memberCount: number;
 }

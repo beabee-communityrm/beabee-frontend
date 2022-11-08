@@ -112,10 +112,10 @@
 
 <script lang="ts" setup>
 import {
-  convertFiltersToRules,
-  convertRulesToFilters,
+  convertFiltersToRuleGroup,
+  convertRuleGroupToFilters,
   Filter,
-  GetPaginatedQuery,
+  RuleGroup,
 } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { computed, ref, watch } from 'vue';
@@ -131,7 +131,7 @@ const props = defineProps<{
   filterItems: FilterItems;
   filterGroups: FilterGroup[];
   search: string;
-  rules: GetPaginatedQuery<string>['rules'] | undefined;
+  rules: RuleGroup | undefined;
   numResults?: number;
 }>();
 
@@ -151,7 +151,7 @@ const selectedFilters = ref<(null | Filter)[]>([]);
 const currentMatchType = computed(() =>
   props.rules?.condition === 'OR' ? 'any' : 'all'
 );
-const currentFilters = computed(() => convertRulesToFilters(props.rules));
+const currentFilters = computed(() => convertRuleGroupToFilters(props.rules));
 
 function removeFilter(i: number) {
   selectedFilters.value.splice(i, 1);
@@ -170,7 +170,7 @@ function addFilter() {
 
 function reset() {
   selectedMatchType.value = currentMatchType.value;
-  const filters = convertRulesToFilters(props.rules);
+  const filters = convertRuleGroupToFilters(props.rules);
   selectedFilters.value = filters && filters.length > 0 ? filters : [null];
 }
 
@@ -184,7 +184,7 @@ function toggleAdvancedSearch() {
 function handleAdvancedSearch() {
   emit(
     'update:rules',
-    convertFiltersToRules(
+    convertFiltersToRuleGroup(
       selectedMatchType.value,
       selectedFilters.value.filter((f) => !!f) as Filter[]
     )

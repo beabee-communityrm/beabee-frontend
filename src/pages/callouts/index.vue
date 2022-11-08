@@ -79,6 +79,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { ItemStatus, Paginated } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import PageTitle from '../../components/PageTitle.vue';
 import AppHeading from '../../components/AppHeading.vue';
@@ -87,8 +88,6 @@ import {
   GetCalloutData,
   GetCalloutDataWith,
   GetCalloutsQuery,
-  ItemStatus,
-  Paginated,
 } from '../../utils/api/api.interface';
 import CalloutCard from '../../components/callout/CalloutCard.vue';
 import AppSearchInput from '../../components/forms/AppSearchInput.vue';
@@ -152,12 +151,12 @@ onBeforeMount(async () => {
         {
           field: 'status',
           operator: 'equal',
-          value: ItemStatus.Open,
+          value: [ItemStatus.Open],
         },
         {
           field: 'hidden',
           operator: 'equal',
-          value: false,
+          value: [false],
         },
       ],
     },
@@ -178,25 +177,25 @@ watchEffect(async () => {
         {
           field: 'title',
           operator: 'contains',
-          value: currentSearch.value,
+          value: [currentSearch.value],
         },
         {
           field: 'hidden',
           operator: 'equal',
-          value: false,
+          value: [false],
         },
         {
           field: 'status',
           operator: 'equal',
-          value: ItemStatus.Ended,
+          value: [ItemStatus.Ended],
         },
         ...(currentShow.value === 'answered'
           ? [
               {
                 field: 'answeredBy',
-                operator: 'equal',
-                value: 'me',
-              } as const,
+                operator: 'equal' as const,
+                value: ['me'],
+              },
             ]
           : []),
       ],

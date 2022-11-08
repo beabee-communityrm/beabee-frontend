@@ -49,7 +49,7 @@ import {
   FilterOperator,
   FilterType,
   nullableOperators,
-  operators,
+  operatorsByType,
 } from '@beabee/beabee-common';
 import AppSearchFilterArgs from './AppSearchFilterArgs.vue';
 import { FilterGroup, FilterItems } from './search.interface';
@@ -88,7 +88,7 @@ const filterGroupsWithDefault = computed(() => [
 ]);
 
 const operatorItems = Object.fromEntries(
-  Object.entries(operators).map(([type, typeOperators]) => [
+  Object.entries(operatorsByType).map(([type, typeOperators]) => [
     type,
     Object.entries(typeOperators).map(([operator]) => ({
       id: operator,
@@ -126,8 +126,9 @@ function changeFilter(id: string) {
 
 function changeOperator(operator: FilterOperator) {
   if (props.filter) {
+    const type = props.filterItems[props.filter.id].type;
     const oldOperator = props.filter.operator;
-    const typeOperators = operators[props.filterItems[props.filter.id].type];
+    const typeOperators = operatorsByType[type] as any; // TODO: remove any for operatorsByType
     const newArgs = (operator && typeOperators[operator]?.args) || 0;
     const oldArgs = (oldOperator && typeOperators[oldOperator]?.args) || 0;
 

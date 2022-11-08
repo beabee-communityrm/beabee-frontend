@@ -30,7 +30,7 @@
   <AppInput
     v-else
     v-model="value"
-    :type="item.type"
+    :type="item.type === 'contact' ? 'text' : item.type"
     :prefix="item.prefix"
     required
     hide-error-message

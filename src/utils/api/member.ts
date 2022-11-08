@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ContributionPeriod, PaymentMethod } from '@beabee/beabee-common';
+import {
+  ContributionPeriod,
+  Paginated,
+  PaymentMethod,
+} from '@beabee/beabee-common';
 
 import axios from '../../axios';
 import {
@@ -10,7 +14,6 @@ import {
   GetMemberWith,
   GetPaymentData,
   GetPaymentsQuery,
-  Paginated,
   PaymentFlowParams,
   Serial,
   SetContributionData,

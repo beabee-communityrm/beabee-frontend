@@ -77,6 +77,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { Paginated } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
@@ -88,9 +89,8 @@ import AppPagination from '../../../components/AppPagination.vue';
 import AppAlert from '../../../components/AppAlert.vue';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
 import {
-  Paginated,
-  GetCalloutsQuery,
   GetCalloutDataWith,
+  GetCalloutsQuery,
 } from '../../../utils/api/api.interface';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import { fetchCallouts } from '../../../utils/api/callout';
@@ -211,29 +211,29 @@ const totalPages = computed(() =>
 );
 
 watchEffect(async () => {
-  const rules = {
+  const rules: GetCalloutsQuery['rules'] = {
     condition: 'AND',
     rules: [
       ...(currentStatus.value
         ? [
             {
               field: 'status',
-              operator: 'equal',
-              value: currentStatus.value,
+              operator: 'equal' as const,
+              value: [currentStatus.value],
             },
           ]
         : []),
       ...(currentSearch.value
         ? [
             {
-              field: 'title' as const,
-              operator: 'contains',
-              value: currentSearch.value,
+              field: 'title',
+              operator: 'contains' as const,
+              value: [currentSearch.value],
             },
           ]
         : []),
     ],
-  } as NonNullable<GetCalloutsQuery['rules']>;
+  };
   calloutsTable.value = await fetchCallouts(
     {
       limit: currentPageSize.value,

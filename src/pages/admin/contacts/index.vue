@@ -103,7 +103,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { ContributionPeriod } from '@beabee/beabee-common';
+import { ContributionPeriod, Paginated } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
@@ -112,7 +112,6 @@ import {
   GetMembersQuery,
   GetMemberDataWith,
   GetSegmentData,
-  Paginated,
 } from '../../../utils/api/api.interface';
 import { fetchMembers } from '../../../utils/api/member';
 import AppTable from '../../../components/table/AppTable.vue';
@@ -256,18 +255,18 @@ watchEffect(async () => {
     rules: currentSearch.value.split(' ').flatMap((value) => [
       {
         field: 'email',
-        operator: 'contains',
-        value,
+        operator: 'contains' as const,
+        value: [value],
       },
       {
         field: 'firstname',
-        operator: 'contains',
-        value,
+        operator: 'contains' as const,
+        value: [value],
       },
       {
         field: 'lastname',
-        operator: 'contains',
-        value,
+        operator: 'contains' as const,
+        value: [value],
       },
     ]),
   };

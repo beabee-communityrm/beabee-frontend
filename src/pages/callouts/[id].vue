@@ -108,6 +108,7 @@ meta:
   </div>
 </template>
 <script lang="ts" setup>
+import { Paginated, ItemStatus } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref } from 'vue';
 import { Form } from 'vue-formio';
 import { useI18n } from 'vue-i18n';
@@ -115,8 +116,6 @@ import {
   CalloutResponseAnswers,
   GetCalloutDataWith,
   GetCalloutResponseData,
-  ItemStatus,
-  Paginated,
 } from '../../utils/api/api.interface';
 import {
   createResponse,
@@ -255,7 +254,7 @@ onBeforeMount(async () => {
     ? await fetchResponses(props.id, {
         rules: {
           condition: 'AND',
-          rules: [{ field: 'member', operator: 'equal', value: 'me' }],
+          rules: [{ field: 'member', operator: 'equal', value: ['me'] }],
         },
         sort: 'createdAt',
         order: 'DESC',
