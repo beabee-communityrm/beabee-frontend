@@ -2,7 +2,6 @@ import {
   EnumFilterArgs,
   Filter,
   FilterOperator,
-  FilterOperatorParams,
   FilterType,
   operatorsByType,
   operatorsByTypeMap,
@@ -82,15 +81,22 @@ function withDefault<T extends FilterType>(
   };
 }
 
-export const defaultFiltersByType: Record<
+const filterDefaultsByType: Record<
   FilterType,
-  Pick<Filter, 'operator' | 'values'>
+  () => Pick<Filter, 'operator' | 'values'>
 > = {
-  text: withDefault('text', 'equal'),
-  number: withDefault('number', 'equal'),
-  enum: withDefault('enum', 'equal'),
-  boolean: withDefault('boolean', 'equal'),
-  contact: withDefault('contact', 'equal'),
-  date: withDefault('date', 'equal'),
-  array: withDefault('array', 'contains'),
+  text: () => withDefault('text', 'equal'),
+  number: () => withDefault('number', 'equal'),
+  enum: () => withDefault('enum', 'equal'),
+  boolean: () => withDefault('boolean', 'equal'),
+  contact: () => withDefault('contact', 'equal'),
+  date: () => withDefault('date', 'equal'),
+  array: () => withDefault('array', 'contains'),
 };
+
+export function createNewFilter(id: string, type: FilterType): Filter {
+  return {
+    id,
+    ...filterDefaultsByType[type](),
+  };
+}

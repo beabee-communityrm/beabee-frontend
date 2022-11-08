@@ -53,7 +53,7 @@ import {
 } from '@beabee/beabee-common';
 import AppSearchFilterArgs from './AppSearchFilterArgs.vue';
 import {
-  defaultFiltersByType,
+  createNewFilter,
   FilterGroup,
   FilterItems,
   getDefaultValue,
@@ -125,7 +125,7 @@ const filterOperatorItems = computed(() => {
 
 function changeFilter(id: string) {
   const type = props.filterItems[id].type;
-  emit('update:filter', { id, ...defaultFiltersByType[type] });
+  emit('update:filter', createNewFilter(id, type));
 }
 
 function changeOperator(operator: FilterOperator) {
