@@ -288,8 +288,32 @@
       "period": "Period",
       "phone": "Phone",
       "preferredChannel": "Preferred channel",
-      "roles": "Roles",
-      "rolesCopy": {
+      "roles": {
+        "add": "Add role",
+        "confirmDelete": {
+          "actionNo": "No, go back",
+          "actionYes": "Yes, remove it",
+          "text": "Are you sure you want to remove this role?",
+          "title": "Remove role"
+        },
+        "delete": "Delete",
+        "edit": "Edit",
+        "expires": {
+          "label": "Expiry date for this role",
+          "opts": {
+            "never": "Never",
+            "schedule": "Set an expiry date"
+          }
+        },
+        "new": "New role",
+        "starts": {
+          "label": "Start date for this role",
+          "opts": {
+            "now": "Now",
+            "schedule": "Set a start date"
+          }
+        },
+        "title": "Roles",
         "today": "present"
       },
       "tags": "Tags"
