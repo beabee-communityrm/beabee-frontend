@@ -36,13 +36,13 @@
 
         <div>
           <div class="my-2 py-1">
-            <AppLabel :label="inputT('starts.label')" required />
+            <AppLabel :label="t('contacts.data.roles.starts.label')" required />
             <AppRadioGroup
               v-model="roleHasStartDate"
               name="roleStartDate"
               :options="[
-                [false, inputT('starts.opts.now')],
-                [true, inputT('starts.opts.schedule')],
+                [false, t('contacts.data.roles.starts.opts.now')],
+                [true, t('contacts.data.roles.starts.opts.schedule')],
               ]"
               required
             />
@@ -60,10 +60,10 @@
             <AppRadioGroup
               v-model="roleHasEndDate"
               name="roleEndDate"
-              :label="inputT('expires.label')"
+              :label="t('contacts.data.roles.expires.label')"
               :options="[
-                [false, inputT('expires.opts.never')],
-                [true, inputT('expires.opts.schedule')],
+                [false, t('contacts.data.roles.expires.opts.never')],
+                [true, t('contacts.data.roles.expires.opts.schedule')],
               ]"
               required
             />
@@ -116,7 +116,6 @@ const props = defineProps<{
 
 const { t } = useI18n();
 const validation = useVuelidate();
-const inputT = (key: string) => t('contacts.data.roles.' + key);
 
 const loading = ref(false);
 const formVisible = ref(false);
