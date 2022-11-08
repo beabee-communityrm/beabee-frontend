@@ -29,8 +29,9 @@
         <div class="my-2 py-1">
           <AppSelect
             v-model="newRole.role"
-            label="New role"
+            :label="t('contacts.data.roles.new')"
             :items="roleOptions"
+            required
           />
         </div>
 

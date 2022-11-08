@@ -5,13 +5,15 @@
       <strong class="mx-2 font-bold uppercase text-body-80">
         {{ t(`common.role.${role.role}`) }}
       </strong>
-      <span>{{ formatLocale(role.dateAdded, 'P') + ' → ' }}</span>
-      {{
-        role.dateExpires
-          ? formatLocale(role.dateExpires, 'P')
-          : t('contacts.data.roles.today')
-      }}
-      <div class="ml-auto">
+      <span>
+        {{ formatLocale(role.dateAdded, 'P') + ' → ' }}
+        {{
+          role.dateExpires
+            ? formatLocale(role.dateExpires, 'P')
+            : t('contacts.data.roles.today')
+        }}
+      </span>
+      <div class="ml-auto -mr-3">
         <AppButton variant="text" size="sm" @click="formVisible = true">{{
           t('actions.edit')
         }}</AppButton>
@@ -49,13 +51,13 @@
       <form class="flex-initial" @submit.prevent="handleFormSubmit">
         <div>
           <div class="my-2 py-1">
-            <AppLabel :label="t('contacts.data.roles.starts.label')" />
+            <AppLabel :label="t('contacts.data.roles.starts.label')" required />
             <div class="flex gap-2">
               <div>
-                <AppInput v-model="editRole.startDate" type="date" />
+                <AppInput v-model="editRole.startDate" type="date" required />
               </div>
               <div>
-                <AppInput v-model="editRole.startTime" type="time" />
+                <AppInput v-model="editRole.startTime" type="time" required />
               </div>
             </div>
           </div>
@@ -71,12 +73,12 @@
               ]"
               required
             />
-            <div class="flex gap-2">
+            <div v-if="roleHasEndDate" class="flex gap-2">
               <div>
-                <AppInput v-model="editRole.endDate" type="date" />
+                <AppInput v-model="editRole.endDate" type="date" required />
               </div>
               <div>
-                <AppInput v-model="editRole.endTime" type="time" />
+                <AppInput v-model="editRole.endTime" type="time" required />
               </div>
             </div>
           </div>
