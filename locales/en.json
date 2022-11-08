@@ -346,6 +346,7 @@
       "amount": "Amount",
       "annotationsCopy": "Contact successfully updated",
       "contribution": "Contribution",
+      "contributionCancelled": "Contribution cancelled",
       "contributionMonthlyAmount": "Contribution monthly amount",
       "contributionPeriod": "Contribution period",
       "contributionType": "Contribution type",
