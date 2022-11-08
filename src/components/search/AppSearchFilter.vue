@@ -49,10 +49,15 @@ import {
   FilterOperator,
   FilterType,
   nullableOperators,
-  operatorsByType,
+  operatorsByTypeMap,
 } from '@beabee/beabee-common';
 import AppSearchFilterArgs from './AppSearchFilterArgs.vue';
-import { FilterGroup, FilterItems } from './search.interface';
+import {
+  defaultFiltersByType,
+  FilterGroup,
+  FilterItems,
+  getDefaultValue,
+} from './search.interface';
 
 const emit = defineEmits(['update:filter', 'remove']);
 const props = defineProps<{
@@ -68,6 +73,9 @@ function operatorT(type: FilterType | 'all', operator: FilterOperator) {
   // TODO: move translations to search.interface.ts
   if (operator === 'is_empty' || operator === 'is_not_empty') {
     type = 'all';
+  }
+  if (type === 'contact') {
+    type = 'text';
   }
 
   return t(`advancedSearch.operators.${type}.${operator}`);
@@ -88,7 +96,7 @@ const filterGroupsWithDefault = computed(() => [
 ]);
 
 const operatorItems = Object.fromEntries(
-  Object.entries(operatorsByType).map(([type, typeOperators]) => [
+  Object.entries(operatorsByTypeMap).map(([type, typeOperators]) => [
     type,
     Object.entries(typeOperators).map(([operator]) => ({
       id: operator,
@@ -105,40 +113,38 @@ const nullableOperatorItems = Object.entries(nullableOperators).map(
 );
 
 const filterOperatorItems = computed(() => {
-  if (props.filter) {
-    const args = props.filterItems[props.filter.id];
-    return [
-      ...operatorItems[args.type],
-      ...(args.nullable ? nullableOperatorItems : []),
-    ];
-  } else {
-    return [];
-  }
+  // Shouldn't be possible as filter must be selected first
+  if (!props.filter) return [];
+
+  const args = props.filterItems[props.filter.id];
+  return [
+    ...operatorItems[args.type],
+    ...(args.nullable ? nullableOperatorItems : []),
+  ];
 });
 
 function changeFilter(id: string) {
-  emit('update:filter', {
-    id,
-    operator: 'equal',
-    values: [''], // TODO: doesn't respect filter type (text, date, number, etc.)
-  } as Filter);
+  const type = props.filterItems[id].type;
+  emit('update:filter', { id, ...defaultFiltersByType[type] });
 }
 
 function changeOperator(operator: FilterOperator) {
-  if (props.filter) {
-    const type = props.filterItems[props.filter.id].type;
-    const oldOperator = props.filter.operator;
-    const typeOperators = operatorsByType[type] as any; // TODO: remove any for operatorsByType
-    const newArgs = (operator && typeOperators[operator]?.args) || 0;
-    const oldArgs = (oldOperator && typeOperators[oldOperator]?.args) || 0;
+  // Shouldn't be possible as filter must be selected first
+  if (!props.filter) return;
 
-    emit('update:filter', {
-      id: props.filter.id,
-      operator,
-      values:
-        // TODO: doesn't respect filter type (text, date, number, etc.)
-        newArgs === oldArgs ? props.filter.values : new Array(newArgs).fill(''),
-    } as Filter);
-  }
+  const type = props.filterItems[props.filter.id].type;
+  const oldOperator = props.filter.operator;
+  const typeOperators = operatorsByTypeMap[type];
+  const newArgs = (operator && typeOperators[operator]?.args) || 0;
+  const oldArgs = (oldOperator && typeOperators[oldOperator]?.args) || 0;
+
+  emit('update:filter', {
+    id: props.filter.id,
+    operator,
+    values:
+      newArgs === oldArgs
+        ? props.filter.values
+        : new Array(newArgs).fill(getDefaultValue(type)),
+  });
 }
 </script>

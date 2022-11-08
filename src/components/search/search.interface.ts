@@ -1,4 +1,15 @@
-import { EnumFilterArgs, OtherFilterArgs } from '@beabee/beabee-common';
+import {
+  EnumFilterArgs,
+  Filter,
+  FilterOperator,
+  FilterOperatorParams,
+  FilterType,
+  FilterValue,
+  operatorsByType,
+  OtherFilterArgs,
+  RuleValue,
+  ValidatedRuleValue,
+} from '@beabee/beabee-common';
 
 export interface FilterGroup<T extends string = string> {
   label: string;
@@ -48,3 +59,39 @@ export function withLabel<T extends readonly string[]>(
     return { ...args, label, ...(extraArg && { prefix: extraArg as string }) };
   }
 }
+
+export function getDefaultValue(type: FilterType): RuleValue {
+  switch (type) {
+    case 'boolean':
+      return true;
+    case 'number':
+      return 0;
+    default:
+      return '';
+  }
+}
+
+// Enforces type safety for the operator and initial values
+function withDefault<T extends FilterType>(
+  type: T,
+  operator: keyof typeof operatorsByType[T]
+): Pick<Filter, 'operator' | 'values'> {
+  const params = operatorsByType[type][operator] as FilterOperatorParams;
+  return {
+    operator: operator as FilterOperator,
+    values: new Array(params.args).fill(getDefaultValue(type)),
+  };
+}
+
+export const defaultFiltersByType: Record<
+  FilterType,
+  Pick<Filter, 'operator' | 'values'>
+> = {
+  text: withDefault('text', 'equal'),
+  number: withDefault('number', 'equal'),
+  enum: withDefault('enum', 'equal'),
+  boolean: withDefault('boolean', 'equal'),
+  contact: withDefault('contact', 'equal'),
+  date: withDefault('date', 'equal'),
+  array: withDefault('array', 'contains'),
+};
