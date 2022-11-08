@@ -102,71 +102,6 @@
     },
     "title": "Einstellungen"
   },
-  "advancedSearch": {
-    "addRule": "Filter hinzufügen",
-    "button": "Erweiterte Suche",
-    "createFilters": "Filter für die Suche erstellen",
-    "matchAfter": "der folgenden Filter enthalten",
-    "matchBefore": "Ergebnisse sollen",
-    "matchType": {
-      "all": "alle",
-      "any": "mindestens einen"
-    },
-    "matchWord": {
-      "all": "und",
-      "any": "oder"
-    },
-    "operators": {
-      "all": {
-        "is_empty": "ist leer",
-        "is_not_empty": "ist nicht leer"
-      },
-      "array": {
-        "contains": "enthält",
-        "not_contains": "enthält nicht"
-      },
-      "boolean": {
-        "equal": "ist"
-      },
-      "date": {
-        "between": "zwischen",
-        "equal": "ist",
-        "greater": "nach",
-        "greater_or_equal": "nach oder am",
-        "less": "vor",
-        "less_or_equal": "vor oder am",
-        "not_between": "nicht zwischen",
-        "not_equal": "ist nicht"
-      },
-      "enum": {
-        "equal": "ist",
-        "not_equal": "ist nicht"
-      },
-      "number": {
-        "between": "zwischen",
-        "equal": "ist",
-        "greater": "mehr als",
-        "greater_or_equal": "mindestens",
-        "less": "weniger als",
-        "less_or_equal": "höchstens",
-        "not_between": "nicht zwischen",
-        "not_equal": "ist nicht"
-      },
-      "text": {
-        "begins_with": "beginnt mit",
-        "contains": "enthält",
-        "ends_with": "endet mit",
-        "equal": "ist",
-        "not_begins_with": "beginnt nicht mit",
-        "not_contains": "enthält nicht",
-        "not_ends_with": "endet nicht mit",
-        "not_equal": "ist nicht"
-      }
-    },
-    "saveAsSegment": "Als Segment speichern",
-    "selectFilter": "Filter auswählen",
-    "showResults": "Suchen"
-  },
   "callout": {
     "contactDetails": "Kontaktdaten",
     "form": {
@@ -271,7 +206,6 @@
     "annually": "Jährlich",
     "backToHome": "Zurück zur Startseite",
     "contributing": "Dein Beitrag",
-    "contributionType": {},
     "copy": "Kopieren",
     "every": "pro",
     "goBack": "Zurück",
@@ -319,7 +253,6 @@
       "copy": "<p>Alle hier eingegebenen Information sind <strong>nur für Administratoren sichtbar</strong>.\nNutzer bekommen das nicht angezeigt.</p>\n"
     },
     "contribution": "Beitrag",
-    "contributionType": "Zahlungsart",
     "information": "Information",
     "newsletter": "Newsletter",
     "overview": "Überblick",
@@ -334,29 +267,22 @@
   },
   "contacts": {
     "addContact": "Kontakt hinzufügen",
+    "advancedSearch": "Erweiterte Suche",
     "allContacts": "Alle Kontakte",
     "data": {
-      "activeMembership": "Aktive Mitgliedschaft",
-      "activePermission": "Aktive Rolle",
       "amount": "Betrag",
       "annotationsCopy": "Änderungen gespeichert!",
       "contribution": "Beitrag",
-      "contributionMonthlyAmount": "Monatlicher Beitrag",
-      "contributionPeriod": "Zahlweise",
       "contributionType": "Beitragsart",
       "deliveryOptIn": "Postsendung",
       "description": "Beschreibung",
       "email": "E-Mail",
-      "firstname": "Vorname",
       "groups": "Gruppe",
       "joined": "Kontakt seit",
       "lastSeen": "Zuletzt angemeldet",
-      "lastname": "Nachname",
-      "manualPaymentSource": "Manuelles Zahlungsmittel",
-      "membershipExpires": "Mitglied bis",
       "membershipStarts": "Mitglied seit",
       "name": "Name",
-      "newsletterStatus": "Newsletter-Status",
+      "newsletter": "Newsletter",
       "notes": "Notizen",
       "payingFee": "Übernimmt Transaktionskosten?",
       "period": "Zeitraum",
@@ -778,12 +704,12 @@
   "membershipBuilder": {
     "steps": {
       "accountConfirmation": {
-        "checkboxLabel": "Beschriftung Kontrollkästchen ",
         "description": "Stelle ein, welche persönlichen Informationen Du über deine Mitglieder sammeln willst.",
-        "heading": "Überschrift",
+        "optInLabel": "Beschriftung Kontrollkästchen ",
+        "optInText": "Text",
+        "optInTitle": "Überschrift",
         "showMailOptIn": "Nach Adresse fragen",
         "showNewsletterOptIn": "Nach Newsletterabonnement fragen",
-        "subheading": "Unterüberschrift",
         "text": "Neue Mitglieder müssen ihre Registrierung in folgendem Bildschirm bestätigen. Außerdem werden hier persönliche Informationen abgefragt.",
         "title": "Persönliche Informationen abfragen",
         "welcomeMessage": "Willkommensnachricht"
@@ -804,23 +730,16 @@
         "title": "Willkommensnachricht"
       },
       "joinForm": {
-        "accountConfirmation": "Persönliche Informationen abfragen",
         "backgroundImage": "Hintergrundbild",
-        "checkboxLabel": "Beschriftung Kontrollkästchen ",
         "defaultAmount": "Standardbeitrag",
         "description": "Optimiere dein Registrierungsformular",
         "formSubtitle": "Untertitel",
         "formTitle": "Titel",
-        "heading": "Überschrift",
         "minAmount": "Mindestbeitrag",
         "showAbsorbFee": "Um Übernahme der Transaktionskosten bitten",
-        "showMailOptIn": "Nach Adresse fragen",
-        "showNewsletterOptIn": "Nach Newsletterabonnement fragen",
-        "subheading": "Unterüberschrift",
         "suggestedAmounts": "Beiträge vorschlagen",
         "text": "In diesem Abschnitt kannst du dein Registrierungsformular bearbeiten, optimieren und ansehen.",
-        "title": "Registrierung",
-        "welcomeMessage": "Willkommensnachricht"
+        "title": "Registrierung"
       }
     },
     "title": "Membership Builder"

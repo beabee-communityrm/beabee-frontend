@@ -37,13 +37,11 @@
         <p class="text-body-60">
           <CalloutStatus :callout="callout" inline />
         </p>
-        <font-awesome-icon :icon="['far', 'calendar']" class="mr-2" />
-        {{
-          callout.starts
-            ? formatLocale(callout.starts, 'PP') + ' - '
-            : t('common.until')
-        }}
-        {{ callout.expires && formatLocale(callout.expires, 'PP') }}
+        <p v-if="callout.starts">
+          <font-awesome-icon :icon="['far', 'calendar']" class="mr-2" />
+          {{ formatLocale(callout.starts, 'PP') + ' - ' }}
+          {{ callout.expires && formatLocale(callout.expires, 'PP') }}
+        </p>
       </div>
       <AppButton
         v-if="edit"
