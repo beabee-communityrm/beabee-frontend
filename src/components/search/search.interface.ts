@@ -4,11 +4,10 @@ import {
   FilterOperator,
   FilterOperatorParams,
   FilterType,
-  FilterValue,
   operatorsByType,
+  operatorsByTypeMap,
   OtherFilterArgs,
   RuleValue,
-  ValidatedRuleValue,
 } from '@beabee/beabee-common';
 
 export interface FilterGroup<T extends string = string> {
@@ -76,10 +75,10 @@ function withDefault<T extends FilterType>(
   type: T,
   operator: keyof typeof operatorsByType[T]
 ): Pick<Filter, 'operator' | 'values'> {
-  const params = operatorsByType[type][operator] as FilterOperatorParams;
+  const params = operatorsByTypeMap[type][operator as FilterOperator];
   return {
     operator: operator as FilterOperator,
-    values: new Array(params.args).fill(getDefaultValue(type)),
+    values: new Array(params?.args || 0).fill(getDefaultValue(type)),
   };
 }
 

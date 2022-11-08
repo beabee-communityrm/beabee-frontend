@@ -127,7 +127,7 @@ onBeforeMount(async () => {
     order: 'DESC',
     rules: {
       condition: 'AND',
-      rules: [{ field: 'activeMembership', operator: 'equal', value: true }],
+      rules: [{ field: 'activeMembership', operator: 'equal', value: [true] }],
     },
   }).then((results) => (recentMembers.value = results.items));
 
