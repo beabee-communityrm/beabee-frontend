@@ -24,7 +24,6 @@
     <AppSelect
       :model-value="filter?.id || ''"
       :items="filterGroupsWithDefault"
-      required
       @update:model-value="changeFilter"
     />
     <template v-if="filter">
