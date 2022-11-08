@@ -37,6 +37,7 @@ export const filterGroups: Ref<FilterGroup<ContactFilterName>[]> = computed(
         'contributionType',
         'contributionMonthlyAmount',
         'contributionPeriod',
+        'contributionCancelled',
         'manualPaymentSource',
       ],
     },
@@ -73,6 +74,10 @@ export const filterItems: FilterItems<ContactFilterName> = {
   deliveryOptIn: withLabel(
     contactFilters.deliveryOptIn,
     t('contacts.data.deliveryOptIn')
+  ),
+  contributionCancelled: withLabel(
+    contactFilters.contributionCancelled,
+    t('contacts.data.contributionCancelled')
   ),
   contributionType: withLabel(
     contactFilters.contributionType,

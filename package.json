@@ -14,7 +14,7 @@
     "check:prettier": "prettier -c ."
   },
   "dependencies": {
-    "@beabee/beabee-common": "^1.7.3",
+    "@beabee/beabee-common": "^1.7.4",
     "@fontsource/fira-sans": "^4.5.9",
     "@fontsource/fira-sans-condensed": "^4.5.9",
     "@fontsource/nunito-sans": "^4.5.9",
