@@ -13,6 +13,8 @@ export type Serial<T> = {
     ? string
     : T[P] extends Date | undefined
     ? string | undefined
+    : T[P] extends Date | null
+    ? string | null
     : T[P];
 };
 
@@ -92,10 +94,13 @@ interface MemberProfileData {
   description?: string;
 }
 
-export interface MemberRoleData {
-  role: PermissionType;
+export interface UpdateMemberRoleData {
   dateAdded: Date;
   dateExpires: Date | null;
+}
+
+export interface MemberRoleData extends UpdateMemberRoleData {
+  role: PermissionType;
 }
 
 export interface GetMemberData extends MemberData {
@@ -115,7 +120,7 @@ export type GetMemberDataWith<With extends GetMemberWith> = GetMemberData &
   ('roles' extends With ? { roles: MemberRoleData[] } : Noop);
 
 export type GetMembersQuery = GetPaginatedQuery<
-  'firstname' | 'lastname' | 'email'
+  'firstname' | 'lastname' | 'email' | 'activeMembership'
 >;
 
 export type UpdateMemberProfileData = Partial<MemberProfileData>;

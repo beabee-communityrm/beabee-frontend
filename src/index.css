@@ -2,17 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-.content-message {
+/* Apply link styles to i18n markdown text */
+.content-i18n {
+  a {
+    @apply text-link underline;
+  }
+}
+
+/* Apply standard styles to v-html content */
+.content-message,
+/* Apply standard styles to FormIO rendered forms */
+.callout-form,
+.callout-form-builder .formarea,
+/* Apply standard styles to FormIO popup preview */
+.formio-dialog .preview-panel,
+.formio-dialog .formio-component-html .ck-content {
   p,
   ul,
   ol {
     margin: 0;
   }
 
+  /* Force empty paragraphs to have height */
   p:empty::after {
     content: '\00A0';
   }
 
+  /* List styles */
   ul,
   ol {
     @apply relative ml-2 list-none pl-6;
@@ -34,24 +50,20 @@
     }
   }
 
+  /* Link and header styles */
   a {
     @apply text-link underline;
   }
-
   h3 {
     @apply font-title text-xl font-semibold;
   }
 }
 
-.content-i18n {
-  a {
-    @apply text-link;
-  }
-}
-
+/* Force FormIO to fit in! Styles for renderer, builder and popup dialog */
 .callout-form,
 .callout-form-builder .formarea,
 .formio-dialog {
+  /* Input styling */
   .form-control {
     @apply w-full rounded border border-primary-40 bg-white p-2 focus:shadow-input focus:outline-none;
 
@@ -60,6 +72,7 @@
     }
   }
 
+  /* Button styling */
   .btn:not(.component-settings-button):not(.formcomponent) {
     @apply relative inline-flex h-10 cursor-pointer items-center justify-center whitespace-nowrap rounded bg-link px-2 text-center font-bold text-white;
 
@@ -90,27 +103,35 @@
       }
     }
 
+    &.btn-block {
+      @apply w-full;
+    }
+
+    /* Align font-awesome icons */
     &.svg-inline--fa {
-      @apply box-content box-content align-top;
+      @apply box-content align-top;
     }
   }
 
+  /* Choice select widget styling */
   .choices__list {
     @apply align-middle;
   }
-
   .formio-choices.form-group {
     @apply mb-0;
   }
 }
 
+/* Force FormIO to fit in! Styles for renderer (including preview) */
 .callout-form,
 .callout-form-builder .formarea,
 .formio-dialog .preview-panel {
+  /* Hide hidden controls */
   .formio-hidden {
     @apply hidden !important;
   }
 
+  /* Standard spacing for questions and flex to manipulate order */
   .formio-component-content,
   .form-group {
     @apply mb-8 flex flex-col;
@@ -120,27 +141,27 @@
     }
   }
 
-  .formio-component-content h3 {
-    @apply mb-2 text-xl font-semibold;
-  }
-
+  /* Label always goes at the top, styled like .content-message h3 */
   .col-form-label {
-    @apply -order-2 mb-2 block text-xl font-semibold;
+    @apply -order-2 mb-2 block font-title text-xl font-semibold;
   }
-
+  /* Description goes next */
   .form-text {
     @apply -order-1 mb-2 text-body-80;
   }
 
+  /* Subtle style for check boxes */
   .formio-editor-read-only-content,
   .form-check-input {
     @apply accent-link;
   }
 
+  /* Inline checkboxes */
   .form-check-inline {
     @apply mr-4 inline-block;
   }
 
+  /* Block checkboxes */
   .form-check-label {
     @apply mb-2 flex align-baseline;
 
@@ -153,6 +174,7 @@
     @apply absolute -z-10 opacity-0;
   }
 
+  /* Styling for input errors */
   .formio-errors {
     @apply mt-1.5 text-sm font-semibold;
 
@@ -161,8 +183,17 @@
     }
   }
 
+  /* Add required asterisk */
   .field-required::after {
     @apply text-danger;
     content: '*';
+  }
+}
+
+/* Match header margin to form labels */
+.formio-component-content,
+.formio-dialog .formio-component-html .ck-content {
+  h3 {
+    @apply mb-2;
   }
 }

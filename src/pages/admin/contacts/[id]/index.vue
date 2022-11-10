@@ -121,18 +121,9 @@ meta:
 
     <div>
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
-      <AppInfoList v-for="role in contact.roles" :key="role.role">
-        <AppInfoListItem :name="t(`common.role.${role.role}`)">
-          <AppRoundBadge :type="isRoleCurrent(role) ? 'success' : 'danger'" />
-          {{ formatLocale(role.dateAdded, 'P') + ' → ' }}
-          {{
-            role.dateExpires
-              ? formatLocale(role.dateExpires, 'P')
-              : t('contacts.data.rolesCopy.today')
-          }}
-        </AppInfoListItem>
-      </AppInfoList>
+      <RoleEditor :contact="contact" class="mt-4" @update="handleUpdate" />
     </div>
+
     <div class="hidden">
       <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
       <p>{{ t('contactOverview.security.whatDoTheButtonsDo') }}</p>
@@ -142,7 +133,7 @@ meta:
           variant="primaryOutlined"
           :disabled="securityButtonsDisabled"
           :loading="loading"
-          class="mt-2"
+          class="mt-4"
           >{{ t('contactOverview.security.loginOverride') }}</AppButton
         >
         <AppButton
@@ -167,15 +158,14 @@ import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../components/AppHeading.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
-import AppRoundBadge from '../../../../components/AppRoundBadge.vue';
 import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown.vue';
+import RoleEditor from '../../../../components/pages/admin/contacts/RoleEditor.vue';
 import MessageBox from '../../../../components/MessageBox.vue';
 import { onBeforeMount, ref, reactive } from 'vue';
 import { ContributionType } from '../../../../utils/enums/contribution-type.enum';
 import {
   GetMemberData,
   GetMemberDataWith,
-  MemberRoleData,
 } from '../../../../utils/api/api.interface';
 import { fetchMember, updateMember } from '../../../../utils/api/member';
 import AppInfoList from '../../../../components/AppInfoList.vue';
@@ -229,9 +219,12 @@ async function handleSecurityAction() {
   }
 }
 
-function isRoleCurrent(role: MemberRoleData): boolean {
-  const now = new Date();
-  return role.dateAdded < now && (!role.dateExpires || role.dateExpires > now);
+async function handleUpdate() {
+  contact.value = await fetchMember(props.contact.id, [
+    'profile',
+    'contribution',
+    'roles',
+  ]);
 }
 
 onBeforeMount(async () => {
