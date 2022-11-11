@@ -110,12 +110,12 @@
     "matchAfter": "der folgenden Filter enthalten",
     "matchBefore": "Ergebnisse sollen",
     "matchType": {
-      "all": "alle",
-      "any": "mindestens einen"
+      "AND": "alle",
+      "OR": "mindestens einen"
     },
     "matchWord": {
-      "all": "und",
-      "any": "oder"
+      "AND": "und",
+      "OR": "oder"
     },
     "operators": {
       "all": {

@@ -1,11 +1,11 @@
 <template>
   <template v-if="readonly">
-    <template v-if="filter">
-      <b>{{ filterItems[filter.id].label }}</b>
-      {{ operatorT(filterItems[filter.id].type, filter.operator) }}
-      <AppSearchFilterArgs
-        :filter="filter"
-        :item="filterItems[filter.id]"
+    <template v-if="rule">
+      <b>{{ filterItems[rule.field].label }}</b>
+      {{ operatorT(filterItems[rule.field].type, rule.operator) }}
+      <AppSearchRuleValue
+        :rule="rule"
+        :item="filterItems[rule.field]"
         readonly
       />
       <button type="button" class="-mr-2 px-2" @click="emit('remove')">
@@ -22,21 +22,21 @@
       <font-awesome-icon :icon="['fa', 'times']" />
     </button>
     <AppSelect
-      :model-value="filter?.id || ''"
+      :model-value="rule?.field || ''"
       :items="filterGroupsWithDefault"
       required
       @update:model-value="changeFilter"
     />
-    <template v-if="filter">
+    <template v-if="rule">
       <AppSelect
         v-if="filterOperatorItems.length > 1"
-        :model-value="filter.operator"
+        :model-value="rule.operator"
         :items="filterOperatorItems"
         required
         @update:model-value="changeOperator($event)"
       />
       <span v-else>{{ filterOperatorItems[0].label }}</span>
-      <AppSearchFilterArgs :filter="filter" :item="filterItems[filter.id]" />
+      <AppSearchRuleValue :rule="rule" :item="filterItems[rule.field]" />
     </template>
   </div>
 </template>
@@ -45,31 +45,31 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppSelect from '../forms/AppSelect.vue';
 import {
-  Filter,
-  FilterOperator,
   FilterType,
   nullableOperators,
   operatorsByTypeMap,
+  Rule,
+  RuleOperator,
 } from '@beabee/beabee-common';
-import AppSearchFilterArgs from './AppSearchFilterArgs.vue';
+import AppSearchRuleValue from './AppSearchRuleValue.vue';
 import {
-  createNewFilter,
+  createNewRule,
   FilterGroup,
   FilterItems,
   getDefaultValue,
 } from './search.interface';
 
-const emit = defineEmits(['update:filter', 'remove']);
+const emit = defineEmits(['update:rule', 'remove']);
 const props = defineProps<{
   filterGroups: FilterGroup[];
   filterItems: FilterItems;
-  filter: Filter | null;
+  rule: Rule | null;
   readonly?: boolean;
 }>();
 
 const { t } = useI18n();
 
-function operatorT(type: FilterType | 'all', operator: FilterOperator) {
+function operatorT(type: FilterType | 'all', operator: RuleOperator) {
   // TODO: move translations to search.interface.ts
   if (operator === 'is_empty' || operator === 'is_not_empty') {
     type = 'all';
@@ -100,7 +100,7 @@ const operatorItems = Object.fromEntries(
     type,
     Object.entries(typeOperators).map(([operator]) => ({
       id: operator,
-      label: operatorT(type as FilterType, operator as FilterOperator),
+      label: operatorT(type as FilterType, operator as RuleOperator),
     })),
   ])
 );
@@ -108,15 +108,15 @@ const operatorItems = Object.fromEntries(
 const nullableOperatorItems = Object.entries(nullableOperators).map(
   ([operator]) => ({
     id: operator,
-    label: operatorT('all', operator as FilterOperator),
+    label: operatorT('all', operator as RuleOperator),
   })
 );
 
 const filterOperatorItems = computed(() => {
-  // Shouldn't be possible as filter must be selected first
-  if (!props.filter) return [];
+  // Shouldn't be possible as rule must be selected first
+  if (!props.rule) return [];
 
-  const args = props.filterItems[props.filter.id];
+  const args = props.filterItems[props.rule.field];
   return [
     ...operatorItems[args.type],
     ...(args.nullable ? nullableOperatorItems : []),
@@ -125,25 +125,25 @@ const filterOperatorItems = computed(() => {
 
 function changeFilter(id: string) {
   const type = props.filterItems[id].type;
-  emit('update:filter', createNewFilter(id, type));
+  emit('update:rule', createNewRule(id, type));
 }
 
-function changeOperator(operator: FilterOperator) {
-  // Shouldn't be possible as filter must be selected first
-  if (!props.filter) return;
+function changeOperator(operator: RuleOperator) {
+  // Shouldn't be possible as rule must be selected first
+  if (!props.rule) return;
 
-  const type = props.filterItems[props.filter.id].type;
-  const oldOperator = props.filter.operator;
+  const type = props.filterItems[props.rule.field].type;
+  const oldOperator = props.rule.operator;
   const typeOperators = operatorsByTypeMap[type];
   const newArgs = (operator && typeOperators[operator]?.args) || 0;
   const oldArgs = (oldOperator && typeOperators[oldOperator]?.args) || 0;
 
-  emit('update:filter', {
-    id: props.filter.id,
+  emit('update:rule', {
+    field: props.rule.field,
     operator,
-    values:
+    value:
       newArgs === oldArgs
-        ? props.filter.values
+        ? props.rule.value
         : new Array(newArgs).fill(getDefaultValue(type)),
   });
 }

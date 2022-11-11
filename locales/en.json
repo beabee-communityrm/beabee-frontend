@@ -110,12 +110,12 @@
     "matchAfter": "of the following",
     "matchBefore": "Match",
     "matchType": {
-      "all": "all",
-      "any": "any"
+      "AND": "all",
+      "OR": "any"
     },
     "matchWord": {
-      "all": "and",
-      "any": "or"
+      "AND": "and",
+      "OR": "or"
     },
     "operators": {
       "all": {

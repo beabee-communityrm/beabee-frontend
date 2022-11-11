@@ -37,7 +37,7 @@
   />
 </template>
 <script lang="ts" setup>
-import { FilterValue } from '@beabee/beabee-common';
+import { RuleValue } from '@beabee/beabee-common';
 import { computed } from 'vue';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import AppInput from '../../forms/AppInput.vue';
@@ -49,7 +49,7 @@ import { FilterItem } from '../search.interface';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
-  modelValue: FilterValue;
+  modelValue: RuleValue;
   item: FilterItem;
   readonly: boolean;
 }>();

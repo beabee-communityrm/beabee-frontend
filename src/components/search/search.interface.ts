@@ -1,12 +1,12 @@
 import {
   EnumFilterArgs,
-  Filter,
-  FilterOperator,
+  Rule,
   FilterType,
   operatorsByType,
   operatorsByTypeMap,
   OtherFilterArgs,
   RuleValue,
+  RuleOperator,
 } from '@beabee/beabee-common';
 
 export interface FilterGroup<T extends string = string> {
@@ -73,17 +73,17 @@ export function getDefaultValue(type: FilterType): RuleValue {
 function withDefault<T extends FilterType>(
   type: T,
   operator: keyof typeof operatorsByType[T]
-): Pick<Filter, 'operator' | 'values'> {
-  const params = operatorsByTypeMap[type][operator as FilterOperator];
+): Pick<Rule, 'operator' | 'value'> {
+  const params = operatorsByTypeMap[type][operator as RuleOperator];
   return {
-    operator: operator as FilterOperator,
-    values: new Array(params?.args || 0).fill(getDefaultValue(type)),
+    operator: operator as RuleOperator,
+    value: new Array(params?.args || 0).fill(getDefaultValue(type)),
   };
 }
 
-const filterDefaultsByType: Record<
+const ruleDefaultsByType: Record<
   FilterType,
-  () => Pick<Filter, 'operator' | 'values'>
+  () => Pick<Rule, 'operator' | 'value'>
 > = {
   text: () => withDefault('text', 'equal'),
   number: () => withDefault('number', 'equal'),
@@ -94,9 +94,9 @@ const filterDefaultsByType: Record<
   array: () => withDefault('array', 'contains'),
 };
 
-export function createNewFilter(id: string, type: FilterType): Filter {
+export function createNewRule(field: string, type: FilterType): Rule {
   return {
-    id,
-    ...filterDefaultsByType[type](),
+    field,
+    ...ruleDefaultsByType[type](),
   };
 }

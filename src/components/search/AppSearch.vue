@@ -11,10 +11,10 @@
     <div class="mb-3 flex items-center gap-2 text-sm text-body-80">
       <span>{{ t('advancedSearch.matchBefore') }}</span>
       <AppSelect
-        v-model="selectedMatchType"
+        v-model="selectedRuleGroup.condition"
         :items="[
-          { id: 'all', label: t('advancedSearch.matchType.all') },
-          { id: 'any', label: t('advancedSearch.matchType.any') },
+          { id: 'AND', label: t('advancedSearch.matchType.AND') },
+          { id: 'OR', label: t('advancedSearch.matchType.OR') },
         ]"
         input-class="font-bold uppercase"
       />
@@ -24,19 +24,21 @@
     <div class="relative mb-8">
       <ul class="mb-3 text-sm">
         <li
-          v-for="(filter, i) in selectedFilters"
+          v-for="(_, i) in selectedRuleGroup.rules"
           :key="i"
           class="group relative -mx-4 gap-2 border-b border-primary-40 bg-primary-10 px-4 py-6 first:border-t"
         >
-          <AppSearchFilter
-            v-model:filter="selectedFilters[i]"
+          <AppSearchRuleOrGroup
+            v-model:rule="selectedRuleGroup.rules[i]"
             :filter-groups="filterGroups"
             :filter-items="filterItems"
-            @remove="removeFilter(i)"
+            @remove="removeRule(i)"
           />
           <span
             class="absolute bottom-full left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded bg-primary-70 px-2 py-1 font-bold uppercase text-white group-first:hidden"
-            >{{ t('advancedSearch.matchWord.' + selectedMatchType) }}</span
+            >{{
+              t('advancedSearch.matchWord.' + selectedRuleGroup.condition)
+            }}</span
           >
         </li>
       </ul>
@@ -45,7 +47,7 @@
           variant="primaryOutlined"
           icon="plus"
           size="sm"
-          @click="addFilter"
+          @click="addRule"
         >
           {{ t('advancedSearch.addRule') }}
         </AppButton>
@@ -62,39 +64,34 @@
     </div>
   </form>
   <ul
-    v-else-if="currentFilters"
+    v-else-if="modelValue && modelValue.rules.length > 0"
     class="my-4 flex flex-wrap items-center gap-2 text-sm text-body-80"
   >
-    <template v-for="(filter, i) in currentFilters" :key="i">
+    <template v-for="(rule, i) in modelValue.rules" :key="i">
       <li class="rounded-full border border-primary-70 px-2 py-1">
-        <AppSearchFilter
+        <AppSearchRuleOrGroup
           :filter-groups="filterGroups"
           :filter-items="filterItems"
-          :filter="filter"
+          :rule="rule"
           readonly
-          @remove="removeFilter(i)"
+          @remove="removeRule(i)"
         />
       </li>
       <li class="font-bold uppercase last:hidden">
-        {{ t('advancedSearch.matchWord.' + currentMatchType) }}
+        {{ t('advancedSearch.matchWord.' + modelValue.condition) }}
       </li>
     </template>
   </ul>
 </template>
 
 <script lang="ts" setup>
-import {
-  convertFiltersToRuleGroup,
-  convertRuleGroupToFilters,
-  Filter,
-  RuleGroup,
-} from '@beabee/beabee-common';
+import { Rule, RuleGroup } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
-import { computed, ref, watch } from 'vue';
+import { reactive, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppButton from '../forms/AppButton.vue';
 import AppSelect from '../forms/AppSelect.vue';
-import AppSearchFilter from './AppSearchFilter.vue';
+import AppSearchRuleOrGroup from './AppSearchRuleOrGroup.vue';
 import { FilterGroup, FilterItems } from './search.interface';
 
 const emit = defineEmits(['reset', 'update:modelValue']);
@@ -108,35 +105,35 @@ const props = defineProps<{
 const { t } = useI18n();
 const validation = useVuelidate();
 
-const selectedMatchType = ref<'all' | 'any'>('all');
-const selectedFilters = ref<(null | Filter)[]>([]);
+interface RuleGroupWithEmpty {
+  condition: RuleGroup['condition'];
+  rules: (Rule | RuleGroup | null)[];
+}
 
-const currentMatchType = computed(() =>
-  props.modelValue?.condition === 'OR' ? 'any' : 'all'
-);
-const currentFilters = computed(() =>
-  convertRuleGroupToFilters(props.modelValue)
-);
+const selectedRuleGroup = reactive<RuleGroupWithEmpty>({
+  condition: 'AND',
+  rules: [null],
+});
 
-function removeFilter(i: number) {
-  selectedFilters.value.splice(i, 1);
+function removeRule(i: number) {
+  selectedRuleGroup.rules.splice(i, 1);
   if (props.expanded) {
-    if (selectedFilters.value.length === 0) {
-      addFilter();
+    if (selectedRuleGroup.rules.length === 0) {
+      addRule();
     }
   } else {
     handleFormSubmit();
   }
 }
 
-function addFilter() {
-  selectedFilters.value.push(null);
+function addRule() {
+  selectedRuleGroup.rules.push(null);
 }
 
 function reset() {
-  selectedMatchType.value = currentMatchType.value;
-  const filters = convertRuleGroupToFilters(props.modelValue);
-  selectedFilters.value = filters && filters.length > 0 ? filters : [null];
+  selectedRuleGroup.condition = props.modelValue?.condition || 'AND';
+  // TODO: needs to copy
+  selectedRuleGroup.rules = props.modelValue?.rules || [null];
 }
 
 watch(() => props.modelValue, reset);
@@ -153,12 +150,6 @@ function handleReset() {
 }
 
 function handleFormSubmit() {
-  emit(
-    'update:modelValue',
-    convertFiltersToRuleGroup(
-      selectedMatchType.value,
-      selectedFilters.value.filter((f) => !!f) as Filter[]
-    )
-  );
+  emit('update:modelValue', selectedRuleGroup);
 }
 </script>
