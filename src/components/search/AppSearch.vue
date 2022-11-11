@@ -85,10 +85,11 @@
 </template>
 
 <script lang="ts" setup>
-import { Rule, RuleGroup } from '@beabee/beabee-common';
+import { RuleGroup } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
-import { reactive, watch } from 'vue';
+import { computed, reactive, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { copyRuleGroup, isEqual, RuleGroupWithEmpty } from '../../utils/rules';
 import AppButton from '../forms/AppButton.vue';
 import AppSelect from '../forms/AppSelect.vue';
 import AppSearchRuleOrGroup from './AppSearchRuleOrGroup.vue';
@@ -131,9 +132,14 @@ function addRule() {
 }
 
 function reset() {
-  selectedRuleGroup.condition = props.modelValue?.condition || 'AND';
-  // TODO: needs to copy
-  selectedRuleGroup.rules = props.modelValue?.rules || [null];
+  const ruleGroup = props.modelValue
+    ? copyRuleGroup(props.modelValue)
+    : {
+        condition: 'AND' as const,
+        rules: [null],
+      };
+  selectedRuleGroup.condition = ruleGroup.condition;
+  selectedRuleGroup.rules = ruleGroup.rules;
 }
 
 watch(() => props.modelValue, reset);
