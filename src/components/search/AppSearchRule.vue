@@ -25,7 +25,7 @@
       :model-value="rule?.field || ''"
       :items="filterGroupsWithDefault"
       required
-      @update:model-value="changeFilter"
+      @update:model-value="changeRule"
     />
     <template v-if="rule">
       <AppSelect
@@ -123,7 +123,7 @@ const filterOperatorItems = computed(() => {
   ];
 });
 
-function changeFilter(id: string) {
+function changeRule(id: string) {
   const type = props.filterItems[id].type;
   emit('update:rule', createNewRule(id, type));
 }
