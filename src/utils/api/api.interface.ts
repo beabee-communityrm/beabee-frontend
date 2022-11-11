@@ -20,6 +20,8 @@ export type Serial<T> = {
     ? string
     : T[P] extends Date | undefined
     ? string | undefined
+    : T[P] extends Date | null
+    ? string | null
     : T[P];
 };
 
@@ -62,10 +64,13 @@ interface MemberProfileData {
   description?: string;
 }
 
-export interface MemberRoleData {
-  role: PermissionType;
+export interface UpdateMemberRoleData {
   dateAdded: Date;
   dateExpires: Date | null;
+}
+
+export interface MemberRoleData extends UpdateMemberRoleData {
+  role: PermissionType;
 }
 
 export interface GetMemberData extends MemberData {

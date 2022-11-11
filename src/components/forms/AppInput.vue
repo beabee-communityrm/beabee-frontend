@@ -113,7 +113,8 @@ const rules = computed(() => ({
     ...(props.min !== undefined && {
       min: helpers.withMessage(
         () => errorT('min', { min: props.min }),
-        (value: number | string) => value >= props.min
+        (value: number | string) =>
+          props.min === undefined || value >= props.min
       ),
     }),
     ...(props.sameAs !== undefined && {

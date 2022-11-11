@@ -363,8 +363,17 @@
       "period": "Zeitraum",
       "phone": "Telefon",
       "preferredChannel": "Bevorzugter Kanal",
-      "roles": "Rolle",
-      "rolesCopy": {
+      "roles": {
+        "confirmDelete": {},
+        "expires": {
+          "opts": {}
+        },
+        "starts": {
+          "opts": {
+            "now": "Sofort"
+          }
+        },
+        "title": "Rolle",
         "today": "heute"
       },
       "tags": "Tags"

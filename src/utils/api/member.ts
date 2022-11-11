@@ -3,6 +3,7 @@ import {
   ContributionPeriod,
   Paginated,
   PaymentMethod,
+  PermissionType,
 } from '@beabee/beabee-common';
 
 import axios from '../../axios';
@@ -14,11 +15,13 @@ import {
   GetMemberWith,
   GetPaymentData,
   GetPaymentsQuery,
+  MemberRoleData,
   PaymentFlowParams,
   Serial,
   SetContributionData,
   StartContributionData,
   UpdateMemberData,
+  UpdateMemberRoleData,
 } from './api.interface';
 
 import { deserializeDate } from '.';
@@ -34,12 +37,16 @@ export function deserializeMember(data: any): any {
       contribution: deserializeContribution(data.contribution),
     }),
     ...(data.roles && {
-      roles: data.roles.map((role: any) => ({
-        role: role.role,
-        dateAdded: deserializeDate(role.dateAdded),
-        dateExpires: deserializeDate(role.dateExpires),
-      })),
+      roles: data.roles.map(deserializeRole),
     }),
+  };
+}
+
+function deserializeRole(data: Serial<MemberRoleData>): MemberRoleData {
+  return {
+    role: data.role,
+    dateAdded: deserializeDate(data.dateAdded),
+    dateExpires: data.dateExpires ? deserializeDate(data.dateExpires) : null,
   };
 }
 
@@ -192,4 +199,23 @@ export async function fetchPayments(
       status: item.status,
     })),
   };
+}
+
+export async function updateRole(
+  id: string,
+  role: PermissionType,
+  dataIn: UpdateMemberRoleData
+): Promise<MemberRoleData> {
+  const { data } = await axios.put<Serial<MemberRoleData>>(
+    `/member/${id}/role/${role}`,
+    dataIn
+  );
+  return deserializeRole(data);
+}
+
+export async function deleteRole(
+  id: string,
+  role: PermissionType
+): Promise<void> {
+  await axios.delete(`/member/${id}/role/${role}`);
 }
