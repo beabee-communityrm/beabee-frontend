@@ -248,7 +248,8 @@
     "search": "Search callouts...",
     "show": "Show",
     "showAll": "All",
-    "showAnswered": "Answered"
+    "showAnswered": "Answered",
+    "showingOf": "Showing {start} to {end} callouts out of {total}"
   },
   "calloutsAdmin": {
     "addCallout": "Create callout",
@@ -861,7 +862,8 @@
       "createdAt": "Created",
       "name": "Name",
       "status": "Status"
-    }
+    },
+    "showingOf": "Showing {start} to {end} notices out of {total}"
   },
   "notification": {
     "error": "Something went wrong. Try reloading the page.",

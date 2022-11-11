@@ -41,16 +41,6 @@ meta:
             class="absolute -left-[1px] top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-[1px]"
           />
         </button>
-        <div
-          v-if="contactsTable !== undefined"
-          class="flex-1 self-center text-right"
-        >
-          <i18n-t keypath="contacts.numResults" :plural="contactsTable.total">
-            <template #n>
-              <b>{{ n(contactsTable.total) }}</b>
-            </template>
-          </i18n-t>
-        </div>
       </div>
       <AppSearch
         v-model="currentRules"
@@ -58,6 +48,12 @@ meta:
         :filter-items="filterItems"
         :expanded="showAdvancedSearch"
         @reset="currentRules = undefined"
+      />
+      <AppPaginatedResult
+        v-model:page="currentPage"
+        v-model:page-size="currentPageSize"
+        :result="contactsTable"
+        keypath="contacts.showingOf"
       />
       <AppTable
         v-model:sort="currentSort"
@@ -111,26 +107,12 @@ meta:
           {{ getMembershipStartDate(item) }}
         </template>
       </AppTable>
-      <div v-if="contactsTable" class="mt-4 flex items-center text-sm">
-        <p class="flex-1">
-          <i18n-t v-if="contactsTable.count > 0" keypath="contacts.showingOf">
-            <template #start
-              ><b>{{ n(contactsTable.offset + 1) }}</b></template
-            >
-            <template #end
-              ><b>{{
-                n(contactsTable.offset + contactsTable.count)
-              }}</b></template
-            >
-            <template #total
-              ><b>{{ n(contactsTable.total) }}</b></template
-            >
-          </i18n-t>
-        </p>
-        <div class="mx-4">Page size</div>
-
-        <AppPagination v-model="currentPage" :total-pages="totalPages" />
-      </div>
+      <AppPaginatedResult
+        v-model:page="currentPage"
+        v-model:page-size="currentPageSize"
+        :result="contactsTable"
+        keypath="contacts.showingOf"
+      />
     </div>
   </div>
 </template>
@@ -150,7 +132,6 @@ import { fetchMembers } from '../../../utils/api/member';
 import AppTable from '../../../components/table/AppTable.vue';
 import { Header, SortType } from '../../../components/table/table.interface';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
-import AppPagination from '../../../components/AppPagination.vue';
 import { fetchSegments } from '../../../utils/api/segments';
 import AppButton from '../../../components/forms/AppButton.vue';
 import AppSearch from '../../../components/search/AppSearch.vue';
@@ -162,6 +143,7 @@ import {
   filterItems,
 } from '../../../components/pages/admin/contacts/contacts.interface';
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
+import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 
 const { t, n } = useI18n();
 
@@ -256,11 +238,6 @@ const currentSegment = computed({
 const segments = ref<GetSegmentData[]>([]);
 const contactsTotal = ref<number | null>(null);
 const contactsTable = ref<Paginated<GetMemberDataWith<'profile' | 'roles'>>>();
-const totalPages = computed(() =>
-  contactsTable.value
-    ? Math.ceil(contactsTable.value.total / currentPageSize.value)
-    : 0
-);
 
 const segmentItems = computed(() => [
   {
