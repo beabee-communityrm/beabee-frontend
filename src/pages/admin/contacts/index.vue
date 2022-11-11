@@ -64,7 +64,9 @@ meta:
         <template #empty>
           <p>
             {{
-              route.query.s ? t('contacts.noResults') : t('contacts.noContacts')
+              currentRules || currentSearch
+                ? t('contacts.noResults')
+                : t('contacts.noContacts')
             }}
           </p>
         </template>
