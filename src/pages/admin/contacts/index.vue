@@ -19,12 +19,44 @@ meta:
       <AppVTabs v-model="currentSegment" :items="segmentItems" />
     </div>
     <div class="flex-auto">
+      <div class="flex">
+        <AppSearchInput
+          v-model="currentSearch"
+          :placeholder="t('contacts.search')"
+        />
+        <button
+          class="ml-2 flex items-center rounded border border-primary-40 px-3 text-sm font-semibold"
+          :class="
+            showAdvancedSearch &&
+            'relative rounded-b-none border border-b-primary/0'
+          "
+          @click="showAdvancedSearch = !showAdvancedSearch"
+        >
+          {{ t('advancedSearch.button') }}
+          <font-awesome-icon
+            class="ml-2"
+            :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
+          />
+          <div
+            class="absolute -left-[1px] top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-[1px]"
+          />
+        </button>
+        <div
+          v-if="contactsTable !== undefined"
+          class="flex-1 self-center text-right"
+        >
+          <i18n-t keypath="contacts.numResults" :plural="contactsTable.total">
+            <template #n>
+              <b>{{ n(contactsTable.total) }}</b>
+            </template>
+          </i18n-t>
+        </div>
+      </div>
       <AppSearch
-        v-model:search="currentSearch"
-        v-model:rules="currentRules"
+        v-model="currentRules"
         :filter-groups="filterGroups"
         :filter-items="filterItems"
-        :num-results="contactsTable?.total"
+        :expanded="showAdvancedSearch"
       />
       <AppTable
         v-model:sort="currentSort"
@@ -128,6 +160,7 @@ import {
   filterGroups,
   filterItems,
 } from '../../../components/pages/admin/contacts/contacts.interface';
+import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 
 const { t, n } = useI18n();
 
@@ -162,6 +195,8 @@ const headers: Header[] = [
 
 const route = useRoute();
 const router = useRouter();
+
+const showAdvancedSearch = ref(false);
 
 const currentPageSize = computed({
   get: () => Number(route.query.limit) || 25,
@@ -211,7 +246,10 @@ const currentRules = computed<GetMembersQuery['rules']>({
 
 const currentSegment = computed({
   get: () => (route.query.segment as string) || '',
-  set: (segment) => router.push({ query: { segment: segment || undefined } }),
+  set: (segment) => {
+    router.push({ query: { segment: segment || undefined } });
+    showAdvancedSearch.value = false;
+  },
 });
 
 const segments = ref<GetSegmentData[]>([]);

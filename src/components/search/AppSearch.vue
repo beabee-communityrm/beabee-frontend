@@ -1,34 +1,6 @@
 <template>
-  <div class="flex">
-    <AppSearchInput v-model="searchText" :placeholder="t('contacts.search')" />
-    <button
-      class="ml-2 flex items-center rounded border border-primary-40 px-3 text-sm font-semibold"
-      :class="
-        showAdvancedSearch &&
-        'relative rounded-b-none border border-b-primary/0'
-      "
-      @click="toggleAdvancedSearch"
-    >
-      {{ t('advancedSearch.button') }}
-      <font-awesome-icon
-        class="ml-2"
-        :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
-      />
-      <div
-        class="absolute -left-[1px] top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-[1px]"
-      />
-    </button>
-    <div v-if="numResults !== undefined" class="flex-1 self-center text-right">
-      <i18n-t keypath="contacts.numResults" :plural="numResults">
-        <template #n>
-          <b>{{ n(numResults) }}</b>
-        </template>
-      </i18n-t>
-    </div>
-  </div>
-
   <form
-    v-if="showAdvancedSearch"
+    v-if="props.expanded"
     class="mt-2 mb-8 border border-primary-40 p-4"
     @submit.prevent="handleAdvancedSearch"
   >
@@ -121,41 +93,34 @@ import useVuelidate from '@vuelidate/core';
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppButton from '../forms/AppButton.vue';
-import AppSearchInput from '../forms/AppSearchInput.vue';
 import AppSelect from '../forms/AppSelect.vue';
 import AppSearchFilter from './AppSearchFilter.vue';
 import { FilterGroup, FilterItems } from './search.interface';
 
-const emit = defineEmits(['update:search', 'update:rules']);
+const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   filterItems: FilterItems;
   filterGroups: FilterGroup[];
-  search: string;
-  rules: RuleGroup | undefined;
-  numResults?: number;
+  modelValue: RuleGroup | undefined;
+  expanded: boolean;
 }>();
 
-const { n, t } = useI18n();
+const { t } = useI18n();
 const validation = useVuelidate();
-
-const searchText = computed({
-  get: () => props.search,
-  set: (text) => emit('update:search', text),
-});
-
-const showAdvancedSearch = ref(false);
 
 const selectedMatchType = ref<'all' | 'any'>('all');
 const selectedFilters = ref<(null | Filter)[]>([]);
 
 const currentMatchType = computed(() =>
-  props.rules?.condition === 'OR' ? 'any' : 'all'
+  props.modelValue?.condition === 'OR' ? 'any' : 'all'
 );
-const currentFilters = computed(() => convertRuleGroupToFilters(props.rules));
+const currentFilters = computed(() =>
+  convertRuleGroupToFilters(props.modelValue)
+);
 
 function removeFilter(i: number) {
   selectedFilters.value.splice(i, 1);
-  if (showAdvancedSearch.value) {
+  if (props.expanded) {
     if (selectedFilters.value.length === 0) {
       addFilter();
     }
@@ -170,20 +135,21 @@ function addFilter() {
 
 function reset() {
   selectedMatchType.value = currentMatchType.value;
-  const filters = convertRuleGroupToFilters(props.rules);
+  const filters = convertRuleGroupToFilters(props.modelValue);
   selectedFilters.value = filters && filters.length > 0 ? filters : [null];
 }
 
-watch(() => props.rules, reset);
-
-function toggleAdvancedSearch() {
-  reset();
-  showAdvancedSearch.value = !showAdvancedSearch.value;
-}
+watch(() => props.modelValue, reset);
+watch(
+  () => props.expanded,
+  (value) => {
+    if (value) reset();
+  }
+);
 
 function handleAdvancedSearch() {
   emit(
-    'update:rules',
+    'update:modelValue',
     convertFiltersToRuleGroup(
       selectedMatchType.value,
       selectedFilters.value.filter((f) => !!f) as Filter[]
