@@ -54,12 +54,16 @@
       </div>
     </div>
 
-    <div class="flex justify-between gap-2">
-      <AppButton variant="text" @click="handleReset">
-        {{ t('actions.reset') }}
-      </AppButton>
-      <AppButton variant="link" :disabled="validation.$invalid" type="submit">
+    <div class="flex gap-2">
+      <AppButton
+        variant="link"
+        :disabled="validation.$invalid || !hasChanged"
+        type="submit"
+      >
         {{ t('actions.search') }}
+      </AppButton>
+      <AppButton v-if="hasChanged" variant="text" @click="handleReset">
+        {{ t('actions.reset') }}
       </AppButton>
     </div>
   </form>
@@ -106,15 +110,16 @@ const props = defineProps<{
 const { t } = useI18n();
 const validation = useVuelidate();
 
-interface RuleGroupWithEmpty {
-  condition: RuleGroup['condition'];
-  rules: (Rule | RuleGroup | null)[];
-}
-
 const selectedRuleGroup = reactive<RuleGroupWithEmpty>({
   condition: 'AND',
   rules: [null],
 });
+
+const hasChanged = computed(() =>
+  props.modelValue
+    ? !isEqual(props.modelValue, selectedRuleGroup)
+    : selectedRuleGroup.rules.length > 0
+);
 
 function removeRule(i: number) {
   selectedRuleGroup.rules.splice(i, 1);
