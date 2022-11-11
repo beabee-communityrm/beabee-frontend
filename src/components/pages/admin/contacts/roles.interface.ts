@@ -1,4 +1,4 @@
-import { PermissionType } from '../../../../utils/api/api.interface';
+import { PermissionType } from '@beabee/beabee-common';
 
 export interface EditableRole {
   role: PermissionType | '';
