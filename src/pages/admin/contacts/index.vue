@@ -57,6 +57,7 @@ meta:
         :filter-groups="filterGroups"
         :filter-items="filterItems"
         :expanded="showAdvancedSearch"
+        @reset="currentRules = undefined"
       />
       <AppTable
         v-model:sort="currentSort"

@@ -2,7 +2,7 @@
   <form
     v-if="props.expanded"
     class="mt-2 mb-8 border border-primary-40 p-4"
-    @submit.prevent="handleAdvancedSearch"
+    @submit.prevent="handleFormSubmit"
   >
     <h4 class="mb-3 font-semibold">
       {{ t('advancedSearch.createFilters') }}
@@ -52,12 +52,12 @@
       </div>
     </div>
 
-    <div class="flex justify-end gap-2">
-      <AppButton variant="primaryOutlined" :disabled="validation.$invalid">
-        {{ t('advancedSearch.saveAsSegment') }}
+    <div class="flex justify-between gap-2">
+      <AppButton variant="text" @click="handleReset">
+        {{ t('actions.reset') }}
       </AppButton>
       <AppButton variant="link" :disabled="validation.$invalid" type="submit">
-        {{ t('advancedSearch.showResults') }}
+        {{ t('actions.search') }}
       </AppButton>
     </div>
   </form>
@@ -97,7 +97,7 @@ import AppSelect from '../forms/AppSelect.vue';
 import AppSearchFilter from './AppSearchFilter.vue';
 import { FilterGroup, FilterItems } from './search.interface';
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['reset', 'update:modelValue']);
 const props = defineProps<{
   filterItems: FilterItems;
   filterGroups: FilterGroup[];
@@ -125,7 +125,7 @@ function removeFilter(i: number) {
       addFilter();
     }
   } else {
-    handleAdvancedSearch();
+    handleFormSubmit();
   }
 }
 
@@ -147,7 +147,12 @@ watch(
   }
 );
 
-function handleAdvancedSearch() {
+function handleReset() {
+  emit('reset');
+  reset();
+}
+
+function handleFormSubmit() {
   emit(
     'update:modelValue',
     convertFiltersToRuleGroup(

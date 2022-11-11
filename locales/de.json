@@ -12,6 +12,7 @@
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
     "schedule": "Planen",
+    "search": "Suchen",
     "submit": "Abschicken",
     "unpublish": "Veröffentlichung aufheben",
     "update": "Änderungen speichern",
@@ -164,8 +165,7 @@
       }
     },
     "saveAsSegment": "Als Segment speichern",
-    "selectFilter": "Filter auswählen",
-    "showResults": "Suchen"
+    "selectFilter": "Filter auswählen"
   },
   "callout": {
     "contactDetails": "Kontaktdaten",

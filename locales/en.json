@@ -12,6 +12,7 @@
     "replicate": "Replicate",
     "reset": "Reset",
     "schedule": "Schedule",
+    "search": "Search",
     "submit": "Submit",
     "unpublish": "Unpublish",
     "update": "Update",
@@ -164,8 +165,7 @@
       }
     },
     "saveAsSegment": "Save as segment",
-    "selectFilter": "Select a filter",
-    "showResults": "Show results"
+    "selectFilter": "Select a filter"
   },
   "callout": {
     "contactDetails": "Contact details",
