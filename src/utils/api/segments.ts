@@ -1,6 +1,7 @@
 import { Paginated } from '@beabee/beabee-common';
 import axios from '../../axios';
 import {
+  CreateSegmentData,
   GetMemberData,
   GetMemberDataWith,
   GetMembersQuery,
@@ -9,6 +10,7 @@ import {
   GetSegmentDataWith,
   GetSegmentWith,
   Serial,
+  UpdateSegmentData,
 } from './api.interface';
 import { deserializeMember } from './member';
 
@@ -41,6 +43,34 @@ export async function fetchSegment<With extends GetSegmentWith>(
     params: { with: _with },
   });
   return data as GetSegmentDataWith<With>;
+}
+
+export async function createSegment(
+  dataIn: CreateSegmentData
+): Promise<GetSegmentData> {
+  const { data } = await axios.post<Serial<GetSegmentData>>('/segment/', {
+    name: dataIn.name,
+    order: dataIn.order,
+    ruleGroup: dataIn.ruleGroup,
+    description: '', // TODO: deprecated from API
+  });
+  return data;
+}
+
+export async function updateSegment(
+  id: string,
+  dataIn: UpdateSegmentData
+): Promise<GetSegmentData> {
+  const { data } = await axios.patch<Serial<GetSegmentData>>('/segment/' + id, {
+    name: dataIn.name,
+    order: dataIn.order,
+    ruleGroup: dataIn.ruleGroup,
+  });
+  return data;
+}
+
+export async function deleteSegment(id: string): Promise<void> {
+  await axios.delete('/segment/' + id);
 }
 
 export async function fetchSegmentMembers(

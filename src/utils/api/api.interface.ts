@@ -372,6 +372,14 @@ export interface GetSegmentData {
   order: number;
 }
 
+export interface CreateSegmentData {
+  name: string;
+  ruleGroup: RuleGroup;
+  order: number;
+}
+
+export type UpdateSegmentData = Partial<CreateSegmentData>;
+
 export type GetSegmentWith = 'contactCount';
 
 export type GetSegmentDataWith<With extends GetSegmentWith> = GetSegmentData &
