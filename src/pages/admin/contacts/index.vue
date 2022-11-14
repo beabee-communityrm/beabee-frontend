@@ -277,17 +277,17 @@ watchEffect(async () => {
       .flatMap((value) => [
         {
           field: 'email',
-          operator: 'contains' as const,
+          operator: 'contains',
           value: [value],
         },
         {
           field: 'firstname',
-          operator: 'contains' as const,
+          operator: 'contains',
           value: [value],
         },
         {
           field: 'lastname',
-          operator: 'contains' as const,
+          operator: 'contains',
           value: [value],
         },
       ]),

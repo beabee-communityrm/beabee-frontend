@@ -26,7 +26,6 @@ import {
 
 import { deserializeDate } from '.';
 import env from '../../env';
-
 // TODO: how to make this type safe?
 export function deserializeMember(data: any): any {
   return {

@@ -86,6 +86,12 @@
   </div>
 </template>
 <script lang="ts" setup>
+import {
+  ContributionPeriod,
+  PaymentMethod,
+  MembershipStatus,
+  ContributionType,
+} from '@beabee/beabee-common';
 import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
@@ -94,13 +100,6 @@ import AppButton from '../../../forms/AppButton.vue';
 import ProrateContribution from './ProrateContribution.vue';
 import MessageBox from '../../../MessageBox.vue';
 import { ContributionContent } from '../../../contribution/contribution.interface';
-import {
-  ContributionPeriod,
-  ContributionType,
-  MembershipStatus,
-  PaymentMethod,
-} from '@beabee/beabee-common';
-import { ContributionInfo } from '../../../../utils/api/api.interface';
 import {
   startContribution,
   startContributionCompleteUrl,
@@ -113,6 +112,7 @@ import AppAlert from '../../../AppAlert.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
 import AppHeading from '../../../AppHeading.vue';
 import { isRequestError } from '../../../../utils/api';
+import { ContributionInfo } from '../../../../utils/api/api.interface';
 
 const validation = useVuelidate();
 
