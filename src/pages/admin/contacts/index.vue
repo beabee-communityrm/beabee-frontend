@@ -47,6 +47,7 @@ meta:
         :filter-groups="filterGroups"
         :filter-items="filterItems"
         :expanded="showAdvancedSearch"
+        :has-changed="!!route.query.r"
         @reset="currentRules = undefined"
       />
       <AppPaginatedResult

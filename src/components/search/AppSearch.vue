@@ -105,6 +105,7 @@ const props = defineProps<{
   filterGroups: FilterGroup[];
   modelValue: RuleGroup | undefined;
   expanded: boolean;
+  hasChanged: boolean;
 }>();
 
 const { t } = useI18n();
@@ -115,10 +116,13 @@ const selectedRuleGroup = reactive<RuleGroupWithEmpty>({
   rules: [null],
 });
 
-const hasChanged = computed(() =>
-  props.modelValue
-    ? !isEqual(props.modelValue, selectedRuleGroup)
-    : selectedRuleGroup.rules.length > 0
+const hasChanged = computed(
+  () =>
+    props.hasChanged ||
+    (props.modelValue
+      ? !isEqual(props.modelValue, selectedRuleGroup)
+      : selectedRuleGroup.rules.length > 1 ||
+        selectedRuleGroup.rules[0] !== null)
 );
 
 function removeRule(i: number) {
@@ -144,7 +148,8 @@ function reset() {
         rules: [null],
       };
   selectedRuleGroup.condition = ruleGroup.condition;
-  selectedRuleGroup.rules = ruleGroup.rules;
+  selectedRuleGroup.rules =
+    ruleGroup.rules.length > 0 ? ruleGroup.rules : [null];
 }
 
 watch(() => props.modelValue, reset);
