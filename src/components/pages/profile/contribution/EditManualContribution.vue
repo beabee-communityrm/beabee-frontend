@@ -30,12 +30,17 @@
       class="mb-4"
     />
 
-    <AppSelect label="Source" :items="sourceOptions" class="mb-3" />
+    <AppSelect
+      v-model="contribution.source"
+      label="Source"
+      :items="sourceOptions"
+      class="mb-3"
+    />
 
-    <AppInput label="Reference" class="mb-3" />
+    <AppInput v-model="contribution.reference" label="Reference" class="mb-3" />
 
     <AppButton
-      :disabled="!canSubmit || validation.$invalid"
+      :disabled="validation.$invalid"
       type="submit"
       variant="link"
       class="mt-6"
@@ -53,9 +58,11 @@ import AppButton from '../../../forms/AppButton.vue';
 import AppInput from '../../../forms/AppInput.vue';
 import AppSelect from '../../../forms/AppSelect.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
-import { ContributionPeriod } from '../../../../utils/enums/contribution-period.enum';
-import { ContributionType } from '../../../../utils/enums/contribution-type.enum';
-import { MembershipStatus } from '../../../../utils/enums/membership-status.enum';
+import {
+  ContributionPeriod,
+  ContributionType,
+  MembershipStatus,
+} from '@beabee/beabee-common';
 import {
   fetchMember,
   forceUpdateContribution,
@@ -122,9 +129,6 @@ watch(
   toRef(props, 'id'),
   async (id) => {
     const member = await fetchMember(id, ['contribution']);
-    console.log('watch changed, printing member');
-    console.log(member);
-
     contribution.type = member.contribution.type;
     contribution.amount = member.contribution.amount;
     contribution.period = member.contribution.period;
@@ -137,7 +141,7 @@ watch(
 async function handleUpdate() {
   loading.value = true;
   try {
-    await forceUpdateContribution(contribution);
+    await forceUpdateContribution(props.id, contribution);
   } finally {
     loading.value = false;
   }
