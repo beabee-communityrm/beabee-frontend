@@ -370,8 +370,12 @@ export interface GetSegmentData {
   name: string;
   ruleGroup: RuleGroup;
   order: number;
-  memberCount: number;
 }
+
+export type GetSegmentWith = 'contactCount';
+
+export type GetSegmentDataWith<With extends GetSegmentWith> = GetSegmentData &
+  ('contactCount' extends With ? { contactCount: number } : Noop);
 
 export interface GetStatsQuery {
   from: Date;

@@ -6,12 +6,41 @@ import {
   GetMembersQuery,
   GetMemberWith,
   GetSegmentData,
+  GetSegmentDataWith,
+  GetSegmentWith,
   Serial,
 } from './api.interface';
 import { deserializeMember } from './member';
 
-export async function fetchSegments(): Promise<GetSegmentData[]> {
-  return (await axios.get<Serial<GetSegmentData>[]>('/segments')).data;
+export async function fetchSegments(): Promise<GetSegmentData[]>;
+export async function fetchSegments<With extends GetSegmentWith>(
+  _with: readonly With[]
+): Promise<GetSegmentDataWith<With>[]>;
+export async function fetchSegments<With extends GetSegmentWith>(
+  _with?: readonly With[]
+): Promise<GetSegmentDataWith<With>[]> {
+  const { data } = await axios.get<Serial<GetSegmentDataWith<With>>[]>(
+    '/segments',
+    {
+      params: { with: _with },
+    }
+  );
+  return data as GetSegmentDataWith<With>[];
+}
+
+export async function fetchSegment(id: string): Promise<GetSegmentData>;
+export async function fetchSegment<With extends GetSegmentWith>(
+  id: string,
+  _with: readonly With[]
+): Promise<GetSegmentDataWith<With>>;
+export async function fetchSegment<With extends GetSegmentWith>(
+  id: string,
+  _with?: readonly With[]
+): Promise<GetSegmentDataWith<With>> {
+  const { data } = await axios.get<Serial<GetSegmentData>>('/segment/' + id, {
+    params: { with: _with },
+  });
+  return data as GetSegmentDataWith<With>;
 }
 
 export async function fetchSegmentMembers(

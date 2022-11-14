@@ -129,7 +129,7 @@ import PageTitle from '../../../components/PageTitle.vue';
 import {
   GetMembersQuery,
   GetMemberDataWith,
-  GetSegmentData,
+  GetSegmentDataWith,
 } from '../../../utils/api/api.interface';
 import { fetchMembers } from '../../../utils/api/member';
 import AppTable from '../../../components/table/AppTable.vue';
@@ -238,7 +238,7 @@ const currentSegment = computed({
   },
 });
 
-const segments = ref<GetSegmentData[]>([]);
+const segments = ref<GetSegmentDataWith<'contactCount'>[]>([]);
 const contactsTotal = ref<number | null>(null);
 const contactsTable = ref<Paginated<GetMemberDataWith<'profile' | 'roles'>>>();
 
@@ -252,7 +252,7 @@ const segmentItems = computed(() => [
   ...segments.value.map((segment) => ({
     id: segment.id,
     label: segment.name,
-    count: n(segment.memberCount),
+    count: n(segment.contactCount),
     to: '/admin/contacts?segment=' + segment.id,
   })),
 ]);
@@ -265,7 +265,7 @@ function getMembershipStartDate(member: GetMemberDataWith<'roles'>): string {
 onBeforeMount(async () => {
   // Load the total if in a segment, otherwise it will be updated automatically below
   contactsTotal.value = (await fetchMembers({ limit: 1 })).total;
-  segments.value = await fetchSegments();
+  segments.value = await fetchSegments(['contactCount']);
 });
 
 watchEffect(async () => {
