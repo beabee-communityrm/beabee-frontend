@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <ArgInput v-model="value[0]" :item="item" :readonly="readonly" />
-  {{ t('advancedSearch.matchWord.all') }}
+  {{ t('advancedSearch.matchWord.AND') }}
   <ArgInput v-model="value[1]" :item="item" :readonly="readonly" />
 </template>
 <script lang="ts" setup>
