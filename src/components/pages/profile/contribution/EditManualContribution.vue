@@ -4,20 +4,33 @@
       {{ t('contribution.billing') }}
     </AppHeading>
 
-    <AppInput label="Amount" type="number" class="mb-3" />
+    <AppSelect
+      v-model="contribution.type"
+      label="Contribution Type"
+      :items="contributionTypes"
+      class="mb-3"
+    />
+
+    <AppInput
+      v-model="contribution.amount"
+      label="Amount"
+      type="number"
+      class="mb-3"
+    />
 
     <AppRadioGroup
-      v-model="currentPeriod"
+      v-if="showChangePeriod"
+      v-model="contribution.period"
       name="period"
       label="Period"
       :options="[
-        [false, 'Monthly'],
-        [true, 'Yearly'],
+        ['monthly', 'Monthly'],
+        ['yearly', 'Yearly'],
       ]"
       class="mb-4"
     />
 
-    <AppSelect label="Source" :items="periodOptions" class="mb-3" />
+    <AppSelect label="Source" :items="sourceOptions" class="mb-3" />
 
     <AppInput label="Reference" class="mb-3" />
 
@@ -28,34 +41,25 @@
       class="mt-6"
       :loading="loading"
     >
-      {{
-        isManualActiveMember
-          ? t('contribution.updatePaymentType')
-          : isActiveMember
-          ? t('contribution.updateContribution')
-          : isExpiringMember
-          ? t('contribution.restartContribution')
-          : t('contribution.startContribution')
-      }}
+      {{ t('contribution.updateContribution') }}
     </AppButton>
   </form>
 </template>
 <script lang="ts" setup>
-import { computed, onBeforeMount, reactive, ref } from 'vue';
+import { computed, reactive, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import AppButton from '../../../forms/AppButton.vue';
 import AppInput from '../../../forms/AppInput.vue';
 import AppSelect from '../../../forms/AppSelect.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
-import { ContributionContent } from '../../../contribution/contribution.interface';
 import { ContributionPeriod } from '../../../../utils/enums/contribution-period.enum';
-import { ContributionInfo } from '../../../../utils/api/api.interface';
-import { PaymentMethod } from '../../../../utils/enums/payment-method.enum';
 import { ContributionType } from '../../../../utils/enums/contribution-type.enum';
 import { MembershipStatus } from '../../../../utils/enums/membership-status.enum';
-import { updateContribution } from '../../../../utils/api/member';
-// import { currentUser } from '../../../../store/currentUser';
+import {
+  fetchMember,
+  forceUpdateContribution,
+} from '../../../../utils/api/member';
 import AppHeading from '../../../AppHeading.vue';
 
 const validation = useVuelidate();
@@ -63,70 +67,77 @@ const validation = useVuelidate();
 const { t } = useI18n();
 
 const props = defineProps<{
-  modelValue: ContributionInfo;
-  content: ContributionContent;
+  id: string;
 }>();
 
 const contribution = reactive({
-  amount: 5,
+  type: 'manual',
+  amount: 0,
   period: ContributionPeriod.Monthly,
   source: '',
   reference: '',
 });
 
-const periodOptions = [
+const contributionTypes = [
   {
-    id: 'auto',
-    label: 'Automatic',
+    id: 'None',
+    label: 'None',
   },
   {
-    id: 'manual',
+    id: 'Manual',
     label: 'Manual',
   },
 ];
 
-const cantUpdate = ref(false);
-const hasUpdated = ref(false);
+const sourceOptions = [
+  {
+    id: 'none',
+    label: 'None',
+  },
+  {
+    id: 'cheque',
+    label: 'Cheque',
+  },
+];
+
 const loading = ref(false);
 
 const isActiveMember = computed(
-  () => props.modelValue.membershipStatus === MembershipStatus.Active
+  () => contribution.membershipStatus === MembershipStatus.Active
 );
-const isExpiringMember = computed(
-  () => props.modelValue.membershipStatus === MembershipStatus.Expiring
-);
-
 const isManualActiveMember = computed(
-  () =>
-    isActiveMember.value && props.modelValue.type === ContributionType.Manual
-);
-const isAutoActiveMember = computed(
-  () =>
-    isActiveMember.value && props.modelValue.type === ContributionType.Automatic
+  () => isActiveMember.value && contribution.type === ContributionType.Manual
 );
 
 // Only non-active members and monthly manual contributors can change their period
 // as otherwise proration gets complicated
-/*
 const showChangePeriod = computed(
   () =>
     !isActiveMember.value ||
     (isManualActiveMember.value &&
-      props.modelValue.period !== ContributionPeriod.Annually)
+      contribution.period !== ContributionPeriod.Annually)
 );
-*/
 
-const canSubmit = computed(
-  () =>
-    !isAutoActiveMember.value || props.modelValue.amount != contribution.amount
+watch(
+  toRef(props, 'id'),
+  async (id) => {
+    const member = await fetchMember(id, ['contribution']);
+    console.log('watch changed, printing member');
+    console.log(member);
+
+    contribution.type = member.contribution.type;
+    contribution.amount = member.contribution.amount;
+    contribution.period = member.contribution.period;
+    contribution.source = member.contribution.paymentSource.source;
+    contribution.reference = member.contribution.paymentSource.reference;
+  },
+  { immediate: true }
 );
 
 async function handleUpdate() {
   loading.value = true;
   try {
-    // const data = await updateContribution(contribution);
-    await updateContribution(contribution);
-    hasUpdated.value = true;
+    await forceUpdateContribution(contribution);
   } finally {
     loading.value = false;
   }
