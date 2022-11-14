@@ -1,72 +1,44 @@
 <template>
-  <div>
-    <form @submit.prevent="handleSubmit">
-      <AppHeading class="mb-2">{{ t('contribution.billing') }} </AppHeading>
+  <form @submit.prevent="handleSubmit">
+    <AppHeading class="mt-6 mb-2">
+      {{ t('contribution.billing') }}
+    </AppHeading>
 
-      <div class="flex-1">
-        <AppSelect label="Billing type" :items="periodOptions" />
-      </div>
+    <AppInput label="Amount" type="number" class="mb-3" />
 
-      <div class="flex-1">
-        <AppInput label="Amount" type="number" />
-      </div>
+    <AppRadioGroup
+      v-model="currentPeriod"
+      name="period"
+      label="Period"
+      :options="[
+        [false, 'Monthly'],
+        [true, 'Yearly'],
+      ]"
+      class="mb-4"
+    />
 
-      <div class="flex-1">
-        <AppRadioGroup
-          v-model="currentPeriod"
-          name="period"
-          label="Period"
-          :options="[
-            [false, 'Monthly'],
-            [true, 'Yearly'],
-          ]"
-        />
-      </div>
+    <AppSelect label="Source" :items="periodOptions" class="mb-3" />
 
-      <div class="flex-1">
-        <AppSelect label="Source" :items="periodOptions" />
-      </div>
+    <AppInput label="Reference" class="mb-3" />
 
-      <div class="flex-1">
-        <AppInput label="Reference" />
-      </div>
-
-      <AppButton
-        :disabled="!canSubmit || validation.$invalid"
-        type="submit"
-        variant="link"
-        class="mb-4 w-full"
-        :loading="loading"
-      >
-        {{
-          isManualActiveMember
-            ? t('contribution.updatePaymentType')
-            : isActiveMember
-            ? t('contribution.updateContribution')
-            : isExpiringMember
-            ? t('contribution.restartContribution')
-            : t('contribution.startContribution')
-        }}
-      </AppButton>
-    </form>
-    <AppModal
-      v-if="stripeClientSecret"
-      :open="stripePaymentLoaded"
-      class="w-full"
-      @close="reset"
+    <AppButton
+      :disabled="!canSubmit || validation.$invalid"
+      type="submit"
+      variant="link"
+      class="mt-6"
+      :loading="loading"
     >
-      <AppHeading class="mb-4">{{
-        t(`paymentMethods.${newContribution.paymentMethod}.setLabel`)
-      }}</AppHeading>
-      <StripePayment
-        :client-secret="stripeClientSecret"
-        :public-key="content.stripePublicKey"
-        :email="email"
-        :return-url="startContributionCompleteUrl"
-        @loaded="onStripeLoaded"
-      />
-    </AppModal>
-  </div>
+      {{
+        isManualActiveMember
+          ? t('contribution.updatePaymentType')
+          : isActiveMember
+          ? t('contribution.updateContribution')
+          : isExpiringMember
+          ? t('contribution.restartContribution')
+          : t('contribution.startContribution')
+      }}
+    </AppButton>
+  </form>
 </template>
 <script lang="ts" setup>
 import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
@@ -84,12 +56,9 @@ import { ContributionType } from '../../../../utils/enums/contribution-type.enum
 import { MembershipStatus } from '../../../../utils/enums/membership-status.enum';
 import {
   startContribution,
-  startContributionCompleteUrl,
   updateContribution,
 } from '../../../../utils/api/member';
-import AppModal from '../../../AppModal.vue';
-import StripePayment from '../../../StripePayment.vue';
-import { currentUser } from '../../../../store/currentUser';
+// import { currentUser } from '../../../../store/currentUser';
 import AppHeading from '../../../AppHeading.vue';
 import { isRequestError } from '../../../../utils/api';
 
@@ -127,10 +96,6 @@ const hasUpdated = ref(false);
 const loading = ref(false);
 const stripeClientSecret = ref('');
 const stripePaymentLoaded = ref(false);
-
-const email = computed(() =>
-  currentUser.value ? currentUser.value.email : ''
-);
 
 const isActiveMember = computed(
   () => props.modelValue.membershipStatus === MembershipStatus.Active
@@ -195,11 +160,6 @@ async function handleSubmit() {
   } finally {
     loading.value = false;
   }
-}
-
-function onStripeLoaded() {
-  stripePaymentLoaded.value = true;
-  loading.value = false;
 }
 
 function reset() {
