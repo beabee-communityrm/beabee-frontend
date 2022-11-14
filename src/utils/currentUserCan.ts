@@ -1,6 +1,6 @@
+import { PermissionType } from '@beabee/beabee-common';
 import { computed, ComputedRef } from 'vue';
 import { currentUser } from '../store';
-import { PermissionType } from './api/api.interface';
 
 const currentUserCan = (role: PermissionType): ComputedRef<boolean> => {
   return computed(() => {

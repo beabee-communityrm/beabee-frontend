@@ -1,3 +1,4 @@
+import { Paginated } from '@beabee/beabee-common';
 import axios from '../../axios';
 import {
   GetMemberData,
@@ -5,7 +6,6 @@ import {
   GetMembersQuery,
   GetMemberWith,
   GetSegmentData,
-  Paginated,
   Serial,
 } from './api.interface';
 import { deserializeMember } from './member';

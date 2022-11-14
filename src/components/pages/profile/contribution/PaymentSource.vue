@@ -39,6 +39,7 @@
 </template>
 
 <script lang="ts" setup>
+import { PaymentMethod } from '@beabee/beabee-common';
 import { onBeforeMount, ref } from 'vue';
 import MessageBox from '../../../MessageBox.vue';
 import AppButton from '../../../forms/AppButton.vue';
@@ -50,7 +51,6 @@ import {
 } from '../../../../utils/api/member';
 import StripePayment from '../../../StripePayment.vue';
 import AppModal from '../../../AppModal.vue';
-import { PaymentMethod } from '../../../../utils/enums/payment-method.enum';
 import PaymentMethodIcon from '../../../payment-method/PaymentMethodIcon.vue';
 import { computed } from 'vue';
 import AppHeading from '../../../AppHeading.vue';

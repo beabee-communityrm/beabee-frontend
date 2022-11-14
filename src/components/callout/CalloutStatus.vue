@@ -25,8 +25,9 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { ItemStatus } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
-import { GetCalloutData, ItemStatus } from '../../utils/api/api.interface';
+import { GetCalloutData } from '../../utils/api/api.interface';
 import {
   formatDistanceLocale,
   formatLocale,

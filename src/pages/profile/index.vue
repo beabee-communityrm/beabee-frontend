@@ -67,6 +67,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { ItemStatus } from '@beabee/beabee-common';
 import { ref, onBeforeMount, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
@@ -82,7 +83,6 @@ import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue'
 import {
   GetCalloutData,
   GetMemberData,
-  ItemStatus,
   ProfileContent,
 } from '../../utils/api/api.interface';
 import { fetchContent } from '../../utils/api/content';
@@ -124,12 +124,12 @@ onBeforeMount(async () => {
           {
             field: 'status',
             operator: 'equal',
-            value: ItemStatus.Open,
+            value: [ItemStatus.Open],
           },
           {
             field: 'hidden',
             operator: 'equal',
-            value: false,
+            value: [false],
           },
         ],
       },

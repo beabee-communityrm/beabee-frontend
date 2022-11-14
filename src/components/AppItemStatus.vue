@@ -4,8 +4,8 @@
   }}</span>
 </template>
 <script lang="ts" setup>
+import { ItemStatus } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
-import { ItemStatus } from '../utils/api/api.interface';
 const { t } = useI18n();
 const color = {
   draft: 'text-body-60',
