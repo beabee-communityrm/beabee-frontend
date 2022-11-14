@@ -41,6 +41,12 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import {
+  ContributionPeriod,
+  ContributionType,
+  MembershipStatus,
+  PaymentMethod,
+} from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
@@ -54,11 +60,7 @@ import { currentUser } from '../../../store';
 import UpdateContribution from '../../../components/pages/profile/contribution/UpdateContribution.vue';
 import { ContributionInfo } from '../../../utils/api/api.interface';
 import { fetchContribution } from '../../../utils/api/member';
-import { MembershipStatus } from '../../../utils/enums/membership-status.enum';
-import { ContributionType } from '../../../utils/enums/contribution-type.enum';
 import { ContributionContent } from '../../../components/contribution/contribution.interface';
-import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
-import { PaymentMethod } from '../../../utils/enums/payment-method.enum';
 import { fetchContent } from '../../../utils/api/content';
 
 const { t } = useI18n();

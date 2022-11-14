@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  Paginated,
+  ContributionPeriod,
+  PaymentMethod,
+  PermissionType,
+} from '@beabee/beabee-common';
 import axios from '../../axios';
-import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
-import { PaymentMethod } from '../enums/payment-method.enum';
 import {
   ContributionInfo,
   GetMemberData,
@@ -11,9 +15,7 @@ import {
   GetPaymentData,
   GetPaymentsQuery,
   MemberRoleData,
-  Paginated,
   PaymentFlowParams,
-  PermissionType,
   Serial,
   SetContributionData,
   StartContributionData,
@@ -23,7 +25,6 @@ import {
 
 import { deserializeDate } from '.';
 import env from '../../env';
-
 // TODO: how to make this type safe?
 export function deserializeMember(data: any): any {
   return {

@@ -1,11 +1,7 @@
+import { Paginated } from '@beabee/beabee-common';
 import { deserializeDate } from '.';
 import axios from '../../axios';
-import {
-  GetNoticeData,
-  GetNoticesQuery,
-  Paginated,
-  Serial,
-} from './api.interface';
+import { GetNoticeData, GetNoticesQuery, Serial } from './api.interface';
 
 export async function fetchNotices(
   query?: GetNoticesQuery
