@@ -1,8 +1,14 @@
-import { ContributionPeriod } from '../enums/contribution-period.enum';
-import { ContributionType } from '../enums/contribution-type.enum';
-import { MembershipStatus } from '../enums/membership-status.enum';
-import { NewsletterStatus } from '../enums/newsletter-status.enum';
-import { PaymentMethod } from '../enums/payment-method.enum';
+import {
+  ContributionPeriod,
+  ContributionType,
+  ItemStatus,
+  MembershipStatus,
+  NewsletterStatus,
+  PaginatedQuery,
+  PaymentMethod,
+  PaymentStatus,
+  PermissionType,
+} from '@beabee/beabee-common';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Noop {}
@@ -24,48 +30,11 @@ export type AllowNull<T> = {
   [P in keyof T]: undefined extends T[P] ? T[P] | null : T[P];
 };
 
-export type PermissionType = 'member' | 'admin' | 'superadmin';
-
-type GetPaginatedQueryRuleOperator = 'equal' | 'contains';
-
-interface GetPaginatedQueryRuleGroup<T> {
-  condition: 'AND' | 'OR';
-  rules: (GetPaginatedQueryRuleGroup<T> | GetPaginatedQueryRule<T>)[];
-}
-
-interface GetPaginatedQueryRule<T> {
-  field: T;
-  operator: GetPaginatedQueryRuleOperator;
-  value: string | number | boolean;
-}
-
-export interface GetPaginatedQuery<T> {
-  limit?: number;
-  offset?: number;
-  sort?: string;
-  order?: 'ASC' | 'DESC';
-  rules?: GetPaginatedQueryRuleGroup<T>;
-}
-
-export interface Paginated<T> {
-  items: T[];
-  offset: number;
-  count: number;
-  total: number;
-}
-
 export interface Address {
   line1: string;
   line2?: string | undefined;
   city: string;
   postcode: string;
-}
-
-export enum ItemStatus {
-  Draft = 'draft',
-  Scheduled = 'scheduled',
-  Open = 'open',
-  Ended = 'ended',
 }
 
 interface MemberData {
@@ -119,9 +88,7 @@ export type GetMemberDataWith<With extends GetMemberWith> = GetMemberData &
   ('contribution' extends With ? { contribution: ContributionInfo } : Noop) &
   ('roles' extends With ? { roles: MemberRoleData[] } : Noop);
 
-export type GetMembersQuery = GetPaginatedQuery<
-  'firstname' | 'lastname' | 'email' | 'activeMembership'
->;
+export type GetMembersQuery = PaginatedQuery; // TODO: constrain fields
 
 export type UpdateMemberProfileData = Partial<MemberProfileData>;
 
@@ -130,18 +97,18 @@ export interface UpdateMemberData extends Partial<MemberData> {
   profile?: UpdateMemberProfileData;
 }
 
-export interface CardPaymentSource {
-  method: PaymentMethod.StripeCard;
-  last4: string;
-  expiryMonth: number;
-  expiryYear: number;
-}
-
 export interface GoCardlessDirectDebitPaymentSource {
   method: PaymentMethod.GoCardlessDirectDebit;
   bankName: string;
   accountHolderName: string;
   accountNumberEnding: string;
+}
+
+export interface StripeCardPaymentSource {
+  method: PaymentMethod.StripeCard;
+  last4: string;
+  expiryMonth: number;
+  expiryYear: number;
 }
 
 export interface StripeBACSPaymentSource {
@@ -158,11 +125,18 @@ export interface StripeSEPAPaymentSource {
   last4: string;
 }
 
+export interface ManualPaymentSource {
+  method: null;
+  source?: string;
+  reference?: string;
+}
+
 export type PaymentSource =
-  | CardPaymentSource
+  | StripeCardPaymentSource
   | GoCardlessDirectDebitPaymentSource
   | StripeBACSPaymentSource
-  | StripeSEPAPaymentSource;
+  | StripeSEPAPaymentSource
+  | ManualPaymentSource;
 
 export interface ContributionInfo {
   type: ContributionType;
@@ -185,15 +159,16 @@ export interface SetContributionData {
   period: ContributionPeriod;
 }
 
-export interface StartContributionData extends SetContributionData {
-  paymentMethod: PaymentMethod;
+export interface ForceUpdateContributionData {
+  type: ContributionType.Manual | ContributionType.None;
+  amount: number | null;
+  period: ContributionPeriod | null;
+  source?: string;
+  reference?: string;
 }
 
-export enum PaymentStatus {
-  Pending = 'pending',
-  Successful = 'successful',
-  Failed = 'failed',
-  Cancelled = 'cancelled',
+export interface StartContributionData extends SetContributionData {
+  paymentMethod: PaymentMethod;
 }
 
 export interface GetPaymentData {
@@ -202,7 +177,7 @@ export interface GetPaymentData {
   status: PaymentStatus;
 }
 
-export type GetPaymentsQuery = GetPaginatedQuery<'chargeDate'>;
+export type GetPaymentsQuery = PaginatedQuery; // TODO: constrain fields
 
 export interface LoginData {
   email: string;
@@ -337,11 +312,9 @@ export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
 
 export type UpdateCalloutData = Omit<CreateCalloutData, 'slug'>;
 
-export type GetCalloutsQuery = GetPaginatedQuery<
-  'title' | 'status' | 'answeredBy' | 'hidden'
->;
+export type GetCalloutsQuery = PaginatedQuery; // TODO: constrain fields
 
-export type GetCalloutResponsesQuery = GetPaginatedQuery<'member'>;
+export type GetCalloutResponsesQuery = PaginatedQuery; // TODO: constrain fields
 
 type CalloutResponseAnswer =
   | string
@@ -364,9 +337,7 @@ export interface CreateCalloutResponseData {
   answers: CalloutResponseAnswers;
 }
 
-export type GetNoticesQuery = GetPaginatedQuery<
-  'name' | 'status' | 'createdAt' | 'updatedAt'
->;
+export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 
 export interface GetNoticeData {
   id: string;

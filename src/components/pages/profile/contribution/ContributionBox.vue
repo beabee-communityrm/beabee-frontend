@@ -60,16 +60,18 @@
 </template>
 
 <script lang="ts" setup>
+import {
+  ContributionPeriod,
+  ContributionType,
+  MembershipStatus,
+} from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import {
   formatDistanceLocale,
   formatLocale,
 } from '../../../../utils/dates/locale-date-formats';
 import { computed } from 'vue';
-import { ContributionPeriod } from '../../../../utils/enums/contribution-period.enum';
 import { ContributionInfo } from '../../../../utils/api/api.interface';
-import { MembershipStatus } from '../../../../utils/enums/membership-status.enum';
-import { ContributionType } from '../../../../utils/enums/contribution-type.enum';
 import AppSubHeading from '../../../AppSubHeading.vue';
 
 const { n, t } = useI18n();

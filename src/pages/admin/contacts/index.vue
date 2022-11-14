@@ -105,13 +105,11 @@ import {
   GetMembersQuery,
   GetMemberDataWith,
   GetSegmentData,
-  Paginated,
 } from '../../../utils/api/api.interface';
 import { fetchMembers } from '../../../utils/api/member';
 import AppTable from '../../../components/table/AppTable.vue';
 import { Header, SortType } from '../../../components/table/table.interface';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
-import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
 import AppPagination from '../../../components/AppPagination.vue';
 import {
   fetchSegmentMembers,
@@ -122,6 +120,7 @@ import SearchBox from '../../../components/pages/admin/contacts/SearchBox.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
 import ContactTag from '../../../components/pages/admin/contacts/ContactTag.vue';
+import { Paginated, ContributionPeriod } from '@beabee/beabee-common';
 
 const { t, n } = useI18n();
 
@@ -237,17 +236,17 @@ watchEffect(async () => {
       {
         field: 'email',
         operator: 'contains',
-        value,
+        value: [value],
       },
       {
         field: 'firstname',
         operator: 'contains',
-        value,
+        value: [value],
       },
       {
         field: 'lastname',
         operator: 'contains',
-        value,
+        value: [value],
       },
     ]),
   };

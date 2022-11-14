@@ -39,18 +39,21 @@
 </template>
 
 <script lang="ts" setup>
+import { PaymentMethod } from '@beabee/beabee-common';
 import { onBeforeMount, ref } from 'vue';
 import MessageBox from '../../../MessageBox.vue';
 import AppButton from '../../../forms/AppButton.vue';
 import { useI18n } from 'vue-i18n';
-import { PaymentSource } from '../../../../utils/api/api.interface';
+import {
+  ManualPaymentSource,
+  PaymentSource,
+} from '../../../../utils/api/api.interface';
 import {
   updatePaymentMethod,
   updatePaymentMethodCompleteUrl,
 } from '../../../../utils/api/member';
 import StripePayment from '../../../StripePayment.vue';
 import AppModal from '../../../AppModal.vue';
-import { PaymentMethod } from '../../../../utils/enums/payment-method.enum';
 import PaymentMethodIcon from '../../../payment-method/PaymentMethodIcon.vue';
 import { computed } from 'vue';
 import AppHeading from '../../../AppHeading.vue';
@@ -60,7 +63,7 @@ const { t } = useI18n();
 
 const props = defineProps<{
   stripePublicKey: string;
-  paymentSource: PaymentSource;
+  paymentSource: Exclude<PaymentSource, ManualPaymentSource>;
   email: string;
 }>();
 

@@ -1,9 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  Paginated,
+  ContributionPeriod,
+  PaymentMethod,
+  PermissionType,
+} from '@beabee/beabee-common';
 import axios from '../../axios';
-import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
-import { PaymentMethod } from '../enums/payment-method.enum';
 import {
   ContributionInfo,
+  ForceUpdateContributionData,
   GetMemberData,
   GetMemberDataWith,
   GetMembersQuery,
@@ -11,9 +16,7 @@ import {
   GetPaymentData,
   GetPaymentsQuery,
   MemberRoleData,
-  Paginated,
   PaymentFlowParams,
-  PermissionType,
   Serial,
   SetContributionData,
   StartContributionData,
@@ -23,7 +26,6 @@ import {
 
 import { deserializeDate } from '.';
 import env from '../../env';
-
 // TODO: how to make this type safe?
 export function deserializeMember(data: any): any {
   return {
@@ -122,6 +124,23 @@ export async function updateContribution(
       amount: dataIn.amount,
       payFee: dataIn.payFee && dataIn.period === ContributionPeriod.Monthly,
       prorate: dataIn.prorate && dataIn.period === ContributionPeriod.Annually,
+    }
+  );
+  return deserializeContribution(data);
+}
+
+export async function forceUpdateContribution(
+  id: string,
+  dataIn: ForceUpdateContributionData
+): Promise<ContributionInfo> {
+  const { data } = await axios.patch<Serial<ContributionInfo>>(
+    `/member/${id}/contribution/force`,
+    {
+      type: dataIn.type,
+      amount: dataIn.amount,
+      period: dataIn.period,
+      source: dataIn.source,
+      reference: dataIn.reference,
     }
   );
   return deserializeContribution(data);

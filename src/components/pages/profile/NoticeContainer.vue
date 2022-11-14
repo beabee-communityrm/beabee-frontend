@@ -5,9 +5,10 @@
 </template>
 
 <script lang="ts" setup>
+import { ItemStatus } from '@beabee/beabee-common';
 import { onBeforeMount, ref } from 'vue';
 import AppNotice from '../../../components/AppNotice.vue';
-import { ItemStatus, GetNoticeData } from '../../../utils/api/api.interface';
+import { GetNoticeData } from '../../../utils/api/api.interface';
 import { fetchNotices } from '../../../utils/api/notice';
 
 const notices = ref<GetNoticeData[]>([]);
@@ -18,7 +19,7 @@ onBeforeMount(() => {
   fetchNotices({
     rules: {
       condition: 'AND',
-      rules: [{ field: 'status', operator: 'equal', value: ItemStatus.Open }],
+      rules: [{ field: 'status', operator: 'equal', value: [ItemStatus.Open] }],
     },
   })
     .then((data) => {

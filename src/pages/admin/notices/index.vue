@@ -37,12 +37,13 @@ meta:
   </div>
 </template>
 <script lang="ts" setup>
+import { Paginated } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import AppButton from '../../../components/forms/AppButton.vue';
 import PageTitle from '../../../components/PageTitle.vue';
-import { Paginated, GetNoticeData } from '../../../utils/api/api.interface';
+import { GetNoticeData } from '../../../utils/api/api.interface';
 import AppTable from '../../../components/table/AppTable.vue';
 import AppPagination from '../../../components/AppPagination.vue';
 import { Header, SortType } from '../../../components/table/table.interface';
