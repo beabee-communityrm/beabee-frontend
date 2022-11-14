@@ -117,6 +117,8 @@
       "AND": "and",
       "OR": "or"
     },
+    "nestedRules": "Nested rules",
+    "noNestedRules": "This filter contains nested rules which cannot be edited using the advanced serach editor.",
     "operators": {
       "all": {
         "is_empty": "is empty",

@@ -1,9 +1,7 @@
 <template>
   <template v-if="rule && isRuleGroup(rule)">
-    <span v-if="readonly">Group of rules</span>
-    <span v-else>
-      The advanced search editor doesn't support nested groups of rules
-    </span>
+    <span v-if="readonly">{{ t('advancedSearch.nestedRules') }}</span>
+    <span v-else>{{ t('advancedSearch.noNestedRules') }}</span>
   </template>
   <AppSearchRule
     v-else
@@ -16,6 +14,7 @@
 </template>
 <script lang="ts" setup>
 import { isRuleGroup, Rule, RuleGroup } from '@beabee/beabee-common';
+import { useI18n } from 'vue-i18n';
 import AppSearchRule from './AppSearchRule.vue';
 import { FilterGroup, FilterItems } from './search.interface';
 
@@ -26,4 +25,6 @@ defineProps<{
   rule: Rule | RuleGroup | null;
   readonly?: boolean;
 }>();
+
+const { t } = useI18n();
 </script>
