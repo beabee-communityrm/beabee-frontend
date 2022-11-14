@@ -25,7 +25,7 @@ meta:
       />
 
       <PaymentSource
-        v-if="contribution.paymentSource"
+        v-if="contribution.paymentSource?.method"
         class="mb-7 md:mb-9"
         :email="email"
         :payment-source="contribution.paymentSource"

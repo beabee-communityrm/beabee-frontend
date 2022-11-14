@@ -44,7 +44,10 @@ import { onBeforeMount, ref } from 'vue';
 import MessageBox from '../../../MessageBox.vue';
 import AppButton from '../../../forms/AppButton.vue';
 import { useI18n } from 'vue-i18n';
-import { PaymentSource } from '../../../../utils/api/api.interface';
+import {
+  ManualPaymentSource,
+  PaymentSource,
+} from '../../../../utils/api/api.interface';
 import {
   updatePaymentMethod,
   updatePaymentMethodCompleteUrl,
@@ -60,7 +63,7 @@ const { t } = useI18n();
 
 const props = defineProps<{
   stripePublicKey: string;
-  paymentSource: PaymentSource;
+  paymentSource: Exclude<PaymentSource, ManualPaymentSource>;
   email: string;
 }>();
 
