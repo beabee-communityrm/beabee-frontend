@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="handleSubmit">
+  <form @submit.prevent="handleUpdate">
     <AppHeading class="mt-6 mb-2">
       {{ t('contribution.billing') }}
     </AppHeading>
@@ -41,7 +41,7 @@
   </form>
 </template>
 <script lang="ts" setup>
-import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
+import { computed, onBeforeMount, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import AppButton from '../../../forms/AppButton.vue';
@@ -54,30 +54,24 @@ import { ContributionInfo } from '../../../../utils/api/api.interface';
 import { PaymentMethod } from '../../../../utils/enums/payment-method.enum';
 import { ContributionType } from '../../../../utils/enums/contribution-type.enum';
 import { MembershipStatus } from '../../../../utils/enums/membership-status.enum';
-import {
-  startContribution,
-  updateContribution,
-} from '../../../../utils/api/member';
+import { updateContribution } from '../../../../utils/api/member';
 // import { currentUser } from '../../../../store/currentUser';
 import AppHeading from '../../../AppHeading.vue';
-import { isRequestError } from '../../../../utils/api';
 
 const validation = useVuelidate();
 
 const { t } = useI18n();
 
-const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   modelValue: ContributionInfo;
   content: ContributionContent;
 }>();
 
-const newContribution = reactive({
+const contribution = reactive({
   amount: 5,
   period: ContributionPeriod.Monthly,
-  payFee: true,
-  prorate: true,
-  paymentMethod: PaymentMethod.StripeCard,
+  source: '',
+  reference: '',
 });
 
 const periodOptions = [
@@ -94,8 +88,6 @@ const periodOptions = [
 const cantUpdate = ref(false);
 const hasUpdated = ref(false);
 const loading = ref(false);
-const stripeClientSecret = ref('');
-const stripePaymentLoaded = ref(false);
 
 const isActiveMember = computed(
   () => props.modelValue.membershipStatus === MembershipStatus.Active
@@ -126,68 +118,17 @@ const showChangePeriod = computed(
 
 const canSubmit = computed(
   () =>
-    !isAutoActiveMember.value ||
-    props.modelValue.amount != newContribution.amount
+    !isAutoActiveMember.value || props.modelValue.amount != contribution.amount
 );
 
-async function handleCreate() {
-  const data = await startContribution(newContribution);
-  if (data.redirectUrl) {
-    window.location.href = data.redirectUrl;
-  } else if (data.clientSecret) {
-    stripeClientSecret.value = data.clientSecret;
-  }
-}
-
 async function handleUpdate() {
-  try {
-    const data = await updateContribution(newContribution);
-    emit('update:modelValue', data);
-
-    hasUpdated.value = true;
-  } catch (err) {
-    if (isRequestError(err, 'cant-update-contribution')) {
-      cantUpdate.value = true;
-    }
-  }
-}
-
-async function handleSubmit() {
   loading.value = true;
-
   try {
-    await (isAutoActiveMember.value ? handleUpdate() : handleCreate());
+    // const data = await updateContribution(contribution);
+    await updateContribution(contribution);
+    hasUpdated.value = true;
   } finally {
     loading.value = false;
   }
 }
-
-function reset() {
-  cantUpdate.value = false;
-  hasUpdated.value = false;
-  loading.value = false;
-  stripeClientSecret.value = '';
-  stripePaymentLoaded.value = false;
-}
-
-watch(
-  props,
-  () => {
-    newContribution.amount =
-      props.modelValue.amount || props.content.initialAmount;
-    newContribution.period =
-      props.modelValue.period || props.content.initialPeriod;
-    newContribution.payFee = props.content.showAbsorbFee
-      ? props.modelValue.payFee === undefined
-        ? true
-        : props.modelValue.payFee
-      : false;
-    newContribution.prorate = true;
-    newContribution.paymentMethod =
-      props.modelValue.paymentSource?.method || props.content.paymentMethods[0];
-  },
-  { immediate: true }
-);
-
-onBeforeMount(reset);
 </script>
