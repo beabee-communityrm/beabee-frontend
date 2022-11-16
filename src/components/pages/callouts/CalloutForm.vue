@@ -4,7 +4,7 @@
     border
     no-collapse
   >
-    <div v-if="mode === 'edit'" class="flex-0 ml-3">
+    <div v-if="mode !== 'new'" class="flex-0 ml-3">
       <AppButton :disabled="!isAllValid" @click="submitForm">{{
         t('actions.update')
       }}</AppButton>
@@ -61,13 +61,13 @@ import PageTitle from '../../PageTitle.vue';
 import AppHeading from '../../AppHeading.vue';
 import AppButton from '../../forms/AppButton.vue';
 import AppStepper from '../../stepper/AppStepper.vue';
-import { CalloutSteps } from './callouts.interface';
+import { CalloutMode, CalloutSteps } from './callouts.interface';
 import router from '../../../router';
 import { UpdateCalloutData } from '../../../utils/api/api.interface';
 import { updateCallout, createCallout } from '../../../utils/api/callout';
 
 const { t } = useI18n();
-const props = defineProps<{ steps: CalloutSteps; mode: 'edit' | 'new' }>();
+const props = defineProps<{ steps: CalloutSteps; mode: CalloutMode }>();
 
 const steps = reactive(props.steps);
 
@@ -144,9 +144,9 @@ function makeCalloutData(steps: CalloutSteps): [string, UpdateCalloutData] {
 async function submitForm() {
   const [slug, callout] = makeCalloutData(steps);
   const newCallout =
-    props.mode === 'edit'
-      ? await updateCallout(slug, callout)
-      : await createCallout({ ...callout, slug });
+    props.mode === 'new'
+      ? await createCallout({ ...callout, slug })
+      : await updateCallout(slug, callout);
   router.push({
     path: '/admin/callouts/view/' + newCallout.slug,
     query: {

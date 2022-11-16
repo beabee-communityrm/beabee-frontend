@@ -57,3 +57,5 @@ export interface CalloutSteps {
   //mailchimp: Step<MailchimpSyncStepProps>;
   dates: CalloutStep<DateAndDurationStepProps>;
 }
+
+export type CalloutMode = 'live' | 'not-live' | 'new';

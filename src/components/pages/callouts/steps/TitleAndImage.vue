@@ -120,7 +120,7 @@ import AppInput from '../../../forms/AppInput.vue';
 import AppImageUpload from '../../../forms/AppImageUpload.vue';
 import AppTextArea from '../../../forms/AppTextArea.vue';
 import useVuelidate from '@vuelidate/core';
-import { TitleAndImageStepProps } from '../callouts.interface';
+import { CalloutMode, TitleAndImageStepProps } from '../callouts.interface';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
 import env from '../../../../env';
 import slugify from 'slugify';
@@ -128,7 +128,7 @@ import slugify from 'slugify';
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   data: TitleAndImageStepProps;
-  mode: 'edit' | 'new';
+  mode: CalloutMode;
 }>();
 
 const { t } = useI18n();

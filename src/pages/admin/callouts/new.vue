@@ -6,7 +6,7 @@ meta:
 </route>
 
 <template>
-  <CalloutForm v-if="steps" :steps="steps" :mode="id ? 'edit' : 'new'" />
+  <CalloutForm v-if="formData" :steps="formData.steps" :mode="formData.mode" />
 </template>
 
 <script lang="ts" setup>
@@ -21,87 +21,103 @@ import StepEndMessage from '../../../components/pages/callouts/steps/EndMessage.
 // import StepMailchimpSync from '../components/steps/MailchimpSync.vue';
 import StepDatesAndDuration from '../../../components/pages/callouts/steps/DatesAndDuration.vue';
 import StepContent from '../../../components/pages/callouts/steps/ContentStep.vue';
-import { CalloutSteps } from '../../../components/pages/callouts/callouts.interface';
+import {
+  CalloutMode,
+  CalloutSteps,
+} from '../../../components/pages/callouts/callouts.interface';
 import CalloutForm from '../../../components/pages/callouts/CalloutForm.vue';
 import { format } from 'date-fns';
+import { ItemStatus } from '@beabee/beabee-common';
+
+interface FormData {
+  steps: CalloutSteps;
+  mode: CalloutMode;
+}
 
 const props = defineProps<{ id?: string }>();
 
 const { t } = useI18n();
 
-const steps: Ref<null | CalloutSteps> = ref(null);
+const formData: Ref<null | FormData> = ref(null);
 
-const makeStepsData = (data?: GetCalloutDataWith<'form'>): CalloutSteps => ({
-  content: {
-    name: t('createCallout.steps.content.title'),
-    description: t('createCallout.steps.content.description'),
-    validated: !!data,
-    error: false,
-    component: markRaw(StepContent),
-    data: {
-      introText: data?.intro || '',
-      formSchema: data?.formSchema || {
-        components: [
-          {
-            type: 'button',
-            label: t('actions.submit'),
-            key: 'submit',
-            size: 'md',
-            block: false,
-            action: 'submit',
-            disableOnInvalid: true,
-            theme: 'primary',
-          },
-        ],
+function makeFormData(data?: GetCalloutDataWith<'form'>): FormData {
+  const mode = data
+    ? data.status === ItemStatus.Open || data.status === ItemStatus.Ended
+      ? 'live'
+      : 'not-live'
+    : 'new';
+
+  const steps: CalloutSteps = {
+    content: {
+      name: t('createCallout.steps.content.title'),
+      description: t('createCallout.steps.content.description'),
+      validated: !!data,
+      error: false,
+      component: markRaw(StepContent),
+      data: {
+        introText: data?.intro || '',
+        formSchema: data?.formSchema || {
+          components: [
+            {
+              type: 'button',
+              label: t('actions.submit'),
+              key: 'submit',
+              size: 'md',
+              block: false,
+              action: 'submit',
+              disableOnInvalid: true,
+              theme: 'primary',
+            },
+          ],
+        },
       },
     },
-  },
-  titleAndImage: {
-    name: t('createCallout.steps.titleAndImage.title'),
-    description: t('createCallout.steps.titleAndImage.description'),
-    validated: !!data,
-    error: false,
-    component: markRaw(StepTitleAndImage),
-    data: {
-      title: data?.title || '',
-      description: data?.excerpt || '',
-      coverImageURL: data?.image || '',
-      useCustomSlug: !!data,
-      autoSlug: '',
-      slug: data?.slug || '',
-      overrideShare: !!data?.shareTitle,
-      shareTitle: data?.shareTitle || '',
-      shareDescription: data?.shareDescription || '',
+    titleAndImage: {
+      name: t('createCallout.steps.titleAndImage.title'),
+      description: t('createCallout.steps.titleAndImage.description'),
+      validated: !!data,
+      error: false,
+      component: markRaw(StepTitleAndImage),
+      data: {
+        title: data?.title || '',
+        description: data?.excerpt || '',
+        coverImageURL: data?.image || '',
+        useCustomSlug: !!data,
+        autoSlug: '',
+        slug: data?.slug || '',
+        overrideShare: !!data?.shareTitle,
+        shareTitle: data?.shareTitle || '',
+        shareDescription: data?.shareDescription || '',
+      },
     },
-  },
-  visibility: {
-    name: t('createCallout.steps.visibility.title'),
-    description: t('createCallout.steps.visibility.description'),
-    validated: !!data,
-    error: false,
-    component: markRaw(StepVisibility),
-    data: {
-      whoCanTakePart:
-        !data || data.access === 'member' ? 'members' : 'everyone',
-      allowAnonymousResponses: data?.access === 'anonymous',
-      showOnUserDashboards: !data?.hidden,
-      usersCanEditAnswers: data?.allowUpdate || false,
+    visibility: {
+      name: t('createCallout.steps.visibility.title'),
+      description: t('createCallout.steps.visibility.description'),
+      validated: !!data,
+      error: false,
+      component: markRaw(StepVisibility),
+      data: {
+        whoCanTakePart:
+          !data || data.access === 'member' ? 'members' : 'everyone',
+        allowAnonymousResponses: data?.access === 'anonymous',
+        showOnUserDashboards: !data?.hidden,
+        usersCanEditAnswers: data?.allowUpdate || false,
+      },
     },
-  },
-  endMessage: {
-    name: t('createCallout.steps.endMessage.title'),
-    description: t('createCallout.steps.endMessage.description'),
-    validated: !!data,
-    error: false,
-    component: markRaw(StepEndMessage),
-    data: {
-      whenFinished: data?.thanksRedirect ? 'redirect' : 'message',
-      thankYouTitle: data?.thanksTitle || '',
-      thankYouText: data?.thanksText || '',
-      thankYouRedirect: data?.thanksRedirect || '',
+    endMessage: {
+      name: t('createCallout.steps.endMessage.title'),
+      description: t('createCallout.steps.endMessage.description'),
+      validated: !!data,
+      error: false,
+      component: markRaw(StepEndMessage),
+      data: {
+        whenFinished: data?.thanksRedirect ? 'redirect' : 'message',
+        thankYouTitle: data?.thanksTitle || '',
+        thankYouText: data?.thanksText || '',
+        thankYouRedirect: data?.thanksRedirect || '',
+      },
     },
-  },
-  /*mailchimp: {
+    /*mailchimp: {
     name: t('createCallout.steps.mailchimp.title'),
     description: t('createCallout.steps.mailchimp.description'),
     validated: false,
@@ -111,26 +127,29 @@ const makeStepsData = (data?: GetCalloutDataWith<'form'>): CalloutSteps => ({
       useMailchimpSync: false,
     },
   },*/
-  dates: {
-    name: t('createCallout.steps.dates.title'),
-    description: t('createCallout.steps.dates.description'),
-    validated: !!data,
-    error: false,
-    component: markRaw(StepDatesAndDuration),
-    data: {
-      startNow: !data,
-      hasEndDate: !!data?.expires,
-      startDate: data?.starts ? format(data.starts, 'yyyy-MM-dd') : '',
-      startTime: data?.starts ? format(data.starts, 'HH:mm') : '',
-      endDate: data?.expires ? format(data.expires, 'yyyy-MM-dd') : '',
-      endTime: data?.expires ? format(data.expires, 'HH:mm') : '',
+    dates: {
+      name: t('createCallout.steps.dates.title'),
+      description: t('createCallout.steps.dates.description'),
+      validated: !!data,
+      error: false,
+      component: markRaw(StepDatesAndDuration),
+      data: {
+        startNow: !data,
+        hasEndDate: !!data?.expires,
+        startDate: data?.starts ? format(data.starts, 'yyyy-MM-dd') : '',
+        startTime: data?.starts ? format(data.starts, 'HH:mm') : '',
+        endDate: data?.expires ? format(data.expires, 'yyyy-MM-dd') : '',
+        endTime: data?.expires ? format(data.expires, 'HH:mm') : '',
+      },
     },
-  },
-});
+  };
+
+  return { steps, mode };
+}
 
 onBeforeMount(async () => {
-  steps.value = props.id
-    ? makeStepsData(await fetchCallout(props.id, ['form']))
-    : makeStepsData();
+  formData.value = makeFormData(
+    props.id ? await fetchCallout(props.id, ['form']) : undefined
+  );
 });
 </script>
