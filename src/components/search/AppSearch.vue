@@ -46,7 +46,7 @@
         <AppButton
           variant="primaryOutlined"
           icon="plus"
-          size="sm"
+          size="xs"
           @click="addRule"
         >
           {{ t('advancedSearch.addRule') }}
