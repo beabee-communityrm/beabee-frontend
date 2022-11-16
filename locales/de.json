@@ -117,6 +117,8 @@
       "AND": "und",
       "OR": "oder"
     },
+    "nestedRules": "Verschachtelte Regeln",
+    "noNestedRules": "Dieser Filter enthält verschachtelte Regeln, die nicht mit dem erweiterten Sucheditor bearbeitet werden können.",
     "operators": {
       "all": {
         "is_empty": "ist leer",
@@ -164,7 +166,6 @@
         "not_equal": "ist nicht"
       }
     },
-    "saveAsSegment": "Als Segment speichern",
     "selectFilter": "Filter auswählen"
   },
   "callout": {
@@ -248,7 +249,8 @@
     "search": "Callouts durchsuchen",
     "show": "Anzeigen",
     "showAll": "Alle",
-    "showAnswered": "Beantwortet"
+    "showAnswered": "Beantwortet",
+    "showingOf": "Callouts {start} bis {end} von {total} werden angezeigt."
   },
   "calloutsAdmin": {
     "addCallout": "Callout anlegen",
@@ -271,7 +273,12 @@
     "annually": "Jährlich",
     "backToHome": "Zurück zur Startseite",
     "contributing": "Ihr Beitrag",
-    "contributionType": {},
+    "contributionType": {
+      "automatic": "Automatisch",
+      "gift": "Geschenk",
+      "manual": "Manuell",
+      "none": "None"
+    },
     "copy": "Kopieren",
     "every": "pro",
     "goBack": "Zurück",
@@ -341,6 +348,7 @@
       "amount": "Betrag",
       "annotationsCopy": "Änderungen gespeichert!",
       "contribution": "Beitrag",
+      "contributionCancelled": "Mitgliedschaft beendet",
       "contributionMonthlyAmount": "Monatlicher Beitrag",
       "contributionPeriod": "Zahlweise",
       "contributionType": "Beitragsart",
@@ -380,6 +388,7 @@
     },
     "noContacts": "Keine Kontakte",
     "noResults": "Keine Kontakte gefunden",
+    "numResults": "{n} Kontakt gefunden | {n} Kontakte gefunden",
     "search": "Kontakte durchsuchen...",
     "showingOf": "{start} to {end} von {total} Kontakten werden angezeigt."
   },
@@ -839,7 +848,8 @@
       "createdAt": "Erstellt",
       "name": "Name",
       "status": "Status"
-    }
+    },
+    "showingOf": "Hinweise {start} bis {end} von {total} werden angezeigt."
   },
   "notification": {
     "error": "Da ist etwas schiefgelaufen!",
