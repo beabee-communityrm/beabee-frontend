@@ -133,13 +133,13 @@
       },
       "date": {
         "between": "between",
-        "equal": "is",
+        "equal": "is on",
         "greater": "after",
         "greater_or_equal": "after or on",
         "less": "before",
         "less_or_equal": "before or on",
         "not_between": "isn't between",
-        "not_equal": "is not"
+        "not_equal": "is not on"
       },
       "enum": {
         "equal": "is",
@@ -166,7 +166,6 @@
         "not_equal": "is not"
       }
     },
-    "saveAsSegment": "Save as segment",
     "selectFilter": "Select a filter"
   },
   "callout": {
