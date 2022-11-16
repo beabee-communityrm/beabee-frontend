@@ -32,9 +32,12 @@ meta:
       <span class="whitespace-nowrap">{{ formatLocale(value, 'PP') }}</span>
     </template>
   </AppTable>
-  <div class="mt-4 ml-auto">
-    <AppPagination v-model="currentPage" :total-pages="totalPages" />
-  </div>
+  <AppPaginatedResult
+    v-model:page="currentPage"
+    v-model:page-size="currentPageSize"
+    :result="noticesTable"
+    keypath="notices.showingOf"
+  />
 </template>
 <script lang="ts" setup>
 import { Paginated } from '@beabee/beabee-common';
@@ -45,11 +48,11 @@ import AppButton from '../../../components/forms/AppButton.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import { GetNoticeData } from '../../../utils/api/api.interface';
 import AppTable from '../../../components/table/AppTable.vue';
-import AppPagination from '../../../components/AppPagination.vue';
 import { Header, SortType } from '../../../components/table/table.interface';
 import { fetchNotices } from '../../../utils/api/notice';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
+import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 
 const { t } = useI18n();
 
@@ -107,10 +110,6 @@ const noticesTable = ref<Paginated<GetNoticeData>>({
   offset: 0,
   items: [],
 });
-
-const totalPages = computed(() =>
-  Math.ceil(noticesTable.value.total / currentPageSize.value)
-);
 
 watchEffect(async () => {
   noticesTable.value = await fetchNotices({

@@ -19,7 +19,43 @@ meta:
       <AppVTabs v-model="currentSegment" :items="segmentItems" />
     </div>
     <div class="flex-auto">
-      <SearchBox v-model="currentSearch" />
+      <div class="flex">
+        <AppSearchInput
+          v-model="currentSearch"
+          :placeholder="t('contacts.search')"
+        />
+        <button
+          class="ml-2 flex items-center rounded border border-primary-40 px-3 text-sm font-semibold"
+          :class="
+            showAdvancedSearch &&
+            'relative rounded-b-none border border-b-primary/0'
+          "
+          @click="showAdvancedSearch = !showAdvancedSearch"
+        >
+          {{ t('advancedSearch.button') }}
+          <font-awesome-icon
+            class="ml-2"
+            :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
+          />
+          <div
+            class="absolute -left-[1px] top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-[1px]"
+          />
+        </button>
+      </div>
+      <AppSearch
+        v-model="currentRules"
+        :filter-groups="filterGroups"
+        :filter-items="filterItems"
+        :expanded="showAdvancedSearch"
+        :has-changed="!!route.query.r"
+        @reset="currentRules = undefined"
+      />
+      <AppPaginatedResult
+        v-model:page="currentPage"
+        v-model:page-size="currentPageSize"
+        :result="contactsTable"
+        keypath="contacts.showingOf"
+      />
       <AppTable
         v-model:sort="currentSort"
         :headers="headers"
@@ -29,7 +65,9 @@ meta:
         <template #empty>
           <p>
             {{
-              route.query.s ? t('contacts.noResults') : t('contacts.noContacts')
+              currentRules || currentSearch
+                ? t('contacts.noResults')
+                : t('contacts.noContacts')
             }}
           </p>
         </template>
@@ -72,31 +110,18 @@ meta:
           {{ getMembershipStartDate(item) }}
         </template>
       </AppTable>
-      <div v-if="contactsTable" class="mt-4 flex items-center text-sm">
-        <p class="flex-1">
-          <i18n-t v-if="contactsTable.count > 0" keypath="contacts.showingOf">
-            <template #start
-              ><b>{{ n(contactsTable.offset + 1) }}</b></template
-            >
-            <template #end
-              ><b>{{
-                n(contactsTable.offset + contactsTable.count)
-              }}</b></template
-            >
-            <template #total
-              ><b>{{ n(contactsTable.total) }}</b></template
-            >
-          </i18n-t>
-        </p>
-        <div class="mx-4">Page size</div>
-
-        <AppPagination v-model="currentPage" :total-pages="totalPages" />
-      </div>
+      <AppPaginatedResult
+        v-model:page="currentPage"
+        v-model:page-size="currentPageSize"
+        :result="contactsTable"
+        keypath="contacts.showingOf"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { ContributionPeriod, Paginated } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
@@ -110,17 +135,18 @@ import { fetchMembers } from '../../../utils/api/member';
 import AppTable from '../../../components/table/AppTable.vue';
 import { Header, SortType } from '../../../components/table/table.interface';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
-import AppPagination from '../../../components/AppPagination.vue';
-import {
-  fetchSegmentMembers,
-  fetchSegments,
-} from '../../../utils/api/segments';
+import { fetchSegments } from '../../../utils/api/segments';
 import AppButton from '../../../components/forms/AppButton.vue';
-import SearchBox from '../../../components/pages/admin/contacts/SearchBox.vue';
+import AppSearch from '../../../components/search/AppSearch.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
 import ContactTag from '../../../components/pages/admin/contacts/ContactTag.vue';
-import { Paginated, ContributionPeriod } from '@beabee/beabee-common';
+import {
+  filterGroups,
+  filterItems,
+} from '../../../components/pages/admin/contacts/contacts.interface';
+import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
+import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 
 const { t, n } = useI18n();
 
@@ -156,6 +182,8 @@ const headers: Header[] = [
 const route = useRoute();
 const router = useRouter();
 
+const showAdvancedSearch = ref(false);
+
 const currentPageSize = computed({
   get: () => Number(route.query.limit) || 25,
   set: (limit) => router.push({ query: { ...route.query, limit } }),
@@ -187,19 +215,32 @@ const currentSearch = computed({
   set: (s) => router.push({ query: { ...route.query, s } }),
 });
 
+const currentRules = computed<GetMembersQuery['rules']>({
+  get: () => {
+    if (route.query.r) {
+      return JSON.parse(route.query.r as string);
+    } else if (currentSegment.value) {
+      return segments.value.find((s) => s.id === currentSegment.value)
+        ?.ruleGroup;
+    } else {
+      return undefined;
+    }
+  },
+  set: (r) =>
+    router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
+});
+
 const currentSegment = computed({
   get: () => (route.query.segment as string) || '',
-  set: (segment) => router.push({ query: { segment: segment || undefined } }),
+  set: (segment) => {
+    router.push({ query: { segment: segment || undefined } });
+    showAdvancedSearch.value = false;
+  },
 });
 
 const segments = ref<GetSegmentData[]>([]);
 const contactsTotal = ref<number | null>(null);
 const contactsTable = ref<Paginated<GetMemberDataWith<'profile' | 'roles'>>>();
-const totalPages = computed(() =>
-  contactsTable.value
-    ? Math.ceil(contactsTable.value.total / currentPageSize.value)
-    : 0
-);
 
 const segmentItems = computed(() => [
   {
@@ -223,33 +264,41 @@ function getMembershipStartDate(member: GetMemberDataWith<'roles'>): string {
 
 onBeforeMount(async () => {
   // Load the total if in a segment, otherwise it will be updated automatically below
-  if (currentSegment.value) {
-    contactsTotal.value = (await fetchMembers({ limit: 1 })).total;
-  }
+  contactsTotal.value = (await fetchMembers({ limit: 1 })).total;
   segments.value = await fetchSegments();
 });
 
 watchEffect(async () => {
-  const rules: GetMembersQuery['rules'] = {
+  const searchRules: GetMembersQuery['rules'] = {
     condition: 'OR',
-    rules: currentSearch.value.split(' ').flatMap((value) => [
-      {
-        field: 'email',
-        operator: 'contains',
-        value: [value],
-      },
-      {
-        field: 'firstname',
-        operator: 'contains',
-        value: [value],
-      },
-      {
-        field: 'lastname',
-        operator: 'contains',
-        value: [value],
-      },
-    ]),
+    rules: currentSearch.value
+      .split(' ')
+      .filter((v) => !!v)
+      .flatMap((value) => [
+        {
+          field: 'email',
+          operator: 'contains',
+          value: [value],
+        },
+        {
+          field: 'firstname',
+          operator: 'contains',
+          value: [value],
+        },
+        {
+          field: 'lastname',
+          operator: 'contains',
+          value: [value],
+        },
+      ]),
   };
+
+  const rules: GetMembersQuery['rules'] = currentRules.value
+    ? {
+        condition: 'AND',
+        rules: [currentRules.value, searchRules],
+      }
+    : searchRules;
 
   const query = {
     offset: currentPage.value * currentPageSize.value,
@@ -261,16 +310,6 @@ watchEffect(async () => {
     }),
   };
 
-  contactsTable.value = currentSegment.value
-    ? await fetchSegmentMembers(currentSegment.value, query, [
-        'profile',
-        'roles',
-      ])
-    : await fetchMembers(query, ['profile', 'roles']);
-
-  // Update all contacts total if no segment
-  if (!currentSegment.value) {
-    contactsTotal.value = contactsTable.value.total;
-  }
+  contactsTable.value = await fetchMembers(query, ['profile', 'roles']);
 });
 </script>

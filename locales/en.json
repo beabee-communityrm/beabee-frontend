@@ -12,6 +12,7 @@
     "replicate": "Replicate",
     "reset": "Reset",
     "schedule": "Schedule",
+    "search": "Search",
     "submit": "Submit",
     "unpublish": "Unpublish",
     "update": "Update",
@@ -102,6 +103,72 @@
     },
     "title": "Settings"
   },
+  "advancedSearch": {
+    "addRule": "Add rule",
+    "button": "Advanced",
+    "createFilters": "Create filters for your search",
+    "matchAfter": "of the following",
+    "matchBefore": "Match",
+    "matchType": {
+      "AND": "all",
+      "OR": "any"
+    },
+    "matchWord": {
+      "AND": "and",
+      "OR": "or"
+    },
+    "nestedRules": "Nested rules",
+    "noNestedRules": "This filter contains nested rules which cannot be edited using the advanced serach editor.",
+    "operators": {
+      "all": {
+        "is_empty": "is empty",
+        "is_not_empty": "isn't empty"
+      },
+      "array": {
+        "contains": "includes",
+        "not_contains": "doesn't include"
+      },
+      "boolean": {
+        "equal": "is"
+      },
+      "date": {
+        "between": "between",
+        "equal": "is",
+        "greater": "after",
+        "greater_or_equal": "after or on",
+        "less": "before",
+        "less_or_equal": "before or on",
+        "not_between": "isn't between",
+        "not_equal": "is not"
+      },
+      "enum": {
+        "equal": "is",
+        "not_equal": "is not"
+      },
+      "number": {
+        "between": "between",
+        "equal": "is",
+        "greater": "more than",
+        "greater_or_equal": "at least",
+        "less": "less than",
+        "less_or_equal": "at most",
+        "not_between": "isn't between",
+        "not_equal": "isn't"
+      },
+      "text": {
+        "begins_with": "begins with",
+        "contains": "contains",
+        "ends_with": "ends with",
+        "equal": "is",
+        "not_begins_with": "doesn't begin with",
+        "not_contains": "doesn't contain",
+        "not_ends_with": "doesn't end with",
+        "not_equal": "is not"
+      }
+    },
+    "saveAsSegment": "Save as segment",
+    "selectFilter": "Select a filter"
+  },
   "callout": {
     "contactDetails": "Contact details",
     "form": {
@@ -183,7 +250,8 @@
     "search": "Search callouts...",
     "show": "Show",
     "showAll": "All",
-    "showAnswered": "Answered"
+    "showAnswered": "Answered",
+    "showingOf": "Showing {start} to {end} callouts out of {total}"
   },
   "calloutsAdmin": {
     "addCallout": "Create callout",
@@ -206,6 +274,12 @@
     "annually": "Annually",
     "backToHome": "Back to home",
     "contributing": "Contributing",
+    "contributionType": {
+      "automatic": "Automatic",
+      "gift": "Gift",
+      "manual": "Manual",
+      "none": "None"
+    },
     "copy": "Copy",
     "every": "every",
     "goBack": "Go back",
@@ -253,6 +327,7 @@
       "copy": "<p>All information added in this section is <strong>visible for admins only</strong>. Members will never see these in their profile or member area.</p>\n"
     },
     "contribution": "Contribution",
+    "contributionType": "Type",
     "information": "Information",
     "newsletter": "Newsletter",
     "overview": "Overview",
@@ -267,22 +342,31 @@
   },
   "contacts": {
     "addContact": "Add contact",
-    "advancedSearch": "Advanced",
     "allContacts": "All contacts",
     "data": {
+      "activeMembership": "Active membership",
+      "activePermission": "Active role",
       "amount": "Amount",
       "annotationsCopy": "Contact successfully updated",
       "contribution": "Contribution",
-      "contributionType": "Type",
-      "deliveryOptIn": "Delivery opt-in?",
+      "contributionCancelled": "Contribution cancelled",
+      "contributionMonthlyAmount": "Contribution monthly amount",
+      "contributionPeriod": "Contribution period",
+      "contributionType": "Contribution type",
+      "deliveryOptIn": "Delivery opt-in",
       "description": "Description",
       "email": "Email",
+      "firstname": "First name",
       "groups": "Groups",
       "joined": "Joined",
       "lastSeen": "Last seen",
+      "lastname": "Last name",
+      "manualPaymentSource": "Manual payment source",
+      "membershipExpires": "Member until",
       "membershipStarts": "Member since",
       "name": "Name",
       "newsletter": "Newsletter",
+      "newsletterStatus": "Newsletter status",
       "notes": "Notes",
       "payingFee": "Paying fee?",
       "period": "Period",
@@ -320,6 +404,7 @@
     },
     "noContacts": "No contacts added yet",
     "noResults": "No contacts found",
+    "numResults": "{n} contact found | {n} contacts found",
     "search": "Search contacts...",
     "showingOf": "Showing {start} to {end} contacts out of {total}"
   },
@@ -779,7 +864,8 @@
       "createdAt": "Created",
       "name": "Name",
       "status": "Status"
-    }
+    },
+    "showingOf": "Showing {start} to {end} notices out of {total}"
   },
   "notification": {
     "error": "Something went wrong. Try reloading the page.",

@@ -44,7 +44,7 @@ meta:
           "
         />
         <AppInfoListItem
-          :name="t('contacts.data.newsletter')"
+          :name="t('contactOverview.newsletter')"
           :value="contact.profile.newsletterStatus"
         />
         <AppInfoListItem
@@ -77,7 +77,7 @@ meta:
           "
         />
         <AppInfoListItem
-          :name="t('contacts.data.contributionType')"
+          :name="t('contactOverview.contributionType')"
           :value="contact.contribution.type"
         />
       </AppInfoList>

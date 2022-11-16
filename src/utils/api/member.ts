@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  Paginated,
   ContributionPeriod,
+  Paginated,
   PaymentMethod,
   PermissionType,
 } from '@beabee/beabee-common';
+
 import axios from '../../axios';
 import {
   ContributionInfo,

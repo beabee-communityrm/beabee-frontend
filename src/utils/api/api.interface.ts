@@ -8,6 +8,7 @@ import {
   PaymentMethod,
   PaymentStatus,
   PermissionType,
+  RuleGroup,
 } from '@beabee/beabee-common';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -313,7 +314,6 @@ export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
 export type UpdateCalloutData = Omit<CreateCalloutData, 'slug'>;
 
 export type GetCalloutsQuery = PaginatedQuery; // TODO: constrain fields
-
 export type GetCalloutResponsesQuery = PaginatedQuery; // TODO: constrain fields
 
 type CalloutResponseAnswer =
@@ -368,8 +368,7 @@ export interface CompleteSignupData {
 export interface GetSegmentData {
   id: string;
   name: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ruleGroup: any; // TODO: add types
+  ruleGroup: RuleGroup;
   order: number;
   memberCount: number;
 }

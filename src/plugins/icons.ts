@@ -61,7 +61,10 @@ import {
   faChartLine,
   faWindowRestore,
   faSort,
+  faPlus,
   faReply,
+  faCircleDot,
+  faCircleArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -121,7 +124,10 @@ library.add(
   faChartLine,
   faWindowRestore,
   faSort,
-  faReply
+  faPlus,
+  faReply,
+  faCircleDot,
+  faCircleArrowRight
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
