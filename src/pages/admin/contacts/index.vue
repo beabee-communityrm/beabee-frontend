@@ -47,15 +47,19 @@ meta:
         :filter-groups="filterGroups"
         :filter-items="filterItems"
         :expanded="showAdvancedSearch"
-        :has-changed="!!route.query.r"
+        :has-changed="hasUnsavedSegment"
         @reset="currentRules = undefined"
       />
-      <AppPaginatedResult
-        v-model:page="currentPage"
-        v-model:page-size="currentPageSize"
-        :result="contactsTable"
-        keypath="contacts.showingOf"
-      />
+      <div class="mt-4 flex items-center">
+        <SaveSegment v-if="hasUnsavedSegment" />
+        <AppPaginatedResult
+          v-model:page="currentPage"
+          v-model:page-size="currentPageSize"
+          :result="contactsTable"
+          keypath="contacts.showingOf"
+          class="ml-auto"
+        />
+      </div>
       <AppTable
         v-model:sort="currentSort"
         :headers="headers"
@@ -115,6 +119,7 @@ meta:
         v-model:page-size="currentPageSize"
         :result="contactsTable"
         keypath="contacts.showingOf"
+        class="mt-4"
       />
     </div>
   </div>
@@ -147,6 +152,7 @@ import {
 } from '../../../components/pages/admin/contacts/contacts.interface';
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
+import SaveSegment from '../../../components/pages/admin/contacts/SaveSegment.vue';
 
 const { t, n } = useI18n();
 
@@ -237,6 +243,8 @@ const currentSegment = computed({
     showAdvancedSearch.value = false;
   },
 });
+
+const hasUnsavedSegment = computed(() => !!route.query.r);
 
 const segments = ref<GetSegmentDataWith<'contactCount'>[]>([]);
 const contactsTotal = ref<number | null>(null);
