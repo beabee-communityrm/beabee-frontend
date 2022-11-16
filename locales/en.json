@@ -360,7 +360,7 @@
       "joined": "Joined",
       "lastSeen": "Last seen",
       "lastname": "Last name",
-      "manualPaymentSource": "Manual payment source",
+      "manualPaymentSource": "Manuelles Zahlungsquelle",
       "membershipExpires": "Member until",
       "membershipStarts": "Member since",
       "name": "Name",
@@ -368,6 +368,8 @@
       "newsletterStatus": "Newsletter status",
       "notes": "Notes",
       "payingFee": "Paying fee?",
+      "paymentReference": "Payment reference",
+      "paymentSource": "Payment source",
       "period": "Period",
       "phone": "Phone",
       "preferredChannel": "Preferred channel",
@@ -379,8 +381,6 @@
           "text": "Are you sure you want to remove this role?",
           "title": "Remove role"
         },
-        "delete": "Delete",
-        "edit": "Edit",
         "expires": {
           "label": "Expiry date for this role",
           "opts": {
@@ -400,6 +400,11 @@
         "today": "present"
       },
       "tags": "Tags"
+    },
+    "dataGroup": {
+      "contact": "Contact",
+      "contribution": "Contribution",
+      "role": "Role"
     },
     "noContacts": "No contacts added yet",
     "noResults": "No contacts found",

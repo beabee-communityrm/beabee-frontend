@@ -350,8 +350,8 @@
       "contribution": "Beitrag",
       "contributionCancelled": "Mitgliedschaft beendet",
       "contributionMonthlyAmount": "Monatlicher Beitrag",
-      "contributionPeriod": "Zahlweise",
-      "contributionType": "Beitragsart",
+      "contributionPeriod": "Beitragsintervall",
+      "contributionType": "Beitragstyp",
       "deliveryOptIn": "Postsendung",
       "description": "Beschreibung",
       "email": "E-Mail",
@@ -360,7 +360,7 @@
       "joined": "Kontakt seit",
       "lastSeen": "Zuletzt angemeldet",
       "lastname": "Nachname",
-      "manualPaymentSource": "Manuelles Zahlungsmittel",
+      "manualPaymentSource": "Manuelles Zahlungsquelle",
       "membershipExpires": "Mitglied bis",
       "membershipStarts": "Mitglied seit",
       "name": "Name",
@@ -368,23 +368,43 @@
       "newsletterStatus": "Newsletter-Status",
       "notes": "Notizen",
       "payingFee": "Übernimmt Transaktionskosten?",
+      "paymentReference": "Zahlungsreferenz",
+      "paymentSource": "Zahlungsquelle",
       "period": "Zeitraum",
       "phone": "Telefon",
       "preferredChannel": "Bevorzugter Kanal",
       "roles": {
-        "confirmDelete": {},
-        "expires": {
-          "opts": {}
+        "add": "Rolle hinzufügen",
+        "confirmDelete": {
+          "actionNo": "Nein, gehe zurück",
+          "actionYes": "Ja, löschen",
+          "text": "Bist Du sicher, dass Du diese Rolle entfernen willst?",
+          "title": "Rolle entfernen"
         },
-        "starts": {
+        "expires": {
+          "label": "Ablaufdatum für diese Rolle",
           "opts": {
-            "now": "Sofort"
+            "never": "Niemals",
+            "schedule": "Ablaufdatum festlegen"
+          }
+        },
+        "new": "Neue Rolle",
+        "starts": {
+          "label": "Startdatum für diese Rolle",
+          "opts": {
+            "now": "Sofort",
+            "schedule": "Startdatum festlegen"
           }
         },
         "title": "Rolle",
         "today": "heute"
       },
       "tags": "Tags"
+    },
+    "dataGroup": {
+      "contact": "Kontakt",
+      "contribution": "Beitrag",
+      "role": "Rolle"
     },
     "noContacts": "Keine Kontakte",
     "noResults": "Keine Kontakte gefunden",
