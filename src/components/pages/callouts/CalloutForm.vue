@@ -55,8 +55,7 @@
 </template>
 
 <script lang="ts" setup>
-import { watch, ref, computed, reactive } from 'vue';
-import slugify from 'slugify';
+import { ref, computed, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import PageTitle from '../../PageTitle.vue';
 import AppHeading from '../../AppHeading.vue';
@@ -72,20 +71,11 @@ const props = defineProps<{ steps: CalloutSteps; mode: 'edit' | 'new' }>();
 
 const steps = reactive(props.steps);
 
-// TODO: FIXME should just be a computed
-watch(
-  () => steps.titleAndImage.data.title,
-  (title) => {
-    steps.url.data.autoSlug = slugify(title, { lower: true });
-  }
-);
-
 const stepsInOrder = computed(() => [
   steps.content,
   steps.titleAndImage,
   steps.visibility,
   steps.endMessage,
-  steps.url,
   //steps.mailchimp,
   steps.dates,
 ]);
@@ -107,9 +97,9 @@ function parseDateTime(date: string, time: string): Date {
 
 function makeCalloutData(steps: CalloutSteps): [string, UpdateCalloutData] {
   return [
-    steps.url.data.useCustomSlug
-      ? steps.url.data.slug
-      : steps.url.data.autoSlug,
+    steps.titleAndImage.data.useCustomSlug
+      ? steps.titleAndImage.data.slug
+      : steps.titleAndImage.data.autoSlug,
     {
       title: steps.titleAndImage.data.title,
       excerpt: steps.titleAndImage.data.description,
@@ -142,9 +132,11 @@ function makeCalloutData(steps: CalloutSteps): [string, UpdateCalloutData] {
             thanksTitle: '',
             thanksRedirect: steps.endMessage.data.thankYouRedirect,
           }),
-      shareTitle: steps.url.data.overrideShare ? steps.url.data.shareTitle : '',
-      shareDescription: steps.url.data.overrideShare
-        ? steps.url.data.shareDescription
+      shareTitle: steps.titleAndImage.data.overrideShare
+        ? steps.titleAndImage.data.shareTitle
+        : '',
+      shareDescription: steps.titleAndImage.data.overrideShare
+        ? steps.titleAndImage.data.shareDescription
         : '',
     },
   ];

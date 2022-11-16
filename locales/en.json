@@ -532,23 +532,6 @@
             "help": "<p>The <strong>Cover image</strong> will serve as an illustration for the callout on menus and forms.</p>\n",
             "label": "Cover image"
           },
-          "title": {
-            "help": "<p>The <strong>Title</strong> will appear on all the mentions of this callout. It's worth spending a while coming up with the right name to get people interested.</p>\n",
-            "label": "Title",
-            "placeholder": "The name of your callout."
-          }
-        },
-        "title": "Title and image"
-      },
-      "url": {
-        "URLWillBe": "URL will be",
-        "description": "Adjust how the URL will appear and how to access it",
-        "inputs": {
-          "description": {
-            "help": "<p>The <strong>Share description</strong> field sets the short description as it should appear on social media cards. This will not affect the original callout description.</p>\n",
-            "label": "Share description",
-            "placeholder": "Quickly explain why people should respond to this callout."
-          },
           "overrideShare": {
             "label": "Use callout title and description for sharing?",
             "opts": {
@@ -556,21 +539,44 @@
               "yes": "Yes"
             }
           },
+          "shareDescription": {
+            "help": "<p>The <strong>Share description</strong> field sets the short description as it should appear on social media cards.</p>\n",
+            "label": "Share description",
+            "placeholder": "Quickly explain why people should respond to this callout."
+          },
+          "shareTitle": {
+            "help": "<p>The <strong>Share title</strong> field sets the title as it should appear on social media cards.</p>\n",
+            "label": "Share title",
+            "placeholder": "The name of your callout"
+          },
           "slug": {
-            "help": "<p>The URL slug will be used to construct the web address for this callout.</p>\n",
-            "label": "URL slug",
+            "help": "<p>The <strong>Permalink</strong> is the link that you'll be able to share for people access the callout</p>\n",
+            "label": "Permalink",
             "opts": {
               "auto": "Auto-generate from callout title",
-              "manual": "Set custom URL"
+              "manual": "Set custom slug"
             }
           },
           "title": {
-            "help": "<p>The <strong>Share title</strong> field sets the title as it should appear on social media cards. This will not affect the original callout title.</p>\n",
-            "label": "Share title",
-            "placeholder": "The name of your callout"
+            "help": "<p>The <strong>Title</strong> will appear on all the mentions of this callout. It's worth spending a while coming up with the right name to get people interested.</p>\n",
+            "label": "Title",
+            "placeholder": "The name of your callout."
           }
         },
-        "title": "URL and sharing"
+        "title": "Title and image",
+        "urlWillBe": "URL will be"
+      },
+      "url": {
+        "inputs": {
+          "description": {},
+          "overrideShare": {
+            "opts": {}
+          },
+          "slug": {
+            "opts": {}
+          },
+          "title": {}
+        }
       },
       "visibility": {
         "description": "Choose who will see your callout",

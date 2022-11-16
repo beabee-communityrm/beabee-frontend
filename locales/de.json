@@ -532,23 +532,6 @@
             "help": "<p>Das <strong>Titelbild</strong> dient zur Illustration des Callouts.</p>\n",
             "label": "Titelbild"
           },
-          "title": {
-            "help": "<p>Der <strong>Titel</strong> taucht immer dort auf, wo dein Callout erwähnt wird. Überlege dir einen guten Namen, der Interesse weckt.</p>\n",
-            "label": "Titel",
-            "placeholder": "Der Name deines Callouts."
-          }
-        },
-        "title": "Titel und Bild"
-      },
-      "url": {
-        "URLWillBe": "Die aktuelle URL lautet:",
-        "description": "Passe die Callout-URL und Titel und Beschreibung für Social-Media an.",
-        "inputs": {
-          "description": {
-            "help": "<p>Die <strong>Social-Media-Beschreibung</strong> ist die Beschreibung, die beim Teilen auf Social Media unter dem Titel erscheint und hat keinen Einfluss auf die eigentliche Beschreibung des Callouts.</p>\n",
-            "label": "Social-Media-Beschreibung",
-            "placeholder": "Die Kurzbeschreibung deines Callouts für Social Media"
-          },
           "overrideShare": {
             "label": "Callout-Titel und -Beschreibung zum Teilen verwenden?",
             "opts": {
@@ -556,21 +539,39 @@
               "yes": "Ja"
             }
           },
+          "shareDescription": {
+            "label": "Social-Media-Beschreibung",
+            "placeholder": "Die Kurzbeschreibung deines Callouts für Social Media"
+          },
+          "shareTitle": {
+            "label": "Social-Media-Titel",
+            "placeholder": "Die Überschrift deines Callouts für Social Media"
+          },
           "slug": {
-            "help": "<p>Du kannst die Endung anpassen, zum Beispiel wenn dir der Callout-Titel als Endung zu lang ist.</p>\n",
-            "label": "Endung der URL anpassen",
             "opts": {
-              "auto": "Automatisch aus Callout-Titel generieren",
-              "manual": "Benutzerdefinierte URL einrichten"
+              "auto": "Automatisch aus Callout-Titel generieren"
             }
           },
           "title": {
-            "help": "<p>Der <strong>Social-Media-Titel</strong> ist der Titel, der beim Teilen des Callouts auf Social Media erscheint und hat keinen Einfluss auf den eigentlichen Titel des Callouts.</p>\n",
-            "label": "Social-Media-Titel",
-            "placeholder": "Die Überschrift deines Callouts für Social Media"
+            "help": "<p>Der <strong>Titel</strong> taucht immer dort auf, wo dein Callout erwähnt wird. Überlege dir einen guten Namen, der Interesse weckt.</p>\n",
+            "label": "Titel",
+            "placeholder": "Der Name deines Callouts."
           }
         },
-        "title": "URL und Optionen zum Teilen"
+        "title": "Titel und Bild",
+        "urlWillBe": "Die aktuelle URL lautet:"
+      },
+      "url": {
+        "inputs": {
+          "description": {},
+          "overrideShare": {
+            "opts": {}
+          },
+          "slug": {
+            "opts": {}
+          },
+          "title": {}
+        }
       },
       "visibility": {
         "description": "Entscheide, wer den Callout sehen und wer daran teilnehmen kann.",

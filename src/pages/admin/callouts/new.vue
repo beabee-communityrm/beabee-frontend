@@ -18,7 +18,6 @@ import type { GetCalloutDataWith } from '../../../utils/api/api.interface';
 import StepVisibility from '../../../components/pages/callouts/steps/VisibilityStep.vue';
 import StepTitleAndImage from '../../../components/pages/callouts/steps/TitleAndImage.vue';
 import StepEndMessage from '../../../components/pages/callouts/steps/EndMessage.vue';
-import StepUrlAndSharing from '../../../components/pages/callouts/steps/UrlAndSharing.vue';
 // import StepMailchimpSync from '../components/steps/MailchimpSync.vue';
 import StepDatesAndDuration from '../../../components/pages/callouts/steps/DatesAndDuration.vue';
 import StepContent from '../../../components/pages/callouts/steps/ContentStep.vue';
@@ -67,6 +66,12 @@ const makeStepsData = (data?: GetCalloutDataWith<'form'>): CalloutSteps => ({
       title: data?.title || '',
       description: data?.excerpt || '',
       coverImageURL: data?.image || '',
+      useCustomSlug: !!data,
+      autoSlug: '',
+      slug: data?.slug || '',
+      overrideShare: !!data?.shareTitle,
+      shareTitle: data?.shareTitle || '',
+      shareDescription: data?.shareDescription || '',
     },
   },
   visibility: {
@@ -94,21 +99,6 @@ const makeStepsData = (data?: GetCalloutDataWith<'form'>): CalloutSteps => ({
       thankYouTitle: data?.thanksTitle || '',
       thankYouText: data?.thanksText || '',
       thankYouRedirect: data?.thanksRedirect || '',
-    },
-  },
-  url: {
-    name: t('createCallout.steps.url.title'),
-    description: t('createCallout.steps.url.description'),
-    validated: !!data,
-    error: false,
-    component: markRaw(StepUrlAndSharing),
-    data: {
-      useCustomSlug: !!data,
-      autoSlug: '',
-      slug: data?.slug || '',
-      overrideShare: !!data?.shareTitle,
-      shareTitle: data?.shareTitle || '',
-      shareDescription: data?.shareDescription || '',
     },
   },
   /*mailchimp: {

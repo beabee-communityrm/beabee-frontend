@@ -10,6 +10,12 @@ export interface TitleAndImageStepProps {
   title: string;
   description: string;
   coverImageURL: string;
+  autoSlug: string;
+  useCustomSlug: boolean;
+  slug: string;
+  overrideShare: boolean;
+  shareTitle: string;
+  shareDescription: string;
 }
 
 export interface VisibilityStepProps {
@@ -25,15 +31,6 @@ export interface EndMessageStepProps {
   thankYouText: string;
   thankYouRedirect: string;
 }
-export interface UrlAndSharingStepProps {
-  autoSlug: string;
-  useCustomSlug: boolean;
-  slug: string;
-  overrideShare: boolean;
-  shareTitle: string;
-  shareDescription: string;
-}
-
 export interface MailchimpSyncStepProps {
   useMailchimpSync: boolean;
 }
@@ -57,7 +54,6 @@ export interface CalloutSteps {
   titleAndImage: CalloutStep<TitleAndImageStepProps>;
   visibility: CalloutStep<VisibilityStepProps>;
   endMessage: CalloutStep<EndMessageStepProps>;
-  url: CalloutStep<UrlAndSharingStepProps>;
   //mailchimp: Step<MailchimpSyncStepProps>;
   dates: CalloutStep<DateAndDurationStepProps>;
 }
