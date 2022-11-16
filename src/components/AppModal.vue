@@ -7,7 +7,7 @@
     >
       <div
         ref="divRef"
-        class="relative flex max-h-full max-w-md flex-col rounded bg-white p-6 shadow-lg md:p-8"
+        class="relative flex max-h-full flex-col rounded bg-white p-6 shadow-lg md:max-w-[28rem] md:p-8 lg:w-[28rem]"
         v-bind="$attrs"
         @click.stop
       >

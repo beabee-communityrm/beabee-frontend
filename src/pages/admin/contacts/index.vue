@@ -8,7 +8,7 @@ meta:
 <template>
   <PageTitle :title="t('menu.community')" border>
     <div class="flex-1 md:hidden">
-      <AppSelect v-model="currentSegment" :items="segmentItems" />
+      <AppSelect v-model="currentSegmentId" :items="segmentItems" />
     </div>
     <div class="flex-0 ml-3">
       <AppButton href="/members/add">{{ t('contacts.addContact') }}</AppButton>
@@ -16,7 +16,7 @@ meta:
   </PageTitle>
   <div class="md:flex">
     <div class="hidden flex-none basis-[220px] md:block">
-      <AppVTabs v-model="currentSegment" :items="segmentItems" />
+      <AppVTabs v-model="currentSegmentId" :items="segmentItems" />
     </div>
     <div class="flex-auto">
       <div class="flex">
@@ -51,7 +51,11 @@ meta:
         @reset="currentRules = undefined"
       />
       <div class="mt-4 flex items-center">
-        <SaveSegment v-if="hasUnsavedSegment" />
+        <SaveSegment
+          v-if="hasUnsavedSegment && currentRules"
+          :segment="currentSegment"
+          :rules="currentRules"
+        />
         <AppPaginatedResult
           v-model:page="currentPage"
           v-model:page-size="currentPageSize"
@@ -222,21 +226,21 @@ const currentSearch = computed({
 });
 
 const currentRules = computed<GetMembersQuery['rules']>({
-  get: () => {
-    if (route.query.r) {
-      return JSON.parse(route.query.r as string);
-    } else if (currentSegment.value) {
-      return segments.value.find((s) => s.id === currentSegment.value)
-        ?.ruleGroup;
-    } else {
-      return undefined;
-    }
-  },
+  get: () =>
+    route.query.r
+      ? JSON.parse(route.query.r as string)
+      : currentSegment.value?.ruleGroup,
   set: (r) =>
     router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
 });
 
-const currentSegment = computed({
+const currentSegment = computed(() =>
+  currentSegmentId.value
+    ? segments.value.find((s) => s.id === currentSegmentId.value)
+    : undefined
+);
+
+const currentSegmentId = computed({
   get: () => (route.query.segment as string) || '',
   set: (segment) => {
     router.push({ query: { segment: segment || undefined } });
