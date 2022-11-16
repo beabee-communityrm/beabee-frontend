@@ -15,7 +15,7 @@ meta:
 <script lang="ts" setup>
 // import { useI18n } from 'vue-i18n';
 import { GetMemberData } from '../../../../utils/api/api.interface';
-import EditManualContribution from '../../../../components/pages/profile/contribution/EditManualContribution.vue';
+import EditManualContribution from '../../../../components/pages/admin/contacts/EditManualContribution.vue';
 
 defineProps<{
   contact: GetMemberData;
