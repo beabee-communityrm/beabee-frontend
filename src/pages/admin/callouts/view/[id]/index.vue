@@ -91,23 +91,15 @@ meta:
         {{ t('actions.delete') }}
       </ActionButton>
       <AppConfirmDialog
-        v-if="showDeleteModal"
-        open
+        :open="showDeleteModal"
+        :title="t('calloutAdminOverview.actions.confirmDelete.title')"
+        :cancel="t('calloutAdminOverview.actions.confirmDelete.actionNo')"
+        :confirm="t('calloutAdminOverview.actions.confirmDelete.actionYes')"
+        variant="danger"
         @close="showDeleteModal = false"
         @confirm="confirmDeleteCallout"
       >
-        <template #title>
-          {{ t('calloutAdminOverview.actions.confirmDelete.title') }}
-        </template>
-        <template #text>
-          {{ t('calloutAdminOverview.actions.confirmDelete.text') }}
-        </template>
-        <template #button-cancel-text>
-          {{ t('calloutAdminOverview.actions.confirmDelete.actionNo') }}
-        </template>
-        <template #button-confirm-text>
-          {{ t('calloutAdminOverview.actions.confirmDelete.actionYes') }}
-        </template>
+        <p>{{ t('calloutAdminOverview.actions.confirmDelete.text') }}</p>
       </AppConfirmDialog>
     </div>
   </div>

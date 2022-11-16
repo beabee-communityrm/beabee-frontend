@@ -18,7 +18,11 @@
         >
           <font-awesome-icon :icon="['fa', 'times']" />
         </button>
-        <AppHeading v-if="title" class="mb-4">{{ title }}</AppHeading>
+        <AppHeading v-if="title" class="mb-4">
+          <span :class="{ 'text-danger': variant === 'danger' }">
+            {{ title }}
+          </span>
+        </AppHeading>
         <div class="overflow-auto">
           <slot></slot>
         </div>
@@ -35,6 +39,7 @@ defineEmits(['close']);
 const props = defineProps<{
   open: boolean;
   title?: string;
+  variant?: 'danger';
 }>();
 
 const divRef = ref<HTMLElement>();
