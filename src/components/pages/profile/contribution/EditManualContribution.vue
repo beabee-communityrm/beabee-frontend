@@ -58,11 +58,7 @@ import AppButton from '../../../forms/AppButton.vue';
 import AppInput from '../../../forms/AppInput.vue';
 import AppSelect from '../../../forms/AppSelect.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
-import {
-  ContributionPeriod,
-  ContributionType,
-  MembershipStatus,
-} from '@beabee/beabee-common';
+import { ContributionPeriod, ContributionType } from '@beabee/beabee-common';
 import {
   fetchMember,
   forceUpdateContribution,
@@ -78,9 +74,9 @@ const props = defineProps<{
 }>();
 
 const contribution = reactive({
-  type: 'manual',
+  type: ContributionType.None,
   amount: 0,
-  period: ContributionPeriod.Monthly,
+  period: null,
   source: '',
   reference: '',
 });
@@ -109,20 +105,10 @@ const sourceOptions = [
 
 const loading = ref(false);
 
-const isActiveMember = computed(
-  () => contribution.membershipStatus === MembershipStatus.Active
-);
-const isManualActiveMember = computed(
-  () => isActiveMember.value && contribution.type === ContributionType.Manual
-);
-
 // Only non-active members and monthly manual contributors can change their period
 // as otherwise proration gets complicated
 const showChangePeriod = computed(
-  () =>
-    !isActiveMember.value ||
-    (isManualActiveMember.value &&
-      contribution.period !== ContributionPeriod.Annually)
+  () => contribution.period !== ContributionPeriod.Annually
 );
 
 watch(
@@ -130,10 +116,12 @@ watch(
   async (id) => {
     const member = await fetchMember(id, ['contribution']);
     contribution.type = member.contribution.type;
-    contribution.amount = member.contribution.amount;
+    contribution.amount = member.contribution.amount
+      ? member.contribution.amount
+      : 0;
     contribution.period = member.contribution.period;
-    contribution.source = member.contribution.paymentSource.source;
-    contribution.reference = member.contribution.paymentSource.reference;
+    contribution.source = member.contribution.paymentSource?.source;
+    contribution.reference = member.contribution.paymentSource?.reference;
   },
   { immediate: true }
 );
