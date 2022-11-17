@@ -19,7 +19,6 @@
     />
 
     <AppRadioGroup
-      v-if="showChangePeriod"
       v-model="contribution.period"
       name="period"
       :label="t('contacts.data.period')"
@@ -55,14 +54,14 @@
   </form>
 </template>
 <script lang="ts" setup>
-import { computed, reactive, ref, toRef, watch } from 'vue';
+import { reactive, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import AppButton from '../../../forms/AppButton.vue';
 import AppInput from '../../../forms/AppInput.vue';
 import AppSelect from '../../../forms/AppSelect.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
-import { ContributionPeriod, ContributionType } from '@beabee/beabee-common';
+import { ContributionType } from '@beabee/beabee-common';
 import {
   fetchMember,
   forceUpdateContribution,
@@ -106,12 +105,6 @@ const manualPaymentSources = (await fetchContent('contacts'))
 
 const loading = ref(false);
 
-// Only non-active members and monthly manual contributors can change their period
-// as otherwise proration gets complicated
-const showChangePeriod = computed(
-  () => contribution.period !== ContributionPeriod.Annually
-);
-
 watch(
   toRef(props, 'id'),
   async (id) => {
@@ -121,8 +114,16 @@ watch(
       ? member.contribution.amount
       : 0;
     contribution.period = member.contribution.period;
-    contribution.source = member.contribution.paymentSource?.source;
-    contribution.reference = member.contribution.paymentSource?.reference;
+
+    const paymentSource = member.contribution.paymentSource;
+    if (paymentSource?.method === null) {
+      contribution.source = paymentSource.source || '';
+      contribution.reference = paymentSource.reference || '';
+    } else {
+      // In practice this shouldn't be possible as we've checked that the type is Manual or None
+      contribution.source = '';
+      contribution.reference = '';
+    }
   },
   { immediate: true }
 );
