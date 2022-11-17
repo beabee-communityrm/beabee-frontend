@@ -81,7 +81,7 @@ const props = defineProps<{
 const contribution = reactive<ForceUpdateContributionData>({
   type: ContributionType.None,
   amount: 0,
-  period: null,
+  period: undefined,
   source: '',
   reference: '',
 });
@@ -114,12 +114,8 @@ watch(
   async (id) => {
     const member = await fetchMember(id, ['contribution']);
     contribution.type = member.contribution.type;
-    contribution.amount = member.contribution.amount
-      ? member.contribution.amount
-      : 0;
-    contribution.period = member.contribution.period
-      ? member.contribution.period
-      : null;
+    contribution.amount = member.contribution.amount;
+    contribution.period = member.contribution.period;
 
     const paymentSource = member.contribution.paymentSource;
     if (paymentSource?.method === null) {
