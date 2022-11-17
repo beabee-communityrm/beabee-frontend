@@ -101,7 +101,6 @@ async function handleSubmit() {
     segment = await createSegment({
       name: newSegmentName.value,
       ruleGroup: props.rules,
-      order: 5,
     });
   }
 
