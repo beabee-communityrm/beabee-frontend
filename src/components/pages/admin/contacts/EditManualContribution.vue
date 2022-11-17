@@ -6,14 +6,14 @@
 
     <AppSelect
       v-model="contribution.type"
-      label="Contribution Type"
+      :label="t('contacts.data.contributionType')"
       :items="contributionTypes"
       class="mb-3"
     />
 
     <AppInput
       v-model="contribution.amount"
-      label="Amount"
+      :label="t('contacts.data.amount')"
       type="number"
       class="mb-3"
     />
@@ -22,7 +22,7 @@
       v-if="showChangePeriod"
       v-model="contribution.period"
       name="period"
-      label="Period"
+      :label="t('contacts.data.period')"
       :options="[
         ['monthly', 'Monthly'],
         ['yearly', 'Yearly'],
@@ -32,12 +32,16 @@
 
     <AppSelect
       v-model="contribution.source"
-      label="Source"
-      :items="sourceOptions"
+      :label="t('contacts.data.paymentSource')"
+      :items="manualPaymentSources"
       class="mb-3"
     />
 
-    <AppInput v-model="contribution.reference" label="Reference" class="mb-3" />
+    <AppInput
+      v-model="contribution.reference"
+      :label="t('contacts.data.paymentReference')"
+      class="mb-3"
+    />
 
     <AppButton
       :disabled="validation.$invalid"
@@ -63,6 +67,7 @@ import {
   fetchMember,
   forceUpdateContribution,
 } from '../../../../utils/api/member';
+import { fetchContent } from '../../../../utils/api/content';
 import AppHeading from '../../../AppHeading.vue';
 
 const validation = useVuelidate();
@@ -88,20 +93,16 @@ const contributionTypes = [
   },
   {
     id: 'Manual',
-    label: 'Manual',
+    label: t('common.contributionType.manual'),
+  },
+  {
+    id: 'Automatic',
+    label: t('common.contributionType.automatic'),
   },
 ];
 
-const sourceOptions = [
-  {
-    id: 'none',
-    label: 'None',
-  },
-  {
-    id: 'cheque',
-    label: 'Cheque',
-  },
-];
+const manualPaymentSources = (await fetchContent('contacts'))
+  .manualPaymentSources;
 
 const loading = ref(false);
 
