@@ -406,6 +406,7 @@
       "contribution": "Contribution",
       "role": "Role"
     },
+    "editNotice": "Editing a member's contribution is only possible when their contribution is Manual.",
     "noContacts": "No contacts added yet",
     "noResults": "No contacts found",
     "numResults": "{n} contact found | {n} contacts found",

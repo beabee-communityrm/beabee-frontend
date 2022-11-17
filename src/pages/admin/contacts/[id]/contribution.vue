@@ -10,8 +10,7 @@ meta:
     <Suspense>
       <EditManualContribution v-if="showEditForm" :id="contact.id" />
       <p v-else>
-        Editing a member's contribution is only possible when their contribution
-        is Manual.
+        {{ t('contact.editNotice') }}
       </p>
     </Suspense>
   </div>
