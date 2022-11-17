@@ -26,6 +26,7 @@ export const filterGroups: ComputedRef<FilterGroup<ContactFilterName>[]> =
         'lastname',
         'email',
         'joined',
+        'lastSeen',
         'newsletterStatus',
         'tags',
         'deliveryOptIn',
@@ -61,6 +62,7 @@ export const filterItems: ComputedRef<FilterItems<ContactFilterName>> =
     lastname: withLabel(contactFilters.lastname, t('contacts.data.lastname')),
     email: withLabel(contactFilters.email, t('contacts.data.email')),
     joined: withLabel(contactFilters.joined, t('contacts.data.joined')),
+    lastSeen: withLabel(contactFilters.lastSeen, t('contacts.data.lastSeen')),
     newsletterStatus: withLabel(
       contactFilters.newsletterStatus,
       t('contacts.data.newsletterStatus'),
