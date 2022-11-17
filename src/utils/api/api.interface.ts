@@ -311,8 +311,6 @@ export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
 
 export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
 
-export type UpdateCalloutData = Omit<CreateCalloutData, 'slug'>;
-
 export type GetCalloutsQuery = PaginatedQuery; // TODO: constrain fields
 export type GetCalloutResponsesQuery = PaginatedQuery; // TODO: constrain fields
 

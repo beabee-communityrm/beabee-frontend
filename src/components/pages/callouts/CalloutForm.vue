@@ -5,7 +5,7 @@
     no-collapse
   >
     <div v-if="mode !== 'new'" class="flex-0 ml-3">
-      <AppButton :disabled="!isAllValid" @click="submitForm">{{
+      <AppButton :disabled="!isAllValid" @click="emit('save')">{{
         t('actions.update')
       }}</AppButton>
     </div>
@@ -42,7 +42,7 @@
           v-show="isLastStep"
           class="ml-2"
           :disabled="!isAllValid"
-          @click="submitForm"
+          @click="emit('save')"
           >{{
             steps.dates.data.startNow
               ? t('actions.publish')
@@ -55,29 +55,26 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, reactive } from 'vue';
+import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import PageTitle from '../../PageTitle.vue';
 import AppHeading from '../../AppHeading.vue';
 import AppButton from '../../forms/AppButton.vue';
 import AppStepper from '../../stepper/AppStepper.vue';
 import { CalloutMode, CalloutSteps } from './callouts.interface';
-import router from '../../../router';
-import { UpdateCalloutData } from '../../../utils/api/api.interface';
-import { updateCallout, createCallout } from '../../../utils/api/callout';
 
-const { t } = useI18n();
+const emit = defineEmits(['save']);
 const props = defineProps<{ steps: CalloutSteps; mode: CalloutMode }>();
 
-const steps = reactive(props.steps);
+const { t } = useI18n();
 
 const stepsInOrder = computed(() => [
-  steps.content,
-  steps.titleAndImage,
-  steps.visibility,
-  steps.endMessage,
-  //steps.mailchimp,
-  steps.dates,
+  props.steps.content,
+  props.steps.titleAndImage,
+  props.steps.visibility,
+  props.steps.endMessage,
+  //props.steps.mailchimp,
+  props.steps.dates,
 ]);
 
 const selectedStepIndex = ref(0);
@@ -90,68 +87,4 @@ const isLastStep = computed(
 const isAllValid = computed(() =>
   stepsInOrder.value.every((step) => step.validated)
 );
-
-function parseDateTime(date: string, time: string): Date {
-  return new Date(date + 'T' + time);
-}
-
-function makeCalloutData(steps: CalloutSteps): [string, UpdateCalloutData] {
-  return [
-    steps.titleAndImage.data.useCustomSlug
-      ? steps.titleAndImage.data.slug
-      : steps.titleAndImage.data.autoSlug,
-    {
-      title: steps.titleAndImage.data.title,
-      excerpt: steps.titleAndImage.data.description,
-      image: steps.titleAndImage.data.coverImageURL,
-      intro: steps.content.data.introText,
-      formSchema: steps.content.data.formSchema,
-      starts: steps.dates.data.startNow
-        ? new Date()
-        : parseDateTime(steps.dates.data.startDate, steps.dates.data.startTime),
-      expires: steps.dates.data.hasEndDate
-        ? parseDateTime(steps.dates.data.endDate, steps.dates.data.endTime)
-        : null,
-      allowUpdate: steps.visibility.data.usersCanEditAnswers,
-      allowMultiple: false,
-      hidden: !steps.visibility.data.showOnUserDashboards,
-      access:
-        steps.visibility.data.whoCanTakePart === 'members'
-          ? 'member'
-          : steps.visibility.data.allowAnonymousResponses
-          ? 'anonymous'
-          : 'guest',
-      ...(steps.endMessage.data.whenFinished === 'message'
-        ? {
-            thanksText: steps.endMessage.data.thankYouText,
-            thanksTitle: steps.endMessage.data.thankYouTitle,
-            thanksRedirect: null,
-          }
-        : {
-            thanksText: '',
-            thanksTitle: '',
-            thanksRedirect: steps.endMessage.data.thankYouRedirect,
-          }),
-      shareTitle: steps.titleAndImage.data.overrideShare
-        ? steps.titleAndImage.data.shareTitle
-        : '',
-      shareDescription: steps.titleAndImage.data.overrideShare
-        ? steps.titleAndImage.data.shareDescription
-        : '',
-    },
-  ];
-}
-async function submitForm() {
-  const [slug, callout] = makeCalloutData(steps);
-  const newCallout =
-    props.mode === 'new'
-      ? await createCallout({ ...callout, slug })
-      : await updateCallout(slug, callout);
-  router.push({
-    path: '/admin/callouts/view/' + newCallout.slug,
-    query: {
-      [props.mode === 'new' ? 'created' : 'updated']: null,
-    },
-  });
-}
 </script>
