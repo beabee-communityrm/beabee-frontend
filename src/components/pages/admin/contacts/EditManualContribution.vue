@@ -66,6 +66,7 @@ import {
   fetchMember,
   forceUpdateContribution,
 } from '../../../../utils/api/member';
+import { ForceUpdateContributionData } from '../../../../utils/api/api.interface';
 import { fetchContent } from '../../../../utils/api/content';
 import AppHeading from '../../../AppHeading.vue';
 
@@ -77,7 +78,7 @@ const props = defineProps<{
   id: string;
 }>();
 
-const contribution = reactive({
+const contribution = reactive<ForceUpdateContributionData>({
   type: ContributionType.None,
   amount: 0,
   period: null,
@@ -100,8 +101,11 @@ const contributionTypes = [
   },
 ];
 
-const manualPaymentSources = (await fetchContent('contacts'))
-  .manualPaymentSources;
+const manualPaymentSources = (
+  await fetchContent('contacts')
+).manualPaymentSources.map((x) => {
+  return { id: x, label: x };
+});
 
 const loading = ref(false);
 
@@ -113,7 +117,9 @@ watch(
     contribution.amount = member.contribution.amount
       ? member.contribution.amount
       : 0;
-    contribution.period = member.contribution.period;
+    contribution.period = member.contribution.period
+      ? member.contribution.period
+      : null;
 
     const paymentSource = member.contribution.paymentSource;
     if (paymentSource?.method === null) {
