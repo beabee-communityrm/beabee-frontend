@@ -16,23 +16,18 @@ meta:
   </div>
 </template>
 <script lang="ts" setup>
-import { onBeforeMount, ref } from 'vue';
+import { computed } from 'vue';
 import { GetMemberDataWith } from '../../../../utils/api/api.interface';
 import { ContributionType } from '@beabee/beabee-common';
 import EditManualContribution from '../../../../components/pages/admin/contacts/EditManualContribution.vue';
-
-const showEditForm = ref(false);
 
 const props = defineProps<{
   contact: GetMemberDataWith<'contribution'>;
 }>();
 
-onBeforeMount(() => {
-  if (
+const showEditForm = computed(
+  () =>
     props.contact.contribution.type === ContributionType.Manual ||
     props.contact.contribution.type === ContributionType.None
-  ) {
-    showEditForm.value = true;
-  }
-});
+);
 </script>
