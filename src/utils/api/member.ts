@@ -1,21 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  ContributionPeriod,
+  Paginated,
+  PaymentMethod,
+  PermissionType,
+} from '@beabee/beabee-common';
+
 import axios from '../../axios';
-import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
-import { PaymentMethod } from '../enums/payment-method.enum';
 import {
   ContributionInfo,
+  ForceUpdateContributionData,
   GetMemberData,
   GetMemberDataWith,
   GetMembersQuery,
   GetMemberWith,
   GetPaymentData,
   GetPaymentsQuery,
-  Paginated,
+  MemberRoleData,
   PaymentFlowParams,
   Serial,
   SetContributionData,
   StartContributionData,
   UpdateMemberData,
+  UpdateMemberRoleData,
 } from './api.interface';
 
 import { deserializeDate } from '.';
@@ -31,12 +38,16 @@ export function deserializeMember(data: any): any {
       contribution: deserializeContribution(data.contribution),
     }),
     ...(data.roles && {
-      roles: data.roles.map((role: any) => ({
-        role: role.role,
-        dateAdded: deserializeDate(role.dateAdded),
-        dateExpires: deserializeDate(role.dateExpires),
-      })),
+      roles: data.roles.map(deserializeRole),
     }),
+  };
+}
+
+function deserializeRole(data: Serial<MemberRoleData>): MemberRoleData {
+  return {
+    role: data.role,
+    dateAdded: deserializeDate(data.dateAdded),
+    dateExpires: data.dateExpires ? deserializeDate(data.dateExpires) : null,
   };
 }
 
@@ -120,6 +131,23 @@ export async function updateContribution(
   return deserializeContribution(data);
 }
 
+export async function forceUpdateContribution(
+  id: string,
+  dataIn: ForceUpdateContributionData
+): Promise<ContributionInfo> {
+  const { data } = await axios.patch<Serial<ContributionInfo>>(
+    `/member/${id}/contribution/force`,
+    {
+      type: dataIn.type,
+      amount: dataIn.amount,
+      period: dataIn.period,
+      source: dataIn.source,
+      reference: dataIn.reference,
+    }
+  );
+  return deserializeContribution(data);
+}
+
 export const startContributionCompleteUrl =
   env.appUrl + '/profile/contribution/complete';
 
@@ -189,4 +217,23 @@ export async function fetchPayments(
       status: item.status,
     })),
   };
+}
+
+export async function updateRole(
+  id: string,
+  role: PermissionType,
+  dataIn: UpdateMemberRoleData
+): Promise<MemberRoleData> {
+  const { data } = await axios.put<Serial<MemberRoleData>>(
+    `/member/${id}/role/${role}`,
+    dataIn
+  );
+  return deserializeRole(data);
+}
+
+export async function deleteRole(
+  id: string,
+  role: PermissionType
+): Promise<void> {
+  await axios.delete(`/member/${id}/role/${role}`);
 }

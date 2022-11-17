@@ -16,7 +16,7 @@ meta:
           :label="t('adminSettings.email.fromEmail')"
           required
         >
-          <template #suffix>
+          <template #after>
             <span class="font-semibold">{{ fromEmailDomain }}</span>
           </template>
         </AppInput>

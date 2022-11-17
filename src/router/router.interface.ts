@@ -1,5 +1,5 @@
+import { PermissionType } from '@beabee/beabee-common';
 import 'vue-router';
-import { PermissionType } from '../utils/api/api.interface';
 
 declare module 'vue-router' {
   interface RouteMeta {
