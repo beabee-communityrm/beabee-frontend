@@ -55,6 +55,7 @@ meta:
           v-if="hasUnsavedSegment && currentRules"
           :segment="currentSegment"
           :rules="currentRules"
+          @saved="handleSavedSegment"
         />
         <AppPaginatedResult
           v-model:page="currentPage"
@@ -130,7 +131,11 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { ContributionPeriod, Paginated } from '@beabee/beabee-common';
+import {
+  ContributionPeriod,
+  Paginated,
+  RuleGroup,
+} from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
@@ -225,10 +230,10 @@ const currentSearch = computed({
   set: (s) => router.push({ query: { ...route.query, s } }),
 });
 
-const currentRules = computed<GetMembersQuery['rules']>({
+const currentRules = computed({
   get: () =>
     route.query.r
-      ? JSON.parse(route.query.r as string)
+      ? (JSON.parse(route.query.r as string) as RuleGroup)
       : currentSegment.value?.ruleGroup,
   set: (r) =>
     router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
@@ -272,6 +277,17 @@ const segmentItems = computed(() => [
 function getMembershipStartDate(member: GetMemberDataWith<'roles'>): string {
   const membership = member.roles.find((role) => role.role === 'member');
   return membership ? formatLocale(membership.dateAdded, 'PPP') : '';
+}
+
+function handleSavedSegment(segment: GetSegmentDataWith<'contactCount'>) {
+  console.log(segment);
+  const segmentIndex = segments.value.findIndex((s) => s.id === segment.id);
+  if (segmentIndex > -1) {
+    segments.value[segmentIndex] = segment;
+  } else {
+    segments.value.push(segment);
+  }
+  currentSegmentId.value = segment.id;
 }
 
 onBeforeMount(async () => {
