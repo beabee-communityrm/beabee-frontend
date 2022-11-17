@@ -25,7 +25,7 @@ import AppLabel from './AppLabel.vue';
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   label?: string;
-  modelValue: string | null;
+  modelValue?: string | null;
   items: {
     id: string;
     label: string;

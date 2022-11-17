@@ -27,7 +27,7 @@ import AppLabel from './AppLabel.vue';
 const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps<{
-  modelValue: string | boolean | number | null;
+  modelValue?: string | boolean | number | null;
   options: [string | boolean | number, string][];
   name: string;
   label?: string;
