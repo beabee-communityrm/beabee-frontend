@@ -550,11 +550,11 @@
             "placeholder": "The name of your callout"
           },
           "slug": {
-            "help": "<p>The <strong>Permalink</strong> is the link that you'll be able to share for people access the callout</p>\n",
+            "help": "<p>You can share the <strong>Permalink</strong> with users so they can access the callout</p>\n",
             "label": "Permalink",
             "opts": {
               "auto": "Auto-generate from callout title",
-              "manual": "Set custom slug"
+              "manual": "Set custom permalink"
             }
           },
           "title": {
@@ -564,7 +564,7 @@
           }
         },
         "title": "Title and image",
-        "urlWillBe": "URL will be"
+        "urlWillBe": "Permalink will be"
       },
       "url": {
         "inputs": {

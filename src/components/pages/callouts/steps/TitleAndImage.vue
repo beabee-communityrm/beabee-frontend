@@ -44,20 +44,23 @@
         v-html="inputT('image.help')"
       />
     </div>
-    <div v-if="mode === 'new'" class="mt-5 grid grid-cols-2 gap-6">
+    <div v-if="mode !== 'live'" class="mt-5 grid grid-cols-2 gap-6">
       <div class="col-span-1">
+        <AppLabel :label="inputT('slug.label')" required />
         <AppRadioGroup
+          v-if="mode === 'new'"
           v-model="data.useCustomSlug"
           name="useCustomSlug"
-          :label="inputT('slug.label')"
           :options="[
             [false, inputT('slug.opts.auto')],
             [true, inputT('slug.opts.manual')],
           ]"
           required
         />
-        <AppInput v-if="data.useCustomSlug" v-model="customSlug" required />
-        <p class="mt-2 text-sm">
+        <AppInput v-if="data.useCustomSlug" v-model="customSlug" required>
+          <template #before> {{ env.appUrl }}/callouts/ </template>
+        </AppInput>
+        <p v-else class="mt-2 text-sm">
           {{ t('createCallout.steps.titleAndImage.urlWillBe') }}
           {{ env.appUrl }}/callouts/{{ slug || '???' }}
         </p>
@@ -122,6 +125,7 @@ import AppTextArea from '../../../forms/AppTextArea.vue';
 import useVuelidate from '@vuelidate/core';
 import { CalloutMode, TitleAndImageStepProps } from '../callouts.interface';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
+import AppLabel from '../../../forms/AppLabel.vue';
 import env from '../../../../env';
 import slugify from 'slugify';
 

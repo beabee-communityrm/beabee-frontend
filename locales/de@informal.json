@@ -558,8 +558,7 @@
             "placeholder": "Der Name deines Callouts."
           }
         },
-        "title": "Titel und Bild",
-        "urlWillBe": "Die aktuelle URL lautet:"
+        "title": "Titel und Bild"
       },
       "url": {
         "inputs": {
