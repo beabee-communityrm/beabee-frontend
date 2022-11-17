@@ -95,10 +95,6 @@ const contributionTypes = [
     id: 'Manual',
     label: t('common.contributionType.manual'),
   },
-  {
-    id: 'Automatic',
-    label: t('common.contributionType.automatic'),
-  },
 ];
 
 const manualPaymentSources = (
