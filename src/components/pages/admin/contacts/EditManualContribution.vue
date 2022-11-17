@@ -109,6 +109,14 @@ watch(
   toRef(props, 'id'),
   async (id) => {
     const member = await fetchMember(id, ['contribution']);
+    // This can't happen as component is only mounted for None/Manual
+    if (
+      member.contribution.type !== ContributionType.Manual &&
+      member.contribution.type !== ContributionType.None
+    ) {
+      return;
+    }
+
     contribution.type = member.contribution.type;
     contribution.amount = member.contribution.amount;
     contribution.period = member.contribution.period;
