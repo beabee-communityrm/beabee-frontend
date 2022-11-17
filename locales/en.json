@@ -174,7 +174,7 @@
       },
       "createSegment": "Create segment",
       "segmentName": "Segment name",
-      "text": "This will be some text explaining why segments are useful.",
+      "text": "A segment is a group of contacts that matches a set of filters, like the ones you've just created. New contacts that match these filters are automatically added to the segment.",
       "title": "Save segment",
       "updateSegment": "Update segment"
     },
