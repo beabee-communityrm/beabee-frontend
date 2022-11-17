@@ -280,7 +280,6 @@ function getMembershipStartDate(member: GetMemberDataWith<'roles'>): string {
 }
 
 function handleSavedSegment(segment: GetSegmentDataWith<'contactCount'>) {
-  console.log(segment);
   const segmentIndex = segments.value.findIndex((s) => s.id === segment.id);
   if (segmentIndex > -1) {
     segments.value[segmentIndex] = segment;
