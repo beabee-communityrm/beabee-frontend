@@ -4,6 +4,7 @@ meta:
   layout: Auth
   noAuth: true
   pageTitle: pageTitle.join
+  embeddable: true
 </route>
 <template>
   <AuthBox>

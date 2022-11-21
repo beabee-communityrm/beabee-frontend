@@ -3,4 +3,6 @@ import { generalContent, initGeneralContent } from './generalContent';
 
 export const initStore = Promise.all([initCurrentUser, initGeneralContent]);
 
-export { currentUser, updateCurrentUser, generalContent };
+const isEmbed = window.self !== window.top;
+
+export { currentUser, updateCurrentUser, generalContent, isEmbed };

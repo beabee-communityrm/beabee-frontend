@@ -1,8 +1,12 @@
 <template>
-  <JoinHeader :title="joinContent.title" />
+  <JoinHeader v-if="!isEmbed" :title="joinContent.title" />
 
   <form v-bind="$attrs">
-    <div class="content-message mb-3" v-html="joinContent.subtitle" />
+    <div
+      v-if="!isEmbed"
+      class="content-message mb-3"
+      v-html="joinContent.subtitle"
+    />
 
     <AppSubHeading v-if="joinContent.showNoContribution" class="mb-1">
       {{ t('join.contribution') }}
@@ -54,7 +58,7 @@
 import { computed, toRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
-import { generalContent } from '../../../store';
+import { generalContent, isEmbed } from '../../../store';
 import { useJoin } from './use-join';
 import AccountSection from './AccountSection.vue';
 import JoinFooter from './JoinFooter.vue';
