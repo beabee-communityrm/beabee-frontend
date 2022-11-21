@@ -60,7 +60,8 @@ const variantClasses = {
     'hover:bg-danger-10',
     'text-danger',
   ],
-  text: ['underline text-link border-0', '', ''],
+  text: ['underline text-link border-0', 'hover:text-link-110', ''],
+  dangerText: ['underline text-danger border-0', 'hover:text-danger-110', ''],
 } as const;
 
 const props = withDefaults(
@@ -90,12 +91,12 @@ const props = withDefaults(
 
 const buttonClasses = computed(() => {
   return [
-    'px-3 py-2.5 text-center leading-tight cursor-pointer inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative border',
-    props.size === 'sm' ? 'py-2 px-2 text-sm' : 'py-2.5',
+    'leading-tight inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative border',
+    props.size === 'sm' ? 'p-2 text-sm' : 'px-3 py-2.5',
     variantClasses[props.variant][0],
     props.disabled
       ? 'cursor-not-allowed opacity-50'
-      : variantClasses[props.variant][1],
+      : 'cursor-pointer ' + variantClasses[props.variant][1],
   ];
 });
 

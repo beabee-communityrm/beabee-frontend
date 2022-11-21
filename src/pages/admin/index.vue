@@ -89,6 +89,7 @@ meta:
   />
 </template>
 <script lang="ts" setup>
+import { ItemStatus } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import PageTitle from '../../components/PageTitle.vue';
 import { currentUser } from '../../store';
@@ -99,7 +100,6 @@ import {
   GetCalloutDataWith,
   GetMemberData,
   GetStatsData,
-  ItemStatus,
 } from '../../utils/api/api.interface';
 import { fetchMembers } from '../../utils/api/member';
 import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
@@ -127,7 +127,7 @@ onBeforeMount(async () => {
     order: 'DESC',
     rules: {
       condition: 'AND',
-      rules: [{ field: 'activeMembership', operator: 'equal', value: true }],
+      rules: [{ field: 'activeMembership', operator: 'equal', value: [true] }],
     },
   }).then((results) => (recentMembers.value = results.items));
 
@@ -142,7 +142,7 @@ onBeforeMount(async () => {
           {
             field: 'status',
             operator: 'equal',
-            value: ItemStatus.Open,
+            value: [ItemStatus.Open],
           },
         ],
       },

@@ -12,6 +12,7 @@
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
     "schedule": "Planen",
+    "search": "Suchen",
     "submit": "Abschicken",
     "unpublish": "Veröffentlichung aufheben",
     "update": "Änderungen speichern",
@@ -102,6 +103,71 @@
     },
     "title": "Einstellungen"
   },
+  "advancedSearch": {
+    "addRule": "Filter hinzufügen",
+    "button": "Erweiterte Suche",
+    "createFilters": "Filter für die Suche erstellen",
+    "matchAfter": "der folgenden Filter enthalten",
+    "matchBefore": "Ergebnisse sollen",
+    "matchType": {
+      "AND": "alle",
+      "OR": "mindestens einen"
+    },
+    "matchWord": {
+      "AND": "und",
+      "OR": "oder"
+    },
+    "nestedRules": "Verschachtelte Regeln",
+    "noNestedRules": "Dieser Filter enthält verschachtelte Regeln, die nicht mit dem erweiterten Sucheditor bearbeitet werden können.",
+    "operators": {
+      "all": {
+        "is_empty": "ist leer",
+        "is_not_empty": "ist nicht leer"
+      },
+      "array": {
+        "contains": "enthält",
+        "not_contains": "enthält nicht"
+      },
+      "boolean": {
+        "equal": "ist"
+      },
+      "date": {
+        "between": "zwischen",
+        "equal": "ist",
+        "greater": "nach",
+        "greater_or_equal": "nach oder am",
+        "less": "vor",
+        "less_or_equal": "vor oder am",
+        "not_between": "nicht zwischen",
+        "not_equal": "ist nicht"
+      },
+      "enum": {
+        "equal": "ist",
+        "not_equal": "ist nicht"
+      },
+      "number": {
+        "between": "zwischen",
+        "equal": "ist",
+        "greater": "mehr als",
+        "greater_or_equal": "mindestens",
+        "less": "weniger als",
+        "less_or_equal": "höchstens",
+        "not_between": "nicht zwischen",
+        "not_equal": "ist nicht"
+      },
+      "text": {
+        "begins_with": "beginnt mit",
+        "contains": "enthält",
+        "ends_with": "endet mit",
+        "equal": "ist",
+        "not_begins_with": "beginnt nicht mit",
+        "not_contains": "enthält nicht",
+        "not_ends_with": "endet nicht mit",
+        "not_equal": "ist nicht"
+      }
+    },
+    "selectFilter": "Filter auswählen"
+  },
   "callout": {
     "contactDetails": "Kontaktdaten",
     "form": {
@@ -183,7 +249,8 @@
     "search": "Callouts durchsuchen",
     "show": "Anzeigen",
     "showAll": "Alle",
-    "showAnswered": "Beantwortet"
+    "showAnswered": "Beantwortet",
+    "showingOf": "Callouts {start} bis {end} von {total} werden angezeigt."
   },
   "calloutsAdmin": {
     "addCallout": "Callout anlegen",
@@ -206,6 +273,12 @@
     "annually": "Jährlich",
     "backToHome": "Zurück zur Startseite",
     "contributing": "Ihr Beitrag",
+    "contributionType": {
+      "automatic": "Automatisch",
+      "gift": "Geschenk",
+      "manual": "Manuell",
+      "none": "None"
+    },
     "copy": "Kopieren",
     "every": "pro",
     "goBack": "Zurück",
@@ -253,6 +326,7 @@
       "copy": "<p>Alle hier eingegebenen Information sind <strong>nur für Administratoren sichtbar</strong>.\nNutzer bekommen das nicht angezeigt.</p>\n"
     },
     "contribution": "Beitrag",
+    "contributionType": "Zahlungsart",
     "information": "Information",
     "newsletter": "Newsletter",
     "overview": "Überblick",
@@ -267,35 +341,74 @@
   },
   "contacts": {
     "addContact": "Kontakt hinzufügen",
-    "advancedSearch": "Erweiterte Suche",
     "allContacts": "Alle Kontakte",
     "data": {
+      "activeMembership": "Aktive Mitgliedschaft",
+      "activePermission": "Aktive Rolle",
       "amount": "Betrag",
       "annotationsCopy": "Änderungen gespeichert!",
       "contribution": "Beitrag",
-      "contributionType": "Beitragsart",
+      "contributionCancelled": "Mitgliedschaft beendet",
+      "contributionMonthlyAmount": "Monatlicher Beitrag",
+      "contributionPeriod": "Beitragsintervall",
+      "contributionType": "Beitragstyp",
       "deliveryOptIn": "Postsendung",
       "description": "Beschreibung",
       "email": "E-Mail",
+      "firstname": "Vorname",
       "groups": "Gruppe",
       "joined": "Kontakt seit",
       "lastSeen": "Zuletzt angemeldet",
+      "lastname": "Nachname",
+      "manualPaymentSource": "Manuelles Zahlungsquelle",
+      "membershipExpires": "Mitglied bis",
       "membershipStarts": "Mitglied seit",
       "name": "Name",
       "newsletter": "Newsletter",
+      "newsletterStatus": "Newsletter-Status",
       "notes": "Notizen",
       "payingFee": "Übernimmt Transaktionskosten?",
+      "paymentReference": "Zahlungsreferenz",
+      "paymentSource": "Zahlungsquelle",
       "period": "Zeitraum",
       "phone": "Telefon",
       "preferredChannel": "Bevorzugter Kanal",
-      "roles": "Rolle",
-      "rolesCopy": {
+      "roles": {
+        "add": "Rolle hinzufügen",
+        "confirmDelete": {
+          "actionNo": "Nein, gehe zurück",
+          "actionYes": "Ja, löschen",
+          "text": "Bist Du sicher, dass Du diese Rolle entfernen willst?",
+          "title": "Rolle entfernen"
+        },
+        "expires": {
+          "label": "Ablaufdatum für diese Rolle",
+          "opts": {
+            "never": "Niemals",
+            "schedule": "Ablaufdatum festlegen"
+          }
+        },
+        "new": "Neue Rolle",
+        "starts": {
+          "label": "Startdatum für diese Rolle",
+          "opts": {
+            "now": "Sofort",
+            "schedule": "Startdatum festlegen"
+          }
+        },
+        "title": "Rolle",
         "today": "heute"
       },
       "tags": "Tags"
     },
+    "dataGroup": {
+      "contact": "Kontakt",
+      "contribution": "Beitrag",
+      "role": "Rolle"
+    },
     "noContacts": "Keine Kontakte",
     "noResults": "Keine Kontakte gefunden",
+    "numResults": "{n} Kontakt gefunden | {n} Kontakte gefunden",
     "search": "Kontakte durchsuchen...",
     "showingOf": "{start} to {end} von {total} Kontakten werden angezeigt."
   },
@@ -755,7 +868,8 @@
       "createdAt": "Erstellt",
       "name": "Name",
       "status": "Status"
-    }
+    },
+    "showingOf": "Hinweise {start} bis {end} von {total} werden angezeigt."
   },
   "notification": {
     "error": "Da ist etwas schiefgelaufen!",

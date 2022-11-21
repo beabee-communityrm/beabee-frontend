@@ -18,10 +18,10 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { NewsletterStatus } from '@beabee/beabee-common';
 import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import AuthBox from '../../components/AuthBox.vue';
-import { NewsletterStatus } from '../../utils/enums/newsletter-status.enum';
 import { updateMember } from '../../utils/api/member';
 import {
   JoinSetupContent,

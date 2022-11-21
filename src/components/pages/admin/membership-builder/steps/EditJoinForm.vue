@@ -82,6 +82,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { ContributionPeriod } from '@beabee/beabee-common';
 import { computed, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
 import { JoinContent } from '../../../../../utils/api/api.interface';
 import { fetchContent, updateContent } from '../../../../../utils/api/content';
@@ -91,7 +92,6 @@ import AppHeading from '../../../../AppHeading.vue';
 import AppLabel from '../../../../forms/AppLabel.vue';
 import { useI18n } from 'vue-i18n';
 import AppSelect from '../../../../forms/AppSelect.vue';
-import { ContributionPeriod } from '../../../../../utils/enums/contribution-period.enum';
 import AppCheckbox from '../../../../forms/AppCheckbox.vue';
 import JoinForm from '../../../join/JoinForm.vue';
 import AuthBox from '../../../../AuthBox.vue';
