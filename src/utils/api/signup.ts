@@ -1,6 +1,6 @@
+import { ContributionPeriod } from '@beabee/beabee-common';
 import axios from '../../axios';
 import env from '../../env';
-import { ContributionPeriod } from '../enums/contribution-period.enum';
 import {
   CompleteSignupData,
   PaymentFlowParams,

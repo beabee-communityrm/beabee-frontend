@@ -33,8 +33,8 @@
 </template>
 
 <script lang="ts" setup>
+import { ContributionPeriod } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
-import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import { ContributionContent } from './contribution.interface';
 import { computed } from 'vue';
 

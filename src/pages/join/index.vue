@@ -58,6 +58,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { ContributionPeriod } from '@beabee/beabee-common';
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
@@ -66,7 +67,6 @@ import AuthBox from '../../components/AuthBox.vue';
 import { generalContent } from '../../store';
 import StripePayment from '../../components/StripePayment.vue';
 import { fetchContent } from '../../utils/api/content';
-import { ContributionPeriod } from '../../utils/enums/contribution-period.enum';
 import { signUp, completeUrl } from '../../utils/api/signup';
 import AppAlert from '../../components/AppAlert.vue';
 import { useJoin } from '../../components/pages/join/use-join';

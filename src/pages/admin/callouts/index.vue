@@ -69,14 +69,18 @@ meta:
           }}</span>
         </template>
       </AppTable>
-      <div class="mt-4 flex justify-end">
-        <AppPagination v-model="currentPage" :total-pages="totalPages" />
-      </div>
+      <AppPaginatedResult
+        v-model:page="currentPage"
+        v-model:page-size="currentPageSize"
+        :result="calloutsTable"
+        keypath="callouts.showingOf"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { Paginated } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
@@ -84,13 +88,11 @@ import { Header, SortType } from '../../../components/table/table.interface';
 import AppButton from '../../../components/forms/AppButton.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import AppTable from '../../../components/table/AppTable.vue';
-import AppPagination from '../../../components/AppPagination.vue';
 import AppAlert from '../../../components/AppAlert.vue';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
 import {
-  Paginated,
-  GetCalloutsQuery,
   GetCalloutDataWith,
+  GetCalloutsQuery,
 } from '../../../utils/api/api.interface';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import { fetchCallouts } from '../../../utils/api/callout';
@@ -98,6 +100,7 @@ import { fetchCallouts } from '../../../utils/api/callout';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
+import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -204,36 +207,30 @@ const currentStatus = computed({
 
 const calloutsTable = ref<Paginated<GetCalloutDataWith<'responseCount'>>>();
 
-const totalPages = computed(() =>
-  calloutsTable.value
-    ? Math.ceil(calloutsTable.value.total / currentPageSize.value)
-    : 0
-);
-
 watchEffect(async () => {
-  const rules = {
+  const rules: GetCalloutsQuery['rules'] = {
     condition: 'AND',
     rules: [
       ...(currentStatus.value
         ? [
             {
               field: 'status',
-              operator: 'equal',
-              value: currentStatus.value,
+              operator: 'equal' as const,
+              value: [currentStatus.value],
             },
           ]
         : []),
       ...(currentSearch.value
         ? [
             {
-              field: 'title' as const,
-              operator: 'contains',
-              value: currentSearch.value,
+              field: 'title',
+              operator: 'contains' as const,
+              value: [currentSearch.value],
             },
           ]
         : []),
     ],
-  } as NonNullable<GetCalloutsQuery['rules']>;
+  };
   calloutsTable.value = await fetchCallouts(
     {
       limit: currentPageSize.value,
