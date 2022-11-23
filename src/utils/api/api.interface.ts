@@ -373,7 +373,7 @@ export interface GetSegmentData {
 export interface CreateSegmentData {
   name: string;
   ruleGroup: RuleGroup;
-  order: number;
+  order?: number;
 }
 
 export type UpdateSegmentData = Partial<CreateSegmentData>;

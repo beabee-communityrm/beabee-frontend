@@ -166,6 +166,9 @@
         "not_equal": "ist nicht"
       }
     },
+    "saveSegment": {
+      "createOrUpdate": {}
+    },
     "selectFilter": "Filter auswählen"
   },
   "callout": {

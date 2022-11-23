@@ -39,7 +39,7 @@ export async function fetchSegment<With extends GetSegmentWith>(
   id: string,
   _with?: readonly With[]
 ): Promise<GetSegmentDataWith<With>> {
-  const { data } = await axios.get<Serial<GetSegmentData>>('/segment/' + id, {
+  const { data } = await axios.get<Serial<GetSegmentData>>('/segments/' + id, {
     params: { with: _with },
   });
   return data as GetSegmentDataWith<With>;
@@ -47,21 +47,26 @@ export async function fetchSegment<With extends GetSegmentWith>(
 
 export async function createSegment(
   dataIn: CreateSegmentData
-): Promise<GetSegmentData> {
-  const { data } = await axios.post<Serial<GetSegmentData>>('/segment/', {
-    name: dataIn.name,
-    order: dataIn.order,
-    ruleGroup: dataIn.ruleGroup,
-    description: '', // TODO: deprecated from API
-  });
+): Promise<GetSegmentDataWith<'contactCount'>> {
+  const { data } = await axios.post<Serial<GetSegmentDataWith<'contactCount'>>>(
+    '/segments/',
+    {
+      name: dataIn.name,
+      order: dataIn.order,
+      ruleGroup: dataIn.ruleGroup,
+      description: '', // TODO: deprecated from API
+    }
+  );
   return data;
 }
 
 export async function updateSegment(
   id: string,
   dataIn: UpdateSegmentData
-): Promise<GetSegmentData> {
-  const { data } = await axios.patch<Serial<GetSegmentData>>('/segment/' + id, {
+): Promise<GetSegmentDataWith<'contactCount'>> {
+  const { data } = await axios.patch<
+    Serial<GetSegmentDataWith<'contactCount'>>
+  >('/segments/' + id, {
     name: dataIn.name,
     order: dataIn.order,
     ruleGroup: dataIn.ruleGroup,
@@ -70,7 +75,7 @@ export async function updateSegment(
 }
 
 export async function deleteSegment(id: string): Promise<void> {
-  await axios.delete('/segment/' + id);
+  await axios.delete('/segments/' + id);
 }
 
 export async function fetchSegmentMembers(
