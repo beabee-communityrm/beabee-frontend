@@ -1,80 +1,56 @@
 <template>
   <div>
-    <div class="mt-5 grid grid-cols-2 gap-6">
-      <div class="col-span-1">
-        <AppRadioGroup
-          v-model="dataProxy.whoCanTakePart"
-          name="whoCanTakePart"
-          :label="inputT('who.label')"
-          :options="[
-            ['members', inputT('who.opts.members')],
-            ['everyone', inputT('who.opts.everyone')],
-          ]"
-          required
-        />
-      </div>
-      <div
-        class="col-span-1 mt-6 text-sm text-grey"
-        v-html="inputT('who.help')"
+    <AppFormSection :help="inputT('who.help')">
+      <AppRadioGroup
+        v-model="dataProxy.whoCanTakePart"
+        name="whoCanTakePart"
+        :label="inputT('who.label')"
+        :options="[
+          ['members', inputT('who.opts.members')],
+          ['everyone', inputT('who.opts.everyone')],
+        ]"
+        required
       />
-    </div>
-    <div
+    </AppFormSection>
+    <AppFormSection
       v-if="dataProxy.whoCanTakePart === 'everyone'"
-      class="mt-5 grid grid-cols-2 gap-6"
+      :help="inputT('anonymous.help')"
     >
-      <div class="col-span-1">
-        <AppRadioGroup
-          v-model="dataProxy.allowAnonymousResponses"
-          name="allowAnonymousResponses"
-          :label="inputT('anonymous.label')"
-          :options="[
-            [true, inputT('anonymous.opts.yes')],
-            [false, inputT('anonymous.opts.no')],
-          ]"
-          required
-        />
-      </div>
-      <div
-        class="col-span-1 mt-6 text-sm text-grey"
-        v-html="inputT('anonymous.help')"
+      <AppRadioGroup
+        v-model="dataProxy.allowAnonymousResponses"
+        name="allowAnonymousResponses"
+        :label="inputT('anonymous.label')"
+        :options="[
+          [true, inputT('anonymous.opts.yes')],
+          [false, inputT('anonymous.opts.no')],
+        ]"
+        required
       />
-    </div>
-    <div class="mt-5 grid grid-cols-2 gap-6">
-      <div class="col-span-1">
-        <AppRadioGroup
-          v-model="dataProxy.showOnUserDashboards"
-          name="showOnUserDashboards"
-          :label="inputT('visible.label')"
-          :options="[
-            [true, inputT('visible.opts.yes')],
-            [false, inputT('visible.opts.no')],
-          ]"
-          required
-        />
-      </div>
-      <div
-        class="col-span-1 mt-6 text-sm text-grey"
-        v-html="inputT('visible.help')"
+    </AppFormSection>
+    <AppFormSection :help="inputT('visible.help')">
+      <AppRadioGroup
+        v-model="dataProxy.showOnUserDashboards"
+        name="showOnUserDashboards"
+        :label="inputT('visible.label')"
+        :options="[
+          [true, inputT('visible.opts.yes')],
+          [false, inputT('visible.opts.no')],
+        ]"
+        required
       />
-    </div>
-    <div class="mt-5 grid grid-cols-2 gap-6">
-      <div class="col-span-1">
-        <AppRadioGroup
-          v-model="dataProxy.usersCanEditAnswers"
-          name="usersCanEditAnswers"
-          :label="inputT('editable.label')"
-          :options="[
-            [true, inputT('editable.opts.yes')],
-            [false, inputT('editable.opts.no')],
-          ]"
-          required
-        />
-      </div>
-      <div
-        class="col-span-1 mt-6 text-sm text-grey"
-        v-html="inputT('editable.help')"
+    </AppFormSection>
+    <AppFormSection :help="inputT('editable.help')">
+      <AppRadioGroup
+        v-model="dataProxy.usersCanEditAnswers"
+        name="usersCanEditAnswers"
+        :label="inputT('editable.label')"
+        :options="[
+          [true, inputT('editable.opts.yes')],
+          [false, inputT('editable.opts.no')],
+        ]"
+        required
       />
-    </div>
+    </AppFormSection>
   </div>
 </template>
 
@@ -84,6 +60,7 @@ import { helpers, required } from '@vuelidate/validators';
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
+import AppFormSection from '../../../forms/AppFormSection.vue';
 import { VisibilityStepProps } from '../callouts.interface';
 
 const emit = defineEmits(['update:error', 'update:validated']);

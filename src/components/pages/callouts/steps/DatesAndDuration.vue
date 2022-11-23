@@ -1,51 +1,46 @@
 <template>
   <div>
-    <div class="grid grid-cols-2 gap-6">
-      <div class="col-span-1">
-        <AppLabel :label="inputT('starts.label')" required />
-        <AppRadioGroup
-          v-if="mode !== 'live'"
-          v-model="dataProxy.startNow"
-          name="calloutStartDate"
-          :options="[
-            [true, inputT('starts.opts.now')],
-            [false, inputT('starts.opts.schedule')],
-          ]"
-          required
-        />
-        <div v-if="!dataProxy.startNow || mode === 'live'" class="flex gap-2">
-          <div>
-            <AppInput v-model="dataProxy.startDate" type="date" required />
-          </div>
-          <div>
-            <AppInput v-model="dataProxy.startTime" type="time" required />
-          </div>
+    <AppFormSection>
+      <AppLabel :label="inputT('starts.label')" required />
+      <AppRadioGroup
+        v-if="mode !== 'live'"
+        v-model="dataProxy.startNow"
+        name="calloutStartDate"
+        :options="[
+          [true, inputT('starts.opts.now')],
+          [false, inputT('starts.opts.schedule')],
+        ]"
+        required
+      />
+      <div v-if="!dataProxy.startNow || mode === 'live'" class="flex gap-2">
+        <div>
+          <AppInput v-model="dataProxy.startDate" type="date" required />
+        </div>
+        <div>
+          <AppInput v-model="dataProxy.startTime" type="time" required />
         </div>
       </div>
-      <div class="col-span-1 mt-6 text-sm text-grey" />
-    </div>
-    <div class="mt-5 grid grid-cols-2 gap-6">
-      <div class="col-span-1">
-        <AppRadioGroup
-          v-model="dataProxy.hasEndDate"
-          name="calloutEndDate"
-          :label="inputT('expires.label')"
-          :options="[
-            [false, inputT('expires.opts.never')],
-            [true, inputT('expires.opts.schedule')],
-          ]"
-          required
-        />
-        <div v-if="dataProxy.hasEndDate" class="flex gap-2">
-          <div>
-            <AppInput v-model="dataProxy.endDate" type="date" required />
-          </div>
-          <div>
-            <AppInput v-model="dataProxy.endTime" type="time" required />
-          </div>
+    </AppFormSection>
+    <AppFormSection>
+      <AppRadioGroup
+        v-model="dataProxy.hasEndDate"
+        name="calloutEndDate"
+        :label="inputT('expires.label')"
+        :options="[
+          [false, inputT('expires.opts.never')],
+          [true, inputT('expires.opts.schedule')],
+        ]"
+        required
+      />
+      <div v-if="dataProxy.hasEndDate" class="flex gap-2">
+        <div>
+          <AppInput v-model="dataProxy.endDate" type="date" required />
+        </div>
+        <div>
+          <AppInput v-model="dataProxy.endTime" type="time" required />
         </div>
       </div>
-    </div>
+    </AppFormSection>
   </div>
 </template>
 
@@ -56,6 +51,7 @@ import { useI18n } from 'vue-i18n';
 import AppInput from '../../../forms/AppInput.vue';
 import AppLabel from '../../../forms/AppLabel.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
+import AppFormSection from '../../../forms/AppFormSection.vue';
 import { CalloutMode, DateAndDurationStepProps } from '../callouts.interface';
 
 const emit = defineEmits(['update:error', 'update:validated']);

@@ -10,19 +10,13 @@
     {{ t('editCallout.warning') }}
   </AppAlert>
 
-  <div class="grid grid-cols-2 gap-6">
-    <div class="col-span-1">
-      <RichTextEditor
-        v-model="dataProxy.introText"
-        :label="inputT('intro.label')"
-        required
-      />
-    </div>
-    <div
-      class="col-span-1 mt-[4rem] text-sm text-grey"
-      v-html="inputT('intro.help')"
+  <AppFormSection :help="inputT('intro.help')">
+    <RichTextEditor
+      v-model="dataProxy.introText"
+      :label="inputT('intro.label')"
+      required
     />
-  </div>
+  </AppFormSection>
   <div class="callout-form-builder mt-8">
     <FormBuilderVue
       ref="formBuilderRef"
@@ -66,6 +60,7 @@ import { useRoute } from 'vue-router';
 import { CalloutMode, ContentStepProps } from '../callouts.interface';
 import AppAlert from '../../../AppAlert.vue';
 import RichTextEditor from '../../../rte/RichTextEditor.vue';
+import AppFormSection from '../../../forms/AppFormSection.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
