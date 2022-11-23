@@ -4,7 +4,7 @@
     <AppFormSection>
       <AppLabel :label="inputT('starts.label')" required />
       <AppRadioGroup
-        v-if="mode !== 'live'"
+        v-if="canStartNow"
         v-model="data.startNow"
         name="calloutStartDate"
         :options="[
@@ -13,7 +13,7 @@
         ]"
         required
       />
-      <div v-if="!data.startNow || mode === 'live'" class="flex gap-2">
+      <div v-if="!data.startNow" class="flex gap-2">
         <div>
           <AppInput v-model="data.startDate" type="date" required />
         </div>
@@ -46,25 +46,33 @@
 </template>
 
 <script lang="ts" setup>
+import { ItemStatus } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
-import { watch } from 'vue';
+import { computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../forms/AppInput.vue';
 import AppLabel from '../../../forms/AppLabel.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
 import AppFormSection from '../../../forms/AppFormSection.vue';
-import { CalloutMode, DateAndDurationStepProps } from '../callouts.interface';
+import { DateAndDurationStepProps } from '../callouts.interface';
 
 const emit = defineEmits(['update:error', 'update:validated']);
-defineProps<{
+const props = defineProps<{
   data: DateAndDurationStepProps;
-  mode: CalloutMode;
+  status: ItemStatus | undefined;
 }>();
 
 const { t } = useI18n();
 const inputT = (key: string) => t('createCallout.steps.dates.inputs.' + key);
 
 const validation = useVuelidate();
+
+const canStartNow = computed(
+  () =>
+    !props.status ||
+    props.status === ItemStatus.Draft ||
+    props.status === ItemStatus.Scheduled
+);
 
 watch(
   validation,

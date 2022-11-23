@@ -1,6 +1,6 @@
 <template>
   <PageTitle
-    :title="t(mode === 'new' ? 'createCallout.title' : 'editCallout.title')"
+    :title="t(!status ? 'createCallout.title' : 'editCallout.title')"
     border
     no-collapse
   >
@@ -21,7 +21,7 @@
         v-model:data="selectedStep.data"
         v-model:validated="selectedStep.validated"
         v-model:error="selectedStep.error"
-        :mode="mode"
+        :status="status"
       />
 
       <div v-if="mode === 'new'" class="mt-5 flex">
@@ -61,10 +61,14 @@ import PageTitle from '../../PageTitle.vue';
 import AppHeading from '../../AppHeading.vue';
 import AppButton from '../../forms/AppButton.vue';
 import AppStepper from '../../stepper/AppStepper.vue';
-import { CalloutMode, CalloutSteps } from './callouts.interface';
+import { CalloutSteps } from './callouts.interface';
+import { ItemStatus } from '@beabee/beabee-common';
 
 const emit = defineEmits(['save']);
-const props = defineProps<{ steps: CalloutSteps; mode: CalloutMode }>();
+const props = defineProps<{
+  steps: CalloutSteps;
+  status: ItemStatus | undefined;
+}>();
 
 const { t } = useI18n();
 

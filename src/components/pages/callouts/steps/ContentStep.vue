@@ -4,7 +4,7 @@
     {{ t('editCallout.replicated') }}
   </AppAlert>
 
-  <AppAlert v-else-if="mode === 'live'" variant="warning" class="mb-4">
+  <AppAlert v-else-if="warnAboutEditing" variant="warning" class="mb-4">
     <template #icon>
       <font-awesome-icon :icon="['fa', 'exclamation']" />
     </template>
@@ -28,6 +28,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { ItemStatus } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { onBeforeMount, ref, watch } from 'vue';
 import { FormBuilder as FormBuilderVue } from 'vue-formio';
@@ -55,23 +56,29 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
 
-import 'formiojs/dist/formio.builder.css';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import { CalloutMode, ContentStepProps } from '../callouts.interface';
+import { ContentStepProps } from '../callouts.interface';
 import AppAlert from '../../../AppAlert.vue';
 import RichTextEditor from '../../../rte/RichTextEditor.vue';
 import AppFormSection from '../../../forms/AppFormSection.vue';
 
+import 'formiojs/dist/formio.builder.css';
+
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   data: ContentStepProps;
-  mode: CalloutMode;
+  status: ItemStatus | undefined;
 }>();
 
 const { t } = useI18n();
 const route = useRoute();
 const inputT = (key: string) => t('createCallout.steps.content.inputs.' + key);
+
+const warnAboutEditing = computed(
+  () => props.status === ItemStatus.Open || props.status === ItemStatus.Ended
+);
 
 const wasJustReplicated = route.query.replicated !== undefined;
 

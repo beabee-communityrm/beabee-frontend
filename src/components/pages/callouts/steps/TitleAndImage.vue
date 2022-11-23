@@ -26,10 +26,10 @@
         required
       />
     </AppFormSection>
-    <AppFormSection v-if="mode !== 'live'" :help="inputT('slug.help')">
+    <AppFormSection v-if="canEditSlug" :help="inputT('slug.help')">
       <AppLabel :label="inputT('slug.label')" required />
       <AppRadioGroup
-        v-if="mode === 'new'"
+        v-if="!status"
         v-model="data.useCustomSlug"
         name="useCustomSlug"
         :options="[
@@ -80,13 +80,14 @@
 </template>
 
 <script lang="ts" setup>
+import { ItemStatus } from '@beabee/beabee-common';
 import { computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../forms/AppInput.vue';
 import AppImageUpload from '../../../forms/AppImageUpload.vue';
 import AppTextArea from '../../../forms/AppTextArea.vue';
 import useVuelidate from '@vuelidate/core';
-import { CalloutMode, TitleAndImageStepProps } from '../callouts.interface';
+import { TitleAndImageStepProps } from '../callouts.interface';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
 import AppLabel from '../../../forms/AppLabel.vue';
 import env from '../../../../env';
@@ -96,7 +97,7 @@ import AppFormSection from '../../../forms/AppFormSection.vue';
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   data: TitleAndImageStepProps;
-  mode: CalloutMode;
+  status: ItemStatus | undefined;
 }>();
 
 const { t } = useI18n();
@@ -120,6 +121,13 @@ watch(
     // eslint-disable-next-line vue/no-mutating-props
     props.data.autoSlug = slugify(title, { lower: true });
   }
+);
+
+const canEditSlug = computed(
+  () =>
+    !props.status ||
+    props.status === ItemStatus.Draft ||
+    props.status === ItemStatus.Scheduled
 );
 
 const validation = useVuelidate();

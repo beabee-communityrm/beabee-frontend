@@ -6,7 +6,12 @@ meta:
 </route>
 
 <template>
-  <CalloutForm v-if="steps" :steps="steps" :mode="mode" @save="handleSave" />
+  <CalloutForm
+    v-if="steps"
+    :steps="steps"
+    :status="status"
+    @save="handleSave"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -29,10 +34,7 @@ import StepEndMessage from '../../../components/pages/callouts/steps/EndMessage.
 // import StepMailchimpSync from '../components/steps/MailchimpSync.vue';
 import StepDatesAndDuration from '../../../components/pages/callouts/steps/DatesAndDuration.vue';
 import StepContent from '../../../components/pages/callouts/steps/ContentStep.vue';
-import {
-  CalloutMode,
-  CalloutSteps,
-} from '../../../components/pages/callouts/callouts.interface';
+import { CalloutSteps } from '../../../components/pages/callouts/callouts.interface';
 import CalloutForm from '../../../components/pages/callouts/CalloutForm.vue';
 import { format } from 'date-fns';
 import { ItemStatus } from '@beabee/beabee-common';
@@ -43,7 +45,7 @@ const { t } = useI18n();
 const router = useRouter();
 
 const steps = ref<CalloutSteps>();
-const mode = ref<CalloutMode>('new');
+const status = ref<ItemStatus>();
 
 function convertCalloutToSteps(
   callout?: GetCalloutDataWith<'form'>
@@ -210,10 +212,6 @@ async function handleSave() {
 onBeforeMount(async () => {
   const callout = props.id ? await fetchCallout(props.id, ['form']) : undefined;
   steps.value = convertCalloutToSteps(callout);
-  mode.value = callout
-    ? callout.status === ItemStatus.Open || callout.status === ItemStatus.Ended
-      ? 'live'
-      : 'not-live'
-    : 'new';
+  status.value = callout?.status;
 });
 </script>
