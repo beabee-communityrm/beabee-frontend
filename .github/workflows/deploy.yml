@@ -9,22 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       stage: ${{ steps.setvars.outputs.stage }}
-      tag: ${{ steps.setvars.outputs.tag }}
     steps:
       - id: setvars
         run: |
           case "${{ github.ref }}" in
-            refs/heads/master)
+            refs/heads/main)
               echo "stage=latest" >> $GITHUB_OUTPUT
-              echo "tag=latest" >> $GITHUB_OUTPUT
               ;;
             refs/heads/dev)
               echo "stage=dev" >> $GITHUB_OUTPUT
-              echo "tag=dev" >> $GITHUB_OUTPUT
               ;;
             refs/heads/release)
               echo "stage=release" >> $GITHUB_OUTPUT
-              echo "tag=stable" >> $GITHUB_OUTPUT
               ;;
           esac
 
@@ -45,7 +41,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_ORGANISATION }}/frontend:${{ needs.init.outputs.tag }}
+          tags: ${{ secrets.DOCKER_ORGANISATION }}/frontend:${{ needs.init.outputs.stage }}
 
   deploy:
     runs-on: ubuntu-latest
