@@ -1,10 +1,11 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div>
     <AppFormSection>
       <AppLabel :label="inputT('starts.label')" required />
       <AppRadioGroup
         v-if="mode !== 'live'"
-        v-model="dataProxy.startNow"
+        v-model="data.startNow"
         name="calloutStartDate"
         :options="[
           [true, inputT('starts.opts.now')],
@@ -12,18 +13,18 @@
         ]"
         required
       />
-      <div v-if="!dataProxy.startNow || mode === 'live'" class="flex gap-2">
+      <div v-if="!data.startNow || mode === 'live'" class="flex gap-2">
         <div>
-          <AppInput v-model="dataProxy.startDate" type="date" required />
+          <AppInput v-model="data.startDate" type="date" required />
         </div>
         <div>
-          <AppInput v-model="dataProxy.startTime" type="time" required />
+          <AppInput v-model="data.startTime" type="time" required />
         </div>
       </div>
     </AppFormSection>
     <AppFormSection>
       <AppRadioGroup
-        v-model="dataProxy.hasEndDate"
+        v-model="data.hasEndDate"
         name="calloutEndDate"
         :label="inputT('expires.label')"
         :options="[
@@ -32,12 +33,12 @@
         ]"
         required
       />
-      <div v-if="dataProxy.hasEndDate" class="flex gap-2">
+      <div v-if="data.hasEndDate" class="flex gap-2">
         <div>
-          <AppInput v-model="dataProxy.endDate" type="date" required />
+          <AppInput v-model="data.endDate" type="date" required />
         </div>
         <div>
-          <AppInput v-model="dataProxy.endTime" type="time" required />
+          <AppInput v-model="data.endTime" type="time" required />
         </div>
       </div>
     </AppFormSection>
@@ -46,7 +47,7 @@
 
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { ref, watch } from 'vue';
+import { watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../forms/AppInput.vue';
 import AppLabel from '../../../forms/AppLabel.vue';
@@ -55,15 +56,13 @@ import AppFormSection from '../../../forms/AppFormSection.vue';
 import { CalloutMode, DateAndDurationStepProps } from '../callouts.interface';
 
 const emit = defineEmits(['update:error', 'update:validated']);
-const props = defineProps<{
+defineProps<{
   data: DateAndDurationStepProps;
   mode: CalloutMode;
 }>();
 
 const { t } = useI18n();
 const inputT = (key: string) => t('createCallout.steps.dates.inputs.' + key);
-
-const dataProxy = ref(props.data);
 
 const validation = useVuelidate();
 

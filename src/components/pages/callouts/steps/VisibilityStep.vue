@@ -1,8 +1,9 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div>
     <AppFormSection :help="inputT('who.help')">
       <AppRadioGroup
-        v-model="dataProxy.whoCanTakePart"
+        v-model="data.whoCanTakePart"
         name="whoCanTakePart"
         :label="inputT('who.label')"
         :options="[
@@ -13,11 +14,11 @@
       />
     </AppFormSection>
     <AppFormSection
-      v-if="dataProxy.whoCanTakePart === 'everyone'"
+      v-if="data.whoCanTakePart === 'everyone'"
       :help="inputT('anonymous.help')"
     >
       <AppRadioGroup
-        v-model="dataProxy.allowAnonymousResponses"
+        v-model="data.allowAnonymousResponses"
         name="allowAnonymousResponses"
         :label="inputT('anonymous.label')"
         :options="[
@@ -29,7 +30,7 @@
     </AppFormSection>
     <AppFormSection :help="inputT('visible.help')">
       <AppRadioGroup
-        v-model="dataProxy.showOnUserDashboards"
+        v-model="data.showOnUserDashboards"
         name="showOnUserDashboards"
         :label="inputT('visible.label')"
         :options="[
@@ -41,7 +42,7 @@
     </AppFormSection>
     <AppFormSection :help="inputT('editable.help')">
       <AppRadioGroup
-        v-model="dataProxy.usersCanEditAnswers"
+        v-model="data.usersCanEditAnswers"
         name="usersCanEditAnswers"
         :label="inputT('editable.label')"
         :options="[
@@ -56,36 +57,20 @@
 
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { helpers, required } from '@vuelidate/validators';
-import { ref, watch } from 'vue';
+import { watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
 import AppFormSection from '../../../forms/AppFormSection.vue';
 import { VisibilityStepProps } from '../callouts.interface';
 
 const emit = defineEmits(['update:error', 'update:validated']);
-const props = defineProps<{ data: VisibilityStepProps }>();
+defineProps<{ data: VisibilityStepProps }>();
 
 const { t } = useI18n();
 const inputT = (key: string) =>
   t('createCallout.steps.visibility.inputs.' + key);
 
-const dataProxy = ref(props.data);
-
-const validate = useVuelidate(
-  {
-    whoCanTakePart: {
-      required: helpers.withMessage('Required', required),
-    },
-    allowAnonymousResponses: {
-      required: helpers.withMessage('Required', required),
-    },
-    showOnUserDashboards: {
-      required: helpers.withMessage('Required', required),
-    },
-  },
-  dataProxy
-);
+const validate = useVuelidate();
 
 watch(
   validate,

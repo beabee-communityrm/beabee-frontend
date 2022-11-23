@@ -1,8 +1,9 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div>
     <AppFormSection>
       <AppRadioGroup
-        v-model="dataProxy.whenFinished"
+        v-model="data.whenFinished"
         name="whenFinished"
         :label="inputT('action.label')"
         :options="[
@@ -12,10 +13,10 @@
         required
       />
     </AppFormSection>
-    <template v-if="dataProxy.whenFinished === 'message'">
+    <template v-if="data.whenFinished === 'message'">
       <AppFormSection :help="inputT('title.help')">
         <AppInput
-          v-model="dataProxy.thankYouTitle"
+          v-model="data.thankYouTitle"
           :label="inputT('title.label')"
           :placeholder="inputT('title.placeholder')"
           required
@@ -23,7 +24,7 @@
       </AppFormSection>
       <AppFormSection :help="inputT('text.help')">
         <RichTextEditor
-          v-model="dataProxy.thankYouText"
+          v-model="data.thankYouText"
           :label="inputT('text.label')"
           :placeholder="inputT('text.placeholder')"
           required
@@ -32,7 +33,7 @@
     </template>
     <AppFormSection v-else :help="inputT('url.help')">
       <AppInput
-        v-model="dataProxy.thankYouRedirect"
+        v-model="data.thankYouRedirect"
         :label="inputT('url.label')"
         :placeholder="inputT('url.placeholder')"
         type="url"
@@ -44,7 +45,7 @@
 
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { ref, watch } from 'vue';
+import { watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../forms/AppInput.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
@@ -53,13 +54,11 @@ import RichTextEditor from '../../../rte/RichTextEditor.vue';
 import AppFormSection from '../../../forms/AppFormSection.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
-const props = defineProps<{ data: EndMessageStepProps }>();
+defineProps<{ data: EndMessageStepProps }>();
 
 const { t } = useI18n();
 const inputT = (key: string) =>
   t('createCallout.steps.endMessage.inputs.' + key);
-
-const dataProxy = ref(props.data);
 
 const validation = useVuelidate();
 

@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <AppAlert v-if="wasJustReplicated" variant="success" class="mb-4">
     {{ t('editCallout.replicated') }}
@@ -12,7 +13,7 @@
 
   <AppFormSection :help="inputT('intro.help')">
     <RichTextEditor
-      v-model="dataProxy.introText"
+      v-model="data.introText"
       :label="inputT('intro.label')"
       required
     />
@@ -74,7 +75,6 @@ const inputT = (key: string) => t('createCallout.steps.content.inputs.' + key);
 
 const wasJustReplicated = route.query.replicated !== undefined;
 
-const dataProxy = ref(props.data);
 const validation = useVuelidate();
 
 watch([validation, props.data.formSchema], () => {
@@ -97,7 +97,8 @@ const formOpts = {
 const formBuilderRef = ref<FormBuilder>();
 
 function handleFormChange() {
-  dataProxy.value.formSchema = formBuilderRef.value?.form;
+  // eslint-disable-next-line vue/no-mutating-props
+  props.data.formSchema = formBuilderRef.value?.form;
 }
 
 onBeforeMount(() => {
