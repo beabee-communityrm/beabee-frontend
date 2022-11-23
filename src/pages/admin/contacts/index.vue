@@ -253,7 +253,12 @@ const currentSegmentId = computed({
   },
 });
 
-const hasUnsavedSegment = computed(() => !!route.query.r);
+const hasUnsavedSegment = computed(
+  () =>
+    !!route.query.r &&
+    !!currentRules.value &&
+    currentRules.value.rules.length > 0
+);
 
 const segments = ref<GetSegmentDataWith<'contactCount'>[]>([]);
 const contactsTotal = ref<number | null>(null);
