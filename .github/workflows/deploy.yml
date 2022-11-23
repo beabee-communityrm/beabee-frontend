@@ -13,7 +13,7 @@ jobs:
       - id: setvars
         run: |
           case "${{ github.ref }}" in
-            refs/heads/master)
+            refs/heads/main)
               echo "stage=latest" >> $GITHUB_OUTPUT
               ;;
             refs/heads/dev)
