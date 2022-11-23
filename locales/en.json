@@ -578,18 +578,6 @@
         "title": "Title and image",
         "urlWillBe": "Permalink will be"
       },
-      "url": {
-        "inputs": {
-          "description": {},
-          "overrideShare": {
-            "opts": {}
-          },
-          "slug": {
-            "opts": {}
-          },
-          "title": {}
-        }
-      },
       "visibility": {
         "description": "Choose who will see your callout",
         "inputs": {
