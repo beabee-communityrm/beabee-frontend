@@ -1,6 +1,7 @@
 <template>
   <AppLabel v-if="label" :label="label" :required="required" />
   <div class="flex items-center">
+    <div v-if="$slots.before" class="flex-0 mr-2"><slot name="before" /></div>
     <div
       class="flex flex-1 items-center overflow-hidden rounded border border-primary-40 bg-white focus-within:shadow-input"
       :class="hasError && 'border-danger-70 bg-danger-10'"

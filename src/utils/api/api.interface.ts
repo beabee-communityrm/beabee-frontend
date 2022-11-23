@@ -311,8 +311,6 @@ export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
 
 export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
 
-export type UpdateCalloutData = Omit<CreateCalloutData, 'slug'>;
-
 export type GetCalloutsQuery = PaginatedQuery; // TODO: constrain fields
 export type GetCalloutResponsesQuery = PaginatedQuery; // TODO: constrain fields
 
@@ -375,7 +373,7 @@ export interface GetSegmentData {
 export interface CreateSegmentData {
   name: string;
   ruleGroup: RuleGroup;
-  order: number;
+  order?: number;
 }
 
 export type UpdateSegmentData = Partial<CreateSegmentData>;

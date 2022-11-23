@@ -166,6 +166,18 @@
         "not_equal": "ist nicht"
       }
     },
+    "saveSegment": {
+      "createOrUpdate": {
+        "create": "Neues Segment erstellen",
+        "label": "Möchtest du ein neues Segment erstellen?",
+        "update": "Segment \"{segment}\" aktualisieren"
+      },
+      "createSegment": "Segment erstellen",
+      "segmentName": "Name des Segments",
+      "text": "Ein Segment ist eine Gruppe von Kontakten, auf die ausgewählte Filter zutreffen. Genau wie die, die du gerade erstellt hast. Neue Kontakte, auf die die Filter ebenfalls zutreffen, werden dem Segment automatisch hinzugefügt.",
+      "title": "Segment speichern",
+      "updateSegment": "Segment aktualisieren"
+    },
     "selectFilter": "Filter auswählen"
   },
   "callout": {
@@ -532,23 +544,6 @@
             "help": "<p>Das <strong>Titelbild</strong> dient zur Illustration des Callouts.</p>\n",
             "label": "Titelbild"
           },
-          "title": {
-            "help": "<p>Der <strong>Titel</strong> taucht immer dort auf, wo dein Callout erwähnt wird. Überlege dir einen guten Namen, der Interesse weckt.</p>\n",
-            "label": "Titel",
-            "placeholder": "Der Name deines Callouts."
-          }
-        },
-        "title": "Titel und Bild"
-      },
-      "url": {
-        "URLWillBe": "Die aktuelle URL lautet:",
-        "description": "Passe die Callout-URL und Titel und Beschreibung für Social-Media an.",
-        "inputs": {
-          "description": {
-            "help": "<p>Die <strong>Social-Media-Beschreibung</strong> ist die Beschreibung, die beim Teilen auf Social Media unter dem Titel erscheint und hat keinen Einfluss auf die eigentliche Beschreibung des Callouts.</p>\n",
-            "label": "Social-Media-Beschreibung",
-            "placeholder": "Die Kurzbeschreibung deines Callouts für Social Media"
-          },
           "overrideShare": {
             "label": "Callout-Titel und -Beschreibung zum Teilen verwenden?",
             "opts": {
@@ -556,21 +551,32 @@
               "yes": "Ja"
             }
           },
+          "shareDescription": {
+            "help": "<p>Die <strong>Social-Media-Beschreibung</strong> ist die Kurzbeschreibung deines Callouts fürs Teilen in sozialen Netzwerken.</p>\n",
+            "label": "Social-Media-Beschreibung",
+            "placeholder": "Die Kurzbeschreibung deines Callouts für Social Media"
+          },
+          "shareTitle": {
+            "help": "<p>Der <strong>Social-Media-Titel</strong> ist die Überschrift fürs Teilen in sozialen Netzwerken.</p>\n",
+            "label": "Social-Media-Titel",
+            "placeholder": "Die Überschrift deines Callouts in sozialen Netzwerken."
+          },
           "slug": {
-            "help": "<p>Du kannst die Endung anpassen, zum Beispiel wenn dir der Callout-Titel als Endung zu lang ist.</p>\n",
-            "label": "Endung der URL anpassen",
+            "help": "<p>Du kannst den <strong>Permalink</strong> an deine Nutzer schicken, damit sie an dem Callout teilnehmen können.</p>\n",
+            "label": "Permalink",
             "opts": {
               "auto": "Automatisch aus Callout-Titel generieren",
-              "manual": "Benutzerdefinierte URL einrichten"
+              "manual": "Benutzerdefinierten Permalink festlegen"
             }
           },
           "title": {
-            "help": "<p>Der <strong>Social-Media-Titel</strong> ist der Titel, der beim Teilen des Callouts auf Social Media erscheint und hat keinen Einfluss auf den eigentlichen Titel des Callouts.</p>\n",
-            "label": "Social-Media-Titel",
-            "placeholder": "Die Überschrift deines Callouts für Social Media"
+            "help": "<p>Der <strong>Titel</strong> taucht immer dort auf, wo dein Callout erwähnt wird. Überlege dir einen guten Namen, der Interesse weckt.</p>\n",
+            "label": "Titel",
+            "placeholder": "Der Name deines Callouts."
           }
         },
-        "title": "URL und Optionen zum Teilen"
+        "title": "Titel und Bild",
+        "urlWillBe": "Der Permalink wird so aussehen"
       },
       "visibility": {
         "description": "Entscheide, wer den Callout sehen und wer daran teilnehmen kann.",
