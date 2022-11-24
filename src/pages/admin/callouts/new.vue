@@ -24,7 +24,6 @@ import {
   fetchCallout,
   updateCallout,
 } from '../../../utils/api/callout';
-import type { CreateCalloutData } from '../../../utils/api/api.interface';
 
 import { CalloutStepsProps } from '../../../components/pages/callouts/callouts.interface';
 import CalloutForm from '../../../components/pages/callouts/CalloutForm.vue';

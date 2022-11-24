@@ -78,8 +78,6 @@ watch(
     emit('update:error', validate.value.$errors.length > 0);
     emit('update:validated', !validate.value.$invalid);
   },
-  {
-    immediate: true,
-  }
+  { immediate: true }
 );
 </script>

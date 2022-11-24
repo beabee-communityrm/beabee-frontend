@@ -86,13 +86,17 @@ const wasJustReplicated = route.query.replicated !== undefined;
 
 const validation = useVuelidate();
 
-watch([validation, props.data.formSchema], () => {
-  emit('update:error', validation.value.$errors.length > 0);
-  emit(
-    'update:validated',
-    !validation.value.$invalid && props.data.formSchema.components.length > 1
-  );
-});
+watch(
+  [validation, props.data.formSchema],
+  () => {
+    emit('update:error', validation.value.$errors.length > 0);
+    emit(
+      'update:validated',
+      !validation.value.$invalid && props.data.formSchema.components.length > 1
+    );
+  },
+  { immediate: true }
+);
 
 const formOpts = {
   builder: {

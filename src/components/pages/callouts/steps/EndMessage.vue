@@ -62,8 +62,12 @@ const inputT = (key: string) =>
 
 const validation = useVuelidate();
 
-watch(validation, () => {
-  emit('update:error', validation.value.$errors.length > 0);
-  emit('update:validated', !validation.value.$invalid);
-});
+watch(
+  validation,
+  () => {
+    emit('update:error', validation.value.$errors.length > 0);
+    emit('update:validated', !validation.value.$invalid);
+  },
+  { immediate: true }
+);
 </script>

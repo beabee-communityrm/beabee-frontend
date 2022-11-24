@@ -30,10 +30,13 @@
     <div class="flex-1">
       <AppHeading class="mb-5">{{ selectedStep.name }}</AppHeading>
       <component
-        :is="selectedStep.component"
-        v-model:data="selectedStep.data"
-        v-model:validated="selectedStep.validated"
-        v-model:error="selectedStep.error"
+        :is="step.component"
+        v-for="step in stepsInOrder"
+        v-show="selectedStep === step"
+        :key="step.name"
+        v-model:data="step.data"
+        v-model:validated="step.validated"
+        v-model:error="step.error"
         :status="status"
       />
     </div>
@@ -42,7 +45,7 @@
 
 <script lang="ts" setup>
 import { ItemStatus } from '@beabee/beabee-common';
-import { ref, computed, watch, markRaw, reactive } from 'vue';
+import { ref, computed, markRaw, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import PageTitle from '../../PageTitle.vue';
 import AppHeading from '../../AppHeading.vue';
@@ -69,7 +72,7 @@ const steps = reactive({
   content: {
     name: t('createCallout.steps.content.title'),
     description: t('createCallout.steps.content.description'),
-    validated: !!props.status,
+    validated: false,
     error: false,
     component: markRaw(StepContent),
     data: props.stepsProps.content,
@@ -77,7 +80,7 @@ const steps = reactive({
   titleAndImage: {
     name: t('createCallout.steps.titleAndImage.title'),
     description: t('createCallout.steps.titleAndImage.description'),
-    validated: !!props.status,
+    validated: false,
     error: false,
     component: markRaw(StepTitleAndImage),
     data: props.stepsProps.titleAndImage,
@@ -85,7 +88,7 @@ const steps = reactive({
   visibility: {
     name: t('createCallout.steps.visibility.title'),
     description: t('createCallout.steps.visibility.description'),
-    validated: !!props.status,
+    validated: false,
     error: false,
     component: markRaw(StepVisibility),
     data: props.stepsProps.visibility,
@@ -93,7 +96,7 @@ const steps = reactive({
   endMessage: {
     name: t('createCallout.steps.endMessage.title'),
     description: t('createCallout.steps.endMessage.description'),
-    validated: !!props.status,
+    validated: false,
     error: false,
     component: markRaw(StepEndMessage),
     data: props.stepsProps.endMessage,
@@ -108,7 +111,7 @@ const steps = reactive({
   dates: {
     name: t('createCallout.steps.dates.title'),
     description: t('createCallout.steps.dates.description'),
-    validated: !!props.status,
+    validated: false,
     error: false,
     component: markRaw(StepDatesAndDuration),
     data: props.stepsProps.dates,
