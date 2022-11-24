@@ -1,25 +1,31 @@
 <template>
   <PageTitle
-    :title="t(!status ? 'createCallout.title' : 'editCallout.title')"
+    :title="
+      status
+        ? t('editCallout.title', { title: steps.titleAndImage.data.title })
+        : t('createCallout.title')
+    "
     border
     no-collapse
   >
-    <div class="flex-0 ml-3">
+    <div class="flex gap-2">
       <AppButton
         v-if="!status || status === ItemStatus.Draft"
-        class="mr-2"
+        variant="primaryOutlined"
         @click="emit('saveDraft')"
       >
         {{ t('actions.saveDraft') }}
       </AppButton>
+      <AppButton
+        v-if="status && !isLive"
+        variant="primaryOutlined"
+        icon="eye"
+        @click="emit('preview')"
+      >
+        {{ t('actions.preview') }}
+      </AppButton>
       <AppButton :disabled="!isAllValid" @click="emit('update')">
-        {{
-          status === ItemStatus.Open || status === ItemStatus.Ended
-            ? t('actions.update')
-            : isPublish
-            ? t('actions.publish')
-            : t('actions.schedule')
-        }}
+        {{ updateAction }}
       </AppButton>
     </div>
   </PageTitle>
@@ -60,7 +66,7 @@ import StepEndMessage from './steps/EndMessage.vue';
 import StepDatesAndDuration from './steps/DatesAndDuration.vue';
 import StepContent from './steps/ContentStep.vue';
 
-const emit = defineEmits(['saveDraft', 'update']);
+const emit = defineEmits(['saveDraft', 'preview', 'update']);
 const props = defineProps<{
   stepsProps: CalloutStepsProps;
   status: ItemStatus | undefined;
@@ -127,16 +133,24 @@ const stepsInOrder = computed(() => [
   steps.dates,
 ]);
 
-const isPublish = ref(false);
+// Doesn't update with current time, probably not that important
+const isPublish = computed(
+  () =>
+    steps.dates.data.startNow ||
+    new Date(steps.dates.data.startDate + 'T' + steps.dates.data.startTime) <=
+      new Date()
+);
 
-watch(
-  steps.dates.data,
-  (data) => {
-    isPublish.value =
-      data.startNow ||
-      new Date(data.startDate + 'T' + data.startTime) <= new Date();
-  },
-  { immediate: true }
+const isLive = computed(
+  () => props.status === ItemStatus.Open || props.status === ItemStatus.Ended
+);
+
+const updateAction = computed(() =>
+  isLive.value || (props.status === ItemStatus.Scheduled && !isPublish.value)
+    ? t('actions.update')
+    : isPublish.value
+    ? t('actions.publish')
+    : t('actions.schedule')
 );
 
 const selectedStepIndex = ref(0);

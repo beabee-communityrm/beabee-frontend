@@ -10,8 +10,9 @@ meta:
     v-if="steps"
     :steps-props="steps"
     :status="status"
+    @save-draft="handleSave"
+    @preview="handlePreview"
     @update="handleUpdate"
-    @save-draft="handleSaveDraft"
   />
 </template>
 
@@ -41,44 +42,43 @@ const router = useRouter();
 const steps = ref<CalloutStepsProps>();
 const status = ref<ItemStatus>();
 
-async function updateOrCreateCallout(data: CreateCalloutData) {
+async function saveCallout(asDraft = false) {
+  // TODO: Remove non-null assertion, handlers can't get called if steps is undefined
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const data = convertStepsToCallout(steps.value!);
+
+  const dataWithDefaults = {
+    ...data,
+    title: data.title || t('createCallout.untitledCallout'),
+    slug: data.slug || null,
+    ...(asDraft && {
+      starts: null,
+      expires: null,
+    }),
+  };
+
   return props.id
-    ? await updateCallout(props.id, data)
-    : await createCallout(data);
+    ? await updateCallout(props.id, dataWithDefaults)
+    : await createCallout(dataWithDefaults);
 }
 
 async function handleUpdate() {
-  if (!steps.value) return; // Can't save without steps
-
-  const data = convertStepsToCallout(steps.value);
-  const newCallout = await updateOrCreateCallout(data);
-
+  const callout = await saveCallout();
   router.push({
-    path: '/admin/callouts/view/' + newCallout.slug,
-    query: {
-      [props.id ? 'updated' : 'created']: null,
-    },
+    path: '/admin/callouts/view/' + callout.slug,
+    query: { [props.id ? 'updated' : 'created']: null },
   });
 }
 
-async function handleSaveDraft() {
-  if (!steps.value) return; // Can't save without steps
+async function handleSave() {
+  const callout = await saveCallout(true);
+  router.push({ path: '/admin/callouts/edit/' + callout.slug });
+  return callout;
+}
 
-  const data = convertStepsToCallout(steps.value);
-
-  const newCallout = await updateOrCreateCallout({
-    ...data,
-    title: data.title || t('createCallout.untitledCallout'),
-    slug: data.slug || 'something-unique',
-    starts: null,
-    expires: null,
-  });
-
-  if (!props.id) {
-    router.push({
-      path: '/admin/callouts/edit/' + newCallout.slug,
-    });
-  }
+async function handlePreview() {
+  const callout = await saveCallout();
+  window.open('/callouts/' + callout.slug + '?preview', 'callout-preview');
 }
 
 onBeforeMount(async () => {

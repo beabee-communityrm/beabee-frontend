@@ -272,7 +272,7 @@ export interface ShareContent {
 }
 
 interface CalloutData {
-  slug: string;
+  slug: string | null;
   title: string;
   excerpt: string;
   image: string;
@@ -295,6 +295,7 @@ interface CalloutFormData {
 }
 
 export interface GetCalloutData extends CalloutData {
+  slug: string;
   status: ItemStatus;
 }
 

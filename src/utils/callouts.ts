@@ -1,3 +1,4 @@
+import { ItemStatus } from '@beabee/beabee-common';
 import { format } from 'date-fns';
 import { CalloutStepsProps } from '../components/pages/callouts/callouts.interface';
 import { CreateCalloutData, GetCalloutDataWith } from './api/api.interface';
@@ -38,7 +39,7 @@ export function convertCalloutToSteps(
       useMailchimpSync: false,
     },*/
     dates: {
-      startNow: !callout,
+      startNow: !callout || callout.status === ItemStatus.Draft,
       hasEndDate: !!callout?.expires,
       startDate: callout?.starts ? format(callout.starts, 'yyyy-MM-dd') : '',
       startTime: callout?.starts ? format(callout.starts, 'HH:mm') : '',
