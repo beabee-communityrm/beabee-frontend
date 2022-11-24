@@ -55,30 +55,87 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ItemStatus } from '@beabee/beabee-common';
+import { ref, computed, watch, markRaw, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import PageTitle from '../../PageTitle.vue';
 import AppHeading from '../../AppHeading.vue';
 import AppButton from '../../forms/AppButton.vue';
 import AppStepper from '../../stepper/AppStepper.vue';
-import { CalloutSteps } from './callouts.interface';
-import { ItemStatus } from '@beabee/beabee-common';
+import { CalloutStepsProps } from './callouts.interface';
 
-const emit = defineEmits(['save']);
+import StepVisibility from './steps/VisibilityStep.vue';
+import StepTitleAndImage from './steps/TitleAndImage.vue';
+import StepEndMessage from './steps/EndMessage.vue';
+// import StepMailchimpSync from './steps/MailchimpSync.vue';
+import StepDatesAndDuration from './steps/DatesAndDuration.vue';
+import StepContent from './steps/ContentStep.vue';
+
+const emit = defineEmits(['saveDraft', 'update']);
 const props = defineProps<{
-  steps: CalloutSteps;
+  stepsProps: CalloutStepsProps;
   status: ItemStatus | undefined;
 }>();
 
 const { t } = useI18n();
 
+const steps = reactive({
+  content: {
+    name: t('createCallout.steps.content.title'),
+    description: t('createCallout.steps.content.description'),
+    validated: !!props.status,
+    error: false,
+    component: markRaw(StepContent),
+    data: props.stepsProps.content,
+  },
+  titleAndImage: {
+    name: t('createCallout.steps.titleAndImage.title'),
+    description: t('createCallout.steps.titleAndImage.description'),
+    validated: !!props.status,
+    error: false,
+    component: markRaw(StepTitleAndImage),
+    data: props.stepsProps.titleAndImage,
+  },
+  visibility: {
+    name: t('createCallout.steps.visibility.title'),
+    description: t('createCallout.steps.visibility.description'),
+    validated: !!props.status,
+    error: false,
+    component: markRaw(StepVisibility),
+    data: props.stepsProps.visibility,
+  },
+  endMessage: {
+    name: t('createCallout.steps.endMessage.title'),
+    description: t('createCallout.steps.endMessage.description'),
+    validated: !!props.status,
+    error: false,
+    component: markRaw(StepEndMessage),
+    data: props.stepsProps.endMessage,
+  },
+  /*mailchimp: {
+    name: t('createCallout.steps.mailchimp.title'),
+    description: t('createCallout.steps.mailchimp.description'),
+    validated: !props.status,
+    error: false,
+    component: markRaw(StepMailchimpSync),
+  },*/
+  dates: {
+    name: t('createCallout.steps.dates.title'),
+    description: t('createCallout.steps.dates.description'),
+    validated: !!props.status,
+    error: false,
+    component: markRaw(StepDatesAndDuration),
+    data: props.stepsProps.dates,
+  },
+});
+
 const stepsInOrder = computed(() => [
-  props.steps.content,
-  props.steps.titleAndImage,
-  props.steps.visibility,
-  props.steps.endMessage,
-  //props.steps.mailchimp,
-  props.steps.dates,
+  steps.content,
+  steps.titleAndImage,
+  steps.visibility,
+  steps.endMessage,
+  //steps.mailchimp,
+  steps.dates,
 ]);
 
 const selectedStepIndex = ref(0);
