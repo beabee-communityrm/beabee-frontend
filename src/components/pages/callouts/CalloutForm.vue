@@ -4,10 +4,23 @@
     border
     no-collapse
   >
-    <div v-if="mode !== 'new'" class="flex-0 ml-3">
-      <AppButton :disabled="!isAllValid" @click="emit('save')">{{
-        t('actions.update')
-      }}</AppButton>
+    <div class="flex-0 ml-3">
+      <AppButton
+        v-if="!status || status === ItemStatus.Draft"
+        class="mr-2"
+        @click="emit('saveDraft')"
+      >
+        {{ t('actions.saveDraft') }}
+      </AppButton>
+      <AppButton :disabled="!isAllValid" @click="emit('update')">
+        {{
+          status === ItemStatus.Open || status === ItemStatus.Ended
+            ? t('actions.update')
+            : isPublish
+            ? t('actions.publish')
+            : t('actions.schedule')
+        }}
+      </AppButton>
     </div>
   </PageTitle>
   <div class="flex gap-8">
@@ -23,33 +36,6 @@
         v-model:error="selectedStep.error"
         :status="status"
       />
-
-      <div v-if="mode === 'new'" class="mt-5 flex">
-        <AppButton
-          variant="linkOutlined"
-          :disabled="selectedStepIndex === 0"
-          @click="selectedStepIndex--"
-          >{{ t('actions.back') }}</AppButton
-        >
-        <AppButton
-          v-show="!isLastStep"
-          class="ml-2"
-          :disabled="!selectedStep.validated"
-          @click="selectedStepIndex++"
-          >{{ t('actions.continue') }}</AppButton
-        >
-        <AppButton
-          v-show="isLastStep"
-          class="ml-2"
-          :disabled="!isAllValid"
-          @click="emit('save')"
-          >{{
-            steps.dates.data.startNow
-              ? t('actions.publish')
-              : t('actions.schedule')
-          }}</AppButton
-        >
-      </div>
     </div>
   </div>
 </template>
@@ -138,12 +124,21 @@ const stepsInOrder = computed(() => [
   steps.dates,
 ]);
 
+const isPublish = ref(false);
+
+watch(
+  steps.dates.data,
+  (data) => {
+    isPublish.value =
+      data.startNow ||
+      new Date(data.startDate + 'T' + data.startTime) <= new Date();
+  },
+  { immediate: true }
+);
+
 const selectedStepIndex = ref(0);
 const selectedStep = computed(
   () => stepsInOrder.value[selectedStepIndex.value]
-);
-const isLastStep = computed(
-  () => selectedStepIndex.value === stepsInOrder.value.length - 1
 );
 const isAllValid = computed(() =>
   stepsInOrder.value.every((step) => step.validated)
