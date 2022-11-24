@@ -10,7 +10,7 @@ meta:
     <Suspense>
       <EditManualContribution v-if="showEditForm" :id="contact.id" />
       <p v-else>
-        {{ t('contact.editNotice') }}
+        {{ t('contacts.editNotice') }}
       </p>
     </Suspense>
   </div>
