@@ -623,7 +623,7 @@
   },
   "editCallout": {
     "replicated": "Your callout was successfully replicated, and you are now editing the new copy. Be sure to edit the title in the \"Title and Image\" tab.",
-    "title": "Edit callout",
+    "title": "Edit: {title}",
     "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
   "footer": {
