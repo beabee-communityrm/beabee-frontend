@@ -1,30 +1,32 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <AppAlert v-if="wasJustReplicated" variant="success" class="mb-4">
-    {{ t('editCallout.replicated') }}
-  </AppAlert>
+  <div>
+    <AppAlert v-if="wasJustReplicated" variant="success" class="mb-4">
+      {{ t('editCallout.replicated') }}
+    </AppAlert>
 
-  <AppAlert v-else-if="warnAboutEditing" variant="warning" class="mb-4">
-    <template #icon>
-      <font-awesome-icon :icon="['fa', 'exclamation']" />
-    </template>
-    {{ t('editCallout.warning') }}
-  </AppAlert>
+    <AppAlert v-else-if="warnAboutEditing" variant="warning" class="mb-4">
+      <template #icon>
+        <font-awesome-icon :icon="['fa', 'exclamation']" />
+      </template>
+      {{ t('editCallout.warning') }}
+    </AppAlert>
 
-  <AppFormSection :help="inputT('intro.help')">
-    <RichTextEditor
-      v-model="data.introText"
-      :label="inputT('intro.label')"
-      required
-    />
-  </AppFormSection>
-  <div class="callout-form-builder mt-8">
-    <FormBuilderVue
-      ref="formBuilderRef"
-      :form="data.formSchema"
-      :options="formOpts"
-      @change="handleFormChange"
-    />
+    <AppFormSection :help="inputT('intro.help')">
+      <RichTextEditor
+        v-model="data.introText"
+        :label="inputT('intro.label')"
+        required
+      />
+    </AppFormSection>
+    <div class="callout-form-builder mt-8">
+      <FormBuilderVue
+        ref="formBuilderRef"
+        :form="data.formSchema"
+        :options="formOpts"
+        @change="handleFormChange"
+      />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
