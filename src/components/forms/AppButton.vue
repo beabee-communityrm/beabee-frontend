@@ -64,6 +64,11 @@ const variantClasses = {
   dangerText: ['underline text-danger border-0', 'hover:text-danger-110', ''],
 } as const;
 
+const sizeClasses = {
+  xs: 'text-sm px-2 py-1',
+  sm: 'text-sm p-2',
+} as const;
+
 const props = withDefaults(
   defineProps<{
     disabled?: boolean;
@@ -71,7 +76,7 @@ const props = withDefaults(
     href?: string;
     to?: string;
     variant?: keyof typeof variantClasses;
-    size?: 'sm';
+    size?: 'xs' | 'sm';
     loading?: boolean;
     icon?: string;
     is?: 'button' | 'label';
@@ -91,12 +96,12 @@ const props = withDefaults(
 
 const buttonClasses = computed(() => {
   return [
-    'px-3 py-2.5 text-center leading-tight cursor-pointer inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative border',
-    props.size === 'sm' ? 'py-2 px-2 text-sm' : 'py-2.5',
+    'leading-tight inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative border',
+    props.size ? sizeClasses[props.size] : 'px-3 py-2.5',
     variantClasses[props.variant][0],
     props.disabled
       ? 'cursor-not-allowed opacity-50'
-      : variantClasses[props.variant][1],
+      : 'cursor-pointer ' + variantClasses[props.variant][1],
   ];
 });
 

@@ -1,25 +1,37 @@
 <template>
   <AppLabel v-if="label" :label="label" :required="required" />
   <div class="flex items-center">
-    <div class="flex-1">
-      <input
-        v-model.trim="value"
-        class="w-full rounded border border-primary-40 p-2 focus:shadow-input focus:outline-none"
-        :class="hasError && 'border-danger-70 bg-danger-10'"
-        :type="type"
-        :name="name"
-        :required="required"
-        :min="min"
-        :pattern="pattern"
-        v-bind="$attrs"
-        @blur="validation.value.$touch"
-      />
+    <div v-if="$slots.before" class="flex-0 mr-2"><slot name="before" /></div>
+    <div
+      class="flex flex-1 items-center overflow-hidden rounded border border-primary-40 bg-white focus-within:shadow-input"
+      :class="hasError && 'border-danger-70 bg-danger-10'"
+    >
+      <span v-if="prefix" class="flex-0 px-2">{{ prefix }}</span>
+      <div
+        class="flex-1"
+        :class="{
+          'border-l border-primary-40': prefix,
+          'border-danger-70': hasError,
+        }"
+      >
+        <input
+          v-model.trim="value"
+          class="w-full bg-white/0 p-2 leading-tight focus:outline-none"
+          :type="type"
+          :name="name"
+          :required="required"
+          :min="min"
+          :pattern="pattern"
+          v-bind="$attrs"
+          @blur="validation.value.$touch"
+        />
+      </div>
     </div>
-    <div v-if="$slots.suffix" class="flex-0 ml-2"><slot name="suffix" /></div>
+    <div v-if="$slots.after" class="flex-0 ml-2"><slot name="after" /></div>
   </div>
 
   <div
-    v-if="hasError"
+    v-if="hasError && !hideErrorMessage"
     class="mt-1.5 text-xs font-semibold text-danger"
     role="alert"
   >
@@ -51,6 +63,8 @@ const props = withDefaults(
     min?: number | string;
     sameAs?: number | string;
     pattern?: string;
+    hideErrorMessage?: boolean;
+    prefix?: string;
   }>(),
   {
     modelValue: undefined,
@@ -61,6 +75,7 @@ const props = withDefaults(
     min: undefined,
     sameAs: undefined,
     pattern: undefined,
+    prefix: undefined,
   }
 );
 

@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  Paginated,
   ContributionPeriod,
+  Paginated,
   PaymentMethod,
   PermissionType,
 } from '@beabee/beabee-common';
+
 import axios from '../../axios';
 import {
   ContributionInfo,
@@ -26,6 +27,7 @@ import {
 
 import { deserializeDate } from '.';
 import env from '../../env';
+
 // TODO: how to make this type safe?
 export function deserializeMember(data: any): any {
   return {

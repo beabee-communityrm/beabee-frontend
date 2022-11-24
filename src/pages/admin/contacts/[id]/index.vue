@@ -44,7 +44,7 @@ meta:
           "
         />
         <AppInfoListItem
-          :name="t('contacts.data.newsletter')"
+          :name="t('contactOverview.newsletter')"
           :value="contact.profile.newsletterStatus"
         />
         <AppInfoListItem
@@ -77,7 +77,7 @@ meta:
           "
         />
         <AppInfoListItem
-          :name="t('contacts.data.contributionType')"
+          :name="t('contactOverview.contributionType')"
           :value="contact.contribution.type"
         />
       </AppInfoList>
@@ -90,11 +90,12 @@ meta:
       />
 
       <form @submit.prevent="handleFormSubmit">
-        <AppInput
-          v-model="contactAnnotations.description"
-          :label="t('contacts.data.description')"
-          class="mb-4"
-        />
+        <div class="mb-4">
+          <AppInput
+            v-model="contactAnnotations.description"
+            :label="t('contacts.data.description')"
+          />
+        </div>
         <RichTextEditor
           v-model="contactAnnotations.notes"
           :label="t('contacts.data.notes')"
