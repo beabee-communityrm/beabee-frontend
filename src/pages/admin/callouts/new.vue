@@ -77,8 +77,8 @@ async function handleSave() {
 }
 
 async function handlePreview() {
-  const callout = await saveCallout();
-  window.open('/callouts/' + callout.slug + '?preview', 'callout-preview');
+  const callout = await saveCallout(status.value === ItemStatus.Draft);
+  window.open('/callouts/' + callout.slug + '?preview', 'preview');
 }
 
 onBeforeMount(async () => {
