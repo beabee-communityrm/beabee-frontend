@@ -20,6 +20,9 @@ import { computed } from 'vue';
 import { GetMemberDataWith } from '../../../../utils/api/api.interface';
 import { ContributionType } from '@beabee/beabee-common';
 import EditManualContribution from '../../../../components/pages/admin/contacts/EditManualContribution.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps<{
   contact: GetMemberDataWith<'contribution'>;
