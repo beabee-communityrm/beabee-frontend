@@ -16,6 +16,7 @@
         v-model="contribution.amount"
         :label="t('contacts.data.amount')"
         type="number"
+        :prefix="generalContent.currencySymbol"
       />
     </div>
 
@@ -71,6 +72,7 @@ import {
 import { ForceUpdateContributionData } from '../../../../utils/api/api.interface';
 import { fetchContent } from '../../../../utils/api/content';
 import AppHeading from '../../../AppHeading.vue';
+import { generalContent } from '../../../../store';
 
 const validation = useVuelidate();
 
