@@ -11,12 +11,13 @@
       class="mb-3"
     />
 
-    <AppInput
-      v-model="contribution.amount"
-      :label="t('contacts.data.amount')"
-      type="number"
-      class="mb-3"
-    />
+    <div class="mb-3">
+      <AppInput
+        v-model="contribution.amount"
+        :label="t('contacts.data.amount')"
+        type="number"
+      />
+    </div>
 
     <AppRadioGroup
       v-model="contribution.period"
@@ -36,11 +37,12 @@
       class="mb-3"
     />
 
-    <AppInput
-      v-model="contribution.reference"
-      :label="t('contacts.data.paymentReference')"
-      class="mb-3"
-    />
+    <div class="mb-3">
+      <AppInput
+        v-model="contribution.reference"
+        :label="t('contacts.data.paymentReference')"
+      />
+    </div>
 
     <AppButton
       :disabled="validation.$invalid"
