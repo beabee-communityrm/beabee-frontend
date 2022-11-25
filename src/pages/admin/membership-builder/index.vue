@@ -28,13 +28,11 @@ meta:
       >
     </div>
   </PageTitle>
-  <div class="flex gap-8">
-    <div class="flex-0 basis-menu">
-      <!-- <AppTabs v-model="selectedStepIndex" :steps="steps" /> -->
-      <AppTabs :items="tabs" :selected="route.name ? route.name as string : null" /> -->
+    
+  <AppTabs :items="tabs" :selected="route.name ? route.name as string : null" /> 
       
-    </div>
-  </div>
+  <router-view></router-view>
+
 </template>
 <script lang="ts" setup>
 import mitt from 'mitt';
