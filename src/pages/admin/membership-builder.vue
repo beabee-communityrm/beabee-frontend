@@ -35,15 +35,13 @@ meta:
 
 </template>
 <script lang="ts" setup>
-import mitt from 'mitt';
 import { Ref, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import PageTitle from '../../../components/PageTitle.vue';
-import AppTabs from '../../../components/tabs/AppTabs.vue';
-import AppButton from '../../../components/forms/AppButton.vue';
-import { MembershipBuilderEmitter } from '../../../components/pages/admin/membership-builder/membership-builder.interface';
+import PageTitle from '../../components/PageTitle.vue';
+import AppTabs from '../../components/tabs/AppTabs.vue';
+import AppButton from '../../components/forms/AppButton.vue';
 import useVuelidate from '@vuelidate/core';
-import { TabItem } from '../../../components/tabs/tabs.interface';
+import { TabItem } from '../../components/tabs/tabs.interface';
 import { useRoute } from 'vue-router';
 
 const { t } = useI18n();
@@ -67,31 +65,39 @@ const tabs: Ref<TabItem[]> = ref([
     label: 'Intro message',
     to: `/admin/membership-builder/intro`,
   },
-  { id: 'emails',
-    label: 'Emails',
-    to: `/admin/membership-builder/emails`,
+  { id: 'email',
+    label: 'Email notices',
+    to: `/admin/membership-builder/email`,
   },
 
 ]);
 
 const validation = useVuelidate();
 
-const emitter: MembershipBuilderEmitter = mitt();
-
-emitter.on('dirty', () => {
-  dirty.value = true;
-  updated.value = false;
-});
-
 async function handleUpdate() {
-  function handleUpdated() {
-    dirty.value = false;
-    emitter.off('updated', handleUpdated);
-    updated.value = true;
-  }
   updating.value = true;
+  /*
+  await updateContent('profile', {
+    introMessage: showIntroMessage.value ? introMessage.value : '',
+  });
 
-  emitter.emit('update');
-  emitter.on('updated', handleUpdated);
+
+  if (welcomeEmail.value) {
+    await updateEmail('welcome', welcomeEmail.value);
+  }
+  if (cancellationEmail.value) {
+    await updateEmail('cancelled-contribution', cancellationEmail.value);
+  }
+  
+
+  if (joinContent.value) {
+    await Promise.all([
+      updateContent('join', joinContent.value),
+      updateContent('general', {
+        backgroundUrl: backgroundUrl.value || '',
+      }),
+    ]);
+  }
+  */
 }
 </script>
