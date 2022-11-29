@@ -2,7 +2,17 @@
   <ul class="-mx-2 flex items-center">
     <li>
       <button
-        class="p-2"
+        class="border border-primary p-2 leading-none hover:border-link hover:font-bold"
+        :class="isFirst && 'opacity-25 hover:border-link hover:font-bold'"
+        :disabled="isFirst"
+        @click="emit('update:modelValue', 0)"
+      >
+        <font-awesome-icon icon="caret-left" />
+      </button>
+    </li>
+    <li>
+      <button
+        class="border border-primary p-2 leading-none hover:border-link hover:font-bold"
         :class="isFirst && 'opacity-25 hover:border-link hover:font-bold'"
         :disabled="isFirst"
         @click="emit('update:modelValue', modelValue - 1)"
@@ -10,27 +20,22 @@
         <font-awesome-icon icon="caret-left" />
       </button>
     </li>
-    <template v-for="(page, index) in pages" :key="index">
-      <li v-if="index > 0 && pages[index - 1] !== page - 1">&hellip;</li>
-      <li>
-        <button
-          :class="
-            page === modelValue && 'border-link bg-white font-bold text-link'
-          "
-          :disabled="page === modelValue"
-          class="mx-1 rounded border border-primary p-2 leading-none hover:border-link hover:font-bold"
-          @click="emit('update:modelValue', page)"
-        >
-          {{ page + 1 }}
-        </button>
-      </li>
-    </template>
     <li>
       <button
-        class="p-2"
+        class="border border-primary p-2 leading-none hover:border-link hover:font-bold"
         :class="isLast && 'opacity-25 hover:border-link hover:font-bold'"
         :disabled="isLast"
         @click="emit('update:modelValue', modelValue + 1)"
+      >
+        <font-awesome-icon icon="caret-right" />
+      </button>
+    </li>
+    <li>
+      <button
+        class="border border-primary p-2 leading-none hover:border-link hover:font-bold"
+        :class="isLast && 'opacity-25 hover:border-link hover:font-bold'"
+        :disabled="isLast"
+        @click="emit('update:modelValue', totalPages - 1)"
       >
         <font-awesome-icon icon="caret-right" />
       </button>
