@@ -2,10 +2,7 @@
   <div :class="!isEmbed && 'mx-auto px-4'">
     <div
       class="mx-auto max-w-[30rem]"
-      :class="
-        !isEmbed &&
-        'mx-auto mb-3 max-w-[30rem] rounded-md bg-white py-6 px-6 shadow-auth-box md:py-8 md:px-8'
-      "
+      :class="!isEmbed && 'mb-3 rounded-md bg-white p-6 shadow-auth-box md:p-8'"
     >
       <slot />
     </div>
