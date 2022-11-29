@@ -109,7 +109,7 @@ async function submitSignUp() {
 
     const data = await signUp(signUpData);
     if (data.redirectUrl) {
-      window.location.href = data.redirectUrl;
+      (window.top || window).location.href = data.redirectUrl;
     } else if (data.clientSecret) {
       stripeClientSecret.value = data.clientSecret;
     } else {
