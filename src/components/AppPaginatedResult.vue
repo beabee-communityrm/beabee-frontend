@@ -13,6 +13,16 @@
         >
       </i18n-t>
     </p>
+    <p class="mr-4 flex-1">
+      <i18n-t v-if="result.count > 0" keypath="common.pageCount">
+        <template #pageNumber
+          ><b>{{ n(props.page + 1) }}</b></template
+        >
+        <template #pageTotal
+          ><b>{{ n(totalPages) }}</b></template
+        >
+      </i18n-t>
+    </p>
     <!-- <div class="mx-4">Page size</div> -->
 
     <AppPagination v-model="currentPage" :total-pages="totalPages" />
