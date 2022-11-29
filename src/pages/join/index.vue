@@ -4,6 +4,7 @@ meta:
   layout: Auth
   noAuth: true
   pageTitle: pageTitle.join
+  embeddable: true
 </route>
 <template>
   <AuthBox>
@@ -15,7 +16,7 @@ meta:
     />
 
     <div v-if="stripeClientSecret" v-show="stripePaymentLoaded">
-      <JoinHeader :title="joinContent.title" />
+      <JoinHeader v-if="!isEmbed" :title="joinContent.title" />
 
       <AppAlert variant="info" class="mb-4">
         <template #icon>
@@ -42,6 +43,7 @@ meta:
           </template>
         </i18n-t>
       </p>
+
       <StripePayment
         :client-secret="stripeClientSecret"
         :public-key="joinContent.stripePublicKey"
@@ -64,7 +66,7 @@ import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import JoinHeader from '../../components/pages/join/JoinHeader.vue';
 import AuthBox from '../../components/AuthBox.vue';
-import { generalContent } from '../../store';
+import { generalContent, isEmbed } from '../../store';
 import StripePayment from '../../components/StripePayment.vue';
 import { fetchContent } from '../../utils/api/content';
 import { signUp, completeUrl } from '../../utils/api/signup';
@@ -107,7 +109,7 @@ async function submitSignUp() {
 
     const data = await signUp(signUpData);
     if (data.redirectUrl) {
-      window.location.href = data.redirectUrl;
+      (window.top || window).location.href = data.redirectUrl;
     } else if (data.clientSecret) {
       stripeClientSecret.value = data.clientSecret;
     } else {

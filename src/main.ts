@@ -5,6 +5,8 @@ import router from './router';
 import i18n from './i18n';
 import './theme';
 
+import 'iframe-resizer/js/iframeResizer.contentWindow';
+
 import './index.css';
 
 // fontawesome icons imports
