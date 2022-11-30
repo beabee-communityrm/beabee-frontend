@@ -55,7 +55,7 @@ const value = computed({
 });
 
 const rules = computed(() => ({
-  value: {
+  v: {
     required: helpers.withMessage(
       t(`form.errors.${props.name}.required`),
       requiredIf(!!props.required)
@@ -63,7 +63,6 @@ const rules = computed(() => ({
   },
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const validation = useVuelidate(rules, { value } as any); // TODO: type problem
+const validation = useVuelidate(rules, { v: value });
 const hasError = computed(() => validation.value.$errors.length > 0);
 </script>
