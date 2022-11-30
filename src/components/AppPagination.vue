@@ -7,7 +7,7 @@
         icon="step-backward"
         size="sm"
         :disabled="isFirst"
-        class="h-full rounded-l rounded-r-none hover:z-10"
+        class="h-full rounded-l rounded-r-none px-3 hover:z-10"
         :class="isFirst && 'cursor-auto'"
         @click="emit('update:modelValue', 0)"
       ></AppButton>
