@@ -21,12 +21,18 @@
         <b>{{ n(value, 'currency') }}</b>
       </template>
     </AppTable>
-    <div v-if="totalPages > 1" class="flex w-full justify-center">
-      <AppPagination
-        v-model="currentPage"
-        :total-pages="totalPages"
-        class="mt-6"
-      />
+    <div v-if="totalPages > 1" class="mt-6 flex w-full justify-between gap-2">
+      <p class="self-center text-sm">
+        <i18n-t keypath="common.pageCount">
+          <template #pageNumber
+            ><b>{{ n(currentPage + 1) }}</b></template
+          >
+          <template #pageTotal
+            ><b>{{ n(totalPages) }}</b></template
+          >
+        </i18n-t>
+      </p>
+      <AppPagination v-model="currentPage" :total-pages="totalPages" />
     </div>
   </div>
 </template>
