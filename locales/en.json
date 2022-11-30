@@ -11,6 +11,7 @@
     "publish": "Publish",
     "replicate": "Replicate",
     "reset": "Reset",
+    "revertToDraft": "Revert to draft",
     "saveDraft": "Save draft",
     "schedule": "Schedule",
     "search": "Search",

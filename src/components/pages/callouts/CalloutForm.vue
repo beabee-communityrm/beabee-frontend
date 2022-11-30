@@ -1,34 +1,4 @@
 <template>
-  <PageTitle
-    :title="
-      status
-        ? t('editCallout.title', { title: steps.titleAndImage.data.title })
-        : t('createCallout.title')
-    "
-    border
-    no-collapse
-  >
-    <div class="flex gap-2">
-      <AppButton
-        v-if="!status || status === ItemStatus.Draft"
-        variant="primaryOutlined"
-        @click="emit('saveDraft')"
-      >
-        {{ t('actions.saveDraft') }}
-      </AppButton>
-      <AppButton
-        v-if="status && !isLive"
-        variant="primaryOutlined"
-        icon="eye"
-        @click="emit('preview')"
-      >
-        {{ t('actions.preview') }}
-      </AppButton>
-      <AppButton :disabled="!isAllValid" @click="emit('update')">
-        {{ updateAction }}
-      </AppButton>
-    </div>
-  </PageTitle>
   <div class="flex gap-8">
     <div class="flex-0 basis-menu">
       <AppStepper v-model="selectedStepIndex" :steps="stepsInOrder" />
@@ -52,11 +22,9 @@
 
 <script lang="ts" setup>
 import { ItemStatus } from '@beabee/beabee-common';
-import { ref, computed, markRaw, reactive } from 'vue';
+import { ref, computed, markRaw, reactive, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import PageTitle from '../../PageTitle.vue';
 import AppHeading from '../../AppHeading.vue';
-import AppButton from '../../forms/AppButton.vue';
 import AppStepper from '../../stepper/AppStepper.vue';
 import { CalloutStepsProps } from './callouts.interface';
 
@@ -67,7 +35,6 @@ import StepEndMessage from './steps/EndMessage.vue';
 import StepDatesAndDuration from './steps/DatesAndDuration.vue';
 import StepContent from './steps/ContentStep.vue';
 
-const emit = defineEmits(['saveDraft', 'preview', 'update']);
 const props = defineProps<{
   stepsProps: CalloutStepsProps;
   status: ItemStatus | undefined;
@@ -125,40 +92,14 @@ const steps = reactive({
   },
 });
 
-const stepsInOrder = computed(() => [
+const stepsInOrder = [
   steps.content,
   steps.titleAndImage,
   steps.visibility,
   steps.endMessage,
   //steps.mailchimp,
   steps.dates,
-]);
-
-// Doesn't update with current time, probably not that important
-const isPublish = computed(
-  () =>
-    steps.dates.data.startNow ||
-    new Date(steps.dates.data.startDate + 'T' + steps.dates.data.startTime) <=
-      new Date()
-);
-
-const isLive = computed(
-  () => props.status === ItemStatus.Open || props.status === ItemStatus.Ended
-);
-
-const updateAction = computed(() =>
-  isLive.value || (props.status === ItemStatus.Scheduled && !isPublish.value)
-    ? t('actions.update')
-    : isPublish.value
-    ? t('actions.publish')
-    : t('actions.schedule')
-);
-
+];
 const selectedStepIndex = ref(0);
-const selectedStep = computed(
-  () => stepsInOrder.value[selectedStepIndex.value]
-);
-const isAllValid = computed(() =>
-  stepsInOrder.value.every((step) => step.validated)
-);
+const selectedStep = computed(() => stepsInOrder[selectedStepIndex.value]);
 </script>
