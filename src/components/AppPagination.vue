@@ -1,5 +1,5 @@
 <template>
-  <ul class="-mx-2 flex items-center">
+  <ul class="flex justify-start">
     <li class="-mr-px">
       <AppButton
         type="button"
@@ -7,8 +7,8 @@
         icon="step-backward"
         size="sm"
         :disabled="isFirst"
-        class="rounded-l rounded-r-none hover:z-10"
-        :class="isFirst && 'opacity-25 hover:border-link hover:font-bold'"
+        class="h-full rounded-l rounded-r-none hover:z-10"
+        :class="isFirst && 'cursor-auto'"
         @click="emit('update:modelValue', 0)"
       ></AppButton>
     </li>
@@ -19,8 +19,8 @@
         icon="caret-left"
         size="sm"
         :disabled="isFirst"
-        class="rounded-none hover:z-10"
-        :class="isFirst && 'opacity-25 hover:border-link hover:font-bold'"
+        class="h-full rounded-none px-3 hover:z-10"
+        :class="isFirst && 'cursor-auto'"
         @click="emit('update:modelValue', modelValue - 1)"
       ></AppButton>
     </li>
@@ -31,8 +31,8 @@
         icon="caret-right"
         size="sm"
         :disabled="isLast"
-        class="rounded-none hover:z-10"
-        :class="isLast && 'opacity-25 hover:border-link hover:font-bold'"
+        class="h-full rounded-none px-3 hover:z-10"
+        :class="isLast && 'cursor-auto'"
         @click="emit('update:modelValue', modelValue + 1)"
       ></AppButton>
     </li>
@@ -43,8 +43,8 @@
         icon="step-forward"
         size="sm"
         :disabled="isLast"
-        class="rounded-r rounded-l-none hover:z-10"
-        :class="isLast && 'opacity-25 hover:border-link hover:font-bold'"
+        class="h-full rounded-r rounded-l-none px-3 hover:z-10"
+        :class="isLast && 'cursor-auto'"
         @click="emit('update:modelValue', totalPages - 1)"
       ></AppButton>
     </li>

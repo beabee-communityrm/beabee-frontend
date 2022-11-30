@@ -1,6 +1,9 @@
 <template>
-  <div v-if="result" class="flex items-center text-sm">
-    <p class="mr-4 flex-1">
+  <div
+    v-if="result"
+    class="items-center justify-between text-sm md:flex md:gap-4"
+  >
+    <p class="mb-3 md:mb-0 md:flex-1">
       <i18n-t v-if="result.count > 0" :keypath="keypath">
         <template #start
           ><b>{{ n(result.offset + 1) }}</b></template
@@ -13,21 +16,29 @@
         >
       </i18n-t>
     </p>
-    <p class="mr-4 flex-1">
-      <i18n-t v-if="result.count > 0" keypath="common.pageCount">
-        <template #pageNumber
-          ><b>{{ n(props.page + 1) }}</b></template
-        >
-        <template #pageTotal
-          ><b>{{ n(totalPages) }}</b></template
-        >
-      </i18n-t>
-    </p>
-    <!-- <div class="mx-4">Page size</div> -->
+    <!-- <div>Page size</div> -->
 
-    <div class="flex-1">
-      <AppSelect v-model="currentPageSize" :items="pageSizes" />
-      <AppPagination v-model="currentPage" :total-pages="totalPages" />
+    <div class="flex gap-2">
+      <p class="flex-1 self-center">
+        <i18n-t v-if="result.count > 0" keypath="common.pageCount">
+          <template #pageNumber
+            ><b>{{ n(props.page + 1) }}</b></template
+          >
+          <template #pageTotal
+            ><b>{{ n(totalPages) }}</b></template
+          >
+        </i18n-t>
+      </p>
+      <AppSelect
+        v-model="currentPageSize"
+        inputClass="text-sm"
+        :items="pageSizes"
+      />
+      <AppPagination
+        v-model="currentPage"
+        v-if="totalPages > 1"
+        :total-pages="totalPages"
+      />
     </div>
   </div>
 </template>
