@@ -1,50 +1,59 @@
 <template>
   <ul class="-mx-2 flex items-center">
-    <li>
-      <button
-        class="border border-primary p-2 leading-none hover:border-link hover:font-bold"
-        :class="isFirst && 'opacity-25 hover:border-link hover:font-bold'"
+    <li class="-mr-px">
+      <AppButton
+        type="button"
+        variant="primaryOutlined"
+        icon="step-backward"
+        size="sm"
         :disabled="isFirst"
         @click="emit('update:modelValue', 0)"
-      >
-        <font-awesome-icon icon="caret-left" />
-      </button>
-    </li>
-    <li>
-      <button
-        class="border border-primary p-2 leading-none hover:border-link hover:font-bold"
+        class="rounded-l rounded-r-none hover:z-10"
         :class="isFirst && 'opacity-25 hover:border-link hover:font-bold'"
+      ></AppButton>
+    </li>
+    <li class="-mr-px">
+      <AppButton
+        type="button"
+        variant="primaryOutlined"
+        icon="caret-left"
+        size="sm"
         :disabled="isFirst"
         @click="emit('update:modelValue', modelValue - 1)"
-      >
-        <font-awesome-icon icon="caret-left" />
-      </button>
+        class="rounded-none hover:z-10"
+        :class="isFirst && 'opacity-25 hover:border-link hover:font-bold'"
+      ></AppButton>
     </li>
-    <li>
-      <button
-        class="border border-primary p-2 leading-none hover:border-link hover:font-bold"
-        :class="isLast && 'opacity-25 hover:border-link hover:font-bold'"
+    <li class="-mr-px">
+      <AppButton
+        type="button"
+        variant="primaryOutlined"
+        icon="caret-right"
+        size="sm"
         :disabled="isLast"
         @click="emit('update:modelValue', modelValue + 1)"
-      >
-        <font-awesome-icon icon="caret-right" />
-      </button>
+        class="rounded-none hover:z-10"
+        :class="isLast && 'opacity-25 hover:border-link hover:font-bold'"
+      ></AppButton>
     </li>
     <li>
-      <button
-        class="border border-primary p-2 leading-none hover:border-link hover:font-bold"
-        :class="isLast && 'opacity-25 hover:border-link hover:font-bold'"
+      <AppButton
+        type="button"
+        variant="primaryOutlined"
+        icon="step-forward"
+        size="sm"
         :disabled="isLast"
         @click="emit('update:modelValue', totalPages - 1)"
-      >
-        <font-awesome-icon icon="caret-right" />
-      </button>
+        class="rounded-r rounded-l-none hover:z-10"
+        :class="isLast && 'opacity-25 hover:border-link hover:font-bold'"
+      ></AppButton>
     </li>
   </ul>
 </template>
 
 <script lang="ts" setup>
 import { computed } from 'vue';
+import AppButton from './forms/AppButton.vue';
 
 const props = defineProps<{
   modelValue: number;
