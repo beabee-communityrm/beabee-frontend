@@ -16,23 +16,26 @@ meta:
       border
       no-collapse
     >
-      <div class="flex gap-2">
-        <AppButton variant="primaryOutlined" @click="handleSaveDraft">
+      <div class="flex items-center gap-2">
+        <span v-if="lastSavedText" class="text-sm text-body-60">
+          {{ lastSavedText }}
+        </span>
+        <AppAsyncButton variant="primaryOutlined" @click="handleSaveDraft">
           {{
             isNewOrDraft ? t('actions.saveDraft') : t('actions.revertToDraft')
           }}
-        </AppButton>
-        <AppButton
+        </AppAsyncButton>
+        <AppAsyncButton
           v-if="status && !isLive"
           variant="primaryOutlined"
           icon="eye"
           @click="handlePreview"
         >
           {{ t('actions.preview') }}
-        </AppButton>
-        <AppButton :disabled="validation.$invalid" @click="handleUpdate">
+        </AppAsyncButton>
+        <AppAsyncButton :disabled="validation.$invalid" @click="handleUpdate">
           {{ updateAction }}
-        </AppButton>
+        </AppAsyncButton>
       </div>
     </PageTitle>
     <CalloutForm :steps-props="steps" :status="status" />
@@ -41,7 +44,7 @@ meta:
 
 <script lang="ts" setup>
 import { ItemStatus } from '@beabee/beabee-common';
-import { ref, onBeforeMount, computed } from 'vue';
+import { ref, onBeforeMount, computed, onBeforeUnmount } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import {
@@ -56,8 +59,11 @@ import {
   convertStepsToCallout,
 } from '../../../utils/callouts';
 import PageTitle from '../../../components/PageTitle.vue';
-import AppButton from '../../../components/forms/AppButton.vue';
 import useVuelidate from '@vuelidate/core';
+import AppAsyncButton from '../../../components/forms/AppAsyncButton.vue';
+import { formatDistanceLocale } from '../../../utils/dates/locale-date-formats';
+
+formatDistanceLocale;
 
 const props = defineProps<{ id?: string }>();
 
@@ -67,15 +73,17 @@ const validation = useVuelidate();
 
 const steps = ref<CalloutStepsProps>();
 const status = ref<ItemStatus>();
+const lastSaved = ref<Date>();
 
-// Doesn't update with current time, probably not that important
+const now = ref(new Date());
+
 const isPublish = computed(
   () =>
     steps.value &&
     (steps.value.dates.startNow ||
       new Date(
         steps.value.dates.startDate + 'T' + steps.value.dates.startTime
-      ) <= new Date())
+      ) <= now.value)
 );
 
 const isLive = computed(
@@ -85,6 +93,16 @@ const isLive = computed(
 const isNewOrDraft = computed(
   () => !status.value || status.value === ItemStatus.Draft
 );
+
+const lastSavedText = computed(() => {
+  if (!lastSaved.value) return;
+
+  return +now.value - +lastSaved.value < 20000
+    ? t('createCallout.lastSavedNow')
+    : t('createCallout.lastSaved', {
+        duration: formatDistanceLocale(now.value, lastSaved.value),
+      });
+});
 
 const updateAction = computed(() =>
   isLive.value || (status.value === ItemStatus.Scheduled && !isPublish.value)
@@ -110,9 +128,12 @@ async function saveCallout(asDraft = false) {
     }),
   };
 
-  return props.id
+  const callout = props.id
     ? await updateCallout(props.id, dataWithDefaults)
     : await createCallout(dataWithDefaults);
+
+  lastSaved.value = new Date();
+  return callout;
 }
 
 async function handleUpdate() {
@@ -130,7 +151,6 @@ async function handleSaveDraft() {
   if (!isNewOrDraft.value) {
     await reset();
   }
-  return callout;
 }
 
 async function handlePreview() {
@@ -163,5 +183,15 @@ async function reset() {
   }
 }
 
-onBeforeMount(reset);
+let interval: number | undefined;
+onBeforeMount(() => {
+  reset();
+  interval = setInterval(() => (now.value = new Date()), 60000);
+});
+onBeforeUnmount(() => {
+  if (interval) {
+    clearInterval(interval);
+    interval = undefined;
+  }
+});
 </script>

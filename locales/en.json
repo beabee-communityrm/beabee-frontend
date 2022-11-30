@@ -471,6 +471,8 @@
     "willRenewWithNewAmount": "Your contribution will automatically renew on {renewalDate} and will change to your chosen amount of {nextAmount}."
   },
   "createCallout": {
+    "lastSaved": "Last saved {duration} ago",
+    "lastSavedNow": "Last saved just now",
     "steps": {
       "content": {
         "description": "Build your callout with questions and prompts",
