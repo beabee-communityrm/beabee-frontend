@@ -11,6 +11,8 @@
     "publish": "Publish",
     "replicate": "Replicate",
     "reset": "Reset",
+    "save": "Save",
+    "saveAndAnother": "Save and add another",
     "schedule": "Schedule",
     "search": "Search",
     "submit": "Submit",
