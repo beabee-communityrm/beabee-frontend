@@ -25,13 +25,17 @@
     </p>
     <!-- <div class="mx-4">Page size</div> -->
 
-    <AppPagination v-model="currentPage" :total-pages="totalPages" />
+    <div class="flex-1">
+      <AppSelect v-model="currentPageSize" :items="pageSizes" />
+      <AppPagination v-model="currentPage" :total-pages="totalPages" />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { Paginated } from '@beabee/beabee-common';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import AppSelect from './forms/AppSelect.vue';
 import AppPagination from './AppPagination.vue';
 
 const emit = defineEmits(['update:page', 'update:pageSize']);
@@ -54,6 +58,11 @@ const currentPageSize = computed({
   get: () => props.pageSize,
   set: (newPageSize) => emit('update:pageSize', newPageSize),
 });
+
+const pageSizes = [12, 25, 50, 100].map((x) => ({
+  id: x,
+  label: x + ' per page',
+}));
 
 const totalPages = computed(() =>
   props.result ? Math.ceil(props.result.total / currentPageSize.value) : 0

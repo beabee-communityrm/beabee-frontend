@@ -7,9 +7,9 @@
         icon="step-backward"
         size="sm"
         :disabled="isFirst"
-        @click="emit('update:modelValue', 0)"
         class="rounded-l rounded-r-none hover:z-10"
         :class="isFirst && 'opacity-25 hover:border-link hover:font-bold'"
+        @click="emit('update:modelValue', 0)"
       ></AppButton>
     </li>
     <li class="-mr-px">
@@ -19,9 +19,9 @@
         icon="caret-left"
         size="sm"
         :disabled="isFirst"
-        @click="emit('update:modelValue', modelValue - 1)"
         class="rounded-none hover:z-10"
         :class="isFirst && 'opacity-25 hover:border-link hover:font-bold'"
+        @click="emit('update:modelValue', modelValue - 1)"
       ></AppButton>
     </li>
     <li class="-mr-px">
@@ -31,9 +31,9 @@
         icon="caret-right"
         size="sm"
         :disabled="isLast"
-        @click="emit('update:modelValue', modelValue + 1)"
         class="rounded-none hover:z-10"
         :class="isLast && 'opacity-25 hover:border-link hover:font-bold'"
+        @click="emit('update:modelValue', modelValue + 1)"
       ></AppButton>
     </li>
     <li>
@@ -43,9 +43,9 @@
         icon="step-forward"
         size="sm"
         :disabled="isLast"
-        @click="emit('update:modelValue', totalPages - 1)"
         class="rounded-r rounded-l-none hover:z-10"
         :class="isLast && 'opacity-25 hover:border-link hover:font-bold'"
+        @click="emit('update:modelValue', totalPages - 1)"
       ></AppButton>
     </li>
   </ul>
