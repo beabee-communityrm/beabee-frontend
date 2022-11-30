@@ -43,6 +43,7 @@
         v-model:data="step.data"
         v-model:validated="step.validated"
         v-model:error="step.error"
+        :is-active="selectedStep === step"
         :status="status"
       />
     </div>

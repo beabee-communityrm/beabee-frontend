@@ -48,24 +48,32 @@
 <script lang="ts" setup>
 import { ItemStatus } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
-import { computed, watch } from 'vue';
+import { computed, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../forms/AppInput.vue';
 import AppLabel from '../../../forms/AppLabel.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
 import AppFormSection from '../../../forms/AppFormSection.vue';
 import { DateAndDurationStepProps } from '../callouts.interface';
+import { sameAs } from '@vuelidate/validators';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   data: DateAndDurationStepProps;
   status: ItemStatus | undefined;
+  isActive: boolean;
 }>();
 
 const { t } = useI18n();
 const inputT = (key: string) => t('createCallout.steps.dates.inputs.' + key);
 
-const validation = useVuelidate();
+// Force step to stay unvalidated until it is visited for new callouts
+const hasVisited = ref(!!props.status);
+watch(toRef(props, 'isActive'), (active) => (hasVisited.value ||= active));
+const validation = useVuelidate(
+  { v: { yes: sameAs(true) } },
+  { v: hasVisited }
+);
 
 const canStartNow = computed(
   () =>
