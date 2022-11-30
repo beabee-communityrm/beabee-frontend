@@ -28,6 +28,7 @@
       <AppButton v-if="resetButtonText" variant="text" @click="emit('reset')">
         {{ resetButtonText }}
       </AppButton>
+      <slot name="buttons" :disabled="validation.$invalid" />
     </div>
   </form>
 </template>
