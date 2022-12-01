@@ -28,11 +28,10 @@ meta:
       >
     </div>
   </PageTitle>
-    
-  <AppTabs :items="tabs" :selected="route.name ? route.name as string : null" /> 
-      
-  <router-view></router-view>
 
+  <AppTabs :items="tabs" :selected="route.name ? route.name as string : null" />
+
+  <router-view></router-view>
 </template>
 <script lang="ts" setup>
 import { Ref, ref } from 'vue';
@@ -53,23 +52,26 @@ const dirty = ref(false);
 
 // TODO: i18n
 const tabs: Ref<TabItem[]> = ref([
-  { id: 'joinForm',
+  {
+    id: 'adminMembershipBuilderJoinForm',
     label: 'Join form',
     to: `/admin/membership-builder/join-form`,
   },
-  { id: 'confirmation',
+  {
+    id: 'adminMembershipBuilderAccountConfirmation',
     label: 'Account confirmation',
     to: `/admin/membership-builder/confirmation`,
   },
-  { id: 'introMessage',
-    label: 'Intro message',
+  {
+    id: 'adminMembershipBuilderIntroMessages',
+    label: 'Intro messages',
     to: `/admin/membership-builder/intro`,
   },
-  { id: 'email',
+  {
+    id: 'adminMembershipBuilderEmail',
     label: 'Email notices',
     to: `/admin/membership-builder/email`,
   },
-
 ]);
 
 const validation = useVuelidate();

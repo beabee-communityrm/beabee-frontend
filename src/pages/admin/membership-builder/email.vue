@@ -9,7 +9,6 @@ meta:
   <div>
     <div class="mb-8 grid grid-cols-2 gap-8">
       <div>
-        <AppHeading class="mb-5">{{ stepT('bigTitle') }}</AppHeading>
         <p>{{ stepT('text') }}</p>
       </div>
     </div>
@@ -32,7 +31,6 @@ meta:
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppHeading from '../../../components/AppHeading.vue';
 import EmailEditor from '../../../components/pages/admin/membership-builder/EmailEditor.vue';
 import { GetEmailData } from '../../../utils/api/api.interface';
 import { fetchContent } from '../../../utils/api/content';

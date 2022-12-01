@@ -9,7 +9,6 @@ meta:
   <div>
     <div class="grid grid-cols-2 gap-8">
       <div>
-        <AppHeading class="mb-5">{{ stepT('title') }}</AppHeading>
         <p class="mb-8">{{ stepT('text') }}</p>
       </div>
     </div>
@@ -43,7 +42,6 @@ meta:
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppHeading from '../../../components/AppHeading.vue';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
 import { fetchContent } from '../../../utils/api/content';

@@ -8,7 +8,6 @@ meta:
 <template>
   <div class="mb-8 grid grid-cols-2 gap-8">
     <div>
-      <AppHeading class="mb-5">{{ stepT('title') }}</AppHeading>
       <p>{{ stepT('text') }}</p>
     </div>
   </div>
@@ -95,7 +94,6 @@ import { onBeforeMount, ref } from 'vue';
 import { JoinSetupContent } from '../../../utils/api/api.interface';
 import { fetchContent } from '../../../utils/api/content';
 import AppInput from '../../../components/forms/AppInput.vue';
-import AppHeading from '../../../components/AppHeading.vue';
 import { useI18n } from 'vue-i18n';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import SetupForm from '../../../components/pages/join/SetupForm.vue';
