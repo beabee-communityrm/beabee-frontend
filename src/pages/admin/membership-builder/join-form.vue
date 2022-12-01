@@ -6,85 +6,83 @@ meta:
 </route>
 
 <template>
-  <div class="grid lg:grid-cols-2 xl:grid-cols-3">
-    <div class="mb-8 grid grid-cols-2 gap-8">
-      <div>
-        <AppHeading class="mb-5">{{ stepT('title') }}</AppHeading>
-        <p>{{ stepT('text') }}</p>
-      </div>
+  <div class="mb-8 grid grid-cols-2 gap-8">
+    <div>
+      <AppHeading class="mb-5">{{ stepT('title') }}</AppHeading>
+      <p>{{ stepT('text') }}</p>
     </div>
-    <div v-if="joinContent" class="mb-12 grid grid-cols-2 gap-8">
-      <div>
-        <div class="mb-4">
+  </div>
+  <div v-if="joinContent" class="mb-12 grid grid-cols-2 gap-8">
+    <div>
+      <div class="mb-4">
+        <AppInput
+          v-model="joinContent.title"
+          :label="stepT('formTitle')"
+          required
+        />
+      </div>
+      <RichTextEditor
+        v-model="joinContent.subtitle"
+        :label="stepT('formSubtitle')"
+        class="mb-4"
+      />
+
+      <AppImageUpload
+        v-model="validation.backgroundUrl.$model"
+        :label="stepT('backgroundImage')"
+        :width="1440"
+        :height="810"
+        class="mb-4"
+        required
+        :error-message="validation.backgroundUrl.$errors[0]?.$message"
+      />
+
+      <h4 class="mb-4 text-lg font-semibold">
+        {{ stepT('suggestedAmounts') }} *
+      </h4>
+      <div class="mb-4 flex gap-4">
+        <PeriodAmounts
+          v-for="(period, periodI) in joinContent.periods"
+          :key="period.name"
+          v-model="joinContent.periods[periodI].presetAmounts"
+          :period="period.name"
+          :min-monthly-amount="joinContent.minMonthlyAmount"
+          class="flex-1"
+        />
+      </div>
+      <div class="mb-4 flex gap-4">
+        <div class="flex-1">
+          <AppLabel :label="stepT('minAmount')" />
           <AppInput
-            v-model="joinContent.title"
-            :label="stepT('formTitle')"
+            v-model="joinContent.minMonthlyAmount"
+            type="number"
+            :min="1"
+            required
+            class="block w-32"
+          />
+        </div>
+        <div class="flex-1">
+          <AppSelect
+            v-model="selectedDefaultAmount"
+            :label="stepT('defaultAmount')"
+            :items="defaultAmounts"
             required
           />
         </div>
-        <RichTextEditor
-          v-model="joinContent.subtitle"
-          :label="stepT('formSubtitle')"
-          class="mb-4"
-        />
-
-        <AppImageUpload
-          v-model="validation.backgroundUrl.$model"
-          :label="stepT('backgroundImage')"
-          :width="1440"
-          :height="810"
-          class="mb-4"
-          required
-          :error-message="validation.backgroundUrl.$errors[0]?.$message"
-        />
-
-        <h4 class="mb-4 text-lg font-semibold">
-          {{ stepT('suggestedAmounts') }} *
-        </h4>
-        <div class="mb-4 flex gap-4">
-          <PeriodAmounts
-            v-for="(period, periodI) in joinContent.periods"
-            :key="period.name"
-            v-model="joinContent.periods[periodI].presetAmounts"
-            :period="period.name"
-            :min-monthly-amount="joinContent.minMonthlyAmount"
-            class="flex-1"
-          />
-        </div>
-        <div class="mb-4 flex gap-4">
-          <div class="flex-1">
-            <AppLabel :label="stepT('minAmount')" />
-            <AppInput
-              v-model="joinContent.minMonthlyAmount"
-              type="number"
-              :min="1"
-              required
-              class="block w-32"
-            />
-          </div>
-          <div class="flex-1">
-            <AppSelect
-              v-model="selectedDefaultAmount"
-              :label="stepT('defaultAmount')"
-              :items="defaultAmounts"
-              required
-            />
-          </div>
-        </div>
-        <AppCheckbox
-          v-model="joinContent.showAbsorbFee"
-          :label="stepT('showAbsorbFee')"
-          class="font-semibold"
-        />
       </div>
-      <div
-        class="bg-cover bg-center p-4 pt-8"
-        :style="`background-image: url(${backgroundUrl})`"
-      >
-        <AuthBox>
-          <JoinForm :join-content="joinContent" @submit.prevent="" />
-        </AuthBox>
-      </div>
+      <AppCheckbox
+        v-model="joinContent.showAbsorbFee"
+        :label="stepT('showAbsorbFee')"
+        class="font-semibold"
+      />
+    </div>
+    <div
+      class="bg-cover bg-center p-4 pt-8"
+      :style="`background-image: url(${backgroundUrl})`"
+    >
+      <AuthBox>
+        <JoinForm :join-content="joinContent" @submit.prevent="" />
+      </AuthBox>
     </div>
   </div>
 </template>
@@ -149,5 +147,4 @@ onBeforeMount(async () => {
   joinContent.value = await fetchContent('join');
   backgroundUrl.value = generalContent.value.backgroundUrl || '';
 });
-
 </script>

@@ -33,6 +33,7 @@ meta:
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
+import EmailEditor from '../../../components/pages/admin/membership-builder/EmailEditor.vue';
 import { GetEmailData } from '../../../utils/api/api.interface';
 import { fetchContent } from '../../../utils/api/content';
 import { fetchEmail } from '../../../utils/api/email';
