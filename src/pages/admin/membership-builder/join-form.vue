@@ -87,6 +87,7 @@ meta:
 </template>
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref } from 'vue';
+import { emitter } from '../../../plugins/notify';
 import { JoinContent } from '../../../utils/api/api.interface';
 import { fetchContent } from '../../../utils/api/content';
 import AppInput from '../../../components/forms/AppInput.vue';
@@ -141,8 +142,13 @@ const validation = useVuelidate(
   { backgroundUrl }
 );
 
+async function handleUpdate() {
+  console.log('join');
+}
+
 onBeforeMount(async () => {
   joinContent.value = await fetchContent('join');
   backgroundUrl.value = generalContent.value.backgroundUrl || '';
+  emitter.on('update', handleUpdate);
 });
 </script>

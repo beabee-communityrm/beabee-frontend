@@ -55,6 +55,10 @@ async function loadEmail(id: string): Promise<GetEmailData | false> {
   }
 }
 
+async function handleUpdate() {
+  console.log('email');
+}
+
 onBeforeMount(async () => {
   welcomeEmail.value = await loadEmail('welcome');
   cancellationEmail.value = await loadEmail('cancelled-contribution');

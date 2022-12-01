@@ -107,6 +107,10 @@ const { t } = useI18n();
 const stepT = (key: string) =>
   t('membershipBuilder.steps.accountConfirmation.' + key);
 
+async function handleUpdate() {
+  console.log('confirmation');
+}
+
 onBeforeMount(async () => {
   setupContent.value = await fetchContent('join/setup');
 });

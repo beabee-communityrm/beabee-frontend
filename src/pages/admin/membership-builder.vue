@@ -31,7 +31,7 @@ meta:
 
   <AppTabs :items="tabs" :selected="route.name ? route.name as string : null" />
 
-  <router-view></router-view>
+  <router-view ref="mbRouterView"></router-view>
 </template>
 <script lang="ts" setup>
 import { Ref, ref } from 'vue';
@@ -49,6 +49,9 @@ const route = useRoute();
 const updated = ref(false);
 const updating = ref(false);
 const dirty = ref(false);
+
+const emit = defineEmits(['update']);
+const mbRouterView = ref();
 
 // TODO: i18n
 const tabs: Ref<TabItem[]> = ref([
@@ -78,6 +81,11 @@ const validation = useVuelidate();
 
 async function handleUpdate() {
   updating.value = true;
+  // console.log(mbRouterView);
+  // console.log(mbRouterView.value);
+  // mbRouterView.value.handleUpdate();
+  emit('update');
+
   /*
   await updateContent('profile', {
     introMessage: showIntroMessage.value ? introMessage.value : '',

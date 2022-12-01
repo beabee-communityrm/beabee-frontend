@@ -54,6 +54,10 @@ const stepT = (key: string) => t('membershipBuilder.steps.intro.' + key);
 const introMessage = ref('');
 const showIntroMessage = ref(false);
 
+async function handleUpdate() {
+  console.log('intro');
+}
+
 onBeforeMount(async () => {
   introMessage.value = (await fetchContent('profile')).introMessage;
   showIntroMessage.value = !!introMessage.value;
