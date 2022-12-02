@@ -118,10 +118,9 @@ meta:
 
     <div>
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
-      <div class="relative">
+      <div class="relative mt-4">
         <RoleEditor
           :roles="contact.roles"
-          class="mt-4"
           @delete="handleDeleteRole"
           @update="handleUpdateRole"
         />

@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-3 rounded border border-primary-20 bg-primary-10">
+  <div class="mb-3 rounded border border-primary-20 bg-primary-10">
     <div class="flex items-center bg-primary-5 px-4 py-1 text-sm">
       <AppRoundBadge :type="isRoleCurrent(role) ? 'success' : 'danger'" />
       <strong class="mx-2 font-bold uppercase text-body-80">
