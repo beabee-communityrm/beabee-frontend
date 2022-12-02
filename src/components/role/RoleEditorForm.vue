@@ -59,6 +59,8 @@
 
 <script lang="ts" setup>
 import { PermissionType } from '@beabee/beabee-common';
+import useVuelidate from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
 import { computed, reactive } from 'vue';
 import { format } from 'date-fns';
 import { useI18n } from 'vue-i18n';
@@ -77,6 +79,10 @@ const props = defineProps<{
   onSave?: (data: MemberRoleData) => Promise<void>;
   availableRoles?: PermissionType[];
 }>();
+
+// This means no form this form is embedded into will ever validate
+// while it's open, preventing unsaved changes from propogating
+useVuelidate({ never: { required } }, { never: undefined });
 
 const roleItems = computed(() =>
   [
