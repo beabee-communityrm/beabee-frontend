@@ -57,9 +57,10 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { PermissionType } from '@beabee/beabee-common';
+import { NewsletterStatus, PermissionType } from '@beabee/beabee-common';
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
@@ -68,8 +69,10 @@ import AppInput from '../../../components/forms/AppInput.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import RoleEditor from '../../../components/role/RoleEditor.vue';
 import { MemberRoleData } from '../../../utils/api/api.interface';
+import { createMember } from '../../../utils/api/member';
 
 const { t } = useI18n();
+const router = useRouter();
 
 const data = reactive({
   email: '',
@@ -93,8 +96,23 @@ function handleDeleteRole(roleName: PermissionType) {
   data.roles = data.roles.filter((role) => role.role !== roleName);
 }
 
+async function saveContact() {
+  return await createMember({
+    email: data.email,
+    firstname: data.firstname,
+    lastname: data.lastname,
+    roles: data.roles,
+    ...(data.subscribeToNewsletter && {
+      profile: {
+        newsletterStatus: NewsletterStatus.Subscribed,
+      },
+    }),
+  });
+}
+
 async function handleSubmit() {
-  await Promise.resolve();
+  const contact = await saveContact();
+  router.push('/admin/contacts/' + contact.id);
 }
 
 async function handleSaveAnother() {

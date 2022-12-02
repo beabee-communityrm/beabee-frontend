@@ -98,6 +98,13 @@ export interface UpdateMemberData extends Partial<MemberData> {
   profile?: UpdateMemberProfileData;
 }
 
+export interface CreateMemberData extends UpdateMemberData {
+  email: string;
+  firstname: string;
+  lastname: string;
+  roles?: MemberRoleData[];
+}
+
 export interface GoCardlessDirectDebitPaymentSource {
   method: PaymentMethod.GoCardlessDirectDebit;
   bankName: string;
