@@ -118,11 +118,20 @@ meta:
 
     <div>
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
-      <RoleEditor
-        :contact="contact"
-        class="mt-4"
-        @changed="handleChangedRoles"
-      />
+      <div class="relative">
+        <RoleEditor
+          :roles="contact.roles"
+          class="mt-4"
+          @delete="handleDeleteRole"
+          @update="handleUpdateRole"
+        />
+        <div
+          v-if="changingRoles"
+          class="absolute inset-0 flex items-center justify-center bg-primary-5/50"
+        >
+          <font-awesome-icon :icon="['fas', 'circle-notch']" spin />
+        </div>
+      </div>
     </div>
 
     <div class="hidden">
@@ -145,7 +154,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { ContributionType } from '@beabee/beabee-common';
+import { ContributionType, PermissionType } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../components/AppHeading.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
@@ -156,16 +165,20 @@ import { onBeforeMount, ref, reactive } from 'vue';
 import {
   GetMemberData,
   GetMemberDataWith,
+  MemberRoleData,
 } from '../../../../utils/api/api.interface';
-import { fetchMember, updateMember } from '../../../../utils/api/member';
+import {
+  deleteRole,
+  fetchMember,
+  updateMember,
+  updateRole,
+} from '../../../../utils/api/member';
 import AppInfoList from '../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
 import { fetchContent } from '../../../../utils/api/content';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 import AppForm from '../../../../components/forms/AppForm.vue';
-
-formatLocale;
 
 const { t, n } = useI18n();
 
@@ -183,6 +196,7 @@ const contactAnnotations = reactive({
   tags: [] as string[],
 });
 const securityLink = ref('');
+const changingRoles = ref(false);
 
 async function handleFormSubmit() {
   await updateMember(props.contact.id, {
@@ -195,12 +209,23 @@ async function handleSecurityAction() {
   securityLink.value = response;
 }
 
-async function handleChangedRoles() {
+async function handleUpdateRole(role: MemberRoleData) {
+  await handleChangedRoles(() => updateRole(props.contact.id, role.role, role));
+}
+
+async function handleDeleteRole(roleName: PermissionType) {
+  await handleChangedRoles(() => deleteRole(props.contact.id, roleName));
+}
+
+async function handleChangedRoles(cb: () => Promise<unknown>) {
+  changingRoles.value = true;
+  await cb();
   contact.value = await fetchMember(props.contact.id, [
     'profile',
     'contribution',
     'roles',
   ]);
+  changingRoles.value = false;
 }
 
 onBeforeMount(async () => {

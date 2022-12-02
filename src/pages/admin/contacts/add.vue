@@ -60,6 +60,7 @@ import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import AppForm from '../../../components/forms/AppForm.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import PageTitle from '../../../components/PageTitle.vue';
+import { MemberRoleData } from '../../../utils/api/api.interface';
 
 const { t } = useI18n();
 
@@ -68,6 +69,7 @@ const data = reactive({
   firstname: '',
   lastname: '',
   subscribeToNewsletter: false,
+  roles: [] as MemberRoleData[],
 });
 
 async function handleSubmit() {
