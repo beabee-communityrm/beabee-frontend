@@ -9,6 +9,7 @@ import {
 import axios from '../../axios';
 import {
   ContributionInfo,
+  CreateMemberData,
   ForceUpdateContributionData,
   GetMemberData,
   GetMemberDataWith,
@@ -81,6 +82,13 @@ export async function fetchMembers<With extends GetMemberWith>(
     ...data,
     items: data.items.map(deserializeMember),
   };
+}
+
+export async function createMember(
+  dataIn: CreateMemberData
+): Promise<GetMemberData> {
+  const { data } = await axios.post<Serial<GetMemberData>>('/member', dataIn);
+  return deserializeMember(data);
 }
 
 export async function fetchMember(id: string): Promise<GetMemberData>;
