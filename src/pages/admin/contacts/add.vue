@@ -32,6 +32,11 @@ meta:
       </section>
       <section class="mb-8">
         <AppHeading class="mb-4">{{ t('contactOverview.roles') }}</AppHeading>
+        <RoleEditor
+          :roles="data.roles"
+          @delete="handleDeleteRole"
+          @update="handleUpdateRole"
+        />
       </section>
       <section class="mb-8">
         <AppHeading class="mb-4">
@@ -52,6 +57,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { PermissionType } from '@beabee/beabee-common';
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
@@ -60,6 +66,7 @@ import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import AppForm from '../../../components/forms/AppForm.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import PageTitle from '../../../components/PageTitle.vue';
+import RoleEditor from '../../../components/role/RoleEditor.vue';
 import { MemberRoleData } from '../../../utils/api/api.interface';
 
 const { t } = useI18n();
@@ -71,6 +78,20 @@ const data = reactive({
   subscribeToNewsletter: false,
   roles: [] as MemberRoleData[],
 });
+
+function handleUpdateRole(role: MemberRoleData) {
+  const existingRole = data.roles.find((r) => r.role === role.role);
+  if (existingRole) {
+    existingRole.dateAdded = role.dateAdded;
+    existingRole.dateExpires = role.dateExpires;
+  } else {
+    data.roles.push(role);
+  }
+}
+
+function handleDeleteRole(roleName: PermissionType) {
+  data.roles = data.roles.filter((role) => role.role !== roleName);
+}
 
 async function handleSubmit() {
   await Promise.resolve();

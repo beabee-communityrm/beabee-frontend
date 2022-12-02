@@ -1,6 +1,6 @@
 <template>
   <AppForm
-    :button-text="t('actions.save')"
+    :button-text="role ? t('actions.update') : t('actions.add')"
     :reset-button-text="t('actions.cancel')"
     @submit="handleSubmit"
     @reset="emit('cancel')"
@@ -9,7 +9,7 @@
       v-if="!role"
       v-model="data.role"
       :label="t('roleEditor.new')"
-      :items="roleOptions"
+      :items="roleItems"
       required
       class="mb-4"
     />
@@ -58,8 +58,9 @@
 </template>
 
 <script lang="ts" setup>
+import { PermissionType } from '@beabee/beabee-common';
+import { computed, reactive } from 'vue';
 import { format } from 'date-fns';
-import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { MemberRoleData } from '../../utils/api/api.interface';
 import AppForm from '../forms/AppForm.vue';
@@ -74,22 +75,28 @@ const emit = defineEmits(['cancel', 'save']);
 const props = defineProps<{
   role?: MemberRoleData;
   onSave?: (data: MemberRoleData) => Promise<void>;
+  availableRoles?: PermissionType[];
 }>();
 
-const roleOptions = [
-  {
-    id: 'member',
-    label: t('common.role.member'),
-  },
-  {
-    id: 'admin',
-    label: t('common.role.admin'),
-  },
-  {
-    id: 'superadmin',
-    label: t('common.role.superadmin'),
-  },
-];
+const roleItems = computed(() =>
+  [
+    {
+      id: 'member' as const,
+      label: t('common.role.member'),
+    },
+    {
+      id: 'admin' as const,
+      label: t('common.role.admin'),
+    },
+    {
+      id: 'superadmin' as const,
+      label: t('common.role.superadmin'),
+    },
+  ].filter(
+    (item) =>
+      !props.availableRoles?.length || props.availableRoles.includes(item.id)
+  )
+);
 
 const data = reactive({
   role: props.role?.role || ('' as const),
