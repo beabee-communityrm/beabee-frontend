@@ -32,7 +32,7 @@
           :confirm="t('roleEditor.confirmDelete.actionYes')"
           variant="danger"
           @close="showDeleteModal = false"
-          @confirm="handleDeleteRole"
+          @confirm="emit('delete', role.role)"
         >
           <p>{{ t('roleEditor.confirmDelete.text') }}</p>
         </AppConfirmDialog>
@@ -43,7 +43,7 @@
       v-if="formVisible"
       class="p-4"
       :role="role"
-      @save="handleUpdateRole"
+      @save="emit('update', $event)"
       @cancel="formVisible = false"
     />
   </div>
@@ -55,16 +55,12 @@ import { useI18n } from 'vue-i18n';
 import AppButton from '../forms/AppButton.vue';
 import AppRoundBadge from '../AppRoundBadge.vue';
 import AppConfirmDialog from '../AppConfirmDialog.vue';
-import { MemberRoleData, GetMemberData } from '../../utils/api/api.interface';
-import { updateRole, deleteRole } from '../../utils/api/member';
+import { MemberRoleData } from '../../utils/api/api.interface';
 import { formatLocale } from '../../utils/dates/locale-date-formats';
 import RoleEditorForm from './RoleEditorForm.vue';
 
-const props = defineProps<{
-  role: MemberRoleData;
-  contact: GetMemberData;
-}>();
-const emit = defineEmits(['changed']);
+const emit = defineEmits(['delete', 'update']);
+defineProps<{ role: MemberRoleData }>();
 
 const { t } = useI18n();
 const formVisible = ref(false);
@@ -73,15 +69,5 @@ const showDeleteModal = ref(false);
 function isRoleCurrent(role: MemberRoleData): boolean {
   const now = new Date();
   return role.dateAdded < now && (!role.dateExpires || role.dateExpires > now);
-}
-
-async function handleUpdateRole(role: MemberRoleData) {
-  await updateRole(props.contact.id, role.role, role);
-  emit('changed');
-}
-
-async function handleDeleteRole() {
-  await deleteRole(props.contact.id, props.role.role);
-  emit('changed');
 }
 </script>

@@ -1,11 +1,11 @@
 <template>
   <div>
     <RoleEditorItem
-      v-for="role in contact.roles"
+      v-for="role in roles"
       :key="role.role"
       :role="role"
-      :contact="contact"
-      @changed="emit('changed')"
+      @delete="emit('delete', $event)"
+      @update="emit('update', $event)"
     />
 
     <AppButton
@@ -30,25 +30,18 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppButton from '../forms/AppButton.vue';
 import RoleEditorItem from './RoleEditorItem.vue';
-import {
-  GetMemberDataWith,
-  MemberRoleData,
-} from '../../utils/api/api.interface';
-import { updateRole } from '../..//utils/api/member';
+import { MemberRoleData } from '../../utils/api/api.interface';
 import RoleEditorForm from './RoleEditorForm.vue';
 
-const emit = defineEmits(['changed']);
-const props = defineProps<{
-  contact: GetMemberDataWith<'roles'>;
-}>();
+const emit = defineEmits(['delete', 'update']);
+defineProps<{ roles: MemberRoleData[] }>();
 
 const { t } = useI18n();
 
 const formVisible = ref(false);
 
 async function handleSaveNew(role: MemberRoleData) {
-  await updateRole(props.contact.id, role.role, role);
   formVisible.value = false;
-  emit('changed');
+  emit('update', role);
 }
 </script>
