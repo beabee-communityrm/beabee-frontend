@@ -312,6 +312,7 @@
     },
     "no": "No",
     "noResults": "No results found",
+    "pageCount": "Page {pageNumber} out of {pageTotal}",
     "role": {
       "admin": "Admin",
       "member": "Member",
@@ -403,6 +404,7 @@
       "contribution": "Contribution",
       "role": "Role"
     },
+    "editNotice": "Editing a contacts's contribution is currently only possible for those within an automatic contribution.",
     "noContacts": "No contacts added yet",
     "noResults": "No contacts found",
     "numResults": "{n} contact found | {n} contacts found",

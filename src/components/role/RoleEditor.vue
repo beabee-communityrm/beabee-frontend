@@ -11,7 +11,7 @@
     <AppButton
       class="mt-3 w-full"
       variant="primaryOutlined"
-      @click="formVisible = true"
+      @click="formVisible = !formVisible"
     >
       {{ t('roleEditor.add') }}
     </AppButton>
