@@ -1,5 +1,6 @@
 {
   "actions": {
+    "add": "Add",
     "back": "Back",
     "cancel": "Cancel",
     "chooseFile": "Choose file",
@@ -19,6 +20,9 @@
     "unpublish": "Unpublish",
     "update": "Update",
     "view": "View"
+  },
+  "addContact": {
+    "subscribeToNewsletter": "Subscribe to newsletter"
   },
   "adminDashboard": {
     "hint1": "<p>Did you know callouts can be created without an end date, and just keep running? See our <a href=\"https://beabee.io/en/beabee-full-feature-list/\">feature showcase</a> for more information.</p>\n",
@@ -913,6 +917,7 @@
   },
   "roleEditor": {
     "add": "Add role",
+    "addNewRole": "Add a new role",
     "confirmDelete": {
       "actionNo": "No, go back",
       "actionYes": "Yes, remove it",
