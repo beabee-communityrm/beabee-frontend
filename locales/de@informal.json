@@ -18,6 +18,7 @@
     "update": "Änderungen speichern",
     "view": "Anzeigen"
   },
+  "addContact": {},
   "adminDashboard": {
     "hint1": "<p>Das beabee-Handbuch für Community-Journalismus <a href=\"https://beabee.io/neu-handbuch-community-journalismus/\">„Lust auf Lokal” ist erschienen</a>. Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
     "hint2": "<p>Im <a href=\"https://beabee.io/#blog\">Blog</a> auf unserer Website findest du viele Best-Practice-Beispiele anderer Redaktionen, von denen du dich inspierieren lassen kannst.</p>\n",
@@ -386,30 +387,13 @@
       "phone": "Telefon",
       "preferredChannel": "Bevorzugter Kanal",
       "roles": {
-        "add": "Rolle hinzufügen",
-        "confirmDelete": {
-          "actionNo": "Nein, gehe zurück",
-          "actionYes": "Ja, löschen",
-          "text": "Bist Du sicher, dass Du diese Rolle entfernen willst?",
-          "title": "Rolle entfernen"
-        },
+        "confirmDelete": {},
         "expires": {
-          "label": "Ablaufdatum für diese Rolle",
-          "opts": {
-            "never": "Niemals",
-            "schedule": "Ablaufdatum festlegen"
-          }
+          "opts": {}
         },
-        "new": "Neue Rolle",
         "starts": {
-          "label": "Startdatum für diese Rolle",
-          "opts": {
-            "now": "Sofort",
-            "schedule": "Startdatum festlegen"
-          }
-        },
-        "title": "Rolle",
-        "today": "heute"
+          "opts": {}
+        }
       },
       "tags": "Tags"
     },
@@ -923,6 +907,32 @@
     "login": "Einloggen",
     "newPassword": "Neues Passwort",
     "title": "Passwort aktualisieren?"
+  },
+  "roleEditor": {
+    "add": "Rolle hinzufügen",
+    "confirmDelete": {
+      "actionNo": "Nein, gehe zurück",
+      "actionYes": "Ja, löschen",
+      "text": "Bist Du sicher, dass Du diese Rolle entfernen willst?",
+      "title": "Rolle entfernen"
+    },
+    "expires": {
+      "label": "Ablaufdatum für diese Rolle",
+      "opts": {
+        "never": "Niemals",
+        "schedule": "Ablaufdatum festlegen"
+      }
+    },
+    "new": "Neue Rolle",
+    "starts": {
+      "label": "Startdatum für diese Rolle",
+      "opts": {
+        "now": "Sofort",
+        "schedule": "Startdatum festlegen"
+      }
+    },
+    "title": "Rolle",
+    "today": "heute"
   },
   "setPassword": {
     "description": "Neues Passwort eingeben, um fortzufahren.",

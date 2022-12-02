@@ -118,7 +118,11 @@ meta:
 
     <div>
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
-      <RoleEditor :contact="contact" class="mt-4" @update="handleUpdate" />
+      <RoleEditor
+        :contact="contact"
+        class="mt-4"
+        @changed="handleChangedRoles"
+      />
     </div>
 
     <div class="hidden">
@@ -147,7 +151,7 @@ import AppHeading from '../../../../components/AppHeading.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown.vue';
-import RoleEditor from '../../../../components/pages/admin/contacts/RoleEditor.vue';
+import RoleEditor from '../../../../components/role/RoleEditor.vue';
 import { onBeforeMount, ref, reactive } from 'vue';
 import {
   GetMemberData,
@@ -191,7 +195,7 @@ async function handleSecurityAction() {
   securityLink.value = response;
 }
 
-async function handleUpdate() {
+async function handleChangedRoles() {
   contact.value = await fetchMember(props.contact.id, [
     'profile',
     'contribution',
