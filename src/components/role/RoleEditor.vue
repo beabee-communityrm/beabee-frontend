@@ -11,7 +11,7 @@
     <template v-if="availableRoles.length > 0">
       <div
         v-if="formVisible"
-        class="mt-3 rounded rounded-t-none border border-primary-20 bg-primary-10 p-4"
+        class="rounded rounded-t-none border border-primary-20 bg-primary-10 p-4"
       >
         <AppSubHeading class="mb-4">
           {{ t('roleEditor.addNewRole') }}
@@ -24,7 +24,7 @@
       </div>
       <AppButton
         v-else
-        class="mt-3 w-full"
+        class="w-full"
         variant="primaryOutlined"
         @click="formVisible = true"
       >
