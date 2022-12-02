@@ -7,7 +7,7 @@ meta:
 
 <template>
   <PageTitle :title="t('contacts.addContact')" border></PageTitle>
-  <div class="grid lg:grid-cols-2 xl:grid-cols-3">
+  <div class="grid lg:grid-cols-2">
     <AppForm :button-text="t('actions.save')" @submit.prevent="handleSubmit">
       <section class="mb-8">
         <div class="mb-4">
