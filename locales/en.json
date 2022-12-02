@@ -388,30 +388,13 @@
       "phone": "Phone",
       "preferredChannel": "Preferred channel",
       "roles": {
-        "add": "Add role",
-        "confirmDelete": {
-          "actionNo": "No, go back",
-          "actionYes": "Yes, remove it",
-          "text": "Are you sure you want to remove this role?",
-          "title": "Remove role"
-        },
+        "confirmDelete": {},
         "expires": {
-          "label": "Expiry date for this role",
-          "opts": {
-            "never": "Never",
-            "schedule": "Set an expiry date"
-          }
+          "opts": {}
         },
-        "new": "New role",
         "starts": {
-          "label": "Start date for this role",
-          "opts": {
-            "now": "Now",
-            "schedule": "Set a start date"
-          }
-        },
-        "title": "Roles",
-        "today": "present"
+          "opts": {}
+        }
       },
       "tags": "Tags"
     },
@@ -925,6 +908,32 @@
     "login": "Login to your account",
     "newPassword": "New password",
     "title": "Reset your password?"
+  },
+  "roleEditor": {
+    "add": "Add role",
+    "confirmDelete": {
+      "actionNo": "No, go back",
+      "actionYes": "Yes, remove it",
+      "text": "Are you sure you want to remove this role?",
+      "title": "Remove role"
+    },
+    "expires": {
+      "label": "Expiry date for this role",
+      "opts": {
+        "never": "Never",
+        "schedule": "Set an expiry date"
+      }
+    },
+    "new": "New role",
+    "starts": {
+      "label": "Start date for this role",
+      "opts": {
+        "now": "Now",
+        "schedule": "Set a start date"
+      }
+    },
+    "title": "Roles",
+    "today": "present"
   },
   "setPassword": {
     "description": "Set a new password to login.",

@@ -226,7 +226,10 @@ export async function updateRole(
 ): Promise<MemberRoleData> {
   const { data } = await axios.put<Serial<MemberRoleData>>(
     `/member/${id}/role/${role}`,
-    dataIn
+    {
+      dateAdded: dataIn.dateAdded,
+      dateExpires: dataIn.dateExpires,
+    }
   );
   return deserializeRole(data);
 }
