@@ -40,7 +40,7 @@ import AppTable from '../../../table/AppTable.vue';
 import AppPagination from '../../../AppPagination.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
 
-import { fetchPayments } from '../../../../utils/api/member';
+import { fetchPayments } from '../../../../utils/api/contact';
 import { GetPaymentData } from '../../../../utils/api/api.interface';
 import { Header, SortType } from '../../../table/table.interface';
 import AppHeading from '../../../AppHeading.vue';

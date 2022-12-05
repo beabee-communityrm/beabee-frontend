@@ -51,7 +51,7 @@
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { updateMember } from '../../../../utils/api/member';
+import { updateContact } from '../../../../utils/api/contact';
 import AppButton from '../../../forms/AppButton.vue';
 import MessageBox from '../../../MessageBox.vue';
 import AppInput from '../../../forms/AppInput.vue';
@@ -66,7 +66,7 @@ const password = ref('');
 const confirmPassword = ref('');
 
 async function handleFormSubmit() {
-  await updateMember('me', { password: password.value });
+  await updateContact('me', { password: password.value });
   saved.value = true;
   showForm.value = false;
 }

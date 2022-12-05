@@ -13,10 +13,10 @@ meta:
   </div>
 </template>
 <script lang="ts" setup>
-import { GetMemberData } from '../../../../utils/api/api.interface';
+import { GetContactData } from '../../../../utils/api/api.interface';
 import UpdateContactInformation from '../../../../components/pages/profile/information/UpdateContactInformation.vue';
 
 defineProps<{
-  contact: GetMemberData;
+  contact: GetContactData;
 }>();
 </script>

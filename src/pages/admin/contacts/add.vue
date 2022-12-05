@@ -57,7 +57,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { NewsletterStatus, PermissionType } from '@beabee/beabee-common';
+import { NewsletterStatus, RoleType } from '@beabee/beabee-common';
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
@@ -68,8 +68,8 @@ import AppForm from '../../../components/forms/AppForm.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import RoleEditor from '../../../components/role/RoleEditor.vue';
-import { MemberRoleData } from '../../../utils/api/api.interface';
-import { createMember } from '../../../utils/api/member';
+import { ContactRoleData } from '../../../utils/api/api.interface';
+import { createContact } from '../../../utils/api/contact';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -79,10 +79,10 @@ const data = reactive({
   firstname: '',
   lastname: '',
   subscribeToNewsletter: false,
-  roles: [] as MemberRoleData[],
+  roles: [] as ContactRoleData[],
 });
 
-function handleUpdateRole(role: MemberRoleData) {
+function handleUpdateRole(role: ContactRoleData) {
   const existingRole = data.roles.find((r) => r.role === role.role);
   if (existingRole) {
     existingRole.dateAdded = role.dateAdded;
@@ -92,12 +92,12 @@ function handleUpdateRole(role: MemberRoleData) {
   }
 }
 
-function handleDeleteRole(roleName: PermissionType) {
+function handleDeleteRole(roleName: RoleType) {
   data.roles = data.roles.filter((role) => role.role !== roleName);
 }
 
 async function saveContact() {
-  return await createMember({
+  return await createContact({
     email: data.email,
     firstname: data.firstname,
     lastname: data.lastname,

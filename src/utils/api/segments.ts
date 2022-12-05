@@ -2,17 +2,17 @@ import { Paginated } from '@beabee/beabee-common';
 import axios from '../../axios';
 import {
   CreateSegmentData,
-  GetMemberData,
-  GetMemberDataWith,
-  GetMembersQuery,
-  GetMemberWith,
+  GetContactData,
+  GetContactDataWith,
+  GetContactsQuery,
+  GetContactWith,
   GetSegmentData,
   GetSegmentDataWith,
   GetSegmentWith,
   Serial,
   UpdateSegmentData,
 } from './api.interface';
-import { deserializeMember } from './member';
+import { deserializeContact } from './contact';
 
 export async function fetchSegments(): Promise<GetSegmentData[]>;
 export async function fetchSegments<With extends GetSegmentWith>(
@@ -78,26 +78,26 @@ export async function deleteSegment(id: string): Promise<void> {
   await axios.delete('/segments/' + id);
 }
 
-export async function fetchSegmentMembers(
+export async function fetchSegmentContacts(
   id: string,
-  query: GetMembersQuery
-): Promise<Paginated<GetMemberData>>;
-export async function fetchSegmentMembers<With extends GetMemberWith>(
+  query: GetContactsQuery
+): Promise<Paginated<GetContactData>>;
+export async function fetchSegmentContacts<With extends GetContactWith>(
   id: string,
-  query: GetMembersQuery,
+  query: GetContactsQuery,
   _with: readonly With[]
-): Promise<Paginated<GetMemberDataWith<With>>>;
-export async function fetchSegmentMembers<With extends GetMemberWith>(
+): Promise<Paginated<GetContactDataWith<With>>>;
+export async function fetchSegmentContacts<With extends GetContactWith>(
   id: string,
-  query: GetMembersQuery = {},
+  query: GetContactsQuery = {},
   _with?: readonly With[]
-): Promise<Paginated<GetMemberDataWith<With>>> {
-  const { data } = await axios.get(`/segments/${id}/members`, {
+): Promise<Paginated<GetContactDataWith<With>>> {
+  const { data } = await axios.get(`/segments/${id}/contacts`, {
     params: { with: _with, ...query },
   });
 
   return {
     ...data,
-    items: data.items.map(deserializeMember),
+    items: data.items.map(deserializeContact),
   };
 }

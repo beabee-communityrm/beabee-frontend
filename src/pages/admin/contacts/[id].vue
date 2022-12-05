@@ -28,8 +28,8 @@ meta:
 import { computed, onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import PageTitle from '../../../components/PageTitle.vue';
-import { GetMemberData } from '../../../utils/api/api.interface';
-import { fetchMember } from '../../../utils/api/member';
+import { GetContactData } from '../../../utils/api/api.interface';
+import { fetchContact } from '../../../utils/api/contact';
 import AppTabs from '../../../components/tabs/AppTabs.vue';
 import { useI18n } from 'vue-i18n';
 
@@ -37,7 +37,7 @@ const props = defineProps<{ id: string }>();
 const route = useRoute();
 const { t } = useI18n();
 
-const contact = ref<GetMemberData | undefined>();
+const contact = ref<GetContactData | undefined>();
 
 const tabs = computed(() =>
   contact.value
@@ -66,6 +66,6 @@ const tabs = computed(() =>
 );
 
 onBeforeMount(async () => {
-  contact.value = await fetchMember(props.id as string);
+  contact.value = await fetchContact(props.id as string);
 });
 </script>

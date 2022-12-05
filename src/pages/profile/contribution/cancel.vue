@@ -32,7 +32,7 @@ import PageTitle from '../../../components/PageTitle.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
-import { cancelContribution } from '../../../utils/api/member';
+import { cancelContribution } from '../../../utils/api/contact';
 import { useRouter } from 'vue-router';
 
 const { t } = useI18n();
