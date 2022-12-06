@@ -37,6 +37,7 @@ meta:
     v-model:page-size="currentPageSize"
     :result="noticesTable"
     keypath="notices.showingOf"
+    class="mt-4"
   />
 </template>
 <script lang="ts" setup>

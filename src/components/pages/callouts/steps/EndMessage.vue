@@ -70,7 +70,7 @@ import { EndMessageStepProps } from '../callouts.interface';
 import RichTextEditor from '../../../rte/RichTextEditor.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
-const props = defineProps<{ data: EndMessageStepProps; validated: boolean }>();
+const props = defineProps<{ data: EndMessageStepProps }>();
 
 const { t } = useI18n();
 const inputT = (key: string) =>

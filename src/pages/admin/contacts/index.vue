@@ -8,7 +8,7 @@ meta:
 <template>
   <PageTitle :title="t('menu.community')" border>
     <div class="flex-1 md:hidden">
-      <AppSelect v-model="currentSegment" :items="segmentItems" />
+      <AppSelect v-model="currentSegmentId" :items="segmentItems" />
     </div>
     <div class="flex-0 ml-3">
       <AppButton href="/members/add">{{ t('contacts.addContact') }}</AppButton>
@@ -16,7 +16,7 @@ meta:
   </PageTitle>
   <div class="md:flex">
     <div class="hidden flex-none basis-[220px] md:block">
-      <AppVTabs v-model="currentSegment" :items="segmentItems" />
+      <AppVTabs v-model="currentSegmentId" :items="segmentItems" />
     </div>
     <div class="flex-auto">
       <div class="flex">
@@ -47,15 +47,24 @@ meta:
         :filter-groups="filterGroups"
         :filter-items="filterItems"
         :expanded="showAdvancedSearch"
-        :has-changed="!!route.query.r"
+        :has-changed="hasUnsavedSegment"
         @reset="currentRules = undefined"
       />
-      <AppPaginatedResult
-        v-model:page="currentPage"
-        v-model:page-size="currentPageSize"
-        :result="contactsTable"
-        keypath="contacts.showingOf"
-      />
+      <div class="mt-4 flex items-center">
+        <SaveSegment
+          v-if="hasUnsavedSegment && currentRules"
+          :segment="currentSegment"
+          :rules="currentRules"
+          @saved="handleSavedSegment"
+        />
+        <AppPaginatedResult
+          v-model:page="currentPage"
+          v-model:page-size="currentPageSize"
+          :result="contactsTable"
+          keypath="contacts.showingOf"
+          class="ml-auto"
+        />
+      </div>
       <AppTable
         v-model:sort="currentSort"
         :headers="headers"
@@ -115,13 +124,18 @@ meta:
         v-model:page-size="currentPageSize"
         :result="contactsTable"
         keypath="contacts.showingOf"
+        class="mt-4"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ContributionPeriod, Paginated } from '@beabee/beabee-common';
+import {
+  ContributionPeriod,
+  Paginated,
+  RuleGroup,
+} from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
@@ -147,6 +161,7 @@ import {
 } from '../../../components/pages/admin/contacts/contacts.interface';
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
+import SaveSegment from '../../../components/pages/admin/contacts/SaveSegment.vue';
 
 const { t, n } = useI18n();
 
@@ -215,28 +230,35 @@ const currentSearch = computed({
   set: (s) => router.push({ query: { ...route.query, s } }),
 });
 
-const currentRules = computed<GetMembersQuery['rules']>({
-  get: () => {
-    if (route.query.r) {
-      return JSON.parse(route.query.r as string);
-    } else if (currentSegment.value) {
-      return segments.value.find((s) => s.id === currentSegment.value)
-        ?.ruleGroup;
-    } else {
-      return undefined;
-    }
-  },
+const currentRules = computed({
+  get: () =>
+    route.query.r
+      ? (JSON.parse(route.query.r as string) as RuleGroup)
+      : currentSegment.value?.ruleGroup,
   set: (r) =>
     router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
 });
 
-const currentSegment = computed({
+const currentSegment = computed(() =>
+  currentSegmentId.value
+    ? segments.value.find((s) => s.id === currentSegmentId.value)
+    : undefined
+);
+
+const currentSegmentId = computed({
   get: () => (route.query.segment as string) || '',
   set: (segment) => {
     router.push({ query: { segment: segment || undefined } });
     showAdvancedSearch.value = false;
   },
 });
+
+const hasUnsavedSegment = computed(
+  () =>
+    !!route.query.r &&
+    !!currentRules.value &&
+    currentRules.value.rules.length > 0
+);
 
 const segments = ref<GetSegmentDataWith<'contactCount'>[]>([]);
 const contactsTotal = ref<number | null>(null);
@@ -260,6 +282,16 @@ const segmentItems = computed(() => [
 function getMembershipStartDate(member: GetMemberDataWith<'roles'>): string {
   const membership = member.roles.find((role) => role.role === 'member');
   return membership ? formatLocale(membership.dateAdded, 'PPP') : '';
+}
+
+function handleSavedSegment(segment: GetSegmentDataWith<'contactCount'>) {
+  const segmentIndex = segments.value.findIndex((s) => s.id === segment.id);
+  if (segmentIndex > -1) {
+    segments.value[segmentIndex] = segment;
+  } else {
+    segments.value.push(segment);
+  }
+  currentSegmentId.value = segment.id;
 }
 
 onBeforeMount(async () => {

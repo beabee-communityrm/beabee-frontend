@@ -1,22 +1,21 @@
 <template>
-  <AppModal :open="open" @close="$emit('close')">
-    <header class="mb-4 flex items-center justify-between">
-      <h3 class="text-2xl font-semibold text-danger">
-        <slot name="title" />
-      </h3>
-    </header>
-
-    <div class="py-2">
-      <p class="mb-4 text-lg"><slot name="text" /></p>
+  <AppModal
+    :open="open"
+    :title="title"
+    :variant="variant"
+    @close="$emit('close')"
+  >
+    <div class="mb-4 text-lg">
+      <slot />
     </div>
 
     <footer class="text-center">
-      <AppButton class="mr-4" variant="primaryOutlined" @click="$emit('close')"
-        ><slot name="button-cancel-text"
-      /></AppButton>
-      <AppButton variant="danger" @click="$emit('confirm')"
-        ><slot name="button-confirm-text"
-      /></AppButton>
+      <AppButton class="mr-4" variant="primaryOutlined" @click="$emit('close')">
+        {{ cancel }}
+      </AppButton>
+      <AppButton :variant="variant" @click="$emit('confirm')">
+        {{ confirm }}
+      </AppButton>
     </footer>
   </AppModal>
 </template>
@@ -25,5 +24,11 @@ import AppButton from '../components/forms/AppButton.vue';
 import AppModal from './AppModal.vue';
 
 defineEmits(['close', 'confirm']);
-defineProps<{ open: boolean }>();
+defineProps<{
+  open: boolean;
+  variant?: 'danger';
+  confirm: string;
+  cancel: string;
+  title: string;
+}>();
 </script>
