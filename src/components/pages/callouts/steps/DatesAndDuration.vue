@@ -4,7 +4,7 @@
       <div class="col-span-1">
         <AppLabel :label="inputT('starts.label')" required />
         <AppRadioGroup
-          v-if="mode === 'new'"
+          v-if="mode !== 'live'"
           v-model="dataProxy.startNow"
           name="calloutStartDate"
           :options="[
@@ -13,7 +13,7 @@
           ]"
           required
         />
-        <div v-if="!dataProxy.startNow || mode === 'edit'" class="flex gap-2">
+        <div v-if="!dataProxy.startNow || mode === 'live'" class="flex gap-2">
           <div>
             <AppInput v-model="dataProxy.startDate" type="date" required />
           </div>
@@ -56,12 +56,12 @@ import { useI18n } from 'vue-i18n';
 import AppInput from '../../../forms/AppInput.vue';
 import AppLabel from '../../../forms/AppLabel.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
-import { DateAndDurationStepProps } from '../callouts.interface';
+import { CalloutMode, DateAndDurationStepProps } from '../callouts.interface';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   data: DateAndDurationStepProps;
-  mode: 'new' | 'edit';
+  mode: CalloutMode;
 }>();
 
 const { t } = useI18n();

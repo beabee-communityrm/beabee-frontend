@@ -7,7 +7,7 @@
     >
       <div
         ref="divRef"
-        class="relative flex max-h-full max-w-md flex-col rounded bg-white p-6 shadow-lg md:p-8"
+        class="relative flex max-h-full flex-col rounded bg-white p-6 shadow-lg md:max-w-[28rem] md:p-8 lg:w-[28rem]"
         v-bind="$attrs"
         @click.stop
       >
@@ -18,7 +18,11 @@
         >
           <font-awesome-icon :icon="['fa', 'times']" />
         </button>
-        <AppHeading v-if="title" class="mb-4">{{ title }}</AppHeading>
+        <AppHeading v-if="title" class="mb-4">
+          <span :class="{ 'text-danger': variant === 'danger' }">
+            {{ title }}
+          </span>
+        </AppHeading>
         <div class="overflow-auto">
           <slot></slot>
         </div>
@@ -35,6 +39,7 @@ defineEmits(['close']);
 const props = defineProps<{
   open: boolean;
   title?: string;
+  variant?: 'danger';
 }>();
 
 const divRef = ref<HTMLElement>();

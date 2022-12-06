@@ -74,6 +74,7 @@ meta:
         v-model:page-size="currentPageSize"
         :result="calloutsTable"
         keypath="callouts.showingOf"
+        class="mt-4"
       />
     </div>
   </div>

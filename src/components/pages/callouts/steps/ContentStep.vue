@@ -3,7 +3,7 @@
     {{ t('editCallout.replicated') }}
   </AppAlert>
 
-  <AppAlert v-else-if="mode === 'edit'" variant="warning" class="mb-4">
+  <AppAlert v-else-if="mode === 'live'" variant="warning" class="mb-4">
     <template #icon>
       <font-awesome-icon :icon="['fa', 'exclamation']" />
     </template>
@@ -63,14 +63,14 @@ import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import 'formiojs/dist/formio.builder.css';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import { ContentStepProps } from '../callouts.interface';
+import { CalloutMode, ContentStepProps } from '../callouts.interface';
 import AppAlert from '../../../AppAlert.vue';
 import RichTextEditor from '../../../rte/RichTextEditor.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   data: ContentStepProps;
-  mode: 'edit' | 'new';
+  mode: CalloutMode;
 }>();
 
 const { t } = useI18n();

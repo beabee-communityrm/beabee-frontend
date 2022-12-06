@@ -1,6 +1,6 @@
 <template>
-  <div v-if="result" class="mt-4 flex items-center text-sm">
-    <p class="flex-1">
+  <div v-if="result" class="flex items-center text-sm">
+    <p class="mr-4 flex-1">
       <i18n-t v-if="result.count > 0" :keypath="keypath">
         <template #start
           ><b>{{ n(result.offset + 1) }}</b></template

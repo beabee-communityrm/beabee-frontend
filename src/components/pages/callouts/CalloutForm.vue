@@ -4,8 +4,8 @@
     border
     no-collapse
   >
-    <div v-if="mode === 'edit'" class="flex-0 ml-3">
-      <AppButton :disabled="!isAllValid" @click="submitForm">{{
+    <div v-if="mode !== 'new'" class="flex-0 ml-3">
+      <AppButton :disabled="!isAllValid" @click="emit('save')">{{
         t('actions.update')
       }}</AppButton>
     </div>
@@ -42,7 +42,7 @@
           v-show="isLastStep"
           class="ml-2"
           :disabled="!isAllValid"
-          @click="submitForm"
+          @click="emit('save')"
           >{{
             steps.dates.data.startNow
               ? t('actions.publish')
@@ -55,39 +55,26 @@
 </template>
 
 <script lang="ts" setup>
-import { watch, ref, computed, reactive } from 'vue';
-import slugify from 'slugify';
+import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import PageTitle from '../../PageTitle.vue';
 import AppHeading from '../../AppHeading.vue';
 import AppButton from '../../forms/AppButton.vue';
 import AppStepper from '../../stepper/AppStepper.vue';
-import { CalloutSteps } from './callouts.interface';
-import router from '../../../router';
-import { UpdateCalloutData } from '../../../utils/api/api.interface';
-import { updateCallout, createCallout } from '../../../utils/api/callout';
+import { CalloutMode, CalloutSteps } from './callouts.interface';
+
+const emit = defineEmits(['save']);
+const props = defineProps<{ steps: CalloutSteps; mode: CalloutMode }>();
 
 const { t } = useI18n();
-const props = defineProps<{ steps: CalloutSteps; mode: 'edit' | 'new' }>();
-
-const steps = reactive(props.steps);
-
-// TODO: FIXME should just be a computed
-watch(
-  () => steps.titleAndImage.data.title,
-  (title) => {
-    steps.url.data.autoSlug = slugify(title, { lower: true });
-  }
-);
 
 const stepsInOrder = computed(() => [
-  steps.content,
-  steps.titleAndImage,
-  steps.visibility,
-  steps.endMessage,
-  steps.url,
-  //steps.mailchimp,
-  steps.dates,
+  props.steps.content,
+  props.steps.titleAndImage,
+  props.steps.visibility,
+  props.steps.endMessage,
+  //props.steps.mailchimp,
+  props.steps.dates,
 ]);
 
 const selectedStepIndex = ref(0);
@@ -100,68 +87,4 @@ const isLastStep = computed(
 const isAllValid = computed(() =>
   stepsInOrder.value.every((step) => step.validated)
 );
-
-function parseDateTime(date: string, time: string): Date {
-  return new Date(date + 'T' + time);
-}
-
-function makeCalloutData(steps: CalloutSteps): [string, UpdateCalloutData] {
-  return [
-    steps.url.data.useCustomSlug
-      ? steps.url.data.slug
-      : steps.url.data.autoSlug,
-    {
-      title: steps.titleAndImage.data.title,
-      excerpt: steps.titleAndImage.data.description,
-      image: steps.titleAndImage.data.coverImageURL,
-      intro: steps.content.data.introText,
-      formSchema: steps.content.data.formSchema,
-      starts: steps.dates.data.startNow
-        ? new Date()
-        : parseDateTime(steps.dates.data.startDate, steps.dates.data.startTime),
-      expires: steps.dates.data.hasEndDate
-        ? parseDateTime(steps.dates.data.endDate, steps.dates.data.endTime)
-        : null,
-      allowUpdate: steps.visibility.data.usersCanEditAnswers,
-      allowMultiple: false,
-      hidden: !steps.visibility.data.showOnUserDashboards,
-      access:
-        steps.visibility.data.whoCanTakePart === 'members'
-          ? 'member'
-          : steps.visibility.data.allowAnonymousResponses === 'none'
-          ? 'guest'
-          : steps.visibility.data.allowAnonymousResponses === 'guests'
-          ? 'anonymous'
-          : 'only-anonymous',
-      ...(steps.endMessage.data.whenFinished === 'message'
-        ? {
-            thanksText: steps.endMessage.data.thankYouText,
-            thanksTitle: steps.endMessage.data.thankYouTitle,
-            thanksRedirect: null,
-          }
-        : {
-            thanksText: '',
-            thanksTitle: '',
-            thanksRedirect: steps.endMessage.data.thankYouRedirect,
-          }),
-      shareTitle: steps.url.data.overrideShare ? steps.url.data.shareTitle : '',
-      shareDescription: steps.url.data.overrideShare
-        ? steps.url.data.shareDescription
-        : '',
-    },
-  ];
-}
-async function submitForm() {
-  const [slug, callout] = makeCalloutData(steps);
-  const newCallout =
-    props.mode === 'edit'
-      ? await updateCallout(slug, callout)
-      : await createCallout({ ...callout, slug });
-  router.push({
-    path: '/admin/callouts/view/' + newCallout.slug,
-    query: {
-      [props.mode === 'new' ? 'created' : 'updated']: null,
-    },
-  });
-}
 </script>

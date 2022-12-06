@@ -8,7 +8,6 @@ import {
   GetCalloutResponsesQuery,
   CreateCalloutResponseData,
   CreateCalloutData,
-  UpdateCalloutData,
   GetCalloutWith,
   GetCalloutDataWith,
   GetCalloutData,
@@ -74,7 +73,7 @@ export async function createCallout(
 
 export async function updateCallout(
   slug: string,
-  calloutData: UpdateCalloutData
+  calloutData: CreateCalloutData
 ): Promise<GetCalloutData> {
   const { data } = await axios.patch<Serial<GetCalloutData>>(
     '/callout/' + slug,

@@ -65,6 +65,7 @@ import {
   faReply,
   faCircleDot,
   faCircleArrowRight,
+  faFloppyDisk,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -127,7 +128,8 @@ library.add(
   faPlus,
   faReply,
   faCircleDot,
-  faCircleArrowRight
+  faCircleArrowRight,
+  faFloppyDisk
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
