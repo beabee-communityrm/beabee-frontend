@@ -56,11 +56,11 @@ import AppInput from '../../../forms/AppInput.vue';
 import AppSelect from '../../../forms/AppSelect.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
 import { ContributionType } from '@beabee/beabee-common';
+import { forceUpdateContribution } from '../../../../utils/api/member';
 import {
-  fetchMember,
-  forceUpdateContribution,
-} from '../../../../utils/api/member';
-import { ForceUpdateContributionData } from '../../../../utils/api/api.interface';
+  ForceUpdateContributionData,
+  GetMemberDataWith,
+} from '../../../../utils/api/api.interface';
 import { fetchContent } from '../../../../utils/api/content';
 import AppHeading from '../../../AppHeading.vue';
 import { generalContent } from '../../../../store';
@@ -68,7 +68,7 @@ import AppForm from '../../../forms/AppForm.vue';
 
 const { t } = useI18n();
 
-const props = defineProps<{ id: string }>();
+const props = defineProps<{ contact: GetMemberDataWith<'contribution'> }>();
 
 const contribution = reactive<ForceUpdateContributionData>({
   type: ContributionType.None,
@@ -96,22 +96,21 @@ const manualPaymentSources = (
 });
 
 watch(
-  toRef(props, 'id'),
-  async (id) => {
-    const member = await fetchMember(id, ['contribution']);
+  toRef(props, 'contact'),
+  (contact) => {
     // This can't happen as component is only mounted for None/Manual
     if (
-      member.contribution.type !== ContributionType.Manual &&
-      member.contribution.type !== ContributionType.None
+      contact.contribution.type !== ContributionType.Manual &&
+      contact.contribution.type !== ContributionType.None
     ) {
       return;
     }
 
-    contribution.type = member.contribution.type;
-    contribution.amount = member.contribution.amount;
-    contribution.period = member.contribution.period;
+    contribution.type = contact.contribution.type;
+    contribution.amount = contact.contribution.amount;
+    contribution.period = contact.contribution.period;
 
-    const paymentSource = member.contribution.paymentSource;
+    const paymentSource = contact.contribution.paymentSource;
     if (paymentSource?.method === null) {
       contribution.source = paymentSource.source || '';
       contribution.reference = paymentSource.reference || '';
@@ -125,6 +124,6 @@ watch(
 );
 
 async function handleUpdate() {
-  await forceUpdateContribution(props.id, contribution);
+  await forceUpdateContribution(props.contact.id, contribution);
 }
 </script>

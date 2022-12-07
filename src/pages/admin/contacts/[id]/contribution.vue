@@ -8,7 +8,7 @@ meta:
 <template>
   <div class="grid lg:grid-cols-2 xl:grid-cols-3">
     <Suspense>
-      <EditManualContribution v-if="showEditForm" :id="contact.id" />
+      <EditManualContribution v-if="showEditForm" :contact="contact" />
       <p v-else>
         {{ t('contacts.editNotice') }}
       </p>
