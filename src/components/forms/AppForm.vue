@@ -59,9 +59,7 @@ async function handleSubmit(evt: Event) {
   hasSuccess.value = false;
 
   try {
-    if (props.onSubmit) {
-      await props.onSubmit(evt);
-    }
+    await props.onSubmit?.(evt);
     hasSuccess.value = true;
   } catch {
     hasError.value = true;
