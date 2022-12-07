@@ -27,6 +27,13 @@ meta:
           class="mb-4"
           required
         />
+
+        <AppButton
+          :loading="updating"
+          :disabled="validation.$invalid"
+          @click="handleUpdate"
+          >{{ t('actions.update') }}</AppButton
+        >
       </div>
       <div>
         <WelcomeMessage
@@ -42,20 +49,33 @@ meta:
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import AppButton from '../../../components/forms/AppButton.vue';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
 import { fetchContent } from '../../../utils/api/content';
 import WelcomeMessage from '../../../components/welcome-message/WelcomeMessage.vue';
 import { currentUser } from '../../../store';
+import { updateContent } from '../../../utils/api/content';
+import useVuelidate from '@vuelidate/core';
 
 const { t } = useI18n();
 const stepT = (key: string) => t('membershipBuilder.steps.intro.' + key);
 
 const introMessage = ref('');
 const showIntroMessage = ref(false);
+const updating = ref(false);
+
+const validation = useVuelidate();
 
 async function handleUpdate() {
-  console.log('intro');
+  updating.value = true
+  try {
+  await updateContent('profile', {
+    introMessage: showIntroMessage.value ? introMessage.value : '',
+  });
+  } finally {
+  updating.value = false
+  }
 }
 
 onBeforeMount(async () => {

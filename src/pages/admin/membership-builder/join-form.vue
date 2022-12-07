@@ -74,6 +74,13 @@ meta:
         :label="stepT('showAbsorbFee')"
         class="font-semibold"
       />
+
+      <AppButton
+        :loading="updating"
+        :disabled="validation.$invalid"
+        @click="handleUpdate"
+        >{{ t('actions.update') }}</AppButton
+      >
     </div>
     <div
       class="bg-cover bg-center p-4 pt-8"
@@ -87,9 +94,9 @@ meta:
 </template>
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref } from 'vue';
-import { emitter } from '../../../plugins/notify';
 import { JoinContent } from '../../../utils/api/api.interface';
-import { fetchContent } from '../../../utils/api/content';
+import { fetchContent, updateContent } from '../../../utils/api/content';
+import AppButton from '../../../components/forms/AppButton.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
 import AppLabel from '../../../components/forms/AppLabel.vue';
@@ -107,6 +114,7 @@ import PeriodAmounts from '../../../components/pages/admin/membership-builder/Pe
 
 const joinContent = ref<JoinContent>();
 const backgroundUrl = ref('');
+const updating = ref(false);
 
 const { n, t } = useI18n();
 
@@ -143,12 +151,19 @@ const validation = useVuelidate(
 );
 
 async function handleUpdate() {
-  console.log('join');
+  if (joinContent.value) {
+    updating.value = true
+    await Promise.all([
+      updateContent('join', joinContent.value),
+      updateContent('general', {
+        backgroundUrl: backgroundUrl.value || '',
+      }),
+    ]).finally(() => (updating.value = false));
+  }
 }
 
 onBeforeMount(async () => {
   joinContent.value = await fetchContent('join');
   backgroundUrl.value = generalContent.value.backgroundUrl || '';
-  emitter.on('update', handleUpdate);
 });
 </script>

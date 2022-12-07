@@ -26,16 +26,25 @@ meta:
       :email="cancellationEmail"
       :footer="emailFooter"
     />
+
+    <AppButton
+      :loading="updating"
+      :disabled="validation.$invalid"
+      @click="handleUpdate"
+      >{{ t('actions.update') }}</AppButton
+    >
   </div>
 </template>
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import AppButton from '../../../components/forms/AppButton.vue';
 import EmailEditor from '../../../components/pages/admin/membership-builder/EmailEditor.vue';
 import { GetEmailData } from '../../../utils/api/api.interface';
 import { fetchContent } from '../../../utils/api/content';
-import { fetchEmail } from '../../../utils/api/email';
+import { fetchEmail, updateEmail } from '../../../utils/api/email';
 import { isRequestError } from '../../../utils/api';
+import useVuelidate from '@vuelidate/core';
 
 const { t } = useI18n();
 const stepT = (key: string) => t('membershipBuilder.steps.emails.' + key);
@@ -43,6 +52,9 @@ const stepT = (key: string) => t('membershipBuilder.steps.emails.' + key);
 const welcomeEmail = ref<GetEmailData | false>();
 const cancellationEmail = ref<GetEmailData | false>();
 const emailFooter = ref('');
+const updating = ref(false);
+
+const validation = useVuelidate();
 
 async function loadEmail(id: string): Promise<GetEmailData | false> {
   try {
@@ -56,7 +68,17 @@ async function loadEmail(id: string): Promise<GetEmailData | false> {
 }
 
 async function handleUpdate() {
-  console.log('email');
+  try {
+    updating.value = true;
+    if (welcomeEmail.value) {
+      await updateEmail('welcome', welcomeEmail.value);
+    }
+    if (cancellationEmail.value) {
+      await updateEmail('cancelled-contribution', cancellationEmail.value);
+    }
+  } finally {
+    updating.value = false;
+  }
 }
 
 onBeforeMount(async () => {

@@ -78,6 +78,14 @@ meta:
             required
           />
         </div>
+        <div class="mb-4">
+          <AppButton
+            :loading="updating"
+            :disabled="validation.$invalid"
+            @click="handleUpdate"
+            >{{ t('actions.update') }}</AppButton
+          >
+        </div>
       </template>
     </div>
     <div class="bg-cover bg-center p-4 pt-8">
@@ -92,13 +100,15 @@ meta:
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue';
 import { JoinSetupContent } from '../../../utils/api/api.interface';
-import { fetchContent } from '../../../utils/api/content';
+import { fetchContent, updateContent } from '../../../utils/api/content';
+import AppButton from '../../../components/forms/AppButton.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import { useI18n } from 'vue-i18n';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import SetupForm from '../../../components/pages/join/SetupForm.vue';
 import AuthBox from '../../../components/AuthBox.vue';
 import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
+import useVuelidate from '@vuelidate/core';
 
 const setupContent = ref<JoinSetupContent>();
 
@@ -107,8 +117,18 @@ const { t } = useI18n();
 const stepT = (key: string) =>
   t('membershipBuilder.steps.accountConfirmation.' + key);
 
+const updating = ref(false);
+const validation = useVuelidate();
+
 async function handleUpdate() {
-  console.log('confirmation');
+  try {
+    updating.value = true;
+    if (setupContent.value) {
+      await updateContent('join/setup', setupContent.value);
+    }
+  } finally {
+    updating.value = false;
+  }
 }
 
 onBeforeMount(async () => {
