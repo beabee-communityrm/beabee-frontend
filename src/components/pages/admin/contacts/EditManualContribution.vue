@@ -14,39 +14,41 @@
       class="mb-3"
     />
 
-    <div class="mb-3">
-      <AppInput
-        v-model="contribution.amount"
-        :label="t('contacts.data.amount')"
-        type="number"
-        :prefix="generalContent.currencySymbol"
+    <template v-if="contribution.type === ContributionType.Manual">
+      <div class="mb-3">
+        <AppInput
+          v-model="contribution.amount"
+          :label="t('contacts.data.amount')"
+          type="number"
+          :prefix="generalContent.currencySymbol"
+        />
+      </div>
+
+      <AppRadioGroup
+        v-model="contribution.period"
+        name="period"
+        :label="t('contacts.data.period')"
+        :options="[
+          ['monthly', 'Monthly'],
+          ['yearly', 'Yearly'],
+        ]"
+        class="mb-4"
       />
-    </div>
 
-    <AppRadioGroup
-      v-model="contribution.period"
-      name="period"
-      :label="t('contacts.data.period')"
-      :options="[
-        ['monthly', 'Monthly'],
-        ['yearly', 'Yearly'],
-      ]"
-      class="mb-4"
-    />
-
-    <AppSelect
-      v-model="contribution.source"
-      :label="t('contacts.data.paymentSource')"
-      :items="manualPaymentSources"
-      class="mb-3"
-    />
-
-    <div class="mb-3">
-      <AppInput
-        v-model="contribution.reference"
-        :label="t('contacts.data.paymentReference')"
+      <AppSelect
+        v-model="contribution.source"
+        :label="t('contacts.data.paymentSource')"
+        :items="manualPaymentSources"
+        class="mb-3"
       />
-    </div>
+
+      <div class="mb-3">
+        <AppInput
+          v-model="contribution.reference"
+          :label="t('contacts.data.paymentReference')"
+        />
+      </div>
+    </template>
   </AppForm>
 </template>
 <script lang="ts" setup>
@@ -124,6 +126,15 @@ watch(
 );
 
 async function handleUpdate() {
-  await forceUpdateContribution(props.contact.id, contribution);
+  if (contribution.type === ContributionType.None) {
+    // Save empty values, not what is currently in the form
+    await forceUpdateContribution(props.contact.id, {
+      type: ContributionType.None,
+      amount: undefined,
+      period: undefined,
+    });
+  } else {
+    await forceUpdateContribution(props.contact.id, contribution);
+  }
 }
 </script>
