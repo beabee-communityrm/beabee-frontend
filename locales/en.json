@@ -408,7 +408,7 @@
       "contribution": "Contribution",
       "role": "Role"
     },
-    "editNotice": "Editing a contacts's contribution is currently only possible for those within an automatic contribution.",
+    "editNotice": "Updating a contact's contribution is currently only possible for those with a manual contribution.",
     "noContacts": "No contacts added yet",
     "noResults": "No contacts found",
     "numResults": "{n} contact found | {n} contacts found",

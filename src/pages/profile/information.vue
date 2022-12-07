@@ -10,7 +10,7 @@ meta:
     :sub-title="t('informationPage.subTitle')"
   />
 
-  <div class="grid lg:grid-cols-2 xl:grid-cols-3">
+  <div class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
     <div>
       <ChangePassword />
       <Suspense>
