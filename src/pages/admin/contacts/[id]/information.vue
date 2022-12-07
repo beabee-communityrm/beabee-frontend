@@ -14,7 +14,7 @@ meta:
 </template>
 <script lang="ts" setup>
 import { GetMemberData } from '../../../../utils/api/api.interface';
-import UpdateContactInformation from '../../../../components/pages/profile/information/UpdateContactInformation.vue';
+import UpdateContactInformation from '../../../../components/contact/ContactUpdateInformation.vue';
 
 defineProps<{
   contact: GetMemberData;

@@ -9,7 +9,7 @@
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue';
-import AppOptIn from './AppOptIn.vue';
+import AppOptIn from '../AppOptIn.vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{

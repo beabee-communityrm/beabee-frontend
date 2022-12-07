@@ -8,7 +8,7 @@
       {{ t('informationPage.contactInformation') }}
     </AppHeading>
 
-    <ContactInformation
+    <ContactUpdateBasicInformation
       v-model:email="information.emailAddress"
       v-model:firstName="information.firstName"
       v-model:lastName="information.lastName"
@@ -49,16 +49,16 @@
   </AppForm>
 </template>
 <script lang="ts" setup>
-import ContactInformation from '../../../ContactInformation.vue';
-import AppAddress from '../../../AppAddress.vue';
-import ContactMailOptIn from '../../../ContactMailOptIn.vue';
-import { useI18n } from 'vue-i18n';
 import { computed, reactive, toRef, watch } from 'vue';
-import AppHeading from '../../../AppHeading.vue';
-import { fetchContent } from '../../../../utils/api/content';
-import { fetchMember, updateMember } from '../../../../utils/api/member';
-import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
-import AppForm from '../../../forms/AppForm.vue';
+import { useI18n } from 'vue-i18n';
+import AppAddress from '../AppAddress.vue';
+import ContactUpdateBasicInformation from './ContactUpdateBasicInformation.vue';
+import ContactMailOptIn from './ContactMailOptIn.vue';
+import AppHeading from '../AppHeading.vue';
+import { fetchContent } from '../../utils/api/content';
+import { fetchMember, updateMember } from '../../utils/api/member';
+import AppRadioGroup from '../forms/AppRadioGroup.vue';
+import AppForm from '../forms/AppForm.vue';
 
 const props = defineProps<{
   id: string;

@@ -60,18 +60,15 @@
 <script lang="ts" setup>
 import { reactive, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppInput from '../../../forms/AppInput.vue';
-import AppSelect from '../../../forms/AppSelect.vue';
-import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
+import AppInput from '../forms/AppInput.vue';
+import AppSelect from '../forms/AppSelect.vue';
+import AppRadioGroup from '../forms/AppRadioGroup.vue';
 import { ContributionPeriod, ContributionType } from '@beabee/beabee-common';
-import {
-  fetchMember,
-  forceUpdateContribution,
-} from '../../../../utils/api/member';
-import { fetchContent } from '../../../../utils/api/content';
-import { generalContent } from '../../../../store';
-import AppForm from '../../../forms/AppForm.vue';
-import MessageBox from '../../../MessageBox.vue';
+import { fetchMember, forceUpdateContribution } from '../../utils/api/member';
+import { fetchContent } from '../../utils/api/content';
+import { generalContent } from '../../store';
+import AppForm from '../forms/AppForm.vue';
+import MessageBox from '../MessageBox.vue';
 
 const { t } = useI18n();
 

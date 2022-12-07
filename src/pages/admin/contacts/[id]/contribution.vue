@@ -12,20 +12,20 @@ meta:
         {{ t('contribution.billing') }}
       </AppHeading>
       <Suspense>
-        <EditManualContribution :id="contact.id" />
+        <ContactUpdateContribution :id="contact.id" />
       </Suspense>
     </div>
     <div>
-      <PaymentsHistory :id="contact.id" />
+      <ContactPaymentsHistory :id="contact.id" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { GetMemberData } from '../../../../utils/api/api.interface';
-import EditManualContribution from '../../../../components/pages/admin/contacts/EditManualContribution.vue';
 import { useI18n } from 'vue-i18n';
-import PaymentsHistory from '../../../../components/pages/profile/contribution/PaymentsHistory.vue';
 import AppHeading from '../../../../components/AppHeading.vue';
+import ContactPaymentsHistory from '../../../../components/contact/ContactPaymentsHistory.vue';
+import ContactUpdateContribution from '../../../../components/contact/ContactUpdateContribution.vue';
 
 const { t } = useI18n();
 
