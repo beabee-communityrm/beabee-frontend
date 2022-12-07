@@ -1,61 +1,64 @@
 <template>
-  <AppForm
-    v-if="
-      contribution.type === ContributionType.Manual ||
-      contribution.type === ContributionType.None
-    "
-    :button-text="t('contribution.updateContribution')"
-    @submit.prevent="handleUpdate"
-  >
-    <AppSelect
-      v-model="contribution.type"
-      :label="t('contacts.data.contributionType')"
-      :items="contributionTypes"
-      class="mb-3"
-    />
-
-    <template v-if="contribution.type === ContributionType.Manual">
-      <div class="mb-3">
-        <AppInput
-          v-model="contribution.amount"
-          :label="t('contacts.data.amount')"
-          type="number"
-          :prefix="generalContent.currencySymbol"
-        />
-      </div>
-
-      <AppRadioGroup
-        v-model="contribution.period"
-        name="period"
-        :label="t('contacts.data.period')"
-        :options="[
-          ['monthly', t('common.monthly')],
-          ['annually', t('common.annually')],
-        ]"
-        class="mb-4"
-      />
-
+  <template v-if="!loading">
+    <AppForm
+      v-if="
+        contribution.type === ContributionType.Manual ||
+        contribution.type === ContributionType.None
+      "
+      :button-text="t('contribution.updateContribution')"
+      :success-text="t('form.saved')"
+      @submit.prevent="handleUpdate"
+    >
       <AppSelect
-        v-model="contribution.source"
-        :label="t('contacts.data.paymentSource')"
-        :items="manualPaymentSources"
+        v-model="contribution.type"
+        :label="t('contacts.data.contributionType')"
+        :items="contributionTypes"
         class="mb-3"
       />
 
-      <div class="mb-3">
-        <AppInput
-          v-model="contribution.reference"
-          :label="t('contacts.data.paymentReference')"
+      <template v-if="contribution.type === ContributionType.Manual">
+        <div class="mb-3">
+          <AppInput
+            v-model="contribution.amount"
+            :label="t('contacts.data.amount')"
+            type="number"
+            :prefix="generalContent.currencySymbol"
+          />
+        </div>
+
+        <AppRadioGroup
+          v-model="contribution.period"
+          name="period"
+          :label="t('contacts.data.period')"
+          :options="[
+            ['monthly', t('common.monthly')],
+            ['annually', t('common.annually')],
+          ]"
+          class="mb-4"
         />
-      </div>
-    </template>
-  </AppForm>
-  <MessageBox v-else type="warning">
-    {{ t('contacts.editNotice') }}
-  </MessageBox>
+
+        <AppSelect
+          v-model="contribution.source"
+          :label="t('contacts.data.paymentSource')"
+          :items="manualPaymentSources"
+          class="mb-3"
+        />
+
+        <div class="mb-3">
+          <AppInput
+            v-model="contribution.reference"
+            :label="t('contacts.data.paymentReference')"
+          />
+        </div>
+      </template>
+    </AppForm>
+    <MessageBox v-else type="warning">
+      {{ t('contacts.editNotice') }}
+    </MessageBox>
+  </template>
 </template>
 <script lang="ts" setup>
-import { reactive, toRef, watch } from 'vue';
+import { reactive, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../forms/AppInput.vue';
 import AppSelect from '../../../forms/AppSelect.vue';
@@ -74,6 +77,7 @@ const { t } = useI18n();
 
 const props = defineProps<{ id: string }>();
 
+const loading = ref(true);
 const contribution = reactive({
   type: ContributionType.None,
   amount: 0 as number | undefined,
@@ -106,6 +110,7 @@ const manualPaymentSources = [
 watch(
   toRef(props, 'id'),
   async (id) => {
+    loading.value = true;
     const contact = await fetchMember(id, ['contribution']);
 
     contribution.type = contact.contribution.type;
@@ -121,6 +126,7 @@ watch(
       contribution.source = '';
       contribution.reference = '';
     }
+    loading.value = false;
   },
   { immediate: true }
 );
