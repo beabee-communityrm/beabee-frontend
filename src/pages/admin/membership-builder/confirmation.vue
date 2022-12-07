@@ -12,7 +12,11 @@ meta:
     </div>
   </div>
   <div v-if="setupContent" class="grid grid-cols-2 gap-8">
-    <div>
+    <AppForm
+      :button-text="t('form.saveChanges')"
+      :success-text="t('form.saved')"
+      @submit="handleUpdate"
+    >
       <div class="mb-4">
         <AppInput
           v-model="setupContent.welcome"
@@ -78,16 +82,8 @@ meta:
             required
           />
         </div>
-        <div class="mb-4">
-          <AppButton
-            :loading="updating"
-            :disabled="validation.$invalid"
-            @click="handleUpdate"
-            >{{ t('actions.update') }}</AppButton
-          >
-        </div>
       </template>
-    </div>
+    </AppForm>
     <div class="bg-cover bg-center p-4 pt-8">
       <Suspense>
         <AuthBox>
@@ -101,14 +97,13 @@ meta:
 import { onBeforeMount, ref } from 'vue';
 import { JoinSetupContent } from '../../../utils/api/api.interface';
 import { fetchContent, updateContent } from '../../../utils/api/content';
-import AppButton from '../../../components/forms/AppButton.vue';
+import AppForm from '../../../components/forms/AppForm.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import { useI18n } from 'vue-i18n';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import SetupForm from '../../../components/pages/join/SetupForm.vue';
 import AuthBox from '../../../components/AuthBox.vue';
 import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
-import useVuelidate from '@vuelidate/core';
 
 const setupContent = ref<JoinSetupContent>();
 
@@ -117,17 +112,9 @@ const { t } = useI18n();
 const stepT = (key: string) =>
   t('membershipBuilder.steps.accountConfirmation.' + key);
 
-const updating = ref(false);
-const validation = useVuelidate();
-
 async function handleUpdate() {
-  try {
-    updating.value = true;
-    if (setupContent.value) {
-      await updateContent('join/setup', setupContent.value);
-    }
-  } finally {
-    updating.value = false;
+  if (setupContent.value) {
+    await updateContent('join/setup', setupContent.value);
   }
 }
 

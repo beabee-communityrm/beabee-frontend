@@ -12,7 +12,11 @@ meta:
     </div>
   </div>
   <div v-if="joinContent" class="mb-12 grid grid-cols-2 gap-8">
-    <div>
+    <AppForm
+      :button-text="t('form.saveChanges')"
+      :success-text="t('form.saved')"
+      @submit="handleUpdate"
+    >
       <div class="mb-4">
         <AppInput
           v-model="joinContent.title"
@@ -74,14 +78,7 @@ meta:
         :label="stepT('showAbsorbFee')"
         class="font-semibold"
       />
-
-      <AppButton
-        :loading="updating"
-        :disabled="validation.$invalid"
-        @click="handleUpdate"
-        >{{ t('actions.update') }}</AppButton
-      >
-    </div>
+    </AppForm>
     <div
       class="bg-cover bg-center p-4 pt-8"
       :style="`background-image: url(${backgroundUrl})`"
@@ -96,13 +93,13 @@ meta:
 import { computed, onBeforeMount, ref } from 'vue';
 import { JoinContent } from '../../../utils/api/api.interface';
 import { fetchContent, updateContent } from '../../../utils/api/content';
-import AppButton from '../../../components/forms/AppButton.vue';
+import AppForm from '../../../components/forms/AppForm.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
 import AppLabel from '../../../components/forms/AppLabel.vue';
 import { useI18n } from 'vue-i18n';
 import AppSelect from '../../../components/forms/AppSelect.vue';
-import { ContributionPeriod } from '../../../utils/enums/contribution-period.enum';
+import { ContributionPeriod } from '@beabee/beabee-common';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import JoinForm from '../../../components/pages/join/JoinForm.vue';
 import AuthBox from '../../../components/AuthBox.vue';
@@ -114,7 +111,6 @@ import PeriodAmounts from '../../../components/pages/admin/membership-builder/Pe
 
 const joinContent = ref<JoinContent>();
 const backgroundUrl = ref('');
-const updating = ref(false);
 
 const { n, t } = useI18n();
 
@@ -152,13 +148,12 @@ const validation = useVuelidate(
 
 async function handleUpdate() {
   if (joinContent.value) {
-    updating.value = true
     await Promise.all([
       updateContent('join', joinContent.value),
       updateContent('general', {
         backgroundUrl: backgroundUrl.value || '',
       }),
-    ]).finally(() => (updating.value = false));
+    ]);
   }
 }
 
