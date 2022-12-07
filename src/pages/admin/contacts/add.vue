@@ -8,7 +8,11 @@ meta:
 <template>
   <PageTitle :title="t('contacts.addContact')" border></PageTitle>
   <div class="grid lg:grid-cols-2">
-    <AppForm :button-text="t('actions.save')" @submit.prevent="handleSubmit">
+    <AppForm
+      :button-text="t('actions.save')"
+      :success-text="t('addContact.contactSaved')"
+      @submit.prevent="handleSubmit"
+    >
       <section class="mb-8">
         <ContactBasicInformationFields
           v-model:email="data.email"
@@ -38,9 +42,10 @@ meta:
       </section>
       <template #buttons="{ disabled }">
         <AppButton
+          type="submit"
           variant="linkOutlined"
           :disabled="disabled"
-          @click="handleSaveAnother"
+          @click="addAnother = true"
         >
           {{ t('actions.saveAndAnother') }}
         </AppButton>
@@ -55,7 +60,8 @@ import {
   NewsletterStatus,
   PermissionType,
 } from '@beabee/beabee-common';
-import { reactive } from 'vue';
+import useVuelidate from '@vuelidate/core';
+import { reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import AppHeading from '../../../components/AppHeading.vue';
@@ -73,7 +79,7 @@ import { createMember } from '../../../utils/api/member';
 const { t } = useI18n();
 const router = useRouter();
 
-const data = reactive({
+const initialData = () => ({
   email: '',
   firstname: '',
   lastname: '',
@@ -87,6 +93,10 @@ const data = reactive({
     reference: undefined,
   } as UpdateContribution,
 });
+const data = reactive(initialData());
+const addAnother = ref(false);
+
+const validation = useVuelidate();
 
 function handleUpdateRole(role: MemberRoleData) {
   const existingRole = data.roles.find((r) => r.role === role.role);
@@ -103,11 +113,23 @@ function handleDeleteRole(roleName: PermissionType) {
 }
 
 async function saveContact() {
+  const contribution =
+    data.contribution.type === ContributionType.None
+      ? {
+          type: ContributionType.None as const,
+          amount: undefined,
+          period: undefined,
+        }
+      : data.contribution.type === ContributionType.Manual
+      ? { ...data.contribution, type: ContributionType.Manual as const }
+      : undefined;
+
   return await createMember({
     email: data.email,
     firstname: data.firstname,
     lastname: data.lastname,
     roles: data.roles,
+    contribution,
     ...(data.subscribeToNewsletter && {
       profile: {
         newsletterStatus: NewsletterStatus.Subscribed,
@@ -118,10 +140,12 @@ async function saveContact() {
 
 async function handleSubmit() {
   const contact = await saveContact();
-  router.push('/admin/contacts/' + contact.id);
-}
-
-async function handleSaveAnother() {
-  await handleSubmit();
+  if (addAnother.value) {
+    Object.assign(data, initialData());
+    validation.value.$reset();
+    addAnother.value = false;
+  } else {
+    router.push('/admin/contacts/' + contact.id);
+  }
 }
 </script>

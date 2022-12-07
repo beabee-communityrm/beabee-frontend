@@ -103,6 +103,7 @@ export interface CreateMemberData extends UpdateMemberData {
   firstname: string;
   lastname: string;
   roles?: MemberRoleData[];
+  contribution?: ForceUpdateContributionData;
 }
 
 export interface GoCardlessDirectDebitPaymentSource {

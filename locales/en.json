@@ -22,6 +22,7 @@
     "view": "View"
   },
   "addContact": {
+    "contactSaved": "Contact saved",
     "subscribeToNewsletter": "Subscribe to newsletter"
   },
   "adminDashboard": {
