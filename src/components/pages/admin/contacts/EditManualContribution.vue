@@ -86,11 +86,15 @@ const contributionTypes = [
   },
 ];
 
-const manualPaymentSources = (
-  await fetchContent('contacts')
-).manualPaymentSources.map((x) => {
-  return { id: x, label: x };
-});
+const manualPaymentSources = [
+  {
+    id: '',
+    label: '',
+  },
+  ...(await fetchContent('contacts')).manualPaymentSources.map((x) => {
+    return { id: x, label: x };
+  }),
+];
 
 watch(
   toRef(props, 'contact'),
