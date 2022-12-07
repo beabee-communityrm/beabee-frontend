@@ -25,22 +25,22 @@ const route = useRoute();
 const tabs: Ref<TabItem[]> = ref([
   {
     id: 'adminMembershipBuilderJoinForm',
-    label: 'Join form',
+    label: t('membershipBuilder.steps.joinForm.title'),
     to: `/admin/membership-builder/join-form`,
   },
   {
     id: 'adminMembershipBuilderAccountConfirmation',
-    label: 'Account confirmation',
+    label: t('membershipBuilder.steps.accountConfirmation.title'),
     to: `/admin/membership-builder/confirmation`,
   },
   {
     id: 'adminMembershipBuilderIntroMessages',
-    label: 'Intro messages',
+    label: t('membershipBuilder.steps.intro.title'),
     to: `/admin/membership-builder/intro`,
   },
   {
     id: 'adminMembershipBuilderEmail',
-    label: 'Email notices',
+    label: t('membershipBuilder.steps.emails.title'),
     to: `/admin/membership-builder/email`,
   },
 ]);
