@@ -1,12 +1,12 @@
 <route lang="yaml">
 name: adminContactsAdd
 meta:
-  pageTitle: contacts.addContact
+  pageTitle: addContact.title
   role: admin
 </route>
 
 <template>
-  <PageTitle :title="t('contacts.addContact')" border></PageTitle>
+  <PageTitle :title="t('addContact.title')" border></PageTitle>
   <div class="grid lg:grid-cols-2">
     <AppForm
       :button-text="t('actions.save')"

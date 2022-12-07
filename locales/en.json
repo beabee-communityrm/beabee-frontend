@@ -23,7 +23,8 @@
   },
   "addContact": {
     "contactSaved": "Contact saved",
-    "subscribeToNewsletter": "Subscribe to newsletter"
+    "subscribeToNewsletter": "Subscribe to newsletter",
+    "title": "Add a contact"
   },
   "adminDashboard": {
     "hint1": "<p>Did you know callouts can be created without an end date, and just keep running? See our <a href=\"https://beabee.io/en/beabee-full-feature-list/\">feature showcase</a> for more information.</p>\n",
