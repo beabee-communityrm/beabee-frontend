@@ -11,12 +11,22 @@ meta:
       <AppHeading class="mb-2">
         {{ t('contribution.billing') }}
       </AppHeading>
-      <Suspense>
-        <ContactUpdateContribution
-          :id="contact.id"
-          @update="handleUpdateContribution"
-        />
-      </Suspense>
+      <template v-if="contribution">
+        <AppForm
+          v-if="
+            contribution.type === ContributionType.Manual ||
+            contribution.type === ContributionType.None
+          "
+          :button-text="t('contribution.updateContribution')"
+          :success-text="t('form.saved')"
+          @submit="handleUpdateContribution"
+        >
+          <ContactContributionFields v-model="contribution" />
+        </AppForm>
+        <MessageBox v-else type="warning">
+          {{ t('contacts.editNotice') }}
+        </MessageBox>
+      </template>
     </div>
     <div>
       <ContactPaymentsHistory :id="contact.id" />
@@ -25,29 +35,60 @@ meta:
 </template>
 <script lang="ts" setup>
 import { ContributionType } from '@beabee/beabee-common';
+import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { GetMemberData } from '../../../../utils/api/api.interface';
 import AppHeading from '../../../../components/AppHeading.vue';
 import ContactPaymentsHistory from '../../../../components/contact/ContactPaymentsHistory.vue';
-import ContactUpdateContribution from '../../../../components/contact/ContactUpdateContribution.vue';
-import { forceUpdateContribution } from '../../../../utils/api/member';
+import {
+  fetchMember,
+  forceUpdateContribution,
+} from '../../../../utils/api/member';
 import { UpdateContribution } from '../../../../components/contact/contact.interface';
+import AppForm from '../../../../components/forms/AppForm.vue';
+import ContactContributionFields from '../../../../components/contact/ContactContributionFields.vue';
+import MessageBox from '../../../../components/MessageBox.vue';
 
 const { t } = useI18n();
 
 const props = defineProps<{ contact: GetMemberData }>();
 
-async function handleUpdateContribution(contribution: UpdateContribution) {
-  if (contribution.type === ContributionType.None) {
+const contribution = ref<UpdateContribution>();
+
+onBeforeMount(async () => {
+  contribution.value = undefined;
+
+  const contact = await fetchMember(props.contact.id, ['contribution']);
+
+  contribution.value = {
+    type: contact.contribution.type,
+    amount: contact.contribution.amount,
+    period: contact.contribution.period,
+    ...(contact.contribution.paymentSource?.method === null
+      ? {
+          source: contact.contribution.paymentSource.source,
+          reference: contact.contribution.paymentSource.reference,
+        }
+      : {
+          source: undefined,
+          reference: undefined,
+        }),
+  };
+});
+
+async function handleUpdateContribution() {
+  if (!contribution.value) return; // Can't submit without contribution laoded
+
+  if (contribution.value.type === ContributionType.None) {
     // Save empty values, not what is currently in the form
     await forceUpdateContribution(props.contact.id, {
       type: ContributionType.None,
       amount: undefined,
       period: undefined,
     });
-  } else if (contribution.type === ContributionType.Manual) {
+  } else if (contribution.value.type === ContributionType.Manual) {
     await forceUpdateContribution(props.contact.id, {
-      ...contribution,
+      ...contribution.value,
       type: ContributionType.Manual, // Why doesn't TS narrow this type?
     });
   }
