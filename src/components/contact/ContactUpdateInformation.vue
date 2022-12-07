@@ -8,7 +8,7 @@
       {{ t('informationPage.contactInformation') }}
     </AppHeading>
 
-    <ContactUpdateBasicInformation
+    <ContactBasicInformationFields
       v-model:email="information.emailAddress"
       v-model:firstName="information.firstName"
       v-model:lastName="information.lastName"
@@ -52,7 +52,7 @@
 import { computed, reactive, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppAddress from '../AppAddress.vue';
-import ContactUpdateBasicInformation from './ContactUpdateBasicInformation.vue';
+import ContactBasicInformationFields from './ContactBasicInformationFields.vue';
 import ContactMailOptIn from './ContactMailOptIn.vue';
 import AppHeading from '../AppHeading.vue';
 import { fetchContent } from '../../utils/api/content';
