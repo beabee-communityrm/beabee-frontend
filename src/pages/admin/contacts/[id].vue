@@ -68,6 +68,6 @@ const tabs = computed(() =>
 );
 
 onBeforeMount(async () => {
-  contact.value = await fetchMember(props.id as string, ['contribution']);
+  contact.value = await fetchMember(props.id as string);
 });
 </script>

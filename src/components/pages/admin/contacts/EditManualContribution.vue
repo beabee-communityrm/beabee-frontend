@@ -1,5 +1,9 @@
 <template>
   <AppForm
+    v-if="
+      contribution.type === ContributionType.Manual ||
+      contribution.type === ContributionType.None
+    "
     :button-text="t('contribution.updateContribution')"
     @submit.prevent="handleUpdate"
   >
@@ -25,8 +29,8 @@
         name="period"
         :label="t('contacts.data.period')"
         :options="[
-          ['monthly', 'Monthly'],
-          ['yearly', 'Yearly'],
+          ['monthly', t('common.monthly')],
+          ['annually', t('common.annually')],
         ]"
         class="mb-4"
       />
@@ -46,6 +50,9 @@
       </div>
     </template>
   </AppForm>
+  <MessageBox v-else type="warning">
+    {{ t('contacts.editNotice') }}
+  </MessageBox>
 </template>
 <script lang="ts" setup>
 import { reactive, toRef, watch } from 'vue';
@@ -53,24 +60,24 @@ import { useI18n } from 'vue-i18n';
 import AppInput from '../../../forms/AppInput.vue';
 import AppSelect from '../../../forms/AppSelect.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
-import { ContributionType } from '@beabee/beabee-common';
-import { forceUpdateContribution } from '../../../../utils/api/member';
+import { ContributionPeriod, ContributionType } from '@beabee/beabee-common';
 import {
-  ForceUpdateContributionData,
-  GetMemberDataWith,
-} from '../../../../utils/api/api.interface';
+  fetchMember,
+  forceUpdateContribution,
+} from '../../../../utils/api/member';
 import { fetchContent } from '../../../../utils/api/content';
 import { generalContent } from '../../../../store';
 import AppForm from '../../../forms/AppForm.vue';
+import MessageBox from '../../../MessageBox.vue';
 
 const { t } = useI18n();
 
-const props = defineProps<{ contact: GetMemberDataWith<'contribution'> }>();
+const props = defineProps<{ id: string }>();
 
-const contribution = reactive<ForceUpdateContributionData>({
+const contribution = reactive({
   type: ContributionType.None,
-  amount: 0,
-  period: undefined,
+  amount: 0 as number | undefined,
+  period: undefined as ContributionPeriod | undefined,
   source: '',
   reference: '',
 });
@@ -97,15 +104,9 @@ const manualPaymentSources = [
 ];
 
 watch(
-  toRef(props, 'contact'),
-  (contact) => {
-    // This can't happen as component is only mounted for None/Manual
-    if (
-      contact.contribution.type !== ContributionType.Manual &&
-      contact.contribution.type !== ContributionType.None
-    ) {
-      return;
-    }
+  toRef(props, 'id'),
+  async (id) => {
+    const contact = await fetchMember(id, ['contribution']);
 
     contribution.type = contact.contribution.type;
     contribution.amount = contact.contribution.amount;
@@ -127,13 +128,16 @@ watch(
 async function handleUpdate() {
   if (contribution.type === ContributionType.None) {
     // Save empty values, not what is currently in the form
-    await forceUpdateContribution(props.contact.id, {
+    await forceUpdateContribution(props.id, {
       type: ContributionType.None,
       amount: undefined,
       period: undefined,
     });
-  } else {
-    await forceUpdateContribution(props.contact.id, contribution);
+  } else if (contribution.type === ContributionType.Manual) {
+    await forceUpdateContribution(props.id, {
+      ...contribution,
+      type: ContributionType.Manual, // Why doesn't TS narrow this type?
+    });
   }
 }
 </script>

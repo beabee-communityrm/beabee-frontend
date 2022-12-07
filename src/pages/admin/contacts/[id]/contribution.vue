@@ -12,10 +12,7 @@ meta:
         {{ t('contribution.billing') }}
       </AppHeading>
       <Suspense>
-        <EditManualContribution v-if="showEditForm" :contact="contact" />
-        <MessageBox v-else type="warning">
-          {{ t('contacts.editNotice') }}
-        </MessageBox>
+        <EditManualContribution :id="contact.id" />
       </Suspense>
     </div>
     <div>
@@ -24,24 +21,13 @@ meta:
   </div>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue';
-import { GetMemberDataWith } from '../../../../utils/api/api.interface';
-import { ContributionType } from '@beabee/beabee-common';
+import { GetMemberData } from '../../../../utils/api/api.interface';
 import EditManualContribution from '../../../../components/pages/admin/contacts/EditManualContribution.vue';
 import { useI18n } from 'vue-i18n';
 import PaymentsHistory from '../../../../components/pages/profile/contribution/PaymentsHistory.vue';
 import AppHeading from '../../../../components/AppHeading.vue';
-import MessageBox from '../../../../components/MessageBox.vue';
 
 const { t } = useI18n();
 
-const props = defineProps<{
-  contact: GetMemberDataWith<'contribution'>;
-}>();
-
-const showEditForm = computed(
-  () =>
-    props.contact.contribution.type === ContributionType.Manual ||
-    props.contact.contribution.type === ContributionType.None
-);
+defineProps<{ contact: GetMemberData }>();
 </script>
