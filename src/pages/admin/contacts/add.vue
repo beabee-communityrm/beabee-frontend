@@ -10,20 +10,12 @@ meta:
   <div class="grid lg:grid-cols-2">
     <AppForm :button-text="t('actions.save')" @submit.prevent="handleSubmit">
       <section class="mb-8">
-        <div class="mb-4">
-          <AppInput
-            v-model="data.email"
-            type="email"
-            :label="t('form.email')"
-            required
-          />
-        </div>
-        <div class="mb-4">
-          <AppInput v-model="data.firstname" :label="t('form.firstName')" />
-        </div>
-        <div class="mb-4">
-          <AppInput v-model="data.lastname" :label="t('form.lastName')" />
-        </div>
+        <ContactBasicInformationFields
+          v-model:email="data.email"
+          v-model:first-name="data.firstname"
+          v-model:last-name="data.lastname"
+          optional-names
+        />
         <AppCheckbox
           v-model="data.subscribeToNewsletter"
           :label="t('addContact.subscribeToNewsletter')"
@@ -42,6 +34,7 @@ meta:
         <AppHeading class="mb-4">
           {{ t('contactOverview.contribution') }}
         </AppHeading>
+        <ContactContributionFields v-model="data.contribution" />
       </section>
       <template #buttons="{ disabled }">
         <AppButton
@@ -57,15 +50,21 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { NewsletterStatus, PermissionType } from '@beabee/beabee-common';
+import {
+  ContributionType,
+  NewsletterStatus,
+  PermissionType,
+} from '@beabee/beabee-common';
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import AppHeading from '../../../components/AppHeading.vue';
+import { UpdateContribution } from '../../../components/contact/contact.interface';
+import ContactBasicInformationFields from '../../../components/contact/ContactBasicInformationFields.vue';
+import ContactContributionFields from '../../../components/contact/ContactContributionFields.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import AppForm from '../../../components/forms/AppForm.vue';
-import AppInput from '../../../components/forms/AppInput.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import RoleEditor from '../../../components/role/RoleEditor.vue';
 import { MemberRoleData } from '../../../utils/api/api.interface';
@@ -80,6 +79,13 @@ const data = reactive({
   lastname: '',
   subscribeToNewsletter: false,
   roles: [] as MemberRoleData[],
+  contribution: {
+    type: ContributionType.None,
+    amount: undefined,
+    period: undefined,
+    source: undefined,
+    reference: undefined,
+  } as UpdateContribution,
 });
 
 function handleUpdateRole(role: MemberRoleData) {
