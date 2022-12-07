@@ -12,7 +12,10 @@ meta:
         {{ t('contribution.billing') }}
       </AppHeading>
       <Suspense>
-        <ContactUpdateContribution :id="contact.id" />
+        <ContactUpdateContribution
+          :id="contact.id"
+          @update="handleUpdateContribution"
+        />
       </Suspense>
     </div>
     <div>
@@ -21,13 +24,32 @@ meta:
   </div>
 </template>
 <script lang="ts" setup>
-import { GetMemberData } from '../../../../utils/api/api.interface';
+import { ContributionType } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
+import { GetMemberData } from '../../../../utils/api/api.interface';
 import AppHeading from '../../../../components/AppHeading.vue';
 import ContactPaymentsHistory from '../../../../components/contact/ContactPaymentsHistory.vue';
 import ContactUpdateContribution from '../../../../components/contact/ContactUpdateContribution.vue';
+import { forceUpdateContribution } from '../../../../utils/api/member';
+import { UpdateContribution } from '../../../../components/contact/contact.interface';
 
 const { t } = useI18n();
 
-defineProps<{ contact: GetMemberData }>();
+const props = defineProps<{ contact: GetMemberData }>();
+
+async function handleUpdateContribution(contribution: UpdateContribution) {
+  if (contribution.type === ContributionType.None) {
+    // Save empty values, not what is currently in the form
+    await forceUpdateContribution(props.contact.id, {
+      type: ContributionType.None,
+      amount: undefined,
+      period: undefined,
+    });
+  } else if (contribution.type === ContributionType.Manual) {
+    await forceUpdateContribution(props.contact.id, {
+      ...contribution,
+      type: ContributionType.Manual, // Why doesn't TS narrow this type?
+    });
+  }
+}
 </script>

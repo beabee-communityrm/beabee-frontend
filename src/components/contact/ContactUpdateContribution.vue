@@ -7,7 +7,7 @@
       "
       :button-text="t('contribution.updateContribution')"
       :success-text="t('form.saved')"
-      @submit.prevent="handleUpdate"
+      @submit="() => onUpdate?.(contribution)"
     >
       <AppSelect
         v-model="contribution.type"
@@ -58,27 +58,31 @@
   </template>
 </template>
 <script lang="ts" setup>
+import { ContributionType } from '@beabee/beabee-common';
 import { reactive, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../forms/AppInput.vue';
 import AppSelect from '../forms/AppSelect.vue';
 import AppRadioGroup from '../forms/AppRadioGroup.vue';
-import { ContributionPeriod, ContributionType } from '@beabee/beabee-common';
-import { fetchMember, forceUpdateContribution } from '../../utils/api/member';
+import { fetchMember } from '../../utils/api/member';
 import { fetchContent } from '../../utils/api/content';
 import { generalContent } from '../../store';
 import AppForm from '../forms/AppForm.vue';
 import MessageBox from '../MessageBox.vue';
+import { UpdateContribution } from './contact.interface';
 
 const { t } = useI18n();
 
-const props = defineProps<{ id: string }>();
+const props = defineProps<{
+  id: string;
+  onUpdate?: (contribution: UpdateContribution) => Promise<unknown>;
+}>();
 
 const loading = ref(true);
-const contribution = reactive({
+const contribution = reactive<UpdateContribution>({
   type: ContributionType.None,
-  amount: 0 as number | undefined,
-  period: undefined as ContributionPeriod | undefined,
+  amount: 0,
+  period: undefined,
   source: '',
   reference: '',
 });
@@ -127,20 +131,4 @@ watch(
   },
   { immediate: true }
 );
-
-async function handleUpdate() {
-  if (contribution.type === ContributionType.None) {
-    // Save empty values, not what is currently in the form
-    await forceUpdateContribution(props.id, {
-      type: ContributionType.None,
-      amount: undefined,
-      period: undefined,
-    });
-  } else if (contribution.type === ContributionType.Manual) {
-    await forceUpdateContribution(props.id, {
-      ...contribution,
-      type: ContributionType.Manual, // Why doesn't TS narrow this type?
-    });
-  }
-}
 </script>

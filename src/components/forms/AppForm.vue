@@ -44,7 +44,7 @@ const props = defineProps<{
   resetButtonText?: string;
   successText?: string;
   errorText?: string;
-  onSubmit?: (evt: Event) => Promise<unknown>;
+  onSubmit?: (evt: Event) => Promise<unknown> | unknown;
 }>();
 
 const isLoading = ref(false);
