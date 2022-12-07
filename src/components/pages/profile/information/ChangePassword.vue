@@ -6,6 +6,7 @@
   <MessageBox v-if="saved" class="mb-4" type="success">{{
     t('informationPage.savedPassword')
   }}</MessageBox>
+
   <AppButton
     v-if="!showForm"
     variant="primaryOutlined"
@@ -17,8 +18,15 @@
   >
     {{ t('informationPage.changePassword') }}
   </AppButton>
-  <form v-else @submit.prevent="handleFormSubmit">
-    <div class="mb-5">
+
+  <AppForm
+    v-else
+    :button-text="t('form.saveChanges')"
+    :reset-button-text="t('form.cancel')"
+    @submit="handleFormSubmit"
+    @reset="showForm = false"
+  >
+    <div class="mb-4">
       <AppInput
         v-model="password"
         type="password"
@@ -28,7 +36,7 @@
         :info-message="t('form.passwordInfo')"
       />
     </div>
-    <div class="mb-5">
+    <div class="mb-4">
       <AppInput
         v-model="confirmPassword"
         type="password"
@@ -38,61 +46,32 @@
         :label="t('form.newPasswordConfirm')"
       />
     </div>
-    <MessageBox v-if="hasFormError" type="error" class="mt-2" />
-    <div class="mt-2 flex">
-      <AppButton
-        type="submit"
-        :disabled="disableSubmit"
-        :loading="loading"
-        variant="link"
-        >{{ t('form.saveChanges') }}</AppButton
-      >
-      <AppButton variant="text" class="ml-2" @click="showForm = false">{{
-        t('form.cancel')
-      }}</AppButton>
-    </div>
-  </form>
+  </AppForm>
 </template>
 <script lang="ts" setup>
-import useVuelidate from '@vuelidate/core';
-import { computed, onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { updateMember } from '../../../../utils/api/member';
 import AppButton from '../../../forms/AppButton.vue';
 import MessageBox from '../../../MessageBox.vue';
 import AppInput from '../../../forms/AppInput.vue';
 import AppHeading from '../../../AppHeading.vue';
+import AppForm from '../../../forms/AppForm.vue';
 
 const { t } = useI18n();
 
 const showForm = ref(false);
-const loading = ref(false);
 const saved = ref(false);
 const password = ref('');
 const confirmPassword = ref('');
 
-const validation = useVuelidate();
-
-const hasFormError = computed(() => validation.value.$errors.length > 0);
-
-const disableSubmit = computed(
-  () => hasFormError.value || password.value === ''
-);
-
 async function handleFormSubmit() {
-  loading.value = true;
-
-  try {
-    await updateMember('me', { password: password.value });
-    saved.value = true;
-    showForm.value = false;
-  } finally {
-    loading.value = false;
-  }
+  await updateMember('me', { password: password.value });
+  saved.value = true;
+  showForm.value = false;
 }
 
 onBeforeMount(() => {
-  loading.value = false;
   saved.value = false;
   showForm.value = false;
   password.value = '';
