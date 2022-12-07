@@ -6,20 +6,20 @@ jobs:
   prettier:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/setup
-      - run: npx prettier -c .
+      - run: npm run check:prettier
 
   vue-tsc:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/setup
-      - run: npx vue-tsc --noEmit
+      - run: npm run check:vue-tsc
 
   eslint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/setup
-      - run: npx eslint 'src/**/*.{ts,vue}'
+      - run: npm run check:eslint

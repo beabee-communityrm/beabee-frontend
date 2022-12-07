@@ -1,6 +1,5 @@
+import { ContributionPeriod, PaymentMethod } from '@beabee/beabee-common';
 import { StripeFeeCountry } from './api/api.interface';
-import { ContributionPeriod } from './enums/contribution-period.enum';
-import { PaymentMethod } from './enums/payment-method.enum';
 
 interface Feeable {
   amount: number;

@@ -1,14 +1,13 @@
+import { Paginated } from '@beabee/beabee-common';
 import { deserializeDate } from '.';
 import axios from '../../axios';
 import {
   GetCalloutsQuery,
-  Paginated,
   Serial,
   GetCalloutResponseData,
   GetCalloutResponsesQuery,
   CreateCalloutResponseData,
   CreateCalloutData,
-  UpdateCalloutData,
   GetCalloutWith,
   GetCalloutDataWith,
   GetCalloutData,
@@ -74,7 +73,7 @@ export async function createCallout(
 
 export async function updateCallout(
   slug: string,
-  calloutData: UpdateCalloutData
+  calloutData: CreateCalloutData
 ): Promise<GetCalloutData> {
   const { data } = await axios.patch<Serial<GetCalloutData>>(
     '/callout/' + slug,

@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { PaymentMethod } from '../../utils/enums/payment-method.enum';
+import { PaymentMethod } from '@beabee/beabee-common';
 import BACS from './icons/BACS.vue';
 import CreditCard from './icons/CreditCard.vue';
 import DirectDebit from './icons/DirectDebit.vue';

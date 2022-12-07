@@ -26,23 +26,15 @@
         </AppButton>
 
         <AppConfirmDialog
-          v-if="showDeleteModal"
-          open
+          :open="showDeleteModal"
+          :title="t('contacts.data.roles.confirmDelete.title')"
+          :cancel="t('contacts.data.roles.confirmDelete.actionNo')"
+          :confirm="t('contacts.data.roles.confirmDelete.actionYes')"
+          variant="danger"
           @close="showDeleteModal = false"
           @confirm="handleDeleteRole"
         >
-          <template #title>
-            {{ t('contacts.data.roles.confirmDelete.title') }}
-          </template>
-          <template #text>
-            {{ t('contacts.data.roles.confirmDelete.text') }}
-          </template>
-          <template #button-cancel-text>
-            {{ t('contacts.data.roles.confirmDelete.actionNo') }}
-          </template>
-          <template #button-confirm-text>
-            {{ t('contacts.data.roles.confirmDelete.actionYes') }}
-          </template>
+          <p>{{ t('contacts.data.roles.confirmDelete.text') }}</p>
         </AppConfirmDialog>
       </div>
     </div>

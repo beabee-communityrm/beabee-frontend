@@ -6,7 +6,13 @@ meta:
 </route>
 
 <template>
-  <form @submit.prevent="handleSubmit">
+  <AppForm
+    :button-text="t('actions.update')"
+    :success-text="t('form.saved')"
+    :reset-button-text="t('actions.reset')"
+    @submit.prevent="handleSubmit"
+    @reset="resetTheme"
+  >
     <div class="mb-8 grid gap-8 lg:grid-cols-2">
       <div v-if="fonts">
         <AppHeading class="mb-4">
@@ -89,29 +95,7 @@ meta:
         </div>
       </div>
     </div>
-
-    <MessageBox v-if="hasSaved" type="success" class="mb-4">
-      {{ t('form.saved') }}
-    </MessageBox>
-
-    <MessageBox v-if="validation.$errors.length > 0" class="mb-4">
-      {{ t('form.errors.aggregator') }}
-    </MessageBox>
-
-    <div class="flex">
-      <AppButton
-        type="submit"
-        variant="link"
-        :loading="saving"
-        :disabled="validation.$invalid"
-      >
-        {{ t('actions.update') }}
-      </AppButton>
-      <AppButton variant="text" class="ml-2" @click="resetTheme">
-        {{ t('actions.reset') }}
-      </AppButton>
-    </div>
-  </form>
+  </AppForm>
 </template>
 
 <script lang="ts" setup>
@@ -121,16 +105,11 @@ import AppHeading from '../../../components/AppHeading.vue';
 import { updateContent } from '../../../utils/api/content';
 import { getFullTheme, Theme, validFonts } from '../../../theme';
 import { generalContent } from '../../../store';
-import AppButton from '../../../components/forms/AppButton.vue';
-import MessageBox from '../../../components/MessageBox.vue';
 import AppColorInput from '../../../components/forms/AppColorInput.vue';
-import useVuelidate from '@vuelidate/core';
 import AppSelect from '../../../components/forms/AppSelect.vue';
+import AppForm from '../../../components/forms/AppForm.vue';
 
 const { t } = useI18n();
-
-const validation = useVuelidate();
-validFonts;
 
 const availableFonts = Object.entries(validFonts).map(([id, [label]]) => ({
   id,
@@ -164,9 +143,6 @@ const fonts = ref<Theme['fonts']>();
 const activePreset = ref('');
 const customColors = ref<Theme['colors']>();
 
-const saving = ref(false);
-const hasSaved = ref(false);
-
 const activeTheme = computed(() => {
   const colors =
     activePreset.value === 'custom'
@@ -180,25 +156,17 @@ watch(
   activeTheme,
   (theme) => {
     generalContent.value.theme = theme;
-    hasSaved.value = false;
+    // hasSaved.value = false;
   },
   { deep: true }
 );
 
 async function handleSubmit() {
-  hasSaved.value = false;
-  saving.value = false;
+  generalContent.value = await updateContent('general', {
+    theme: activeTheme.value,
+  });
 
-  try {
-    generalContent.value = await updateContent('general', {
-      theme: activeTheme.value,
-    });
-
-    currentTheme = generalContent.value.theme;
-    hasSaved.value = true;
-    // eslint-disable-next-line no-empty
-  } catch (err) {}
-  saving.value = false;
+  currentTheme = generalContent.value.theme;
 }
 
 function resetTheme() {

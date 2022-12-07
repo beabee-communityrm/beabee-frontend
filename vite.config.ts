@@ -45,5 +45,10 @@ export default ({ command, mode }) => {
         },
       },
     },
+    ...(command === 'serve' && {
+      optimizeDeps: {
+        exclude: ['@beabee/beabee-common'],
+      },
+    }),
   });
 };

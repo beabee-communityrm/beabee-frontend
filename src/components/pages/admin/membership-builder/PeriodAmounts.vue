@@ -11,9 +11,9 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { ContributionPeriod } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
-import { ContributionPeriod } from '../../../../utils/enums/contribution-period.enum';
 import PeriodAmountValue from './PeriodAmountValue.vue';
 import AppLabel from '../../../forms/AppLabel.vue';
 
