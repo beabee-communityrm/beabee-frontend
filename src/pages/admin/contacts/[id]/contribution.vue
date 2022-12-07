@@ -13,9 +13,9 @@ meta:
       </AppHeading>
       <Suspense>
         <EditManualContribution v-if="showEditForm" :contact="contact" />
-        <p v-else>
+        <MessageBox v-else type="warning">
           {{ t('contacts.editNotice') }}
-        </p>
+        </MessageBox>
       </Suspense>
     </div>
     <div>
@@ -31,6 +31,7 @@ import EditManualContribution from '../../../../components/pages/admin/contacts/
 import { useI18n } from 'vue-i18n';
 import PaymentsHistory from '../../../../components/pages/profile/contribution/PaymentsHistory.vue';
 import AppHeading from '../../../../components/AppHeading.vue';
+import MessageBox from '../../../../components/MessageBox.vue';
 
 const { t } = useI18n();
 
