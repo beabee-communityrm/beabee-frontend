@@ -89,7 +89,11 @@ meta:
         v-html="t('contactOverview.annotation.copy')"
       />
 
-      <form @submit.prevent="handleFormSubmit">
+      <AppForm
+        :button-text="t('form.saveChanges')"
+        :success-text="t('contacts.data.annotationsCopy')"
+        @submit.prevent="handleFormSubmit"
+      >
         <div class="mb-4">
           <AppInput
             v-model="contactAnnotations.description"
@@ -101,23 +105,15 @@ meta:
           :label="t('contacts.data.notes')"
           class="mb-4"
         />
-        <TagDropdown
-          v-if="contactTags.length > 0"
-          v-model="contactAnnotations.tags"
-          :tags="contactTags"
-          label="Tags"
-        />
-        <AppButton
-          type="submit"
-          variant="primary"
-          class="mt-4"
-          :loading="loading"
-          >{{ t('form.saveChanges') }}</AppButton
-        >
-      </form>
-      <MessageBox v-if="hasSetAnnotations" type="success" class="mt-5">
-        {{ t('contacts.data.annotationsCopy') }}
-      </MessageBox>
+        <div class="mb-4">
+          <TagDropdown
+            v-if="contactTags.length > 0"
+            v-model="contactAnnotations.tags"
+            :tags="contactTags"
+            label="Tags"
+          />
+        </div>
+      </AppForm>
     </div>
 
     <div>
@@ -129,22 +125,12 @@ meta:
       <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
       <p>{{ t('contactOverview.security.whatDoTheButtonsDo') }}</p>
       <form @submit.prevent="handleSecurityAction">
-        <AppButton
-          type="submit"
-          variant="primaryOutlined"
-          :disabled="securityButtonsDisabled"
-          :loading="loading"
-          class="mt-4"
-          >{{ t('contactOverview.security.loginOverride') }}</AppButton
-        >
-        <AppButton
-          type="submit"
-          variant="primaryOutlined"
-          :disabled="securityButtonsDisabled"
-          :loading="loading"
-          class="mt-2 ml-6"
-          >{{ t('contactOverview.security.resetPassword') }}</AppButton
-        >
+        <AppButton type="submit" variant="primaryOutlined" class="mt-4">{{
+          t('contactOverview.security.loginOverride')
+        }}</AppButton>
+        <AppButton type="submit" variant="primaryOutlined" class="mt-2 ml-6">{{
+          t('contactOverview.security.resetPassword')
+        }}</AppButton>
       </form>
       <div v-if="securityLink" class="mt-4">
         <p class="mt-4">{{ t('contactOverview.security.instructions') }}</p>
@@ -162,7 +148,6 @@ import AppInput from '../../../../components/forms/AppInput.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown.vue';
 import RoleEditor from '../../../../components/pages/admin/contacts/RoleEditor.vue';
-import MessageBox from '../../../../components/MessageBox.vue';
 import { onBeforeMount, ref, reactive } from 'vue';
 import {
   GetMemberData,
@@ -174,6 +159,7 @@ import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
 import { fetchContent } from '../../../../utils/api/content';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
+import AppForm from '../../../../components/forms/AppForm.vue';
 
 formatLocale;
 
@@ -187,9 +173,6 @@ const contact = ref<GetMemberDataWith<
   'profile' | 'contribution' | 'roles'
 > | null>(null);
 const contactTags = ref<string[]>([]);
-const loading = ref(false);
-const hasSetAnnotations = ref(false);
-const securityButtonsDisabled = ref(false);
 const contactAnnotations = reactive({
   notes: '',
   description: '',
@@ -198,26 +181,14 @@ const contactAnnotations = reactive({
 const securityLink = ref('');
 
 async function handleFormSubmit() {
-  loading.value = true;
-  try {
-    await updateMember(props.contact.id, {
-      profile: { ...contactAnnotations },
-    });
-  } finally {
-    loading.value = false;
-    hasSetAnnotations.value = true;
-  }
+  await updateMember(props.contact.id, {
+    profile: { ...contactAnnotations },
+  });
 }
 
 async function handleSecurityAction() {
-  securityButtonsDisabled.value = true;
-  loading.value = true;
-  try {
-    const response = await (() => 'https://reset-link.com')();
-    securityLink.value = response;
-  } finally {
-    loading.value = false;
-  }
+  const response = await (() => 'https://reset-link.com')();
+  securityLink.value = response;
 }
 
 async function handleUpdate() {
@@ -229,9 +200,6 @@ async function handleUpdate() {
 }
 
 onBeforeMount(async () => {
-  loading.value = false;
-  securityButtonsDisabled.value = false;
-
   contact.value = await fetchMember(props.contact.id, [
     'profile',
     'contribution',

@@ -420,6 +420,7 @@
       "contribution": "Contribution",
       "role": "Role"
     },
+    "editNotice": "Updating a contact's contribution is currently only possible for those with a manual contribution.",
     "noContacts": "No contacts added yet",
     "noResults": "No contacts found",
     "numResults": "{n} contact found | {n} contacts found",
