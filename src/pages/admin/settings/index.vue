@@ -8,7 +8,11 @@ meta:
 <template>
   <div class="grid gap-8 lg:grid-cols-2">
     <div>
-      <AppForm :button-text="t('actions.update')" @submit="handleSaveGeneral">
+      <AppForm
+        :button-text="t('actions.update')"
+        :success-text="t('form.saved')"
+        @submit="handleSaveGeneral"
+      >
         <div class="mb-4">
           <AppInput
             v-model="generalData.organisationName"
@@ -41,6 +45,7 @@ meta:
       <AppForm
         v-if="shareContent"
         :button-text="t('actions.update')"
+        :success-text="t('form.saved')"
         @submit="handleSaveShare"
       >
         <AppHeading class="mb-4">
@@ -82,7 +87,11 @@ meta:
 
       <div class="my-6 border-b border-b-primary-40" />
 
-      <AppForm :button-text="t('actions.update')" @submit="handleSaveFooter">
+      <AppForm
+        :button-text="t('actions.update')"
+        :success-text="t('form.saved')"
+        @submit="handleSaveFooter"
+      >
         <AppHeading class="mb-4">
           {{ t('adminSettings.general.footer.title') }}
         </AppHeading>
