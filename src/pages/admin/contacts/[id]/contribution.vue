@@ -7,12 +7,20 @@ meta:
 
 <template>
   <div class="grid lg:grid-cols-2 xl:grid-cols-3">
-    <Suspense>
-      <EditManualContribution v-if="showEditForm" :contact="contact" />
-      <p v-else>
-        {{ t('contacts.editNotice') }}
-      </p>
-    </Suspense>
+    <div>
+      <AppHeading class="mb-2">
+        {{ t('contribution.billing') }}
+      </AppHeading>
+      <Suspense>
+        <EditManualContribution v-if="showEditForm" :contact="contact" />
+        <p v-else>
+          {{ t('contacts.editNotice') }}
+        </p>
+      </Suspense>
+    </div>
+    <div>
+      <PaymentsHistory :id="contact.id" />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -21,6 +29,8 @@ import { GetMemberDataWith } from '../../../../utils/api/api.interface';
 import { ContributionType } from '@beabee/beabee-common';
 import EditManualContribution from '../../../../components/pages/admin/contacts/EditManualContribution.vue';
 import { useI18n } from 'vue-i18n';
+import PaymentsHistory from '../../../../components/pages/profile/contribution/PaymentsHistory.vue';
+import AppHeading from '../../../../components/AppHeading.vue';
 
 const { t } = useI18n();
 

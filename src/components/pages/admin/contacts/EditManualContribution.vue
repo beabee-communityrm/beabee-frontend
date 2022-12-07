@@ -3,10 +3,6 @@
     :button-text="t('contribution.updateContribution')"
     @submit.prevent="handleUpdate"
   >
-    <AppHeading class="mt-6 mb-2">
-      {{ t('contribution.billing') }}
-    </AppHeading>
-
     <AppSelect
       v-model="contribution.type"
       :label="t('contacts.data.contributionType')"
@@ -64,7 +60,6 @@ import {
   GetMemberDataWith,
 } from '../../../../utils/api/api.interface';
 import { fetchContent } from '../../../../utils/api/content';
-import AppHeading from '../../../AppHeading.vue';
 import { generalContent } from '../../../../store';
 import AppForm from '../../../forms/AppForm.vue';
 
