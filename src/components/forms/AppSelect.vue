@@ -32,7 +32,7 @@
       class="mt-1.5 text-xs font-semibold text-danger"
       role="alert"
     >
-      {{ validation.value.$errors[0].$message }}
+      {{ validation.$errors[0].$message }}
     </div>
   </div>
 </template>
@@ -66,12 +66,8 @@ const value = computed({
 const isRequired = computed(() => !!props.required);
 
 const validation = useVuelidate(
-  {
-    value: {
-      required: requiredIf(isRequired),
-    },
-  } as any,
-  { value } as any
+  { v: { required: requiredIf(isRequired) } },
+  { v: value }
 );
 const hasError = computed(() => validation.value.$errors.length > 0);
 </script>
