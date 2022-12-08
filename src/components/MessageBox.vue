@@ -11,7 +11,7 @@
       class="flex flex-grow items-center p-3 text-xs font-semibold"
       :class="contentClasses[type]"
     >
-      <slot>{{ t('form.errors.aggregator') }}</slot>
+      <slot>{{ t('form.errorMessages.validation') }}</slot>
     </div>
   </div>
 </template>

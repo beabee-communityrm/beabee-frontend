@@ -642,6 +642,11 @@
     "deliveryOptIn": "Einverständnis zur Postsendung",
     "description": "Bezeichnung",
     "email": "E-Mail",
+    "errorMessages": {
+      "aggregatorTop": "Hier fehlt etwas! Bitte ergänzen.",
+      "generic": "Upps! Etwas ist schiefgelaufen. Bitte wenden Sie sich an den Support, sollte das erneut passieren.",
+      "validation": "Es fehlt etwas! Bitte kontrollieren Sie die obigen Felder."
+    },
     "errors": {
       "address": {
         "required": "Dieses Feld wird benötigt, wenn Sie eine Adresse eintragen wollen."
@@ -649,8 +654,6 @@
       "addressLine1": {
         "required": "Adresse benötigt"
       },
-      "aggregator": "Es fehlt etwas! Bitte kontrollieren Sie die obigen Felder.",
-      "aggregatorTop": "Hier fehlt etwas! Bitte ergänzen.",
       "cityOrTown": {
         "required": "Ort benötigt"
       },

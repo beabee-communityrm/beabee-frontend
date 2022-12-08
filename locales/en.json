@@ -646,6 +646,11 @@
     "deliveryOptIn": "Delivery opt-in",
     "description": "Description",
     "email": "Email",
+    "errorMessages": {
+      "aggregatorTop": "Something is missing. Please check for errors below.",
+      "generic": "Oops, something went wrong! Contact support if this happens again.",
+      "validation": "Something is missing. Please check the fields above."
+    },
     "errors": {
       "address": {
         "required": "This field is required if you want to add an address"
@@ -653,8 +658,6 @@
       "addressLine1": {
         "required": "Address line 1 is required"
       },
-      "aggregator": "Something is missing. Please check the fields above.",
-      "aggregatorTop": "Something is missing. Please check for errors below.",
       "cityOrTown": {
         "required": "City/Town is required"
       },
