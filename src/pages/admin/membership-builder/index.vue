@@ -14,7 +14,7 @@ meta:
       </span>
       <span v-else-if="validation.$invalid" class="mr-4 text-danger">
         <font-awesome-icon :icon="['fa', 'info-circle']" />
-        {{ t('form.errors.aggregatorTop') }}
+        {{ t('form.errorMessages.aggregatorTop') }}
       </span>
       <span v-else-if="dirty" class="mr-4">
         <font-awesome-icon :icon="['fa', 'info-circle']" />

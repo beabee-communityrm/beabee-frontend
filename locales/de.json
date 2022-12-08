@@ -1,5 +1,6 @@
 {
   "actions": {
+    "add": "Hinzufügen",
     "back": "Zurück",
     "cancel": "Abbrechen",
     "chooseFile": "Datei auswählen",
@@ -11,12 +12,20 @@
     "publish": "Veröffentlichen",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
+    "save": "Speichern",
+    "saveAndAnother": "Speichern und weiteren hinzufügen",
     "schedule": "Planen",
     "search": "Suchen",
     "submit": "Abschicken",
     "unpublish": "Veröffentlichung aufheben",
     "update": "Änderungen speichern",
     "view": "Anzeigen"
+  },
+  "addContact": {
+    "contactSaved": "Kontakt gespeichert",
+    "errors": {},
+    "subscribeToNewsletter": "Mit Newsletter-Tool synchronisieren",
+    "title": "Kontakt hinzufügen"
   },
   "adminDashboard": {
     "hint1": "<p>Das beabee-Handbuch für Community-Journalismus „Lust auf Lokal” <a href=\"https://beabee.io/neu-handbuch-community-journalismus/\">ist erschienen</a>. Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
@@ -386,30 +395,13 @@
       "phone": "Telefon",
       "preferredChannel": "Bevorzugter Kanal",
       "roles": {
-        "add": "Rolle hinzufügen",
-        "confirmDelete": {
-          "actionNo": "Nein, gehe zurück",
-          "actionYes": "Ja, löschen",
-          "text": "Bist Du sicher, dass Du diese Rolle entfernen willst?",
-          "title": "Rolle entfernen"
-        },
+        "confirmDelete": {},
         "expires": {
-          "label": "Ablaufdatum für diese Rolle",
-          "opts": {
-            "never": "Niemals",
-            "schedule": "Ablaufdatum festlegen"
-          }
+          "opts": {}
         },
-        "new": "Neue Rolle",
         "starts": {
-          "label": "Startdatum für diese Rolle",
-          "opts": {
-            "now": "Sofort",
-            "schedule": "Startdatum festlegen"
-          }
-        },
-        "title": "Rolle",
-        "today": "heute"
+          "opts": {}
+        }
       },
       "tags": "Tags"
     },
@@ -430,6 +422,7 @@
     "cancelContribution": "Mitgliedschaft kündigen",
     "cancelDescription": "Wenn Sie jetzt kündigen, endet Ihre Mitgliedschaft am {day} {month}.",
     "cancelMessage": "Schade, dass Sie uns verlassen.",
+    "cancelledContribution": "Ihre Mitgliedschaft wurde gekündigt.",
     "changeBank": "Ändern Sie Ihre Bankverbindung.",
     "changeBankInfo": "Im nächsten Schritt können Sie Ihre neue Bankverbindung eingeben.",
     "contributing": "Sie zahlen",
@@ -447,7 +440,7 @@
         "failed": "Fehlgeschlagen",
         "pending": "In Bearbeitung"
       },
-      "title": "Ihre bisherigen Beiträge:"
+      "title": "Bisher gezahlte Beiträge"
     },
     "paymentMethod": "Zahlungsart",
     "paymentSourceUpdateError": "Sie können Ihre Bankverbindung aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
@@ -621,6 +614,7 @@
   },
   "editCallout": {
     "replicated": "Dein Callout wurde kopiert! Du bearbeitest jetzt die Kopie. Bitte denke unbedingt daran, den Titel zu bearbeiten.",
+    "title": "Callout bearbeiten",
     "warning": "Vorsicht! Du bearbeitest einen veröffentlichten Callout. Wenn du Umfrageelemente bearbeitest riskierst Du, Antworten unbrauchbar zu machen."
   },
   "footer": {
@@ -648,6 +642,11 @@
     "deliveryOptIn": "Einverständnis zur Postsendung",
     "description": "Bezeichnung",
     "email": "E-Mail",
+    "errorMessages": {
+      "aggregatorTop": "Hier fehlt etwas! Bitte ergänzen.",
+      "generic": "Upps! Etwas ist schiefgelaufen. Bitte wenden Sie sich an den Support, sollte das erneut passieren.",
+      "validation": "Es fehlt etwas! Bitte kontrollieren Sie die obigen Felder."
+    },
     "errors": {
       "address": {
         "required": "Dieses Feld wird benötigt, wenn Sie eine Adresse eintragen wollen."
@@ -655,8 +654,6 @@
       "addressLine1": {
         "required": "Adresse benötigt"
       },
-      "aggregator": "Es fehlt etwas! Bitte kontrollieren Sie die obigen Felder.",
-      "aggregatorTop": "Hier fehlt etwas! Bitte ergänzen.",
       "cityOrTown": {
         "required": "Ort benötigt"
       },
@@ -922,6 +919,32 @@
     "login": "Einloggen",
     "newPassword": "Neues Passwort",
     "title": "Passwort aktualisieren?"
+  },
+  "roleEditor": {
+    "add": "Rolle hinzufügen",
+    "confirmDelete": {
+      "actionNo": "Nein, gehe zurück",
+      "actionYes": "Ja, löschen",
+      "text": "Bist Du sicher, dass Du diese Rolle entfernen willst?",
+      "title": "Rolle entfernen"
+    },
+    "expires": {
+      "label": "Ablaufdatum für diese Rolle",
+      "opts": {
+        "never": "Niemals",
+        "schedule": "Ablaufdatum festlegen"
+      }
+    },
+    "new": "Neue Rolle",
+    "starts": {
+      "label": "Startdatum für diese Rolle",
+      "opts": {
+        "now": "Sofort",
+        "schedule": "Startdatum festlegen"
+      }
+    },
+    "title": "Rolle",
+    "today": "heute"
   },
   "setPassword": {
     "description": "Neues Passwort eingeben, um fortzufahren.",
