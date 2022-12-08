@@ -15,6 +15,9 @@ meta:
       <AppAlert v-if="startedContribution" class="mb-8">{{
         t('contribution.startedContribution')
       }}</AppAlert>
+      <AppAlert v-if="cancelledContribution" class="mb-8" variant="danger">
+        {{ t('contribution.cancelledContribution') }}
+      </AppAlert>
 
       <ContributionBox :contribution="contribution" class="mb-9" />
 
@@ -68,6 +71,7 @@ const { t } = useI18n();
 const route = useRoute();
 const updatedPaymentSource = route.query.updatedPaymentSource !== undefined;
 const startedContribution = route.query.startedContribution !== undefined;
+const cancelledContribution = route.query.cancelled !== undefined;
 
 const content = ref<ContributionContent>({
   initialAmount: 5,

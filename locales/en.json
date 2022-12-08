@@ -14,6 +14,8 @@
     "reset": "Reset",
     "save": "Save",
     "saveAndAnother": "Save and add another",
+    "revertToDraft": "Revert to draft",
+    "saveDraft": "Save draft",
     "schedule": "Schedule",
     "search": "Search",
     "submit": "Submit",
@@ -423,6 +425,7 @@
     "cancelContribution": "Cancel contribution",
     "cancelDescription": "If you cancel your contribution your membership will finish at the end of your current payment cycle, {day} of {month}.",
     "cancelMessage": "We're sorry to see you go.",
+    "cancelledContribution": "Your contribution has been cancelled.",
     "changeBank": "Change to a different bank account",
     "changeBankInfo": "You'll be asked for the details of your new bank account in the next step.",
     "contributing": "You're contributing",
@@ -462,6 +465,8 @@
     "willRenewWithNewAmount": "Your contribution will automatically renew on {renewalDate} and will change to your chosen amount of {nextAmount}."
   },
   "createCallout": {
+    "lastSaved": "Last saved {duration} ago",
+    "lastSavedNow": "Last saved just now",
     "steps": {
       "content": {
         "description": "Build your callout with questions and prompts",
@@ -610,11 +615,12 @@
         "title": "Visibility settings"
       }
     },
-    "title": "Create a callout"
+    "title": "Create a callout",
+    "untitledCallout": "Untitled callout"
   },
   "editCallout": {
     "replicated": "Your callout was successfully replicated, and you are now editing the new copy. Be sure to edit the title in the \"Title and Image\" tab.",
-    "title": "Edit callout",
+    "title": "Edit: {title}",
     "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
   "footer": {
