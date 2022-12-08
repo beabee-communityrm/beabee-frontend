@@ -11,6 +11,9 @@ meta:
     <AppForm
       :button-text="t('actions.save')"
       :success-text="t('addContact.contactSaved')"
+      :error-text="{
+        'duplicate-email': t('addContact.errors.duplicateEmail'),
+      }"
       @submit.prevent="handleSubmit"
     >
       <section class="mb-8">
