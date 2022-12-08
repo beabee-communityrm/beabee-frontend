@@ -431,6 +431,7 @@
     "cancelContribution": "Cancel contribution",
     "cancelDescription": "If you cancel your contribution your membership will finish at the end of your current payment cycle, {day} of {month}.",
     "cancelMessage": "We're sorry to see you go.",
+    "cancelledContribution": "Your contribution has been cancelled.",
     "changeBank": "Change to a different bank account",
     "changeBankInfo": "You'll be asked for the details of your new bank account in the next step.",
     "contributing": "You're contributing",
