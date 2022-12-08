@@ -621,7 +621,6 @@
   },
   "editCallout": {
     "replicated": "Dein Callout wurde kopiert! Du bearbeitest jetzt die Kopie. Bitte denke unbedingt daran, den Titel zu bearbeiten.",
-    "title": "Callout bearbeiten",
     "warning": "Vorsicht! Du bearbeitest einen veröffentlichten Callout. Wenn du Umfrageelemente bearbeitest riskierst Du, Antworten unbrauchbar zu machen."
   },
   "footer": {
