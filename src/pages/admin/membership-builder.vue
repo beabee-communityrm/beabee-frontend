@@ -25,7 +25,7 @@ const tabs: Ref<TabItem[]> = ref([
   {
     id: 'adminMembershipBuilderJoinForm',
     label: t('membershipBuilder.steps.joinForm.title'),
-    to: `/admin/membership-builder/join-form`,
+    to: `/admin/membership-builder`,
   },
   {
     id: 'adminMembershipBuilderAccountConfirmation',
