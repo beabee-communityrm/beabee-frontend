@@ -21,7 +21,6 @@ import { useRoute } from 'vue-router';
 const { t } = useI18n();
 const route = useRoute();
 
-// TODO: i18n
 const tabs: Ref<TabItem[]> = ref([
   {
     id: 'adminMembershipBuilderJoinForm',
