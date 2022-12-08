@@ -48,5 +48,5 @@ watch(currentValue, (newValue) => {
   emit('update:modelValue', newValue);
 });
 
-useVuelidate({ value: { required } } as any, { value: currentValue } as any);
+useVuelidate({ v: { required } }, { v: currentValue });
 </script>

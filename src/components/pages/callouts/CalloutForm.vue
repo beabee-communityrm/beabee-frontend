@@ -22,7 +22,7 @@
 
 <script lang="ts" setup>
 import { ItemStatus } from '@beabee/beabee-common';
-import { ref, computed, markRaw, reactive, watch } from 'vue';
+import { ref, computed, markRaw, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../AppHeading.vue';
 import AppStepper from '../../stepper/AppStepper.vue';

@@ -48,12 +48,5 @@ const uniqueName = Math.random().toString(16).substring(2);
 const name = computed(() => props.name || uniqueName);
 
 const isRequired = computed(() => !!props.required);
-useVuelidate(
-  {
-    value: {
-      required: requiredIf(isRequired),
-    },
-  } as any,
-  { value: selected } as any
-);
+useVuelidate({ v: { required: requiredIf(isRequired) } }, { v: selected });
 </script>
