@@ -11,7 +11,9 @@ meta:
       <AppSelect v-model="currentSegmentId" :items="segmentItems" />
     </div>
     <div class="flex-0 ml-3">
-      <AppButton href="/members/add">{{ t('contacts.addContact') }}</AppButton>
+      <AppButton to="/admin/contacts/add">
+        {{ t('contacts.addContact') }}
+      </AppButton>
     </div>
   </PageTitle>
   <div class="md:flex">
@@ -154,7 +156,7 @@ import AppButton from '../../../components/forms/AppButton.vue';
 import AppSearch from '../../../components/search/AppSearch.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
-import ContactTag from '../../../components/pages/admin/contacts/ContactTag.vue';
+import ContactTag from '../../../components/contact/ContactTag.vue';
 import {
   filterGroups,
   filterItems,

@@ -13,7 +13,7 @@
       {{ setupContent.welcome }}
     </p>
 
-    <ContactInformation
+    <ContactBasicInformationFields
       v-model:email="setupMemberData.email"
       v-model:firstName="setupMemberData.firstName"
       v-model:lastName="setupMemberData.lastName"
@@ -66,8 +66,8 @@ import JoinHeader from './JoinHeader.vue';
 import AppAddress from '../../AppAddress.vue';
 import AppButton from '../../forms/AppButton.vue';
 import MessageBox from '../../MessageBox.vue';
-import ContactInformation from '../../ContactInformation.vue';
-import ContactMailOptIn from '../../ContactMailOptIn.vue';
+import ContactBasicInformationFields from '../../contact/ContactBasicInformationFields.vue';
+import ContactMailOptIn from '../../contact/ContactMailOptIn.vue';
 import { fetchMember } from '../../../utils/api/member';
 import { SetupMemberData } from './join.interface';
 import AppOptIn from '../../AppOptIn.vue';

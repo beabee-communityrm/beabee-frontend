@@ -14,7 +14,7 @@ meta:
     <div>
       <ChangePassword />
       <Suspense>
-        <UpdateContactInformation id="me" />
+        <ContactUpdateInformation id="me" />
       </Suspense>
     </div>
   </div>
@@ -24,7 +24,7 @@ meta:
 import PageTitle from '../../components/PageTitle.vue';
 import { useI18n } from 'vue-i18n';
 import ChangePassword from '../../components/pages/profile/information/ChangePassword.vue';
-import UpdateContactInformation from '../../components/pages/profile/information/UpdateContactInformation.vue';
+import ContactUpdateInformation from '../../components/contact/ContactUpdateInformation.vue';
 
 const { t } = useI18n();
 </script>
