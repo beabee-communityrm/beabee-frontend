@@ -22,7 +22,12 @@
     "view": "View"
   },
   "addContact": {
-    "subscribeToNewsletter": "Subscribe to newsletter"
+    "contactSaved": "Contact saved",
+    "errors": {
+      "duplicateEmail": "Email address already exists"
+    },
+    "subscribeToNewsletter": "Synchronise with newsletter tool",
+    "title": "Add a contact"
   },
   "adminDashboard": {
     "hint1": "<p>Did you know callouts can be created without an end date, and just keep running? See our <a href=\"https://beabee.io/en/beabee-full-feature-list/\">feature showcase</a> for more information.</p>\n",
@@ -408,7 +413,7 @@
       "contribution": "Contribution",
       "role": "Role"
     },
-    "editNotice": "Editing a contacts's contribution is currently only possible for those within an automatic contribution.",
+    "editNotice": "Updating a contact's contribution is currently only possible for those with a manual contribution.",
     "noContacts": "No contacts added yet",
     "noResults": "No contacts found",
     "numResults": "{n} contact found | {n} contacts found",
@@ -421,6 +426,7 @@
     "cancelContribution": "Cancel contribution",
     "cancelDescription": "If you cancel your contribution your membership will finish at the end of your current payment cycle, {day} of {month}.",
     "cancelMessage": "We're sorry to see you go.",
+    "cancelledContribution": "Your contribution has been cancelled.",
     "changeBank": "Change to a different bank account",
     "changeBankInfo": "You'll be asked for the details of your new bank account in the next step.",
     "contributing": "You're contributing",
@@ -640,6 +646,11 @@
     "deliveryOptIn": "Delivery opt-in",
     "description": "Description",
     "email": "Email",
+    "errorMessages": {
+      "aggregatorTop": "Something is missing. Please check for errors below.",
+      "generic": "Oops, something went wrong! Contact support if this happens again.",
+      "validation": "Something is missing. Please check the fields above."
+    },
     "errors": {
       "address": {
         "required": "This field is required if you want to add an address"
@@ -647,8 +658,6 @@
       "addressLine1": {
         "required": "Address line 1 is required"
       },
-      "aggregator": "Something is missing. Please check the fields above.",
-      "aggregatorTop": "Something is missing. Please check for errors below.",
       "cityOrTown": {
         "required": "City/Town is required"
       },

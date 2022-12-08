@@ -153,7 +153,7 @@ meta:
       </MessageBox>
 
       <MessageBox v-if="validation.$errors.length > 0" class="mb-4">
-        {{ t('form.errors.aggregator') }}
+        {{ t('form.errorMessages.validation') }}
       </MessageBox>
 
       <AppButton

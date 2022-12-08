@@ -103,6 +103,7 @@ export interface CreateContactData extends UpdateContactData {
   firstname: string;
   lastname: string;
   roles?: ContactRoleData[];
+  contribution?: ForceUpdateContributionData;
 }
 
 export interface GoCardlessDirectDebitPaymentSource {
@@ -169,8 +170,8 @@ export interface SetContributionData {
 
 export interface ForceUpdateContributionData {
   type: ContributionType.Manual | ContributionType.None;
-  amount: number | null;
-  period: ContributionPeriod | null;
+  amount: number | undefined;
+  period: ContributionPeriod | undefined;
   source?: string;
   reference?: string;
 }
@@ -279,7 +280,7 @@ export interface ShareContent {
 }
 
 interface CalloutData {
-  slug: string;
+  slug: string | null;
   title: string;
   excerpt: string;
   image: string;
@@ -302,6 +303,7 @@ interface CalloutFormData {
 }
 
 export interface GetCalloutData extends CalloutData {
+  slug: string;
   status: ItemStatus;
 }
 

@@ -14,6 +14,7 @@
             :key="groupItem.id"
             :item="groupItem"
             :selected="modelValue === groupItem.id"
+            :disabled="groupItem.id === '' && required"
           />
         </optgroup>
         <AppSelectItem
@@ -21,6 +22,7 @@
           :key="item.id"
           :item="item"
           :selected="modelValue === item.id"
+          :disabled="item.id === '' && required"
         />
       </template>
     </select>
@@ -50,7 +52,7 @@ function isGroup(item: SelectItem | SelectGroup): item is SelectGroup {
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   label?: string;
-  modelValue: string | null;
+  modelValue?: string | null;
   items: (SelectItem | SelectGroup)[];
   required?: boolean;
   inputClass?: string;

@@ -18,7 +18,6 @@ meta:
 
     <AppButton
       class="ml-4"
-      to="/profile/contribution"
       variant="danger"
       :loading="loading"
       @click="submit"
@@ -28,21 +27,25 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 import PageTitle from '../../../components/PageTitle.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
-import { useI18n } from 'vue-i18n';
-import { ref } from 'vue';
 import { cancelContribution } from '../../../utils/api/contact';
-import { useRouter } from 'vue-router';
 
 const { t } = useI18n();
+const router = useRouter();
 
 const loading = ref(false);
 async function submit() {
   loading.value = true;
   try {
     await cancelContribution();
-    useRouter().push('/profile/contribution');
+    router.push({
+      path: '/profile/contribution',
+      query: { cancelled: null },
+    });
   } finally {
     loading.value = false;
   }

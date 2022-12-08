@@ -1,38 +1,36 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <AppAlert v-if="wasJustReplicated" variant="success" class="mb-4">
-    {{ t('editCallout.replicated') }}
-  </AppAlert>
+  <div>
+    <AppAlert v-if="wasJustReplicated" variant="success" class="mb-4">
+      {{ t('editCallout.replicated') }}
+    </AppAlert>
 
-  <AppAlert v-else-if="mode === 'live'" variant="warning" class="mb-4">
-    <template #icon>
-      <font-awesome-icon :icon="['fa', 'exclamation']" />
-    </template>
-    {{ t('editCallout.warning') }}
-  </AppAlert>
+    <AppAlert v-else-if="warnAboutEditing" variant="warning" class="mb-4">
+      <template #icon>
+        <font-awesome-icon :icon="['fa', 'exclamation']" />
+      </template>
+      {{ t('editCallout.warning') }}
+    </AppAlert>
 
-  <div class="grid grid-cols-2 gap-6">
-    <div class="col-span-1">
+    <AppFormSection :help="inputT('intro.help')">
       <RichTextEditor
-        v-model="dataProxy.introText"
+        v-model="data.introText"
         :label="inputT('intro.label')"
         required
       />
+    </AppFormSection>
+    <div class="callout-form-builder mt-8">
+      <FormBuilderVue
+        ref="formBuilderRef"
+        :form="data.formSchema"
+        :options="formOpts"
+        @change="handleFormChange"
+      />
     </div>
-    <div
-      class="col-span-1 mt-[4rem] text-sm text-grey"
-      v-html="inputT('intro.help')"
-    />
-  </div>
-  <div class="callout-form-builder mt-8">
-    <FormBuilderVue
-      ref="formBuilderRef"
-      :form="data.formSchema"
-      :options="formOpts"
-      @change="handleFormChange"
-    />
   </div>
 </template>
 <script lang="ts" setup>
+import { ItemStatus } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { onBeforeMount, ref, watch } from 'vue';
 import { FormBuilder as FormBuilderVue } from 'vue-formio';
@@ -60,35 +58,45 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
 
-import 'formiojs/dist/formio.builder.css';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import { CalloutMode, ContentStepProps } from '../callouts.interface';
+import { ContentStepProps } from '../callouts.interface';
 import AppAlert from '../../../AppAlert.vue';
 import RichTextEditor from '../../../rte/RichTextEditor.vue';
+import AppFormSection from '../../../forms/AppFormSection.vue';
+
+import 'formiojs/dist/formio.builder.css';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   data: ContentStepProps;
-  mode: CalloutMode;
+  status: ItemStatus | undefined;
 }>();
 
 const { t } = useI18n();
 const route = useRoute();
 const inputT = (key: string) => t('createCallout.steps.content.inputs.' + key);
 
+const warnAboutEditing = computed(
+  () => props.status === ItemStatus.Open || props.status === ItemStatus.Ended
+);
+
 const wasJustReplicated = route.query.replicated !== undefined;
 
-const dataProxy = ref(props.data);
 const validation = useVuelidate();
 
-watch([validation, props.data.formSchema], () => {
-  emit('update:error', validation.value.$errors.length > 0);
-  emit(
-    'update:validated',
-    !validation.value.$invalid && props.data.formSchema.components.length > 1
-  );
-});
+watch(
+  [validation, props.data.formSchema],
+  () => {
+    emit('update:error', validation.value.$errors.length > 0);
+    emit(
+      'update:validated',
+      !validation.value.$invalid && props.data.formSchema.components.length > 1
+    );
+  },
+  { immediate: true }
+);
 
 const formOpts = {
   builder: {
@@ -102,7 +110,8 @@ const formOpts = {
 const formBuilderRef = ref<FormBuilder>();
 
 function handleFormChange() {
-  dataProxy.value.formSchema = formBuilderRef.value?.form;
+  // eslint-disable-next-line vue/no-mutating-props
+  props.data.formSchema = formBuilderRef.value?.form;
 }
 
 onBeforeMount(() => {

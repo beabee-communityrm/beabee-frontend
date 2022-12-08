@@ -15,6 +15,9 @@ meta:
       <AppAlert v-if="startedContribution" class="mb-8">{{
         t('contribution.startedContribution')
       }}</AppAlert>
+      <AppAlert v-if="cancelledContribution" class="mb-8" variant="danger">
+        {{ t('contribution.cancelledContribution') }}
+      </AppAlert>
 
       <ContributionBox :contribution="contribution" class="mb-9" />
 
@@ -35,7 +38,7 @@ meta:
       <CancelContribution :contribution="contribution" />
     </div>
     <div>
-      <PaymentsHistory id="me" class="lg:ml-10" />
+      <ContactPaymentsHistory id="me" class="lg:ml-10" />
     </div>
   </div>
 </template>
@@ -55,7 +58,7 @@ import CancelContribution from '../../../components/pages/profile/contribution/C
 import PaymentSource from '../../../components/pages/profile/contribution/PaymentSource.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import AppAlert from '../../../components/AppAlert.vue';
-import PaymentsHistory from '../../../components/pages/profile/contribution/PaymentsHistory.vue';
+import ContactPaymentsHistory from '../../../components/contact/ContactPaymentsHistory.vue';
 import { currentUser } from '../../../store';
 import UpdateContribution from '../../../components/pages/profile/contribution/UpdateContribution.vue';
 import { ContributionInfo } from '../../../utils/api/api.interface';
@@ -68,6 +71,7 @@ const { t } = useI18n();
 const route = useRoute();
 const updatedPaymentSource = route.query.updatedPaymentSource !== undefined;
 const startedContribution = route.query.startedContribution !== undefined;
+const cancelledContribution = route.query.cancelled !== undefined;
 
 const content = ref<ContributionContent>({
   initialAmount: 5,

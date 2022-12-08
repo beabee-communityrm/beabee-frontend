@@ -125,16 +125,14 @@ const data = reactive({
 async function handleSubmit() {
   if (!data.role) return; // Can't submit without a role
 
-  if (props.onSave) {
-    await props.onSave({
-      role: data.role,
-      dateAdded: data.hasStartDate
-        ? new Date(data.startDate + 'T' + data.startTime)
-        : new Date(),
-      dateExpires: data.hasEndDate
-        ? new Date(data.endDate + 'T' + data.endTime)
-        : null,
-    });
-  }
+  await props.onSave?.({
+    role: data.role,
+    dateAdded: data.hasStartDate
+      ? new Date(data.startDate + 'T' + data.startTime)
+      : new Date(),
+    dateExpires: data.hasEndDate
+      ? new Date(data.endDate + 'T' + data.endTime)
+      : null,
+  });
 }
 </script>

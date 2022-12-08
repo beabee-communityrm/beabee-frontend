@@ -156,7 +156,7 @@ import AppButton from '../../../components/forms/AppButton.vue';
 import AppSearch from '../../../components/search/AppSearch.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
-import ContactTag from '../../../components/pages/admin/contacts/ContactTag.vue';
+import ContactTag from '../../../components/contact/ContactTag.vue';
 import {
   filterGroups,
   filterItems,
