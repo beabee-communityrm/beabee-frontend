@@ -12,8 +12,10 @@
     "publish": "Publish",
     "replicate": "Replicate",
     "reset": "Reset",
+    "revertToDraft": "Revert to draft",
     "save": "Save",
     "saveAndAnother": "Save and add another",
+    "saveDraft": "Save draft",
     "schedule": "Schedule",
     "search": "Search",
     "submit": "Submit",
@@ -397,15 +399,6 @@
       "period": "Period",
       "phone": "Phone",
       "preferredChannel": "Preferred channel",
-      "roles": {
-        "confirmDelete": {},
-        "expires": {
-          "opts": {}
-        },
-        "starts": {
-          "opts": {}
-        }
-      },
       "tags": "Tags"
     },
     "dataGroup": {
@@ -466,6 +459,8 @@
     "willRenewWithNewAmount": "Your contribution will automatically renew on {renewalDate} and will change to your chosen amount of {nextAmount}."
   },
   "createCallout": {
+    "lastSaved": "Last saved {duration} ago",
+    "lastSavedNow": "Last saved just now",
     "steps": {
       "content": {
         "description": "Build your callout with questions and prompts",
@@ -614,11 +609,12 @@
         "title": "Visibility settings"
       }
     },
-    "title": "Create a callout"
+    "title": "Create a callout",
+    "untitledCallout": "Untitled callout"
   },
   "editCallout": {
     "replicated": "Your callout was successfully replicated, and you are now editing the new copy. Be sure to edit the title in the \"Title and Image\" tab.",
-    "title": "Edit callout",
+    "title": "Edit: {title}",
     "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
   "footer": {
