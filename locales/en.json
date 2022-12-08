@@ -14,8 +14,6 @@
     "reset": "Reset",
     "save": "Save",
     "saveAndAnother": "Save and add another",
-    "revertToDraft": "Revert to draft",
-    "saveDraft": "Save draft",
     "schedule": "Schedule",
     "search": "Search",
     "submit": "Submit",
@@ -25,7 +23,10 @@
   },
   "addContact": {
     "contactSaved": "Contact saved",
-    "subscribeToNewsletter": "Subscribe to newsletter",
+    "errors": {
+      "duplicateEmail": "Email address already exists"
+    },
+    "subscribeToNewsletter": "Synchronise with newsletter tool",
     "title": "Add a contact"
   },
   "adminDashboard": {
@@ -465,8 +466,6 @@
     "willRenewWithNewAmount": "Your contribution will automatically renew on {renewalDate} and will change to your chosen amount of {nextAmount}."
   },
   "createCallout": {
-    "lastSaved": "Last saved {duration} ago",
-    "lastSavedNow": "Last saved just now",
     "steps": {
       "content": {
         "description": "Build your callout with questions and prompts",
@@ -615,12 +614,11 @@
         "title": "Visibility settings"
       }
     },
-    "title": "Create a callout",
-    "untitledCallout": "Untitled callout"
+    "title": "Create a callout"
   },
   "editCallout": {
     "replicated": "Your callout was successfully replicated, and you are now editing the new copy. Be sure to edit the title in the \"Title and Image\" tab.",
-    "title": "Edit: {title}",
+    "title": "Edit callout",
     "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
   "footer": {
