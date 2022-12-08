@@ -14,6 +14,7 @@
             :key="groupItem.id"
             :item="groupItem"
             :selected="modelValue === groupItem.id"
+            :disabled="groupItem.id === '' && required"
           />
         </optgroup>
         <AppSelectItem
@@ -21,6 +22,7 @@
           :key="item.id"
           :item="item"
           :selected="modelValue === item.id"
+          :disabled="item.id === '' && required"
         />
       </template>
     </select>
@@ -30,7 +32,7 @@
       class="mt-1.5 text-xs font-semibold text-danger"
       role="alert"
     >
-      {{ validation.value.$errors[0].$message }}
+      {{ validation.$errors[0].$message }}
     </div>
   </div>
 </template>
@@ -50,7 +52,7 @@ function isGroup(item: SelectItem | SelectGroup): item is SelectGroup {
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   label?: string;
-  modelValue: string | null;
+  modelValue?: string | null;
   items: (SelectItem | SelectGroup)[];
   required?: boolean;
   inputClass?: string;
@@ -64,12 +66,8 @@ const value = computed({
 const isRequired = computed(() => !!props.required);
 
 const validation = useVuelidate(
-  {
-    value: {
-      required: requiredIf(isRequired),
-    },
-  } as any,
-  { value } as any
+  { v: { required: requiredIf(isRequired) } },
+  { v: value }
 );
 const hasError = computed(() => validation.value.$errors.length > 0);
 </script>

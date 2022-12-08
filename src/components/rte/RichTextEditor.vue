@@ -120,7 +120,7 @@ watch(toRef(props, 'modelValue'), (value) => {
 });
 
 const rules = computed(() => ({
-  value: {
+  v: {
     required: helpers.withMessage(
       t('form.errors.unknown.required'),
       requiredIf(!!props.required)
@@ -128,10 +128,7 @@ const rules = computed(() => ({
   },
 }));
 
-const validation = useVuelidate(rules, {
-  value: toRef(props, 'modelValue'),
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-} as any); // TODO: type error
+const validation = useVuelidate(rules, { v: toRef(props, 'modelValue') });
 const hasError = computed(() => validation.value.$errors.length > 0);
 
 onBeforeUnmount(() => {

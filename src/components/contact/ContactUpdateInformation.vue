@@ -1,10 +1,14 @@
 <template>
-  <form @submit.prevent="handleSubmit()">
+  <AppForm
+    :button-text="t('form.saveChanges')"
+    :success-text="t('form.saved')"
+    @submit="handleSubmit"
+  >
     <AppHeading class="mt-6 mb-2">
       {{ t('informationPage.contactInformation') }}
     </AppHeading>
 
-    <ContactInformation
+    <ContactBasicInformationFields
       v-model:email="information.emailAddress"
       v-model:firstName="information.firstName"
       v-model:lastName="information.lastName"
@@ -42,40 +46,19 @@
       v-model:cityOrTown="information.cityOrTown"
       :required="information.deliveryOptIn"
     />
-
-    <MessageBox
-      v-if="validation.$errors.length > 0"
-      type="error"
-      class="mt-2"
-    />
-
-    <MessageBox v-if="isSaved" type="success" class="mt-2">
-      {{ t('form.saved') }}
-    </MessageBox>
-
-    <AppButton
-      type="submit"
-      :disabled="validation.$invalid"
-      class="mt-6"
-      :loading="loading"
-      variant="link"
-      >{{ t('form.saveChanges') }}</AppButton
-    >
-  </form>
+  </AppForm>
 </template>
 <script lang="ts" setup>
-import AppButton from '../../../forms/AppButton.vue';
-import ContactInformation from '../../../ContactInformation.vue';
-import MessageBox from '../../../MessageBox.vue';
-import AppAddress from '../../../AppAddress.vue';
-import ContactMailOptIn from '../../../ContactMailOptIn.vue';
+import { computed, reactive, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { computed, reactive, ref, toRef, watch } from 'vue';
-import AppHeading from '../../../AppHeading.vue';
-import useVuelidate from '@vuelidate/core';
-import { fetchContent } from '../../../../utils/api/content';
-import { fetchMember, updateMember } from '../../../../utils/api/member';
-import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
+import AppAddress from '../AppAddress.vue';
+import ContactBasicInformationFields from './ContactBasicInformationFields.vue';
+import ContactMailOptIn from './ContactMailOptIn.vue';
+import AppHeading from '../AppHeading.vue';
+import { fetchContent } from '../../utils/api/content';
+import { fetchMember, updateMember } from '../../utils/api/member';
+import AppRadioGroup from '../forms/AppRadioGroup.vue';
+import AppForm from '../forms/AppForm.vue';
 
 const props = defineProps<{
   id: string;
@@ -84,8 +67,6 @@ const props = defineProps<{
 const { t } = useI18n();
 
 const isAdmin = computed(() => props.id !== 'me');
-const loading = ref(false);
-const isSaved = ref(false);
 
 const infoContent = await fetchContent('join/setup');
 
@@ -119,32 +100,22 @@ watch(
   { immediate: true }
 );
 
-const validation = useVuelidate();
-
 async function handleSubmit() {
-  loading.value = true;
-  isSaved.value = false;
-
-  try {
-    await updateMember(props.id, {
-      email: information.emailAddress,
-      firstname: information.firstName,
-      lastname: information.lastName,
-      profile: {
-        ...(infoContent.showMailOptIn && {
-          deliveryOptIn: information.deliveryOptIn,
-        }),
-        deliveryAddress: {
-          line1: information.addressLine1,
-          line2: information.addressLine2,
-          city: information.cityOrTown,
-          postcode: information.postCode,
-        },
+  await updateMember(props.id, {
+    email: information.emailAddress,
+    firstname: information.firstName,
+    lastname: information.lastName,
+    profile: {
+      ...(infoContent.showMailOptIn && {
+        deliveryOptIn: information.deliveryOptIn,
+      }),
+      deliveryAddress: {
+        line1: information.addressLine1,
+        line2: information.addressLine2,
+        city: information.cityOrTown,
+        postcode: information.postCode,
       },
-    });
-    isSaved.value = true;
-  } finally {
-    loading.value = false;
-  }
+    },
+  });
 }
 </script>
