@@ -73,11 +73,13 @@ meta:
           />
         </div>
       </div>
-      <AppCheckbox
-        v-model="joinContent.showAbsorbFee"
-        :label="stepT('showAbsorbFee')"
-        class="font-semibold"
-      />
+      <div class="mb-4 flex gap-4">
+        <AppCheckbox
+          v-model="joinContent.showAbsorbFee"
+          :label="stepT('showAbsorbFee')"
+          class="font-semibold"
+        />
+      </div>
     </AppForm>
     <div
       class="bg-cover bg-center p-4 pt-8"
