@@ -43,7 +43,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { computed } from 'vue';
-import ContactTag from './ContactTag.vue';
+import ContactTag from '../../../contact/ContactTag.vue';
 import AppLabel from '../../../forms/AppLabel.vue';
 
 const props = defineProps<{

@@ -8,7 +8,7 @@
       {{ t('informationPage.contactInformation') }}
     </AppHeading>
 
-    <ContactInformation
+    <ContactBasicInformationFields
       v-model:email="information.emailAddress"
       v-model:firstName="information.firstName"
       v-model:lastName="information.lastName"
@@ -49,16 +49,16 @@
   </AppForm>
 </template>
 <script lang="ts" setup>
-import ContactInformation from '../../../ContactInformation.vue';
-import AppAddress from '../../../AppAddress.vue';
-import ContactMailOptIn from '../../../ContactMailOptIn.vue';
-import { useI18n } from 'vue-i18n';
 import { computed, reactive, toRef, watch } from 'vue';
-import AppHeading from '../../../AppHeading.vue';
-import { fetchContent } from '../../../../utils/api/content';
-import { fetchMember, updateMember } from '../../../../utils/api/member';
-import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
-import AppForm from '../../../forms/AppForm.vue';
+import { useI18n } from 'vue-i18n';
+import AppAddress from '../AppAddress.vue';
+import ContactBasicInformationFields from './ContactBasicInformationFields.vue';
+import ContactMailOptIn from './ContactMailOptIn.vue';
+import AppHeading from '../AppHeading.vue';
+import { fetchContent } from '../../utils/api/content';
+import { fetchContact, updateContact } from '../../utils/api/contact';
+import AppRadioGroup from '../forms/AppRadioGroup.vue';
+import AppForm from '../forms/AppForm.vue';
 
 const props = defineProps<{
   id: string;
@@ -84,14 +84,14 @@ const information = reactive({
 watch(
   toRef(props, 'id'),
   async (id) => {
-    const member = await fetchMember(id, ['profile']);
+    const contact = await fetchContact(id, ['profile']);
 
-    information.emailAddress = member.email;
-    information.firstName = member.firstname;
-    information.lastName = member.lastname;
-    information.deliveryOptIn = member.profile.deliveryOptIn;
+    information.emailAddress = contact.email;
+    information.firstName = contact.firstname;
+    information.lastName = contact.lastname;
+    information.deliveryOptIn = contact.profile.deliveryOptIn;
 
-    const address = member.profile.deliveryAddress;
+    const address = contact.profile.deliveryAddress;
     information.addressLine1 = address?.line1 || '';
     information.addressLine2 = address?.line2 || '';
     information.cityOrTown = address?.city || '';
@@ -101,7 +101,7 @@ watch(
 );
 
 async function handleSubmit() {
-  await updateMember(props.id, {
+  await updateContact(props.id, {
     email: information.emailAddress,
     firstname: information.firstName,
     lastname: information.lastName,

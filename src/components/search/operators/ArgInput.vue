@@ -57,6 +57,8 @@ const props = defineProps<{
 const { t } = useI18n();
 
 const value = computed({
+  // modelValue has a different type depending on the item.type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   get: () => props.modelValue as any,
   set: (modelValue) => emit('update:modelValue', modelValue),
 });

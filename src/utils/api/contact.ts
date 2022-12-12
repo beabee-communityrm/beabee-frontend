@@ -3,33 +3,34 @@ import {
   ContributionPeriod,
   Paginated,
   PaymentMethod,
-  PermissionType,
+  RoleType,
 } from '@beabee/beabee-common';
 
 import axios from '../../axios';
 import {
   ContributionInfo,
+  CreateContactData,
   ForceUpdateContributionData,
-  GetMemberData,
-  GetMemberDataWith,
-  GetMembersQuery,
-  GetMemberWith,
+  GetContactData,
+  GetContactDataWith,
+  GetContactsQuery,
+  GetContactWith,
   GetPaymentData,
   GetPaymentsQuery,
-  MemberRoleData,
+  ContactRoleData,
   PaymentFlowParams,
   Serial,
   SetContributionData,
   StartContributionData,
-  UpdateMemberData,
-  UpdateMemberRoleData,
+  UpdateContactData,
+  UpdateContactRoleData,
 } from './api.interface';
 
 import { deserializeDate } from '.';
 import env from '../../env';
 
 // TODO: how to make this type safe?
-export function deserializeMember(data: any): any {
+export function deserializeContact(data: any): any {
   return {
     ...data,
     joined: deserializeDate(data.joined),
@@ -43,7 +44,7 @@ export function deserializeMember(data: any): any {
   };
 }
 
-function deserializeRole(data: Serial<MemberRoleData>): MemberRoleData {
+function deserializeRole(data: Serial<ContactRoleData>): ContactRoleData {
   return {
     role: data.role,
     dateAdded: deserializeDate(data.dateAdded),
@@ -62,57 +63,64 @@ function deserializeContribution(
   };
 }
 
-export async function fetchMembers(
-  query: GetMembersQuery
-): Promise<Paginated<GetMemberData>>;
-export async function fetchMembers<With extends GetMemberWith>(
-  query: GetMembersQuery,
+export async function fetchContacts(
+  query: GetContactsQuery
+): Promise<Paginated<GetContactData>>;
+export async function fetchContacts<With extends GetContactWith>(
+  query: GetContactsQuery,
   _with: readonly With[]
-): Promise<Paginated<GetMemberDataWith<With>>>;
-export async function fetchMembers<With extends GetMemberWith>(
-  query: GetMembersQuery = {},
+): Promise<Paginated<GetContactDataWith<With>>>;
+export async function fetchContacts<With extends GetContactWith>(
+  query: GetContactsQuery = {},
   _with?: readonly With[]
-): Promise<Paginated<GetMemberDataWith<With>>> {
+): Promise<Paginated<GetContactDataWith<With>>> {
   // TODO: fix type safety
-  const { data } = await axios.get('/member', {
+  const { data } = await axios.get('/contact', {
     params: { with: _with, ...query },
   });
   return {
     ...data,
-    items: data.items.map(deserializeMember),
+    items: data.items.map(deserializeContact),
   };
 }
 
-export async function fetchMember(id: string): Promise<GetMemberData>;
-export async function fetchMember<With extends GetMemberWith>(
-  id: string,
-  _with: readonly With[]
-): Promise<GetMemberDataWith<With>>;
-export async function fetchMember<With extends GetMemberWith>(
-  id: string,
-  _with?: readonly With[]
-): Promise<GetMemberDataWith<With>> {
-  const { data } = await axios.get<Serial<GetMemberData>>(`/member/${id}`, {
-    params: { with: _with },
-  });
-  return deserializeMember(data);
+export async function createContact(
+  dataIn: CreateContactData
+): Promise<GetContactData> {
+  const { data } = await axios.post<Serial<GetContactData>>('/contact', dataIn);
+  return deserializeContact(data);
 }
 
-export async function updateMember(
+export async function fetchContact(id: string): Promise<GetContactData>;
+export async function fetchContact<With extends GetContactWith>(
   id: string,
-  memberData: UpdateMemberData
-): Promise<GetMemberData> {
-  const { data } = await axios.patch<Serial<GetMemberData>>(
-    `/member/${id}`,
-    // TODO: passing memberData directly is not type safe, it could contain extra properties
-    memberData
+  _with: readonly With[]
+): Promise<GetContactDataWith<With>>;
+export async function fetchContact<With extends GetContactWith>(
+  id: string,
+  _with?: readonly With[]
+): Promise<GetContactDataWith<With>> {
+  const { data } = await axios.get<Serial<GetContactData>>(`/contact/${id}`, {
+    params: { with: _with },
+  });
+  return deserializeContact(data);
+}
+
+export async function updateContact(
+  id: string,
+  dataIn: UpdateContactData
+): Promise<GetContactData> {
+  const { data } = await axios.patch<Serial<GetContactData>>(
+    `/contact/${id}`,
+    // TODO: passing dataIn directly is not type safe, it could contain extra properties
+    dataIn
   );
-  return deserializeMember(data);
+  return deserializeContact(data);
 }
 
 export async function fetchContribution(): Promise<ContributionInfo> {
   const { data } = await axios.get<Serial<ContributionInfo>>(
-    '/member/me/contribution'
+    '/contact/me/contribution'
   );
   return deserializeContribution(data);
 }
@@ -121,7 +129,7 @@ export async function updateContribution(
   dataIn: SetContributionData
 ): Promise<ContributionInfo> {
   const { data } = await axios.patch<Serial<ContributionInfo>>(
-    '/member/me/contribution',
+    '/contact/me/contribution',
     {
       amount: dataIn.amount,
       payFee: dataIn.payFee && dataIn.period === ContributionPeriod.Monthly,
@@ -136,7 +144,7 @@ export async function forceUpdateContribution(
   dataIn: ForceUpdateContributionData
 ): Promise<ContributionInfo> {
   const { data } = await axios.patch<Serial<ContributionInfo>>(
-    `/member/${id}/contribution/force`,
+    `/contact/${id}/contribution/force`,
     {
       type: dataIn.type,
       amount: dataIn.amount,
@@ -155,7 +163,7 @@ export async function startContribution(
   dataIn: StartContributionData
 ): Promise<PaymentFlowParams> {
   const { data } = await axios.post<Serial<PaymentFlowParams>>(
-    '/member/me/contribution',
+    '/contact/me/contribution',
     {
       amount: dataIn.amount,
       period: dataIn.period,
@@ -172,13 +180,13 @@ export async function completeStartContribution(
   paymentFlowId: string
 ): Promise<ContributionInfo> {
   const { data } = await axios.post<Serial<ContributionInfo>>(
-    '/member/me/contribution/complete',
+    '/contact/me/contribution/complete',
     { paymentFlowId }
   );
   return deserializeContribution(data);
 }
 export async function cancelContribution(): Promise<void> {
-  await axios.post('/member/me/contribution/cancel');
+  await axios.post('/contact/me/contribution/cancel');
 }
 
 export const updatePaymentMethodCompleteUrl =
@@ -188,7 +196,7 @@ export async function updatePaymentMethod(
   paymentMethod?: PaymentMethod
 ): Promise<PaymentFlowParams> {
   const { data } = await axios.put<Serial<PaymentFlowParams>>(
-    '/member/me/payment-method',
+    '/contact/me/payment-method',
     { paymentMethod, completeUrl: updatePaymentMethodCompleteUrl }
   );
   return data;
@@ -198,7 +206,7 @@ export async function completeUpdatePaymentMethod(
   paymentFlowId: string
 ): Promise<ContributionInfo> {
   const { data } = await axios.post<Serial<ContributionInfo>>(
-    '/member/me/payment-method/complete',
+    '/contact/me/payment-method/complete',
     { paymentFlowId }
   );
   return deserializeContribution(data);
@@ -208,7 +216,7 @@ export async function fetchPayments(
   id: string,
   query: GetPaymentsQuery
 ): Promise<Paginated<GetPaymentData>> {
-  const { data } = await axios.get(`/member/${id}/payment`, { params: query });
+  const { data } = await axios.get(`/contact/${id}/payment`, { params: query });
   return {
     ...data,
     items: data.items.map((item: any) => ({
@@ -221,19 +229,19 @@ export async function fetchPayments(
 
 export async function updateRole(
   id: string,
-  role: PermissionType,
-  dataIn: UpdateMemberRoleData
-): Promise<MemberRoleData> {
-  const { data } = await axios.put<Serial<MemberRoleData>>(
-    `/member/${id}/role/${role}`,
-    dataIn
+  role: RoleType,
+  dataIn: UpdateContactRoleData
+): Promise<ContactRoleData> {
+  const { data } = await axios.put<Serial<ContactRoleData>>(
+    `/contact/${id}/role/${role}`,
+    {
+      dateAdded: dataIn.dateAdded,
+      dateExpires: dataIn.dateExpires,
+    }
   );
   return deserializeRole(data);
 }
 
-export async function deleteRole(
-  id: string,
-  role: PermissionType
-): Promise<void> {
-  await axios.delete(`/member/${id}/role/${role}`);
+export async function deleteRole(id: string, role: RoleType): Promise<void> {
+  await axios.delete(`/contact/${id}/role/${role}`);
 }

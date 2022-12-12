@@ -118,7 +118,19 @@ meta:
 
     <div>
       <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
-      <RoleEditor :contact="contact" class="mt-4" @update="handleUpdate" />
+      <div class="relative mt-4">
+        <RoleEditor
+          :roles="contact.roles"
+          @delete="handleDeleteRole"
+          @update="handleUpdateRole"
+        />
+        <div
+          v-if="changingRoles"
+          class="absolute inset-0 flex items-center justify-center bg-primary-5/50"
+        >
+          <font-awesome-icon :icon="['fas', 'circle-notch']" spin />
+        </div>
+      </div>
     </div>
 
     <div class="hidden">
@@ -141,19 +153,25 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { ContributionType } from '@beabee/beabee-common';
+import { ContributionType, RoleType } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../components/AppHeading.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
 import AppButton from '../../../../components/forms/AppButton.vue';
 import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown.vue';
-import RoleEditor from '../../../../components/pages/admin/contacts/RoleEditor.vue';
+import RoleEditor from '../../../../components/role/RoleEditor.vue';
 import { onBeforeMount, ref, reactive } from 'vue';
 import {
-  GetMemberData,
-  GetMemberDataWith,
+  GetContactData,
+  GetContactDataWith,
+  ContactRoleData,
 } from '../../../../utils/api/api.interface';
-import { fetchMember, updateMember } from '../../../../utils/api/member';
+import {
+  deleteRole,
+  fetchContact,
+  updateContact,
+  updateRole,
+} from '../../../../utils/api/contact';
 import AppInfoList from '../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
@@ -161,15 +179,13 @@ import { fetchContent } from '../../../../utils/api/content';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 import AppForm from '../../../../components/forms/AppForm.vue';
 
-formatLocale;
-
 const { t, n } = useI18n();
 
 const props = defineProps<{
-  contact: GetMemberData;
+  contact: GetContactData;
 }>();
 
-const contact = ref<GetMemberDataWith<
+const contact = ref<GetContactDataWith<
   'profile' | 'contribution' | 'roles'
 > | null>(null);
 const contactTags = ref<string[]>([]);
@@ -179,9 +195,10 @@ const contactAnnotations = reactive({
   tags: [] as string[],
 });
 const securityLink = ref('');
+const changingRoles = ref(false);
 
 async function handleFormSubmit() {
-  await updateMember(props.contact.id, {
+  await updateContact(props.contact.id, {
     profile: { ...contactAnnotations },
   });
 }
@@ -191,16 +208,27 @@ async function handleSecurityAction() {
   securityLink.value = response;
 }
 
-async function handleUpdate() {
-  contact.value = await fetchMember(props.contact.id, [
+async function handleUpdateRole(role: ContactRoleData) {
+  await handleChangedRoles(() => updateRole(props.contact.id, role.role, role));
+}
+
+async function handleDeleteRole(roleName: RoleType) {
+  await handleChangedRoles(() => deleteRole(props.contact.id, roleName));
+}
+
+async function handleChangedRoles(cb: () => Promise<unknown>) {
+  changingRoles.value = true;
+  await cb();
+  contact.value = await fetchContact(props.contact.id, [
     'profile',
     'contribution',
     'roles',
   ]);
+  changingRoles.value = false;
 }
 
 onBeforeMount(async () => {
-  contact.value = await fetchMember(props.contact.id, [
+  contact.value = await fetchContact(props.contact.id, [
     'profile',
     'contribution',
     'roles',
