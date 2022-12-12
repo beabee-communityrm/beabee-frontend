@@ -24,6 +24,8 @@ jobs:
               ;;
           esac
 
+          echo "revision=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
   check:
     uses: ./.github/workflows/check.yml
 
@@ -39,6 +41,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - uses: docker/build-push-action@v3
         with:
+          build-args: |
+            REVISION=${{ needs.init.outputs.revision }}
           context: .
           push: true
           tags: ${{ secrets.DOCKER_ORGANISATION }}/frontend:${{ needs.init.outputs.stage }}

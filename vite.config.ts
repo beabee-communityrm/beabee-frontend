@@ -25,6 +25,7 @@ export default ({ command, mode }) => {
         values: {
           __appUrl__: 'http://localhost:3000',
           __apiUrl__: env.API_BASE_URL,
+          __revision__: '',
         },
         preventAssignment: true,
       })
