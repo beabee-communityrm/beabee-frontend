@@ -61,7 +61,7 @@ meta:
 import {
   ContributionType,
   NewsletterStatus,
-  PermissionType,
+  RoleType,
 } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { reactive, ref } from 'vue';
@@ -76,8 +76,8 @@ import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import AppForm from '../../../components/forms/AppForm.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import RoleEditor from '../../../components/role/RoleEditor.vue';
-import { MemberRoleData } from '../../../utils/api/api.interface';
-import { createMember } from '../../../utils/api/member';
+import { ContactRoleData } from '../../../utils/api/api.interface';
+import { createContact } from '../../../utils/api/contact';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -87,7 +87,7 @@ const initialData = () => ({
   firstname: '',
   lastname: '',
   subscribeToNewsletter: false,
-  roles: [] as MemberRoleData[],
+  roles: [] as ContactRoleData[],
   contribution: {
     type: ContributionType.None,
     amount: undefined,
@@ -101,7 +101,7 @@ const addAnother = ref(false);
 
 const validation = useVuelidate();
 
-function handleUpdateRole(role: MemberRoleData) {
+function handleUpdateRole(role: ContactRoleData) {
   const existingRole = data.roles.find((r) => r.role === role.role);
   if (existingRole) {
     existingRole.dateAdded = role.dateAdded;
@@ -111,7 +111,7 @@ function handleUpdateRole(role: MemberRoleData) {
   }
 }
 
-function handleDeleteRole(roleName: PermissionType) {
+function handleDeleteRole(roleName: RoleType) {
   data.roles = data.roles.filter((role) => role.role !== roleName);
 }
 
@@ -127,7 +127,7 @@ async function saveContact() {
       ? { ...data.contribution, type: ContributionType.Manual as const }
       : undefined;
 
-  return await createMember({
+  return await createContact({
     email: data.email,
     firstname: data.firstname,
     lastname: data.lastname,

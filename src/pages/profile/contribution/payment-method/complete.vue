@@ -10,7 +10,7 @@ meta:
 <script lang="ts" setup>
 import { onBeforeMount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { completeUpdatePaymentMethod } from '../../../../utils/api/member';
+import { completeUpdatePaymentMethod } from '../../../../utils/api/contact';
 
 const route = useRoute();
 const router = useRouter();
