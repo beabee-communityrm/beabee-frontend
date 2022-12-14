@@ -39,25 +39,23 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppButton from '../forms/AppButton.vue';
 import RoleEditorItem from './RoleEditorItem.vue';
-import { MemberRoleData } from '../../utils/api/api.interface';
+import { ContactRoleData } from '../../utils/api/api.interface';
 import RoleEditorForm from './RoleEditorForm.vue';
-import { PermissionTypes } from '@beabee/beabee-common';
+import { RoleTypes } from '@beabee/beabee-common';
 import AppSubHeading from '../AppSubHeading.vue';
 
 const emit = defineEmits(['delete', 'update']);
-const props = defineProps<{ roles: MemberRoleData[] }>();
+const props = defineProps<{ roles: ContactRoleData[] }>();
 
 const { t } = useI18n();
 
 const formVisible = ref(false);
 
 const availableRoles = computed(() =>
-  PermissionTypes.filter((type) =>
-    props.roles.every((role) => role.role !== type)
-  )
+  RoleTypes.filter((type) => props.roles.every((role) => role.role !== type))
 );
 
-async function handleSaveNew(role: MemberRoleData) {
+async function handleSaveNew(role: ContactRoleData) {
   formVisible.value = false;
   emit('update', role);
 }

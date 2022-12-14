@@ -104,7 +104,7 @@ import {
   startContribution,
   startContributionCompleteUrl,
   updateContribution,
-} from '../../../../utils/api/member';
+} from '../../../../utils/api/contact';
 import AppModal from '../../../AppModal.vue';
 import StripePayment from '../../../StripePayment.vue';
 import { currentUser } from '../../../../store/currentUser';

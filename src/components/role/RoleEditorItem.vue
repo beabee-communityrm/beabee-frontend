@@ -55,18 +55,18 @@ import { useI18n } from 'vue-i18n';
 import AppButton from '../forms/AppButton.vue';
 import AppRoundBadge from '../AppRoundBadge.vue';
 import AppConfirmDialog from '../AppConfirmDialog.vue';
-import { MemberRoleData } from '../../utils/api/api.interface';
+import { ContactRoleData } from '../../utils/api/api.interface';
 import { formatLocale } from '../../utils/dates/locale-date-formats';
 import RoleEditorForm from './RoleEditorForm.vue';
 
 const emit = defineEmits(['delete', 'update']);
-defineProps<{ role: MemberRoleData }>();
+defineProps<{ role: ContactRoleData }>();
 
 const { t } = useI18n();
 const formVisible = ref(false);
 const showDeleteModal = ref(false);
 
-function isRoleCurrent(role: MemberRoleData): boolean {
+function isRoleCurrent(role: ContactRoleData): boolean {
   const now = new Date();
   return role.dateAdded < now && (!role.dateExpires || role.dateExpires > now);
 }

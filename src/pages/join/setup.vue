@@ -22,14 +22,14 @@ import { NewsletterStatus } from '@beabee/beabee-common';
 import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import AuthBox from '../../components/AuthBox.vue';
-import { updateMember } from '../../utils/api/member';
+import { updateContact } from '../../utils/api/contact';
 import {
   JoinSetupContent,
-  UpdateMemberData,
+  UpdateContactData,
 } from '../../utils/api/api.interface';
 import { fetchContent } from '../../utils/api/content';
 import SetupForm from '../../components/pages/join/SetupForm.vue';
-import { SetupMemberData } from '../../components/pages/join/join.interface';
+import { SetupContactData } from '../../components/pages/join/join.interface';
 
 const router = useRouter();
 
@@ -47,37 +47,34 @@ const setupContent = ref<JoinSetupContent>({
 
 const saving = ref(false);
 
-async function completeSetup(setupMemberData: SetupMemberData) {
+async function completeSetup(data: SetupContactData) {
   saving.value = true;
 
-  const updateMemberData: UpdateMemberData = {
-    email: setupMemberData.email,
-    firstname: setupMemberData.firstName,
-    lastname: setupMemberData.lastName,
+  const updateContactData: UpdateContactData = {
+    email: data.email,
+    firstname: data.firstName,
+    lastname: data.lastName,
   };
 
-  if (
-    setupMemberData.profile.newsletterOptIn ||
-    setupContent.value.showMailOptIn
-  ) {
-    updateMemberData.profile = {
-      ...(setupMemberData.profile.newsletterOptIn && {
+  if (data.profile.newsletterOptIn || setupContent.value.showMailOptIn) {
+    updateContactData.profile = {
+      ...(data.profile.newsletterOptIn && {
         newsletterStatus: NewsletterStatus.Subscribed,
       }),
       ...(setupContent.value.showMailOptIn && {
-        deliveryOptIn: setupMemberData.profile.deliveryOptIn,
+        deliveryOptIn: data.profile.deliveryOptIn,
         deliveryAddress: {
-          line1: setupMemberData.addressLine1,
-          line2: setupMemberData.addressLine2,
-          city: setupMemberData.cityOrTown,
-          postcode: setupMemberData.postCode,
+          line1: data.addressLine1,
+          line2: data.addressLine2,
+          city: data.cityOrTown,
+          postcode: data.postCode,
         },
       }),
     };
   }
 
   try {
-    await updateMember('me', updateMemberData);
+    await updateContact('me', updateContactData);
     router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
   } catch (err) {
     saving.value = false;

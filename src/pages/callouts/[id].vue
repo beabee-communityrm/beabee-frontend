@@ -254,7 +254,7 @@ onBeforeMount(async () => {
     ? await fetchResponses(props.id, {
         rules: {
           condition: 'AND',
-          rules: [{ field: 'member', operator: 'equal', value: ['me'] }],
+          rules: [{ field: 'contact', operator: 'equal', value: ['me'] }],
         },
         sort: 'createdAt',
         order: 'DESC',

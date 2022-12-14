@@ -54,7 +54,7 @@ meta:
     <SectionTitle>{{ t('homePage.yourProfile') }}</SectionTitle>
 
     <div class="mb-4 flex">
-      <ContributionInfo :member="user" />
+      <ContributionInfo :contact="user" />
     </div>
 
     <AppButton
@@ -82,7 +82,7 @@ import CalloutCard from '../../components/callout/CalloutCard.vue';
 import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
 import {
   GetCalloutData,
-  GetMemberData,
+  GetContactData,
   ProfileContent,
 } from '../../utils/api/api.interface';
 import { fetchContent } from '../../utils/api/content';
@@ -109,7 +109,7 @@ const callouts = ref<GetCalloutData[]>([]);
 
 // This page is behind auth so currentUser can't be null
 // TODO: is there a nicer way to handle this?
-const user = currentUser as Ref<GetMemberData>;
+const user = currentUser as Ref<GetContactData>;
 
 onBeforeMount(async () => {
   profileContent.value = await fetchContent('profile');

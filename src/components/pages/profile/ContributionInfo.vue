@@ -10,13 +10,13 @@
       </div>
     </div>
 
-    <div v-if="member.contributionAmount" class="w-px bg-primary-20" />
+    <div v-if="contact.contributionAmount" class="w-px bg-primary-20" />
 
-    <div v-if="member.contributionAmount" class="flex-1 pl-4">
+    <div v-if="contact.contributionAmount" class="flex-1 pl-4">
       <div class="title uppercase">{{ t('common.contributing') }}</div>
 
       <div class="content">
-        {{ n(member.contributionAmount, 'currency') }}<br />
+        {{ n(contact.contributionAmount, 'currency') }}<br />
         {{ t('common.every') }}<br />
         {{ period }}<br />
       </div>
@@ -29,22 +29,22 @@ import { ContributionPeriod } from '@beabee/beabee-common';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
-import { GetMemberData } from '../../../utils/api/api.interface';
+import { GetContactData } from '../../../utils/api/api.interface';
 
 const { t, n } = useI18n();
 
 const props = defineProps<{
-  member: GetMemberData;
+  contact: GetContactData;
 }>();
 
 const period = computed(() => {
-  return props.member.contributionPeriod === ContributionPeriod.Monthly
+  return props.contact.contributionPeriod === ContributionPeriod.Monthly
     ? t('common.month')
     : t('common.year');
 });
 
 const formattedJoinedDate = computed(() => {
-  return formatLocale(props.member.joined, 'do MMMM y').split(' ');
+  return formatLocale(props.contact.joined, 'do MMMM y').split(' ');
 });
 </script>
 

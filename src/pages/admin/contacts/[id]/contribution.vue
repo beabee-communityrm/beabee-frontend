@@ -37,13 +37,13 @@ meta:
 import { ContributionType } from '@beabee/beabee-common';
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { GetMemberData } from '../../../../utils/api/api.interface';
+import { GetContactData } from '../../../../utils/api/api.interface';
 import AppHeading from '../../../../components/AppHeading.vue';
 import ContactPaymentsHistory from '../../../../components/contact/ContactPaymentsHistory.vue';
 import {
-  fetchMember,
+  fetchContact,
   forceUpdateContribution,
-} from '../../../../utils/api/member';
+} from '../../../../utils/api/contact';
 import { UpdateContribution } from '../../../../components/contact/contact.interface';
 import AppForm from '../../../../components/forms/AppForm.vue';
 import ContactContributionFields from '../../../../components/contact/ContactContributionFields.vue';
@@ -51,14 +51,14 @@ import MessageBox from '../../../../components/MessageBox.vue';
 
 const { t } = useI18n();
 
-const props = defineProps<{ contact: GetMemberData }>();
+const props = defineProps<{ contact: GetContactData }>();
 
 const contribution = ref<UpdateContribution>();
 
 onBeforeMount(async () => {
   contribution.value = undefined;
 
-  const contact = await fetchMember(props.contact.id, ['contribution']);
+  const contact = await fetchContact(props.contact.id, ['contribution']);
 
   contribution.value = {
     type: contact.contribution.type,

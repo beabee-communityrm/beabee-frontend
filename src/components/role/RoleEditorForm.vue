@@ -58,13 +58,13 @@
 </template>
 
 <script lang="ts" setup>
-import { PermissionType } from '@beabee/beabee-common';
+import { RoleType } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import { computed, reactive } from 'vue';
 import { format } from 'date-fns';
 import { useI18n } from 'vue-i18n';
-import { MemberRoleData } from '../../utils/api/api.interface';
+import { ContactRoleData } from '../../utils/api/api.interface';
 import AppForm from '../forms/AppForm.vue';
 import AppInput from '../forms/AppInput.vue';
 import AppLabel from '../forms/AppLabel.vue';
@@ -75,9 +75,9 @@ const { t } = useI18n();
 
 const emit = defineEmits(['cancel', 'save']);
 const props = defineProps<{
-  role?: MemberRoleData;
-  onSave?: (data: MemberRoleData) => Promise<void>;
-  availableRoles?: PermissionType[];
+  role?: ContactRoleData;
+  onSave?: (data: ContactRoleData) => Promise<void>;
+  availableRoles?: RoleType[];
 }>();
 
 // This means no form this form is embedded into will ever validate
