@@ -31,6 +31,9 @@
     "subscribeToNewsletter": "Synchronise with newsletter tool",
     "title": "Add a contact"
   },
+  "addNotice": {
+    "title": "Add a notice"
+  },
   "adminDashboard": {
     "hint1": "<p>Did you know callouts can be created without an end date, and just keep running? See our <a href=\"https://beabee.io/en/beabee-full-feature-list/\">feature showcase</a> for more information.</p>\n",
     "hint2": "<p>Find out more about <a href=\"https://beabee.io/en/beabee-model/\">the beabee vision</a> around community engagement and meaningful relationships with your audience.</p>\n",
