@@ -24,3 +24,8 @@ export async function fetchNotices(
     })),
   };
 }
+
+export async function createNotice() {
+  // await axios.post('/notice', {data...});
+  // ...
+}
