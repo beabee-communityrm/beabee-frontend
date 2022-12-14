@@ -8,7 +8,9 @@ meta:
 <template>
   <PageTitle :title="t('menu.notices')" border>
     <div class="flex-0 ml-3">
-      <AppButton href="/tools/notices">{{ t('notices.addNotice') }}</AppButton>
+      <AppButton to="/admin/notices/add">{{
+        t('notices.addNotice')
+      }}</AppButton>
     </div>
   </PageTitle>
   <AppTable
