@@ -32,7 +32,7 @@ meta:
         />
         <KeyStat
           :label="t('adminDashboard.numbers.newMembers')"
-          :stat="'+' + n(stats.newMembers)"
+          :stat="'+' + n(stats.newContacts)"
         />
       </div>
       <AppHeading>{{ t('adminDashboard.mostRecentMembers.title') }}</AppHeading>
@@ -98,10 +98,10 @@ import KeyStat from '../../components/pages/admin/KeyStat.vue';
 import { onBeforeMount, ref } from 'vue';
 import {
   GetCalloutDataWith,
-  GetMemberData,
+  GetContactData,
   GetStatsData,
 } from '../../utils/api/api.interface';
-import { fetchMembers } from '../../utils/api/member';
+import { fetchContacts } from '../../utils/api/contact';
 import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
 import HintBox from '../../components/pages/admin/HintBox.vue';
 import { fetchCallouts } from '../../utils/api/callout';
@@ -112,26 +112,30 @@ import { subDays } from 'date-fns';
 const { n, t } = useI18n();
 
 const stats = ref<GetStatsData>();
-const recentMembers = ref<GetMemberData[]>([]);
+const recentMembers = ref<GetContactData[]>([]);
 const latestCallout = ref<GetCalloutDataWith<'responseCount'> | null>();
 
 onBeforeMount(async () => {
-  fetchStats({
+  stats.value = await fetchStats({
     from: subDays(new Date(), 30),
     to: new Date(),
-  }).then((results) => (stats.value = results));
+  });
 
-  fetchMembers({
-    limit: 5,
-    sort: 'joined',
-    order: 'DESC',
-    rules: {
-      condition: 'AND',
-      rules: [{ field: 'activeMembership', operator: 'equal', value: [true] }],
-    },
-  }).then((results) => (recentMembers.value = results.items));
+  recentMembers.value = (
+    await fetchContacts({
+      limit: 5,
+      sort: 'joined',
+      order: 'DESC',
+      rules: {
+        condition: 'AND',
+        rules: [
+          { field: 'activeMembership', operator: 'equal', value: [true] },
+        ],
+      },
+    })
+  ).items;
 
-  fetchCallouts(
+  const callouts = await fetchCallouts(
     {
       limit: 1,
       sort: 'starts',
@@ -148,8 +152,7 @@ onBeforeMount(async () => {
       },
     },
     ['responseCount']
-  ).then((results) => {
-    latestCallout.value = results.count > 0 ? results.items[0] : null;
-  });
+  );
+  latestCallout.value = callouts.count > 0 ? callouts.items[0] : null;
 });
 </script>

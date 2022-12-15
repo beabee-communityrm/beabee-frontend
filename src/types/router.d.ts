@@ -1,4 +1,4 @@
-import { PermissionType } from '@beabee/beabee-common';
+import { RoleType } from '@beabee/beabee-common';
 import 'vue-router';
 
 declare module 'vue-router' {
@@ -6,6 +6,6 @@ declare module 'vue-router' {
     pageTitle: string;
     layout?: 'Auth' | 'Dashboard' | 'Loading';
     noAuth?: boolean;
-    role?: PermissionType;
+    role?: RoleType;
   }
 }

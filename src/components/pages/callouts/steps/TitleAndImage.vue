@@ -1,138 +1,103 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div>
-    <div class="mt-5 grid grid-cols-2 gap-6">
-      <div class="col-span-1">
-        <AppInput
-          v-model="data.title"
-          :label="inputT('title.label')"
-          :placeholder="inputT('title.placeholder')"
-          required
-        />
-      </div>
-      <div
-        class="col-span-1 mt-6 text-sm text-grey"
-        v-html="inputT('title.help')"
+    <AppFormSection :help="inputT('title.help')">
+      <AppInput
+        v-model="data.title"
+        :label="inputT('title.label')"
+        :placeholder="inputT('title.placeholder')"
+        required
       />
-    </div>
-    <div class="mt-5 grid grid-cols-2 gap-6">
-      <div class="col-span-1">
-        <AppTextArea
-          v-model="data.description"
-          :label="inputT('description.label')"
-          :placeholder="inputT('description.placeholder')"
-          required
-        />
-      </div>
-      <div
-        class="col-span-1 mt-6 text-sm text-grey"
-        v-html="inputT('description.help')"
+    </AppFormSection>
+    <AppFormSection :help="inputT('description.help')">
+      <AppTextArea
+        v-model="data.description"
+        :label="inputT('description.label')"
+        :placeholder="inputT('description.placeholder')"
+        required
       />
-    </div>
-    <div class="mt-5 grid grid-cols-2 gap-6">
-      <div class="col-span-1">
-        <AppImageUpload
-          v-model="data.coverImageURL"
-          :label="inputT('image.label')"
-          :width="1440"
-          :height="900"
-          required
-        />
-      </div>
-      <div
-        class="col-span-1 mt-6 text-sm text-grey"
-        v-html="inputT('image.help')"
+    </AppFormSection>
+    <AppFormSection :help="inputT('image.help')">
+      <AppImageUpload
+        v-model="data.coverImageURL"
+        :label="inputT('image.label')"
+        :width="1440"
+        :height="900"
+        required
       />
-    </div>
-    <div v-if="mode !== 'live'" class="mt-5 grid grid-cols-2 gap-6">
-      <div class="col-span-1">
-        <AppLabel :label="inputT('slug.label')" required />
-        <AppRadioGroup
-          v-if="mode === 'new'"
-          v-model="data.useCustomSlug"
-          name="useCustomSlug"
-          :options="[
-            [false, inputT('slug.opts.auto')],
-            [true, inputT('slug.opts.manual')],
-          ]"
-          required
-        />
-        <AppInput v-if="data.useCustomSlug" v-model="customSlug" required>
-          <template #before> {{ env.appUrl }}/callouts/ </template>
-        </AppInput>
-        <p v-else class="mt-2 text-sm">
-          {{ t('createCallout.steps.titleAndImage.urlWillBe') }}
-          {{ env.appUrl }}/callouts/{{ slug || '???' }}
-        </p>
-      </div>
-      <div
-        class="col-span-1 mt-6 text-sm text-grey"
-        v-html="inputT('slug.help')"
+    </AppFormSection>
+    <AppFormSection v-if="canEditSlug" :help="inputT('slug.help')">
+      <AppLabel :label="inputT('slug.label')" required />
+      <AppRadioGroup
+        v-if="!status"
+        v-model="data.useCustomSlug"
+        name="useCustomSlug"
+        :options="[
+          [false, inputT('slug.opts.auto')],
+          [true, inputT('slug.opts.manual')],
+        ]"
+        required
       />
-    </div>
-    <div class="mt-5 grid grid-cols-2 gap-6">
-      <div class="col-span-1">
-        <AppRadioGroup
-          v-model="data.overrideShare"
-          name="overrideShare"
-          :label="inputT('overrideShare.label')"
-          :options="[
-            [false, inputT('overrideShare.opts.yes')],
-            [true, inputT('overrideShare.opts.no')],
-          ]"
-          required
-        />
-      </div>
-      <div class="col-span-1 mt-6 text-sm text-grey" />
-    </div>
-    <div v-if="data.overrideShare" class="mt-5 grid grid-cols-2 gap-6">
-      <div class="col-span-1">
+      <AppInput v-if="data.useCustomSlug" v-model="customSlug" required>
+        <template #before> {{ env.appUrl }}/callouts/ </template>
+      </AppInput>
+      <p v-else class="mt-2 text-sm">
+        {{ t('createCallout.steps.titleAndImage.urlWillBe') }}
+        {{ env.appUrl }}/callouts/{{ slug || '???' }}
+      </p>
+    </AppFormSection>
+    <AppFormSection>
+      <AppRadioGroup
+        v-model="data.overrideShare"
+        name="overrideShare"
+        :label="inputT('overrideShare.label')"
+        :options="[
+          [false, inputT('overrideShare.opts.yes')],
+          [true, inputT('overrideShare.opts.no')],
+        ]"
+        required
+      />
+    </AppFormSection>
+    <template v-if="data.overrideShare">
+      <AppFormSection :help="inputT('shareTitle.help')">
         <AppInput
           v-model="data.shareTitle"
           :label="inputT('shareTitle.label')"
           :placeholder="inputT('shareTitle.placeholder')"
           required
         />
-      </div>
-      <div
-        class="col-span-1 mt-6 text-sm text-grey"
-        v-html="inputT('shareTitle.help')"
-      />
-    </div>
-    <div v-if="data.overrideShare" class="mt-5 grid grid-cols-2 gap-6">
-      <div class="col-span-1">
+      </AppFormSection>
+      <AppFormSection :help="inputT('shareDescription.help')">
         <AppTextArea
           v-model="data.shareDescription"
           :label="inputT('shareDescription.label')"
           :placeholder="inputT('shareDescription.placeholder')"
           required
         />
-      </div>
-      <div
-        class="col-span-1 mt-6 text-sm text-grey"
-        v-html="inputT('shareDescription.help')"
-      />
-    </div>
+      </AppFormSection>
+    </template>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { ItemStatus } from '@beabee/beabee-common';
 import { computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../forms/AppInput.vue';
 import AppImageUpload from '../../../forms/AppImageUpload.vue';
 import AppTextArea from '../../../forms/AppTextArea.vue';
 import useVuelidate from '@vuelidate/core';
-import { CalloutMode, TitleAndImageStepProps } from '../callouts.interface';
+import { TitleAndImageStepProps } from '../callouts.interface';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
 import AppLabel from '../../../forms/AppLabel.vue';
 import env from '../../../../env';
 import slugify from 'slugify';
+import AppFormSection from '../../../forms/AppFormSection.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   data: TitleAndImageStepProps;
-  mode: CalloutMode;
+  status: ItemStatus | undefined;
 }>();
 
 const { t } = useI18n();
@@ -158,10 +123,21 @@ watch(
   }
 );
 
+const canEditSlug = computed(
+  () =>
+    !props.status ||
+    props.status === ItemStatus.Draft ||
+    props.status === ItemStatus.Scheduled
+);
+
 const validation = useVuelidate();
 
-watch(validation, () => {
-  emit('update:error', validation.value.$errors.length > 0);
-  emit('update:validated', !validation.value.$invalid);
-});
+watch(
+  validation,
+  () => {
+    emit('update:error', validation.value.$errors.length > 0);
+    emit('update:validated', !validation.value.$invalid);
+  },
+  { immediate: true }
+);
 </script>

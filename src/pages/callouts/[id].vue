@@ -127,7 +127,7 @@ import MessageBox from '../../components/MessageBox.vue';
 import { currentUser } from '../../store';
 import GuestFields from '../../components/pages/callouts/GuestFields.vue';
 import SharingPanel from '../../components/pages/callouts/CalloutSharingPanel.vue';
-import axios from '../../axios';
+import axios from '../../lib/axios';
 import InfoMessage from '../../components/InfoMessage.vue';
 
 import 'formiojs/dist/formio.form.css';
@@ -254,7 +254,7 @@ onBeforeMount(async () => {
     ? await fetchResponses(props.id, {
         rules: {
           condition: 'AND',
-          rules: [{ field: 'member', operator: 'equal', value: ['me'] }],
+          rules: [{ field: 'contact', operator: 'equal', value: ['me'] }],
         },
         sort: 'createdAt',
         order: 'DESC',

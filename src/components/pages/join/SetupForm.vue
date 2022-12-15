@@ -1,10 +1,10 @@
 <template>
-  <form @submit.prevent="emit('submit', setupMemberData)">
+  <form @submit.prevent="emit('submit', data)">
     <JoinHeader
       :title="
         t('joinSetup.welcome', {
-          firstName: setupMemberData.firstName,
-          lastName: setupMemberData.lastName,
+          firstName: data.firstName,
+          lastName: data.lastName,
         })
       "
     />
@@ -13,30 +13,30 @@
       {{ setupContent.welcome }}
     </p>
 
-    <ContactInformation
-      v-model:email="setupMemberData.email"
-      v-model:firstName="setupMemberData.firstName"
-      v-model:lastName="setupMemberData.lastName"
+    <ContactBasicInformationFields
+      v-model:email="data.email"
+      v-model:firstName="data.firstName"
+      v-model:lastName="data.lastName"
     />
 
     <template v-if="setupContent.showMailOptIn">
       <ContactMailOptIn
-        v-model="setupMemberData.profile.deliveryOptIn"
+        v-model="data.profile.deliveryOptIn"
         :content="setupContent"
       />
 
       <AppAddress
-        v-model:line1="setupMemberData.addressLine1"
-        v-model:line2="setupMemberData.addressLine2"
-        v-model:postCode="setupMemberData.postCode"
-        v-model:cityOrTown="setupMemberData.cityOrTown"
-        :required="setupMemberData.profile.deliveryOptIn"
+        v-model:line1="data.addressLine1"
+        v-model:line2="data.addressLine2"
+        v-model:postCode="data.postCode"
+        v-model:cityOrTown="data.cityOrTown"
+        :required="data.profile.deliveryOptIn"
       />
     </template>
 
     <AppOptIn
       v-if="showNewsletterOptIn"
-      v-model="setupMemberData.profile.newsletterOptIn"
+      v-model="data.profile.newsletterOptIn"
       :title="setupContent.newsletterTitle"
       :text="setupContent.newsletterText"
       :label="setupContent.newsletterOptIn"
@@ -66,10 +66,10 @@ import JoinHeader from './JoinHeader.vue';
 import AppAddress from '../../AppAddress.vue';
 import AppButton from '../../forms/AppButton.vue';
 import MessageBox from '../../MessageBox.vue';
-import ContactInformation from '../../ContactInformation.vue';
-import ContactMailOptIn from '../../ContactMailOptIn.vue';
-import { fetchMember } from '../../../utils/api/member';
-import { SetupMemberData } from './join.interface';
+import ContactBasicInformationFields from '../../contact/ContactBasicInformationFields.vue';
+import ContactMailOptIn from '../../contact/ContactMailOptIn.vue';
+import { fetchContact } from '../../../utils/api/contact';
+import { SetupContactData } from './join.interface';
 import AppOptIn from '../../AppOptIn.vue';
 
 const emit = defineEmits(['submit']);
@@ -81,25 +81,25 @@ const props = defineProps<{
 const { t } = useI18n();
 const validation = useVuelidate({ $stopPropagation: true });
 
-const member = await fetchMember('me', ['profile']);
+const contact = await fetchContact('me', ['profile']);
 
-const setupMemberData = reactive<SetupMemberData>({
-  email: member.email,
-  firstName: member.firstname,
-  lastName: member.lastname,
+const data = reactive<SetupContactData>({
+  email: contact.email,
+  firstName: contact.firstname,
+  lastName: contact.lastname,
   profile: {
     newsletterOptIn: false,
-    deliveryOptIn: member.profile.deliveryOptIn,
+    deliveryOptIn: contact.profile.deliveryOptIn,
   },
-  addressLine1: member.profile.deliveryAddress?.line1 || '',
-  addressLine2: member.profile.deliveryAddress?.line2 || '',
-  cityOrTown: member.profile.deliveryAddress?.city || '',
-  postCode: member.profile.deliveryAddress?.postcode || '',
+  addressLine1: contact.profile.deliveryAddress?.line1 || '',
+  addressLine2: contact.profile.deliveryAddress?.line2 || '',
+  cityOrTown: contact.profile.deliveryAddress?.city || '',
+  postCode: contact.profile.deliveryAddress?.postcode || '',
 });
 
 const showNewsletterOptIn = computed(
   () =>
     props.setupContent.showNewsletterOptIn &&
-    member.profile.newsletterStatus !== NewsletterStatus.Subscribed
+    contact.profile.newsletterStatus !== NewsletterStatus.Subscribed
 );
 </script>

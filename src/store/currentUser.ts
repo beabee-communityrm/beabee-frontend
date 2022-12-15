@@ -1,17 +1,17 @@
-import axios from '../axios';
+import axios from '../lib/axios';
 import { ref } from 'vue';
-import { fetchMember } from '../utils/api/member';
-import { GetMemberData } from '../utils/api/api.interface';
+import { fetchContact } from '../utils/api/contact';
+import { GetContactData } from '../utils/api/api.interface';
 
 export async function updateCurrentUser(): Promise<void> {
   try {
-    currentUser.value = await fetchMember('me');
+    currentUser.value = await fetchContact('me');
   } catch (err) {
     currentUser.value = null;
   }
 }
 
-export const currentUser = ref<GetMemberData | null>(null);
+export const currentUser = ref<GetContactData | null>(null);
 export const initCurrentUser = updateCurrentUser();
 
 axios.interceptors.response.use(
