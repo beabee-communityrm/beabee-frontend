@@ -31,12 +31,12 @@
       </p>
       <AppSelect
         v-model="currentPageSize"
-        inputClass="text-sm"
         :items="pageSizes"
+        input-class="text-sm"
       />
       <AppPagination
-        v-model="currentPage"
         v-if="totalPages > 1"
+        v-model="currentPage"
         :total-pages="totalPages"
       />
     </div>
