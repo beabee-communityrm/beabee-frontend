@@ -1,5 +1,4 @@
 import Appsignal from '@appsignal/javascript';
-import { errorHandler } from '@appsignal/vue';
 import { App } from 'vue';
 import env from '../env';
 
@@ -9,6 +8,30 @@ export function init(app: App) {
       key: env.appsignalKey,
       revision: env.revision,
     });
-    app.config.errorHandler = errorHandler(appsignal, app);
+
+    // Copied from @appsignal/vue but with location tagged
+    app.config.errorHandler = (err, instance, info) => {
+      console.log(instance, info);
+
+      const span = appsignal.createSpan();
+
+      span
+        .setAction(instance?.$options.name || '[Unknown Vue component]')
+        .setTags({
+          info,
+          location: window.location.href,
+          appUrl: env.appUrl,
+        })
+        .setError(err as Error);
+
+      // appsignal.send(span);
+
+      if (
+        typeof console !== 'undefined' &&
+        typeof console.error === 'function'
+      ) {
+        console.error(err);
+      }
+    };
   }
 }
