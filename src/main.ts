@@ -1,9 +1,6 @@
-import Appsignal from '@appsignal/javascript';
-import { errorHandler } from '@appsignal/vue';
 import { createApp } from 'vue';
 
 import App from './App.vue';
-import env from './env';
 
 import i18n from './lib/i18n';
 import router from './lib/router';
@@ -14,15 +11,10 @@ import './index.css';
 
 // fontawesome icons imports
 import Icons from './plugins/icons';
+import { init as initErrorHandler } from './lib/appsignal';
 
 const app = createApp(App);
-if (env.appsignalKey) {
-  const appsignal = new Appsignal({
-    key: env.appsignalKey,
-    revision: env.revision,
-  });
-  app.config.errorHandler = errorHandler(appsignal, app);
-}
+initErrorHandler(app);
 
 app.use({ ...router });
 app.use(i18n);
