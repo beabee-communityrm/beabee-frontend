@@ -1,5 +1,5 @@
 import { ContributionPeriod } from '@beabee/beabee-common';
-import axios from '../../axios';
+import axios from '../../lib/axios';
 import env from '../../env';
 import {
   CompleteSignupData,
