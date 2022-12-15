@@ -14,13 +14,14 @@ import './index.css';
 // fontawesome icons imports
 import Icons from './plugins/icons';
 
-const appsignal = new Appsignal({
-  key: '8114cb92-a109-4e64-bf24-865b6143ea22',
-  revision: env.revision,
-});
-
 const app = createApp(App);
-app.config.errorHandler = errorHandler(appsignal, app);
+if (env.appsignalKey) {
+  const appsignal = new Appsignal({
+    key: env.appsignalKey,
+    revision: env.revision,
+  });
+  app.config.errorHandler = errorHandler(appsignal, app);
+}
 
 app.use({ ...router });
 app.use(i18n);

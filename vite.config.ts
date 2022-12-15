@@ -26,6 +26,7 @@ export default ({ command, mode }) => {
           __appUrl__: 'http://localhost:3000',
           __apiUrl__: env.API_BASE_URL,
           __revision__: '',
+          __appsignalKey__: env.APPSIGNAL_KEY || '',
         },
         preventAssignment: true,
       })
