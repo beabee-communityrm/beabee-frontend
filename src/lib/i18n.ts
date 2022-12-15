@@ -13,7 +13,7 @@ watch(
     const [justLocale] = newLocale.split('@');
 
     if (i18n.global.locale.value !== justLocale) {
-      const messages = await import(`../locales/${newLocale}.json`);
+      const messages = await import(`../../locales/${newLocale}.json`);
       i18n.global.setLocaleMessage(justLocale, messages.default);
       i18n.global.setNumberFormat(justLocale, {
         currency: {

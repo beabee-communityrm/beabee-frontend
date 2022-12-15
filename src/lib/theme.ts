@@ -118,9 +118,9 @@ watch(
     setCSSVar('--ff-body', validFonts[fonts.body].join(','));
     setCSSVar('--ff-title', validFonts[fonts.title].join(','));
 
-    import(`./assets/styles/fonts-${fonts.body}.css`);
+    import(`../assets/styles/fonts-${fonts.body}.css`);
     if (fonts.title !== fonts.body) {
-      import(`./assets/styles/fonts-${fonts.title}.css`);
+      import(`../assets/styles/fonts-${fonts.title}.css`);
     }
   },
   {
