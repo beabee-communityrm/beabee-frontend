@@ -25,7 +25,9 @@
   },
   "addContact": {
     "contactSaved": "Kontakt gespeichert",
-    "errors": {},
+    "errors": {
+      "duplicateEmail": "Diese E-Mail-Adresse existiert bereits."
+    },
     "subscribeToNewsletter": "Mit Newsletter-Tool synchronisieren",
     "title": "Kontakt hinzufügen"
   },
@@ -404,6 +406,7 @@
       "contribution": "Beitrag",
       "role": "Rolle"
     },
+    "editNotice": "Der Beitrag kann aktuell nur bei manuell zahlenden Mitgliedern geändert werden.",
     "noContacts": "Keine Kontakte",
     "noResults": "Keine Kontakte gefunden",
     "numResults": "{n} Kontakt gefunden | {n} Kontakte gefunden",
