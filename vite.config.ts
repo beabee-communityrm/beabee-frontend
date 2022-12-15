@@ -34,6 +34,9 @@ export default ({ command, mode }) => {
   }
 
   return defineConfig({
+    build: {
+      sourcemap: true,
+    },
     plugins,
     server: {
       port: 3000,
