@@ -11,12 +11,14 @@ export function init(app: App) {
 
     // Copied from @appsignal/vue but with location tagged
     app.config.errorHandler = (err, instance, info) => {
-      console.log(instance, info);
-
       const span = appsignal.createSpan();
 
       span
-        .setAction(instance?.$options.name || '[Unknown Vue component]')
+        .setAction(
+          instance?.$options.name ||
+            instance?.$options.__name ||
+            '[Unknown Vue component]'
+        )
         .setTags({
           info,
           location: window.location.href,
@@ -24,7 +26,7 @@ export function init(app: App) {
         })
         .setError(err as Error);
 
-      // appsignal.send(span);
+      appsignal.send(span);
 
       if (
         typeof console !== 'undefined' &&
