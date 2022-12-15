@@ -1,6 +1,6 @@
 import { parseToRgba, mix, transparentize } from 'color2k';
 import { watch } from 'vue';
-import { generalContent } from './store';
+import { generalContent } from '../store';
 
 // [Font name, fallbacks]
 export const validFonts = {

@@ -1,6 +1,6 @@
 import { de, enGB } from 'date-fns/locale';
 import { formatDistance, format } from 'date-fns';
-import i18n from '../../i18n';
+import i18n from '../../lib/i18n';
 
 const { locale } = i18n.global;
 const locales = { en: enGB, de };

@@ -182,7 +182,7 @@ import { generalContent as storeGeneralContent } from '../../../store';
 import MessageBox from '../../../components/MessageBox.vue';
 import AppHeading from '../../../components/AppHeading.vue';
 import useVuelidate from '@vuelidate/core';
-import axios from '../../../axios';
+import axios from '../../../lib/axios';
 
 const { t } = useI18n();
 const validation = useVuelidate();

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
-import { notifyError } from './plugins/notify';
-import env from './env';
+import { notifyError } from '../plugins/notify';
+import env from '../env';
 
 axios.defaults.baseURL = env.apiUrl;
 axios.defaults.withCredentials = true;

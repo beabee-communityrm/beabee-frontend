@@ -4,10 +4,11 @@ import { createApp } from 'vue';
 
 import App from './App.vue';
 import env from './env';
-import i18n from './i18n';
-import router from './router';
 
-import './theme';
+import i18n from './lib/i18n';
+import router from './lib/router';
+
+import './lib/theme';
 
 import './index.css';
 
