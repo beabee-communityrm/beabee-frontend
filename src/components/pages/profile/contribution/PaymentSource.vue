@@ -51,7 +51,7 @@ import {
 import {
   updatePaymentMethod,
   updatePaymentMethodCompleteUrl,
-} from '../../../../utils/api/member';
+} from '../../../../utils/api/contact';
 import StripePayment from '../../../StripePayment.vue';
 import AppModal from '../../../AppModal.vue';
 import PaymentMethodIcon from '../../../payment-method/PaymentMethodIcon.vue';

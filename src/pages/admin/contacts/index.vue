@@ -143,11 +143,11 @@ import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import PageTitle from '../../../components/PageTitle.vue';
 import {
-  GetMembersQuery,
-  GetMemberDataWith,
+  GetContactsQuery,
+  GetContactDataWith,
   GetSegmentDataWith,
 } from '../../../utils/api/api.interface';
-import { fetchMembers } from '../../../utils/api/member';
+import { fetchContacts } from '../../../utils/api/contact';
 import AppTable from '../../../components/table/AppTable.vue';
 import { Header, SortType } from '../../../components/table/table.interface';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
@@ -264,7 +264,7 @@ const hasUnsavedSegment = computed(
 
 const segments = ref<GetSegmentDataWith<'contactCount'>[]>([]);
 const contactsTotal = ref<number | null>(null);
-const contactsTable = ref<Paginated<GetMemberDataWith<'profile' | 'roles'>>>();
+const contactsTable = ref<Paginated<GetContactDataWith<'profile' | 'roles'>>>();
 
 const segmentItems = computed(() => [
   {
@@ -281,8 +281,8 @@ const segmentItems = computed(() => [
   })),
 ]);
 
-function getMembershipStartDate(member: GetMemberDataWith<'roles'>): string {
-  const membership = member.roles.find((role) => role.role === 'member');
+function getMembershipStartDate(contact: GetContactDataWith<'roles'>): string {
+  const membership = contact.roles.find((role) => role.role === 'member');
   return membership ? formatLocale(membership.dateAdded, 'PPP') : '';
 }
 
@@ -298,12 +298,12 @@ function handleSavedSegment(segment: GetSegmentDataWith<'contactCount'>) {
 
 onBeforeMount(async () => {
   // Load the total if in a segment, otherwise it will be updated automatically below
-  contactsTotal.value = (await fetchMembers({ limit: 1 })).total;
+  contactsTotal.value = (await fetchContacts({ limit: 1 })).total;
   segments.value = await fetchSegments(['contactCount']);
 });
 
 watchEffect(async () => {
-  const searchRules: GetMembersQuery['rules'] = {
+  const searchRules: GetContactsQuery['rules'] = {
     condition: 'OR',
     rules: currentSearch.value
       .split(' ')
@@ -327,7 +327,7 @@ watchEffect(async () => {
       ]),
   };
 
-  const rules: GetMembersQuery['rules'] = currentRules.value
+  const rules: GetContactsQuery['rules'] = currentRules.value
     ? {
         condition: 'AND',
         rules: [currentRules.value, searchRules],
@@ -344,6 +344,6 @@ watchEffect(async () => {
     }),
   };
 
-  contactsTable.value = await fetchMembers(query, ['profile', 'roles']);
+  contactsTable.value = await fetchContacts(query, ['profile', 'roles']);
 });
 </script>

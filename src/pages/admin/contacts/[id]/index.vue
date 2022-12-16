@@ -153,7 +153,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { ContributionType, PermissionType } from '@beabee/beabee-common';
+import { ContributionType, RoleType } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../components/AppHeading.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
@@ -162,16 +162,16 @@ import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown
 import RoleEditor from '../../../../components/role/RoleEditor.vue';
 import { onBeforeMount, ref, reactive } from 'vue';
 import {
-  GetMemberData,
-  GetMemberDataWith,
-  MemberRoleData,
+  GetContactData,
+  GetContactDataWith,
+  ContactRoleData,
 } from '../../../../utils/api/api.interface';
 import {
   deleteRole,
-  fetchMember,
-  updateMember,
+  fetchContact,
+  updateContact,
   updateRole,
-} from '../../../../utils/api/member';
+} from '../../../../utils/api/contact';
 import AppInfoList from '../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
@@ -182,10 +182,10 @@ import AppForm from '../../../../components/forms/AppForm.vue';
 const { t, n } = useI18n();
 
 const props = defineProps<{
-  contact: GetMemberData;
+  contact: GetContactData;
 }>();
 
-const contact = ref<GetMemberDataWith<
+const contact = ref<GetContactDataWith<
   'profile' | 'contribution' | 'roles'
 > | null>(null);
 const contactTags = ref<string[]>([]);
@@ -198,7 +198,7 @@ const securityLink = ref('');
 const changingRoles = ref(false);
 
 async function handleFormSubmit() {
-  await updateMember(props.contact.id, {
+  await updateContact(props.contact.id, {
     profile: { ...contactAnnotations },
   });
 }
@@ -208,18 +208,18 @@ async function handleSecurityAction() {
   securityLink.value = response;
 }
 
-async function handleUpdateRole(role: MemberRoleData) {
+async function handleUpdateRole(role: ContactRoleData) {
   await handleChangedRoles(() => updateRole(props.contact.id, role.role, role));
 }
 
-async function handleDeleteRole(roleName: PermissionType) {
+async function handleDeleteRole(roleName: RoleType) {
   await handleChangedRoles(() => deleteRole(props.contact.id, roleName));
 }
 
 async function handleChangedRoles(cb: () => Promise<unknown>) {
   changingRoles.value = true;
   await cb();
-  contact.value = await fetchMember(props.contact.id, [
+  contact.value = await fetchContact(props.contact.id, [
     'profile',
     'contribution',
     'roles',
@@ -228,7 +228,7 @@ async function handleChangedRoles(cb: () => Promise<unknown>) {
 }
 
 onBeforeMount(async () => {
-  contact.value = await fetchMember(props.contact.id, [
+  contact.value = await fetchContact(props.contact.id, [
     'profile',
     'contribution',
     'roles',

@@ -1,135 +1,166 @@
 <route lang="yaml">
-name: adminMembershipBuilder
+name: adminMembershipBuilderJoinForm
 meta:
   pageTitle: membershipBuilder.title
   role: admin
 </route>
 
 <template>
-  <PageTitle :title="t('membershipBuilder.title')" border>
-    <div class="flex-0 ml-3">
-      <span v-if="updated" class="mr-4 text-success">
-        <font-awesome-icon :icon="['fa', 'check-circle']" />
-        {{ t('form.updated') }}
-      </span>
-      <span v-else-if="validation.$invalid" class="mr-4 text-danger">
-        <font-awesome-icon :icon="['fa', 'info-circle']" />
-        {{ t('form.errorMessages.aggregatorTop') }}
-      </span>
-      <span v-else-if="dirty" class="mr-4">
-        <font-awesome-icon :icon="['fa', 'info-circle']" />
-        {{ t('form.unsavedChanges') }}
-      </span>
-      <AppButton
-        :loading="updating"
-        :disabled="validation.$invalid"
-        @click="handleUpdate"
-        >{{ t('actions.update') }}</AppButton
-      >
+  <div class="mb-8 grid grid-cols-2 gap-8">
+    <div>
+      <p>{{ stepT('text') }}</p>
     </div>
-  </PageTitle>
-  <div class="flex gap-8">
-    <div class="flex-0 basis-menu">
-      <AppStepper v-model="selectedStepIndex" :steps="steps" />
-    </div>
-    <div class="flex-1">
-      <div
-        v-for="(step, i) in steps"
-        :key="i"
-        :class="{ hidden: selectedStepIndex !== i }"
-      >
-        <component
-          :is="step.component"
-          v-model:error="step.error"
-          v-model:validated="step.validated"
-          :emitter="emitter"
+  </div>
+  <div v-if="joinContent" class="mb-12 grid grid-cols-2 gap-8">
+    <AppForm
+      :button-text="t('form.saveChanges')"
+      :success-text="t('form.saved')"
+      @submit="handleUpdate"
+    >
+      <div class="mb-4">
+        <AppInput
+          v-model="joinContent.title"
+          :label="stepT('formTitle')"
+          required
         />
       </div>
+      <RichTextEditor
+        v-model="joinContent.subtitle"
+        :label="stepT('formSubtitle')"
+        class="mb-4"
+      />
+
+      <AppImageUpload
+        v-model="validation.backgroundUrl.$model"
+        :label="stepT('backgroundImage')"
+        :width="1440"
+        :height="810"
+        class="mb-4"
+        required
+        :error-message="validation.backgroundUrl.$errors[0]?.$message"
+      />
+
+      <h4 class="mb-4 text-lg font-semibold">
+        {{ stepT('suggestedAmounts') }} *
+      </h4>
+      <div class="mb-4 flex gap-4">
+        <PeriodAmounts
+          v-for="(period, periodI) in joinContent.periods"
+          :key="period.name"
+          v-model="joinContent.periods[periodI].presetAmounts"
+          :period="period.name"
+          :min-monthly-amount="joinContent.minMonthlyAmount"
+          class="flex-1"
+        />
+      </div>
+      <div class="mb-4 flex gap-4">
+        <div class="flex-1">
+          <AppLabel :label="stepT('minAmount')" />
+          <AppInput
+            v-model="joinContent.minMonthlyAmount"
+            type="number"
+            :min="1"
+            required
+            class="block w-32"
+          />
+        </div>
+        <div class="flex-1">
+          <AppSelect
+            v-model="selectedDefaultAmount"
+            :label="stepT('defaultAmount')"
+            :items="defaultAmounts"
+            required
+          />
+        </div>
+      </div>
+      <div class="mb-4 flex gap-4">
+        <AppCheckbox
+          v-model="joinContent.showAbsorbFee"
+          :label="stepT('showAbsorbFee')"
+          class="font-semibold"
+        />
+      </div>
+    </AppForm>
+    <div
+      class="bg-cover bg-center p-4 pt-8"
+      :style="`background-image: url(${backgroundUrl})`"
+    >
+      <AuthBox>
+        <JoinForm :join-content="joinContent" @submit.prevent="" />
+      </AuthBox>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import mitt from 'mitt';
-import { markRaw, Ref, ref } from 'vue';
-import type { Component } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
+import { JoinContent } from '../../../utils/api/api.interface';
+import { fetchContent, updateContent } from '../../../utils/api/content';
+import AppForm from '../../../components/forms/AppForm.vue';
+import AppInput from '../../../components/forms/AppInput.vue';
+import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
+import AppLabel from '../../../components/forms/AppLabel.vue';
 import { useI18n } from 'vue-i18n';
-import PageTitle from '../../../components/PageTitle.vue';
-import AppStepper from '../../../components/stepper/AppStepper.vue';
-import { Step } from '../../../components/stepper/stepper.interface';
-import EditJoinForm from '../../../components/pages/admin/membership-builder/steps/EditJoinForm.vue';
-import AccountConfirmation from '../../../components/pages/admin/membership-builder/steps/AccountConfirmation.vue';
-import IntroMessage from '../../../components/pages/admin/membership-builder/steps/IntroMessage.vue';
-import Emails from '../../../components/pages/admin/membership-builder/steps/EmailsStep.vue';
-import AppButton from '../../../components/forms/AppButton.vue';
-import { MembershipBuilderEmitter } from '../../../components/pages/admin/membership-builder/membership-builder.interface';
+import AppSelect from '../../../components/forms/AppSelect.vue';
+import { ContributionPeriod } from '@beabee/beabee-common';
+import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
+import JoinForm from '../../../components/pages/join/JoinForm.vue';
+import AuthBox from '../../../components/AuthBox.vue';
+import AppImageUpload from '../../../components/forms/AppImageUpload.vue';
+import { generalContent } from '../../../store';
 import useVuelidate from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
+import PeriodAmounts from '../../../components/pages/admin/membership-builder/PeriodAmounts.vue';
 
-const { t } = useI18n();
+const joinContent = ref<JoinContent>();
+const backgroundUrl = ref('');
 
-const selectedStepIndex = ref(0);
-const updated = ref(false);
-const updating = ref(false);
-const dirty = ref(false);
+const { n, t } = useI18n();
 
-interface BuilderStep extends Step {
-  component: Component;
-}
+const stepT = (key: string) => t('membershipBuilder.steps.joinForm.' + key);
 
-const steps: Ref<BuilderStep[]> = ref([
-  {
-    name: t('membershipBuilder.steps.joinForm.title'),
-    description: t('membershipBuilder.steps.joinForm.description'),
-    validated: true,
-    error: false,
-    component: markRaw(EditJoinForm),
+const selectedDefaultAmount = computed({
+  get: () =>
+    joinContent.value
+      ? `${joinContent.value.initialPeriod}_${joinContent.value.initialAmount}`
+      : '',
+  set: (defaultAmount) => {
+    if (joinContent.value) {
+      const [periodName, amount] = defaultAmount.split('_');
+      joinContent.value.initialPeriod = periodName as ContributionPeriod;
+      joinContent.value.initialAmount = Number(amount);
+    }
   },
-  {
-    name: t('membershipBuilder.steps.accountConfirmation.title'),
-    description: t('membershipBuilder.steps.accountConfirmation.description'),
-    validated: true,
-    error: false,
-    component: markRaw(AccountConfirmation),
-  },
-  {
-    name: t('membershipBuilder.steps.intro.title'),
-    description: t('membershipBuilder.steps.intro.description'),
-    validated: true,
-    error: false,
-    component: markRaw(IntroMessage),
-  },
-  {
-    name: t('membershipBuilder.steps.emails.title'),
-    description: t('membershipBuilder.steps.emails.description'),
-    validated: true,
-    error: false,
-    component: markRaw(Emails),
-  },
-]);
-
-const validation = useVuelidate();
-
-const emitter: MembershipBuilderEmitter = mitt();
-
-emitter.on('dirty', () => {
-  dirty.value = true;
-  updated.value = false;
 });
 
+const defaultAmounts = computed(() => {
+  return joinContent.value
+    ? joinContent.value.periods.flatMap((period) =>
+        period.presetAmounts.map((amount) => ({
+          id: `${period.name}_${amount}`,
+          label: `${n(amount, 'currency')}/${t('common.' + period.name)}`,
+        }))
+      )
+    : [];
+});
+
+const validation = useVuelidate(
+  { backgroundUrl: { required } },
+  { backgroundUrl }
+);
+
 async function handleUpdate() {
-  let updatedNo = 0;
-
-  function handleUpdated() {
-    updatedNo++;
-    if (updatedNo === steps.value.length) {
-      updating.value = false;
-      dirty.value = false;
-      emitter.off('updated', handleUpdated);
-      updated.value = true;
-    }
+  if (joinContent.value) {
+    await Promise.all([
+      updateContent('join', joinContent.value),
+      updateContent('general', {
+        backgroundUrl: backgroundUrl.value || '',
+      }),
+    ]);
   }
-  updating.value = true;
-
-  emitter.emit('update');
-  emitter.on('updated', handleUpdated);
 }
+
+onBeforeMount(async () => {
+  joinContent.value = await fetchContent('join');
+  backgroundUrl.value = generalContent.value.backgroundUrl || '';
+});
 </script>

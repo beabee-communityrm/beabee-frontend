@@ -62,7 +62,7 @@ import ContactPaymentsHistory from '../../../components/contact/ContactPaymentsH
 import { currentUser } from '../../../store';
 import UpdateContribution from '../../../components/pages/profile/contribution/UpdateContribution.vue';
 import { ContributionInfo } from '../../../utils/api/api.interface';
-import { fetchContribution } from '../../../utils/api/member';
+import { fetchContribution } from '../../../utils/api/contact';
 import { ContributionContent } from '../../../components/contribution/contribution.interface';
 import { fetchContent } from '../../../utils/api/content';
 

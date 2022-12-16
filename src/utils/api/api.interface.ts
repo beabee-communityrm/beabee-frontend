@@ -7,7 +7,7 @@ import {
   PaginatedQuery,
   PaymentMethod,
   PaymentStatus,
-  PermissionType,
+  RoleType,
   RuleGroup,
 } from '@beabee/beabee-common';
 
@@ -38,7 +38,7 @@ export interface Address {
   postcode: string;
 }
 
-interface MemberData {
+interface ContactData {
   email: string;
   firstname: string;
   lastname: string;
@@ -49,7 +49,7 @@ export interface PaymentFlowParams {
   redirectUrl?: string;
 }
 
-interface MemberProfileData {
+interface ContactProfileData {
   telephone: string;
   twitter: string;
   preferredContact: string;
@@ -64,45 +64,45 @@ interface MemberProfileData {
   description?: string;
 }
 
-export interface UpdateMemberRoleData {
+export interface UpdateContactRoleData {
   dateAdded: Date;
   dateExpires: Date | null;
 }
 
-export interface MemberRoleData extends UpdateMemberRoleData {
-  role: PermissionType;
+export interface ContactRoleData extends UpdateContactRoleData {
+  role: RoleType;
 }
 
-export interface GetMemberData extends MemberData {
+export interface GetContactData extends ContactData {
   id: string;
   joined: Date;
   lastSeen?: Date;
   contributionAmount?: number;
   contributionPeriod?: ContributionPeriod;
-  activeRoles: PermissionType[];
+  activeRoles: RoleType[];
 }
 
-export type GetMemberWith = 'profile' | 'contribution' | 'roles';
+export type GetContactWith = 'profile' | 'contribution' | 'roles';
 
-export type GetMemberDataWith<With extends GetMemberWith> = GetMemberData &
-  ('profile' extends With ? { profile: MemberProfileData } : Noop) &
+export type GetContactDataWith<With extends GetContactWith> = GetContactData &
+  ('profile' extends With ? { profile: ContactProfileData } : Noop) &
   ('contribution' extends With ? { contribution: ContributionInfo } : Noop) &
-  ('roles' extends With ? { roles: MemberRoleData[] } : Noop);
+  ('roles' extends With ? { roles: ContactRoleData[] } : Noop);
 
-export type GetMembersQuery = PaginatedQuery; // TODO: constrain fields
+export type GetContactsQuery = PaginatedQuery; // TODO: constrain fields
 
-export type UpdateMemberProfileData = Partial<MemberProfileData>;
+export type UpdateContactProfileData = Partial<ContactProfileData>;
 
-export interface UpdateMemberData extends Partial<MemberData> {
+export interface UpdateContactData extends Partial<ContactData> {
   password?: string;
-  profile?: UpdateMemberProfileData;
+  profile?: UpdateContactProfileData;
 }
 
-export interface CreateMemberData extends UpdateMemberData {
+export interface CreateContactData extends UpdateContactData {
   email: string;
   firstname: string;
   lastname: string;
-  roles?: MemberRoleData[];
+  roles?: ContactRoleData[];
   contribution?: ForceUpdateContributionData;
 }
 
@@ -398,7 +398,7 @@ export interface GetStatsQuery {
 }
 
 export interface GetStatsData {
-  newMembers: number;
+  newContacts: number;
   averageContribution: number | null;
   totalRevenue: number | null;
 }

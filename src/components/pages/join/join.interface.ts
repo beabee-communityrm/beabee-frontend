@@ -1,4 +1,4 @@
-export interface SetupMemberData {
+export interface SetupContactData {
   email: string;
   firstName: string;
   lastName: string;
