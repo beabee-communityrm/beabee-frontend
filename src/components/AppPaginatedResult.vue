@@ -70,10 +70,12 @@ const currentPageSize = computed({
   set: (newPageSize) => emit('update:pageSize', newPageSize),
 });
 
-const pageSizes = computed(() => [12, 25, 50, 100].map(x => ({
-  id: x,
-  label: t('common.itemsPerPage', {items: n(x)})
-})));
+const pageSizes = computed(() =>
+  [12, 25, 50, 100].map((x) => ({
+    id: x,
+    label: t('common.itemsPerPage', { items: n(x) }),
+  }))
+);
 
 const totalPages = computed(() =>
   props.result ? Math.ceil(props.result.total / currentPageSize.value) : 0
