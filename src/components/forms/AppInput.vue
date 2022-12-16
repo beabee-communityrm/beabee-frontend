@@ -23,7 +23,7 @@
           :min="min"
           :pattern="pattern"
           v-bind="$attrs"
-          @blur="validation.value.$touch"
+          @blur="validation.$touch"
         />
       </div>
     </div>
@@ -35,7 +35,7 @@
     class="mt-1.5 text-xs font-semibold text-danger"
     role="alert"
   >
-    {{ validation.value.$errors[0].$message }}
+    {{ validation.$errors[0].$message }}
   </div>
 
   <div v-if="infoMessage" class="mt-1.5 text-xs">
@@ -97,7 +97,7 @@ function errorT(key: string, context?: Record<string, unknown>): string {
 }
 
 const rules = computed(() => ({
-  value: {
+  v: {
     required: helpers.withMessage(
       errorT('required'),
       requiredIf(!!props.required)
@@ -131,8 +131,7 @@ const rules = computed(() => ({
   },
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const validation = useVuelidate(rules, { value } as any); // TODO: type problem
+const validation = useVuelidate(rules, { v: value });
 const hasError = computed(() => validation.value.$errors.length > 0);
 
 function isPassword(value: string) {

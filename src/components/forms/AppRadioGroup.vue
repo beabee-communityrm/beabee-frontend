@@ -30,7 +30,7 @@ import AppLabel from './AppLabel.vue';
 const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps<{
-  modelValue: string | boolean | number | null;
+  modelValue?: string | boolean | number | null;
   options: [string | boolean | number, string][];
   name?: string;
   label?: string;
@@ -48,12 +48,5 @@ const uniqueName = Math.random().toString(16).substring(2);
 const name = computed(() => props.name || uniqueName);
 
 const isRequired = computed(() => !!props.required);
-useVuelidate(
-  {
-    value: {
-      required: requiredIf(isRequired),
-    },
-  } as any,
-  { value: selected } as any
-);
+useVuelidate({ v: { required: requiredIf(isRequired) } }, { v: selected });
 </script>

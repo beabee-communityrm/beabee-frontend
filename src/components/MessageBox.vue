@@ -11,7 +11,7 @@
       class="flex flex-grow items-center p-3 text-xs font-semibold"
       :class="contentClasses[type]"
     >
-      <slot>{{ t('form.errors.aggregator') }}</slot>
+      <slot>{{ t('form.errorMessages.validation') }}</slot>
     </div>
   </div>
 </template>
@@ -41,7 +41,7 @@ const iconClasses = {
 
 const contentClasses = {
   success: 'bg-success-10 text-success',
-  warning: 'bg-warning-10 text-primary-80',
+  warning: 'bg-warning-10 text-body-80',
   error: 'bg-danger-10 text-danger',
 };
 </script>

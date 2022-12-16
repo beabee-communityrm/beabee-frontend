@@ -1,9 +1,10 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div>
     <div class="grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <AppRadioGroup
-          v-model="dataProxy.useMailchimpSync"
+          v-model="data.useMailchimpSync"
           name="useMailchimpSync"
           label="Use Mailchimp sync"
           :options="[
@@ -18,10 +19,7 @@
         profiles.
       </p>
     </div>
-    <div
-      v-show="dataProxy.useMailchimpSync"
-      class="mt-3 grid grid-cols-2 gap-6"
-    >
+    <div v-show="data.useMailchimpSync" class="mt-3 grid grid-cols-2 gap-6">
       <div class="col-span-1">
         <p>
           <b>Select the fields</b> you want to sync with Mailchimp, making use
@@ -53,14 +51,13 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
 import { MailchimpSyncStepProps } from '../callouts.interface';
 import AppSelect from '../../../forms/AppSelect.vue';
 
 const emit = defineEmits(['update:validated']);
-const props = defineProps<{ data: MailchimpSyncStepProps }>();
-const dataProxy = ref(props.data);
+defineProps<{ data: MailchimpSyncStepProps }>();
 
 const foo = '';
 onMounted(() => emit('update:validated', true));

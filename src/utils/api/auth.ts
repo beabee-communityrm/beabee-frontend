@@ -1,4 +1,4 @@
-import axios from '../../axios';
+import axios from '../../lib/axios';
 import env from '../../env';
 import { LoginData } from './api.interface';
 

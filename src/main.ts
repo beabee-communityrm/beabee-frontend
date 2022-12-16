@@ -1,9 +1,12 @@
 import { createApp } from 'vue';
 import VueMatomo from 'vue-matomo';
+
 import App from './App.vue';
-import router from './router';
-import i18n from './i18n';
-import './theme';
+
+import i18n from './lib/i18n';
+import router from './lib/router';
+
+import './lib/theme';
 
 import 'iframe-resizer/js/iframeResizer.contentWindow';
 
@@ -11,8 +14,10 @@ import './index.css';
 
 // fontawesome icons imports
 import Icons from './plugins/icons';
+import { init as initErrorHandler } from './lib/appsignal';
 
 const app = createApp(App);
+initErrorHandler(app);
 
 app.use(VueMatomo, {
   host: 'https://stats2.xtreamlab.net',
