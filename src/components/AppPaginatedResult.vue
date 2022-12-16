@@ -58,7 +58,7 @@ const props = defineProps<{
   keypath: string;
 }>();
 
-const { n } = useI18n();
+const { t, n } = useI18n();
 
 const currentPage = computed({
   get: () => props.page,
@@ -70,10 +70,10 @@ const currentPageSize = computed({
   set: (newPageSize) => emit('update:pageSize', newPageSize),
 });
 
-const pageSizes = [12, 25, 50, 100].map((x) => ({
+const pageSizes = computed(() => [12, 25, 50, 100].map(x => ({
   id: x,
-  label: x + ' per page',
-}));
+  label: t('common.itemsPerPage', {items: n(x)})
+})));
 
 const totalPages = computed(() =>
   props.result ? Math.ceil(props.result.total / currentPageSize.value) : 0
