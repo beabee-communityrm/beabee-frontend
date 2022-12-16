@@ -64,21 +64,4 @@ const emit = defineEmits(['update:modelValue']);
 
 const isFirst = computed(() => props.modelValue === 0);
 const isLast = computed(() => props.modelValue >= props.totalPages - 1);
-
-const pages = computed(() => {
-  const ret = [0];
-  if (props.modelValue - 1 > 0) {
-    ret.push(props.modelValue - 1);
-  }
-  if (!isFirst.value && !isLast.value) {
-    ret.push(props.modelValue);
-  }
-  if (props.modelValue + 1 < props.totalPages - 1) {
-    ret.push(props.modelValue + 1);
-  }
-  if (props.totalPages > 1) {
-    ret.push(props.totalPages - 1);
-  }
-  return ret;
-});
 </script>

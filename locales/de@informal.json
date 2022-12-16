@@ -25,9 +25,23 @@
   },
   "addContact": {
     "contactSaved": "Kontakt gespeichert",
-    "errors": {},
+    "errors": {
+      "duplicateEmail": "Diese E-Mail-Adresse existiert bereits."
+    },
     "subscribeToNewsletter": "Mit Newsletter-Tool synchronisieren",
     "title": "Kontakt hinzufügen"
+  },
+  "addNotice": {
+    "form": {
+      "buttonText": "Button Text",
+      "expirationDateAndTime": "Ablaufdatum und -zeit",
+      "name": "Name",
+      "startDateAndTime": "Anfangsdatum und -zeit",
+      "text": "Text",
+      "url": "URL"
+    },
+    "noticeSaved": "Hinweis gespeichert",
+    "title": "Hinweis hinzufügen"
   },
   "adminDashboard": {
     "hint1": "<p>Das beabee-Handbuch für Community-Journalismus <a href=\"https://beabee.io/neu-handbuch-community-journalismus/\">„Lust auf Lokal” ist erschienen</a>. Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
@@ -404,6 +418,7 @@
       "contribution": "Beitrag",
       "role": "Rolle"
     },
+    "editNotice": "Der Beitrag kann aktuell nur bei manuell zahlenden Mitgliedern geändert werden.",
     "noContacts": "Keine Kontakte",
     "noResults": "Keine Kontakte gefunden",
     "numResults": "{n} Kontakt gefunden | {n} Kontakte gefunden",
