@@ -1,12 +1,22 @@
+<route lang="yaml">
+name: adminMembershipBuilderAccountConfirmation
+meta:
+  pageTitle: membershipBuilder.title
+  role: admin
+</route>
+
 <template>
   <div class="mb-8 grid grid-cols-2 gap-8">
     <div>
-      <AppHeading class="mb-5">{{ stepT('title') }}</AppHeading>
       <p>{{ stepT('text') }}</p>
     </div>
   </div>
   <div v-if="setupContent" class="grid grid-cols-2 gap-8">
-    <div>
+    <AppForm
+      :button-text="t('form.saveChanges')"
+      :success-text="t('form.saved')"
+      @submit="handleUpdate"
+    >
       <div class="mb-4">
         <AppInput
           v-model="setupContent.welcome"
@@ -73,7 +83,7 @@
           />
         </div>
       </template>
-    </div>
+    </AppForm>
     <div class="bg-cover bg-center p-4 pt-8">
       <Suspense>
         <AuthBox>
@@ -84,24 +94,16 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
-import { JoinSetupContent } from '../../../../../utils/api/api.interface';
-import { fetchContent, updateContent } from '../../../../../utils/api/content';
-import AppInput from '../../../../forms/AppInput.vue';
-import AppHeading from '../../../../AppHeading.vue';
+import { onBeforeMount, ref } from 'vue';
+import { JoinSetupContent } from '../../../utils/api/api.interface';
+import { fetchContent, updateContent } from '../../../utils/api/content';
+import AppForm from '../../../components/forms/AppForm.vue';
+import AppInput from '../../../components/forms/AppInput.vue';
 import { useI18n } from 'vue-i18n';
-import AppCheckbox from '../../../../forms/AppCheckbox.vue';
-import SetupForm from '../../../join/SetupForm.vue';
-import AuthBox from '../../../../AuthBox.vue';
-import { MembershipBuilderEmitter } from '../membership-builder.interface';
-import useVuelidate from '@vuelidate/core';
-import RichTextEditor from '../../../../rte/RichTextEditor.vue';
-
-const emit = defineEmits(['update:error', 'update:validated']);
-
-const props = defineProps<{
-  emitter: MembershipBuilderEmitter;
-}>();
+import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
+import SetupForm from '../../../components/pages/join/SetupForm.vue';
+import AuthBox from '../../../components/AuthBox.vue';
+import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
 
 const setupContent = ref<JoinSetupContent>();
 
@@ -110,35 +112,13 @@ const { t } = useI18n();
 const stepT = (key: string) =>
   t('membershipBuilder.steps.accountConfirmation.' + key);
 
-const validation = useVuelidate();
-
-watch(validation, () => {
-  emit('update:error', validation.value.$errors.length > 0);
-  emit('update:validated', !validation.value.$invalid);
-});
-
 async function handleUpdate() {
   if (setupContent.value) {
     await updateContent('join/setup', setupContent.value);
   }
-
-  props.emitter.emit('updated');
 }
 
 onBeforeMount(async () => {
-  props.emitter.on('update', handleUpdate);
   setupContent.value = await fetchContent('join/setup');
-
-  watch(
-    setupContent,
-    () => {
-      props.emitter.emit('dirty');
-    },
-    { deep: true }
-  );
-});
-
-onBeforeUnmount(() => {
-  props.emitter.off('update', handleUpdate);
 });
 </script>

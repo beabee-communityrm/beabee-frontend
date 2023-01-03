@@ -1,6 +1,3 @@
-/// <reference types="vite/client" />
-/// <reference types="vite-plugin-pages/client" />
-
 declare module 'virtual:theme' {
   interface BaseTheme {
     fontSize: { [k: string]: [string, string] };
@@ -19,5 +16,6 @@ declare module 'vue-matomo' {
 }
 
 interface Window {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   _paq: any[];
 }

@@ -1,5 +1,6 @@
 {
   "actions": {
+    "add": "Add",
     "back": "Back",
     "cancel": "Cancel",
     "chooseFile": "Choose file",
@@ -11,12 +12,24 @@
     "publish": "Publish",
     "replicate": "Replicate",
     "reset": "Reset",
+    "revertToDraft": "Revert to draft",
+    "save": "Save",
+    "saveAndAnother": "Save and add another",
+    "saveDraft": "Save draft",
     "schedule": "Schedule",
     "search": "Search",
     "submit": "Submit",
     "unpublish": "Unpublish",
     "update": "Update",
     "view": "View"
+  },
+  "addContact": {
+    "contactSaved": "Contact saved",
+    "errors": {
+      "duplicateEmail": "Email address already exists"
+    },
+    "subscribeToNewsletter": "Synchronise with newsletter tool",
+    "title": "Add a contact"
   },
   "adminDashboard": {
     "hint1": "<p>Did you know callouts can be created without an end date, and just keep running? See our <a href=\"https://beabee.io/en/beabee-full-feature-list/\">feature showcase</a> for more information.</p>\n",
@@ -310,6 +323,7 @@
     },
     "no": "No",
     "noResults": "No results found",
+    "pageCount": "Page {pageNumber} out of {pageTotal}",
     "role": {
       "admin": "Admin",
       "member": "Member",
@@ -385,32 +399,6 @@
       "period": "Period",
       "phone": "Phone",
       "preferredChannel": "Preferred channel",
-      "roles": {
-        "add": "Add role",
-        "confirmDelete": {
-          "actionNo": "No, go back",
-          "actionYes": "Yes, remove it",
-          "text": "Are you sure you want to remove this role?",
-          "title": "Remove role"
-        },
-        "expires": {
-          "label": "Expiry date for this role",
-          "opts": {
-            "never": "Never",
-            "schedule": "Set an expiry date"
-          }
-        },
-        "new": "New role",
-        "starts": {
-          "label": "Start date for this role",
-          "opts": {
-            "now": "Now",
-            "schedule": "Set a start date"
-          }
-        },
-        "title": "Roles",
-        "today": "present"
-      },
       "tags": "Tags"
     },
     "dataGroup": {
@@ -418,6 +406,7 @@
       "contribution": "Contribution",
       "role": "Role"
     },
+    "editNotice": "Updating a contact's contribution is currently only possible for those with a manual contribution.",
     "noContacts": "No contacts added yet",
     "noResults": "No contacts found",
     "numResults": "{n} contact found | {n} contacts found",
@@ -430,6 +419,7 @@
     "cancelContribution": "Cancel contribution",
     "cancelDescription": "If you cancel your contribution your membership will finish at the end of your current payment cycle, {day} of {month}.",
     "cancelMessage": "We're sorry to see you go.",
+    "cancelledContribution": "Your contribution has been cancelled.",
     "changeBank": "Change to a different bank account",
     "changeBankInfo": "You'll be asked for the details of your new bank account in the next step.",
     "contributing": "You're contributing",
@@ -469,6 +459,8 @@
     "willRenewWithNewAmount": "Your contribution will automatically renew on {renewalDate} and will change to your chosen amount of {nextAmount}."
   },
   "createCallout": {
+    "lastSaved": "Last saved {duration} ago",
+    "lastSavedNow": "Last saved just now",
     "steps": {
       "content": {
         "description": "Build your callout with questions and prompts",
@@ -618,11 +610,12 @@
         "title": "Visibility settings"
       }
     },
-    "title": "Create a callout"
+    "title": "Create a callout",
+    "untitledCallout": "Untitled callout"
   },
   "editCallout": {
     "replicated": "Your callout was successfully replicated, and you are now editing the new copy. Be sure to edit the title in the \"Title and Image\" tab.",
-    "title": "Edit callout",
+    "title": "Edit: {title}",
     "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
   "footer": {
@@ -650,6 +643,11 @@
     "deliveryOptIn": "Delivery opt-in",
     "description": "Description",
     "email": "Email",
+    "errorMessages": {
+      "aggregatorTop": "Something is missing. Please check for errors below.",
+      "generic": "Oops, something went wrong! Contact support if this happens again.",
+      "validation": "Something is missing. Please check the fields above."
+    },
     "errors": {
       "address": {
         "required": "This field is required if you want to add an address"
@@ -657,8 +655,6 @@
       "addressLine1": {
         "required": "Address line 1 is required"
       },
-      "aggregator": "Something is missing. Please check the fields above.",
-      "aggregatorTop": "Something is missing. Please check for errors below.",
       "cityOrTown": {
         "required": "City/Town is required"
       },
@@ -924,6 +920,33 @@
     "login": "Login to your account",
     "newPassword": "New password",
     "title": "Reset your password?"
+  },
+  "roleEditor": {
+    "add": "Add role",
+    "addNewRole": "Add a new role",
+    "confirmDelete": {
+      "actionNo": "No, go back",
+      "actionYes": "Yes, remove it",
+      "text": "Are you sure you want to remove this role?",
+      "title": "Remove role"
+    },
+    "expires": {
+      "label": "Expiry date for this role",
+      "opts": {
+        "never": "Never",
+        "schedule": "Set an expiry date"
+      }
+    },
+    "new": "New role",
+    "starts": {
+      "label": "Start date for this role",
+      "opts": {
+        "now": "Now",
+        "schedule": "Set a start date"
+      }
+    },
+    "title": "Roles",
+    "today": "present"
   },
   "setPassword": {
     "description": "Set a new password to login.",

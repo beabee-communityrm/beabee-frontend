@@ -35,7 +35,7 @@ import useVuelidate from '@vuelidate/core';
 import { sameAs } from '@vuelidate/validators';
 import { ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import axios from '../../axios';
+import axios from '../../lib/axios';
 import env from '../../env';
 import AppButton from './AppButton.vue';
 import AppLabel from './AppLabel.vue';

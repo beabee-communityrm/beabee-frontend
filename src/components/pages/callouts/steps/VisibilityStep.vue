@@ -1,124 +1,96 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div>
-    <div class="mt-5 grid grid-cols-2 gap-6">
-      <div class="col-span-1">
-        <AppRadioGroup
-          v-model="dataProxy.whoCanTakePart"
-          name="whoCanTakePart"
-          :label="inputT('who.label')"
-          :options="[
-            ['members', inputT('who.opts.members')],
-            ['everyone', inputT('who.opts.everyone')],
-          ]"
-          required
-        />
-      </div>
-      <div
-        class="col-span-1 mt-6 text-sm text-grey"
-        v-html="inputT('who.help')"
+    <AppFormSection :help="inputT('who.help')">
+      <AppRadioGroup
+        v-model="data.whoCanTakePart"
+        name="whoCanTakePart"
+        :label="inputT('who.label')"
+        :options="[
+          ['members', inputT('who.opts.members')],
+          ['everyone', inputT('who.opts.everyone')],
+        ]"
+        required
       />
-    </div>
-    <div
-      v-if="dataProxy.whoCanTakePart === 'everyone'"
-      class="mt-5 grid grid-cols-2 gap-6"
+    </AppFormSection>
+    <AppFormSection
+      v-if="data.whoCanTakePart === 'everyone'"
+      :help="inputT('anonymous.help')"
     >
-      <div class="col-span-1">
-        <AppRadioGroup
-          v-model="dataProxy.allowAnonymousResponses"
-          name="allowAnonymousResponses"
-          :label="inputT('anonymous.label')"
-          :options="[
-            ['none', inputT('anonymous.opts.none')],
-            ['guests', inputT('anonymous.opts.guests')],
-            ['all', inputT('anonymous.opts.all')],
-          ]"
-          required
-        />
-      </div>
-      <div
-        class="col-span-1 mt-6 text-sm text-grey"
-        v-html="inputT('anonymous.help')"
+      <AppRadioGroup
+        v-model="data.allowAnonymousResponses"
+        name="allowAnonymousResponses"
+        :label="inputT('anonymous.label')"
+        :options="[
+          ['none', inputT('anonymous.opts.none')],
+          ['guests', inputT('anonymous.opts.guests')],
+          ['all', inputT('anonymous.opts.all')],
+        ]"
+        required
       />
-    </div>
-    <div class="mt-5 grid grid-cols-2 gap-6">
-      <div class="col-span-1">
-        <AppRadioGroup
-          v-model="dataProxy.showOnUserDashboards"
-          name="showOnUserDashboards"
-          :label="inputT('visible.label')"
-          :options="[
-            [true, inputT('visible.opts.yes')],
-            [false, inputT('visible.opts.no')],
-          ]"
-          required
-        />
-      </div>
-      <div
-        class="col-span-1 mt-6 text-sm text-grey"
-        v-html="inputT('visible.help')"
+    </AppFormSection>
+    <AppFormSection :help="inputT('visible.help')">
+      <AppRadioGroup
+        v-model="data.showOnUserDashboards"
+        name="showOnUserDashboards"
+        :label="inputT('visible.label')"
+        :options="[
+          [true, inputT('visible.opts.yes')],
+          [false, inputT('visible.opts.no')],
+        ]"
+        required
       />
-    </div>
-    <div class="mt-5 grid grid-cols-2 gap-6">
-      <div class="col-span-1">
-        <AppRadioGroup
-          v-model="dataProxy.usersCanEditAnswers"
-          name="usersCanEditAnswers"
-          :label="inputT('editable.label')"
-          :options="[
-            [true, inputT('editable.opts.yes')],
-            [false, inputT('editable.opts.no')],
-          ]"
-          required
-        />
-      </div>
-      <div
-        class="col-span-1 mt-6 text-sm text-grey"
-        v-html="inputT('editable.help')"
+    </AppFormSection>
+    <AppFormSection :help="inputT('editable.help')">
+      <AppRadioGroup
+        v-model="data.usersCanEditAnswers"
+        name="usersCanEditAnswers"
+        :label="inputT('editable.label')"
+        :options="[
+          [true, inputT('editable.opts.yes')],
+          [false, inputT('editable.opts.no')],
+        ]"
+        required
       />
-    </div>
+    </AppFormSection>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { ItemStatus } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
-import { helpers, required } from '@vuelidate/validators';
-import { ref, watch } from 'vue';
+import { ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
+import AppFormSection from '../../../forms/AppFormSection.vue';
 import { VisibilityStepProps } from '../callouts.interface';
+import { sameAs } from '@vuelidate/validators';
 
 const emit = defineEmits(['update:error', 'update:validated']);
-const props = defineProps<{ data: VisibilityStepProps }>();
+const props = defineProps<{
+  data: VisibilityStepProps;
+  status: ItemStatus | undefined;
+  isActive: boolean;
+}>();
 
 const { t } = useI18n();
 const inputT = (key: string) =>
   t('createCallout.steps.visibility.inputs.' + key);
 
-const dataProxy = ref(props.data);
-
-const validate = useVuelidate(
-  {
-    whoCanTakePart: {
-      required: helpers.withMessage('Required', required),
-    },
-    allowAnonymousResponses: {
-      required: helpers.withMessage('Required', required),
-    },
-    showOnUserDashboards: {
-      required: helpers.withMessage('Required', required),
-    },
-  },
-  dataProxy
+// Force step to stay unvalidated until it is visited for new callouts
+const hasVisited = ref(!!props.status);
+watch(toRef(props, 'isActive'), (active) => (hasVisited.value ||= active));
+const validation = useVuelidate(
+  { v: { yes: sameAs(true) } },
+  { v: hasVisited }
 );
 
 watch(
-  validate,
+  validation,
   () => {
-    emit('update:error', validate.value.$errors.length > 0);
-    emit('update:validated', !validate.value.$invalid);
+    emit('update:error', validation.value.$errors.length > 0);
+    emit('update:validated', !validation.value.$invalid);
   },
-  {
-    immediate: true,
-  }
+  { immediate: true }
 );
 </script>

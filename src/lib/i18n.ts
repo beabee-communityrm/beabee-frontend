@@ -1,6 +1,6 @@
 import { watch } from 'vue';
 import { createI18n } from 'vue-i18n';
-import { generalContent } from './store';
+import { generalContent } from '../store';
 
 const i18n = createI18n({
   legacy: false,
@@ -13,7 +13,7 @@ watch(
     const [justLocale] = newLocale.split('@');
 
     if (i18n.global.locale.value !== justLocale) {
-      const messages = await import(`../locales/${newLocale}.json`);
+      const messages = await import(`../../locales/${newLocale}.json`);
       i18n.global.setLocaleMessage(justLocale, messages.default);
       i18n.global.setNumberFormat(justLocale, {
         currency: {
