@@ -52,21 +52,20 @@ meta:
         :has-changed="hasUnsavedSegment"
         @reset="currentRules = undefined"
       />
-      <div class="mt-4 flex items-center">
-        <SaveSegment
-          v-if="hasUnsavedSegment && currentRules"
-          :segment="currentSegment"
-          :rules="currentRules"
-          @saved="handleSavedSegment"
-        />
-        <AppPaginatedResult
-          v-model:page="currentPage"
-          v-model:page-size="currentPageSize"
-          :result="contactsTable"
-          keypath="contacts.showingOf"
-          class="ml-auto"
-        />
-      </div>
+
+      <SaveSegment
+        v-if="hasUnsavedSegment && currentRules"
+        :segment="currentSegment"
+        :rules="currentRules"
+        @saved="handleSavedSegment"
+      />
+      <AppPaginatedResult
+        v-model:page="currentPage"
+        v-model:page-size="currentPageSize"
+        :result="contactsTable"
+        keypath="contacts.showingOf"
+        class="mt-4"
+      />
       <AppTable
         v-model:sort="currentSort"
         :headers="headers"
