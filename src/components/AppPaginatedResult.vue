@@ -16,7 +16,6 @@
         >
       </i18n-t>
     </p>
-    <!-- <div>Page size</div> -->
 
     <div class="flex gap-2">
       <p class="flex-1 self-center">
