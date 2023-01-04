@@ -59,7 +59,7 @@ export const adminMenu: MenuSection[] = [
         icon: ['fa', 'chart-line'],
       },
       {
-        title: 'menu.community',
+        title: 'menu.contacts',
         href: '/admin/contacts',
         icon: ['fa', 'users'],
         isActive: /^\/admin\/contacts.*/,
