@@ -10,7 +10,7 @@
       </div>
     </div>
     <p>
-      <router-link :to="calloutLink">
+      <router-link :to="calloutLink" class="relative z-10">
         <font-awesome-icon icon="external-link-alt" />
         <span class="ml-2 text-link">{{ env.appUrl }}{{ calloutLink }}</span>
       </router-link>
@@ -27,7 +27,10 @@
             <b>{{ callout.responseCount }}</b>
           </template>
         </i18n-t>
-        <router-link :to="`/admin/callouts/view/${callout.slug}/responses`">
+        <router-link
+          :to="`/admin/callouts/view/${callout.slug}/responses`"
+          class="relative z-10"
+        >
           <p class="text-sm font-semibold text-link">
             {{ t('adminDashboard.seeAllResponses') }}
           </p>
@@ -43,13 +46,6 @@
           {{ callout.expires && formatLocale(callout.expires, 'PP') }}
         </p>
       </div>
-      <AppButton
-        v-if="edit"
-        class="ml-2"
-        :to="`/admin/callouts/edit/${callout.slug}`"
-      >
-        {{ t('actions.edit') }}
-      </AppButton>
     </div>
   </div>
 </template>
@@ -60,7 +56,6 @@ import {
   GetCalloutData,
   GetCalloutDataWith,
 } from '../../utils/api/api.interface';
-import AppButton from '../forms/AppButton.vue';
 import { formatLocale } from '../../utils/dates/locale-date-formats';
 import AppSubHeading from '../AppSubHeading.vue';
 import env from './../../env';
@@ -70,7 +65,6 @@ const { t } = useI18n();
 
 const props = defineProps<{
   callout: GetCalloutData | GetCalloutDataWith<'responseCount'>;
-  edit?: boolean;
 }>();
 
 const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
