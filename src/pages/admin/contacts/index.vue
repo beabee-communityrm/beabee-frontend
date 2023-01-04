@@ -1,12 +1,12 @@
 <route lang="yaml">
 name: adminContacts
 meta:
-  pageTitle: menu.community
+  pageTitle: menu.contacts
   role: admin
 </route>
 
 <template>
-  <PageTitle :title="t('menu.community')" border>
+  <PageTitle :title="t('menu.contacts')" border>
     <div class="flex-1 md:hidden">
       <AppSelect v-model="currentSegmentId" :items="segmentItems" />
     </div>
