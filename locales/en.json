@@ -1,4 +1,14 @@
 {
+  "accountPage": {
+    "changePassword": "Change password",
+    "contactInformation": "Contact information",
+    "deliveryAddress": "Delivery address",
+    "deliveryOptIn": "Delivery opt-in",
+    "loginDetail": "Login details",
+    "savedPassword": "New password saved",
+    "subTitle": "Required fields are marked with an asterisk. All information submitted here is private.",
+    "title": "Account"
+  },
   "actions": {
     "add": "Add",
     "back": "Back",
@@ -356,11 +366,10 @@
     "year": "year | years",
     "yes": "Yes"
   },
-  "contactInformation": {
-    "deliveryOptIn": "Delivery opt-in"
-  },
+  "contactInformation": {},
   "contactOverview": {
     "about": "About",
+    "account": "Account",
     "annotation": {
       "copy": "<p>All information added in this section is <strong>visible for admins only</strong>. Members will never see these in their profile or member area.</p>\n"
     },
@@ -751,15 +760,7 @@
     "welcome": "Welcome aboard {firstName}!",
     "yourProfile": "Your profile"
   },
-  "informationPage": {
-    "changePassword": "Change password",
-    "contactInformation": "Contact information",
-    "deliveryAddress": "Delivery address",
-    "loginDetail": "Login details",
-    "savedPassword": "New password saved",
-    "subTitle": "Required fields are marked with an asterisk. All information submitted here is private.",
-    "title": "Your information"
-  },
+  "informationPage": {},
   "join": {
     "absorbFeeForce": "{amount} contributions must absorb the {fee} fee.",
     "absorbFeeOptIn": "Yes, I'll absorb the {fee} fee.",
@@ -858,9 +859,11 @@
     "title": "Membership builder"
   },
   "menu": {
+    "account": "Account",
     "admin": "Administration",
     "adminSettings": "Settings",
     "callouts": "Callouts",
+    "community": "Community",
     "contacts": "Contacts",
     "contribution": "Contribution",
     "dashboard": "Dashboard",
@@ -870,12 +873,21 @@
     "membershipBuilder": "Membership builder",
     "notices": "Notices",
     "settings": "Settings",
-    "yourInformation": "Your information",
     "yourProfile": "Your profile"
   },
   "notFound": {
     "goBack": "Go back to home",
     "text": "This page doesn't exist. If you think this is a mistake please contact {support}."
+  },
+  "noticeAdminOverview": {
+    "actions": {
+      "confirmDelete": {
+        "actionNo": "No, go back",
+        "actionYes": "Yes, delete it",
+        "text": "Are you sure you want to delete this notice?",
+        "title": "Delete notice?"
+      }
+    }
   },
   "notices": {
     "addNotice": "Add notice",

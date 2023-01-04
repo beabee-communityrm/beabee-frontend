@@ -1,4 +1,13 @@
 {
+  "accountPage": {
+    "changePassword": "Passwort ändern",
+    "contactInformation": "Kontaktdaten",
+    "deliveryAddress": "Adresse",
+    "deliveryOptIn": "Postsendung",
+    "loginDetail": "Anmeldedaten",
+    "savedPassword": "Das neue Passwort wurde gespeichert. ",
+    "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt."
+  },
   "actions": {
     "add": "Hinzufügen",
     "back": "Zurück",
@@ -355,9 +364,7 @@
     "year": "Jahr | Jahren",
     "yes": "Ja"
   },
-  "contactInformation": {
-    "deliveryOptIn": "Postsendung"
-  },
+  "contactInformation": {},
   "contactOverview": {
     "about": "Über",
     "annotation": {
@@ -750,15 +757,7 @@
     "welcome": "Herzlich willkommen {firstName}!",
     "yourProfile": "Dein Profil"
   },
-  "informationPage": {
-    "changePassword": "Passwort ändern",
-    "contactInformation": "Kontaktdaten",
-    "deliveryAddress": "Adresse",
-    "loginDetail": "Anmeldedaten",
-    "savedPassword": "Das neue Passwort wurde gespeichert. ",
-    "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt.",
-    "title": "Persönliche Informationen"
-  },
+  "informationPage": {},
   "join": {
     "absorbFeeForce": "Bei einem Beitrag von {amount}, musst du die {fee} Transaktionskosten übernehmen.",
     "absorbFeeOptIn": "Ja, ich übernehme die {fee} Transaktionskosten.",
@@ -860,6 +859,7 @@
     "admin": "Administration",
     "adminSettings": "Einstellungen",
     "callouts": "Callouts",
+    "community": "Community",
     "contacts": "Kontakte",
     "contribution": "Beitrag",
     "dashboard": "Dashboard",
@@ -869,12 +869,16 @@
     "membershipBuilder": "Membership Builder",
     "notices": "Hinweise",
     "settings": "Einstellungen",
-    "yourInformation": "Deine Informationen",
     "yourProfile": "Dein Profil"
   },
   "notFound": {
     "goBack": "Zurück zum Dashboard",
     "text": "Diese Seite existiert nicht. Wenn Du glaubst, dass das ein Fehler ist kontaktiere {support}."
+  },
+  "noticeAdminOverview": {
+    "actions": {
+      "confirmDelete": {}
+    }
   },
   "notices": {
     "addNotice": "Hinweis hinzufügen",

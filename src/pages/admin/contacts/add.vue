@@ -17,7 +17,7 @@ meta:
       @submit.prevent="handleSubmit"
     >
       <section class="mb-8">
-        <ContactBasicInformationFields
+        <ContactBasicFields
           v-model:email="data.email"
           v-model:first-name="data.firstname"
           v-model:last-name="data.lastname"
@@ -69,7 +69,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import AppHeading from '../../../components/AppHeading.vue';
 import { UpdateContribution } from '../../../components/contact/contact.interface';
-import ContactBasicInformationFields from '../../../components/contact/ContactBasicInformationFields.vue';
+import ContactBasicFields from '../../../components/contact/ContactBasicFields.vue';
 import ContactContributionFields from '../../../components/contact/ContactContributionFields.vue';
 import AppButton from '../../../components/forms/AppButton.vue';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
