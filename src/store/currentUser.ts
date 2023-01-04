@@ -1,4 +1,4 @@
-import axios from '../axios';
+import axios from '../lib/axios';
 import { ref } from 'vue';
 import { fetchContact } from '../utils/api/contact';
 import { GetContactData } from '../utils/api/api.interface';

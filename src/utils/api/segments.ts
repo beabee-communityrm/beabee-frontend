@@ -1,5 +1,5 @@
 import { Paginated } from '@beabee/beabee-common';
-import axios from '../../axios';
+import axios from '../../lib/axios';
 import {
   CreateSegmentData,
   GetContactData,
