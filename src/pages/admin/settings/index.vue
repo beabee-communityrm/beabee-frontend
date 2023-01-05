@@ -6,7 +6,7 @@ meta:
 </route>
 
 <template>
-  <div class="grid gap-8 lg:grid-cols-2">
+  <div class="grid md:grid-cols-2 md:gap-12 lg:grid-cols-3">
     <div>
       <AppForm
         :button-text="t('actions.update')"
@@ -40,7 +40,7 @@ meta:
         </div>
       </AppForm>
 
-      <div class="my-6 border-b border-b-primary-40" />
+      <div class="my-8 block border-b border-b-primary-40" />
 
       <AppForm
         v-if="shareContent"
@@ -48,10 +48,10 @@ meta:
         :success-text="t('form.saved')"
         @submit="handleSaveShare"
       >
-        <AppHeading class="mb-4">
+        <AppHeading class="mb-4 md:mb-2">
           {{ t('adminSettings.general.socialSharing.title') }}
         </AppHeading>
-        <p class="mb-4">
+        <p class="mb-4 text-sm text-body-80">
           {{ t('adminSettings.general.socialSharing.text') }}
         </p>
         <div class="mb-4">
@@ -84,18 +84,18 @@ meta:
           />
         </div>
       </AppForm>
-
-      <div class="my-6 border-b border-b-primary-40" />
-
+    </div>
+    <div>
+      <div class="my-8 block border-b border-b-primary-40 md:hidden" />
       <AppForm
         :button-text="t('actions.update')"
         :success-text="t('form.saved')"
         @submit="handleSaveFooter"
       >
-        <AppHeading class="mb-4">
+        <AppHeading class="mb-4 md:mb-2">
           {{ t('adminSettings.general.footer.title') }}
         </AppHeading>
-        <p class="mb-4">
+        <p class="mb-4 text-sm text-body-80">
           {{ t('adminSettings.general.footer.text') }}
         </p>
         <div class="mb-4">
@@ -106,7 +106,7 @@ meta:
             required
           />
         </div>
-        <h4 class="mb-4 text-lg font-semibold">
+        <h4 class="mt-6 mb-2 font-title text-lg font-bold text-body-60">
           {{ t('adminSettings.general.footer.dataPrivacy.title') }}
         </h4>
         <div class="mb-4">
@@ -131,7 +131,7 @@ meta:
             type="url"
           />
         </div>
-        <h4 class="mb-4 text-lg font-semibold">
+        <h4 class="mt-6 mb-2 font-title text-lg font-bold text-body-60">
           {{ t('adminSettings.general.footer.otherLinks.title') }}
         </h4>
         <div
@@ -155,14 +155,26 @@ meta:
             />
           </div>
           <div class="flex-0 self-end">
-            <AppButton variant="danger" @click="removeLink(i)">
-              <font-awesome-icon :icon="['fa', 'trash']" />
-            </AppButton>
+            <button
+              class="-ml-2 p-2 leading-tight text-primary-80 hover:text-primary"
+              type="button"
+              @click="removeLink(i)"
+            >
+              <font-awesome-icon :icon="['fa', 'times']" />
+            </button>
           </div>
         </div>
-        <AppButton variant="primaryOutlined" class="mb-4" @click="addLink">
-          {{ t('adminSettings.general.footer.otherLinks.add') }}
-        </AppButton>
+
+        <div class="mb-4">
+          <AppButton
+            variant="primaryOutlined"
+            size="sm"
+            icon="plus"
+            @click="addLink"
+          >
+            {{ t('adminSettings.general.footer.otherLinks.add') }}
+          </AppButton>
+        </div>
       </AppForm>
     </div>
   </div>
