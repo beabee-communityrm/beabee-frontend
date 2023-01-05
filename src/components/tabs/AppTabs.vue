@@ -1,10 +1,16 @@
 <template>
-  <AppSelect v-model="selectedItem" :items="items" class="mb-4 md:hidden" />
-  <ul class="mb-4 hidden border-b border-primary-40 text-sm md:-mx-2 md:flex">
+  <AppSelect
+    v-model="selectedItem"
+    :items="items"
+    class="mb-4 md:mb-6 md:hidden"
+  />
+  <ul
+    class="mb-4 hidden border-b border-primary-40 text-sm md:-mx-2 md:mb-6 md:flex"
+  >
     <li v-for="item in items" :key="item.id">
       <router-link
         :to="item.to"
-        class="relative inline-block p-3"
+        class="relative inline-block p-2"
         :class="
           selected === item.id && 'border-text border-b-2 font-bold text-body'
         "
