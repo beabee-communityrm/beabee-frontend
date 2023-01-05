@@ -109,14 +109,14 @@ const data = reactive({
   ...(props.role
     ? {
         startDate: format(props.role.dateAdded, 'yyyy-MM-dd'),
-        startTime: format(props.role.dateAdded, 'MM:mm'),
+        startTime: format(props.role.dateAdded, 'HH:mm'),
         hasStartDate: true,
       }
     : { startDate: '', startTime: '', hasStartDate: false }),
   ...(props.role?.dateExpires
     ? {
         endDate: format(props.role.dateExpires, 'yyyy-MM-dd'),
-        endTime: format(props.role.dateExpires, 'MM:mm'),
+        endTime: format(props.role.dateExpires, 'HH:mm'),
         hasEndDate: true,
       }
     : { endDate: '', endTime: '', hasEndDate: false }),
