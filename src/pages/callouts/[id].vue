@@ -18,7 +18,7 @@ meta:
         </div>
       </div>
       <AppButton
-        v-if="callout.status === ItemStatus.Open" 
+        v-if="callout.status === ItemStatus.Open"
         :icon="showSharingPanel ? 'caret-down' : 'share'"
         variant="primaryOutlined"
         @click="showSharingPanel = !showSharingPanel"

@@ -8,17 +8,21 @@ meta:
 <template>
   <PageTitle :title="t('addNotice.title')" border></PageTitle>
   <div class="grid lg:grid-cols-2">
-    <AppForm 
+    <AppForm
       :button-text="t('actions.save')"
       :success-text="t('addNotice.noticeSaved')"
       @submit.prevent="handleSubmit"
     >
       <div class="mb-3">
-        <AppInput v-model="data.name" :label="t('addNotice.form.name')" required/>
+        <AppInput
+          v-model="data.name"
+          :label="t('addNotice.form.name')"
+          required
+        />
       </div>
-      
+
       <AppLabel :label="t('addNotice.form.startDateAndTime')" />
-      <div class="flex mb-3">
+      <div class="mb-3 flex">
         <div>
           <AppInput v-model="data.startDate" type="date" />
         </div>
@@ -28,7 +32,7 @@ meta:
       </div>
 
       <AppLabel :label="t('addNotice.form.expirationDateAndTime')" />
-      <div class="flex mb-3">
+      <div class="mb-3 flex">
         <div>
           <AppInput v-model="data.expirationDate" type="date" />
         </div>
@@ -38,11 +42,18 @@ meta:
       </div>
 
       <div class="mb-3">
-        <AppInput v-model="data.text" :label="t('addNotice.form.text')" required/>
+        <AppInput
+          v-model="data.text"
+          :label="t('addNotice.form.text')"
+          required
+        />
       </div>
 
       <div class="mb-3">
-        <AppInput v-model="data.buttonText" :label="t('addNotice.form.buttonText')" />
+        <AppInput
+          v-model="data.buttonText"
+          :label="t('addNotice.form.buttonText')"
+        />
       </div>
 
       <div class="mb-3">
@@ -61,7 +72,7 @@ import AppForm from '../../../components/forms/AppForm.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppLabel from '../../../components/forms/AppLabel.vue';
 import PageTitle from '../../../components/PageTitle.vue';
-import { createNotice} from '../../../utils/api/notice';
+import { createNotice } from '../../../utils/api/notice';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -71,26 +82,25 @@ const data = reactive({
   startDate: '',
   startTime: '',
   expirationDate: '',
-  expirationTime: '', 
-  text: '', 
+  expirationTime: '',
+  text: '',
   buttonText: '',
-  url: ''
+  url: '',
 });
 
 async function saveNotice() {
   return await createNotice({
-    name: data.name, 
+    name: data.name,
     starts: new Date(data.startDate + 'T' + data.startTime),
     expires: new Date(data.expirationDate + 'T' + data.expirationTime),
     text: data.text,
     buttonText: data.buttonText,
-    url: data.buttonText
-  })
+    url: data.buttonText,
+  });
 }
 
 async function handleSubmit() {
   const notice = await saveNotice();
-  router.push('/admin/notices/view/' + notice.id)
+  router.push('/admin/notices/view/' + notice.id);
 }
-
 </script>
