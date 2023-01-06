@@ -25,11 +25,24 @@
   },
   "addContact": {
     "contactSaved": "Kontakt gespeichert",
-    "errors": {},
+    "errors": {
+      "duplicateEmail": "Diese E-Mail-Adresse existiert bereits."
+    },
     "subscribeToNewsletter": "Mit Newsletter-Tool synchronisieren",
     "title": "Kontakt hinzufügen"
   },
-  "addNotice": {},
+  "addNotice": {
+    "form": {
+      "buttonText": "Button Text",
+      "expirationDateAndTime": "Ablaufdatum und -zeit",
+      "name": "Name",
+      "startDateAndTime": "Anfangsdatum und -zeit",
+      "text": "Text",
+      "url": "URL"
+    },
+    "noticeSaved": "Hinweis gespeichert",
+    "title": "Hinweis hinzufügen"
+  },
   "adminDashboard": {
     "hint1": "<p>Das beabee-Handbuch für Community-Journalismus „Lust auf Lokal” <a href=\"https://beabee.io/neu-handbuch-community-journalismus/\">ist erschienen</a>. Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
     "hint2": "<p>Im <a href=\"https://beabee.io/#blog\">Blog</a> auf unserer Website findest du viele Best-Practice-Beispiele anderer Redaktionen, von denen du dich inspierieren lassen kannst.</p>\n",
@@ -225,8 +238,8 @@
   "calloutAdminOverview": {
     "actions": {
       "confirmDelete": {
-        "actionNo": "Nein, Callout behalten.",
-        "actionYes": "Ja, Callout löschen.",
+        "actionNo": "Nein, Callout behalten",
+        "actionYes": "Ja, Callout löschen",
         "text": "Bist du sicher, dass du diesen Callout löschen willst?",
         "title": "Callout löschen?"
       }
@@ -405,6 +418,7 @@
       "contribution": "Beitrag",
       "role": "Rolle"
     },
+    "editNotice": "Der Beitrag kann aktuell nur bei manuell zahlenden Mitgliedern geändert werden.",
     "noContacts": "Keine Kontakte",
     "noResults": "Keine Kontakte gefunden",
     "numResults": "{n} Kontakt gefunden | {n} Kontakte gefunden",
@@ -614,6 +628,9 @@
     "replicated": "Dein Callout wurde kopiert! Du bearbeitest jetzt die Kopie. Bitte denke unbedingt daran, den Titel zu bearbeiten.",
     "title": "Bearbeiten: {title}",
     "warning": "Vorsicht! Du bearbeitest einen veröffentlichten Callout. Wenn du Umfrageelemente bearbeitest riskierst Du, Antworten unbrauchbar zu machen."
+  },
+  "editNotice": {
+    "title": "Hinweis bearbeiten"
   },
   "footer": {
     "contactUs": "Kontaktieren Sie uns unter",
@@ -847,6 +864,7 @@
     "adminSettings": "Einstellungen",
     "callouts": "Callouts",
     "community": "Community",
+    "contacts": "Kontakte",
     "contribution": "Beitrag",
     "dashboard": "Dashboard",
     "home": "Home",
@@ -861,6 +879,16 @@
   "notFound": {
     "goBack": "Zurück zum Dashboard",
     "text": "Diese Seite existiert nicht. Wenn Du glaubst, dass das ein Fehler ist kontaktiere {support}."
+  },
+  "noticeAdminOverview": {
+    "actions": {
+      "confirmDelete": {
+        "actionNo": "Nein, Hinweis behalten",
+        "actionYes": "Ja, Hinweis löschen",
+        "text": "Bist du sicher, dass du diesen Hinweis löschen willst?",
+        "title": "Hinweis löschen?"
+      }
+    }
   },
   "notices": {
     "addNotice": "Hinweis hinzufügen",

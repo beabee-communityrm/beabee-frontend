@@ -11,14 +11,14 @@ meta:
     <div class="mb-6 flex items-center justify-between">
       <div class="flex items-center text-sm font-semibold text-body-60">
         <div>
-          <CalloutStatus :callout="callout" />
+          <ItemStatusComponent :item="callout" />
         </div>
         <div v-if="hasResponded" class="border-body-40 ml-3 w-32 border-l pl-3">
           {{ t('callout.youResponded') }}
         </div>
       </div>
       <AppButton
-        v-if="callout.status === ItemStatus.Open"
+        v-if="callout.status === ItemStatus.Open" 
         :icon="showSharingPanel ? 'caret-down' : 'share'"
         variant="primaryOutlined"
         @click="showSharingPanel = !showSharingPanel"
@@ -132,7 +132,7 @@ import InfoMessage from '../../components/InfoMessage.vue';
 
 import 'formiojs/dist/formio.form.css';
 import { useRoute } from 'vue-router';
-import CalloutStatus from '../../components/callout/CalloutStatus.vue';
+import ItemStatusComponent from '../../components/item/ItemStatus.vue';
 
 type FormSubmission = { data: CalloutResponseAnswers };
 

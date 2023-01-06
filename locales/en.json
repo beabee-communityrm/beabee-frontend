@@ -32,6 +32,15 @@
     "title": "Add a contact"
   },
   "addNotice": {
+    "form": {
+      "buttonText": "Button text",
+      "expirationDateAndTime": "Expiration date and time",
+      "name": "Name",
+      "startDateAndTime": "Start date and time",
+      "text": "Text",
+      "url": "URL"
+    },
+    "noticeSaved": "Notice saved",
     "title": "Add a notice"
   },
   "adminDashboard": {
@@ -312,6 +321,7 @@
     "goBack": "Go back",
     "hello": "Hello",
     "in": "in",
+    "itemsPerPage": "{items} items per page",
     "joined": "Joined",
     "loading": "Loading...",
     "login": "Login",
@@ -620,6 +630,9 @@
     "title": "Edit: {title}",
     "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
+  "editNotice": {
+    "title": "Edit notice"
+  },
   "footer": {
     "contactUs": "Contact us at",
     "contacts": "Contacts",
@@ -852,6 +865,7 @@
     "adminSettings": "Settings",
     "callouts": "Callouts",
     "community": "Community",
+    "contacts": "Contacts",
     "contribution": "Contribution",
     "dashboard": "Dashboard",
     "home": "Home",
@@ -866,6 +880,17 @@
   "notFound": {
     "goBack": "Go back to home",
     "text": "This page doesn't exist. If you think this is a mistake please contact {support}."
+  },
+  "noticeAdminOverview": {
+    "actions": {
+      "confirmDelete": {
+        "actionNo": "No, go back",
+        "actionYes": "Yes, delete it",
+        "text": "Are you sure you want to delete this notice?",
+        "title": "Delete notice?"
+      }
+    },
+    "summary": "Summary"
   },
   "notices": {
     "addNotice": "Add notice",

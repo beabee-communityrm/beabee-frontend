@@ -35,13 +35,9 @@
       </div>
       <div class="text-sm font-semibold">
         <p class="text-body-60">
-          <CalloutStatus :callout="callout" inline />
+          <ItemStatus :item="callout" inline />
         </p>
-        <p v-if="callout.starts">
-          <font-awesome-icon :icon="['far', 'calendar']" class="mr-2" />
-          {{ formatLocale(callout.starts, 'PP') + ' - ' }}
-          {{ callout.expires && formatLocale(callout.expires, 'PP') }}
-        </p>
+        <ItemDateRange :item="callout"></ItemDateRange>
       </div>
       <AppButton
         v-if="edit"
@@ -61,10 +57,10 @@ import {
   GetCalloutDataWith,
 } from '../../utils/api/api.interface';
 import AppButton from '../forms/AppButton.vue';
-import { formatLocale } from '../../utils/dates/locale-date-formats';
 import AppSubHeading from '../AppSubHeading.vue';
 import env from './../../env';
-import CalloutStatus from './CalloutStatus.vue';
+import ItemStatus from '../item/ItemStatus.vue';
+import ItemDateRange from '../item/ItemDateRange.vue';
 
 const { t } = useI18n();
 

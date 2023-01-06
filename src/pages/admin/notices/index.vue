@@ -23,12 +23,12 @@ meta:
       <AppItemStatus :status="value" />
     </template>
     <template #name="{ item, value }">
-      <a
-        :href="'/tools/notices/' + item.id"
+      <router-link
+        :to="'/admin/notices/view/' + item.id"
         class="text-base font-bold text-link"
       >
         {{ value }}
-      </a>
+      </router-link>
     </template>
     <template #createdAt="{ value }">
       <span class="whitespace-nowrap">{{ formatLocale(value, 'PP') }}</span>
