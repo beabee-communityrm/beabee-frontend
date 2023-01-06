@@ -90,7 +90,7 @@ async function saveNotice() {
 
 async function handleSubmit() {
   const notice = await saveNotice();
-  router.push('/admin/notices/view' + notice.id)
+  router.push('/admin/notices/view/' + notice.id)
 }
 
 </script>

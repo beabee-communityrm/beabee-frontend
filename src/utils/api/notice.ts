@@ -1,7 +1,7 @@
 import { Paginated } from '@beabee/beabee-common';
 import { deserializeDate } from '.';
 
-import axios from '../../axios';
+import axios from '../../lib/axios';
 import {
   CreateNoticeData,
   GetNoticeData,
