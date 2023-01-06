@@ -52,7 +52,7 @@ function isGroup(item: SelectItem | SelectGroup): item is SelectGroup {
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   label?: string;
-  modelValue?: string | null;
+  modelValue?: string | number | null;
   items: (SelectItem | SelectGroup)[];
   required?: boolean;
   inputClass?: string;

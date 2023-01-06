@@ -188,7 +188,7 @@ async function reset() {
 let interval: number | undefined;
 onBeforeMount(() => {
   reset();
-  interval = setInterval(() => (now.value = new Date()), 60000);
+  interval = window.setInterval(() => (now.value = new Date()), 60000);
 });
 onBeforeUnmount(() => {
   if (interval) {

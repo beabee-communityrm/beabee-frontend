@@ -180,7 +180,7 @@ import { ShareContent } from '../../../utils/api/api.interface';
 import { fetchContent, updateContent } from '../../../utils/api/content';
 import { generalContent as storeGeneralContent } from '../../../store';
 import AppHeading from '../../../components/AppHeading.vue';
-import axios from '../../../axios';
+import axios from '../../../lib/axios';
 import AppForm from '../../../components/forms/AppForm.vue';
 
 const { t } = useI18n();

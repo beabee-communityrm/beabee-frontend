@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { currentUser, initStore, generalContent } from '../store';
-import i18n from '../i18n';
+import i18n from './i18n';
 
 import routes from '~pages';
 import { watch } from 'vue';

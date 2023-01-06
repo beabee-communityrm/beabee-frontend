@@ -1,7 +1,7 @@
 <route lang="yaml">
 name: adminContactsViewOverview
 meta:
-  pageTitle: menu.community
+  pageTitle: menu.contacts
   role: admin
 </route>
 

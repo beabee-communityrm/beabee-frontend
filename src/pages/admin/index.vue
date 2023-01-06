@@ -59,8 +59,14 @@ meta:
     </div>
     <div class="flex-1 basis-7/12">
       <AppHeading>{{ t('adminDashboard.latestCallout.title') }}</AppHeading>
-      <div class="mt-4 mb-8 block rounded bg-white p-4">
-        <CalloutSummary v-if="latestCallout" :callout="latestCallout" edit />
+      <div class="relative mt-4 mb-8 block rounded bg-white p-4">
+        <div v-if="latestCallout">
+          <CalloutSummary :callout="latestCallout" />
+          <router-link
+            class="absolute inset-0"
+            :to="'/admin/callouts/view/' + latestCallout.slug"
+          />
+        </div>
         <div v-else-if="latestCallout === null">
           {{ t('adminDashboard.latestCallout.empty') }}
           <router-link to="/admin/callouts/new" class="text-link">
