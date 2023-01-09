@@ -6,7 +6,8 @@
     "deliveryOptIn": "Postsendung",
     "loginDetail": "Anmeldedaten",
     "savedPassword": "Das neue Passwort wurde gespeichert.",
-    "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt."
+    "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt.",
+    "title": "Account"
   },
   "actions": {
     "add": "Hinzufügen",
@@ -364,9 +365,9 @@
     "year": "Jahr | Jahren",
     "yes": "Ja"
   },
-  "contactInformation": {},
   "contactOverview": {
     "about": "Über",
+    "account": "Account",
     "annotation": {
       "copy": "<p>Alle hier eingegebenen Information sind <strong>nur für Administratoren sichtbar</strong>.\nNutzer bekommen das nicht angezeigt.</p>\n"
     },
@@ -636,6 +637,9 @@
     "title": "Bearbeiten: {title}",
     "warning": "Vorsicht! Du bearbeitest einen veröffentlichten Callout. Wenn du Umfrageelemente bearbeitest riskierst Du, Antworten unbrauchbar zu machen."
   },
+  "editNotice": {
+    "title": "Hinweis bearbeiten"
+  },
   "footer": {
     "contactUs": "Kontaktieren Sie uns unter",
     "contacts": "Kontakte",
@@ -757,7 +761,6 @@
     "welcome": "Herzlich willkommen {firstName} {lastName}!",
     "yourProfile": "Ihr Profil"
   },
-  "informationPage": {},
   "join": {
     "absorbFeeForce": "Bei einem Beitrag von {amount}, müssen Sie die {fee} Transaktionskosten übernehmen.",
     "absorbFeeOptIn": "Ja, ich übernehme die {fee} Transaktionskosten.",
@@ -856,6 +859,7 @@
     "title": "Membership Builder"
   },
   "menu": {
+    "account": "Account",
     "admin": "Administration",
     "adminSettings": "Einstellungen",
     "callouts": "Callouts",

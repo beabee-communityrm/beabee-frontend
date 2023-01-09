@@ -366,7 +366,6 @@
     "year": "year | years",
     "yes": "Yes"
   },
-  "contactInformation": {},
   "contactOverview": {
     "about": "About",
     "account": "Account",
@@ -639,6 +638,9 @@
     "title": "Edit: {title}",
     "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
+  "editNotice": {
+    "title": "Edit notice"
+  },
   "footer": {
     "contactUs": "Contact us at",
     "contacts": "Contacts",
@@ -760,7 +762,6 @@
     "welcome": "Welcome aboard {firstName}!",
     "yourProfile": "Your profile"
   },
-  "informationPage": {},
   "join": {
     "absorbFeeForce": "{amount} contributions must absorb the {fee} fee.",
     "absorbFeeOptIn": "Yes, I'll absorb the {fee} fee.",
@@ -887,7 +888,8 @@
         "text": "Are you sure you want to delete this notice?",
         "title": "Delete notice?"
       }
-    }
+    },
+    "summary": "Summary"
   },
   "notices": {
     "addNotice": "Add notice",
