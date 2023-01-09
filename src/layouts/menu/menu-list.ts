@@ -30,8 +30,8 @@ export const menu = computed(
         type: 'settings',
         items: [
           {
-            title: 'menu.yourInformation',
-            href: '/profile/information',
+            title: 'menu.account',
+            href: '/profile/account',
             icon: ['far', 'address-card'],
           },
           ...(generalContent.value.hideContribution
