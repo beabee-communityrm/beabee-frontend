@@ -418,7 +418,7 @@
       "paymentReference": "Payment reference",
       "paymentSource": "Payment source",
       "period": "Period",
-      "phone": "Phone",
+      "phone": "Phone number",
       "preferredChannel": "Preferred channel",
       "tags": "Tags"
     },
@@ -730,7 +730,7 @@
     "notes": "Notes",
     "password": "Password",
     "passwordInfo": "Set a secure password: 8+ characters or longer, and it must include a number, uppercase and lowercase letters.",
-    "phone": "Phone",
+    "phone": "Phone number",
     "postCode": "Postcode",
     "richtext": {
       "bold": "Bold",

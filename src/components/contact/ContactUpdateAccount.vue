@@ -15,6 +15,10 @@
       :optional-names="isAdmin"
     />
 
+    <div class="mb-3">
+      <AppInput v-model="data.telephone" :label="t('form.phone')" />
+    </div>
+
     <AppHeading class="mt-6 mb-2">
       {{ t('accountPage.deliveryAddress') }}
     </AppHeading>
@@ -59,6 +63,7 @@ import { fetchContent } from '../../utils/api/content';
 import { fetchContact, updateContact } from '../../utils/api/contact';
 import AppRadioGroup from '../forms/AppRadioGroup.vue';
 import AppForm from '../forms/AppForm.vue';
+import AppInput from '../forms/AppInput.vue';
 
 const props = defineProps<{
   id: string;
@@ -74,6 +79,7 @@ const data = reactive({
   emailAddress: '',
   firstName: '',
   lastName: '',
+  telephone: '',
   deliveryOptIn: false,
   addressLine1: '',
   addressLine2: '' as string | undefined,
@@ -89,6 +95,7 @@ watch(
     data.emailAddress = contact.email;
     data.firstName = contact.firstname;
     data.lastName = contact.lastname;
+    data.telephone = contact.profile.telephone;
     data.deliveryOptIn = contact.profile.deliveryOptIn;
 
     const address = contact.profile.deliveryAddress;
@@ -106,6 +113,7 @@ async function handleSubmit() {
     firstname: data.firstName,
     lastname: data.lastName,
     profile: {
+      telephone: data.telephone,
       ...(accountContent.showMailOptIn && {
         deliveryOptIn: data.deliveryOptIn,
       }),
