@@ -81,7 +81,7 @@ onBeforeMount(async () => {
 
 async function saveNotice(
   noticeFormData: NoticeFormData
-): Promise<GetNoticeData> {
+): Promise<GetNoticeData | undefined> {
   const noticeToSubmit: CreateNoticeData = {
     name: noticeFormData.name,
     starts: new Date(noticeFormData.startDate + 'T' + noticeFormData.startTime),
@@ -92,15 +92,13 @@ async function saveNotice(
     buttonText: noticeFormData.buttonText,
     url: noticeFormData.url,
   };
-  if (notice.value) {
-    return await updateNotice(notice.value.id, noticeToSubmit);
-  } else {
-    return await createNotice(noticeToSubmit);
-  }
+
+  if (!notice.value) return; // Can't submit without notice being loaded
+  return await updateNotice(notice.value.id, noticeToSubmit);
 }
 
 async function handleSubmit(noticeFormData: NoticeFormData) {
-  const notice = await saveNotice(noticeFormData);
-  router.push('/admin/notices/view/' + notice.id);
+  const notice: GetNoticeData | undefined = await saveNotice(noticeFormData);
+  if (notice) router.push('/admin/notices/view/' + notice.id);
 }
 </script>
