@@ -78,5 +78,5 @@ async function confirmDeleteNotice() {
     path: '/admin/notices',
     query: { deleted: null },
   });
-};
+}
 </script>

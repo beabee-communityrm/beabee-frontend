@@ -138,7 +138,7 @@ async function confirmDeleteCallout() {
     path: '/admin/callouts',
     query: { deleted: null },
   });
-};
+}
 
 async function replicateThisCallout() {
   const newCalloutData = {
