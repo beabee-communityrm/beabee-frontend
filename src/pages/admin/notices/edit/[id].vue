@@ -79,11 +79,15 @@ onBeforeMount(async () => {
   data.url = notice.value.url || '';
 });
 
-async function saveNotice(noticeFormData: NoticeFormData): Promise<GetNoticeData> {
+async function saveNotice(
+  noticeFormData: NoticeFormData
+): Promise<GetNoticeData> {
   const noticeToSubmit: CreateNoticeData = {
     name: noticeFormData.name,
     starts: new Date(noticeFormData.startDate + 'T' + noticeFormData.startTime),
-    expires: new Date(noticeFormData.expirationDate + 'T' + noticeFormData.expirationTime),
+    expires: new Date(
+      noticeFormData.expirationDate + 'T' + noticeFormData.expirationTime
+    ),
     text: noticeFormData.text,
     buttonText: noticeFormData.buttonText,
     url: noticeFormData.url,
