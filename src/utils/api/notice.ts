@@ -9,8 +9,7 @@ import {
   Serial,
 } from './api.interface';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function deserializeNotice(notice: any): any {
+function deserializeNotice(notice: Serial<GetNoticeData>): GetNoticeData {
   return {
     ...notice,
     createdAt: deserializeDate(notice.createdAt),

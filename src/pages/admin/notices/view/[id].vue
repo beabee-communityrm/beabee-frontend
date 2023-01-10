@@ -56,7 +56,7 @@ import PageTitle from '../../../../components/PageTitle.vue';
 import ActionButton from '../../../../components/pages/callouts/ActionButton.vue';
 import { GetNoticeData } from '../../../../utils/api/api.interface';
 import { deleteNotice, fetchNotice } from '../../../../utils/api/notice';
-import ItemStatus from '../../../../components/item/ItemStatus.vue';
+import ItemStatus from '../../../../components/item/ItemStatusText.vue';
 import ItemDateRange from '../../../../components/item/ItemDateRange.vue';
 import { useRouter } from 'vue-router';
 
@@ -72,8 +72,8 @@ onBeforeMount(async () => {
   notice.value = await fetchNotice(props.id as string);
 });
 
-const confirmDeleteNotice = () => {
-  deleteNotice(props.id);
+async function confirmDeleteNotice() {
+  await deleteNotice(props.id);
   router.push({
     path: '/admin/notices',
     query: { deleted: null },

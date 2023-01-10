@@ -38,7 +38,7 @@
       </div>
       <div class="text-sm font-semibold">
         <p class="text-body-60">
-          <ItemStatus :item="callout" inline />
+          <ItemStatusText :item="callout" inline />
         </p>
         <ItemDateRange :item="callout"></ItemDateRange>
       </div>
@@ -53,11 +53,8 @@ import {
   GetCalloutDataWith,
 } from '../../utils/api/api.interface';
 
-import AppButton from '../forms/AppButton.vue';
-import { formatLocale } from '../../utils/dates/locale-date-formats';
-import AppSubHeading from '../AppSubHeading.vue';
 import env from './../../env';
-import ItemStatus from '../item/ItemStatus.vue';
+import ItemStatusText from '../item/ItemStatusText.vue';
 import ItemDateRange from '../item/ItemDateRange.vue';
 
 const { t } = useI18n();

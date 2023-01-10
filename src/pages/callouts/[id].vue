@@ -11,7 +11,7 @@ meta:
     <div class="mb-6 flex items-center justify-between">
       <div class="flex items-center text-sm font-semibold text-body-60">
         <div>
-          <ItemStatusComponent :item="callout" />
+          <ItemStatusText :item="callout" />
         </div>
         <div v-if="hasResponded" class="border-body-40 ml-3 w-32 border-l pl-3">
           {{ t('callout.youResponded') }}
@@ -132,7 +132,7 @@ import InfoMessage from '../../components/InfoMessage.vue';
 
 import 'formiojs/dist/formio.form.css';
 import { useRoute } from 'vue-router';
-import ItemStatusComponent from '../../components/item/ItemStatus.vue';
+import ItemStatusText from '../../components/item/ItemStatusText.vue';
 
 type FormSubmission = { data: CalloutResponseAnswers };
 

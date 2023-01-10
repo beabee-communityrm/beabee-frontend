@@ -123,8 +123,8 @@ onBeforeMount(async () => {
     ? format(notice.value.expires, 'HH:mm')
     : '';
   data.text = notice.value.text;
-  data.buttonText = notice.value.buttonText ? notice.value.buttonText : '';
-  data.url = notice.value.url ? notice.value.url : '';
+  data.buttonText = notice.value.buttonText || '';
+  data.url = notice.value.url || '';
 });
 
 async function saveNotice() {
