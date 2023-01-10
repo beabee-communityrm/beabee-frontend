@@ -30,8 +30,8 @@ export const menu = computed(
         type: 'settings',
         items: [
           {
-            title: 'menu.yourInformation',
-            href: '/profile/information',
+            title: 'menu.account',
+            href: '/profile/account',
             icon: ['far', 'address-card'],
           },
           ...(generalContent.value.hideContribution
@@ -59,7 +59,7 @@ export const adminMenu: MenuSection[] = [
         icon: ['fa', 'chart-line'],
       },
       {
-        title: 'menu.community',
+        title: 'menu.contacts',
         href: '/admin/contacts',
         icon: ['fa', 'users'],
         isActive: /^\/admin\/contacts.*/,
