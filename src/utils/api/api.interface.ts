@@ -333,6 +333,8 @@ type CalloutResponseAnswer =
 export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
 
 export interface GetCalloutResponseData {
+  id: string;
+  contact: string;
   answers: CalloutResponseAnswers;
   createdAt: Date;
   updatedAt: Date;

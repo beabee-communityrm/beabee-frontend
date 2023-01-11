@@ -286,6 +286,15 @@
     "summary": "Summary",
     "updated": "Your callout was successfully updated."
   },
+  "calloutResponse": {
+    "data": {
+      "createdAt": "Date"
+    }
+  },
+  "calloutResponsesPage": {
+    "responseNo": "Response",
+    "showingOf": "Showing {start} to {end} responses out of {total}"
+  },
   "callouts": {
     "archive": "Archive",
     "data": {
@@ -729,7 +738,7 @@
     "notes": "Notes",
     "password": "Password",
     "passwordInfo": "Set a secure password: 8+ characters or longer, and it must include a number, uppercase and lowercase letters.",
-    "phone": "Phone",
+    "phone": "Phone number",
     "postCode": "Postcode",
     "richtext": {
       "bold": "Bold",

@@ -44,17 +44,17 @@ export async function fetchCallouts<With extends GetCalloutWith>(
   };
 }
 
-export async function fetchCallout(id: string): Promise<GetCalloutData>;
+export async function fetchCallout(slug: string): Promise<GetCalloutData>;
 export async function fetchCallout<With extends GetCalloutWith>(
-  id: string,
+  slug: string,
   _with: readonly With[]
 ): Promise<GetCalloutDataWith<With>>;
 export async function fetchCallout<With extends GetCalloutWith>(
-  id: string,
+  slug: string,
   _with?: readonly With[]
 ): Promise<GetCalloutDataWith<With>> {
   const { data } = await axios.get<Serial<GetCalloutDataWith<With>>>(
-    '/callout/' + id,
+    '/callout/' + slug,
     { params: { with: _with } }
   );
   return deserializeCallout(data);
@@ -87,11 +87,11 @@ export async function deleteCallout(slug: string): Promise<void> {
 }
 
 export async function fetchResponses(
-  id: string,
+  slug: string,
   query?: GetCalloutResponsesQuery
 ): Promise<Paginated<GetCalloutResponseData>> {
   const { data } = await axios.get<Paginated<Serial<GetCalloutResponseData>>>(
-    `/callout/${id}/responses`,
+    `/callout/${slug}/responses`,
     { params: query }
   );
   return {
@@ -105,10 +105,10 @@ export async function fetchResponses(
 }
 
 export async function createResponse(
-  id: string,
+  slug: string,
   data: CreateCalloutResponseData
 ): Promise<void> {
-  await axios.post(`/callout/${id}/responses`, {
+  await axios.post(`/callout/${slug}/responses`, {
     answers: data.answers,
     guestName: data.guestName,
     guestEmail: data.guestEmail,

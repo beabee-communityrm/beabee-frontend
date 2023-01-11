@@ -286,6 +286,10 @@
     "summary": "Zusammenfassung",
     "updated": "Änderungen gespeichert!"
   },
+  "calloutResponse": {
+    "data": {}
+  },
+  "calloutResponsesPage": {},
   "callouts": {
     "archive": "Archiv",
     "data": {

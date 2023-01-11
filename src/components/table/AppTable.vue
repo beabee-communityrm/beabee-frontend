@@ -55,9 +55,13 @@
           class="p-2 align-top"
           :align="header.align || undefined"
         >
-          <slot :name="header.value" :item="item" :value="item[header.value]">{{
-            item[header.value]
-          }}</slot>
+          <slot
+            :name="header.value"
+            :item="item"
+            :value="item[header.value]"
+            :num="i"
+            >{{ item[header.value] }}</slot
+          >
         </td>
       </tr>
     </tbody>
