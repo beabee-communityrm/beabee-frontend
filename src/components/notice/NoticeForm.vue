@@ -4,8 +4,6 @@
     :success-text="t('addNotice.noticeSaved')"
     @submit.prevent="$emit('submit', data)"
   >
-    <AppLabel :label="`This is the shared form`" />
-
     <div class="mb-3">
       <AppInput
         v-model="data.name"
