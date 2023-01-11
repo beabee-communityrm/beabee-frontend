@@ -3,7 +3,7 @@
     <AppLabel v-if="label" :label="label" :required="required" />
     <div class="flex items-start gap-4">
       <div
-        class="flex-0 basis-28 rounded border border-primary-40 bg-primary-20"
+        class="flex-0 basis-28 overflow-hidden rounded border border-primary-40 bg-primary-20"
       >
         <img
           :src="imageUrl"

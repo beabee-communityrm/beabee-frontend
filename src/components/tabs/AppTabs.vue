@@ -1,9 +1,5 @@
 <template>
-  <AppSelect
-    v-model="selectedItem"
-    :items="items"
-    class="mb-4 md:mb-6 md:hidden"
-  />
+  <AppSelect v-model="selectedItem" :items="items" class="mb-4 md:hidden" />
   <ul
     class="mb-4 hidden border-b border-primary-40 text-sm md:-mx-2 md:mb-6 md:flex"
   >

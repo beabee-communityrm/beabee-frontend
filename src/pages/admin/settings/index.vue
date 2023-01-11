@@ -40,7 +40,7 @@ meta:
         </div>
       </AppForm>
 
-      <div class="my-8 block border-b border-b-primary-40" />
+      <div class="my-8 border-b border-b-primary-40" />
 
       <AppForm
         v-if="shareContent"
@@ -86,7 +86,7 @@ meta:
       </AppForm>
     </div>
     <div>
-      <div class="my-8 block border-b border-b-primary-40 md:hidden" />
+      <div class="my-8 border-b border-b-primary-40 md:hidden" />
       <AppForm
         :button-text="t('actions.update')"
         :success-text="t('form.saved')"
