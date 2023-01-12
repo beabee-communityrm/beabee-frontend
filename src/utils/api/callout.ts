@@ -23,14 +23,7 @@ function deserializeCallout(callout: any): any {
   };
 }
 
-export async function fetchCallouts(
-  query: GetCalloutsQuery
-): Promise<Paginated<GetCalloutData>>;
-export async function fetchCallouts<With extends GetCalloutWith>(
-  query: GetCalloutsQuery,
-  _with: readonly With[]
-): Promise<Paginated<GetCalloutDataWith<With>>>;
-export async function fetchCallouts<With extends GetCalloutWith>(
+export async function fetchCallouts<With extends GetCalloutWith = void>(
   query?: GetCalloutsQuery,
   _with?: readonly With[]
 ): Promise<Paginated<GetCalloutDataWith<With>>> {
@@ -44,12 +37,7 @@ export async function fetchCallouts<With extends GetCalloutWith>(
   };
 }
 
-export async function fetchCallout(slug: string): Promise<GetCalloutData>;
-export async function fetchCallout<With extends GetCalloutWith>(
-  slug: string,
-  _with: readonly With[]
-): Promise<GetCalloutDataWith<With>>;
-export async function fetchCallout<With extends GetCalloutWith>(
+export async function fetchCallout<With extends GetCalloutWith = void>(
   slug: string,
   _with?: readonly With[]
 ): Promise<GetCalloutDataWith<With>> {

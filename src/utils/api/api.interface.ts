@@ -11,8 +11,10 @@ import {
   RuleGroup,
 } from '@beabee/beabee-common';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Noop {}
+// Not really sure why but this work for conditional intersections
+// https://stackoverflow.com/questions/65549362/how-to-create-a-conditional-intersection-based-on-a-generic-parameter
+// eslint-disable-next-line @typescript-eslint/ban-types
+type Noop = {};
 
 // Dates are serialized in API response
 export type Serial<T> = {
@@ -82,7 +84,7 @@ export interface GetContactData extends ContactData {
   activeRoles: RoleType[];
 }
 
-export type GetContactWith = 'profile' | 'contribution' | 'roles';
+export type GetContactWith = 'profile' | 'contribution' | 'roles' | void;
 
 export type GetContactDataWith<With extends GetContactWith> = GetContactData &
   ('profile' extends With ? { profile: ContactProfileData } : Noop) &
@@ -311,7 +313,7 @@ export interface CalloutFormSchema {
   components: unknown[];
 }
 
-export type GetCalloutWith = 'form' | 'responseCount' | 'hasAnswered';
+export type GetCalloutWith = 'form' | 'responseCount' | 'hasAnswered' | void;
 
 export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
   ('responseCount' extends With ? { responseCount: number } : Noop) &
@@ -389,7 +391,7 @@ export interface CreateSegmentData {
 
 export type UpdateSegmentData = Partial<CreateSegmentData>;
 
-export type GetSegmentWith = 'contactCount';
+export type GetSegmentWith = 'contactCount' | void;
 
 export type GetSegmentDataWith<With extends GetSegmentWith> = GetSegmentData &
   ('contactCount' extends With ? { contactCount: number } : Noop);
