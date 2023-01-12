@@ -6,11 +6,11 @@ meta:
 </route>
 
 <template>
-  <template v-if="callout">
+  <div v-if="callout">
     <PageTitle class="mb-2" :title="callout.title" no-collapse />
     <AppTabs :items="tabs" :selected="selectedTab" />
     <router-view :callout="callout"></router-view>
-  </template>
+  </div>
 </template>
 
 <script lang="ts" setup>

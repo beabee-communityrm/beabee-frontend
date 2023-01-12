@@ -294,6 +294,7 @@
     }
   },
   "calloutResponsesPage": {
+    "overview": "Overview",
     "response": "Response",
     "responseId": "Response {id}",
     "showingOf": "Showing {start} to {end} responses out of {total}"
