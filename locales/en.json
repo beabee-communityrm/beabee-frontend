@@ -288,11 +288,14 @@
   },
   "calloutResponse": {
     "data": {
-      "createdAt": "Date"
+      "contact": "Contact",
+      "createdAt": "Submission date",
+      "tags": "Tags"
     }
   },
   "calloutResponsesPage": {
     "response": "Response",
+    "responseId": "Response {id}",
     "showingOf": "Showing {start} to {end} responses out of {total}"
   },
   "callouts": {

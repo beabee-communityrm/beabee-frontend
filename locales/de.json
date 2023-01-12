@@ -287,7 +287,10 @@
     "updated": "Änderungen gespeichert!"
   },
   "calloutResponse": {
-    "data": {}
+    "data": {
+      "contact": "Kontakt",
+      "tags": "Tags"
+    }
   },
   "calloutResponsesPage": {},
   "callouts": {
