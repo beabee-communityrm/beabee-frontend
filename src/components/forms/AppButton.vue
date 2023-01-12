@@ -3,7 +3,11 @@
     <font-awesome-icon v-if="icon" :icon="icon" class="mr-2" /><slot />
   </a>
   <router-link v-else-if="to" :to="to" :class="buttonClasses">
-    <font-awesome-icon v-if="icon" :icon="icon" class="mr-2" /><slot />
+    <font-awesome-icon
+      v-if="icon"
+      :icon="icon"
+      class="mr-2"
+    /><slot /><font-awesome-icon v-if="ricon" :icon="ricon" class="ml-2" />
   </router-link>
 
   <component
@@ -17,7 +21,7 @@
       v-if="icon"
       :icon="icon"
       :class="$slots.default ? 'mr-2' : 'mr-0'"
-    /><slot />
+    /><slot /><font-awesome-icon v-if="ricon" :icon="ricon" class="ml-2" />
     <span v-if="loading" class="absolute inset-0 bg-white opacity-30" />
     <font-awesome-icon
       v-if="loading"
@@ -79,6 +83,7 @@ const props = withDefaults(
     size?: 'xs' | 'sm';
     loading?: boolean;
     icon?: string;
+    ricon?: string;
     is?: 'button' | 'label';
   }>(),
   {
@@ -90,6 +95,7 @@ const props = withDefaults(
     size: undefined,
     loading: false,
     icon: undefined,
+    ricon: undefined,
     is: 'button',
   }
 );
