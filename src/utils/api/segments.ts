@@ -1,24 +1,14 @@
-import { Paginated } from '@beabee/beabee-common';
 import axios from '../../lib/axios';
 import {
   CreateSegmentData,
-  GetContactData,
-  GetContactDataWith,
-  GetContactsQuery,
-  GetContactWith,
   GetSegmentData,
   GetSegmentDataWith,
   GetSegmentWith,
   Serial,
   UpdateSegmentData,
 } from './api.interface';
-import { deserializeContact } from './contact';
 
-export async function fetchSegments(): Promise<GetSegmentData[]>;
-export async function fetchSegments<With extends GetSegmentWith>(
-  _with: readonly With[]
-): Promise<GetSegmentDataWith<With>[]>;
-export async function fetchSegments<With extends GetSegmentWith>(
+export async function fetchSegments<With extends GetSegmentWith = void>(
   _with?: readonly With[]
 ): Promise<GetSegmentDataWith<With>[]> {
   const { data } = await axios.get<Serial<GetSegmentDataWith<With>>[]>(
@@ -27,21 +17,18 @@ export async function fetchSegments<With extends GetSegmentWith>(
       params: { with: _with },
     }
   );
+  // TODO: needs Serial type guard
   return data as GetSegmentDataWith<With>[];
 }
 
-export async function fetchSegment(id: string): Promise<GetSegmentData>;
-export async function fetchSegment<With extends GetSegmentWith>(
-  id: string,
-  _with: readonly With[]
-): Promise<GetSegmentDataWith<With>>;
-export async function fetchSegment<With extends GetSegmentWith>(
+export async function fetchSegment<With extends GetSegmentWith = void>(
   id: string,
   _with?: readonly With[]
 ): Promise<GetSegmentDataWith<With>> {
   const { data } = await axios.get<Serial<GetSegmentData>>('/segments/' + id, {
     params: { with: _with },
   });
+  // TODO: needs Serial type guard
   return data as GetSegmentDataWith<With>;
 }
 
@@ -76,28 +63,4 @@ export async function updateSegment(
 
 export async function deleteSegment(id: string): Promise<void> {
   await axios.delete('/segments/' + id);
-}
-
-export async function fetchSegmentContacts(
-  id: string,
-  query: GetContactsQuery
-): Promise<Paginated<GetContactData>>;
-export async function fetchSegmentContacts<With extends GetContactWith>(
-  id: string,
-  query: GetContactsQuery,
-  _with: readonly With[]
-): Promise<Paginated<GetContactDataWith<With>>>;
-export async function fetchSegmentContacts<With extends GetContactWith>(
-  id: string,
-  query: GetContactsQuery = {},
-  _with?: readonly With[]
-): Promise<Paginated<GetContactDataWith<With>>> {
-  const { data } = await axios.get(`/segments/${id}/contacts`, {
-    params: { with: _with, ...query },
-  });
-
-  return {
-    ...data,
-    items: data.items.map(deserializeContact),
-  };
 }
