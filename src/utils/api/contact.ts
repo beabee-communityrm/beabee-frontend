@@ -207,10 +207,13 @@ export async function fetchPayments(
   id: string,
   query: GetPaymentsQuery
 ): Promise<Paginated<GetPaymentData>> {
-  const { data } = await axios.get(`/contact/${id}/payment`, { params: query });
+  const { data } = await axios.get<Paginated<Serial<GetPaymentData>>>(
+    `/contact/${id}/payment`,
+    { params: query }
+  );
   return {
     ...data,
-    items: data.items.map((item: any) => ({
+    items: data.items.map((item) => ({
       chargeDate: deserializeDate(item.chargeDate),
       amount: item.amount,
       status: item.status,
