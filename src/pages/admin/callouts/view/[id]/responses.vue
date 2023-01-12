@@ -8,16 +8,17 @@ meta:
 <template>
   <div>
     <AppTable
+      v-model:sort="currentSort"
       :headers="headers"
       :items="responses?.items || null"
       class="w-full"
     >
-      <template #responseNo="{ num, item }">
+      <template #responseNo="{ item }">
         <router-link
           :to="`/admin/callouts/view/${callout.slug}/responses/${item.id}`"
           class="text-base font-bold text-link"
         >
-          Response {{ n(currentOffset + num + 1) }}
+          {{ item.id }}
         </router-link>
       </template>
       <template #createdAt="{ value }">
@@ -40,7 +41,10 @@ import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import AppPaginatedResult from '../../../../../components/AppPaginatedResult.vue';
 import AppTable from '../../../../../components/table/AppTable.vue';
-import { Header } from '../../../../../components/table/table.interface';
+import {
+  Header,
+  SortType,
+} from '../../../../../components/table/table.interface';
 import {
   GetCalloutData,
   GetCalloutResponseData,
@@ -52,7 +56,7 @@ const props = defineProps<{
   callout: GetCalloutData;
 }>();
 
-const { t, n } = useI18n();
+const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
@@ -62,12 +66,14 @@ const headers: Header[] = [
     text: t('calloutResponsesPage.responseNo'),
   },
   {
-    value: 'createdAt',
-    text: t('calloutResponse.data.createdAt'),
-  },
-  {
     value: 'tags',
     text: 'Tags',
+  },
+  {
+    value: 'createdAt',
+    text: t('calloutResponse.data.createdAt'),
+    sortable: true,
+    align: 'right',
   },
 ];
 
@@ -83,12 +89,28 @@ const currentPage = computed({
   set: (page) => router.push({ query: { ...route.query, page } }),
 });
 
-const currentOffset = computed(() => currentPage.value * currentPageSize.value);
+const currentSort = computed({
+  get: () => ({
+    by: (route.query.sortBy as string) || 'createdAt',
+    type: (route.query.sortType as SortType) || SortType.Desc,
+  }),
+  set: ({ by, type }) => {
+    router.replace({
+      query: {
+        ...route.query,
+        sortBy: by,
+        sortType: type,
+      },
+    });
+  },
+});
 
 watchEffect(async () => {
   responses.value = await fetchResponses(props.callout.slug, {
     limit: currentPageSize.value,
-    offset: currentOffset.value,
+    offset: currentPage.value * currentPageSize.value,
+    sort: currentSort.value.by,
+    order: currentSort.value.type,
   });
 });
 </script>
