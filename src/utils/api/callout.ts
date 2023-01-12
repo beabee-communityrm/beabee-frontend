@@ -87,6 +87,18 @@ export async function deleteCallout(slug: string): Promise<void> {
   await axios.delete('/callout/' + slug);
 }
 
+export async function fetchResponse<With extends GetCalloutResponseWith = void>(
+  slug: string,
+  id: string,
+  _with?: readonly With[]
+): Promise<GetCalloutResponseDataWith<With>> {
+  const { data } = await axios.get<Serial<GetCalloutResponseDataWith<With>>>(
+    `/callout/${slug}/responses/${id}`,
+    { params: { with: _with } }
+  );
+  return deserializeResponse(data);
+}
+
 export async function fetchResponses<
   With extends GetCalloutResponseWith = void
 >(

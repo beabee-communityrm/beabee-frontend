@@ -49,18 +49,18 @@ import { Paginated } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
-import AppPaginatedResult from '../../../../../components/AppPaginatedResult.vue';
-import AppTable from '../../../../../components/table/AppTable.vue';
+import AppPaginatedResult from '../../../../../../components/AppPaginatedResult.vue';
+import AppTable from '../../../../../../components/table/AppTable.vue';
 import {
   Header,
   SortType,
-} from '../../../../../components/table/table.interface';
+} from '../../../../../../components/table/table.interface';
 import {
   GetCalloutDataWith,
   GetCalloutResponseDataWith,
-} from '../../../../../utils/api/api.interface';
-import { fetchResponses } from '../../../../../utils/api/callout';
-import { formatLocale } from '../../../../../utils/dates/locale-date-formats';
+} from '../../../../../../utils/api/api.interface';
+import { fetchResponses } from '../../../../../../utils/api/callout';
+import { formatLocale } from '../../../../../../utils/dates/locale-date-formats';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
@@ -77,11 +77,11 @@ const headers: Header[] = [
   },
   {
     value: 'contact',
-    text: 'Contact',
+    text: t('calloutResponse.data.contact'),
   },
   {
     value: 'tags',
-    text: 'Tags',
+    text: t('calloutResponse.data.tags'),
   },
   {
     value: 'createdAt',
