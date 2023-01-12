@@ -351,7 +351,7 @@ export type GetCalloutResponseWith = 'answers' | 'contact' | void;
 export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
   GetCalloutResponseData &
     ('answers' extends With ? { answers: CalloutResponseAnswers } : Noop) &
-    ('contact' extends With ? { contact: GetContactData } : Noop);
+    ('contact' extends With ? { contact: GetContactData | null } : Noop);
 
 export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 
