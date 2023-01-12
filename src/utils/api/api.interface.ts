@@ -183,7 +183,7 @@ export interface StartContributionData extends SetContributionData {
 }
 
 export interface GetPaymentData {
-  chargeDate: string;
+  chargeDate: Date;
   amount: number;
   status: PaymentStatus;
 }
