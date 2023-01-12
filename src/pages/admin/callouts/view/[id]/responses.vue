@@ -13,13 +13,23 @@ meta:
       :items="responses?.items || null"
       class="w-full"
     >
-      <template #responseNo="{ item }">
+      <template #response="{ item }">
         <router-link
           :to="`/admin/callouts/view/${callout.slug}/responses/${item.id}`"
           class="text-base font-bold text-link"
         >
           {{ item.id }}
         </router-link>
+      </template>
+      <template #contact="{ item }">
+        <router-link
+          v-if="item.contact"
+          :to="`/admin/contacts/${item.contact.id}`"
+          class="text-link"
+        >
+          {{ item.contact.email }}
+        </router-link>
+        <span v-else>-</span>
       </template>
       <template #createdAt="{ value }">
         {{ formatLocale(value, 'Pp') }}
@@ -46,14 +56,14 @@ import {
   SortType,
 } from '../../../../../components/table/table.interface';
 import {
-  GetCalloutData,
-  GetCalloutResponseData,
+  GetCalloutDataWith,
+  GetCalloutResponseDataWith,
 } from '../../../../../utils/api/api.interface';
 import { fetchResponses } from '../../../../../utils/api/callout';
 import { formatLocale } from '../../../../../utils/dates/locale-date-formats';
 
 const props = defineProps<{
-  callout: GetCalloutData;
+  callout: GetCalloutDataWith<'form'>;
 }>();
 
 const { t } = useI18n();
@@ -62,8 +72,12 @@ const router = useRouter();
 
 const headers: Header[] = [
   {
-    value: 'responseNo',
-    text: t('calloutResponsesPage.responseNo'),
+    value: 'response',
+    text: t('calloutResponsesPage.response'),
+  },
+  {
+    value: 'contact',
+    text: 'Contact',
   },
   {
     value: 'tags',
@@ -77,7 +91,7 @@ const headers: Header[] = [
   },
 ];
 
-const responses = ref<Paginated<GetCalloutResponseData>>();
+const responses = ref<Paginated<GetCalloutResponseDataWith<'contact'>>>();
 
 const currentPageSize = computed({
   get: () => Number(route.query.limit) || 25,
@@ -106,11 +120,15 @@ const currentSort = computed({
 });
 
 watchEffect(async () => {
-  responses.value = await fetchResponses(props.callout.slug, {
-    limit: currentPageSize.value,
-    offset: currentPage.value * currentPageSize.value,
-    sort: currentSort.value.by,
-    order: currentSort.value.type,
-  });
+  responses.value = await fetchResponses(
+    props.callout.slug,
+    {
+      limit: currentPageSize.value,
+      offset: currentPage.value * currentPageSize.value,
+      sort: currentSort.value.by,
+      order: currentSort.value.type,
+    },
+    ['contact']
+  );
 });
 </script>

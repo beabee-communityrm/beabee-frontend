@@ -292,7 +292,7 @@
     }
   },
   "calloutResponsesPage": {
-    "responseNo": "Response",
+    "response": "Response",
     "showingOf": "Showing {start} to {end} responses out of {total}"
   },
   "callouts": {
