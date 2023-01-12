@@ -51,6 +51,7 @@ meta:
     </AppInfoList>
     <div class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg">
       <Form
+        :key="response.id /*Form doesn't respect reactivity */"
         :form="callout.formSchema"
         :submission="{ data: response.answers }"
         :options="{ readOnly: true }"
