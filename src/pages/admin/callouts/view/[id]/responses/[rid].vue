@@ -6,7 +6,7 @@ meta:
 </route>
 <template>
   <div v-if="response" class="md:max-w-2xl">
-    <div class="mb-2 flex justify-between">
+    <div class="relative mb-4 flex gap-2">
       <AppButton
         :disabled="!prevResponse"
         :to="
@@ -16,7 +16,7 @@ meta:
         icon="caret-left"
         size="xs"
       >
-        Previous
+        {{ t('actions.previous') }}
       </AppButton>
       <AppButton
         :disabled="!nextResponse"
@@ -27,13 +27,13 @@ meta:
         ricon="caret-right"
         size="xs"
       >
-        Next
+        {{ t('actions.next') }}
       </AppButton>
+      <div v-show="loadingPrevNext" class="absolute inset-0 bg-primary-5/30" />
     </div>
     <AppHeading class="mb-4">
       {{ t('calloutResponsesPage.responseId', { id: response.id }) }}
     </AppHeading>
-    <AppSubHeading>{{ t('calloutResponsesPage.overview') }}</AppSubHeading>
     <AppInfoList>
       <AppInfoListItem :name="t('calloutResponse.data.contact')">
         <router-link
@@ -76,7 +76,6 @@ import AppHeading from '../../../../../../components/AppHeading.vue';
 import AppInfoList from '../../../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../../../../utils/dates/locale-date-formats';
-import AppSubHeading from '../../../../../../components/AppSubHeading.vue';
 import AppButton from '../../../../../../components/forms/AppButton.vue';
 
 const props = defineProps<{
@@ -89,12 +88,15 @@ const { t } = useI18n();
 const response = ref<GetCalloutResponseDataWith<'answers' | 'contact'>>();
 const prevResponse = ref<GetCalloutResponseData>();
 const nextResponse = ref<GetCalloutResponseData>();
+const loadingPrevNext = ref(false);
 
 watchEffect(async () => {
   response.value = await fetchResponse(props.callout.slug, props.rid, [
     'answers',
     'contact',
   ]);
+
+  loadingPrevNext.value = true;
 
   const olderResponses = await fetchResponses(props.callout.slug, {
     limit: 1,
@@ -133,5 +135,7 @@ watchEffect(async () => {
 
   nextResponse.value =
     newerResponses.count > 0 ? newerResponses.items[0] : undefined;
+
+  loadingPrevNext.value = false;
 });
 </script>

@@ -17,8 +17,10 @@
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
+    "next": "Next",
     "participate": "Participate",
     "preview": "Preview",
+    "previous": "Previous",
     "publish": "Publish",
     "replicate": "Replicate",
     "reset": "Reset",
@@ -294,7 +296,6 @@
     }
   },
   "calloutResponsesPage": {
-    "overview": "Overview",
     "response": "Response",
     "responseId": "Response {id}",
     "showingOf": "Showing {start} to {end} responses out of {total}"
