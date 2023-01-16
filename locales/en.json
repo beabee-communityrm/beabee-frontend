@@ -290,6 +290,7 @@
   },
   "calloutResponse": {
     "data": {
+      "callout": "Callout",
       "contact": "Contact",
       "createdAt": "Submission date",
       "tags": "Tags"
@@ -386,6 +387,7 @@
     "annotation": {
       "copy": "<p>All information added in this section is <strong>visible for admins only</strong>. Members will never see these in their profile or member area.</p>\n"
     },
+    "callouts": "Callouts",
     "contribution": "Contribution",
     "contributionType": "Type",
     "information": "Information",

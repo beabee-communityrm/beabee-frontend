@@ -57,12 +57,11 @@ const tabs = computed(() =>
           label: t('contactOverview.contribution'),
           to: `/admin/contacts/${contact.value.id}/contribution`,
         },
-        /*
         {
-          id: 'contactRoles',
-          label: t('contactOverview.roles'),
-          to: `/admin/contacts/${contact.value.id}/roles`,
-        },*/
+          id: 'adminContactsViewCallouts',
+          label: t('contactOverview.callouts'),
+          to: `/admin/contacts/${contact.value.id}/callouts`,
+        },
       ]
     : []
 );
