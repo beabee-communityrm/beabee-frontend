@@ -7,11 +7,30 @@ meta:
 
 <template>
   <div>
+    <div class="flex gap-2">
+      <AppSelect :items="[]" />
+      <AppButton
+        variant="primaryOutlined"
+        class="bg-white/0"
+        :class="showAdvancedSearch && 'relative rounded-b-none'"
+        @click="showAdvancedSearch = !showAdvancedSearch"
+      >
+        {{ t('advancedSearch.button') }}
+        <font-awesome-icon
+          class="ml-2"
+          :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
+        />
+        <div
+          v-show="showAdvancedSearch"
+          class="absolute -left-px top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-px"
+        />
+      </AppButton>
+    </div>
     <AppSearch
       v-model="currentRules"
       :filter-groups="filterGroupsWithQuestions"
       :filter-items="filterItemsWithQuestions"
-      :expanded="true"
+      :expanded="showAdvancedSearch"
       :has-changed="false"
       @reset="currentRules = undefined"
     />
@@ -55,8 +74,11 @@ meta:
 <script lang="ts" setup>
 import { Paginated, RuleGroup } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import AppPaginatedResult from '../../../../../../components/AppPaginatedResult.vue';
+import AppButton from '../../../../../../components/forms/AppButton.vue';
+import AppSelect from '../../../../../../components/forms/AppSelect.vue';
 import {
   filterGroups,
   filterItems,
@@ -80,10 +102,12 @@ const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
 }>();
 
+const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
 const responses = ref<Paginated<GetCalloutResponseDataWith<'contact'>>>();
+const showAdvancedSearch = ref(false);
 
 const formQuestions = computed(() =>
   flattenComponents(props.callout.formSchema.components).filter(

@@ -292,8 +292,9 @@
     "data": {
       "callout": "Callout",
       "contact": "Contact",
-      "createdAt": "Submission date",
-      "tags": "Tags"
+      "createdAt": "Date submitted",
+      "tags": "Tags",
+      "updatedAt": "Date updated"
     },
     "dataGroup": {
       "response": "Response"

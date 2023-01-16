@@ -26,12 +26,11 @@ meta:
           v-model="currentSearch"
           :placeholder="t('contacts.search')"
         />
-        <button
-          class="ml-2 flex items-center rounded border border-primary-40 px-3 text-sm font-semibold"
-          :class="
-            showAdvancedSearch &&
-            'relative rounded-b-none border border-b-primary/0'
-          "
+
+        <AppButton
+          variant="primaryOutlined"
+          class="ml-2 bg-white/0"
+          :class="showAdvancedSearch && 'relative rounded-b-none'"
           @click="showAdvancedSearch = !showAdvancedSearch"
         >
           {{ t('advancedSearch.button') }}
@@ -40,9 +39,10 @@ meta:
             :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
           />
           <div
-            class="absolute -left-[1px] top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-[1px]"
+            v-show="showAdvancedSearch"
+            class="absolute -left-px top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-px"
           />
-        </button>
+        </AppButton>
       </div>
       <AppSearch
         v-model="currentRules"
