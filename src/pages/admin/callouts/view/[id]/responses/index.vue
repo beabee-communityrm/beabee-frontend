@@ -7,6 +7,14 @@ meta:
 
 <template>
   <div>
+    <AppSearch
+      v-model="currentRules"
+      :filter-groups="filterGroupsWithQuestions"
+      :filter-items="filterItemsWithQuestions"
+      :expanded="true"
+      :has-changed="false"
+      @reset="currentRules = undefined"
+    />
     <AppTable
       v-model:sort="currentSort"
       :headers="headers"
@@ -45,53 +53,58 @@ meta:
   </div>
 </template>
 <script lang="ts" setup>
-import { Paginated } from '@beabee/beabee-common';
+import { Paginated, RuleGroup } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
-import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import AppPaginatedResult from '../../../../../../components/AppPaginatedResult.vue';
-import AppTable from '../../../../../../components/table/AppTable.vue';
 import {
-  Header,
-  SortType,
-} from '../../../../../../components/table/table.interface';
+  filterGroups,
+  filterItems,
+  headers,
+} from '../../../../../../components/pages/admin/callout-responses.interface';
+import AppSearch from '../../../../../../components/search/AppSearch.vue';
+import AppTable from '../../../../../../components/table/AppTable.vue';
+import { SortType } from '../../../../../../components/table/table.interface';
 import {
   GetCalloutDataWith,
   GetCalloutResponseDataWith,
 } from '../../../../../../utils/api/api.interface';
 import { fetchResponses } from '../../../../../../utils/api/callout';
+import {
+  convertComponentsToFilters,
+  flattenComponents,
+} from '../../../../../../utils/callouts';
 import { formatLocale } from '../../../../../../utils/dates/locale-date-formats';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
 }>();
 
-const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
-const headers: Header[] = [
-  {
-    value: 'response',
-    text: t('calloutResponsesPage.response'),
-  },
-  {
-    value: 'contact',
-    text: t('calloutResponse.data.contact'),
-  },
-  {
-    value: 'tags',
-    text: t('calloutResponse.data.tags'),
-  },
-  {
-    value: 'createdAt',
-    text: t('calloutResponse.data.createdAt'),
-    sortable: true,
-    align: 'right',
-  },
-];
-
 const responses = ref<Paginated<GetCalloutResponseDataWith<'contact'>>>();
+
+const formQuestions = computed(() =>
+  flattenComponents(props.callout.formSchema.components).filter(
+    (c) => !!c.input && c.type !== 'button'
+  )
+);
+
+const filterGroupsWithQuestions = computed(() => [
+  ...filterGroups.value,
+  {
+    label: 'Answers',
+    items: formQuestions.value.map((q) => `answers.${q.key}`),
+  },
+]);
+
+const filterItemsWithQuestions = computed(() => {
+  return {
+    ...filterItems.value,
+    ...convertComponentsToFilters(formQuestions.value),
+  };
+});
 
 const currentPageSize = computed({
   get: () => Number(route.query.limit) || 25,
@@ -117,6 +130,15 @@ const currentSort = computed({
       },
     });
   },
+});
+
+const currentRules = computed({
+  get: () =>
+    route.query.r
+      ? (JSON.parse(route.query.r as string) as RuleGroup)
+      : undefined,
+  set: (r) =>
+    router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
 });
 
 watchEffect(async () => {

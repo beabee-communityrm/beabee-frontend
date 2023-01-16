@@ -1,7 +1,12 @@
 import { ItemStatus } from '@beabee/beabee-common';
 import { format } from 'date-fns';
 import { CalloutStepsProps } from '../components/pages/callouts/callouts.interface';
-import { CreateCalloutData, GetCalloutDataWith } from './api/api.interface';
+import { FilterItem, FilterItems } from '../components/search/search.interface';
+import {
+  CalloutComponentSchema,
+  CreateCalloutData,
+  GetCalloutDataWith,
+} from './api/api.interface';
 
 export function convertCalloutToSteps(
   callout?: GetCalloutDataWith<'form'>
@@ -94,4 +99,54 @@ export function convertStepsToCallout(
       ? steps.titleAndImage.shareDescription
       : '',
   };
+}
+
+export function flattenComponents(
+  components: CalloutComponentSchema[]
+): CalloutComponentSchema[] {
+  return components.flatMap((component) => [
+    component,
+    ...flattenComponents(component.components || []),
+  ]);
+}
+
+function convertComponentToFilter(
+  component: CalloutComponentSchema
+): FilterItem {
+  const baseItem = {
+    label: component.label || component.key,
+    nullable: false,
+  };
+
+  switch (component.type) {
+    case 'select':
+      return {
+        ...baseItem,
+        type: 'enum',
+        options: component.data.values.map((v) => ({
+          id: v.value,
+          label: v.label,
+        })),
+      };
+
+    case 'radio':
+      return {
+        ...baseItem,
+        type: 'enum',
+        options: component.values.map((v) => ({ id: v.value, label: v.label })),
+      };
+
+    default:
+      return { ...baseItem, type: 'text' };
+  }
+}
+
+export function convertComponentsToFilters(
+  components: CalloutComponentSchema[]
+): FilterItems {
+  const items = components.map((c) => {
+    return [`answers.${c.key}`, convertComponentToFilter(c)] as const;
+  });
+
+  return Object.fromEntries(items);
 }
