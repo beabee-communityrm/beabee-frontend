@@ -1,6 +1,8 @@
+import { CalloutFormSchema } from '../../../utils/api/api.interface';
+
 export interface ContentStepProps {
   introText: string;
-  formSchema: { components: unknown[] };
+  formSchema: CalloutFormSchema;
 }
 
 export interface TitleAndImageStepProps {

@@ -309,8 +309,34 @@ export interface GetCalloutData extends CalloutData {
   status: ItemStatus;
 }
 
+interface BaseCalloutComponentSchema {
+  key: string;
+  label?: string;
+  input?: boolean;
+  components: CalloutComponentSchema[];
+}
+
+interface OtherCalloutComponentSchema extends BaseCalloutComponentSchema {
+  type: 'textfield' | 'textarea' | 'input' | 'button';
+}
+
+interface SelectCalloutComponentSchema extends BaseCalloutComponentSchema {
+  type: 'select';
+  data: { values: { label: string; value: string }[] };
+}
+
+interface RadioCalloutComponentSchema extends BaseCalloutComponentSchema {
+  type: 'radio';
+  values: { label: string; value: string }[];
+}
+
+export type CalloutComponentSchema =
+  | SelectCalloutComponentSchema
+  | RadioCalloutComponentSchema
+  | OtherCalloutComponentSchema;
+
 export interface CalloutFormSchema {
-  components: unknown[];
+  components: CalloutComponentSchema[];
 }
 
 export type GetCalloutWith = 'form' | 'responseCount' | 'hasAnswered' | void;
