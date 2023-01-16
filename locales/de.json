@@ -290,7 +290,8 @@
     "data": {
       "contact": "Kontakt",
       "tags": "Tags"
-    }
+    },
+    "dataGroup": {}
   },
   "calloutResponsesPage": {},
   "callouts": {
