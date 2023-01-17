@@ -2,7 +2,9 @@
   <div>
     <AppLabel v-if="label" :label="label" :required="required" />
     <div class="flex items-start gap-4">
-      <div class="flex-0 basis-28 bg-grey-light">
+      <div
+        class="flex-0 basis-28 overflow-hidden rounded border border-primary-40 bg-primary-20"
+      >
         <img
           :src="imageUrl"
           :width="width"

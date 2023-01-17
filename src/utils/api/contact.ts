@@ -63,15 +63,8 @@ function deserializeContribution(
   };
 }
 
-export async function fetchContacts(
-  query: GetContactsQuery
-): Promise<Paginated<GetContactData>>;
-export async function fetchContacts<With extends GetContactWith>(
+export async function fetchContacts<With extends GetContactWith = void>(
   query: GetContactsQuery,
-  _with: readonly With[]
-): Promise<Paginated<GetContactDataWith<With>>>;
-export async function fetchContacts<With extends GetContactWith>(
-  query: GetContactsQuery = {},
   _with?: readonly With[]
 ): Promise<Paginated<GetContactDataWith<With>>> {
   // TODO: fix type safety
@@ -91,18 +84,16 @@ export async function createContact(
   return deserializeContact(data);
 }
 
-export async function fetchContact(id: string): Promise<GetContactData>;
-export async function fetchContact<With extends GetContactWith>(
-  id: string,
-  _with: readonly With[]
-): Promise<GetContactDataWith<With>>;
-export async function fetchContact<With extends GetContactWith>(
+export async function fetchContact<With extends GetContactWith = void>(
   id: string,
   _with?: readonly With[]
 ): Promise<GetContactDataWith<With>> {
-  const { data } = await axios.get<Serial<GetContactData>>(`/contact/${id}`, {
-    params: { with: _with },
-  });
+  const { data } = await axios.get<Serial<GetContactDataWith<With>>>(
+    `/contact/${id}`,
+    {
+      params: { with: _with },
+    }
+  );
   return deserializeContact(data);
 }
 
@@ -216,10 +207,13 @@ export async function fetchPayments(
   id: string,
   query: GetPaymentsQuery
 ): Promise<Paginated<GetPaymentData>> {
-  const { data } = await axios.get(`/contact/${id}/payment`, { params: query });
+  const { data } = await axios.get<Paginated<Serial<GetPaymentData>>>(
+    `/contact/${id}/payment`,
+    { params: query }
+  );
   return {
     ...data,
-    items: data.items.map((item: any) => ({
+    items: data.items.map((item) => ({
       chargeDate: deserializeDate(item.chargeDate),
       amount: item.amount,
       status: item.status,
