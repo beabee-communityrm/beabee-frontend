@@ -313,7 +313,8 @@ interface BaseCalloutComponentSchema {
   key: string;
   label?: string;
   input?: boolean;
-  components: CalloutComponentSchema[];
+  components?: CalloutComponentSchema[];
+  [key: string]: unknown;
 }
 
 interface OtherCalloutComponentSchema extends BaseCalloutComponentSchema {

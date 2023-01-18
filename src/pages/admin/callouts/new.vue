@@ -65,8 +65,6 @@ import useVuelidate from '@vuelidate/core';
 import AppAsyncButton from '../../../components/forms/AppAsyncButton.vue';
 import { formatDistanceLocale } from '../../../utils/dates/locale-date-formats';
 
-formatDistanceLocale;
-
 const props = defineProps<{ id?: string }>();
 
 const { t } = useI18n();
