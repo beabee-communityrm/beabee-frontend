@@ -11,6 +11,7 @@ meta:
       <AppSelect :items="[]" />
       <AppButton
         variant="primaryOutlined"
+        size="sm"
         class="bg-white/0"
         :class="showAdvancedSearch && 'relative rounded-b-none'"
         @click="showAdvancedSearch = !showAdvancedSearch"

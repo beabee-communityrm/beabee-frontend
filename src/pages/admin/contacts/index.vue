@@ -26,9 +26,9 @@ meta:
           v-model="currentSearch"
           :placeholder="t('contacts.search')"
         />
-
         <AppButton
           variant="primaryOutlined"
+          size="sm"
           class="ml-2 bg-white/0"
           :class="showAdvancedSearch && 'relative rounded-b-none'"
           @click="showAdvancedSearch = !showAdvancedSearch"
