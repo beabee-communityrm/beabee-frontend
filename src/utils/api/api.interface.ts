@@ -313,12 +313,19 @@ interface BaseCalloutComponentSchema {
   key: string;
   label?: string;
   input?: boolean;
+  // TODO: should only be on nestable components
   components?: CalloutComponentSchema[];
   [key: string]: unknown;
 }
 
 interface OtherCalloutComponentSchema extends BaseCalloutComponentSchema {
-  type: 'textfield' | 'textarea' | 'input' | 'button';
+  type:
+    | 'button'
+    | 'checkbox'
+    | 'number'
+    | 'password'
+    | 'textfield'
+    | 'textarea';
 }
 
 interface SelectCalloutComponentSchema extends BaseCalloutComponentSchema {
@@ -327,7 +334,7 @@ interface SelectCalloutComponentSchema extends BaseCalloutComponentSchema {
 }
 
 interface RadioCalloutComponentSchema extends BaseCalloutComponentSchema {
-  type: 'radio';
+  type: 'radio' | 'selectboxes';
   values: { label: string; value: string }[];
 }
 

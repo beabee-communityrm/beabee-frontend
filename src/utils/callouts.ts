@@ -110,6 +110,12 @@ export function flattenComponents(
   ]);
 }
 
+function convertValuesToOptions(
+  values: { value: string; label: string }[]
+): { id: string; label: string }[] {
+  return values.map(({ value, label }) => ({ id: value, label }));
+}
+
 function convertComponentToFilter(
   component: CalloutComponentSchema
 ): FilterItem {
@@ -119,21 +125,25 @@ function convertComponentToFilter(
   };
 
   switch (component.type) {
+    case 'checkbox':
+      return { ...baseItem, type: 'boolean', nullable: false };
+
+    case 'number':
+      return { ...baseItem, type: 'number' };
+
     case 'select':
       return {
         ...baseItem,
         type: 'enum',
-        options: component.data.values.map((v) => ({
-          id: v.value,
-          label: v.label,
-        })),
+        options: convertValuesToOptions(component.data.values),
       };
 
+    case 'selectboxes':
     case 'radio':
       return {
         ...baseItem,
-        type: 'enum',
-        options: component.values.map((v) => ({ id: v.value, label: v.label })),
+        type: component.type === 'radio' ? 'enum' : 'array',
+        options: convertValuesToOptions(component.values),
       };
 
     default:
