@@ -174,6 +174,7 @@ watchEffect(async () => {
       offset: currentPage.value * currentPageSize.value,
       sort: currentSort.value.by,
       order: currentSort.value.type,
+      rules: currentRules.value,
     },
     ['contact']
   );

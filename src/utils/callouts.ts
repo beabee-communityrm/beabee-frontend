@@ -115,7 +115,7 @@ function convertComponentToFilter(
 ): FilterItem {
   const baseItem = {
     label: component.label || component.key,
-    nullable: false,
+    nullable: true,
   };
 
   switch (component.type) {
