@@ -99,6 +99,9 @@ const ruleDefaultsByType: Record<
   contact: () => withDefault('contact', 'equal'),
   date: () => withDefault('date', 'equal'),
   array: () => withDefault('array', 'contains'),
+  custom: () => {
+    throw new Error("Custom filter types shouldn't be creatable");
+  },
 };
 
 export function createNewRule(field: string, type: FilterType): Rule {

@@ -28,7 +28,7 @@
   />
   <DateInput v-else-if="item.type === 'date'" v-model="value" />
   <AppInput
-    v-else
+    v-else-if="item.type !== 'custom'"
     v-model="value"
     :type="item.type === 'contact' ? 'text' : item.type"
     :prefix="item.prefix"
