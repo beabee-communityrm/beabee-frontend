@@ -7,128 +7,116 @@ meta:
 
 <template>
   <PageTitle :title="t('menu.contacts')" border>
-    <div class="flex-1 md:hidden">
-      <AppSelect v-model="currentSegmentId" :items="segmentItems" />
-    </div>
     <div class="flex-0 ml-3">
       <AppButton to="/admin/contacts/add">
         {{ t('contacts.addContact') }}
       </AppButton>
     </div>
   </PageTitle>
-  <div class="md:flex">
-    <div class="hidden flex-none basis-[220px] md:block">
-      <AppVTabs v-model="currentSegmentId" :items="segmentItems" />
-    </div>
-    <div class="flex-auto">
-      <div class="flex">
-        <AppSearchInput
-          v-model="currentSearch"
-          :placeholder="t('contacts.search')"
-        />
-        <button
-          class="ml-2 flex items-center rounded border border-primary-40 px-3 text-sm font-semibold"
-          :class="
-            showAdvancedSearch &&
-            'relative rounded-b-none border border-b-primary/0'
-          "
-          @click="showAdvancedSearch = !showAdvancedSearch"
-        >
-          {{ t('advancedSearch.button') }}
-          <font-awesome-icon
-            class="ml-2"
-            :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
-          />
-          <div
-            class="absolute -left-[1px] top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-[1px]"
-          />
-        </button>
-      </div>
-      <AppSearch
-        v-model="currentRules"
-        :filter-groups="filterGroups"
-        :filter-items="filterItems"
-        :expanded="showAdvancedSearch"
-        :has-changed="hasUnsavedSegment"
-        @reset="currentRules = undefined"
+  <AppFilterGrid v-model="currentSegmentId" :items="segmentItems">
+    <div class="flex">
+      <AppSearchInput
+        v-model="currentSearch"
+        :placeholder="t('contacts.search')"
       />
-
-      <SaveSegment
-        v-if="hasUnsavedSegment && currentRules"
-        :segment="currentSegment"
-        :rules="currentRules"
-        @saved="handleSavedSegment"
-      />
-      <AppPaginatedResult
-        v-model:page="currentPage"
-        v-model:page-size="currentPageSize"
-        :result="contactsTable"
-        keypath="contacts.showingOf"
-        class="mt-4"
-      />
-      <AppTable
-        v-model:sort="currentSort"
-        :headers="headers"
-        :items="contactsTable?.items || null"
-        class="mt-2 w-full whitespace-nowrap"
+      <button
+        class="ml-2 flex items-center rounded border border-primary-40 px-3 text-sm font-semibold"
+        :class="
+          showAdvancedSearch &&
+          'relative rounded-b-none border border-b-primary/0'
+        "
+        @click="showAdvancedSearch = !showAdvancedSearch"
       >
-        <template #empty>
-          <p>
-            {{
-              currentRules || currentSearch
-                ? t('contacts.noResults')
-                : t('contacts.noContacts')
-            }}
-          </p>
-        </template>
-        <template #firstname="{ item }">
-          <router-link
-            :to="'/admin/contacts/' + item.id"
-            class="text-base font-bold text-link"
-          >
-            {{ `${item.firstname} ${item.lastname}`.trim() || item.email }}
-          </router-link>
-          <p
-            v-if="item.profile.description"
-            class="mt-1 whitespace-normal text-xs"
-          >
-            {{ item.profile.description }}
-          </p>
-        </template>
-        <template #tags="{ item }">
-          <span class="whitespace-normal">
-            <ContactTag
-              v-for="tag in item.profile.tags"
-              :key="tag"
-              :tag="tag"
-            />
-          </span>
-        </template>
-        <template #contribution="{ item }">
-          <span v-if="item.contributionAmount">
-            {{ n(item.contributionAmount, 'currency') }}/{{
-              item.contributionPeriod === ContributionPeriod.Monthly
-                ? t('common.month')
-                : t('common.year')
-            }}
-          </span>
-        </template>
-        <template #joined="{ value }">
-          {{ formatLocale(value, 'PPP') }}
-        </template>
-        <template #membershipStarts="{ item }">
-          {{ getMembershipStartDate(item) }}
-        </template>
-      </AppTable>
-      <AppPaginatedResult
-        v-model:page="currentPage"
-        v-model:page-size="currentPageSize"
-        :result="contactsTable"
-        keypath="contacts.showingOf"
-        class="mt-4"
-      />
+        {{ t('advancedSearch.button') }}
+        <font-awesome-icon
+          class="ml-2"
+          :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
+        />
+        <div
+          class="absolute -left-[1px] top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-[1px]"
+        />
+      </button>
     </div>
-  </div>
+    <AppSearch
+      v-model="currentRules"
+      :filter-groups="filterGroups"
+      :filter-items="filterItems"
+      :expanded="showAdvancedSearch"
+      :has-changed="hasUnsavedSegment"
+      @reset="currentRules = undefined"
+    />
+
+    <SaveSegment
+      v-if="hasUnsavedSegment && currentRules"
+      :segment="currentSegment"
+      :rules="currentRules"
+      @saved="handleSavedSegment"
+    />
+    <AppPaginatedResult
+      v-model:page="currentPage"
+      v-model:page-size="currentPageSize"
+      :result="contactsTable"
+      keypath="contacts.showingOf"
+      class="mt-4"
+    />
+    <AppTable
+      v-model:sort="currentSort"
+      :headers="headers"
+      :items="contactsTable?.items || null"
+      class="mt-2 w-full whitespace-nowrap"
+    >
+      <template #empty>
+        <p>
+          {{
+            currentRules || currentSearch
+              ? t('contacts.noResults')
+              : t('contacts.noContacts')
+          }}
+        </p>
+      </template>
+      <template #firstname="{ item }">
+        <router-link
+          :to="'/admin/contacts/' + item.id"
+          class="text-base font-bold text-link"
+        >
+          {{ `${item.firstname} ${item.lastname}`.trim() || item.email }}
+        </router-link>
+        <p
+          v-if="item.profile.description"
+          class="mt-1 whitespace-normal text-xs"
+        >
+          {{ item.profile.description }}
+        </p>
+      </template>
+      <template #tags="{ item }">
+        <span class="whitespace-normal">
+          <ContactTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
+        </span>
+      </template>
+      <template #contribution="{ item }">
+        <span v-if="item.contributionAmount">
+          {{ n(item.contributionAmount, 'currency') }}/{{
+            item.contributionPeriod === ContributionPeriod.Monthly
+              ? t('common.month')
+              : t('common.year')
+          }}
+        </span>
+      </template>
+      <template #joined="{ value }">
+        {{ formatLocale(value, 'PPP') }}
+      </template>
+      <template #membershipStarts="{ item }">
+        {{ getMembershipStartDate(item) }}
+      </template>
+    </AppTable>
+    <AppPaginatedResult
+      v-model:page="currentPage"
+      v-model:page-size="currentPageSize"
+      :result="contactsTable"
+      keypath="contacts.showingOf"
+      class="mt-4"
+    />
+  </AppFilterGrid>
 </template>
 
 <script lang="ts" setup>
@@ -163,6 +151,7 @@ import {
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 import SaveSegment from '../../../components/pages/admin/contacts/SaveSegment.vue';
+import AppFilterGrid from '../../../components/AppFilterGrid.vue';
 
 const { t, n } = useI18n();
 

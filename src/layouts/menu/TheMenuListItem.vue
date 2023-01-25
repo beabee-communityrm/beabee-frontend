@@ -1,11 +1,11 @@
 <template>
   <div
-    class="my-0.5 flex w-auto items-center justify-start rounded px-1 py-2 font-semibold md:w-12 md:justify-center md:overflow-x-hidden xl:w-auto xl:justify-start xl:overflow-auto"
+    class="my-0.5 flex w-auto items-center justify-start rounded px-1 py-2 font-semibold md:w-12 md:justify-center md:overflow-x-hidden lg:w-auto lg:justify-start lg:overflow-auto"
     :class="itemClass"
   >
     <font-awesome-icon class="fa-fw inline-block h-4" :icon="icon" size="lg" />
 
-    <span class="ml-2 md:hidden xl:inline-block">{{ title }}</span>
+    <span class="ml-2 md:hidden lg:inline-block">{{ title }}</span>
   </div>
 </template>
 

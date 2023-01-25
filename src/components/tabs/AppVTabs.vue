@@ -1,5 +1,5 @@
 <template>
-  <ul class="mr-5 flex flex-col">
+  <ul class="flex flex-col">
     <li v-for="item in items" :key="item.id">
       <AppVTabsItem
         :item="item"

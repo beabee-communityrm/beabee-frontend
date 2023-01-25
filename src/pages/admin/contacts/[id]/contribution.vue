@@ -6,11 +6,9 @@ meta:
 </route>
 
 <template>
-  <div class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
-    <div>
-      <AppHeading class="mb-2">
-        {{ t('contribution.billing') }}
-      </AppHeading>
+  <App2ColGrid>
+    <template #col1>
+      <AppHeading>{{ t('contribution.billing') }}</AppHeading>
       <template v-if="contribution">
         <AppForm
           v-if="
@@ -27,11 +25,11 @@ meta:
           {{ t('contacts.editNotice') }}
         </MessageBox>
       </template>
-    </div>
-    <div>
+    </template>
+    <template #col2>
       <ContactPaymentsHistory :id="contact.id" />
-    </div>
-  </div>
+    </template>
+  </App2ColGrid>
 </template>
 <script lang="ts" setup>
 import { ContributionType } from '@beabee/beabee-common';
@@ -48,6 +46,7 @@ import { UpdateContribution } from '../../../../components/contact/contact.inter
 import AppForm from '../../../../components/forms/AppForm.vue';
 import ContactContributionFields from '../../../../components/contact/ContactContributionFields.vue';
 import MessageBox from '../../../../components/MessageBox.vue';
+import App2ColGrid from '../../../../components/App2ColGrid.vue';
 
 const { t } = useI18n();
 

@@ -24,12 +24,12 @@
   </div>
 
   <div
-    class="absolute bottom-0 z-40 flex w-menu flex-none -translate-x-full transform flex-col bg-white transition-transform transition-width md:static md:w-16 md:transform-none xl:w-menu"
+    class="absolute bottom-0 z-40 flex w-menu flex-none -translate-x-full transform flex-col bg-white transition-transform transition-width md:static md:w-16 md:transform-none lg:w-menu"
     :class="{ 'top-[68px] translate-x-0': isMenuVisible }"
   >
     <div class="my-10 hidden text-center md:block">
       <!-- logo on bigger screens -->
-      <AppLogo class="w-12 md:inline-block xl:w-20" />
+      <AppLogo class="w-12 md:inline-block lg:w-20" />
     </div>
 
     <TheMenuList v-if="currentUser" />

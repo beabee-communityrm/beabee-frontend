@@ -42,7 +42,8 @@ module.exports = {
       },
       screens: {
         xs: '475px',
-        xl: '1400px',
+        lg: '1264px' /* Offset by 240px for menu */,
+        xl: '1640px',
       },
       padding: {
         4.5: '1.125rem',

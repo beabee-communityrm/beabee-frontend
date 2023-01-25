@@ -6,8 +6,8 @@ meta:
 </route>
 
 <template>
-  <div class="grid md:grid-cols-2 md:gap-12 lg:grid-cols-3">
-    <div>
+  <App2ColGrid>
+    <template #col1>
       <AppForm
         :button-text="t('actions.update')"
         :success-text="t('form.saved')"
@@ -48,7 +48,7 @@ meta:
         :success-text="t('form.saved')"
         @submit="handleSaveShare"
       >
-        <AppHeading class="mb-4 md:mb-2">
+        <AppHeading>
           {{ t('adminSettings.general.socialSharing.title') }}
         </AppHeading>
         <p class="mb-4 text-sm text-body-80">
@@ -84,15 +84,15 @@ meta:
           />
         </div>
       </AppForm>
-    </div>
-    <div>
+    </template>
+    <template #col2>
       <div class="my-8 border-b border-b-primary-40 md:hidden" />
       <AppForm
         :button-text="t('actions.update')"
         :success-text="t('form.saved')"
         @submit="handleSaveFooter"
       >
-        <AppHeading class="mb-4 md:mb-2">
+        <AppHeading>
           {{ t('adminSettings.general.footer.title') }}
         </AppHeading>
         <p class="mb-4 text-sm text-body-80">
@@ -176,8 +176,8 @@ meta:
           </AppButton>
         </div>
       </AppForm>
-    </div>
-  </div>
+    </template>
+  </App2ColGrid>
 </template>
 
 <script lang="ts" setup>
@@ -194,6 +194,7 @@ import { generalContent as storeGeneralContent } from '../../../store';
 import AppHeading from '../../../components/AppHeading.vue';
 import axios from '../../../lib/axios';
 import AppForm from '../../../components/forms/AppForm.vue';
+import App2ColGrid from '../../../components/App2ColGrid.vue';
 
 const { t } = useI18n();
 

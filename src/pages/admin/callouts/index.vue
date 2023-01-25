@@ -6,9 +6,6 @@ meta:
 </route>
 <template>
   <PageTitle :title="t('menu.callouts')" border>
-    <div class="block flex-1 lg:hidden">
-      <AppSelect v-model="currentStatus" :items="statusItems" />
-    </div>
     <div class="flex-0 ml-3">
       <AppButton to="/admin/callouts/new">{{
         t('calloutsAdmin.addCallout')
@@ -23,61 +20,56 @@ meta:
     {{ t('calloutAdmin.deleted') }}
   </AppAlert>
 
-  <div class="md:flex">
-    <div class="hidden flex-none basis-[220px] lg:block">
-      <AppVTabs v-model="currentStatus" :items="statusItems" />
-    </div>
-    <div class="flex-auto">
-      <div class="flex">
-        <AppSearchInput
-          v-model="currentSearch"
-          :placeholder="t('callouts.search')"
-        />
-      </div>
-      <AppTable
-        v-model:sort="currentSort"
-        :headers="headers"
-        :items="calloutsTable?.items || null"
-        class="mt-2 w-full"
-      >
-        <template #header-hidden><font-awesome-icon icon="eye" /></template>
-        <template #status="{ value }">
-          <AppItemStatus :status="value" />
-        </template>
-        <template #title="{ item, value }">
-          <router-link
-            :to="'/admin/callouts/view/' + item.slug"
-            class="text-base font-bold text-link"
-          >
-            {{ value }}
-          </router-link>
-        </template>
-        <template #hidden="{ value }">
-          <font-awesome-icon
-            :class="value ? 'text-body-80' : 'text-body-60'"
-            :icon="value ? 'eye-slash' : 'eye'"
-          />
-        </template>
-        <template #starts="{ value }">
-          <span class="whitespace-nowrap">{{
-            value && formatLocale(value, 'PP')
-          }}</span>
-        </template>
-        <template #expires="{ value }">
-          <span class="whitespace-nowrap">{{
-            value && formatLocale(value, 'PP')
-          }}</span>
-        </template>
-      </AppTable>
-      <AppPaginatedResult
-        v-model:page="currentPage"
-        v-model:page-size="currentPageSize"
-        :result="calloutsTable"
-        keypath="callouts.showingOf"
-        class="mt-4"
+  <AppFilterGrid v-model="currentStatus" :items="statusItems">
+    <div class="flex">
+      <AppSearchInput
+        v-model="currentSearch"
+        :placeholder="t('callouts.search')"
       />
     </div>
-  </div>
+    <AppTable
+      v-model:sort="currentSort"
+      :headers="headers"
+      :items="calloutsTable?.items || null"
+      class="mt-2 w-full"
+    >
+      <template #header-hidden><font-awesome-icon icon="eye" /></template>
+      <template #status="{ value }">
+        <AppItemStatus :status="value" />
+      </template>
+      <template #title="{ item, value }">
+        <router-link
+          :to="'/admin/callouts/view/' + item.slug"
+          class="text-base font-bold text-link"
+        >
+          {{ value }}
+        </router-link>
+      </template>
+      <template #hidden="{ value }">
+        <font-awesome-icon
+          :class="value ? 'text-body-80' : 'text-body-60'"
+          :icon="value ? 'eye-slash' : 'eye'"
+        />
+      </template>
+      <template #starts="{ value }">
+        <span class="whitespace-nowrap">{{
+          value && formatLocale(value, 'PP')
+        }}</span>
+      </template>
+      <template #expires="{ value }">
+        <span class="whitespace-nowrap">{{
+          value && formatLocale(value, 'PP')
+        }}</span>
+      </template>
+    </AppTable>
+    <AppPaginatedResult
+      v-model:page="currentPage"
+      v-model:page-size="currentPageSize"
+      :result="calloutsTable"
+      keypath="callouts.showingOf"
+      class="mt-4"
+    />
+  </AppFilterGrid>
 </template>
 
 <script lang="ts" setup>
@@ -102,6 +94,7 @@ import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
 import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
+import AppFilterGrid from '../../../components/AppFilterGrid.vue';
 
 const { t } = useI18n();
 const route = useRoute();

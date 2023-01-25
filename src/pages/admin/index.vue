@@ -10,10 +10,10 @@ meta:
   <p class="mb-8">
     {{ t('adminDashboard.welcomeBack', { firstName: currentUser?.firstname }) }}
   </p>
-  <div class="flex flex-col gap-8 lg:flex-row">
-    <div class="flex-1 basis-5/12">
+  <div class="grid grid-cols-12 gap-6">
+    <div class="col-span-12 md:col-span-5 xl:col-span-5">
       <AppHeading>{{ t('adminDashboard.numbers.title') }}</AppHeading>
-      <div v-if="stats" class="mt-4 mb-8 flex gap-4">
+      <div v-if="stats" class="mb-6 flex gap-4">
         <KeyStat
           :label="t('adminDashboard.numbers.revenue')"
           :stat="
@@ -36,28 +36,28 @@ meta:
         />
       </div>
       <AppHeading>{{ t('adminDashboard.mostRecentMembers.title') }}</AppHeading>
-      <div class="mt-1 mb-5">
-        <div
+      <ul>
+        <li
           v-for="member in recentMembers"
           :key="member.id"
-          class="my-3 flex justify-between gap-4"
+          class="mb-3 flex gap-4"
         >
           <router-link :to="'/admin/contacts/' + member.id" class="text-link">
             {{
               `${member.firstname} ${member.lastname}`.trim() || member.email
             }}
           </router-link>
-          <span class="text-sm font-semibold text-body-60">
+          <span class="flex-1 text-right text-sm font-semibold text-body-60">
             {{
               t('common.timeAgo', {
                 time: formatDistanceLocale(new Date(), member.joined),
               })
             }}
           </span>
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
-    <div class="flex-1 basis-7/12">
+    <div class="col-span-12 md:col-span-7 xl:col-span-7">
       <AppHeading>{{ t('adminDashboard.latestCallout.title') }}</AppHeading>
       <div class="relative mt-4 mb-8 block rounded bg-white p-4">
         <div v-if="latestCallout">
@@ -84,7 +84,7 @@ meta:
       </a>
     </div>
   </div>
-  <div class="mt-8 gap-12 lg:flex">
+  <div class="mt-8 gap-6 lg:flex">
     <HintBox class="content-i18n" :hint="t('adminDashboard.hint1')" />
     <HintBox class="content-i18n" :hint="t('adminDashboard.hint2')" />
     <HintBox class="content-i18n" :hint="t('adminDashboard.hint3')" />

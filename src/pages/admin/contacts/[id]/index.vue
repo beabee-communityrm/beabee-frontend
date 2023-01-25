@@ -6,8 +6,8 @@ meta:
 </route>
 
 <template>
-  <div v-if="contact" class="grid gap-8 lg:grid-cols-2">
-    <div>
+  <App2ColGrid v-if="contact">
+    <template #col1>
       <AppHeading>{{ t('contactOverview.overview') }}</AppHeading>
       <AppInfoList>
         <AppInfoListItem
@@ -21,8 +21,54 @@ meta:
           "
         />
       </AppInfoList>
-    </div>
-    <div>
+
+      <AppHeading class="mt-6">{{
+        t('contactOverview.contribution')
+      }}</AppHeading>
+      <AppInfoList>
+        <AppInfoListItem
+          :name="t('contacts.data.amount')"
+          :value="
+            contact.contributionAmount
+              ? n(contact.contributionAmount, 'currency')
+              : '–'
+          "
+        />
+        <AppInfoListItem
+          :name="t('contacts.data.period')"
+          :value="contact.contributionPeriod"
+        />
+        <AppInfoListItem
+          v-if="contact.contribution.type === ContributionType.Automatic"
+          :name="t('contacts.data.payingFee')"
+          :value="
+            contact.contribution.payFee ? t('common.yes') : t('common.no')
+          "
+        />
+        <AppInfoListItem
+          :name="t('contactOverview.contributionType')"
+          :value="contact.contribution.type"
+        />
+      </AppInfoList>
+
+      <AppHeading class="mt-6">
+        {{ t('contactOverview.roles') }}
+      </AppHeading>
+      <div class="relative">
+        <RoleEditor
+          :roles="contact.roles"
+          @delete="handleDeleteRole"
+          @update="handleUpdateRole"
+        />
+        <div
+          v-if="changingRoles"
+          class="absolute inset-0 flex items-center justify-center bg-primary-5/50"
+        >
+          <font-awesome-icon :icon="['fas', 'circle-notch']" spin />
+        </div>
+      </div>
+    </template>
+    <template #col2>
       <AppHeading>{{ t('contactOverview.information') }}</AppHeading>
       <AppInfoList>
         <AppInfoListItem
@@ -52,40 +98,10 @@ meta:
           :value="contact.profile.newsletterGroups.join(', ')"
         />
       </AppInfoList>
-    </div>
 
-    <div>
-      <AppHeading>{{ t('contactOverview.contribution') }}</AppHeading>
-      <AppInfoList>
-        <AppInfoListItem
-          :name="t('contacts.data.amount')"
-          :value="
-            contact.contributionAmount
-              ? n(contact.contributionAmount, 'currency')
-              : '–'
-          "
-        />
-        <AppInfoListItem
-          :name="t('contacts.data.period')"
-          :value="contact.contributionPeriod"
-        />
-        <AppInfoListItem
-          v-if="contact.contribution.type === ContributionType.Automatic"
-          :name="t('contacts.data.payingFee')"
-          :value="
-            contact.contribution.payFee ? t('common.yes') : t('common.no')
-          "
-        />
-        <AppInfoListItem
-          :name="t('contactOverview.contributionType')"
-          :value="contact.contribution.type"
-        />
-      </AppInfoList>
-    </div>
-    <div class="row-span-3 max-w-xl">
       <AppHeading>{{ t('contactOverview.about') }}</AppHeading>
       <div
-        class="mb-5 text-sm text-body-80"
+        class="mb-4 text-sm text-body-80"
         v-html="t('contactOverview.annotation.copy')"
       />
 
@@ -114,25 +130,7 @@ meta:
           />
         </div>
       </AppForm>
-    </div>
-
-    <div>
-      <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
-      <div class="relative mt-4">
-        <RoleEditor
-          :roles="contact.roles"
-          @delete="handleDeleteRole"
-          @update="handleUpdateRole"
-        />
-        <div
-          v-if="changingRoles"
-          class="absolute inset-0 flex items-center justify-center bg-primary-5/50"
-        >
-          <font-awesome-icon :icon="['fas', 'circle-notch']" spin />
-        </div>
-      </div>
-    </div>
-
+    </template>
     <div class="hidden">
       <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
       <p>{{ t('contactOverview.security.whatDoTheButtonsDo') }}</p>
@@ -149,7 +147,7 @@ meta:
         <AppInput readonly :value="securityLink" class="mt-2"></AppInput>
       </div>
     </div>
-  </div>
+  </App2ColGrid>
 </template>
 
 <script lang="ts" setup>
@@ -178,6 +176,7 @@ import { formatLocale } from '../../../../utils/dates/locale-date-formats';
 import { fetchContent } from '../../../../utils/api/content';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 import AppForm from '../../../../components/forms/AppForm.vue';
+import App2ColGrid from '../../../../components/App2ColGrid.vue';
 
 const { t, n } = useI18n();
 
