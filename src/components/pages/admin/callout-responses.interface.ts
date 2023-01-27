@@ -61,9 +61,5 @@ export const filterItems = computed<FilterItems<CalloutResponseFilterName>>(
       calloutResponseFilters.contact,
       t('calloutResponse.data.contact')
     ),
-    answers: withLabel(
-      calloutResponseFilters.answers,
-      t('calloutResponse.data.answers')
-    ),
   })
 );

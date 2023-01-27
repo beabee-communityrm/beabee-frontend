@@ -73,7 +73,7 @@ meta:
   </div>
 </template>
 <script lang="ts" setup>
-import { Paginated, RuleGroup } from '@beabee/beabee-common';
+import { flattenComponents, Paginated, RuleGroup } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
@@ -93,10 +93,7 @@ import {
   GetCalloutResponseDataWith,
 } from '../../../../../../utils/api/api.interface';
 import { fetchResponses } from '../../../../../../utils/api/callout';
-import {
-  convertComponentsToFilters,
-  flattenComponents,
-} from '../../../../../../utils/callouts';
+import { convertComponentsToFilters } from '../../../../../../utils/callouts';
 import { formatLocale } from '../../../../../../utils/dates/locale-date-formats';
 
 const props = defineProps<{

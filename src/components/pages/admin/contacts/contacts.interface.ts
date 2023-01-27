@@ -122,7 +122,7 @@ export const filterItems = computed<FilterItems<ContactFilterName>>(() => ({
   contributionMonthlyAmount: withLabel(
     contactFilters.contributionMonthlyAmount,
     t('contacts.data.contributionMonthlyAmount'),
-    generalContent.value.currencySymbol
+    { prefix: generalContent.value.currencySymbol }
   ),
   contributionPeriod: withLabel(
     contactFilters.contributionPeriod,

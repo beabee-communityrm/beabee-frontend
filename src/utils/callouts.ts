@@ -101,15 +101,6 @@ export function convertStepsToCallout(
   };
 }
 
-export function flattenComponents(
-  components: CalloutComponentSchema[]
-): CalloutComponentSchema[] {
-  return components.flatMap((component) => [
-    component,
-    ...flattenComponents(component.components || []),
-  ]);
-}
-
 function convertValuesToOptions(
   values: { value: string; label: string }[]
 ): { id: string; label: string }[] {

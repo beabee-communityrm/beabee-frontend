@@ -9,6 +9,7 @@ import {
   RuleOperator,
   RuleGroup,
   isRuleGroup,
+  ArrayFilterArgs,
 } from '@beabee/beabee-common';
 
 export interface RuleGroupWithEmpty {
@@ -26,42 +27,69 @@ export interface OtherFilterItem extends OtherFilterArgs {
   prefix?: string;
 }
 
-export interface EnumFilterItem extends Omit<EnumFilterArgs, 'options'> {
+export interface ArrayFilterItem<T extends readonly string[] | undefined>
+  extends Omit<ArrayFilterArgs<T>, 'options'> {
   label: string;
-  options: { id: string; label: string }[];
+  prefix?: string;
+  options?: { id: string; label: string }[];
 }
 
-export type FilterItem = OtherFilterItem | EnumFilterItem;
+export interface EnumFilterItem<T extends readonly string[]>
+  extends Omit<EnumFilterArgs<T>, 'options'> {
+  label: string;
+  options: { id: T[number]; label: string }[];
+}
+
+export type FilterItem =
+  | OtherFilterItem
+  | ArrayFilterItem<readonly string[] | undefined>
+  | EnumFilterItem<readonly string[]>;
 
 export type FilterItems<T extends string = string> = Record<T, FilterItem>;
+
+interface LabelOpts {
+  prefix: string;
+}
 
 export function withLabel<T extends readonly string[]>(
   args: EnumFilterArgs<T>,
   label: string,
-  optLabels: Record<T[number], string>
-): EnumFilterItem;
+  optionLabels: Record<T[number], string>
+): EnumFilterItem<T>;
+export function withLabel(
+  args: ArrayFilterArgs<undefined>,
+  label: string,
+  opts?: LabelOpts
+): ArrayFilterItem<undefined>;
+export function withLabel<T extends readonly string[]>(
+  args: ArrayFilterArgs<T>,
+  label: string,
+  optionLabels: Record<T[number], string>
+): ArrayFilterItem<T>;
 export function withLabel(
   args: OtherFilterArgs,
   label: string,
-  prefix?: string
+  opts?: LabelOpts
 ): OtherFilterItem;
 export function withLabel<T extends readonly string[]>(
-  args: EnumFilterArgs<T> | OtherFilterArgs,
+  args: EnumFilterArgs<T> | ArrayFilterArgs<T> | OtherFilterArgs,
   label: string,
-  extraArg?: Record<T[number], string> | string
+  extraArg?: Record<T[number], string> | LabelOpts
 ): FilterItem {
-  if (args.type === 'enum') {
-    const optLabels = extraArg as Record<T[number], string>;
+  if (args.type === 'enum' || (args.type === 'array' && args.options)) {
+    const optionLabels = extraArg as Record<T[number], string>;
     return {
       ...args,
       label,
-      options: args.options.map((id: T[number]) => ({
+      options: (args.options || []).map((id: T[number]) => ({
         id,
-        label: optLabels[id],
+        label: optionLabels[id],
       })),
     };
   } else {
-    return { ...args, label, ...(extraArg && { prefix: extraArg as string }) };
+    const args2 = args as OtherFilterArgs | ArrayFilterArgs<undefined>;
+    const opts = extraArg as LabelOpts | undefined;
+    return { ...args2, label, ...opts };
   }
 }
 
@@ -99,9 +127,6 @@ const ruleDefaultsByType: Record<
   contact: () => withDefault('contact', 'equal'),
   date: () => withDefault('date', 'equal'),
   array: () => withDefault('array', 'contains'),
-  custom: () => {
-    throw new Error("Custom filter types shouldn't be creatable");
-  },
 };
 
 export function createNewRule(field: string, type: FilterType): Rule {

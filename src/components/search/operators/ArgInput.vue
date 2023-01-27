@@ -1,7 +1,5 @@
 <template>
-  <b v-if="readonly"
-    >{{ item.type === 'enum' ? '' : item.prefix }}{{ readonlyValue }}</b
-  >
+  <b v-if="readonly">{{ prefix }}{{ readonlyValue }}</b>
   <AppRadioGroup
     v-else-if="item.type === 'boolean'"
     v-model="value"
@@ -13,25 +11,19 @@
     required
   />
   <AppSelect
-    v-else-if="item.type === 'enum'"
+    v-else-if="item.type === 'enum' || (item.type === 'array' && item.options)"
     v-model="value"
-    :items="item.options"
+    :items="item.options || []"
     required
-  />
-  <AppInput
-    v-else-if="item.type === 'array'"
-    v-model="value"
-    type="text"
-    :prefix="item.prefix"
-    required
-    hide-error-message
   />
   <DateInput v-else-if="item.type === 'date'" v-model="value" />
   <AppInput
-    v-else-if="item.type !== 'custom'"
+    v-else
     v-model="value"
-    :type="item.type === 'contact' ? 'text' : item.type"
-    :prefix="item.prefix"
+    :type="
+      item.type === 'contact' || item.type === 'array' ? 'text' : item.type
+    "
+    :prefix="prefix"
     required
     hide-error-message
   />
@@ -63,6 +55,10 @@ const value = computed({
   set: (modelValue) => emit('update:modelValue', modelValue),
 });
 
+const prefix = computed(() =>
+  'prefix' in props.item ? props.item.prefix : ''
+);
+
 const readonlyValue = computed(() => {
   switch (props.item.type) {
     case 'date': {
@@ -76,9 +72,10 @@ const readonlyValue = computed(() => {
     case 'boolean':
       return props.modelValue === true ? t('common.yes') : t('common.no');
 
+    case 'array':
     case 'enum':
       return (
-        props.item.options.find((opt) => opt.id === props.modelValue)?.label ||
+        props.item.options?.find((opt) => opt.id === props.modelValue)?.label ||
         props.modelValue
       );
 
