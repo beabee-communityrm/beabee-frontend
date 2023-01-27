@@ -1,4 +1,4 @@
-import { CalloutFormSchema } from '../../../utils/api/api.interface';
+import { CalloutFormSchema } from '@beabee/beabee-common';
 
 export interface ContentStepProps {
   introText: string;

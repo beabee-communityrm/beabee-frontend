@@ -1,12 +1,8 @@
-import { ItemStatus } from '@beabee/beabee-common';
+import { CalloutComponentSchema, ItemStatus } from '@beabee/beabee-common';
 import { format } from 'date-fns';
 import { CalloutStepsProps } from '../components/pages/callouts/callouts.interface';
 import { FilterItem, FilterItems } from '../components/search/search.interface';
-import {
-  CalloutComponentSchema,
-  CreateCalloutData,
-  GetCalloutDataWith,
-} from './api/api.interface';
+import { CreateCalloutData, GetCalloutDataWith } from './api/api.interface';
 
 export function convertCalloutToSteps(
   callout?: GetCalloutDataWith<'form'>
