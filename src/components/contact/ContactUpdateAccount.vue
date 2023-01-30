@@ -5,26 +5,26 @@
     @submit="handleSubmit"
   >
     <AppHeading class="mt-6 mb-2">
-      {{ t('informationPage.contactInformation') }}
+      {{ t('accountPage.contactInformation') }}
     </AppHeading>
 
-    <ContactBasicInformationFields
-      v-model:email="information.emailAddress"
-      v-model:firstName="information.firstName"
-      v-model:lastName="information.lastName"
+    <ContactBasicFields
+      v-model:email="data.emailAddress"
+      v-model:firstName="data.firstName"
+      v-model:lastName="data.lastName"
       :optional-names="isAdmin"
     />
 
     <AppHeading class="mt-6 mb-2">
-      {{ t('informationPage.deliveryAddress') }}
+      {{ t('accountPage.deliveryAddress') }}
     </AppHeading>
 
-    <template v-if="infoContent.showMailOptIn">
+    <template v-if="accountContent.showMailOptIn">
       <AppRadioGroup
         v-if="isAdmin"
-        v-model="information.deliveryOptIn"
+        v-model="data.deliveryOptIn"
         name="deliveryOptIn"
-        :label="t('contactInformation.deliveryOptIn')"
+        :label="t('accountPage.deliveryOptIn')"
         :options="[
           [true, t('common.yes')],
           [false, t('common.no')],
@@ -34,17 +34,17 @@
       />
       <ContactMailOptIn
         v-else
-        v-model="information.deliveryOptIn"
-        :content="infoContent"
+        v-model="data.deliveryOptIn"
+        :content="accountContent"
       />
     </template>
 
     <AppAddress
-      v-model:line1="information.addressLine1"
-      v-model:line2="information.addressLine2"
-      v-model:postCode="information.postCode"
-      v-model:cityOrTown="information.cityOrTown"
-      :required="information.deliveryOptIn"
+      v-model:line1="data.addressLine1"
+      v-model:line2="data.addressLine2"
+      v-model:postCode="data.postCode"
+      v-model:cityOrTown="data.cityOrTown"
+      :required="data.deliveryOptIn"
     />
   </AppForm>
 </template>
@@ -52,7 +52,7 @@
 import { computed, reactive, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppAddress from '../AppAddress.vue';
-import ContactBasicInformationFields from './ContactBasicInformationFields.vue';
+import ContactBasicFields from './ContactBasicFields.vue';
 import ContactMailOptIn from './ContactMailOptIn.vue';
 import AppHeading from '../AppHeading.vue';
 import { fetchContent } from '../../utils/api/content';
@@ -68,9 +68,9 @@ const { t } = useI18n();
 
 const isAdmin = computed(() => props.id !== 'me');
 
-const infoContent = await fetchContent('join/setup');
+const accountContent = await fetchContent('join/setup');
 
-const information = reactive({
+const data = reactive({
   emailAddress: '',
   firstName: '',
   lastName: '',
@@ -86,34 +86,34 @@ watch(
   async (id) => {
     const contact = await fetchContact(id, ['profile']);
 
-    information.emailAddress = contact.email;
-    information.firstName = contact.firstname;
-    information.lastName = contact.lastname;
-    information.deliveryOptIn = contact.profile.deliveryOptIn;
+    data.emailAddress = contact.email;
+    data.firstName = contact.firstname;
+    data.lastName = contact.lastname;
+    data.deliveryOptIn = contact.profile.deliveryOptIn;
 
     const address = contact.profile.deliveryAddress;
-    information.addressLine1 = address?.line1 || '';
-    information.addressLine2 = address?.line2 || '';
-    information.cityOrTown = address?.city || '';
-    information.postCode = address?.postcode || '';
+    data.addressLine1 = address?.line1 || '';
+    data.addressLine2 = address?.line2 || '';
+    data.cityOrTown = address?.city || '';
+    data.postCode = address?.postcode || '';
   },
   { immediate: true }
 );
 
 async function handleSubmit() {
   await updateContact(props.id, {
-    email: information.emailAddress,
-    firstname: information.firstName,
-    lastname: information.lastName,
+    email: data.emailAddress,
+    firstname: data.firstName,
+    lastname: data.lastName,
     profile: {
-      ...(infoContent.showMailOptIn && {
-        deliveryOptIn: information.deliveryOptIn,
+      ...(accountContent.showMailOptIn && {
+        deliveryOptIn: data.deliveryOptIn,
       }),
       deliveryAddress: {
-        line1: information.addressLine1,
-        line2: information.addressLine2,
-        city: information.cityOrTown,
-        postcode: information.postCode,
+        line1: data.addressLine1,
+        line2: data.addressLine2,
+        city: data.cityOrTown,
+        postcode: data.postCode,
       },
     },
   });

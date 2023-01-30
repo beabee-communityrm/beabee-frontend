@@ -1,4 +1,14 @@
 {
+  "accountPage": {
+    "changePassword": "Passwort ändern",
+    "contactInformation": "Kontaktdaten",
+    "deliveryAddress": "Adresse",
+    "deliveryOptIn": "Postsendung",
+    "loginDetail": "Anmeldedaten",
+    "savedPassword": "Das neue Passwort wurde gespeichert. ",
+    "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt.",
+    "title": "Account"
+  },
   "actions": {
     "add": "Hinzufügen",
     "back": "Zurück",
@@ -30,6 +40,18 @@
     },
     "subscribeToNewsletter": "Mit Newsletter-Tool synchronisieren",
     "title": "Kontakt hinzufügen"
+  },
+  "addNotice": {
+    "form": {
+      "buttonText": "Button Text",
+      "expirationDateAndTime": "Ablaufdatum und -zeit",
+      "name": "Name",
+      "startDateAndTime": "Anfangsdatum und -zeit",
+      "text": "Text",
+      "url": "URL"
+    },
+    "noticeSaved": "Hinweis gespeichert",
+    "title": "Hinweis hinzufügen"
   },
   "adminDashboard": {
     "hint1": "<p>Das beabee-Handbuch für Community-Journalismus <a href=\"https://beabee.io/neu-handbuch-community-journalismus/\">„Lust auf Lokal” ist erschienen</a>. Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
@@ -343,11 +365,9 @@
     "year": "Jahr | Jahren",
     "yes": "Ja"
   },
-  "contactInformation": {
-    "deliveryOptIn": "Postsendung"
-  },
   "contactOverview": {
     "about": "Über",
+    "account": "Account",
     "annotation": {
       "copy": "<p>Alle hier eingegebenen Information sind <strong>nur für Administratoren sichtbar</strong>.\nNutzer bekommen das nicht angezeigt.</p>\n"
     },
@@ -617,6 +637,7 @@
     "title": "Bearbeiten: {title}",
     "warning": "Vorsicht! Du bearbeitest einen veröffentlichten Callout. Wenn du Umfrageelemente bearbeitest riskierst Du, Antworten unbrauchbar zu machen."
   },
+  "editNotice": {},
   "footer": {
     "contactUs": "Kontaktiere uns unter",
     "contacts": "Kontakte",
@@ -738,15 +759,6 @@
     "welcome": "Herzlich willkommen {firstName}!",
     "yourProfile": "Dein Profil"
   },
-  "informationPage": {
-    "changePassword": "Passwort ändern",
-    "contactInformation": "Kontaktdaten",
-    "deliveryAddress": "Adresse",
-    "loginDetail": "Anmeldedaten",
-    "savedPassword": "Das neue Passwort wurde gespeichert. ",
-    "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt.",
-    "title": "Persönliche Informationen"
-  },
   "join": {
     "absorbFeeForce": "Bei einem Beitrag von {amount}, musst du die {fee} Transaktionskosten übernehmen.",
     "absorbFeeOptIn": "Ja, ich übernehme die {fee} Transaktionskosten.",
@@ -845,10 +857,12 @@
     "title": "Membership Builder"
   },
   "menu": {
+    "account": "Account",
     "admin": "Administration",
     "adminSettings": "Einstellungen",
     "callouts": "Callouts",
     "community": "Community",
+    "contacts": "Kontakte",
     "contribution": "Beitrag",
     "dashboard": "Dashboard",
     "home": "Home",
@@ -857,12 +871,16 @@
     "membershipBuilder": "Membership Builder",
     "notices": "Hinweise",
     "settings": "Einstellungen",
-    "yourInformation": "Deine Informationen",
     "yourProfile": "Dein Profil"
   },
   "notFound": {
     "goBack": "Zurück zum Dashboard",
     "text": "Diese Seite existiert nicht. Wenn Du glaubst, dass das ein Fehler ist kontaktiere {support}."
+  },
+  "noticeAdminOverview": {
+    "actions": {
+      "confirmDelete": {}
+    }
   },
   "notices": {
     "addNotice": "Hinweis hinzufügen",

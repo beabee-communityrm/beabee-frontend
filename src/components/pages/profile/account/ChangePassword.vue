@@ -1,10 +1,10 @@
 <template>
   <AppHeading class="mb-3">
-    {{ t('informationPage.loginDetail') }}
+    {{ t('accountPage.loginDetail') }}
   </AppHeading>
 
   <MessageBox v-if="saved" class="mb-4" type="success">{{
-    t('informationPage.savedPassword')
+    t('accountPage.savedPassword')
   }}</MessageBox>
 
   <AppButton
@@ -16,7 +16,7 @@
       saved = false;
     "
   >
-    {{ t('informationPage.changePassword') }}
+    {{ t('accountPage.changePassword') }}
   </AppButton>
 
   <AppForm

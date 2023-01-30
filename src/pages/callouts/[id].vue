@@ -115,7 +115,7 @@ import { useI18n } from 'vue-i18n';
 import {
   CalloutResponseAnswers,
   GetCalloutDataWith,
-  GetCalloutResponseData,
+  GetCalloutResponseDataWith,
 } from '../../utils/api/api.interface';
 import {
   createResponse,
@@ -144,7 +144,8 @@ const route = useRoute();
 const isPreview = computed(() => route.query.preview === null);
 
 const callout = ref<GetCalloutDataWith<'form'>>();
-const currentUserResponses = ref<Paginated<GetCalloutResponseData>>();
+const currentUserResponses =
+  ref<Paginated<GetCalloutResponseDataWith<'answers'>>>();
 
 const guestName = ref('');
 const guestEmail = ref('');
@@ -251,14 +252,18 @@ onBeforeMount(async () => {
   callout.value = await fetchCallout(props.id, ['form']);
 
   currentUserResponses.value = currentUser.value
-    ? await fetchResponses(props.id, {
-        rules: {
-          condition: 'AND',
-          rules: [{ field: 'contact', operator: 'equal', value: ['me'] }],
+    ? await fetchResponses(
+        props.id,
+        {
+          rules: {
+            condition: 'AND',
+            rules: [{ field: 'contact', operator: 'equal', value: ['me'] }],
+          },
+          sort: 'createdAt',
+          order: 'DESC',
         },
-        sort: 'createdAt',
-        order: 'DESC',
-      })
+        ['answers']
+      )
     : { total: 0, count: 0, offset: 0, items: [] };
 });
 </script>

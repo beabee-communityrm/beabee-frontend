@@ -4,14 +4,16 @@ import axios from '../../lib/axios';
 import {
   GetCalloutsQuery,
   Serial,
-  GetCalloutResponseData,
   GetCalloutResponsesQuery,
   CreateCalloutResponseData,
   CreateCalloutData,
   GetCalloutWith,
   GetCalloutDataWith,
   GetCalloutData,
+  GetCalloutResponseWith,
+  GetCalloutResponseDataWith,
 } from './api.interface';
+import { deserializeContact } from './contact';
 
 // TODO: how to make this type safe?
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,14 +25,18 @@ function deserializeCallout(callout: any): any {
   };
 }
 
-export async function fetchCallouts(
-  query: GetCalloutsQuery
-): Promise<Paginated<GetCalloutData>>;
-export async function fetchCallouts<With extends GetCalloutWith>(
-  query: GetCalloutsQuery,
-  _with: readonly With[]
-): Promise<Paginated<GetCalloutDataWith<With>>>;
-export async function fetchCallouts<With extends GetCalloutWith>(
+// TODO: how to make this type safe?
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function deserializeResponse(response: any): any {
+  return {
+    ...response,
+    createdAt: deserializeDate(response.createdAt),
+    updatedAt: deserializeDate(response.updatedAt),
+    ...(response.contact && { contact: deserializeContact(response.contact) }),
+  };
+}
+
+export async function fetchCallouts<With extends GetCalloutWith = void>(
   query?: GetCalloutsQuery,
   _with?: readonly With[]
 ): Promise<Paginated<GetCalloutDataWith<With>>> {
@@ -44,12 +50,7 @@ export async function fetchCallouts<With extends GetCalloutWith>(
   };
 }
 
-export async function fetchCallout(id: string): Promise<GetCalloutData>;
-export async function fetchCallout<With extends GetCalloutWith>(
-  id: string,
-  _with: readonly With[]
-): Promise<GetCalloutDataWith<With>>;
-export async function fetchCallout<With extends GetCalloutWith>(
+export async function fetchCallout<With extends GetCalloutWith = void>(
   id: string,
   _with?: readonly With[]
 ): Promise<GetCalloutDataWith<With>> {
@@ -86,21 +87,19 @@ export async function deleteCallout(slug: string): Promise<void> {
   await axios.delete('/callout/' + slug);
 }
 
-export async function fetchResponses(
-  id: string,
-  query?: GetCalloutResponsesQuery
-): Promise<Paginated<GetCalloutResponseData>> {
-  const { data } = await axios.get<Paginated<Serial<GetCalloutResponseData>>>(
-    `/callout/${id}/responses`,
-    { params: query }
-  );
+export async function fetchResponses<
+  With extends GetCalloutResponseWith = void
+>(
+  slug: string,
+  query?: GetCalloutResponsesQuery,
+  _with?: readonly With[]
+): Promise<Paginated<GetCalloutResponseDataWith<With>>> {
+  const { data } = await axios.get<
+    Paginated<Serial<GetCalloutResponseDataWith<With>>>
+  >(`/callout/${slug}/responses`, { params: { with: _with, ...query } });
   return {
     ...data,
-    items: data.items.map((item) => ({
-      ...item,
-      createdAt: deserializeDate(item.createdAt),
-      updatedAt: deserializeDate(item.updatedAt),
-    })),
+    items: data.items.map(deserializeResponse),
   };
 }
 

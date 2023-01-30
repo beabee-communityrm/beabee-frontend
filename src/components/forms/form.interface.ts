@@ -1,5 +1,5 @@
 export interface SelectItem {
-  id: string;
+  id: string | number;
   label: string;
   count?: string;
 }

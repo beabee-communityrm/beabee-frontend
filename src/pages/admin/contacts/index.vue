@@ -1,12 +1,12 @@
 <route lang="yaml">
 name: adminContacts
 meta:
-  pageTitle: menu.community
+  pageTitle: menu.contacts
   role: admin
 </route>
 
 <template>
-  <PageTitle :title="t('menu.community')" border>
+  <PageTitle :title="t('menu.contacts')" border>
     <div class="flex-1 md:hidden">
       <AppSelect v-model="currentSegmentId" :items="segmentItems" />
     </div>
@@ -52,21 +52,20 @@ meta:
         :has-changed="hasUnsavedSegment"
         @reset="currentRules = undefined"
       />
-      <div class="mt-4 flex items-center">
-        <SaveSegment
-          v-if="hasUnsavedSegment && currentRules"
-          :segment="currentSegment"
-          :rules="currentRules"
-          @saved="handleSavedSegment"
-        />
-        <AppPaginatedResult
-          v-model:page="currentPage"
-          v-model:page-size="currentPageSize"
-          :result="contactsTable"
-          keypath="contacts.showingOf"
-          class="ml-auto"
-        />
-      </div>
+
+      <SaveSegment
+        v-if="hasUnsavedSegment && currentRules"
+        :segment="currentSegment"
+        :rules="currentRules"
+        @saved="handleSavedSegment"
+      />
+      <AppPaginatedResult
+        v-model:page="currentPage"
+        v-model:page-size="currentPageSize"
+        :result="contactsTable"
+        keypath="contacts.showingOf"
+        class="mt-4"
+      />
       <AppTable
         v-model:sort="currentSort"
         :headers="headers"
