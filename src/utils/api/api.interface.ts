@@ -335,7 +335,7 @@ type CalloutResponseAnswer =
 export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
 
 export interface GetCalloutResponseData {
-  answers: CalloutResponseAnswers;
+  id: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -345,6 +345,13 @@ export interface CreateCalloutResponseData {
   guestEmail?: string;
   answers: CalloutResponseAnswers;
 }
+
+export type GetCalloutResponseWith = 'answers' | 'contact' | void;
+
+export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
+  GetCalloutResponseData &
+    ('answers' extends With ? { answers: CalloutResponseAnswers } : Noop) &
+    ('contact' extends With ? { contact: GetContactData } : Noop);
 
 export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 

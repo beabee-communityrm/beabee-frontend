@@ -4,14 +4,16 @@ import axios from '../../lib/axios';
 import {
   GetCalloutsQuery,
   Serial,
-  GetCalloutResponseData,
   GetCalloutResponsesQuery,
   CreateCalloutResponseData,
   CreateCalloutData,
   GetCalloutWith,
   GetCalloutDataWith,
   GetCalloutData,
+  GetCalloutResponseWith,
+  GetCalloutResponseDataWith,
 } from './api.interface';
+import { deserializeContact } from './contact';
 
 // TODO: how to make this type safe?
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -20,6 +22,17 @@ function deserializeCallout(callout: any): any {
     ...callout,
     starts: deserializeDate(callout.starts),
     expires: deserializeDate(callout.expires),
+  };
+}
+
+// TODO: how to make this type safe?
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function deserializeResponse(response: any): any {
+  return {
+    ...response,
+    createdAt: deserializeDate(response.createdAt),
+    updatedAt: deserializeDate(response.updatedAt),
+    ...(response.contact && { contact: deserializeContact(response.contact) }),
   };
 }
 
@@ -74,21 +87,19 @@ export async function deleteCallout(slug: string): Promise<void> {
   await axios.delete('/callout/' + slug);
 }
 
-export async function fetchResponses(
-  id: string,
-  query?: GetCalloutResponsesQuery
-): Promise<Paginated<GetCalloutResponseData>> {
-  const { data } = await axios.get<Paginated<Serial<GetCalloutResponseData>>>(
-    `/callout/${id}/responses`,
-    { params: query }
-  );
+export async function fetchResponses<
+  With extends GetCalloutResponseWith = void
+>(
+  slug: string,
+  query?: GetCalloutResponsesQuery,
+  _with?: readonly With[]
+): Promise<Paginated<GetCalloutResponseDataWith<With>>> {
+  const { data } = await axios.get<
+    Paginated<Serial<GetCalloutResponseDataWith<With>>>
+  >(`/callout/${slug}/responses`, { params: { with: _with, ...query } });
   return {
     ...data,
-    items: data.items.map((item) => ({
-      ...item,
-      createdAt: deserializeDate(item.createdAt),
-      updatedAt: deserializeDate(item.updatedAt),
-    })),
+    items: data.items.map(deserializeResponse),
   };
 }
 
