@@ -340,6 +340,7 @@
     "newsletterStatus": {
       "cleaned": "Bereinigt",
       "none": "Kein Status",
+      "pending": "Pending",
       "subscribed": "Subscribed",
       "unsubscribed": "Unsubscribed"
     },
