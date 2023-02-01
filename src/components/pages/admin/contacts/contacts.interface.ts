@@ -96,6 +96,7 @@ export const filterItems = computed<FilterItems<ContactFilterName>>(() => ({
       [NewsletterStatus.Unsubscribed]: t(
         'common.newsletterStatus.unsubscribed'
       ),
+      [NewsletterStatus.Pending]: t('common.newsletterStatus.pending'),
       [NewsletterStatus.Cleaned]: t('common.newsletterStatus.cleaned'),
       [NewsletterStatus.None]: t('common.newsletterStatus.none'),
     }
