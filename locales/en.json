@@ -360,6 +360,7 @@
     "newsletterStatus": {
       "cleaned": "Cleaned",
       "none": "None",
+      "pending": "Pending",
       "subscribed": "Subscribed",
       "unsubscribed": "Unsubscribed"
     },
