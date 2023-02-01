@@ -6,30 +6,30 @@ meta:
 </route>
 <template>
   <div v-if="response" class="md:max-w-2xl">
-    <div class="relative mb-4 flex gap-2">
-      <AppButton
-        :disabled="!prevResponse"
-        :to="
-          prevResponse &&
-          `/admin/callouts/view/${callout.slug}/responses/${prevResponse.id}`
-        "
-        icon="caret-left"
-        size="xs"
-      >
-        {{ t('actions.previous') }}
-      </AppButton>
-      <AppButton
-        :disabled="!nextResponse"
-        :to="
-          nextResponse &&
-          `/admin/callouts/view/${callout.slug}/responses/${nextResponse.id}`
-        "
-        ricon="caret-right"
-        size="xs"
-      >
-        {{ t('actions.next') }}
-      </AppButton>
-      <div v-show="loadingPrevNext" class="absolute inset-0 bg-primary-5/30" />
+    <div class="mb-4 flex items-center justify-end gap-2 text-sm">
+      <span>Response x of x</span>
+      <AppButtonGroup>
+        <AppButton
+          type="button"
+          variant="primaryOutlined"
+          icon="caret-left"
+          :disabled="!prevResponse"
+          :to="
+            prevResponse &&
+            `/admin/callouts/view/${callout.slug}/responses/${prevResponse.id}`
+          "
+        />
+        <AppButton
+          type="button"
+          variant="primaryOutlined"
+          icon="caret-right"
+          :disabled="!nextResponse"
+          :to="
+            nextResponse &&
+            `/admin/callouts/view/${callout.slug}/responses/${nextResponse.id}`
+          "
+        />
+      </AppButtonGroup>
     </div>
     <AppHeading class="mb-4">
       {{ t('calloutResponsesPage.responseId', { id: response.id }) }}
@@ -77,6 +77,7 @@ import AppInfoList from '../../../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../../../../utils/dates/locale-date-formats';
 import AppButton from '../../../../../../components/forms/AppButton.vue';
+import AppButtonGroup from '../../../../../../components/forms/AppButtonGroup.vue';
 
 const props = defineProps<{
   rid: string;
@@ -88,15 +89,12 @@ const { t } = useI18n();
 const response = ref<GetCalloutResponseDataWith<'answers' | 'contact'>>();
 const prevResponse = ref<GetCalloutResponseData>();
 const nextResponse = ref<GetCalloutResponseData>();
-const loadingPrevNext = ref(false);
 
 watchEffect(async () => {
-  response.value = await fetchResponse(props.callout.slug, props.rid, [
+  const newResponse = await fetchResponse(props.callout.slug, props.rid, [
     'answers',
     'contact',
   ]);
-
-  loadingPrevNext.value = true;
 
   const olderResponses = await fetchResponses(props.callout.slug, {
     limit: 1,
@@ -108,14 +106,11 @@ watchEffect(async () => {
         {
           field: 'createdAt',
           operator: 'less',
-          value: [response.value.createdAt.toISOString()],
+          value: [newResponse.createdAt.toISOString()],
         },
       ],
     },
   });
-
-  prevResponse.value =
-    olderResponses.count > 0 ? olderResponses.items[0] : undefined;
 
   const newerResponses = await fetchResponses(props.callout.slug, {
     limit: 1,
@@ -127,15 +122,16 @@ watchEffect(async () => {
         {
           field: 'createdAt',
           operator: 'greater',
-          value: [response.value.createdAt.toISOString()],
+          value: [newResponse.createdAt.toISOString()],
         },
       ],
     },
   });
 
+  response.value = newResponse;
+  prevResponse.value =
+    olderResponses.count > 0 ? olderResponses.items[0] : undefined;
   nextResponse.value =
     newerResponses.count > 0 ? newerResponses.items[0] : undefined;
-
-  loadingPrevNext.value = false;
 });
 </script>
