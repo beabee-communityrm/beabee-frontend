@@ -95,16 +95,21 @@ const props = withDefaults(
     size: undefined,
     loading: false,
     icon: undefined,
-    ricon: undefined,
     is: 'button',
   }
 );
 
 const buttonClasses = computed(() => {
   return [
+    // Base styles
     'leading-tight inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative border',
+    // Styles for in a button group
+    'group-[]/btns:rounded-none group-[]/btns:last:rounded-r group-[]/btns:first:rounded-l group-[]/btns:-ml-px group-[]/btns:hover:z-10',
+    // Size styles
     props.size ? sizeClasses[props.size] : 'px-3 py-2.5',
+    // Variant styles
     variantClasses[props.variant][0],
+    // Disabled/enabled styles
     props.disabled
       ? 'cursor-not-allowed opacity-50'
       : 'cursor-pointer ' + variantClasses[props.variant][1],
