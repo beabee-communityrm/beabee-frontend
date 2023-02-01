@@ -17,8 +17,10 @@
     "continue": "Weiter",
     "delete": "Löschen",
     "edit": "Bearbeiten",
+    "next": "Nächste",
     "participate": "Teilnehmen",
     "preview": "Vorschau",
+    "previous": "Vorherige",
     "publish": "Veröffentlichen",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
@@ -288,12 +290,21 @@
   },
   "calloutResponse": {
     "data": {
+      "callout": "Callout",
       "contact": "Kontakt",
-      "tags": "Tags"
+      "createdAt": "Beantwortet am",
+      "tags": "Tags",
+      "updatedAt": "Geändert am"
     },
-    "dataGroup": {}
+    "dataGroup": {
+      "response": "Antwort"
+    }
   },
-  "calloutResponsesPage": {},
+  "calloutResponsesPage": {
+    "response": "Antwort",
+    "responseId": "Antwort {id}",
+    "showingOf": "Antworten {start} bis {end} von {total} werden angezeigt"
+  },
   "callouts": {
     "archive": "Archiv",
     "data": {
@@ -339,6 +350,7 @@
     "goBack": "Zurück",
     "hello": "Hallo",
     "in": "in",
+    "itemsPerPage": "{items} Einträge pro Seite",
     "joined": "Mitglied seit",
     "loading": "Lädt...",
     "login": "Login",
@@ -380,6 +392,7 @@
     "annotation": {
       "copy": "<p>Alle hier eingegebenen Information sind <strong>nur für Administratoren sichtbar</strong>.\nNutzer bekommen das nicht angezeigt.</p>\n"
     },
+    "callouts": "Callouts",
     "contribution": "Beitrag",
     "contributionType": "Zahlungsart",
     "information": "Information",
@@ -646,7 +659,9 @@
     "title": "Bearbeiten: {title}",
     "warning": "Vorsicht! Du bearbeitest einen veröffentlichten Callout. Wenn du Umfrageelemente bearbeitest riskierst Du, Antworten unbrauchbar zu machen."
   },
-  "editNotice": {},
+  "editNotice": {
+    "title": "Hinweis bearbeiten"
+  },
   "footer": {
     "contactUs": "Kontaktiere uns unter",
     "contacts": "Kontakte",
@@ -888,8 +903,14 @@
   },
   "noticeAdminOverview": {
     "actions": {
-      "confirmDelete": {}
-    }
+      "confirmDelete": {
+        "actionNo": "Nein, Hinweis behalten",
+        "actionYes": "Ja, Hinweis löschen",
+        "text": "Bist du sicher, dass du diesen Hinweis löschen willst?",
+        "title": "Hinweis löschen?"
+      }
+    },
+    "summary": "Zusammenfassung"
   },
   "notices": {
     "addNotice": "Hinweis hinzufügen",
