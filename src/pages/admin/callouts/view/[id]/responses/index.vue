@@ -8,7 +8,7 @@ meta:
 <template>
   <div>
     <div class="flex gap-2">
-      <AppSelect :items="[]" />
+      <!-- <AppSelect :items="[]" /> -->
       <AppButton
         variant="primaryOutlined"
         size="sm"
