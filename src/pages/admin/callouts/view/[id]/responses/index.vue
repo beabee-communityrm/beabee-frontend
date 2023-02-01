@@ -60,7 +60,11 @@ meta:
         <span v-else>-</span>
       </template>
       <template #createdAt="{ value }">
-        {{ formatLocale(value, 'Pp') }}
+        {{
+          t('common.timeAgo', {
+            time: formatDistanceLocale(new Date(), value),
+          })
+        }}
       </template>
     </AppTable>
     <AppPaginatedResult
@@ -94,7 +98,7 @@ import {
 } from '../../../../../../utils/api/api.interface';
 import { fetchResponses } from '../../../../../../utils/api/callout';
 import { convertComponentsToFilters } from '../../../../../../utils/callouts';
-import { formatLocale } from '../../../../../../utils/dates/locale-date-formats';
+import { formatDistanceLocale } from '../../../../../../utils/dates/locale-date-formats';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
