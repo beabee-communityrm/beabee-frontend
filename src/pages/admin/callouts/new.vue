@@ -92,7 +92,12 @@ addBreadcrumb(
                   to: '/admin/callouts/edit/' + props.id,
                 },
               ]
-            : [{ title: t('actions.add'), to: '/admin/callouts/new' }]),
+            : [
+                {
+                  title: t('calloutsAdmin.addCallout'),
+                  to: '/admin/callouts/new',
+                },
+              ]),
         ]
       : []
   )

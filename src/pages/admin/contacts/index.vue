@@ -164,11 +164,18 @@ import {
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 import SaveSegment from '../../../components/pages/admin/contacts/SaveSegment.vue';
+import { addBreadcrumb } from '../../../store/breadcrumb';
 
 const { t, n } = useI18n();
 
 const route = useRoute();
 const router = useRouter();
+
+addBreadcrumb(
+  computed(() => [
+    { title: t('menu.contacts'), to: '/admin/contacts', icon: 'users' },
+  ])
+);
 
 const showAdvancedSearch = ref(false);
 
