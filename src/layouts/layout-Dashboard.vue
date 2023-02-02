@@ -6,9 +6,9 @@
       id="top"
       class="flex w-full max-w-[1400px] flex-grow flex-col bg-primary-5 p-4 md:p-10"
     >
-      <AppBreadcrumb v-if="items.length > 0" :items="items" />
+      <TheBreadcrumb v-if="items.length > 0" :items="items" />
       <router-view />
-      <AppFooter />
+      <TheFooter />
     </main>
     <div class="hidden flex-1 bg-primary-5 md:block" />
   </div>
@@ -16,9 +16,9 @@
 
 <script lang="ts" setup>
 import TheMenu from './menu/TheMenu.vue';
-import AppFooter from '../components/AppFooter.vue';
+import TheFooter from '../components/TheFooter.vue';
 import { breadcrumbItems } from '../store/breadcrumb';
-import AppBreadcrumb from '../components/AppBreadcrumb.vue';
+import TheBreadcrumb from '../components/TheBreadcrumb.vue';
 import { computed } from 'vue';
 
 const items = computed(() => breadcrumbItems.value.flatMap((bi) => bi.value));
