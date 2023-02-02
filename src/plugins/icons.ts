@@ -1,12 +1,4 @@
 import { Library, library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faAddressCard as farAddressCard,
-  faBuilding as farBuilding,
-  faCalendar as farCalendar,
-  faCalendarCheck as farCalendarCheck,
-  faCreditCard as farCreditCard,
-  faUser as farUser,
-} from '@fortawesome/free-regular-svg-icons';
 
 import {
   faFacebook,
@@ -16,8 +8,11 @@ import {
   faWhatsapp,
 } from '@fortawesome/free-brands-svg-icons';
 
+import { faCalendar as farCalendar } from '@fortawesome/free-regular-svg-icons';
+
 import {
   faSignInAlt,
+  faAddressCard,
   faCaretLeft,
   faCaretRight,
   faCaretDown,
@@ -25,6 +20,7 @@ import {
   faStepForward,
   faCaretUp,
   faExclamation,
+  faHouse,
   faInfoCircle,
   faBullhorn,
   faKey,
@@ -69,15 +65,13 @@ import {
   faCircleArrowRight,
   faFloppyDisk,
   faThList,
+  faSignHanging,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
-  farBuilding,
-  farUser,
   farCalendar,
-  farCalendarCheck,
-  farAddressCard,
-  farCreditCard,
+  faHouse,
+  faAddressCard,
   faSignInAlt,
   faCaretLeft,
   faCaretRight,
@@ -135,7 +129,8 @@ library.add(
   faCircleDot,
   faCircleArrowRight,
   faFloppyDisk,
-  faThList
+  faThList,
+  faSignHanging
 );
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
