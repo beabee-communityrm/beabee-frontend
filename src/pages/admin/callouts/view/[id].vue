@@ -6,16 +6,11 @@ meta:
 </route>
 
 <template>
-  <template v-if="callout">
+  <div v-if="callout">
     <PageTitle class="mb-2" :title="callout.title" no-collapse />
-
-    <AppTabs
-      :items="tabs"
-      :selected="route.name ? route.name as string : null"
-    />
-
+    <AppTabs :items="tabs" :selected="selectedTab" />
     <router-view :callout="callout"></router-view>
-  </template>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -39,12 +34,12 @@ const tabs = computed(() =>
   callout.value
     ? [
         {
-          id: 'adminCalloutViewOverview',
+          id: 'overview',
           label: t('calloutAdmin.overview'),
           to: `/admin/callouts/view/${callout.value.slug}`,
         },
         {
-          id: 'adminCalloutViewResponses',
+          id: 'responses',
           label: t('calloutAdmin.responses'),
           to: `/admin/callouts/view/${callout.value.slug}/responses`,
           ...(responseCount.value > -1 && {
@@ -53,6 +48,14 @@ const tabs = computed(() =>
         },
       ]
     : []
+);
+
+const selectedTab = computed(() =>
+  route.name
+    ? (route.name as string).startsWith('adminCalloutViewResponses')
+      ? 'responses'
+      : 'overview'
+    : null
 );
 
 onBeforeMount(async () => {

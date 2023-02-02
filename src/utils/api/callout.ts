@@ -1,5 +1,4 @@
 import { Paginated } from '@beabee/beabee-common';
-import { deserializeDate } from '.';
 import axios from '../../lib/axios';
 import {
   GetCalloutsQuery,
@@ -13,7 +12,8 @@ import {
   GetCalloutResponseWith,
   GetCalloutResponseDataWith,
 } from './api.interface';
-import { deserializeContact } from './contact';
+import { deserializeDate } from '.';
+import { deserializeCalloutResponse } from './callout-response';
 
 // TODO: how to make this type safe?
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,17 +22,6 @@ function deserializeCallout(callout: any): any {
     ...callout,
     starts: deserializeDate(callout.starts),
     expires: deserializeDate(callout.expires),
-  };
-}
-
-// TODO: how to make this type safe?
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function deserializeResponse(response: any): any {
-  return {
-    ...response,
-    createdAt: deserializeDate(response.createdAt),
-    updatedAt: deserializeDate(response.updatedAt),
-    ...(response.contact && { contact: deserializeContact(response.contact) }),
   };
 }
 
@@ -51,11 +40,11 @@ export async function fetchCallouts<With extends GetCalloutWith = void>(
 }
 
 export async function fetchCallout<With extends GetCalloutWith = void>(
-  id: string,
+  slug: string,
   _with?: readonly With[]
 ): Promise<GetCalloutDataWith<With>> {
   const { data } = await axios.get<Serial<GetCalloutDataWith<With>>>(
-    '/callout/' + id,
+    '/callout/' + slug,
     { params: { with: _with } }
   );
   return deserializeCallout(data);
@@ -87,6 +76,18 @@ export async function deleteCallout(slug: string): Promise<void> {
   await axios.delete('/callout/' + slug);
 }
 
+export async function fetchResponse<With extends GetCalloutResponseWith = void>(
+  slug: string,
+  id: string,
+  _with?: readonly With[]
+): Promise<GetCalloutResponseDataWith<With>> {
+  const { data } = await axios.get<Serial<GetCalloutResponseDataWith<With>>>(
+    `/callout/${slug}/responses/${id}`,
+    { params: { with: _with } }
+  );
+  return deserializeCalloutResponse(data);
+}
+
 export async function fetchResponses<
   With extends GetCalloutResponseWith = void
 >(
@@ -99,15 +100,15 @@ export async function fetchResponses<
   >(`/callout/${slug}/responses`, { params: { with: _with, ...query } });
   return {
     ...data,
-    items: data.items.map(deserializeResponse),
+    items: data.items.map(deserializeCalloutResponse),
   };
 }
 
 export async function createResponse(
-  id: string,
+  slug: string,
   data: CreateCalloutResponseData
 ): Promise<void> {
-  await axios.post(`/callout/${id}/responses`, {
+  await axios.post(`/callout/${slug}/responses`, {
     answers: data.answers,
     guestName: data.guestName,
     guestEmail: data.guestEmail,

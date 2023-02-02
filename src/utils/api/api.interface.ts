@@ -1,4 +1,5 @@
 import {
+  CalloutFormSchema,
   ContributionPeriod,
   ContributionType,
   ItemStatus,
@@ -309,10 +310,6 @@ export interface GetCalloutData extends CalloutData {
   status: ItemStatus;
 }
 
-export interface CalloutFormSchema {
-  components: unknown[];
-}
-
 export type GetCalloutWith = 'form' | 'responseCount' | 'hasAnswered' | void;
 
 export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
@@ -346,12 +343,13 @@ export interface CreateCalloutResponseData {
   answers: CalloutResponseAnswers;
 }
 
-export type GetCalloutResponseWith = 'answers' | 'contact' | void;
+export type GetCalloutResponseWith = 'answers' | 'callout' | 'contact' | void;
 
 export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
   GetCalloutResponseData &
     ('answers' extends With ? { answers: CalloutResponseAnswers } : Noop) &
-    ('contact' extends With ? { contact: GetContactData } : Noop);
+    ('callout' extends With ? { callout: GetCalloutData } : Noop) &
+    ('contact' extends With ? { contact: GetContactData | null } : Noop);
 
 export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 

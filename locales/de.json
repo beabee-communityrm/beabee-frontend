@@ -17,8 +17,10 @@
     "continue": "Weiter",
     "delete": "Löschen",
     "edit": "Bearbeiten",
+    "next": "Nächste",
     "participate": "Teilnehmen",
     "preview": "Vorschau",
+    "previous": "Vorherige",
     "publish": "Veröffentlichen",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
@@ -286,6 +288,23 @@
     "summary": "Zusammenfassung",
     "updated": "Änderungen gespeichert!"
   },
+  "calloutResponse": {
+    "data": {
+      "callout": "Callout",
+      "contact": "Kontakt",
+      "createdAt": "Beantwortet am",
+      "tags": "Tags",
+      "updatedAt": "Geändert am"
+    },
+    "dataGroup": {
+      "response": "Antwort"
+    }
+  },
+  "calloutResponsesPage": {
+    "response": "Antwort",
+    "responseId": "Antwort {id}",
+    "showingOf": "Antworten {start} bis {end} von {total} werden angezeigt"
+  },
   "callouts": {
     "archive": "Archiv",
     "data": {
@@ -331,6 +350,7 @@
     "goBack": "Zurück",
     "hello": "Hallo",
     "in": "in",
+    "itemsPerPage": "{items} Einträge pro Seite",
     "joined": "Mitglied seit",
     "loading": "Lädt...",
     "login": "Login",
@@ -372,6 +392,7 @@
     "annotation": {
       "copy": "<p>Alle hier eingegebenen Information sind <strong>nur für Administratoren sichtbar</strong>.\nNutzer bekommen das nicht angezeigt.</p>\n"
     },
+    "callouts": "Callouts",
     "contribution": "Beitrag",
     "contributionType": "Zahlungsart",
     "information": "Information",
@@ -888,7 +909,8 @@
         "text": "Bist du sicher, dass du diesen Hinweis löschen willst?",
         "title": "Hinweis löschen?"
       }
-    }
+    },
+    "summary": "Zusammenfassung"
   },
   "notices": {
     "addNotice": "Hinweis hinzufügen",
