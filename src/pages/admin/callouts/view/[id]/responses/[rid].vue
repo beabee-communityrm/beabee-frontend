@@ -1,5 +1,5 @@
 <route lang="yaml">
-name: adminCalloutViewResponses
+name: adminCalloutViewResponsesItem
 meta:
   pageTitle: menu.callouts
   role: admin
