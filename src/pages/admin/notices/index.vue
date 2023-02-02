@@ -6,6 +6,9 @@ meta:
 </route>
 
 <template>
+  <AppBreadcrumb
+    :items="[{ title: t('menu.notices'), icon: 'sign-hanging' }]"
+  />
   <PageTitle :title="t('menu.notices')" border>
     <div class="flex-0 ml-3">
       <AppButton href="/tools/notices">{{ t('notices.addNotice') }}</AppButton>
@@ -54,6 +57,7 @@ import { fetchNotices } from '../../../utils/api/notice';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
 import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
+import AppBreadcrumb from '../../../components/AppBreadcrumb.vue';
 
 const { t } = useI18n();
 

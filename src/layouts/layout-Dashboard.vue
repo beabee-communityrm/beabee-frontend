@@ -1,15 +1,15 @@
 <template>
   <div class="relative flex min-h-screen flex-col md:flex-row">
-    <the-menu />
+    <TheMenu />
 
     <main
       id="top"
-      class="flex w-full max-w-[1400px] flex-grow flex-col bg-primary-5 px-4 pt-5 pb-5 md:px-10 md:pt-14"
+      class="flex w-full max-w-[1400px] flex-grow flex-col bg-primary-5 p-4 md:p-10"
     >
       <router-view />
       <AppFooter />
     </main>
-    <div class="flex-1 bg-primary-5" />
+    <div class="hidden flex-1 bg-primary-5 md:block" />
   </div>
 </template>
 
