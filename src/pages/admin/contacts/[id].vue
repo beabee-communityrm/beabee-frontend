@@ -7,13 +7,7 @@ meta:
 
 <template>
   <template v-if="contact">
-    <PageTitle
-      class="mb-2"
-      :title="
-        `${contact.firstname} ${contact.lastname}`.trim() || contact.email
-      "
-      no-collapse
-    />
+    <PageTitle class="mb-2" :title="contact.displayName" no-collapse />
 
     <AppTabs
       :items="tabs"
@@ -83,7 +77,7 @@ addBreadcrumb(
     ...(contact.value && selectedTab.value
       ? [
           {
-            title: contact.value.email,
+            title: contact.value.displayName,
             to: '/admin/contacts/' + contact.value.id,
           },
           {

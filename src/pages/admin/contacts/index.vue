@@ -86,7 +86,7 @@ meta:
             :to="'/admin/contacts/' + item.id"
             class="text-base font-bold text-link"
           >
-            {{ `${item.firstname} ${item.lastname}`.trim() || item.email }}
+            {{ item.displayName }}
           </router-link>
           <p
             v-if="item.profile.description"

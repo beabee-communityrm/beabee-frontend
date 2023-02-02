@@ -43,9 +43,7 @@ meta:
           class="my-3 flex justify-between gap-4"
         >
           <router-link :to="'/admin/contacts/' + member.id" class="text-link">
-            {{
-              `${member.firstname} ${member.lastname}`.trim() || member.email
-            }}
+            {{ member.displayName }}
           </router-link>
           <span class="text-sm font-semibold text-body-60">
             {{
