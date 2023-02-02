@@ -1,5 +1,5 @@
 <route lang="yaml">
-name: adminCalloutViewResponsesItem
+name: adminCalloutViewResponses
 meta:
   pageTitle: menu.callouts
   role: admin
@@ -60,7 +60,7 @@ meta:
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, watchEffect } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import {
   GetCalloutDataWith,
   GetCalloutResponseData,
@@ -78,6 +78,7 @@ import AppInfoListItem from '../../../../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../../../../utils/dates/locale-date-formats';
 import AppButton from '../../../../../../components/forms/AppButton.vue';
 import AppButtonGroup from '../../../../../../components/forms/AppButtonGroup.vue';
+import { addBreadcrumb } from '../../../../../../store/breadcrumb';
 
 const props = defineProps<{
   rid: string;
@@ -85,6 +86,8 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
+
+addBreadcrumb(computed(() => [{ title: props.rid }]));
 
 const response = ref<GetCalloutResponseDataWith<'answers' | 'contact'>>();
 const prevResponse = ref<GetCalloutResponseData>();
