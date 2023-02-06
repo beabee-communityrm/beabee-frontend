@@ -16,7 +16,11 @@
     />
 
     <div class="mb-3">
-      <AppInput v-model="data.telephone" :label="t('form.phone')" />
+      <AppInput
+        v-model="data.telephone"
+        :label="t('form.phone')"
+        :info-message="t('form.phoneInfo')"
+      />
     </div>
 
     <AppHeading class="mt-6 mb-2">
