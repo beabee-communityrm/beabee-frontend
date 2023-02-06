@@ -731,6 +731,7 @@
     "password": "Password",
     "passwordInfo": "Set a secure password: 8+ characters or longer, and it must include a number, uppercase and lowercase letters.",
     "phone": "Phone number",
+    "phoneInfo": "You must have the person's consent before adding their phone number to the system",
     "postCode": "Postcode",
     "richtext": {
       "bold": "Bold",
