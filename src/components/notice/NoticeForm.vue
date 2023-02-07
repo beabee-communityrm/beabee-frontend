@@ -97,18 +97,15 @@ const data = props.notice
       buttonText: '',
       url: '',
     });
-  
+
 function convertFormData(notice: NoticeFormData): CreateNoticeData {
   return {
     name: notice.name,
     starts: new Date(notice.startDate + 'T' + notice.startTime),
-    expires: new Date(
-      notice.expirationDate + 'T' + notice.expirationTime
-    ),
+    expires: new Date(notice.expirationDate + 'T' + notice.expirationTime),
     text: notice.text,
     buttonText: notice.buttonText,
     url: notice.buttonText,
-  }
-
+  };
 }
 </script>
