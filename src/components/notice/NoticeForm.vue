@@ -2,7 +2,7 @@
   <AppForm
     :button-text="t('actions.save')"
     :success-text="t('addNotice.noticeSaved')"
-    @submit.prevent="$emit('submit', data)"
+    @submit.prevent="$emit('submit', convertFormData(data))"
   >
     <div class="mb-3">
       <AppInput
@@ -54,26 +54,61 @@
 </template>
 
 <script lang="ts" setup>
+import { format } from 'date-fns';
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { CreateNoticeData, GetNoticeData } from '../../utils/api/api.interface';
 import AppForm from '../forms/AppForm.vue';
 import AppInput from '../forms/AppInput.vue';
 import AppLabel from '../forms/AppLabel.vue';
 import { NoticeFormData } from './notice.interface';
 
-const emit = defineEmits(['submit']);
-const props = defineProps<{ data: NoticeFormData }>();
+defineEmits(['submit']);
+const props = defineProps<{ notice: GetNoticeData | undefined }>();
 
 const { t } = useI18n();
 
-const data = reactive<NoticeFormData>({
-  name: props.data.name,
-  startDate: props.data.startDate,
-  startTime: props.data.startTime,
-  expirationDate: props.data.expirationDate,
-  expirationTime: props.data.expirationTime,
-  text: props.data.text,
-  buttonText: props.data.buttonText,
-  url: props.data.url,
-});
+const data = props.notice
+  ? reactive<NoticeFormData>({
+      name: props.notice.name,
+      startDate: props.notice.starts
+        ? format(props.notice.starts, 'yyyy-MM-dd')
+        : '',
+      startTime: props.notice.starts
+        ? format(props.notice.starts, 'HH:mm')
+        : '',
+      expirationDate: props.notice.expires
+        ? format(props.notice.expires, 'yyyy-MM-dd')
+        : '',
+      expirationTime: props.notice.expires
+        ? format(props.notice.expires, 'HH:mm')
+        : '',
+      text: props.notice.text,
+      buttonText: props.notice.buttonText || '',
+      url: props.notice.url || '',
+    })
+  : reactive<NoticeFormData>({
+      name: '',
+      startDate: '',
+      startTime: '',
+      expirationDate: '',
+      expirationTime: '',
+      text: '',
+      buttonText: '',
+      url: '',
+    });
+  
+function convertFormData(notice: NoticeFormData): CreateNoticeData {
+  return {
+    name: notice.name,
+    starts: new Date(notice.startDate + 'T' + notice.startTime),
+    expires: new Date(
+      notice.expirationDate + 'T' + notice.expirationTime
+    ),
+    text: notice.text,
+    buttonText: notice.buttonText,
+    url: notice.buttonText,
+  }
+
+}
 </script>

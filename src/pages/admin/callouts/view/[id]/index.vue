@@ -133,7 +133,7 @@ const wasJustUpdated = route.query.updated !== undefined;
 const showDeleteModal = ref(false);
 
 async function confirmDeleteCallout() {
-  deleteCallout(props.callout.slug);
+  await deleteCallout(props.callout.slug);
   router.push({
     path: '/admin/callouts',
     query: { deleted: null },
