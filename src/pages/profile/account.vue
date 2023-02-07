@@ -1,20 +1,20 @@
 <route lang="yaml">
-name: profileInformation
+name: profileAccount
 meta:
-  pageTitle: informationPage.title
+  pageTitle: accountPage.title
 </route>
 
 <template>
   <PageTitle
-    :title="t('informationPage.title')"
-    :sub-title="t('informationPage.subTitle')"
+    :title="t('accountPage.title')"
+    :sub-title="t('accountPage.subTitle')"
   />
 
   <div class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
     <div>
       <ChangePassword />
       <Suspense>
-        <ContactUpdateInformation id="me" />
+        <ContactUpdateAccount id="me" />
       </Suspense>
     </div>
   </div>
@@ -23,8 +23,8 @@ meta:
 <script lang="ts" setup>
 import PageTitle from '../../components/PageTitle.vue';
 import { useI18n } from 'vue-i18n';
-import ChangePassword from '../../components/pages/profile/information/ChangePassword.vue';
-import ContactUpdateInformation from '../../components/contact/ContactUpdateInformation.vue';
+import ChangePassword from '../../components/pages/profile/account/ChangePassword.vue';
+import ContactUpdateAccount from '../../components/contact/ContactUpdateAccount.vue';
 
 const { t } = useI18n();
 </script>

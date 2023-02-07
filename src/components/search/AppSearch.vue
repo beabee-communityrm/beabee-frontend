@@ -93,11 +93,16 @@ import { RuleGroup } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { computed, reactive, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { copyRuleGroup, isEqual, RuleGroupWithEmpty } from '../../utils/rules';
 import AppButton from '../forms/AppButton.vue';
 import AppSelect from '../forms/AppSelect.vue';
 import AppSearchRuleOrGroup from './AppSearchRuleOrGroup.vue';
-import { FilterGroup, FilterItems } from './search.interface';
+import {
+  FilterGroup,
+  FilterItems,
+  copyRuleGroup,
+  isEqual,
+  RuleGroupWithEmpty,
+} from './search.interface';
 
 const emit = defineEmits(['reset', 'update:modelValue']);
 const props = defineProps<{

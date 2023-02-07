@@ -48,21 +48,20 @@ const tabs = computed(() =>
           to: `/admin/contacts/${contact.value.id}`,
         },
         {
-          id: 'adminContactsViewInformation',
-          label: t('contactOverview.information'),
-          to: `/admin/contacts/${contact.value.id}/information`,
+          id: 'adminContactsViewAccount',
+          label: t('contactOverview.account'),
+          to: `/admin/contacts/${contact.value.id}/account`,
         },
         {
           id: 'adminContactsViewContribution',
           label: t('contactOverview.contribution'),
           to: `/admin/contacts/${contact.value.id}/contribution`,
         },
-        /*
         {
-          id: 'contactRoles',
-          label: t('contactOverview.roles'),
-          to: `/admin/contacts/${contact.value.id}/roles`,
-        },*/
+          id: 'adminContactsViewCallouts',
+          label: t('contactOverview.callouts'),
+          to: `/admin/contacts/${contact.value.id}/callouts`,
+        },
       ]
     : []
 );

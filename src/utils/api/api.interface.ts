@@ -1,4 +1,5 @@
 import {
+  CalloutFormSchema,
   ContributionPeriod,
   ContributionType,
   ItemStatus,
@@ -11,8 +12,10 @@ import {
   RuleGroup,
 } from '@beabee/beabee-common';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Noop {}
+// Not really sure why but this work for conditional intersections
+// https://stackoverflow.com/questions/65549362/how-to-create-a-conditional-intersection-based-on-a-generic-parameter
+// eslint-disable-next-line @typescript-eslint/ban-types
+type Noop = {};
 
 // Dates are serialized in API response
 export type Serial<T> = {
@@ -82,7 +85,7 @@ export interface GetContactData extends ContactData {
   activeRoles: RoleType[];
 }
 
-export type GetContactWith = 'profile' | 'contribution' | 'roles';
+export type GetContactWith = 'profile' | 'contribution' | 'roles' | void;
 
 export type GetContactDataWith<With extends GetContactWith> = GetContactData &
   ('profile' extends With ? { profile: ContactProfileData } : Noop) &
@@ -181,7 +184,7 @@ export interface StartContributionData extends SetContributionData {
 }
 
 export interface GetPaymentData {
-  chargeDate: string;
+  chargeDate: Date;
   amount: number;
   status: PaymentStatus;
 }
@@ -307,11 +310,7 @@ export interface GetCalloutData extends CalloutData {
   status: ItemStatus;
 }
 
-export interface CalloutFormSchema {
-  components: unknown[];
-}
-
-export type GetCalloutWith = 'form' | 'responseCount' | 'hasAnswered';
+export type GetCalloutWith = 'form' | 'responseCount' | 'hasAnswered' | void;
 
 export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
   ('responseCount' extends With ? { responseCount: number } : Noop) &
@@ -333,7 +332,7 @@ type CalloutResponseAnswer =
 export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
 
 export interface GetCalloutResponseData {
-  answers: CalloutResponseAnswers;
+  id: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -352,6 +351,13 @@ interface NoticeData {
   buttonText?: string;
   url?: string;
 }
+export type GetCalloutResponseWith = 'answers' | 'callout' | 'contact' | void;
+
+export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
+  GetCalloutResponseData &
+    ('answers' extends With ? { answers: CalloutResponseAnswers } : Noop) &
+    ('callout' extends With ? { callout: GetCalloutData } : Noop) &
+    ('contact' extends With ? { contact: GetContactData | null } : Noop);
 
 export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 
@@ -397,7 +403,7 @@ export interface CreateSegmentData {
 
 export type UpdateSegmentData = Partial<CreateSegmentData>;
 
-export type GetSegmentWith = 'contactCount';
+export type GetSegmentWith = 'contactCount' | void;
 
 export type GetSegmentDataWith<With extends GetSegmentWith> = GetSegmentData &
   ('contactCount' extends With ? { contactCount: number } : Noop);

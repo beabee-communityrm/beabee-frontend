@@ -1,4 +1,14 @@
 {
+  "accountPage": {
+    "changePassword": "Passwort ändern",
+    "contactInformation": "Kontaktdaten",
+    "deliveryAddress": "Adresse",
+    "deliveryOptIn": "Postsendung",
+    "loginDetail": "Anmeldedaten",
+    "savedPassword": "Das neue Passwort wurde gespeichert.",
+    "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt.",
+    "title": "Account"
+  },
   "actions": {
     "add": "Hinzufügen",
     "back": "Zurück",
@@ -7,8 +17,10 @@
     "continue": "Weiter",
     "delete": "Löschen",
     "edit": "Bearbeiten",
+    "next": "Nächste",
     "participate": "Teilnehmen",
     "preview": "Vorschau",
+    "previous": "Vorherige",
     "publish": "Veröffentlichen",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
@@ -276,6 +288,23 @@
     "summary": "Zusammenfassung",
     "updated": "Änderungen gespeichert!"
   },
+  "calloutResponse": {
+    "data": {
+      "callout": "Callout",
+      "contact": "Kontakt",
+      "createdAt": "Beantwortet am",
+      "tags": "Tags",
+      "updatedAt": "Geändert am"
+    },
+    "dataGroup": {
+      "response": "Antwort"
+    }
+  },
+  "calloutResponsesPage": {
+    "response": "Antwort",
+    "responseId": "Antwort {id}",
+    "showingOf": "Antworten {start} bis {end} von {total} werden angezeigt"
+  },
   "callouts": {
     "archive": "Archiv",
     "data": {
@@ -321,6 +350,7 @@
     "goBack": "Zurück",
     "hello": "Hallo",
     "in": "in",
+    "itemsPerPage": "{items} Einträge pro Seite",
     "joined": "Mitglied seit",
     "loading": "Lädt...",
     "login": "Login",
@@ -330,6 +360,7 @@
     "newsletterStatus": {
       "cleaned": "Bereinigt",
       "none": "Kein Status",
+      "pending": "Pending",
       "subscribed": "Subscribed",
       "unsubscribed": "Unsubscribed"
     },
@@ -355,14 +386,13 @@
     "year": "Jahr | Jahren",
     "yes": "Ja"
   },
-  "contactInformation": {
-    "deliveryOptIn": "Postsendung"
-  },
   "contactOverview": {
     "about": "Über",
+    "account": "Account",
     "annotation": {
       "copy": "<p>Alle hier eingegebenen Information sind <strong>nur für Administratoren sichtbar</strong>.\nNutzer bekommen das nicht angezeigt.</p>\n"
     },
+    "callouts": "Callouts",
     "contribution": "Beitrag",
     "contributionType": "Zahlungsart",
     "information": "Information",
@@ -753,15 +783,6 @@
     "welcome": "Herzlich willkommen {firstName} {lastName}!",
     "yourProfile": "Ihr Profil"
   },
-  "informationPage": {
-    "changePassword": "Passwort ändern",
-    "contactInformation": "Kontaktdaten",
-    "deliveryAddress": "Adresse",
-    "loginDetail": "Anmeldedaten",
-    "savedPassword": "Das neue Passwort wurde gespeichert.",
-    "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt.",
-    "title": "Persönliche Informationen"
-  },
   "join": {
     "absorbFeeForce": "Bei einem Beitrag von {amount}, müssen Sie die {fee} Transaktionskosten übernehmen.",
     "absorbFeeOptIn": "Ja, ich übernehme die {fee} Transaktionskosten.",
@@ -860,6 +881,7 @@
     "title": "Membership Builder"
   },
   "menu": {
+    "account": "Account",
     "admin": "Administration",
     "adminSettings": "Einstellungen",
     "callouts": "Callouts",
@@ -873,7 +895,6 @@
     "membershipBuilder": "Membership Builder",
     "notices": "Hinweise",
     "settings": "Einstellungen",
-    "yourInformation": "Ihre Informationen",
     "yourProfile": "Ihr Profil"
   },
   "notFound": {
@@ -888,7 +909,8 @@
         "text": "Bist du sicher, dass du diesen Hinweis löschen willst?",
         "title": "Hinweis löschen?"
       }
-    }
+    },
+    "summary": "Zusammenfassung"
   },
   "notices": {
     "addNotice": "Hinweis hinzufügen",
