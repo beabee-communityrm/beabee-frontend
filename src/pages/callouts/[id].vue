@@ -133,6 +133,8 @@ import InfoMessage from '../../components/InfoMessage.vue';
 import 'formiojs/dist/formio.form.css';
 import { useRoute } from 'vue-router';
 import ItemStatusText from '../../components/item/ItemStatusText.vue';
+import { addBreadcrumb } from '../../store/breadcrumb';
+import { canAdmin } from '../../utils/currentUserCan';
 
 type FormSubmission = { data: CalloutResponseAnswers };
 
@@ -141,7 +143,37 @@ const props = defineProps<{ id: string }>();
 const { t } = useI18n();
 const route = useRoute();
 
-const isPreview = computed(() => route.query.preview === null);
+addBreadcrumb(
+  computed(() =>
+    currentUser.value && callout.value
+      ? isPreview.value
+        ? [
+            {
+              title: t('menu.callouts'),
+              to: '/admin/callouts',
+              icon: 'bullhorn',
+            },
+            {
+              title: callout.value.title,
+              to: '/admin/callouts/view/' + callout.value.slug,
+            },
+            { title: t('actions.preview') },
+          ]
+        : [
+            {
+              title: t('menu.callouts'),
+              to: '/callouts',
+              icon: 'bullhorn',
+            },
+            { title: callout.value.title },
+          ]
+      : []
+  )
+);
+
+const isPreview = computed(
+  () => route.query.preview === null && canAdmin.value
+);
 
 const callout = ref<GetCalloutDataWith<'form'>>();
 const currentUserResponses =
