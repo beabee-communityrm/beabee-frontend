@@ -17,8 +17,10 @@
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
+    "next": "Next",
     "participate": "Participate",
     "preview": "Preview",
+    "previous": "Previous",
     "publish": "Publish",
     "replicate": "Replicate",
     "reset": "Reset",
@@ -286,6 +288,23 @@
     "summary": "Summary",
     "updated": "Your callout was successfully updated."
   },
+  "calloutResponse": {
+    "data": {
+      "callout": "Callout",
+      "contact": "Contact",
+      "createdAt": "Date submitted",
+      "tags": "Tags",
+      "updatedAt": "Date updated"
+    },
+    "dataGroup": {
+      "response": "Response"
+    }
+  },
+  "calloutResponsesPage": {
+    "response": "Response",
+    "responseId": "Response {id}",
+    "showingOf": "Showing {start} to {end} responses out of {total}"
+  },
   "callouts": {
     "archive": "Archive",
     "data": {
@@ -341,6 +360,7 @@
     "newsletterStatus": {
       "cleaned": "Cleaned",
       "none": "None",
+      "pending": "Pending",
       "subscribed": "Subscribed",
       "unsubscribed": "Unsubscribed"
     },
@@ -372,6 +392,7 @@
     "annotation": {
       "copy": "<p>All information added in this section is <strong>visible for admins only</strong>. Members will never see these in their profile or member area.</p>\n"
     },
+    "callouts": "Callouts",
     "contribution": "Contribution",
     "contributionType": "Type",
     "information": "Information",
@@ -729,7 +750,7 @@
     "notes": "Notes",
     "password": "Password",
     "passwordInfo": "Set a secure password: 8+ characters or longer, and it must include a number, uppercase and lowercase letters.",
-    "phone": "Phone",
+    "phone": "Phone number",
     "postCode": "Postcode",
     "richtext": {
       "bold": "Bold",

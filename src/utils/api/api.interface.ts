@@ -1,4 +1,5 @@
 import {
+  CalloutFormSchema,
   ContributionPeriod,
   ContributionType,
   ItemStatus,
@@ -44,6 +45,8 @@ interface ContactData {
   email: string;
   firstname: string;
   lastname: string;
+  // Added by deserializer
+  displayName: string;
 }
 
 export interface PaymentFlowParams {
@@ -309,10 +312,6 @@ export interface GetCalloutData extends CalloutData {
   status: ItemStatus;
 }
 
-export interface CalloutFormSchema {
-  components: unknown[];
-}
-
 export type GetCalloutWith = 'form' | 'responseCount' | 'hasAnswered' | void;
 
 export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
@@ -335,7 +334,7 @@ type CalloutResponseAnswer =
 export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
 
 export interface GetCalloutResponseData {
-  answers: CalloutResponseAnswers;
+  id: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -346,20 +345,37 @@ export interface CreateCalloutResponseData {
   answers: CalloutResponseAnswers;
 }
 
+interface NoticeData {
+  name: string;
+  starts: Date | null;
+  expires: Date | null;
+  text: string;
+  buttonText?: string;
+  url?: string;
+}
+export type GetCalloutResponseWith = 'answers' | 'callout' | 'contact' | void;
+
+export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
+  GetCalloutResponseData &
+    ('answers' extends With ? { answers: CalloutResponseAnswers } : Noop) &
+    ('callout' extends With ? { callout: GetCalloutData } : Noop) &
+    ('contact' extends With ? { contact: GetContactData | null } : Noop);
+
 export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 
-export interface GetNoticeData {
+export interface GetNoticeData extends NoticeData {
   id: string;
   createdAt: Date;
   updatedAt: Date;
   status: ItemStatus;
-  name: string;
-  starts?: Date;
-  expires?: Date;
-  enabled: boolean;
-  text: string;
-  buttonText?: string;
-  url?: string;
+}
+
+export type CreateNoticeData = AllowNull<NoticeData>;
+
+export interface ItemWithStatus {
+  status: ItemStatus;
+  starts: Date | null;
+  expires: Date | null;
 }
 
 export interface SignupData extends StartContributionData {

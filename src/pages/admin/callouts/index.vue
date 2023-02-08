@@ -95,10 +95,21 @@ import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
 import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 import AppFilterGrid from '../../../components/AppFilterGrid.vue';
+import { addBreadcrumb } from '../../../store/breadcrumb';
 
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
+
+addBreadcrumb(
+  computed(() => [
+    {
+      title: t('menu.callouts'),
+      icon: 'bullhorn',
+      to: '/admin/callouts',
+    },
+  ])
+);
 
 const wasJustDeleted = route.query.deleted !== undefined;
 

@@ -11,36 +11,60 @@ meta:
   <router-view ref="mbRouterView"></router-view>
 </template>
 <script lang="ts" setup>
-import { Ref, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import PageTitle from '../../components/PageTitle.vue';
 import AppTabs from '../../components/tabs/AppTabs.vue';
-import { TabItem } from '../../components/tabs/tabs.interface';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+import { addBreadcrumb } from '../../store/breadcrumb';
 
 const { t } = useI18n();
 const route = useRoute();
+const router = useRouter();
 
-const tabs: Ref<TabItem[]> = ref([
-  {
-    id: 'adminMembershipBuilderJoinForm',
-    label: t('membershipBuilder.steps.joinForm.title'),
-    to: `/admin/membership-builder`,
-  },
-  {
-    id: 'adminMembershipBuilderAccountConfirmation',
-    label: t('membershipBuilder.steps.accountConfirmation.title'),
-    to: `/admin/membership-builder/confirmation`,
-  },
-  {
-    id: 'adminMembershipBuilderIntroMessages',
-    label: t('membershipBuilder.steps.intro.title'),
-    to: `/admin/membership-builder/intro`,
-  },
-  {
-    id: 'adminMembershipBuilderEmail',
-    label: t('membershipBuilder.steps.emails.title'),
-    to: `/admin/membership-builder/email`,
-  },
-]);
+const tabs = ref(
+  [
+    {
+      id: 'adminMembershipBuilderJoinForm',
+      label: t('membershipBuilder.steps.joinForm.title'),
+    },
+    {
+      id: 'adminMembershipBuilderAccountConfirmation',
+      label: t('membershipBuilder.steps.accountConfirmation.title'),
+    },
+    {
+      id: 'adminMembershipBuilderIntroMessages',
+      label: t('membershipBuilder.steps.intro.title'),
+    },
+    {
+      id: 'adminMembershipBuilderEmail',
+      label: t('membershipBuilder.steps.emails.title'),
+    },
+  ].map((item) => ({
+    ...item,
+    to: router.resolve({ name: item.id }).href,
+  }))
+);
+
+const selectedTab = computed(() =>
+  tabs.value.find((tab) => tab.id === route.name)
+);
+
+addBreadcrumb(
+  computed(() => [
+    {
+      title: t('membershipBuilder.title'),
+      to: '/admin/membership-builder',
+      icon: 'hands-helping',
+    },
+    ...(selectedTab.value
+      ? [
+          {
+            title: selectedTab.value.label,
+            to: selectedTab.value.to,
+          },
+        ]
+      : []),
+  ])
+);
 </script>
