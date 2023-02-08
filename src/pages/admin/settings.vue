@@ -16,6 +16,7 @@ import { useRoute, useRouter } from 'vue-router';
 import PageTitle from '../../components/PageTitle.vue';
 import AppTabs from '../../components/tabs/AppTabs.vue';
 import { computed } from 'vue';
+import { addBreadcrumb } from '../../store/breadcrumb';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -39,5 +40,27 @@ const tabs = computed(() =>
     ...item,
     to: router.resolve({ name: item.id }).href,
   }))
+);
+
+const selectedTab = computed(() =>
+  tabs.value.find((tab) => tab.id === route.name)
+);
+
+addBreadcrumb(
+  computed(() => [
+    {
+      title: t('menu.adminSettings'),
+      to: '/admin/settings',
+      icon: 'cogs',
+    },
+    ...(selectedTab.value
+      ? [
+          {
+            title: selectedTab.value.label,
+            to: selectedTab.value.to,
+          },
+        ]
+      : []),
+  ])
 );
 </script>

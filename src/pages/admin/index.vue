@@ -43,9 +43,7 @@ meta:
           class="my-3 flex justify-between gap-4"
         >
           <router-link :to="'/admin/contacts/' + member.id" class="text-link">
-            {{
-              `${member.firstname} ${member.lastname}`.trim() || member.email
-            }}
+            {{ member.displayName }}
           </router-link>
           <span class="text-sm font-semibold text-body-60">
             {{
@@ -101,7 +99,7 @@ import PageTitle from '../../components/PageTitle.vue';
 import { currentUser } from '../../store';
 import AppHeading from '../../components/AppHeading.vue';
 import KeyStat from '../../components/pages/admin/KeyStat.vue';
-import { onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import {
   GetCalloutDataWith,
   GetContactData,
@@ -114,8 +112,19 @@ import { fetchCallouts } from '../../utils/api/callout';
 import CalloutSummary from '../../components/callout/CalloutSummary.vue';
 import { fetchStats } from '../../utils/api/stats';
 import { subDays } from 'date-fns';
+import { addBreadcrumb } from '../../store/breadcrumb';
 
 const { n, t } = useI18n();
+
+addBreadcrumb(
+  computed(() => [
+    {
+      title: t('menu.dashboard'),
+      to: '/admin',
+      icon: 'chart-line',
+    },
+  ])
+);
 
 const stats = ref<GetStatsData>();
 const recentMembers = ref<GetContactData[]>([]);
