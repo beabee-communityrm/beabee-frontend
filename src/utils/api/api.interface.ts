@@ -345,6 +345,14 @@ export interface CreateCalloutResponseData {
   answers: CalloutResponseAnswers;
 }
 
+interface NoticeData {
+  name: string;
+  starts: Date | null;
+  expires: Date | null;
+  text: string;
+  buttonText?: string;
+  url?: string;
+}
 export type GetCalloutResponseWith = 'answers' | 'callout' | 'contact' | void;
 
 export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
@@ -355,18 +363,19 @@ export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
 
 export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 
-export interface GetNoticeData {
+export interface GetNoticeData extends NoticeData {
   id: string;
   createdAt: Date;
   updatedAt: Date;
   status: ItemStatus;
-  name: string;
-  starts?: Date;
-  expires?: Date;
-  enabled: boolean;
-  text: string;
-  buttonText?: string;
-  url?: string;
+}
+
+export type CreateNoticeData = AllowNull<NoticeData>;
+
+export interface ItemWithStatus {
+  status: ItemStatus;
+  starts: Date | null;
+  expires: Date | null;
 }
 
 export interface SignupData extends StartContributionData {
