@@ -90,9 +90,7 @@ import {
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import { fetchCallouts } from '../../../utils/api/callout';
 
-import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
-import AppVTabs from '../../../components/tabs/AppVTabs.vue';
 import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 import AppFilterGrid from '../../../components/AppFilterGrid.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
