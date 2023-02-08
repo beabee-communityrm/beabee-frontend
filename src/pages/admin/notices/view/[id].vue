@@ -47,7 +47,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppConfirmDialog from '../../../../components/AppConfirmDialog.vue';
 import AppHeading from '../../../../components/AppHeading.vue';
@@ -59,12 +59,20 @@ import { deleteNotice, fetchNotice } from '../../../../utils/api/notice';
 import ItemStatus from '../../../../components/item/ItemStatusText.vue';
 import ItemDateRange from '../../../../components/item/ItemDateRange.vue';
 import { useRouter } from 'vue-router';
+import { addBreadcrumb } from '../../../../store/breadcrumb';
 
 const props = defineProps<{ id: string }>();
 const { t } = useI18n();
 
 const notice = ref<GetNoticeData | undefined>();
 const router = useRouter();
+
+addBreadcrumb(
+  computed(() => [
+    { title: t('menu.notices'), to: '/admin/notices', icon: 'sign-hanging' },
+    { title: notice.value?.name || '' },
+  ])
+);
 
 const showDeleteModal = ref(false);
 

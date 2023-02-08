@@ -13,6 +13,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
@@ -23,9 +24,17 @@ import {
   CreateNoticeData,
   GetNoticeData,
 } from '../../../utils/api/api.interface';
+import { addBreadcrumb } from '../../../store/breadcrumb';
 
 const { t } = useI18n();
 const router = useRouter();
+
+addBreadcrumb(
+  computed(() => [
+    { title: t('menu.notices'), to: '/admin/notices', icon: 'sign-hanging' },
+    { title: t('addNotice.title') },
+  ])
+);
 
 async function handleSubmit(noticeData: CreateNoticeData) {
   const notice: GetNoticeData = await createNotice(noticeData);

@@ -19,12 +19,13 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import NoticeForm from '../../../../components/notice/NoticeForm.vue';
 import PageTitle from '../../../../components/PageTitle.vue';
+import { addBreadcrumb } from '../../../../store/breadcrumb';
 import {
   CreateNoticeData,
   GetNoticeData,
@@ -36,6 +37,21 @@ const router = useRouter();
 
 const props = defineProps<{ id: string }>();
 const notice = ref<GetNoticeData | undefined>();
+
+addBreadcrumb(
+  computed(() => [
+    { title: t('menu.notices'), to: '/admin/notices', icon: 'sign-hanging' },
+    ...(notice.value
+      ? [
+          {
+            title: notice.value?.name || '',
+            to: '/admin/notices/view/' + props.id,
+          },
+          { title: t('actions.edit') },
+        ]
+      : []),
+  ])
+);
 
 onBeforeMount(async () => {
   notice.value = await fetchNotice(props.id as string);
