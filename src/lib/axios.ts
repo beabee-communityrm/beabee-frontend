@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-import { notifyError } from '../plugins/notify';
 import env from '../env';
 
 axios.defaults.baseURL = env.apiUrl;
@@ -9,11 +8,12 @@ const onResponseSuccess = (response: AxiosResponse) => response;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onResponseError = (error: any) => {
-  if (!error.response) return notifyError();
+  // if (!error.response) return notifyError();
 
   const status = error.response.status;
   if (status >= 500) {
-    notifyError();
+    // TODO:
+    // notifyError();
   }
 
   return Promise.reject(error);

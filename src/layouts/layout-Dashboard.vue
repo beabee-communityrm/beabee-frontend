@@ -21,5 +21,5 @@ import { breadcrumbItems } from '../store/breadcrumb';
 import TheBreadcrumb from '../components/TheBreadcrumb.vue';
 import { computed } from 'vue';
 
-const items = computed(() => breadcrumbItems.value.flatMap((bi) => bi.value));
+const items = computed(() => breadcrumbItems.flatMap((bi) => bi.value));
 </script>

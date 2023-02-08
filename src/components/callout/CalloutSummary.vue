@@ -56,6 +56,7 @@ import {
 import env from './../../env';
 import ItemStatusText from '../item/ItemStatusText.vue';
 import ItemDateRange from '../item/ItemDateRange.vue';
+import AppSubHeading from '../AppSubHeading.vue';
 
 const { t } = useI18n();
 

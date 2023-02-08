@@ -1,4 +1,4 @@
-import { onBeforeMount, onBeforeUnmount, Ref, ref } from 'vue';
+import { onBeforeMount, onBeforeUnmount, Ref, reactive } from 'vue';
 
 interface Item {
   title: string;
@@ -6,13 +6,13 @@ interface Item {
   icon?: string;
 }
 
-export const breadcrumbItems = ref<Ref<Item[]>[]>([]);
+export const breadcrumbItems = reactive<Ref<Item[]>[]>([]);
 
 export const addBreadcrumb = (items: Ref<Item[]>): void => {
   onBeforeMount(() => {
-    breadcrumbItems.value.push(items);
+    breadcrumbItems.push(items);
   });
   onBeforeUnmount(() => {
-    breadcrumbItems.value.pop();
+    breadcrumbItems.pop();
   });
 };

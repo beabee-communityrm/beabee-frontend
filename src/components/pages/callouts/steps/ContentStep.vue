@@ -1,9 +1,14 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div>
-    <AppAlert v-if="wasJustReplicated" variant="success" class="mb-4">
+    <AppNotification
+      v-if="wasJustReplicated"
+      variant="success"
+      title="Success"
+      class="mb-4"
+    >
       {{ t('editCallout.replicated') }}
-    </AppAlert>
+    </AppNotification>
 
     <AppAlert v-else-if="warnAboutEditing" variant="warning" class="mb-4">
       <template #icon>
@@ -67,6 +72,7 @@ import RichTextEditor from '../../../rte/RichTextEditor.vue';
 import AppFormSection from '../../../forms/AppFormSection.vue';
 
 import 'formiojs/dist/formio.builder.css';
+import AppNotification from '../../../AppNotification.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
