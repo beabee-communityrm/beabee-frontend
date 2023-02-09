@@ -41,7 +41,7 @@ const emit = defineEmits(['remove']);
 const props = defineProps<{
   variant: 'success' | 'warning' | 'error';
   title: string;
-  removeable?: 'auto' | '';
+  removeable?: 'auto' | '' | true;
 }>();
 
 const circleRadius = 10;
