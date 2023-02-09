@@ -16,13 +16,6 @@ meta:
     </div>
   </PageTitle>
 
-  <AppAlert v-if="wasJustDeleted" class="mb-8">
-    <template #icon>
-      <font-awesome-icon :icon="['fa', 'magic']" />
-    </template>
-    {{ t('calloutAdmin.deleted') }}
-  </AppAlert>
-
   <div class="md:flex">
     <div class="hidden flex-none basis-[220px] lg:block">
       <AppVTabs v-model="currentStatus" :items="statusItems" />
@@ -89,7 +82,6 @@ import { Header, SortType } from '../../../components/table/table.interface';
 import AppButton from '../../../components/forms/AppButton.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import AppTable from '../../../components/table/AppTable.vue';
-import AppAlert from '../../../components/AppAlert.vue';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
 import {
   GetCalloutDataWith,
@@ -117,8 +109,6 @@ addBreadcrumb(
     },
   ])
 );
-
-const wasJustDeleted = route.query.deleted !== undefined;
 
 const statusItems = [
   {

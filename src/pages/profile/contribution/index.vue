@@ -9,15 +9,30 @@ meta:
 
   <div v-if="!isIniting" class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
     <div>
-      <AppAlert v-if="updatedPaymentSource" class="mb-8">{{
-        t('contribution.updatedPaymentSource')
-      }}</AppAlert>
-      <AppAlert v-if="startedContribution" class="mb-8">{{
-        t('contribution.startedContribution')
-      }}</AppAlert>
-      <AppAlert v-if="cancelledContribution" class="mb-8" variant="danger">
-        {{ t('contribution.cancelledContribution') }}
-      </AppAlert>
+      <AppNotification
+        v-if="updatedPaymentSource"
+        class="mb-8"
+        variant="success"
+        :title="t('contribution.updatedPaymentSource')"
+        removeable
+        @remove="updatedPaymentSource = false"
+      />
+      <AppNotification
+        v-if="startedContribution"
+        class="mb-8"
+        variant="success"
+        :title="t('contribution.startedContribution')"
+        removeable
+        @remove="startedContribution = false"
+      />
+      <AppNotification
+        v-if="cancelledContribution"
+        class="mb-8"
+        variant="error"
+        :title="t('contribution.cancelledContribution')"
+        removeable
+        @remove="cancelledContribution = false"
+      />
 
       <ContributionBox :contribution="contribution" class="mb-9" />
 
@@ -57,7 +72,6 @@ import ContributionBox from '../../../components/pages/profile/contribution/Cont
 import CancelContribution from '../../../components/pages/profile/contribution/CancelContribution.vue';
 import PaymentSource from '../../../components/pages/profile/contribution/PaymentSource.vue';
 import PageTitle from '../../../components/PageTitle.vue';
-import AppAlert from '../../../components/AppAlert.vue';
 import ContactPaymentsHistory from '../../../components/contact/ContactPaymentsHistory.vue';
 import { currentUser } from '../../../store';
 import UpdateContribution from '../../../components/pages/profile/contribution/UpdateContribution.vue';
@@ -65,13 +79,16 @@ import { ContributionInfo } from '../../../utils/api/api.interface';
 import { fetchContribution } from '../../../utils/api/contact';
 import { ContributionContent } from '../../../components/contribution/contribution.interface';
 import { fetchContent } from '../../../utils/api/content';
+import AppNotification from '../../../components/AppNotification.vue';
 
 const { t } = useI18n();
-
 const route = useRoute();
-const updatedPaymentSource = route.query.updatedPaymentSource !== undefined;
-const startedContribution = route.query.startedContribution !== undefined;
-const cancelledContribution = route.query.cancelled !== undefined;
+
+const updatedPaymentSource = ref(
+  route.query.updatedPaymentSource !== undefined
+);
+const startedContribution = ref(route.query.startedContribution !== undefined);
+const cancelledContribution = ref(route.query.cancelled !== undefined);
 
 const content = ref<ContributionContent>({
   initialAmount: 5,

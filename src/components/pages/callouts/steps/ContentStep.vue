@@ -4,18 +4,15 @@
     <AppNotification
       v-if="wasJustReplicated"
       variant="success"
-      title="Success"
       class="mb-4"
-    >
-      {{ t('editCallout.replicated') }}
-    </AppNotification>
-
-    <AppAlert v-else-if="warnAboutEditing" variant="warning" class="mb-4">
-      <template #icon>
-        <font-awesome-icon :icon="['fa', 'exclamation']" />
-      </template>
-      {{ t('editCallout.warning') }}
-    </AppAlert>
+      :title="t('editCallout.replicated')"
+    />
+    <AppNotification
+      v-if="warnAboutEditing"
+      variant="warning"
+      class="mb-4"
+      :title="t('editCallout.warning')"
+    />
 
     <AppFormSection :help="inputT('intro.help')">
       <RichTextEditor
@@ -67,7 +64,6 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { ContentStepProps } from '../callouts.interface';
-import AppAlert from '../../../AppAlert.vue';
 import RichTextEditor from '../../../rte/RichTextEditor.vue';
 import AppFormSection from '../../../forms/AppFormSection.vue';
 

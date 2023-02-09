@@ -65,6 +65,7 @@ import useVuelidate from '@vuelidate/core';
 import AppAsyncButton from '../../../components/forms/AppAsyncButton.vue';
 import { formatDistanceLocale } from '../../../utils/dates/locale-date-formats';
 import { addBreadcrumb } from '../../../store/breadcrumb';
+import { addNotification } from '../../../store/notifications';
 
 const props = defineProps<{ id?: string }>();
 
@@ -170,14 +171,21 @@ async function saveCallout(asDraft = false) {
 
 async function handleUpdate() {
   const callout = await saveCallout();
-  router.push({
-    path: '/admin/callouts/view/' + callout.slug,
-    query: { [props.id ? 'updated' : 'created']: null },
+  addNotification({
+    title: props.id
+      ? t('calloutAdminOverview.updated')
+      : t('calloutAdminOverview.added'),
+    variant: 'success',
   });
+  router.push({ path: '/admin/callouts/view/' + callout.slug });
 }
 
 async function handleSaveDraft() {
   const callout = await saveCallout(true);
+  addNotification({
+    title: 'Saved draft',
+    variant: 'success',
+  });
   router.push({ path: '/admin/callouts/edit/' + callout.slug });
   // If reverting from other status then reset form
   if (!isNewOrDraft.value) {
