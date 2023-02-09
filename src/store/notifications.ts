@@ -1,6 +1,7 @@
 import { Component, reactive } from 'vue';
 
 interface Notification {
+  id: number;
   title: string;
   variant: 'success' | 'warning' | 'error';
   body?: Component;
@@ -8,6 +9,7 @@ interface Notification {
 
 export const notifications = reactive<Notification[]>([]);
 
-export function addNotification(notification: Notification) {
-  notifications.push(notification);
+let uniqueId = 0;
+export function addNotification(notification: Omit<Notification, 'id'>) {
+  notifications.push({ ...notification, id: uniqueId++ });
 }

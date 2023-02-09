@@ -1,13 +1,15 @@
 <template>
-  <div class="fixed bottom-4 left-4 z-50 w-60">
+  <div class="fixed bottom-16 left-16 z-50 w-96">
     <div class="flex flex-col gap-4">
-      <transition-group name="fade">
+      <transition-group name="notification">
         <AppNotfication
-          v-for="(notification, i) in notifications"
-          :key="i"
+          v-for="notification in notifications"
+          :key="notification.id"
           :title="notification.title"
           :variant="notification.variant"
-          @remove="removeItem(i)"
+          class="shadow-lg"
+          removeable="auto"
+          @remove="removeItem(notification.id)"
         />
       </transition-group>
     </div>
@@ -18,17 +20,26 @@
 import AppNotfication from './AppNotification.vue';
 import { notifications } from '../store/notifications';
 
-function removeItem(i: number) {
-  notifications.splice(i, 1);
+function removeItem(id: number) {
+  notifications.splice(
+    notifications.findIndex((n) => n.id === id),
+    1
+  );
 }
 </script>
 
 <style lang="postcss" scoped>
-.fade-leave-active {
-  @apply transition duration-200 ease-linear;
+.notification-move,
+.notification-enter-active,
+.notification-leave-active {
+  @apply transition;
 }
 
-.fade-leave-to {
-  @apply opacity-0;
+.notification-leave-active {
+  @apply absolute w-full;
+}
+.notification-enter-from,
+.notification-leave-to {
+  @apply translate-y-6 opacity-0;
 }
 </style>
