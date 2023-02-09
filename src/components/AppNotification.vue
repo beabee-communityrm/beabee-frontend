@@ -1,37 +1,37 @@
 <template>
-  <div class="bg-white text-sm text-body-80">
-    <div class="border-t-8 border-t-[currentColor]" :class="colorClass" />
-    <div class="p-4">
-      <div class="mb-2 flex items-center gap-4">
-        <span class="flex-1 font-bold" :class="colorClass">
-          {{ title }}
-        </span>
-        <template v-if="removeable">
-          <svg
-            class="h-5 w-5 -rotate-90"
-            :class="colorClass"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              class="fill-none stroke-[currentColor] stroke-[4] transition-[stroke-dasharray]"
-              :r="circleRadius"
-              cx="12"
-              cy="12"
-              :style="circleStyle"
-            />
-          </svg>
-          <a
-            class="inline-block cursor-pointer px-2 py-1 hover:bg-grey-lighter hover:text-body"
-            @click="emit('remove')"
-          >
-            <font-awesome-icon :icon="['fa', 'times']" />
-          </a>
-        </template>
-      </div>
+  <aside
+    class="border-t-8 bg-white p-4 text-sm text-body-80"
+    :class="colorClass[0]"
+  >
+    <header class="mb-2 flex items-start gap-4">
+      <span class="flex-1 font-bold" :class="colorClass[1]">
+        {{ title }}
+      </span>
+      <template v-if="removeable !== undefined">
+        <svg
+          class="h-5 w-5 -rotate-90"
+          :class="colorClass[2]"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="fill-none stroke-[4] transition-[stroke-dasharray]"
+            :r="circleRadius"
+            cx="12"
+            cy="12"
+            :style="circleStyle"
+          />
+        </svg>
+        <a
+          class="inline-block w-5 cursor-pointer text-center leading-5 hover:bg-grey-lighter hover:text-body"
+          @click="emit('remove')"
+        >
+          <font-awesome-icon :icon="['fa', 'times']" />
+        </a>
+      </template>
+    </header>
 
-      <slot></slot>
-    </div>
-  </div>
+    <slot></slot>
+  </aside>
 </template>
 
 <script lang="ts" setup>
@@ -41,7 +41,7 @@ const emit = defineEmits(['remove']);
 const props = defineProps<{
   variant: 'success' | 'warning' | 'error';
   title: string;
-  removeable?: 'auto' | true;
+  removeable?: 'auto' | '';
 }>();
 
 const circleRadius = 10;
@@ -66,11 +66,11 @@ const circleStyle = computed(() => ({
 const colorClass = computed(() => {
   switch (props.variant) {
     case 'success':
-      return 'text-success';
+      return ['border-t-success', 'text-success', 'stroke-success'];
     case 'warning':
-      return 'text-warning';
+      return ['border-t-warning', '', 'stroke-warning'];
     default:
-      return 'text-danger';
+      return ['border-t-danger', 'text-danger', 'stroke-danger'];
   }
 });
 </script>
