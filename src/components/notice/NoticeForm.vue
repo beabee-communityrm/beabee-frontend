@@ -1,7 +1,6 @@
 <template>
   <AppForm
     :button-text="t('actions.save')"
-    :success-text="t('addNotice.noticeSaved')"
     @submit.prevent="$emit('submit', convertFormData(data))"
   >
     <div class="mb-3">

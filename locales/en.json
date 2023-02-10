@@ -910,7 +910,9 @@
         "title": "Delete notice?"
       }
     },
-    "summary": "Summary"
+    "created": "Your new notice was successfully created.",
+    "summary": "Summary",
+    "updated": "Your notice was successfully updated."
   },
   "notices": {
     "addNotice": "Add notice",

@@ -38,6 +38,9 @@ addBreadcrumb(
 
 async function handleSubmit(noticeData: CreateNoticeData) {
   const notice: GetNoticeData = await createNotice(noticeData);
-  router.push('/admin/notices/view/' + notice.id);
+  router.push({
+    path: '/admin/notices/view/' + notice.id,
+    query: { ['created']: null },
+  });
 }
 </script>

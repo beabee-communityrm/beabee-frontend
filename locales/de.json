@@ -910,7 +910,9 @@
         "title": "Hinweis löschen?"
       }
     },
-    "summary": "Zusammenfassung"
+    "created": "Super, dein Hinweis wurde erstellt!",
+    "summary": "Zusammenfassung",
+    "updated": "Änderungen gespeichert!"
   },
   "notices": {
     "addNotice": "Hinweis hinzufügen",
