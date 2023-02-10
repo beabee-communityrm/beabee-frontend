@@ -8,7 +8,7 @@ meta:
 <template>
   <template v-if="notice">
     <PageTitle
-      :title="`${t('editNotice.title')}: ${notice.name}`"
+      :title="t('editNotice.title', { title: notice.name })"
       border
     ></PageTitle>
 

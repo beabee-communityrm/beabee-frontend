@@ -17,10 +17,8 @@
     "continue": "Weiter",
     "delete": "Löschen",
     "edit": "Bearbeiten",
-    "next": "Nächste",
     "participate": "Teilnehmen",
     "preview": "Vorschau",
-    "previous": "Vorherige",
     "publish": "Veröffentlichen",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
@@ -660,7 +658,7 @@
     "warning": "Vorsicht! Du bearbeitest einen veröffentlichten Callout. Wenn du Umfrageelemente bearbeitest riskierst Du, Antworten unbrauchbar zu machen."
   },
   "editNotice": {
-    "title": "Hinweis bearbeiten"
+    "title": "Bearbeiten: {title}"
   },
   "footer": {
     "contactUs": "Kontaktieren Sie uns unter",

@@ -17,10 +17,8 @@
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
-    "next": "Next",
     "participate": "Participate",
     "preview": "Preview",
-    "previous": "Previous",
     "publish": "Publish",
     "replicate": "Replicate",
     "reset": "Reset",
@@ -660,7 +658,7 @@
     "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
   "editNotice": {
-    "title": "Edit notice"
+    "title": "Edit: {title}"
   },
   "footer": {
     "contactUs": "Contact us at",
