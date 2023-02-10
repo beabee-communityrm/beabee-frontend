@@ -231,11 +231,6 @@
       "services": "Or quickly share using one of these services:"
     },
     "showingPreview": "Response submission is disabled in preview mode",
-    "status": {
-      "endedOn": "on {date}",
-      "endsIn": "Ends in {duration}",
-      "startsIn": "starts in {duration}"
-    },
     "toContributionPage": "Edit my contribution",
     "updateContribution": "please update your contribution",
     "youResponded": "You replied to this callout ♥"
@@ -780,6 +775,13 @@
     "viewOpenCallouts": "View open callouts",
     "welcome": "Welcome aboard {firstName}!",
     "yourProfile": "Your profile"
+  },
+  "item": {
+    "status": {
+      "endedOn": "on {date}",
+      "endsIn": "Ends in {duration}",
+      "startsIn": "starts in {duration}"
+    }
   },
   "join": {
     "absorbFeeForce": "{amount} contributions must absorb the {fee} fee.",

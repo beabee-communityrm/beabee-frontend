@@ -48,7 +48,11 @@
     </div>
 
     <div class="mb-3">
-      <AppInput v-model="data.url" :label="t('addNotice.form.url')" />
+      <AppInput
+        v-model="data.url"
+        :required="!!data.buttonText"
+        :label="t('addNotice.form.url')"
+      />
     </div>
   </AppForm>
 </template>
@@ -105,7 +109,7 @@ function convertFormData(notice: NoticeFormData): CreateNoticeData {
     expires: new Date(notice.expirationDate + 'T' + notice.expirationTime),
     text: notice.text,
     buttonText: notice.buttonText,
-    url: notice.buttonText,
+    url: notice.url,
   };
 }
 </script>
