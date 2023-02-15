@@ -3,21 +3,21 @@
     <AppItemStatus :status="item.status" />
     <span v-if="item.status === ItemStatus.Scheduled && item.starts">
       {{
-        t('callout.status.startsIn', {
+        t('item.status.startsIn', {
           duration: formatDistanceLocale(item.starts, new Date()),
         })
       }}
     </span>
     <span v-else-if="item.status === ItemStatus.Open && item.expires">
       {{
-        t('notice.status.endsIn', {
+        t('item.status.endsIn', {
           duration: formatDistanceLocale(item.expires, new Date()),
         })
       }}
     </span>
     <span v-else-if="item.status === ItemStatus.Ended && item.expires">
       {{
-        t('notice.status.endedOn', {
+        t('item.status.endedOn', {
           date: formatLocale(item.expires, 'P'),
         })
       }}

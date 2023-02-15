@@ -8,7 +8,7 @@ meta:
 <template>
   <template v-if="notice">
     <PageTitle
-      :title="`${t('editNotice.title')}: ${notice.name}`"
+      :title="t('editNotice.title', { title: notice.name })"
       border
     ></PageTitle>
 
@@ -63,6 +63,10 @@ async function handleSubmit(formData: CreateNoticeData) {
     notice.value.id,
     formData
   );
-  if (updatedNotice) router.push('/admin/notices/view/' + updatedNotice.id);
+  if (updatedNotice)
+    router.push({
+      path: '/admin/notices/view/' + updatedNotice.id,
+      query: { ['updated']: null },
+    });
 }
 </script>
