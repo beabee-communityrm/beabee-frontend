@@ -283,6 +283,7 @@
   },
   "calloutResponse": {
     "data": {
+      "bucket": "Bucket",
       "callout": "Callout",
       "contact": "Contact",
       "createdAt": "Date submitted",
@@ -292,6 +293,11 @@
     "dataGroup": {
       "response": "Response"
     }
+  },
+  "calloutResponseBuckets": {
+    "inbox": "Inbox",
+    "trash": "Trash",
+    "verified": "Verified"
   },
   "calloutResponsesPage": {
     "response": "Response",
