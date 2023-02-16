@@ -35,7 +35,6 @@ meta:
         >
           {{ t('advancedSearch.button') }}
           <font-awesome-icon
-            class="ml-2"
             :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
           />
           <div
