@@ -62,7 +62,7 @@ import {
 } from '../../../../utils/api/api.interface';
 import { createSegment, updateSegment } from '../../../../utils/api/segments';
 import AppModal from '../../../AppModal.vue';
-import AppButton from '../../../forms/AppButton.vue';
+import AppButton from '../../../button/AppButton.vue';
 import AppInput from '../../../forms/AppInput.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
 

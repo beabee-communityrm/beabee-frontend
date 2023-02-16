@@ -33,8 +33,8 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
-import AppButton from './forms/AppButton.vue';
-import AppButtonGroup from './forms/AppButtonGroup.vue';
+import AppButton from './button/AppButton.vue';
+import AppButtonGroup from './button/AppButtonGroup.vue';
 
 const props = defineProps<{
   modelValue: number;

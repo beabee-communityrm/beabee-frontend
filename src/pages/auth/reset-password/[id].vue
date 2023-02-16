@@ -81,7 +81,7 @@ meta:
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
 import AppInput from '../../../components/forms/AppInput.vue';
-import AppButton from '../../../components/forms/AppButton.vue';
+import AppButton from '../../../components/button/AppButton.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';

@@ -20,7 +20,7 @@
   </AppModal>
 </template>
 <script lang="ts" setup>
-import AppButton from '../components/forms/AppButton.vue';
+import AppButton from './button/AppButton.vue';
 import AppModal from './AppModal.vue';
 
 defineEmits(['close', 'confirm']);
