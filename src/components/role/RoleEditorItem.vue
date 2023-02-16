@@ -52,7 +52,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppButton from '../forms/AppButton.vue';
+import AppButton from '../button/AppButton.vue';
 import AppRoundBadge from '../AppRoundBadge.vue';
 import AppConfirmDialog from '../AppConfirmDialog.vue';
 import { ContactRoleData } from '../../utils/api/api.interface';

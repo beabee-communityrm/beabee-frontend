@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import AppButton from './forms/AppButton.vue';
+import AppButton from './button/AppButton.vue';
 import { GetNoticeData } from '../utils/api/api.interface';
 
 defineProps<{

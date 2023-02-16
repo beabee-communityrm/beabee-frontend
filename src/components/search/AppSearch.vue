@@ -93,7 +93,7 @@ import { RuleGroup } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { computed, reactive, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppButton from '../forms/AppButton.vue';
+import AppButton from '../button/AppButton.vue';
 import AppSelect from '../forms/AppSelect.vue';
 import AppSearchRuleOrGroup from './AppSearchRuleOrGroup.vue';
 import {

@@ -76,8 +76,8 @@ import AppHeading from '../../../../../../components/AppHeading.vue';
 import AppInfoList from '../../../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../../../components/AppInfoListItem.vue';
 import { formatLocale } from '../../../../../../utils/dates/locale-date-formats';
-import AppButton from '../../../../../../components/forms/AppButton.vue';
-import AppButtonGroup from '../../../../../../components/forms/AppButtonGroup.vue';
+import AppButton from '../../../../../../components/button/AppButton.vue';
+import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
 import { addBreadcrumb } from '../../../../../../store/breadcrumb';
 
 const props = defineProps<{

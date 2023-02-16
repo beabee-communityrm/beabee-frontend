@@ -151,7 +151,7 @@ import AppTable from '../../../components/table/AppTable.vue';
 import { SortType } from '../../../components/table/table.interface';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import { fetchSegments } from '../../../utils/api/segments';
-import AppButton from '../../../components/forms/AppButton.vue';
+import AppButton from '../../../components/button/AppButton.vue';
 import AppSearch from '../../../components/search/AppSearch.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';

@@ -115,7 +115,7 @@ import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import AppPaginatedResult from '../../../../../../components/AppPaginatedResult.vue';
-import AppButton from '../../../../../../components/forms/AppButton.vue';
+import AppButton from '../../../../../../components/button/AppButton.vue';
 import AppSelect from '../../../../../../components/forms/AppSelect.vue';
 import AppVTabs from '../../../../../../components/tabs/AppVTabs.vue';
 import {
