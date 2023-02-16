@@ -1,4 +1,4 @@
-import { Paginated } from '@beabee/beabee-common';
+import { Paginated, RuleGroup } from '@beabee/beabee-common';
 import axios from '../../lib/axios';
 import { deserializeDate } from '.';
 import { deserializeContact } from './contact';
@@ -7,6 +7,7 @@ import {
   GetCalloutResponsesQuery,
   GetCalloutResponseDataWith,
   Serial,
+  UpdateCalloutResponseData,
 } from './api.interface';
 
 // TODO: how to make this type safe?
@@ -33,4 +34,18 @@ export async function fetchCalloutResponses<
     ...data,
     items: data.items.map(deserializeCalloutResponse),
   };
+}
+
+export async function updateCalloutResponses(
+  rules: RuleGroup,
+  updates: UpdateCalloutResponseData
+): Promise<{ affected: number }> {
+  const { data } = await axios.patch<Serial<{ affected: number }>>(
+    '/callout-responses',
+    {
+      rules,
+      updates,
+    }
+  );
+  return data;
 }

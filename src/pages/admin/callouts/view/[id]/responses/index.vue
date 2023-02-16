@@ -42,16 +42,32 @@ meta:
       />
       <div class="mt-4 flex justify-between">
         <AppButtonGroup>
-          <AppButton
+          <AppDropdownButton
             icon="folder"
             variant="primaryOutlined"
             :disabled="!hasSelected"
-          ></AppButton>
-          <AppButton
+          >
+            <ul>
+              <li
+                v-for="bucket in buckets"
+                :key="bucket.id"
+                class="p-2 hover:bg-primary-5"
+                :class="{ hidden: bucket.id === currentBucket }"
+                @click="() => handleMoveBucket(bucket.id)"
+              >
+                {{
+                  t('calloutResponsesPage.moveToBucket', {
+                    bucket: bucket.label,
+                  })
+                }}
+              </li>
+            </ul>
+          </AppDropdownButton>
+          <AppDropdownButton
             icon="tag"
             variant="primaryOutlined"
             :disabled="!hasSelected"
-          ></AppButton>
+          />
         </AppButtonGroup>
         <AppPaginatedResult
           v-model:page="currentPage"
@@ -133,7 +149,9 @@ import {
 import { fetchResponses } from '../../../../../../utils/api/callout';
 import { convertComponentsToFilters } from '../../../../../../utils/callouts';
 import { formatDistanceLocale } from '../../../../../../utils/dates/locale-date-formats';
-import AppButtonGroup from '../../../../../../components/forms/AppButtonGroup.vue';
+import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
+import AppDropdownButton from '../../../../../../components/button/AppDropdownButton.vue';
+import { updateCalloutResponses } from '../../../../../../utils/api/callout-response';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
@@ -263,4 +281,21 @@ watchEffect(async () => {
     selected: false,
   }));
 });
+
+async function handleMoveBucket(bucket: string): Promise<void> {
+  if (!responseItems.value) return; // Can't move bucket without selected items
+
+  const ruleGroup: RuleGroup = {
+    condition: 'OR',
+    rules: responseItems.value
+      .filter((item) => item.selected)
+      .map((item) => ({
+        field: 'id',
+        operator: 'equal',
+        value: [item.id],
+      })),
+  };
+
+  await updateCalloutResponses(ruleGroup, { bucket });
+}
 </script>

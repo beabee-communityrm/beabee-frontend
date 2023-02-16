@@ -300,6 +300,7 @@
     "verified": "Verified"
   },
   "calloutResponsesPage": {
+    "moveToBucket": "Move to {bucket}",
     "response": "Response",
     "responseId": "Response {id}",
     "showingOf": "Showing {start} to {end} responses out of {total}"
