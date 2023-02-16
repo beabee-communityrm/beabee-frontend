@@ -20,6 +20,7 @@ meta:
           :class="showAdvancedSearch && 'relative rounded-b-none'"
           @click="showAdvancedSearch = !showAdvancedSearch"
         >
+          <font-awesome-icon class="mr-2" :icon="['fa', 'filter']" />
           {{ t('advancedSearch.button') }}
           <font-awesome-icon
             class="ml-2"
@@ -39,11 +40,23 @@ meta:
         :has-changed="false"
         @reset="currentRules = undefined"
       />
+      <div class="flex justify-between">
+        <div>Actions</div>
+        <AppPaginatedResult
+          v-model:page="currentPage"
+          v-model:page-size="currentPageSize"
+          :result="responses"
+          keypath="calloutResponsesPage.showingOf"
+          class="mt-4"
+          no-page-size
+        />
+      </div>
       <AppTable
         v-model:sort="currentSort"
         :headers="headers"
-        :items="responses?.items || null"
-        class="w-full"
+        :items="responseItems || null"
+        selectable
+        class="mt-2 w-full"
       >
         <template #response="{ item }">
           <router-link
@@ -121,6 +134,9 @@ const router = useRouter();
 
 const responses = ref<Paginated<GetCalloutResponseDataWith<'contact'>>>();
 const showAdvancedSearch = ref(false);
+
+const responseItems =
+  ref<(GetCalloutResponseDataWith<'contact'> & { selected: boolean })[]>();
 
 const responsesUrl = computed(
   () =>
@@ -226,5 +242,10 @@ watchEffect(async () => {
     },
     ['contact']
   );
+
+  responseItems.value = responses.value.items.map((r) => ({
+    ...r,
+    selected: false,
+  }));
 });
 </script>

@@ -18,21 +18,23 @@
     </p>
 
     <div class="flex gap-2">
-      <p class="flex-1 self-center">
-        <i18n-t v-if="result.count > 0" keypath="common.pageCount">
-          <template #pageNumber
-            ><b>{{ n(props.page + 1) }}</b></template
-          >
-          <template #pageTotal
-            ><b>{{ n(totalPages) }}</b></template
-          >
-        </i18n-t>
-      </p>
-      <AppSelect
-        v-model="currentPageSize"
-        :items="pageSizes"
-        input-class="text-sm"
-      />
+      <template v-if="!noPageSize">
+        <p class="flex-1 self-center">
+          <i18n-t v-if="result.count > 0" keypath="common.pageCount">
+            <template #pageNumber
+              ><b>{{ n(props.page + 1) }}</b></template
+            >
+            <template #pageTotal
+              ><b>{{ n(totalPages) }}</b></template
+            >
+          </i18n-t>
+        </p>
+        <AppSelect
+          v-model="currentPageSize"
+          :items="pageSizes"
+          input-class="text-sm"
+        />
+      </template>
       <AppPagination
         v-if="totalPages > 1"
         v-model="currentPage"
@@ -55,6 +57,7 @@ const props = defineProps<{
   pageSize: number;
   result: Paginated<unknown> | undefined;
   keypath: string;
+  noPageSize?: boolean;
 }>();
 
 const { t, n } = useI18n();

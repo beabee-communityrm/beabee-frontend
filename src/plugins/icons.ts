@@ -66,6 +66,7 @@ import {
   faFloppyDisk,
   faThList,
   faSignHanging,
+  faFilter,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -98,6 +99,7 @@ library.add(
   faCogs,
   faExternalLinkAlt,
   faPencilAlt,
+  faFilter,
   faNewspaper,
   faClone,
   faTrash,

@@ -2,6 +2,9 @@
   <table class="">
     <thead v-if="!hideHeaders" class="border-b border-primary-20 text-sm">
       <tr class="align-bottom">
+        <th v-if="selectable" class="w-0 p-2">
+          <AppCheckbox v-model="allSelected" />
+        </th>
         <th
           v-for="(header, i) in headers"
           :key="i"
@@ -47,8 +50,11 @@
         v-for="(item, i) in items"
         :key="i"
         class="border-b border-primary-20"
-        :class="rowClass && rowClass(item)"
+        :class="rowClass(item)"
       >
+        <td v-if="selectable" class="p-2">
+          <AppCheckbox v-model="item.selected" />
+        </td>
         <td
           v-for="(header, j) in headers"
           :key="j"
@@ -67,6 +73,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import AppCheckbox from '../forms/AppCheckbox.vue';
 import { Header, SortType } from './table.interface';
 
 interface Sort {
@@ -74,14 +81,19 @@ interface Sort {
   type: SortType;
 }
 
+// TODO: it would be really nice to be able to make this a generic
+// but unfortunately Vue doesn't support that at the moment
+// https://github.com/vuejs/rfcs/discussions/436
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Item = any;
+
 const props = defineProps<{
   sort?: Sort;
   headers: Header[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  items: any[] | null; // TODO: improve typing
+  items: Item[] | null;
+  selectable?: boolean;
   hideHeaders?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  rowClass?: (item: any) => string;
+  rowClass?: (item: Item) => string;
 }>();
 
 const emit = defineEmits(['update:sort']);
@@ -93,7 +105,27 @@ const sort = computed({
   set: (value) => emit('update:sort', value),
 });
 
-function sortBy(header: Header) {
+const allSelected = computed({
+  get: () =>
+    props.selectable && props.items
+      ? props.items.every((i) => i.selected)
+      : false,
+  set: (newValue) => {
+    if (!props.items) return;
+    for (const item of props.items) {
+      item.selected = newValue;
+    }
+  },
+});
+
+function rowClass(item: Item): string {
+  return (
+    (props.rowClass ? props.rowClass(item) : '') +
+    (props.selectable && item.selected ? ' bg-primary-10' : '')
+  );
+}
+
+function sortBy(header: Header): void {
   if (!header.sortable) return;
 
   sort.value = {
