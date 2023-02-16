@@ -66,11 +66,13 @@ import {
   faFloppyDisk,
   faThList,
   faSignHanging,
+  faFolder,
   faFilter,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
   farCalendar,
+  faFolder,
   faHouse,
   faAddressCard,
   faSignInAlt,

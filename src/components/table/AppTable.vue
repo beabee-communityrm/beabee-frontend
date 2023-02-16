@@ -3,7 +3,7 @@
     <thead v-if="!hideHeaders" class="border-b border-primary-20 text-sm">
       <tr class="align-bottom">
         <th v-if="selectable" class="w-0 p-2">
-          <AppCheckbox v-model="allSelected" />
+          <AppCheckbox v-model="allSelected" class="h-5" />
         </th>
         <th
           v-for="(header, i) in headers"
@@ -49,7 +49,7 @@
       <tr
         v-for="(item, i) in items"
         :key="i"
-        class="border-b border-primary-20"
+        class="border-b border-primary-20 align-top"
         :class="rowClass(item)"
       >
         <td v-if="selectable" class="p-2">
@@ -58,7 +58,7 @@
         <td
           v-for="(header, j) in headers"
           :key="j"
-          class="p-2 align-top"
+          class="p-2"
           :align="header.align || undefined"
         >
           <slot :name="header.value" :item="item" :value="item[header.value]">{{

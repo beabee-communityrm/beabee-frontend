@@ -17,10 +17,10 @@ meta:
           variant="primaryOutlined"
           size="sm"
           class="bg-white/0"
+          icon="filter"
           :class="showAdvancedSearch && 'relative rounded-b-none'"
           @click="showAdvancedSearch = !showAdvancedSearch"
         >
-          <font-awesome-icon class="mr-2" :icon="['fa', 'filter']" />
           {{ t('advancedSearch.button') }}
           <font-awesome-icon
             class="ml-2"
@@ -40,14 +40,24 @@ meta:
         :has-changed="false"
         @reset="currentRules = undefined"
       />
-      <div class="flex justify-between">
-        <div>Actions</div>
+      <div class="mt-4 flex justify-between">
+        <AppButtonGroup>
+          <AppButton
+            icon="folder"
+            variant="primaryOutlined"
+            :disabled="!hasSelected"
+          ></AppButton>
+          <AppButton
+            icon="tag"
+            variant="primaryOutlined"
+            :disabled="!hasSelected"
+          ></AppButton>
+        </AppButtonGroup>
         <AppPaginatedResult
           v-model:page="currentPage"
           v-model:page-size="currentPageSize"
           :result="responses"
           keypath="calloutResponsesPage.showingOf"
-          class="mt-4"
           no-page-size
         />
       </div>
@@ -123,6 +133,7 @@ import {
 import { fetchResponses } from '../../../../../../utils/api/callout';
 import { convertComponentsToFilters } from '../../../../../../utils/callouts';
 import { formatDistanceLocale } from '../../../../../../utils/dates/locale-date-formats';
+import AppButtonGroup from '../../../../../../components/forms/AppButtonGroup.vue';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
@@ -137,6 +148,10 @@ const showAdvancedSearch = ref(false);
 
 const responseItems =
   ref<(GetCalloutResponseDataWith<'contact'> & { selected: boolean })[]>();
+
+const hasSelected = computed(
+  () => responseItems.value?.some((ri) => ri.selected) || false
+);
 
 const responsesUrl = computed(
   () =>
