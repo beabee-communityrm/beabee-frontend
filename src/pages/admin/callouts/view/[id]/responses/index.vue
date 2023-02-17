@@ -45,6 +45,7 @@ meta:
           <AppDropdownButton
             icon="folder"
             variant="primaryOutlined"
+            :loading="doingAction"
             :disabled="!hasSelected"
           >
             <ul>
@@ -163,6 +164,7 @@ const router = useRouter();
 
 const responses = ref<Paginated<GetCalloutResponseDataWith<'contact'>>>();
 const showAdvancedSearch = ref(false);
+const doingAction = ref(false);
 
 const responseItems =
   ref<(GetCalloutResponseDataWith<'contact'> & { selected: boolean })[]>();
@@ -255,7 +257,7 @@ const currentRules = computed({
     router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
 });
 
-watchEffect(async () => {
+async function refreshResponses() {
   const bucketRule: Rule = currentBucket.value
     ? { field: 'bucket', operator: 'equal', value: [currentBucket.value] }
     : { field: 'bucket', operator: 'is_empty', value: [] };
@@ -280,10 +282,14 @@ watchEffect(async () => {
     ...r,
     selected: false,
   }));
-});
+}
+
+watchEffect(refreshResponses);
 
 async function handleMoveBucket(bucket: string): Promise<void> {
   if (!responseItems.value) return; // Can't move bucket without selected items
+
+  doingAction.value = true;
 
   const ruleGroup: RuleGroup = {
     condition: 'OR',
@@ -297,5 +303,8 @@ async function handleMoveBucket(bucket: string): Promise<void> {
   };
 
   await updateCalloutResponses(ruleGroup, { bucket });
+  await refreshResponses();
+
+  doingAction.value = false;
 }
 </script>
