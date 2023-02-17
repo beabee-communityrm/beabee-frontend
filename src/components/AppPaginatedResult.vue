@@ -45,7 +45,7 @@
 </template>
 <script lang="ts" setup>
 import { Paginated } from '@beabee/beabee-common';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppSelect from './forms/AppSelect.vue';
 import AppPagination from './AppPagination.vue';
@@ -81,5 +81,14 @@ const pageSizes = computed(() =>
 
 const totalPages = computed(() =>
   props.result ? Math.ceil(props.result.total / currentPageSize.value) : 0
+);
+
+watch(
+  () => props.result?.total,
+  () => {
+    if (currentPage.value > totalPages.value - 1) {
+      currentPage.value = Math.max(0, totalPages.value - 1);
+    }
+  }
 );
 </script>
