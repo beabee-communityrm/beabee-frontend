@@ -103,6 +103,11 @@ meta:
           </router-link>
           <span v-else>-</span>
         </template>
+        <template #tags="{ value }">
+          <span class="whitespace-normal">
+            <ContactTag v-for="tag in value" :key="tag.id" :tag="tag.name" />
+          </span>
+        </template>
         <template #createdAt="{ value }">
           {{
             t('common.timeAgo', {
@@ -153,6 +158,7 @@ import { formatDistanceLocale } from '../../../../../../utils/dates/locale-date-
 import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
 import AppDropdownButton from '../../../../../../components/button/AppDropdownButton.vue';
 import { updateCalloutResponses } from '../../../../../../utils/api/callout-response';
+import ContactTag from '../../../../../../components/contact/ContactTag.vue';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
@@ -275,7 +281,7 @@ async function refreshResponses() {
       order: currentSort.value.type,
       rules,
     },
-    ['contact']
+    ['contact', 'tags']
   );
 
   responseItems.value = responses.value.items.map((r) => ({

@@ -356,13 +356,19 @@ interface NoticeData {
   buttonText?: string;
   url?: string;
 }
-export type GetCalloutResponseWith = 'answers' | 'callout' | 'contact' | void;
+export type GetCalloutResponseWith =
+  | 'answers'
+  | 'callout'
+  | 'contact'
+  | 'tags'
+  | void;
 
 export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
   GetCalloutResponseData &
     ('answers' extends With ? { answers: CalloutResponseAnswers } : Noop) &
     ('callout' extends With ? { callout: GetCalloutData } : Noop) &
-    ('contact' extends With ? { contact: GetContactData | null } : Noop);
+    ('contact' extends With ? { contact: GetContactData | null } : Noop) &
+    ('tags' extends With ? { tags: { id: string; name: string }[] } : Noop);
 
 export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 
