@@ -1,7 +1,7 @@
 <template>
   <AppLabel v-if="label" :label="label" />
   <div class="mb-1 mt-1 flex flex-row flex-wrap">
-    <ContactTag
+    <AppTag
       v-for="tag in modelValue"
       :key="tag"
       :tag="tag"
@@ -43,7 +43,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { computed } from 'vue';
-import ContactTag from '../../../contact/ContactTag.vue';
+import AppTag from '../../../AppTag.vue';
 import AppLabel from '../../../forms/AppLabel.vue';
 
 const props = defineProps<{

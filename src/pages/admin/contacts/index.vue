@@ -96,11 +96,7 @@ meta:
         </template>
         <template #tags="{ item }">
           <span class="whitespace-normal">
-            <ContactTag
-              v-for="tag in item.profile.tags"
-              :key="tag"
-              :tag="tag"
-            />
+            <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
           </span>
         </template>
         <template #contribution="{ item }">
@@ -154,7 +150,7 @@ import AppButton from '../../../components/button/AppButton.vue';
 import AppSearch from '../../../components/search/AppSearch.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
-import ContactTag from '../../../components/contact/ContactTag.vue';
+import AppTag from '../../../components/AppTag.vue';
 import {
   headers,
   filterGroups,

@@ -105,7 +105,7 @@ meta:
         </template>
         <template #tags="{ value }">
           <span class="whitespace-normal">
-            <ContactTag v-for="tag in value" :key="tag.id" :tag="tag.name" />
+            <AppTag v-for="tag in value" :key="tag.id" :tag="tag.name" />
           </span>
         </template>
         <template #createdAt="{ value }">
@@ -158,7 +158,7 @@ import { formatDistanceLocale } from '../../../../../../utils/dates/locale-date-
 import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
 import AppDropdownButton from '../../../../../../components/button/AppDropdownButton.vue';
 import { updateCalloutResponses } from '../../../../../../utils/api/callout-response';
-import ContactTag from '../../../../../../components/contact/ContactTag.vue';
+import AppTag from '../../../../../../components/AppTag.vue';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
