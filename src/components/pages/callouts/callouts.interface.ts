@@ -1,6 +1,8 @@
+import { CalloutFormSchema } from '@beabee/beabee-common';
+
 export interface ContentStepProps {
   introText: string;
-  formSchema: { components: unknown[] };
+  formSchema: CalloutFormSchema;
 }
 
 export interface TitleAndImageStepProps {
