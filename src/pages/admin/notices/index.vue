@@ -8,7 +8,9 @@ meta:
 <template>
   <PageTitle :title="t('menu.notices')" border>
     <div class="flex-0 ml-3">
-      <AppButton href="/tools/notices">{{ t('notices.addNotice') }}</AppButton>
+      <AppButton to="/admin/notices/add">{{
+        t('notices.addNotice')
+      }}</AppButton>
     </div>
   </PageTitle>
   <AppTable
@@ -21,12 +23,12 @@ meta:
       <AppItemStatus :status="value" />
     </template>
     <template #name="{ item, value }">
-      <a
-        :href="'/tools/notices/' + item.id"
+      <router-link
+        :to="'/admin/notices/view/' + item.id"
         class="text-base font-bold text-link"
       >
         {{ value }}
-      </a>
+      </router-link>
     </template>
     <template #createdAt="{ value }">
       <span class="whitespace-nowrap">{{ formatLocale(value, 'PP') }}</span>
@@ -54,8 +56,13 @@ import { fetchNotices } from '../../../utils/api/notice';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
 import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
+import { addBreadcrumb } from '../../../store/breadcrumb';
 
 const { t } = useI18n();
+
+addBreadcrumb(
+  computed(() => [{ title: t('menu.notices'), icon: 'sign-hanging' }])
+);
 
 const headers: Header[] = [
   {

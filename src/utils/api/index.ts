@@ -28,7 +28,11 @@ export function getRequestError(err: unknown): string | undefined {
 }
 
 export function deserializeDate(s: string): Date;
-export function deserializeDate(s: string | undefined): Date | undefined;
-export function deserializeDate(s: string | undefined): Date | undefined {
-  return s ? parseISO(s) : undefined;
+export function deserializeDate<T extends null | undefined>(
+  s: string | T
+): Date | T;
+export function deserializeDate<T extends null | undefined>(
+  s: string | T
+): Date | T {
+  return s == null ? s : parseISO(s);
 }

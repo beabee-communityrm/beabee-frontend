@@ -19,6 +19,7 @@ import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import PageTitle from '../../../../components/PageTitle.vue';
 import AppTabs from '../../../../components/tabs/AppTabs.vue';
+import { addBreadcrumb } from '../../../../store/breadcrumb';
 import { GetCalloutDataWith } from '../../../../utils/api/api.interface';
 import { fetchCallout, fetchResponses } from '../../../../utils/api/callout';
 
@@ -26,6 +27,16 @@ const props = defineProps<{ id: string }>();
 
 const route = useRoute();
 const { t } = useI18n();
+
+addBreadcrumb(
+  computed(() => [
+    { title: t('menu.callouts'), icon: 'bullhorn', to: '/admin/callouts' },
+    {
+      title: callout.value?.title || '',
+      to: '/admin/callouts/view/' + props.id,
+    },
+  ])
+);
 
 const callout = ref<GetCalloutDataWith<'form'>>();
 const responseCount = ref(-1);

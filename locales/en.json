@@ -17,10 +17,8 @@
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
-    "next": "Next",
     "participate": "Participate",
     "preview": "Preview",
-    "previous": "Previous",
     "publish": "Publish",
     "replicate": "Replicate",
     "reset": "Reset",
@@ -233,11 +231,6 @@
       "services": "Or quickly share using one of these services:"
     },
     "showingPreview": "Response submission is disabled in preview mode",
-    "status": {
-      "endedOn": "on {date}",
-      "endsIn": "Ends in {duration}",
-      "startsIn": "starts in {duration}"
-    },
     "toContributionPage": "Edit my contribution",
     "updateContribution": "please update your contribution",
     "youResponded": "You replied to this callout ♥"
@@ -661,7 +654,7 @@
     "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
   "editNotice": {
-    "title": "Edit notice"
+    "title": "Edit: {title}"
   },
   "footer": {
     "contactUs": "Contact us at",
@@ -784,6 +777,13 @@
     "viewOpenCallouts": "View open callouts",
     "welcome": "Welcome aboard {firstName}!",
     "yourProfile": "Your profile"
+  },
+  "item": {
+    "status": {
+      "endedOn": "on {date}",
+      "endsIn": "Ends in {duration}",
+      "startsIn": "starts in {duration}"
+    }
   },
   "join": {
     "absorbFeeForce": "{amount} contributions must absorb the {fee} fee.",
@@ -912,7 +912,9 @@
         "title": "Delete notice?"
       }
     },
-    "summary": "Summary"
+    "created": "Your new notice was successfully created.",
+    "summary": "Summary",
+    "updated": "Your notice was successfully updated."
   },
   "notices": {
     "addNotice": "Add notice",

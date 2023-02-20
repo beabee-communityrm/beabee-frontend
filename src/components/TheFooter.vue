@@ -1,9 +1,9 @@
 <template>
   <footer class="mt-auto">
     <div
-      class="mt-16 border-t border-primary-40 pt-4 text-sm xs:flex xs:flex-row xs:flex-wrap"
+      class="mt-16 flex flex-col gap-4 border-t border-primary-40 pt-4 text-sm xs:flex-row xs:flex-wrap xs:gap-6"
     >
-      <div class="mr-8 mb-6 w-full lg:w-auto">
+      <div class="w-full lg:w-auto">
         <ul>
           <li>
             <a class="text-base font-semibold" :href="generalContent.siteUrl">{{
@@ -19,7 +19,7 @@
           </li>
         </ul>
       </div>
-      <div class="mr-8 mb-6">
+      <div>
         <ul>
           <li>
             <a :href="generalContent.privacyLink">{{
@@ -36,14 +36,14 @@
           </li>
         </ul>
       </div>
-      <div class="mr-8 mb-6">
+      <div v-if="generalContent.footerLinks?.length">
         <ul>
           <li v-for="item in generalContent.footerLinks" :key="item.url">
             <a :href="item.url">{{ item.text }}</a>
           </li>
         </ul>
       </div>
-      <div class="mb-6 xs:ml-auto xs:w-1/5">
+      <div class="xs:ml-auto xs:w-1/5">
         <ul>
           <li><a class="font-bold" href="https://beabee.io">beabee</a></li>
           <template v-if="canAdmin">

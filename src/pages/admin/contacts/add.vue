@@ -64,7 +64,7 @@ import {
   RoleType,
 } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import AppHeading from '../../../components/AppHeading.vue';
@@ -76,11 +76,19 @@ import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import AppForm from '../../../components/forms/AppForm.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import RoleEditor from '../../../components/role/RoleEditor.vue';
+import { addBreadcrumb } from '../../../store/breadcrumb';
 import { ContactRoleData } from '../../../utils/api/api.interface';
 import { createContact } from '../../../utils/api/contact';
 
 const { t } = useI18n();
 const router = useRouter();
+
+addBreadcrumb(
+  computed(() => [
+    { title: t('menu.contacts'), to: '/admin/contacts', icon: 'users' },
+    { title: t('contacts.addContact'), to: '/admin/contacts/new' },
+  ])
+);
 
 const initialData = () => ({
   email: '',

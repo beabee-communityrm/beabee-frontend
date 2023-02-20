@@ -17,10 +17,8 @@
     "continue": "Weiter",
     "delete": "Löschen",
     "edit": "Bearbeiten",
-    "next": "Nächste",
     "participate": "Teilnehmen",
     "preview": "Vorschau",
-    "previous": "Vorherige",
     "publish": "Veröffentlichen",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
@@ -233,11 +231,6 @@
       "services": "Diesen Callout auf einer der folgenden Plattformen teilen: "
     },
     "showingPreview": "Antworten sind im Vorschaumodus deaktiviert",
-    "status": {
-      "endedOn": "am {date}",
-      "endsIn": "Endet in {duration}",
-      "startsIn": "startet in {duration}"
-    },
     "toContributionPage": "Meinen Beitrag ändern",
     "updateContribution": "Bitte ändere deinen Beitrag. ",
     "youResponded": "Du hast geantwortet ♥"
@@ -660,7 +653,7 @@
     "warning": "Vorsicht! Du bearbeitest einen veröffentlichten Callout. Wenn du Umfrageelemente bearbeitest riskierst Du, Antworten unbrauchbar zu machen."
   },
   "editNotice": {
-    "title": "Hinweis bearbeiten"
+    "title": "Bearbeiten: {title}"
   },
   "footer": {
     "contactUs": "Kontaktiere uns unter",
@@ -782,6 +775,13 @@
     "viewOpenCallouts": "Aktive Callouts anzeigen",
     "welcome": "Herzlich willkommen {firstName}!",
     "yourProfile": "Dein Profil"
+  },
+  "item": {
+    "status": {
+      "endedOn": "am {date}",
+      "endsIn": "Endet in {duration}",
+      "startsIn": "startet in {duration}"
+    }
   },
   "join": {
     "absorbFeeForce": "Bei einem Beitrag von {amount}, musst du die {fee} Transaktionskosten übernehmen.",
@@ -910,7 +910,9 @@
         "title": "Hinweis löschen?"
       }
     },
-    "summary": "Zusammenfassung"
+    "created": "Super, dein Hinweis wurde erstellt!",
+    "summary": "Zusammenfassung",
+    "updated": "Änderungen gespeichert!"
   },
   "notices": {
     "addNotice": "Hinweis hinzufügen",

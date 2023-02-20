@@ -1,5 +1,5 @@
 <route lang="yaml">
-name: adminCalloutViewResponses
+name: adminCalloutViewResponsesTable
 meta:
   pageTitle: menu.callouts
   role: admin
@@ -55,7 +55,7 @@ meta:
           :to="`/admin/contacts/${item.contact.id}`"
           class="text-link"
         >
-          {{ item.contact.email }}
+          {{ item.contact.displayName }}
         </router-link>
         <span v-else>-</span>
       </template>
