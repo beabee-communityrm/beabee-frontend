@@ -19,7 +19,9 @@
       <AppInput
         v-model="data.telephone"
         :label="t('form.phone')"
-        :info-message="t('form.phoneInfo')"
+        :info-message="
+          isAdmin ? t('accountPage.phoneInfoAdmin') : t('accountPage.phoneInfo')
+        "
       />
     </div>
 

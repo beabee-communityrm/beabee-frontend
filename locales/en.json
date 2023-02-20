@@ -5,6 +5,8 @@
     "deliveryAddress": "Delivery address",
     "deliveryOptIn": "Delivery opt-in",
     "loginDetail": "Login details",
+    "phoneInfo": "By providing your phone number you are consenting to being contacted by phone",
+    "phoneInfoAdmin": "You must have the person's consent before adding their phone number to the system",
     "savedPassword": "New password saved",
     "subTitle": "Required fields are marked with an asterisk. All information submitted here is private.",
     "title": "Account"
@@ -731,7 +733,6 @@
     "password": "Password",
     "passwordInfo": "Set a secure password: 8+ characters or longer, and it must include a number, uppercase and lowercase letters.",
     "phone": "Phone number",
-    "phoneInfo": "You must have the person's consent before adding their phone number to the system",
     "postCode": "Postcode",
     "richtext": {
       "bold": "Bold",
