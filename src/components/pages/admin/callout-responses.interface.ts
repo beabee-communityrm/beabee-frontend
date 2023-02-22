@@ -38,13 +38,14 @@ export const filterGroups = computed<FilterGroup<CalloutResponseFilterName>[]>(
   () => [
     {
       label: t('calloutResponse.dataGroup.response'),
-      items: ['createdAt'],
+      items: ['createdAt', 'tags'],
     },
   ]
 );
 
 export const filterItems = computed<FilterItems<CalloutResponseFilterName>>(
   () => ({
+    id: withLabel(calloutResponseFilters.id, ''),
     createdAt: withLabel(
       calloutResponseFilters.createdAt,
       t('calloutResponse.data.createdAt')
@@ -56,6 +57,10 @@ export const filterItems = computed<FilterItems<CalloutResponseFilterName>>(
     bucket: withLabel(
       calloutResponseFilters.bucket,
       t('calloutResponse.data.bucket')
+    ),
+    tags: withLabel(
+      calloutResponseFilters.tags,
+      t('calloutResponse.data.tags')
     ),
     callout: withLabel(
       calloutResponseFilters.callout,

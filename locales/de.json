@@ -294,6 +294,7 @@
     }
   },
   "calloutResponseBuckets": {},
+  "calloutResponsePage": {},
   "calloutResponsesPage": {
     "response": "Antwort",
     "responseId": "Antwort {id}",

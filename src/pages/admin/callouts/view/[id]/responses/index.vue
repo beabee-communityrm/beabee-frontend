@@ -12,7 +12,13 @@ meta:
     </div>
     <div class="flex-1">
       <div class="flex gap-2">
-        <AppSelect v-model="currentTag" :items="tagItems" />
+        <AppSelect
+          v-model="currentTag"
+          :items="[
+            { id: '', label: t('calloutResponsePage.searchTag') },
+            ...tagItems,
+          ]"
+        />
         <AppButton
           variant="primaryOutlined"
           size="sm"
@@ -35,7 +41,7 @@ meta:
       <AppSearch
         v-model="currentRules"
         :filter-groups="filterGroupsWithQuestions"
-        :filter-items="filterItemsWithQuestions"
+        :filter-items="filterItemsWithExtras"
         :expanded="showAdvancedSearch"
         :has-changed="false"
         @reset="currentRules = undefined"
@@ -182,10 +188,9 @@ const hasSelected = computed(
 
 const tags = ref<GetCalloutTagData[]>([]);
 
-const tagItems = computed(() => [
-  { id: '', label: 'Search by tag...' },
-  ...tags.value.map((tag) => ({ id: tag.id, label: tag.name })),
-]);
+const tagItems = computed(() =>
+  tags.value.map((tag) => ({ id: tag.id, label: tag.name }))
+);
 
 const responsesUrl = computed(
   () =>
@@ -223,9 +228,13 @@ const filterGroupsWithQuestions = computed(() => [
   },
 ]);
 
-const filterItemsWithQuestions = computed(() => {
+const filterItemsWithExtras = computed(() => {
   return {
     ...filterItems.value,
+    tags: {
+      ...filterItems.value.tags,
+      options: tagItems.value,
+    },
     ...convertComponentsToFilters(formQuestions.value),
   };
 });

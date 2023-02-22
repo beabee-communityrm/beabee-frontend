@@ -299,6 +299,9 @@
     "trash": "Trash",
     "verified": "Verified"
   },
+  "calloutResponsePage": {
+    "searchTag": "Search by tag..."
+  },
   "calloutResponsesPage": {
     "moveToBucket": "Move to {bucket}",
     "response": "Response",
