@@ -324,6 +324,18 @@ export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
 export type GetCalloutsQuery = PaginatedQuery; // TODO: constrain fields
 export type GetCalloutResponsesQuery = PaginatedQuery; // TODO: constrain fields
 
+export interface GetCalloutTagData {
+  id: string;
+  name: string;
+}
+
+export interface CreateCalloutTagData {
+  name: string;
+  description: string;
+}
+
+export type UpdateCalloutTagData = Partial<CreateCalloutTagData>;
+
 type CalloutResponseAnswer =
   | string
   | boolean
@@ -348,14 +360,6 @@ export interface CreateCalloutResponseData {
 
 export type UpdateCalloutResponseData = Partial<CreateCalloutResponseData>;
 
-interface NoticeData {
-  name: string;
-  starts: Date | null;
-  expires: Date | null;
-  text: string;
-  buttonText?: string;
-  url?: string;
-}
 export type GetCalloutResponseWith =
   | 'answers'
   | 'callout'
@@ -372,6 +376,14 @@ export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
 
 export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 
+interface NoticeData {
+  name: string;
+  starts: Date | null;
+  expires: Date | null;
+  text: string;
+  buttonText?: string;
+  url?: string;
+}
 export interface GetNoticeData extends NoticeData {
   id: string;
   createdAt: Date;
