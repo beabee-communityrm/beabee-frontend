@@ -73,15 +73,26 @@ meta:
           <AppDropdownButton
             icon="tag"
             variant="primaryOutlined"
+            :loading="doingAction"
             :disabled="!hasSelected"
           >
             <ul>
               <li
                 v-for="tag in tagItems"
                 :key="tag.id"
-                class="px-4 py-3 hover:bg-primary-5"
+                class="flex items-center justify-between gap-4 px-4 py-3"
+                :class="
+                  selectedTags[tag.id] === selectedCount
+                    ? 'bg-primary-10'
+                    : 'hover:bg-primary-5'
+                "
+                @click="() => handleToggleTag(tag.id)"
               >
-                {{ tag.label }}
+                <span>{{ tag.label }}</span>
+                <font-awesome-icon
+                  v-if="selectedTags[tag.id] === selectedCount"
+                  :icon="['fa', 'check']"
+                />
               </li>
             </ul>
           </AppDropdownButton>
@@ -179,6 +190,7 @@ import {
   GetCalloutDataWith,
   GetCalloutResponseDataWith,
   GetCalloutTagData,
+  UpdateCalloutResponseData,
 } from '../../../../../../utils/api/api.interface';
 import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
 import { convertComponentsToFilters } from '../../../../../../utils/callouts';
@@ -196,23 +208,33 @@ const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
-const responses = ref<Paginated<GetCalloutResponseDataWith<'contact'>>>();
+const responses =
+  ref<Paginated<GetCalloutResponseDataWith<'contact' | 'tags'>>>();
 const showAdvancedSearch = ref(false);
 const doingAction = ref(false);
 
 const responseItems =
-  ref<(GetCalloutResponseDataWith<'contact'> & { selected: boolean })[]>();
+  ref<
+    (GetCalloutResponseDataWith<'contact' | 'tags'> & { selected: boolean })[]
+  >();
 
-const selectedCount = computed(() => {
-  let count = 0;
-  if (responseItems.value) {
-    for (const item of responseItems.value) {
-      if (item.selected) count++;
+const selectedResponseItems = computed(
+  () => responseItems.value?.filter((ri) => ri.selected) || []
+);
+
+const selectedCount = computed(() => selectedResponseItems.value.length);
+const hasSelected = computed(() => selectedCount.value > 0);
+
+const selectedTags = computed(() => {
+  const ret = Object.fromEntries(tags.value.map((t) => [t.id, 0]));
+
+  for (const item of selectedResponseItems.value) {
+    for (const tag of item.tags) {
+      ret[tag.id]++;
     }
   }
-  return count;
+  return ret;
 });
-const hasSelected = computed(() => selectedCount.value > 0);
 
 const tags = ref<GetCalloutTagData[]>([]);
 
@@ -356,25 +378,32 @@ async function refreshResponses() {
 
 watchEffect(refreshResponses);
 
-async function handleMoveBucket(bucket: string): Promise<void> {
-  if (!responseItems.value) return; // Can't move bucket without selected items
-
+async function handleUpdateAction(
+  updates: UpdateCalloutResponseData
+): Promise<void> {
   doingAction.value = true;
 
   const ruleGroup: RuleGroup = {
     condition: 'OR',
-    rules: responseItems.value
-      .filter((item) => item.selected)
-      .map((item) => ({
-        field: 'id',
-        operator: 'equal',
-        value: [item.id],
-      })),
+    rules: selectedResponseItems.value.map((item) => ({
+      field: 'id',
+      operator: 'equal',
+      value: [item.id],
+    })),
   };
 
-  await updateCalloutResponses(ruleGroup, { bucket });
+  await updateCalloutResponses(ruleGroup, updates);
   await refreshResponses();
 
   doingAction.value = false;
+}
+
+async function handleMoveBucket(bucket: string): Promise<void> {
+  await handleUpdateAction({ bucket });
+}
+
+async function handleToggleTag(tagId: string): Promise<void> {
+  const action = selectedTags.value[tagId] === selectedCount.value ? '-' : '+';
+  await handleUpdateAction({ tags: [`${action}${tagId}`] });
 }
 </script>

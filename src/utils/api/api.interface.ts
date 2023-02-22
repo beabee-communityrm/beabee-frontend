@@ -356,6 +356,7 @@ export interface CreateCalloutResponseData {
   guestEmail?: string;
   answers: CalloutResponseAnswers;
   bucket?: string;
+  tags?: string[];
 }
 
 export type UpdateCalloutResponseData = Partial<CreateCalloutResponseData>;
