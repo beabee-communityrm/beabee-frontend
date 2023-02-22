@@ -58,7 +58,7 @@ meta:
               <li
                 v-for="bucket in buckets"
                 :key="bucket.id"
-                class="p-2 hover:bg-primary-5"
+                class="py-2 px-3 hover:bg-primary-5"
                 :class="{ hidden: bucket.id === currentBucket }"
                 @click="() => handleMoveBucket(bucket.id)"
               >
@@ -80,7 +80,7 @@ meta:
               <li
                 v-for="tag in tagItems"
                 :key="tag.id"
-                class="flex items-center justify-between gap-4 px-4 py-3"
+                class="flex items-center justify-between gap-4 py-2 px-3"
                 :class="
                   selectedTags[tag.id] === selectedCount
                     ? 'bg-primary-10'
