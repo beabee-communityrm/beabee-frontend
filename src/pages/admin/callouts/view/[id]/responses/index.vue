@@ -12,7 +12,7 @@ meta:
     </div>
     <div class="flex-1">
       <div class="flex gap-2">
-        <!-- <AppSelect :items="[]" /> -->
+        <AppSelect v-model="currentTag" :items="tagItems" />
         <AppButton
           variant="primaryOutlined"
           size="sm"
@@ -133,7 +133,7 @@ import {
   Rule,
   RuleGroup,
 } from '@beabee/beabee-common';
-import { computed, ref, watchEffect } from 'vue';
+import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import AppPaginatedResult from '../../../../../../components/AppPaginatedResult.vue';
@@ -151,8 +151,9 @@ import { SortType } from '../../../../../../components/table/table.interface';
 import {
   GetCalloutDataWith,
   GetCalloutResponseDataWith,
+  GetCalloutTagData,
 } from '../../../../../../utils/api/api.interface';
-import { fetchResponses } from '../../../../../../utils/api/callout';
+import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
 import { convertComponentsToFilters } from '../../../../../../utils/callouts';
 import { formatDistanceLocale } from '../../../../../../utils/dates/locale-date-formats';
 import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
@@ -178,6 +179,13 @@ const responseItems =
 const hasSelected = computed(
   () => responseItems.value?.some((ri) => ri.selected) || false
 );
+
+const tags = ref<GetCalloutTagData[]>([]);
+
+const tagItems = computed(() => [
+  { id: '', label: 'Search by tag...' },
+  ...tags.value.map((tag) => ({ id: tag.id, label: tag.name })),
+]);
 
 const responsesUrl = computed(
   () =>
@@ -224,8 +232,13 @@ const filterItemsWithQuestions = computed(() => {
 
 const currentBucket = computed({
   get: () => (route.query.bucket as string) || '',
-  set: (bucket) =>
-    router.push({ query: { ...route.query, bucket: bucket || undefined } }),
+  set: (bucket) => router.push({ query: { bucket: bucket || undefined } }),
+});
+
+const currentTag = computed({
+  get: () => (route.query.tag as string) || '',
+  set: (tag) =>
+    router.push({ query: { ...route.query, tag: tag || undefined } }),
 });
 
 const currentPageSize = computed({
@@ -263,14 +276,28 @@ const currentRules = computed({
     router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
 });
 
+onBeforeMount(async () => {
+  tags.value = await fetchTags(props.callout.slug);
+});
+
 async function refreshResponses() {
   const bucketRule: Rule = currentBucket.value
     ? { field: 'bucket', operator: 'equal', value: [currentBucket.value] }
     : { field: 'bucket', operator: 'is_empty', value: [] };
 
-  const rules: RuleGroup = currentRules.value
-    ? { condition: 'AND', rules: [currentRules.value, bucketRule] }
-    : { condition: 'AND', rules: [bucketRule] };
+  const rules: RuleGroup = { condition: 'AND', rules: [bucketRule] };
+
+  if (currentRules.value) {
+    rules.rules.push(currentRules.value);
+  }
+
+  if (currentTag.value) {
+    rules.rules.push({
+      field: 'tags',
+      operator: 'contains',
+      value: [currentTag.value],
+    });
+  }
 
   responses.value = await fetchResponses(
     props.callout.slug,
