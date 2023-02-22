@@ -46,7 +46,7 @@ meta:
         :has-changed="false"
         @reset="currentRules = undefined"
       />
-      <div class="mt-4 flex justify-between">
+      <div class="mt-4 flex gap-4">
         <AppButtonGroup>
           <AppDropdownButton
             icon="folder"
@@ -74,14 +74,35 @@ meta:
             icon="tag"
             variant="primaryOutlined"
             :disabled="!hasSelected"
-          />
+          >
+            <ul>
+              <li
+                v-for="tag in tagItems"
+                :key="tag.id"
+                class="px-4 py-3 hover:bg-primary-5"
+              >
+                {{ tag.label }}
+              </li>
+            </ul>
+          </AppDropdownButton>
         </AppButtonGroup>
+        <p v-if="selectedCount > 0" class="self-center text-sm">
+          <i18n-t
+            keypath="calloutResponsePage.selectedCount"
+            :plural="selectedCount"
+          >
+            <template #n>
+              <b>{{ selectedCount }}</b>
+            </template>
+          </i18n-t>
+        </p>
         <AppPaginatedResult
           v-model:page="currentPage"
           v-model:page-size="currentPageSize"
           :result="responses"
           keypath="calloutResponsesPage.showingOf"
           no-page-size
+          class="ml-auto"
         />
       </div>
       <AppTable
@@ -182,9 +203,16 @@ const doingAction = ref(false);
 const responseItems =
   ref<(GetCalloutResponseDataWith<'contact'> & { selected: boolean })[]>();
 
-const hasSelected = computed(
-  () => responseItems.value?.some((ri) => ri.selected) || false
-);
+const selectedCount = computed(() => {
+  let count = 0;
+  if (responseItems.value) {
+    for (const item of responseItems.value) {
+      if (item.selected) count++;
+    }
+  }
+  return count;
+});
+const hasSelected = computed(() => selectedCount.value > 0);
 
 const tags = ref<GetCalloutTagData[]>([]);
 
