@@ -90,13 +90,25 @@ meta:
                 "
                 @click="() => handleToggleTag(tag.id)"
               >
-                <span>{{ tag.label }}</span>
+                <span>
+                  <font-awesome-icon class="mr-2" :icon="['fa', 'tag']" />{{
+                    tag.label
+                  }}
+                </span>
                 <font-awesome-icon
                   v-if="selectedTags[tag.id] === selectedCount"
                   :icon="['fa', 'check']"
                 />
               </li>
             </ul>
+            <router-link
+              class="block border-t border-primary-40 py-2 px-3 font-semibold text-primary underline hover:bg-primary-5 group-hover:border-primary"
+              :to="`${responsesUrl}/tags`"
+            >
+              <font-awesome-icon class="mr-2" :icon="['fa', 'cog']" />{{
+                t('calloutResponsePage.manageTags')
+              }}
+            </router-link>
           </AppDropdownButton>
         </AppButtonGroup>
         <p v-if="selectedCount > 0" class="self-center text-sm">
@@ -191,7 +203,6 @@ import { SortType } from '../../../../../../components/table/table.interface';
 import {
   GetCalloutDataWith,
   GetCalloutResponseDataWith,
-  GetCalloutTagData,
   UpdateCalloutResponseData,
 } from '../../../../../../utils/api/api.interface';
 import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
@@ -228,7 +239,7 @@ const selectedCount = computed(() => selectedResponseItems.value.length);
 const hasSelected = computed(() => selectedCount.value > 0);
 
 const selectedTags = computed(() => {
-  const ret = Object.fromEntries(tags.value.map((t) => [t.id, 0]));
+  const ret = Object.fromEntries(tagItems.value.map((t) => [t.id, 0]));
 
   for (const item of selectedResponseItems.value) {
     for (const tag of item.tags) {
@@ -238,11 +249,7 @@ const selectedTags = computed(() => {
   return ret;
 });
 
-const tags = ref<GetCalloutTagData[]>([]);
-
-const tagItems = computed(() =>
-  tags.value.map((tag) => ({ id: tag.id, label: tag.name }))
-);
+const tagItems = ref<{ id: string; label: string }[]>([]);
 
 const responsesUrl = computed(
   () =>
@@ -338,7 +345,8 @@ const currentRules = computed({
 });
 
 onBeforeMount(async () => {
-  tags.value = await fetchTags(props.callout.slug);
+  const tags = await fetchTags(props.callout.slug);
+  tagItems.value = tags.map((tag) => ({ id: tag.id, label: tag.name }));
 });
 
 async function refreshResponses() {

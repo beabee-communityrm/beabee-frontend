@@ -84,7 +84,7 @@ export const adminMenu: MenuSection[] = [
       {
         title: 'menu.adminSettings',
         href: '/admin/settings',
-        icon: ['fa', 'cogs'],
+        icon: ['fa', 'cog'],
         isActive: /^\/admin\/settings.*/,
       },
     ],
