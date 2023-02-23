@@ -50,7 +50,6 @@
       "text": "Text",
       "url": "URL"
     },
-    "noticeSaved": "Notice saved",
     "title": "Add a notice"
   },
   "adminDashboard": {
@@ -391,6 +390,7 @@
     "information": "Information",
     "newsletter": "Newsletter",
     "overview": "Overview",
+    "pickTag": "Pick a tag from the list below",
     "roles": "Roles",
     "security": {
       "instructions": "Copy and share this link:",

@@ -50,7 +50,6 @@
       "text": "Text",
       "url": "URL"
     },
-    "noticeSaved": "Hinweis gespeichert",
     "title": "Hinweis hinzufügen"
   },
   "adminDashboard": {
@@ -813,6 +812,7 @@
     "notice": "Indem du fortfährst, akzeptierst Du unsere",
     "now": "Jetzt Mitglied werden! ",
     "paymentMethod": "Zahlungsart",
+    "poweredBy": "Powered by beabee",
     "privacy": "Datenschutzerklärung"
   },
   "joinPayment": {
