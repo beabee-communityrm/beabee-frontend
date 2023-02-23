@@ -51,6 +51,7 @@ meta:
           <AppDropdownButton
             icon="folder"
             variant="primaryOutlined"
+            :title="t('calloutResponse.data.bucket')"
             :loading="doingAction"
             :disabled="!hasSelected"
           >
@@ -73,6 +74,7 @@ meta:
           <AppDropdownButton
             icon="tag"
             variant="primaryOutlined"
+            :title="t('calloutResponse.data.tags')"
             :loading="doingAction"
             :disabled="!hasSelected"
           >
