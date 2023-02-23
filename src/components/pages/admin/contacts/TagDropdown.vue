@@ -1,7 +1,7 @@
 <template>
   <AppLabel v-if="label" :label="label" />
   <div class="mb-1 mt-1 flex flex-row flex-wrap">
-    <ContactTag
+    <AppTag
       v-for="tag in modelValue"
       :key="tag"
       :tag="tag"
@@ -44,7 +44,7 @@
 import { ref } from 'vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import ContactTag from '../../../contact/ContactTag.vue';
+import AppTag from '../../../AppTag.vue';
 import AppLabel from '../../../forms/AppLabel.vue';
 
 const emit = defineEmits(['update:modelValue']);

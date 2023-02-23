@@ -1,5 +1,6 @@
 <template>
   <AppButton
+    ref="buttonRef"
     variant="primaryOutlined"
     :icon="icon"
     class="group"
@@ -23,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, toRef, watch } from 'vue';
+import { onBeforeMount, onBeforeUnmount, ref, toRef, watch } from 'vue';
 import AppButton from './AppButton.vue';
 
 const props = defineProps<{
@@ -34,9 +35,23 @@ const props = defineProps<{
 const sharedClasses =
   'absolute top-full -left-px z-20 border-primary-40 group-hover:border-primary-80 bg-white';
 
+const buttonRef = ref<InstanceType<typeof AppButton>>();
 const open = ref(false);
 
 watch(toRef(props, 'disabled'), (disabled) => {
   if (disabled) open.value = false;
+});
+
+function handleClick(evt: Event) {
+  if (!buttonRef.value?.$el.contains(evt.target as Node)) {
+    open.value = false;
+  }
+}
+
+onBeforeMount(() => {
+  document.addEventListener('click', handleClick);
+});
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClick);
 });
 </script>

@@ -298,6 +298,10 @@
     "trash": "Trash",
     "verified": "Verified"
   },
+  "calloutResponsePage": {
+    "searchTag": "Search by tag...",
+    "selectedCount": "{n} response selected | {n} responses selected"
+  },
   "calloutResponsesPage": {
     "moveToBucket": "Move to {bucket}",
     "response": "Response",

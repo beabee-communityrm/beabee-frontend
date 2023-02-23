@@ -139,7 +139,7 @@
   },
   "advancedSearch": {
     "addRule": "Filter hinzufügen",
-    "button": "Erweiterte Suche",
+    "button": "Filter",
     "createFilters": "Filter für die Suche erstellen",
     "matchAfter": "der folgenden Filter enthalten",
     "matchBefore": "Ergebnisse sollen",
@@ -292,8 +292,17 @@
       "response": "Antwort"
     }
   },
-  "calloutResponseBuckets": {},
+  "calloutResponseBuckets": {
+    "inbox": "Eingang",
+    "trash": "Papierkorb",
+    "verified": "Verifiziert"
+  },
+  "calloutResponsePage": {
+    "searchTag": "Suche nach Tags...",
+    "selectedCount": "{n} Antwort ausgewählt | {n} Antworten ausgewählt"
+  },
   "calloutResponsesPage": {
+    "moveToBucket": "Nach {bucket} verschieben",
     "response": "Antwort",
     "responseId": "Antwort {id}",
     "showingOf": "Antworten {start} bis {end} von {total} werden angezeigt"

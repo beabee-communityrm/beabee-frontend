@@ -12,7 +12,13 @@ meta:
     </div>
     <div class="flex-1">
       <div class="flex gap-2">
-        <!-- <AppSelect :items="[]" /> -->
+        <AppSelect
+          v-model="currentTag"
+          :items="[
+            { id: '', label: t('calloutResponsePage.searchTag') },
+            ...tagItems,
+          ]"
+        />
         <AppButton
           variant="primaryOutlined"
           size="sm"
@@ -35,12 +41,12 @@ meta:
       <AppSearch
         v-model="currentRules"
         :filter-groups="filterGroupsWithQuestions"
-        :filter-items="filterItemsWithQuestions"
+        :filter-items="filterItemsWithExtras"
         :expanded="showAdvancedSearch"
         :has-changed="false"
         @reset="currentRules = undefined"
       />
-      <div class="mt-4 flex justify-between">
+      <div class="mt-4 flex gap-4">
         <AppButtonGroup>
           <AppDropdownButton
             icon="folder"
@@ -52,7 +58,7 @@ meta:
               <li
                 v-for="bucket in buckets"
                 :key="bucket.id"
-                class="p-2 hover:bg-primary-5"
+                class="py-2 px-3 hover:bg-primary-5"
                 :class="{ hidden: bucket.id === currentBucket }"
                 @click="() => handleMoveBucket(bucket.id)"
               >
@@ -67,15 +73,47 @@ meta:
           <AppDropdownButton
             icon="tag"
             variant="primaryOutlined"
+            :loading="doingAction"
             :disabled="!hasSelected"
-          />
+          >
+            <ul>
+              <li
+                v-for="tag in tagItems"
+                :key="tag.id"
+                class="flex items-center justify-between gap-4 py-2 px-3"
+                :class="
+                  selectedTags[tag.id] === selectedCount
+                    ? 'bg-primary-10'
+                    : 'hover:bg-primary-5'
+                "
+                @click="() => handleToggleTag(tag.id)"
+              >
+                <span>{{ tag.label }}</span>
+                <font-awesome-icon
+                  v-if="selectedTags[tag.id] === selectedCount"
+                  :icon="['fa', 'check']"
+                />
+              </li>
+            </ul>
+          </AppDropdownButton>
         </AppButtonGroup>
+        <p v-if="selectedCount > 0" class="self-center text-sm">
+          <i18n-t
+            keypath="calloutResponsePage.selectedCount"
+            :plural="selectedCount"
+          >
+            <template #n>
+              <b>{{ selectedCount }}</b>
+            </template>
+          </i18n-t>
+        </p>
         <AppPaginatedResult
           v-model:page="currentPage"
           v-model:page-size="currentPageSize"
           :result="responses"
           keypath="calloutResponsesPage.showingOf"
           no-page-size
+          class="ml-auto"
         />
       </div>
       <AppTable
@@ -103,6 +141,11 @@ meta:
           </router-link>
           <span v-else>-</span>
         </template>
+        <template #tags="{ value }">
+          <span class="whitespace-normal">
+            <AppTag v-for="tag in value" :key="tag.id" :tag="tag.name" />
+          </span>
+        </template>
         <template #createdAt="{ value }">
           {{
             t('common.timeAgo', {
@@ -128,7 +171,7 @@ import {
   Rule,
   RuleGroup,
 } from '@beabee/beabee-common';
-import { computed, ref, watchEffect } from 'vue';
+import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import AppPaginatedResult from '../../../../../../components/AppPaginatedResult.vue';
@@ -146,13 +189,16 @@ import { SortType } from '../../../../../../components/table/table.interface';
 import {
   GetCalloutDataWith,
   GetCalloutResponseDataWith,
+  GetCalloutTagData,
+  UpdateCalloutResponseData,
 } from '../../../../../../utils/api/api.interface';
-import { fetchResponses } from '../../../../../../utils/api/callout';
+import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
 import { convertComponentsToFilters } from '../../../../../../utils/callouts';
 import { formatDistanceLocale } from '../../../../../../utils/dates/locale-date-formats';
 import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
 import AppDropdownButton from '../../../../../../components/button/AppDropdownButton.vue';
 import { updateCalloutResponses } from '../../../../../../utils/api/callout-response';
+import AppTag from '../../../../../../components/AppTag.vue';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
@@ -162,15 +208,38 @@ const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
-const responses = ref<Paginated<GetCalloutResponseDataWith<'contact'>>>();
+const responses =
+  ref<Paginated<GetCalloutResponseDataWith<'contact' | 'tags'>>>();
 const showAdvancedSearch = ref(false);
 const doingAction = ref(false);
 
 const responseItems =
-  ref<(GetCalloutResponseDataWith<'contact'> & { selected: boolean })[]>();
+  ref<
+    (GetCalloutResponseDataWith<'contact' | 'tags'> & { selected: boolean })[]
+  >();
 
-const hasSelected = computed(
-  () => responseItems.value?.some((ri) => ri.selected) || false
+const selectedResponseItems = computed(
+  () => responseItems.value?.filter((ri) => ri.selected) || []
+);
+
+const selectedCount = computed(() => selectedResponseItems.value.length);
+const hasSelected = computed(() => selectedCount.value > 0);
+
+const selectedTags = computed(() => {
+  const ret = Object.fromEntries(tags.value.map((t) => [t.id, 0]));
+
+  for (const item of selectedResponseItems.value) {
+    for (const tag of item.tags) {
+      ret[tag.id]++;
+    }
+  }
+  return ret;
+});
+
+const tags = ref<GetCalloutTagData[]>([]);
+
+const tagItems = computed(() =>
+  tags.value.map((tag) => ({ id: tag.id, label: tag.name }))
 );
 
 const responsesUrl = computed(
@@ -209,17 +278,26 @@ const filterGroupsWithQuestions = computed(() => [
   },
 ]);
 
-const filterItemsWithQuestions = computed(() => {
+const filterItemsWithExtras = computed(() => {
   return {
     ...filterItems.value,
+    tags: {
+      ...filterItems.value.tags,
+      options: tagItems.value,
+    },
     ...convertComponentsToFilters(formQuestions.value),
   };
 });
 
 const currentBucket = computed({
   get: () => (route.query.bucket as string) || '',
-  set: (bucket) =>
-    router.push({ query: { ...route.query, bucket: bucket || undefined } }),
+  set: (bucket) => router.push({ query: { bucket: bucket || undefined } }),
+});
+
+const currentTag = computed({
+  get: () => (route.query.tag as string) || '',
+  set: (tag) =>
+    router.push({ query: { ...route.query, tag: tag || undefined } }),
 });
 
 const currentPageSize = computed({
@@ -257,14 +335,28 @@ const currentRules = computed({
     router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
 });
 
+onBeforeMount(async () => {
+  tags.value = await fetchTags(props.callout.slug);
+});
+
 async function refreshResponses() {
   const bucketRule: Rule = currentBucket.value
     ? { field: 'bucket', operator: 'equal', value: [currentBucket.value] }
     : { field: 'bucket', operator: 'is_empty', value: [] };
 
-  const rules: RuleGroup = currentRules.value
-    ? { condition: 'AND', rules: [currentRules.value, bucketRule] }
-    : { condition: 'AND', rules: [bucketRule] };
+  const rules: RuleGroup = { condition: 'AND', rules: [bucketRule] };
+
+  if (currentRules.value) {
+    rules.rules.push(currentRules.value);
+  }
+
+  if (currentTag.value) {
+    rules.rules.push({
+      field: 'tags',
+      operator: 'contains',
+      value: [currentTag.value],
+    });
+  }
 
   responses.value = await fetchResponses(
     props.callout.slug,
@@ -275,7 +367,7 @@ async function refreshResponses() {
       order: currentSort.value.type,
       rules,
     },
-    ['contact']
+    ['contact', 'tags']
   );
 
   responseItems.value = responses.value.items.map((r) => ({
@@ -286,25 +378,32 @@ async function refreshResponses() {
 
 watchEffect(refreshResponses);
 
-async function handleMoveBucket(bucket: string): Promise<void> {
-  if (!responseItems.value) return; // Can't move bucket without selected items
-
+async function handleUpdateAction(
+  updates: UpdateCalloutResponseData
+): Promise<void> {
   doingAction.value = true;
 
   const ruleGroup: RuleGroup = {
     condition: 'OR',
-    rules: responseItems.value
-      .filter((item) => item.selected)
-      .map((item) => ({
-        field: 'id',
-        operator: 'equal',
-        value: [item.id],
-      })),
+    rules: selectedResponseItems.value.map((item) => ({
+      field: 'id',
+      operator: 'equal',
+      value: [item.id],
+    })),
   };
 
-  await updateCalloutResponses(ruleGroup, { bucket });
+  await updateCalloutResponses(ruleGroup, updates);
   await refreshResponses();
 
   doingAction.value = false;
+}
+
+async function handleMoveBucket(bucket: string): Promise<void> {
+  await handleUpdateAction({ bucket });
+}
+
+async function handleToggleTag(tagId: string): Promise<void> {
+  const action = selectedTags.value[tagId] === selectedCount.value ? '-' : '+';
+  await handleUpdateAction({ tags: [`${action}${tagId}`] });
 }
 </script>
