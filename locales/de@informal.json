@@ -282,6 +282,7 @@
   },
   "calloutResponse": {
     "data": {
+      "bucket": "Ordner",
       "callout": "Callout",
       "contact": "Kontakt",
       "createdAt": "Beantwortet am",
