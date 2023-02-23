@@ -299,6 +299,7 @@
     "verified": "Verifiziert"
   },
   "calloutResponsePage": {
+    "manageTags": "Tags bearbeiten",
     "searchTag": "Suche nach Tags...",
     "selectedCount": "{n} Antwort ausgewählt | {n} Antworten ausgewählt"
   },
@@ -1014,9 +1015,14 @@
     "title": "Passwort vergeben"
   },
   "tagEditor": {
+    "add": "Tag hinzufügen",
+    "addNewTag": "Tag hinzufügen",
     "confirmDelete": {
       "actionNo": "Nein, gehe zurück",
-      "actionYes": "Ja, löschen"
-    }
+      "actionYes": "Ja, löschen",
+      "text": "Bist du sicher, dass du diesen Tag entfernen willst? Die damit getaggten Antworten werden nicht gelöscht.",
+      "title": "Tag entfernen"
+    },
+    "name": "Name"
   }
 }
