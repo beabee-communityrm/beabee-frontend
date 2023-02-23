@@ -51,7 +51,7 @@ addBreadcrumb(
     {
       title: t('menu.adminSettings'),
       to: '/admin/settings',
-      icon: 'cogs',
+      icon: 'cog',
     },
     ...(selectedTab.value
       ? [
