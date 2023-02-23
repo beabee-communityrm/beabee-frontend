@@ -156,3 +156,7 @@ export async function updateTag(
 
   return data;
 }
+
+export async function deleteTag(slug: string, tagId: string): Promise<void> {
+  await axios.delete(`/callout/${slug}/tags/${tagId}`);
+}

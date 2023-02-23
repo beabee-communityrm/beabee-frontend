@@ -1012,5 +1012,11 @@
   "setPassword": {
     "description": "Neues Passwort eingeben, um fortzufahren.",
     "title": "Passwort vergeben"
+  },
+  "tagEditor": {
+    "confirmDelete": {
+      "actionNo": "Nein, gehe zurück",
+      "actionYes": "Ja, löschen"
+    }
   }
 }

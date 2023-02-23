@@ -1013,5 +1013,17 @@
   "setPassword": {
     "description": "Set a new password to login.",
     "title": "Set a password"
+  },
+  "tagEditor": {
+    "add": "Add tag",
+    "addNewTag": "Add a tag role",
+    "confirmDelete": {
+      "actionNo": "No, go back",
+      "actionYes": "Yes, remove it",
+      "text": "Are you sure you want to remove this tag? It will be removed from callout responses.",
+      "title": "Remove tag"
+    },
+    "name": "Name",
+    "new": "New tag"
   }
 }
