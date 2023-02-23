@@ -50,7 +50,6 @@
       "text": "Text",
       "url": "URL"
     },
-    "noticeSaved": "Hinweis gespeichert",
     "title": "Hinweis hinzufügen"
   },
   "adminDashboard": {
@@ -391,6 +390,7 @@
     "information": "Information",
     "newsletter": "Newsletter",
     "overview": "Überblick",
+    "pickTag": "Tag aus der Liste wählen",
     "roles": "Rolle",
     "security": {
       "instructions": "Link kopieren und teilen:",
@@ -813,6 +813,7 @@
     "notice": "Indem Sie fortfahren, akzeptieren Sie unsere",
     "now": "Jetzt Mitglied werden! ",
     "paymentMethod": "Zahlungsart",
+    "poweredBy": "Powered by beabee",
     "privacy": "Datenschutzerklärung"
   },
   "joinPayment": {
