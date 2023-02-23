@@ -1016,14 +1016,13 @@
   },
   "tagEditor": {
     "add": "Add tag",
-    "addNewTag": "Add a tag role",
+    "addNewTag": "Add a tag",
     "confirmDelete": {
       "actionNo": "No, go back",
       "actionYes": "Yes, remove it",
-      "text": "Are you sure you want to remove this tag? It will be removed from callout responses.",
+      "text": "Are you sure you want to remove this tag? Any responses with this tag will not be deleted.",
       "title": "Remove tag"
     },
-    "name": "Name",
-    "new": "New tag"
+    "name": "Name"
   }
 }
