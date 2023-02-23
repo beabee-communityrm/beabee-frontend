@@ -292,6 +292,7 @@
       "response": "Antwort"
     }
   },
+  "calloutResponseBuckets": {},
   "calloutResponsesPage": {
     "response": "Antwort",
     "responseId": "Antwort {id}",

@@ -6,84 +6,135 @@ meta:
 </route>
 
 <template>
-  <div>
-    <div class="flex gap-2">
-      <!-- <AppSelect :items="[]" /> -->
-      <AppButton
-        variant="primaryOutlined"
-        size="sm"
-        class="bg-white/0"
-        :class="showAdvancedSearch && 'relative rounded-b-none'"
-        @click="showAdvancedSearch = !showAdvancedSearch"
-      >
-        {{ t('advancedSearch.button') }}
-        <font-awesome-icon
-          class="ml-2"
-          :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
-        />
-        <div
-          v-show="showAdvancedSearch"
-          class="absolute -left-px top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-px"
-        />
-      </AppButton>
+  <div class="md:flex">
+    <div class="hidden flex-none basis-[220px] md:block">
+      <AppVTabs v-model="currentBucket" :items="buckets" />
     </div>
-    <AppSearch
-      v-model="currentRules"
-      :filter-groups="filterGroupsWithQuestions"
-      :filter-items="filterItemsWithQuestions"
-      :expanded="showAdvancedSearch"
-      :has-changed="false"
-      @reset="currentRules = undefined"
-    />
-    <AppTable
-      v-model:sort="currentSort"
-      :headers="headers"
-      :items="responses?.items || null"
-      class="w-full"
-    >
-      <template #response="{ item }">
-        <router-link
-          :to="`/admin/callouts/view/${callout.slug}/responses/${item.id}`"
-          class="text-base font-bold text-link"
+    <div class="flex-1">
+      <div class="flex gap-2">
+        <!-- <AppSelect :items="[]" /> -->
+        <AppButton
+          variant="primaryOutlined"
+          size="sm"
+          class="bg-white/0"
+          icon="filter"
+          :class="showAdvancedSearch && 'relative rounded-b-none'"
+          @click="showAdvancedSearch = !showAdvancedSearch"
         >
-          {{ item.id }}
-        </router-link>
-      </template>
-      <template #contact="{ item }">
-        <router-link
-          v-if="item.contact"
-          :to="`/admin/contacts/${item.contact.id}`"
-          class="text-link"
-        >
-          {{ item.contact.displayName }}
-        </router-link>
-        <span v-else>-</span>
-      </template>
-      <template #createdAt="{ value }">
-        {{
-          t('common.timeAgo', {
-            time: formatDistanceLocale(new Date(), value),
-          })
-        }}
-      </template>
-    </AppTable>
-    <AppPaginatedResult
-      v-model:page="currentPage"
-      v-model:page-size="currentPageSize"
-      :result="responses"
-      keypath="calloutResponsesPage.showingOf"
-      class="mt-4"
-    />
+          {{ t('advancedSearch.button') }}
+          <font-awesome-icon
+            class="ml-2"
+            :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
+          />
+          <div
+            v-show="showAdvancedSearch"
+            class="absolute -left-px top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-px"
+          />
+        </AppButton>
+      </div>
+      <AppSearch
+        v-model="currentRules"
+        :filter-groups="filterGroupsWithQuestions"
+        :filter-items="filterItemsWithQuestions"
+        :expanded="showAdvancedSearch"
+        :has-changed="false"
+        @reset="currentRules = undefined"
+      />
+      <div class="mt-4 flex justify-between">
+        <AppButtonGroup>
+          <AppDropdownButton
+            icon="folder"
+            variant="primaryOutlined"
+            :loading="doingAction"
+            :disabled="!hasSelected"
+          >
+            <ul>
+              <li
+                v-for="bucket in buckets"
+                :key="bucket.id"
+                class="p-2 hover:bg-primary-5"
+                :class="{ hidden: bucket.id === currentBucket }"
+                @click="() => handleMoveBucket(bucket.id)"
+              >
+                {{
+                  t('calloutResponsesPage.moveToBucket', {
+                    bucket: bucket.label,
+                  })
+                }}
+              </li>
+            </ul>
+          </AppDropdownButton>
+          <AppDropdownButton
+            icon="tag"
+            variant="primaryOutlined"
+            :disabled="!hasSelected"
+          />
+        </AppButtonGroup>
+        <AppPaginatedResult
+          v-model:page="currentPage"
+          v-model:page-size="currentPageSize"
+          :result="responses"
+          keypath="calloutResponsesPage.showingOf"
+          no-page-size
+        />
+      </div>
+      <AppTable
+        v-model:sort="currentSort"
+        :headers="headers"
+        :items="responseItems || null"
+        selectable
+        class="mt-2 w-full"
+      >
+        <template #response="{ item }">
+          <router-link
+            :to="`${responsesUrl}/${item.id}`"
+            class="text-base font-bold text-link"
+          >
+            {{ item.id }}
+          </router-link>
+        </template>
+        <template #contact="{ item }">
+          <router-link
+            v-if="item.contact"
+            :to="`/admin/contacts/${item.contact.id}`"
+            class="text-link"
+          >
+            {{ item.contact.displayName }}
+          </router-link>
+          <span v-else>-</span>
+        </template>
+        <template #createdAt="{ value }">
+          {{
+            t('common.timeAgo', {
+              time: formatDistanceLocale(new Date(), value),
+            })
+          }}
+        </template>
+      </AppTable>
+      <AppPaginatedResult
+        v-model:page="currentPage"
+        v-model:page-size="currentPageSize"
+        :result="responses"
+        keypath="calloutResponsesPage.showingOf"
+        class="mt-4"
+      />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { flattenComponents, Paginated, RuleGroup } from '@beabee/beabee-common';
+import {
+  flattenComponents,
+  Paginated,
+  Rule,
+  RuleGroup,
+} from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import AppPaginatedResult from '../../../../../../components/AppPaginatedResult.vue';
 import AppButton from '../../../../../../components/button/AppButton.vue';
 import AppSelect from '../../../../../../components/forms/AppSelect.vue';
+import AppVTabs from '../../../../../../components/tabs/AppVTabs.vue';
 import {
   filterGroups,
   filterItems,
@@ -99,6 +150,9 @@ import {
 import { fetchResponses } from '../../../../../../utils/api/callout';
 import { convertComponentsToFilters } from '../../../../../../utils/callouts';
 import { formatDistanceLocale } from '../../../../../../utils/dates/locale-date-formats';
+import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
+import AppDropdownButton from '../../../../../../components/button/AppDropdownButton.vue';
+import { updateCalloutResponses } from '../../../../../../utils/api/callout-response';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
@@ -110,6 +164,36 @@ const router = useRouter();
 
 const responses = ref<Paginated<GetCalloutResponseDataWith<'contact'>>>();
 const showAdvancedSearch = ref(false);
+const doingAction = ref(false);
+
+const responseItems =
+  ref<(GetCalloutResponseDataWith<'contact'> & { selected: boolean })[]>();
+
+const hasSelected = computed(
+  () => responseItems.value?.some((ri) => ri.selected) || false
+);
+
+const responsesUrl = computed(
+  () =>
+    router.resolve({
+      name: 'adminCalloutViewResponsesTable',
+      params: { id: props.callout.slug },
+    }).href
+);
+
+const buckets = computed(() => [
+  { id: '', label: t('calloutResponseBuckets.inbox'), to: responsesUrl.value },
+  {
+    id: 'verified',
+    label: t('calloutResponseBuckets.verified'),
+    to: responsesUrl.value + '?bucket=verified',
+  },
+  {
+    id: 'trash',
+    label: t('calloutResponseBuckets.trash'),
+    to: responsesUrl.value + '?bucket=trash',
+  },
+]);
 
 const formQuestions = computed(() =>
   flattenComponents(props.callout.formSchema.components).filter(
@@ -130,6 +214,12 @@ const filterItemsWithQuestions = computed(() => {
     ...filterItems.value,
     ...convertComponentsToFilters(formQuestions.value),
   };
+});
+
+const currentBucket = computed({
+  get: () => (route.query.bucket as string) || '',
+  set: (bucket) =>
+    router.push({ query: { ...route.query, bucket: bucket || undefined } }),
 });
 
 const currentPageSize = computed({
@@ -167,7 +257,15 @@ const currentRules = computed({
     router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
 });
 
-watchEffect(async () => {
+async function refreshResponses() {
+  const bucketRule: Rule = currentBucket.value
+    ? { field: 'bucket', operator: 'equal', value: [currentBucket.value] }
+    : { field: 'bucket', operator: 'is_empty', value: [] };
+
+  const rules: RuleGroup = currentRules.value
+    ? { condition: 'AND', rules: [currentRules.value, bucketRule] }
+    : { condition: 'AND', rules: [bucketRule] };
+
   responses.value = await fetchResponses(
     props.callout.slug,
     {
@@ -175,9 +273,38 @@ watchEffect(async () => {
       offset: currentPage.value * currentPageSize.value,
       sort: currentSort.value.by,
       order: currentSort.value.type,
-      rules: currentRules.value,
+      rules,
     },
     ['contact']
   );
-});
+
+  responseItems.value = responses.value.items.map((r) => ({
+    ...r,
+    selected: false,
+  }));
+}
+
+watchEffect(refreshResponses);
+
+async function handleMoveBucket(bucket: string): Promise<void> {
+  if (!responseItems.value) return; // Can't move bucket without selected items
+
+  doingAction.value = true;
+
+  const ruleGroup: RuleGroup = {
+    condition: 'OR',
+    rules: responseItems.value
+      .filter((item) => item.selected)
+      .map((item) => ({
+        field: 'id',
+        operator: 'equal',
+        value: [item.id],
+      })),
+  };
+
+  await updateCalloutResponses(ruleGroup, { bucket });
+  await refreshResponses();
+
+  doingAction.value = false;
+}
 </script>

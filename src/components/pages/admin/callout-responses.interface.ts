@@ -53,6 +53,10 @@ export const filterItems = computed<FilterItems<CalloutResponseFilterName>>(
       calloutResponseFilters.updatedAt,
       t('calloutResponse.data.updatedAt')
     ),
+    bucket: withLabel(
+      calloutResponseFilters.bucket,
+      t('calloutResponse.data.bucket')
+    ),
     callout: withLabel(
       calloutResponseFilters.callout,
       t('calloutResponse.data.callout')

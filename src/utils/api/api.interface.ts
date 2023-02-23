@@ -343,7 +343,10 @@ export interface CreateCalloutResponseData {
   guestName?: string;
   guestEmail?: string;
   answers: CalloutResponseAnswers;
+  bucket?: string;
 }
+
+export type UpdateCalloutResponseData = Partial<CreateCalloutResponseData>;
 
 interface NoticeData {
   name: string;
