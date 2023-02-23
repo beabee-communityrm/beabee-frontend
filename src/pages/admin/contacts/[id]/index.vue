@@ -110,7 +110,7 @@ meta:
             v-if="contactTags.length > 0"
             v-model="contactAnnotations.tags"
             :tags="contactTags"
-            label="Tags"
+            :label="t('contacts.data.tags')"
           />
         </div>
       </AppForm>

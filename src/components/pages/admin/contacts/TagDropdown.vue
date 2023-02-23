@@ -20,7 +20,7 @@
           class="mr-2 ml-2 inline-block cursor-pointer"
           icon="caret-down"
         />
-        Pick a tag from the list below
+        {{ t('contactOverview.pickTag') }}
       </p>
       <div :class="isTagMenuVisible ? 'block' : 'hidden'" class="">
         <p
@@ -43,15 +43,18 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import AppTag from '../../../AppTag.vue';
 import AppLabel from '../../../forms/AppLabel.vue';
 
+const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   tags: string[];
   modelValue: string[];
   label?: string;
 }>();
-const emit = defineEmits(['update:modelValue']);
+
+const { t } = useI18n();
 
 const isTagMenuVisible = ref(false);
 
