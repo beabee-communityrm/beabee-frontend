@@ -88,13 +88,25 @@ meta:
                 "
                 @click="() => handleToggleTag(tag.id)"
               >
-                <span>{{ tag.label }}</span>
+                <span>
+                  <font-awesome-icon class="mr-2" :icon="['fa', 'tag']" />{{
+                    tag.label
+                  }}
+                </span>
                 <font-awesome-icon
                   v-if="selectedTags[tag.id] === selectedCount"
                   :icon="['fa', 'check']"
                 />
               </li>
             </ul>
+            <router-link
+              class="block border-t border-primary-40 py-2 px-3 font-semibold text-primary underline hover:bg-primary-5 group-hover:border-primary"
+              :to="`${responsesUrl}/tags`"
+            >
+              <font-awesome-icon class="mr-2" :icon="['fa', 'cog']" />{{
+                t('calloutResponsePage.manageTags')
+              }}
+            </router-link>
           </AppDropdownButton>
         </AppButtonGroup>
         <p v-if="selectedCount > 0" class="self-center text-sm">
