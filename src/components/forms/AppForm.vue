@@ -36,7 +36,7 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { getRequestError } from '../../utils/api';
 import MessageBox from '../MessageBox.vue';
-import AppButton from './AppButton.vue';
+import AppButton from '../button/AppButton.vue';
 
 const emit = defineEmits(['reset']);
 const props = defineProps<{

@@ -122,7 +122,7 @@ import {
   fetchCallout,
   fetchResponses,
 } from '../../utils/api/callout';
-import AppButton from '../../components/forms/AppButton.vue';
+import AppButton from '../../components/button/AppButton.vue';
 import MessageBox from '../../components/MessageBox.vue';
 import { currentUser } from '../../store';
 import GuestFields from '../../components/pages/callouts/GuestFields.vue';

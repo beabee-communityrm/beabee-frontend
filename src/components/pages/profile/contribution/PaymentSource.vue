@@ -42,7 +42,7 @@
 import { PaymentMethod } from '@beabee/beabee-common';
 import { onBeforeMount, ref } from 'vue';
 import MessageBox from '../../../MessageBox.vue';
-import AppButton from '../../../forms/AppButton.vue';
+import AppButton from '../../../button/AppButton.vue';
 import { useI18n } from 'vue-i18n';
 import {
   ManualPaymentSource,

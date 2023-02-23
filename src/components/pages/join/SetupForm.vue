@@ -64,7 +64,7 @@ import { useI18n } from 'vue-i18n';
 import { JoinSetupContent } from '../../../utils/api/api.interface';
 import JoinHeader from './JoinHeader.vue';
 import AppAddress from '../../AppAddress.vue';
-import AppButton from '../../forms/AppButton.vue';
+import AppButton from '../../button/AppButton.vue';
 import MessageBox from '../../MessageBox.vue';
 import ContactBasicFields from '../../contact/ContactBasicFields.vue';
 import ContactMailOptIn from '../../contact/ContactMailOptIn.vue';
