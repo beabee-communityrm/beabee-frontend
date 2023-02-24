@@ -11,17 +11,12 @@ export const menu = computed(
           {
             title: 'menu.home',
             href: '/profile',
-            icon: ['far', 'building'],
+            icon: ['fa', 'house'],
           },
-          /*{
-        title: 'menu.yourProfile',
-        href: '/profile/edit',
-        icon: ['far', 'user'],
-      },*/
           {
             title: 'menu.callouts',
             href: '/callouts',
-            icon: ['far', 'calendar-check'],
+            icon: ['fa', 'bullhorn'],
             isActive: /^\/callouts/,
           },
         ],
@@ -32,7 +27,7 @@ export const menu = computed(
           {
             title: 'menu.account',
             href: '/profile/account',
-            icon: ['far', 'address-card'],
+            icon: ['fa', 'address-card'],
           },
           ...(generalContent.value.hideContribution
             ? []
@@ -40,7 +35,7 @@ export const menu = computed(
                 {
                   title: 'menu.contribution',
                   href: '/profile/contribution',
-                  icon: ['far', 'credit-card'],
+                  icon: ['fa', 'credit-card'],
                 },
               ]),
         ],
@@ -67,13 +62,13 @@ export const adminMenu: MenuSection[] = [
       {
         title: 'menu.callouts',
         href: '/admin/callouts',
-        icon: ['far', 'calendar-check'],
+        icon: ['fa', 'bullhorn'],
         isActive: /^\/admin\/callouts.*/,
       },
       {
         title: 'menu.notices',
         href: '/admin/notices',
-        icon: ['fa', 'bullhorn'],
+        icon: ['fa', 'sign-hanging'],
         isActive: /^\/admin\/notices.*/,
       },
     ],
@@ -89,7 +84,7 @@ export const adminMenu: MenuSection[] = [
       {
         title: 'menu.adminSettings',
         href: '/admin/settings',
-        icon: ['fa', 'cogs'],
+        icon: ['fa', 'cog'],
         isActive: /^\/admin\/settings.*/,
       },
     ],

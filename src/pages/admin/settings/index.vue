@@ -187,7 +187,7 @@ import AppImageUpload from '../../../components/forms/AppImageUpload.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
-import AppButton from '../../../components/forms/AppButton.vue';
+import AppButton from '../../../components/button/AppButton.vue';
 import { ShareContent } from '../../../utils/api/api.interface';
 import { fetchContent, updateContent } from '../../../utils/api/content';
 import { generalContent as storeGeneralContent } from '../../../store';

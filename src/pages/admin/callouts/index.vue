@@ -86,7 +86,7 @@ import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { Header, SortType } from '../../../components/table/table.interface';
-import AppButton from '../../../components/forms/AppButton.vue';
+import AppButton from '../../../components/button/AppButton.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import AppTable from '../../../components/table/AppTable.vue';
 import AppAlert from '../../../components/AppAlert.vue';
@@ -102,10 +102,21 @@ import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
 import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
+import { addBreadcrumb } from '../../../store/breadcrumb';
 
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
+
+addBreadcrumb(
+  computed(() => [
+    {
+      title: t('menu.callouts'),
+      icon: 'bullhorn',
+      to: '/admin/callouts',
+    },
+  ])
+);
 
 const wasJustDeleted = route.query.deleted !== undefined;
 

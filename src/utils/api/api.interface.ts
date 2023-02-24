@@ -1,4 +1,5 @@
 import {
+  CalloutFormSchema,
   ContributionPeriod,
   ContributionType,
   ItemStatus,
@@ -44,6 +45,8 @@ interface ContactData {
   email: string;
   firstname: string;
   lastname: string;
+  // Added by deserializer
+  displayName: string;
 }
 
 export interface PaymentFlowParams {
@@ -309,10 +312,6 @@ export interface GetCalloutData extends CalloutData {
   status: ItemStatus;
 }
 
-export interface CalloutFormSchema {
-  components: unknown[];
-}
-
 export type GetCalloutWith = 'form' | 'responseCount' | 'hasAnswered' | void;
 
 export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
@@ -324,6 +323,18 @@ export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
 
 export type GetCalloutsQuery = PaginatedQuery; // TODO: constrain fields
 export type GetCalloutResponsesQuery = PaginatedQuery; // TODO: constrain fields
+
+export interface GetCalloutTagData {
+  id: string;
+  name: string;
+}
+
+export interface CreateCalloutTagData {
+  name: string;
+  description: string;
+}
+
+export type UpdateCalloutTagData = Partial<CreateCalloutTagData>;
 
 type CalloutResponseAnswer =
   | string
@@ -344,29 +355,49 @@ export interface CreateCalloutResponseData {
   guestName?: string;
   guestEmail?: string;
   answers: CalloutResponseAnswers;
+  bucket?: string;
+  tags?: string[];
 }
 
-export type GetCalloutResponseWith = 'answers' | 'contact' | void;
+export type UpdateCalloutResponseData = Partial<CreateCalloutResponseData>;
+
+export type GetCalloutResponseWith =
+  | 'answers'
+  | 'callout'
+  | 'contact'
+  | 'tags'
+  | void;
 
 export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
   GetCalloutResponseData &
     ('answers' extends With ? { answers: CalloutResponseAnswers } : Noop) &
-    ('contact' extends With ? { contact: GetContactData } : Noop);
+    ('callout' extends With ? { callout: GetCalloutData } : Noop) &
+    ('contact' extends With ? { contact: GetContactData | null } : Noop) &
+    ('tags' extends With ? { tags: { id: string; name: string }[] } : Noop);
 
 export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 
-export interface GetNoticeData {
+interface NoticeData {
+  name: string;
+  starts: Date | null;
+  expires: Date | null;
+  text: string;
+  buttonText?: string;
+  url?: string;
+}
+export interface GetNoticeData extends NoticeData {
   id: string;
   createdAt: Date;
   updatedAt: Date;
   status: ItemStatus;
-  name: string;
-  starts?: Date;
-  expires?: Date;
-  enabled: boolean;
-  text: string;
-  buttonText?: string;
-  url?: string;
+}
+
+export type CreateNoticeData = AllowNull<NoticeData>;
+
+export interface ItemWithStatus {
+  status: ItemStatus;
+  starts: Date | null;
+  expires: Date | null;
 }
 
 export interface SignupData extends StartContributionData {

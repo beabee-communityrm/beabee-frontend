@@ -29,7 +29,7 @@ meta:
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import AuthBox from '../components/AuthBox.vue';
-import AppButton from '../components/forms/AppButton.vue';
+import AppButton from '../components/button/AppButton.vue';
 import { generalContent } from '../store';
 generalContent;
 

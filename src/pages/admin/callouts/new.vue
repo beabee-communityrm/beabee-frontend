@@ -62,16 +62,46 @@ import {
 } from '../../../utils/callouts';
 import PageTitle from '../../../components/PageTitle.vue';
 import useVuelidate from '@vuelidate/core';
-import AppAsyncButton from '../../../components/forms/AppAsyncButton.vue';
+import AppAsyncButton from '../../../components/button/AppAsyncButton.vue';
 import { formatDistanceLocale } from '../../../utils/dates/locale-date-formats';
-
-formatDistanceLocale;
+import { addBreadcrumb } from '../../../store/breadcrumb';
 
 const props = defineProps<{ id?: string }>();
 
 const { t } = useI18n();
 const router = useRouter();
 const validation = useVuelidate();
+
+addBreadcrumb(
+  computed(() =>
+    steps.value
+      ? [
+          {
+            title: t('menu.callouts'),
+            icon: 'bullhorn',
+            to: '/admin/callouts',
+          },
+          ...(props.id
+            ? [
+                {
+                  title: steps.value.titleAndImage.title,
+                  to: '/admin/callouts/view/' + props.id,
+                },
+                {
+                  title: t('actions.edit'),
+                  to: '/admin/callouts/edit/' + props.id,
+                },
+              ]
+            : [
+                {
+                  title: t('calloutsAdmin.addCallout'),
+                  to: '/admin/callouts/new',
+                },
+              ]),
+        ]
+      : []
+  )
+);
 
 const steps = ref<CalloutStepsProps>();
 const status = ref<ItemStatus>();

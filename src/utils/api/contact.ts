@@ -33,6 +33,7 @@ import env from '../../env';
 export function deserializeContact(data: any): any {
   return {
     ...data,
+    displayName: `${data.firstname} ${data.lastname}`.trim() || data.email,
     joined: deserializeDate(data.joined),
     lastSeen: deserializeDate(data.lastSeen),
     ...(data.contribution && {

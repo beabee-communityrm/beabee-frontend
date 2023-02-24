@@ -95,7 +95,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import env from '../../../env';
-import AppButton from '../../forms/AppButton.vue';
+import AppButton from '../../button/AppButton.vue';
 
 const { t } = useI18n();
 
