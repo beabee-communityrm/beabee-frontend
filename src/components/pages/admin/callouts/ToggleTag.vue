@@ -4,6 +4,8 @@
     variant="primaryOutlined"
     :title="t('calloutResponse.data.tags')"
   >
+    <slot />
+
     <template #dropdown>
       <ul>
         <li
@@ -45,9 +47,9 @@ const props = defineProps<{
 }>();
 
 const tagItemsWithSelected = computed(() =>
-  props.tagItems.map((ti) => ({
-    ...ti,
-    selected: props.selectedTags.includes(ti.id),
+  props.tagItems.map((tagItem) => ({
+    ...tagItem,
+    selected: props.selectedTags.includes(tagItem.id),
   }))
 );
 

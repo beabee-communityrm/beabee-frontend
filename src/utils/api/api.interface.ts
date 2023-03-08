@@ -350,6 +350,7 @@ export interface GetCalloutResponseData {
   number: number;
   createdAt: Date;
   updatedAt: Date;
+  bucket: string;
 }
 
 export interface CreateCalloutResponseData {

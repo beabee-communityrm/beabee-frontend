@@ -26,24 +26,12 @@
   </AppDropdownButton>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppDropdownButton from '../../../button/AppDropdownButton.vue';
+import { buckets } from './callouts.interface';
 
 defineEmits<{ (event: 'move', id: string): void }>();
 defineProps<{ currentBucket: string; small?: boolean }>();
 
 const { t } = useI18n();
-
-const buckets = computed(() => [
-  { id: '', label: t('calloutResponseBuckets.inbox') },
-  {
-    id: 'verified',
-    label: t('calloutResponseBuckets.verified'),
-  },
-  {
-    id: 'trash',
-    label: t('calloutResponseBuckets.trash'),
-  },
-]);
 </script>

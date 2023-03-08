@@ -34,21 +34,44 @@ meta:
     <AppHeading class="mb-4">
       {{ t('calloutResponsesPage.responseNo', { no: response.number }) }}
     </AppHeading>
-    <AppInfoList>
+    <AppInfoList class="mb-4">
       <AppInfoListItem :name="t('calloutResponse.data.contact')">
         <router-link
           v-if="response.contact"
           :to="`/admin/contacts/${response.contact.id}`"
           class="text-link"
         >
-          {{ response.contact.email }}
+          {{ response.contact.displayName }}
         </router-link>
       </AppInfoListItem>
       <AppInfoListItem
         :name="t('calloutResponse.data.createdAt')"
         :value="formatLocale(response.createdAt, 'Pp')"
       />
+      <AppInfoListItem
+        :name="t('calloutResponse.data.bucket')"
+        :value="
+          buckets.find((bucket) => bucket.id === response!.bucket)?.label ||
+          response.bucket
+        "
+      />
+      <AppInfoListItem :name="t('calloutResponse.data.tags')">
+        <AppTag v-for="tag in response.tags" :key="tag.id" :tag="tag.name" />
+      </AppInfoListItem>
     </AppInfoList>
+    <div class="flex gap-2">
+      <MoveBucket :current-bucket="response.bucket" size="sm">
+        Move bucket
+      </MoveBucket>
+      <ToggleTag
+        :tag-items="tagItems"
+        :selected-tags="response.tags.map((t) => t.id)"
+        :responses-url="''"
+        size="sm"
+      >
+        Toggle tags
+      </ToggleTag>
+    </div>
     <div class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg">
       <Form
         :key="response.id /*Form doesn't respect reactivity */"
@@ -60,7 +83,7 @@ meta:
   </div>
 </template>
 <script lang="ts" setup>
-import { computed, ref, watchEffect } from 'vue';
+import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import {
   GetCalloutDataWith,
   GetCalloutResponseData,
@@ -69,6 +92,7 @@ import {
 import {
   fetchResponse,
   fetchResponses,
+  fetchTags,
 } from '../../../../../../utils/api/callout';
 import { Form } from 'vue-formio';
 import { useI18n } from 'vue-i18n';
@@ -79,6 +103,10 @@ import { formatLocale } from '../../../../../../utils/dates/locale-date-formats'
 import AppButton from '../../../../../../components/button/AppButton.vue';
 import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
 import { addBreadcrumb } from '../../../../../../store/breadcrumb';
+import MoveBucket from '../../../../../../components/pages/admin/callouts/MoveBucket.vue';
+import ToggleTag from '../../../../../../components/pages/admin/callouts/ToggleTag.vue';
+import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
+import AppTag from '../../../../../../components/AppTag.vue';
 
 const props = defineProps<{
   rid: string;
@@ -89,14 +117,23 @@ const { t } = useI18n();
 
 addBreadcrumb(computed(() => [{ title: props.rid }]));
 
-const response = ref<GetCalloutResponseDataWith<'answers' | 'contact'>>();
+const response =
+  ref<GetCalloutResponseDataWith<'answers' | 'contact' | 'tags'>>();
 const prevResponse = ref<GetCalloutResponseData>();
 const nextResponse = ref<GetCalloutResponseData>();
+
+const tagItems = ref<{ id: string; label: string }[]>([]);
+
+onBeforeMount(async () => {
+  const tags = await fetchTags(props.callout.slug);
+  tagItems.value = tags.map((tag) => ({ id: tag.id, label: tag.name }));
+});
 
 watchEffect(async () => {
   const newResponse = await fetchResponse(props.callout.slug, props.rid, [
     'answers',
     'contact',
+    'tags',
   ]);
 
   const olderResponses = await fetchResponses(props.callout.slug, {

@@ -8,7 +8,7 @@ meta:
 <template>
   <div class="md:flex">
     <div class="hidden flex-none basis-[220px] md:block">
-      <AppVTabs v-model="currentBucket" :items="buckets" />
+      <AppVTabs v-model="currentBucket" :items="bucketItems" />
     </div>
     <div class="flex-1">
       <div class="flex gap-2">
@@ -165,6 +165,7 @@ import { updateCalloutResponses } from '../../../../../../utils/api/callout-resp
 import AppTag from '../../../../../../components/AppTag.vue';
 import MoveBucket from '../../../../../../components/pages/admin/callouts/MoveBucket.vue';
 import ToggleTag from '../../../../../../components/pages/admin/callouts/ToggleTag.vue';
+import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
@@ -214,19 +215,12 @@ const responsesUrl = computed(
     }).href
 );
 
-const buckets = computed(() => [
-  { id: '', label: t('calloutResponseBuckets.inbox'), to: responsesUrl.value },
-  {
-    id: 'verified',
-    label: t('calloutResponseBuckets.verified'),
-    to: responsesUrl.value + '?bucket=verified',
-  },
-  {
-    id: 'trash',
-    label: t('calloutResponseBuckets.trash'),
-    to: responsesUrl.value + '?bucket=trash',
-  },
-]);
+const bucketItems = computed(() =>
+  buckets.value.map((bucket) => ({
+    ...bucket,
+    to: responsesUrl.value + '?bucket=' + bucket.id,
+  }))
+);
 
 const formQuestions = computed(() =>
   flattenComponents(props.callout.formSchema.components).filter(
