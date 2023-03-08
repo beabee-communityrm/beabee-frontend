@@ -15,7 +15,7 @@ const { t } = i18n.global;
 
 export const headers = computed<Header[]>(() => [
   {
-    value: 'response',
+    value: 'number',
     text: t('calloutResponsesPage.response'),
   },
   {

@@ -306,7 +306,7 @@
   "calloutResponsesPage": {
     "moveToBucket": "Nach {bucket} verschieben",
     "response": "Antwort",
-    "responseId": "Antwort {id}",
+    "responseNo": "Antwort {no}",
     "showingOf": "Antworten {start} bis {end} von {total} werden angezeigt"
   },
   "callouts": {

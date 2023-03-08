@@ -32,7 +32,7 @@ meta:
       </AppButtonGroup>
     </div>
     <AppHeading class="mb-4">
-      {{ t('calloutResponsesPage.responseId', { id: response.id }) }}
+      {{ t('calloutResponsesPage.responseNo', { no: response.number }) }}
     </AppHeading>
     <AppInfoList>
       <AppInfoListItem :name="t('calloutResponse.data.contact')">

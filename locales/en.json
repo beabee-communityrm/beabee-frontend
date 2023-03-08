@@ -306,7 +306,7 @@
   "calloutResponsesPage": {
     "moveToBucket": "Move to {bucket}",
     "response": "Response",
-    "responseId": "Response {id}",
+    "responseNo": "Response {no}",
     "showingOf": "Showing {start} to {end} responses out of {total}"
   },
   "callouts": {

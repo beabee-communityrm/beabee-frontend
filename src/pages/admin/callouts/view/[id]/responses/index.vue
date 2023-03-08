@@ -137,12 +137,12 @@ meta:
         selectable
         class="mt-2 w-full"
       >
-        <template #response="{ item }">
+        <template #number="{ value, item }">
           <router-link
             :to="`${responsesUrl}/${item.id}`"
             class="text-base font-bold text-link"
           >
-            {{ item.id }}
+            {{ t('calloutResponsesPage.responseNo', { no: n(value) }) }}
           </router-link>
         </template>
         <template #contact="{ item }">
@@ -217,7 +217,7 @@ const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
 }>();
 
-const { t } = useI18n();
+const { t, n } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
