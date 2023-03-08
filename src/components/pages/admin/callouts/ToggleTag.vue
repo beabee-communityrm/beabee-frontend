@@ -13,7 +13,7 @@
           :key="tag.id"
           class="flex items-center justify-between gap-4 py-2 px-3"
           :class="tag.selected ? 'bg-primary-10' : 'hover:bg-primary-5'"
-          @click="$emit('toggle', tag.id)"
+          @click="$emit('toggle', (tag.selected ? '-' : '+') + tag.id)"
         >
           <span>
             <font-awesome-icon class="mr-2" :icon="['fa', 'tag']" />{{

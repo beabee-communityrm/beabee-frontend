@@ -65,14 +65,21 @@ meta:
       </AppInfoListItem>
     </AppInfoList>
     <div class="flex gap-2">
-      <MoveBucket :current-bucket="response.bucket" size="sm">
+      <MoveBucket
+        :current-bucket="response.bucket"
+        size="sm"
+        :loading="doingAction"
+        @move="(bucket) => handleUpdate({ bucket })"
+      >
         {{ t('calloutResponsePage.actions.moveBucket') }}
       </MoveBucket>
       <ToggleTag
         :tag-items="tagItems"
         :selected-tags="response.tags.map((t) => t.id)"
         :manage-url="`/admin/callouts/view/${callout.slug}/responses/tags`"
+        :loading="doingAction"
         size="sm"
+        @toggle="(tagId) => handleUpdate({ tags: [tagId] })"
       >
         {{ t('calloutResponsePage.actions.toggleTag') }}
       </ToggleTag>
@@ -93,12 +100,9 @@ import {
   GetCalloutDataWith,
   GetCalloutResponseData,
   GetCalloutResponseDataWith,
+  UpdateCalloutResponseData,
 } from '../../../../../../utils/api/api.interface';
-import {
-  fetchResponse,
-  fetchResponses,
-  fetchTags,
-} from '../../../../../../utils/api/callout';
+import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
 import { Form } from 'vue-formio';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../../../components/AppHeading.vue';
@@ -112,6 +116,10 @@ import MoveBucket from '../../../../../../components/pages/admin/callouts/MoveBu
 import ToggleTag from '../../../../../../components/pages/admin/callouts/ToggleTag.vue';
 import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
 import AppTag from '../../../../../../components/AppTag.vue';
+import {
+  fetchCalloutResponse,
+  updateCalloutResponse,
+} from '../../../../../../utils/api/callout-response';
 
 const props = defineProps<{
   rid: string;
@@ -131,13 +139,24 @@ const totalResponses = ref(0);
 
 const tagItems = ref<{ id: string; label: string }[]>([]);
 
+const doingAction = ref(false);
+
+async function handleUpdate(data: UpdateCalloutResponseData) {
+  if (!response.value) return;
+
+  doingAction.value = true;
+  await updateCalloutResponse(response.value.id, data);
+  await refreshResponse();
+  doingAction.value = false;
+}
+
 onBeforeMount(async () => {
   const tags = await fetchTags(props.callout.slug);
   tagItems.value = tags.map((tag) => ({ id: tag.id, label: tag.name }));
 });
 
-watchEffect(async () => {
-  const newResponse = await fetchResponse(props.callout.slug, props.rid, [
+async function refreshResponse() {
+  const newResponse = await fetchCalloutResponse(props.rid, [
     'answers',
     'contact',
     'tags',
@@ -184,5 +203,7 @@ watchEffect(async () => {
     newerResponses.count > 0 ? newerResponses.items[0] : undefined;
   responseNo.value = olderResponses.total + 1;
   totalResponses.value = olderResponses.total + newerResponses.total + 1;
-});
+}
+
+watchEffect(refreshResponse);
 </script>

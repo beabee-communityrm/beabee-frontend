@@ -52,7 +52,7 @@ meta:
             :current-bucket="currentBucket"
             :disabled="selectedCount === 0"
             :loading="doingAction"
-            @move="handleMoveBucket"
+            @move="(bucket) => handleUpdateAction({ bucket })"
           />
           <ToggleTag
             :tag-items="tagItems"
@@ -60,7 +60,7 @@ meta:
             :manage-url="`${responsesUrl}/tags`"
             :loading="doingAction"
             :disabled="selectedCount === 0"
-            @toggle="handleToggleTag"
+            @toggle="(tagId) => handleUpdateAction({ tags: [tagId] })"
           />
         </AppButtonGroup>
         <p v-if="selectedCount > 0" class="self-center text-sm">
@@ -355,14 +355,5 @@ async function handleUpdateAction(
   await refreshResponses();
 
   doingAction.value = false;
-}
-
-async function handleMoveBucket(bucket: string): Promise<void> {
-  await handleUpdateAction({ bucket });
-}
-
-async function handleToggleTag(tagId: string): Promise<void> {
-  const action = selectedTags.value.includes(tagId) ? '-' : '+';
-  await handleUpdateAction({ tags: [`${action}${tagId}`] });
 }
 </script>

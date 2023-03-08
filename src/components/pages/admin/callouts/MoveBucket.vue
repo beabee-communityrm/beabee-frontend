@@ -31,7 +31,7 @@ import AppDropdownButton from '../../../button/AppDropdownButton.vue';
 import { buckets } from './callouts.interface';
 
 defineEmits<{ (event: 'move', id: string): void }>();
-defineProps<{ currentBucket: string; small?: boolean }>();
+defineProps<{ currentBucket: string }>();
 
 const { t } = useI18n();
 </script>
