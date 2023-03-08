@@ -70,6 +70,7 @@ meta:
       <MoveBucket
         :current-bucket="response.bucket"
         size="sm"
+        :disabled="doingAction"
         :loading="doingAction"
         @move="(bucket) => handleUpdate({ bucket })"
       >
