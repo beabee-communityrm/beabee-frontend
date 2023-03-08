@@ -7,12 +7,14 @@ meta:
 <template>
   <div v-if="response" class="md:max-w-2xl">
     <div class="mb-4 flex items-center justify-end gap-2 text-sm">
-      <span>{{
-        t('calloutResponsePage.responseOf', {
-          no: n(responseNo),
-          total: n(totalResponses),
-        })
-      }}</span>
+      <i18n-t tag="span" keypath="calloutResponsePage.responseOf">
+        <template #no>
+          <b>{{ n(responseNo) }}</b>
+        </template>
+        <template #total>
+          <b>{{ n(totalResponses) }}</b>
+        </template>
+      </i18n-t>
       <AppButtonGroup>
         <AppButton
           type="button"

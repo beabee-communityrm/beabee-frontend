@@ -304,7 +304,7 @@
       "toggleTag": "Toggle tag"
     },
     "manageTags": "Manage tags",
-    "responseOf": "Response {no} of {total}",
+    "responseOf": "Response {no} out of {total}",
     "searchTag": "Search by tag...",
     "selectedCount": "{n} response selected | {n} responses selected"
   },

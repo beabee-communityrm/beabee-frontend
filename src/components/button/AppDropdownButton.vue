@@ -36,7 +36,7 @@ const props = defineProps<{
 }>();
 
 const sharedClasses =
-  'absolute top-full -left-px z-20 border-primary-40 group-hover:border-primary-80 bg-white';
+  'absolute top-full min-w-full -left-px z-20 border-primary-40 group-hover:border-primary-80 bg-white';
 
 const buttonRef = ref<InstanceType<typeof AppButton>>();
 const open = ref(false);
