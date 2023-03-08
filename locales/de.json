@@ -299,6 +299,7 @@
     "verified": "Verifiziert"
   },
   "calloutResponsePage": {
+    "actions": {},
     "manageTags": "Tags bearbeiten",
     "searchTag": "Suche nach Tags...",
     "selectedCount": "{n} Antwort ausgewählt | {n} Antworten ausgewählt"

@@ -299,7 +299,12 @@
     "verified": "Verified"
   },
   "calloutResponsePage": {
+    "actions": {
+      "moveBucket": "Move bucket",
+      "toggleTag": "Toggle tag"
+    },
     "manageTags": "Manage tags",
+    "responseOf": "Response {no} of {total}",
     "searchTag": "Search by tag...",
     "selectedCount": "{n} response selected | {n} responses selected"
   },

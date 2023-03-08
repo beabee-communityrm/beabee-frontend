@@ -7,7 +7,12 @@ meta:
 <template>
   <div v-if="response" class="md:max-w-2xl">
     <div class="mb-4 flex items-center justify-end gap-2 text-sm">
-      <span>Response x of x</span>
+      <span>{{
+        t('calloutResponsePage.responseOf', {
+          no: n(responseNo),
+          total: n(totalResponses),
+        })
+      }}</span>
       <AppButtonGroup>
         <AppButton
           type="button"
@@ -32,7 +37,7 @@ meta:
       </AppButtonGroup>
     </div>
     <AppHeading class="mb-4">
-      {{ t('calloutResponsesPage.responseNo', { no: response.number }) }}
+      {{ t('calloutResponsesPage.responseNo', { no: n(response.number) }) }}
     </AppHeading>
     <AppInfoList class="mb-4">
       <AppInfoListItem :name="t('calloutResponse.data.contact')">
@@ -61,7 +66,7 @@ meta:
     </AppInfoList>
     <div class="flex gap-2">
       <MoveBucket :current-bucket="response.bucket" size="sm">
-        Move bucket
+        {{ t('calloutResponsePage.actions.moveBucket') }}
       </MoveBucket>
       <ToggleTag
         :tag-items="tagItems"
@@ -69,7 +74,7 @@ meta:
         :manage-url="`/admin/callouts/view/${callout.slug}/responses/tags`"
         size="sm"
       >
-        Toggle tags
+        {{ t('calloutResponsePage.actions.toggleTag') }}
       </ToggleTag>
     </div>
     <div class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg">
@@ -113,7 +118,7 @@ const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
 }>();
 
-const { t } = useI18n();
+const { t, n } = useI18n();
 
 addBreadcrumb(computed(() => [{ title: props.rid }]));
 
@@ -121,6 +126,8 @@ const response =
   ref<GetCalloutResponseDataWith<'answers' | 'contact' | 'tags'>>();
 const prevResponse = ref<GetCalloutResponseData>();
 const nextResponse = ref<GetCalloutResponseData>();
+const responseNo = ref(0);
+const totalResponses = ref(0);
 
 const tagItems = ref<{ id: string; label: string }[]>([]);
 
@@ -143,6 +150,7 @@ watchEffect(async () => {
     rules: {
       condition: 'AND',
       rules: [
+        { field: 'bucket', operator: 'equal', value: [newResponse.bucket] },
         {
           field: 'createdAt',
           operator: 'less',
@@ -159,6 +167,7 @@ watchEffect(async () => {
     rules: {
       condition: 'AND',
       rules: [
+        { field: 'bucket', operator: 'equal', value: [newResponse.bucket] },
         {
           field: 'createdAt',
           operator: 'greater',
@@ -173,5 +182,7 @@ watchEffect(async () => {
     olderResponses.count > 0 ? olderResponses.items[0] : undefined;
   nextResponse.value =
     newerResponses.count > 0 ? newerResponses.items[0] : undefined;
+  responseNo.value = olderResponses.total + 1;
+  totalResponses.value = olderResponses.total + newerResponses.total + 1;
 });
 </script>
