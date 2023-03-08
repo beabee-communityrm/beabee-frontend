@@ -7,7 +7,10 @@
     <slot />
 
     <template #dropdown>
-      <ul>
+      <p v-if="tagItemsWithSelected.length === 0" class="py-2 px-3 italic">
+        {{ t('calloutResponsesPage.noTags') }}
+      </p>
+      <ul v-else>
         <li
           v-for="tag in tagItemsWithSelected"
           :key="tag.id"

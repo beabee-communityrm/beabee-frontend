@@ -310,6 +310,7 @@
   },
   "calloutResponsesPage": {
     "moveToBucket": "Move to {bucket}",
+    "noTags": "No tags",
     "response": "Response",
     "responseNo": "Response {no}",
     "showingOf": "Showing {start} to {end} responses out of {total}"
