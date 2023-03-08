@@ -1,10 +1,12 @@
 <template>
-  <dd class="text-sm font-semibold text-body-80 md:text-right">{{ name }}</dd>
-  <dt class="text-right font-bold md:text-left">
-    <slot>
-      {{ valueWithDefault }}
-    </slot>
-  </dt>
+  <div class="mb-2 border-l border-primary-20 pl-2">
+    <dd class="block text-sm font-semibold text-body-80">{{ name }}</dd>
+    <dt class="font-bold">
+      <slot>
+        {{ valueWithDefault }}
+      </slot>
+    </dt>
+  </div>
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue';
