@@ -17,6 +17,7 @@ export const headers = computed<Header[]>(() => [
   {
     value: 'number',
     text: t('calloutResponsesPage.response'),
+    sortable: true,
   },
   {
     value: 'contact',
