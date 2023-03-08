@@ -55,9 +55,9 @@ meta:
             @move="handleMoveBucket"
           />
           <ToggleTag
-            :responses-url="responsesUrl"
             :tag-items="tagItems"
             :selected-tags="selectedTags"
+            :manage-url="`${responsesUrl}/tags`"
             :loading="doingAction"
             :disabled="selectedCount === 0"
             @toggle="handleToggleTag"

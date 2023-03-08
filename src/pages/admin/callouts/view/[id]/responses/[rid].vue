@@ -66,7 +66,7 @@ meta:
       <ToggleTag
         :tag-items="tagItems"
         :selected-tags="response.tags.map((t) => t.id)"
-        :responses-url="''"
+        :manage-url="`/admin/callouts/view/${callout.slug}/responses/tags`"
         size="sm"
       >
         Toggle tags

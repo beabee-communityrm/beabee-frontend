@@ -25,7 +25,7 @@
       </ul>
       <router-link
         class="block border-t border-primary-40 py-2 px-3 font-semibold text-primary underline hover:bg-primary-5 group-hover:border-primary"
-        :to="`${responsesUrl}/tags`"
+        :to="manageUrl"
       >
         <font-awesome-icon class="mr-2" :icon="['fa', 'cog']" />{{
           t('calloutResponsePage.manageTags')
@@ -43,7 +43,7 @@ defineEmits<{ (event: 'toggle', id: string): void }>();
 const props = defineProps<{
   tagItems: { id: string; label: string }[];
   selectedTags: string[];
-  responsesUrl: string;
+  manageUrl: string;
 }>();
 
 const tagItemsWithSelected = computed(() =>
