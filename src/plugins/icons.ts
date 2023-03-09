@@ -68,6 +68,7 @@ import {
   faSignHanging,
   faFolder,
   faFilter,
+  faDownload,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -87,6 +88,7 @@ library.add(
   faBullhorn,
   faKey,
   faMagic,
+  faDownload,
   faBomb,
   faTimes,
   faCircleNotch,

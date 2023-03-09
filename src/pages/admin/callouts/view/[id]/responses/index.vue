@@ -48,6 +48,12 @@ meta:
       />
       <div class="mt-4 flex gap-4">
         <AppButtonGroup>
+          <AppButton
+            icon="download"
+            variant="primaryOutlined"
+            :title="t('actions.export')"
+            @click="handleExport"
+          />
           <MoveBucketButton
             :current-bucket="currentBucket"
             :disabled="selectedCount === 0"
@@ -298,7 +304,7 @@ onBeforeMount(async () => {
   tagItems.value = tags.map((tag) => ({ id: tag.id, label: tag.name }));
 });
 
-async function refreshResponses() {
+function getSearchRules(): RuleGroup {
   const bucketRule: Rule = currentBucket.value
     ? { field: 'bucket', operator: 'equal', value: [currentBucket.value] }
     : { field: 'bucket', operator: 'is_empty', value: [] };
@@ -316,7 +322,21 @@ async function refreshResponses() {
       value: [currentTag.value],
     });
   }
+  return rules;
+}
 
+function getSelectedResponseRules(): RuleGroup {
+  return {
+    condition: 'OR',
+    rules: selectedResponseItems.value.map((item) => ({
+      field: 'id',
+      operator: 'equal',
+      value: [item.id],
+    })),
+  };
+}
+
+async function refreshResponses() {
   responses.value = await fetchResponses(
     props.callout.slug,
     {
@@ -324,7 +344,7 @@ async function refreshResponses() {
       offset: currentPage.value * currentPageSize.value,
       sort: currentSort.value.by,
       order: currentSort.value.type,
-      rules,
+      rules: getSearchRules(),
     },
     ['contact', 'tags']
   );
@@ -337,21 +357,28 @@ async function refreshResponses() {
 
 watchEffect(refreshResponses);
 
+function handleExport() {
+  const rules: RuleGroup =
+    selectedResponseItems.value.length > 0
+      ? getSelectedResponseRules()
+      : getSearchRules();
+
+  const rulesQuery = encodeURIComponent(JSON.stringify(rules));
+
+  console.log(rules);
+
+  window.open(
+    `/api/1.0/callout/${props.callout.slug}/responses.csv?rules=${rulesQuery}`,
+    '_blank'
+  );
+}
+
 async function handleUpdateAction(
   updates: UpdateCalloutResponseData
 ): Promise<void> {
   doingAction.value = true;
 
-  const ruleGroup: RuleGroup = {
-    condition: 'OR',
-    rules: selectedResponseItems.value.map((item) => ({
-      field: 'id',
-      operator: 'equal',
-      value: [item.id],
-    })),
-  };
-
-  await updateCalloutResponses(ruleGroup, updates);
+  await updateCalloutResponses(getSelectedResponseRules(), updates);
   await refreshResponses();
 
   doingAction.value = false;
