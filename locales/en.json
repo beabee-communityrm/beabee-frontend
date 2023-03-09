@@ -17,6 +17,7 @@
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
+    "export": "Export",
     "participate": "Participate",
     "preview": "Preview",
     "publish": "Publish",
@@ -299,14 +300,20 @@
     "verified": "Verified"
   },
   "calloutResponsePage": {
+    "actions": {
+      "moveBucket": "Move bucket",
+      "toggleTag": "Toggle tag"
+    },
     "manageTags": "Manage tags",
+    "responseOf": "Response {no} out of {total}",
     "searchTag": "Search by tag...",
     "selectedCount": "{n} response selected | {n} responses selected"
   },
   "calloutResponsesPage": {
     "moveToBucket": "Move to {bucket}",
+    "noTags": "No tags",
     "response": "Response",
-    "responseId": "Response {id}",
+    "responseNo": "Response {no}",
     "showingOf": "Showing {start} to {end} responses out of {total}"
   },
   "callouts": {

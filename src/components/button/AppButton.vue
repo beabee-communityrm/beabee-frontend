@@ -22,6 +22,7 @@
       :icon="['fas', 'circle-notch']"
       spin
     />
+    <slot name="after" />
   </component>
 </template>
 

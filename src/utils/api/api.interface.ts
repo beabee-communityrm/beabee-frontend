@@ -347,8 +347,10 @@ export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
 
 export interface GetCalloutResponseData {
   id: string;
+  number: number;
   createdAt: Date;
   updatedAt: Date;
+  bucket: string;
 }
 
 export interface CreateCalloutResponseData {

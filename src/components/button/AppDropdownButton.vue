@@ -8,18 +8,21 @@
     :disabled="disabled"
     @click="open = !open"
   >
-    <div
-      class="border text-left text-sm font-normal text-body-80 shadow-lg"
-      :class="{ [sharedClasses]: true, hidden: !open }"
-      @click.stop
-    >
-      <slot />
-    </div>
-    <div
-      v-show="open"
-      :class="sharedClasses"
-      class="box-content w-full border-x pt-px"
-    />
+    <slot />
+    <template #after>
+      <div
+        class="border text-left text-sm font-normal text-body-80 shadow-lg"
+        :class="{ [sharedClasses]: true, hidden: !open }"
+        @click.stop
+      >
+        <slot name="dropdown" />
+      </div>
+      <div
+        v-show="open"
+        :class="sharedClasses"
+        class="box-content w-full border-x pt-px"
+      />
+    </template>
   </AppButton>
 </template>
 
@@ -33,7 +36,7 @@ const props = defineProps<{
 }>();
 
 const sharedClasses =
-  'absolute top-full -left-px z-20 border-primary-40 group-hover:border-primary-80 bg-white';
+  'absolute top-full min-w-full -left-px z-20 border-primary-40 group-hover:border-primary-80 bg-white';
 
 const buttonRef = ref<InstanceType<typeof AppButton>>();
 const open = ref(false);
