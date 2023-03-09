@@ -2,7 +2,7 @@
   <AppDropdownButton
     icon="folder"
     variant="primaryOutlined"
-    :title="t('calloutResponse.data.bucket')"
+    :title="t('calloutResponsePage.actions.moveBucket')"
   >
     <slot />
 

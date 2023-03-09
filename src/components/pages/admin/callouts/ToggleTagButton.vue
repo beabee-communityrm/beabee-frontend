@@ -2,7 +2,7 @@
   <AppDropdownButton
     icon="tag"
     variant="primaryOutlined"
-    :title="t('calloutResponse.data.tags')"
+    :title="t('calloutResponsePage.actions.toggleTag')"
   >
     <slot />
 
