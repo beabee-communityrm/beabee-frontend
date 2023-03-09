@@ -365,8 +365,6 @@ function handleExport() {
 
   const rulesQuery = encodeURIComponent(JSON.stringify(rules));
 
-  console.log(rules);
-
   window.open(
     `/api/1.0/callout/${props.callout.slug}/responses.csv?rules=${rulesQuery}`,
     '_blank'
