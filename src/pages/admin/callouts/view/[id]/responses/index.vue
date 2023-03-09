@@ -48,13 +48,13 @@ meta:
       />
       <div class="mt-4 flex gap-4">
         <AppButtonGroup>
-          <MoveBucket
+          <MoveBucketButton
             :current-bucket="currentBucket"
             :disabled="selectedCount === 0"
             :loading="doingAction"
             @move="(bucket) => handleUpdateAction({ bucket })"
           />
-          <ToggleTag
+          <ToggleTagButton
             :tag-items="tagItems"
             :selected-tags="selectedTags"
             :manage-url="`${responsesUrl}/tags`"
@@ -163,8 +163,8 @@ import { formatDistanceLocale } from '../../../../../../utils/dates/locale-date-
 import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
 import { updateCalloutResponses } from '../../../../../../utils/api/callout-response';
 import AppTag from '../../../../../../components/AppTag.vue';
-import MoveBucket from '../../../../../../components/pages/admin/callouts/MoveBucket.vue';
-import ToggleTag from '../../../../../../components/pages/admin/callouts/ToggleTag.vue';
+import MoveBucketButton from '../../../../../../components/pages/admin/callouts/MoveBucketButton.vue';
+import ToggleTagButton from '../../../../../../components/pages/admin/callouts/ToggleTagButton.vue';
 import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
 
 const props = defineProps<{

@@ -67,7 +67,7 @@ meta:
       </AppInfoListItem>
     </AppInfoList>
     <div class="flex gap-2">
-      <MoveBucket
+      <MoveBucketButton
         :current-bucket="response.bucket"
         size="sm"
         :disabled="doingAction"
@@ -75,8 +75,8 @@ meta:
         @move="(bucket) => handleUpdate({ bucket })"
       >
         {{ t('calloutResponsePage.actions.moveBucket') }}
-      </MoveBucket>
-      <ToggleTag
+      </MoveBucketButton>
+      <ToggleTagButton
         :tag-items="tagItems"
         :selected-tags="response.tags.map((t) => t.id)"
         :manage-url="`/admin/callouts/view/${callout.slug}/responses/tags`"
@@ -85,7 +85,7 @@ meta:
         @toggle="(tagId) => handleUpdate({ tags: [tagId] })"
       >
         {{ t('calloutResponsePage.actions.toggleTag') }}
-      </ToggleTag>
+      </ToggleTagButton>
     </div>
     <div class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg">
       <Form
@@ -115,8 +115,8 @@ import { formatLocale } from '../../../../../../utils/dates/locale-date-formats'
 import AppButton from '../../../../../../components/button/AppButton.vue';
 import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
 import { addBreadcrumb } from '../../../../../../store/breadcrumb';
-import MoveBucket from '../../../../../../components/pages/admin/callouts/MoveBucket.vue';
-import ToggleTag from '../../../../../../components/pages/admin/callouts/ToggleTag.vue';
+import MoveBucketButton from '../../../../../../components/pages/admin/callouts/MoveBucketButton.vue';
+import ToggleTagButton from '../../../../../../components/pages/admin/callouts/ToggleTagButton.vue';
 import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
 import AppTag from '../../../../../../components/AppTag.vue';
 import {
