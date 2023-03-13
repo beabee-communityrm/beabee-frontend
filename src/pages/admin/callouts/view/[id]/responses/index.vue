@@ -8,7 +8,7 @@ meta:
 <template>
   <div class="md:flex">
     <div class="hidden flex-none basis-[220px] md:block">
-      <AppVTabs v-model="currentBucket" :items="buckets" />
+      <AppVTabs v-model="currentBucket" :items="bucketItems" />
     </div>
     <div class="flex-1">
       <div class="flex gap-2">
@@ -48,68 +48,26 @@ meta:
       />
       <div class="mt-4 flex gap-4">
         <AppButtonGroup>
-          <AppDropdownButton
-            icon="folder"
+          <AppButton
+            icon="download"
             variant="primaryOutlined"
-            :title="t('calloutResponse.data.bucket')"
+            :title="t('actions.export')"
+            @click="handleExport"
+          />
+          <MoveBucketButton
+            :current-bucket="currentBucket"
+            :disabled="selectedCount === 0"
             :loading="doingAction"
-            :disabled="!hasSelected"
-          >
-            <ul>
-              <li
-                v-for="bucket in buckets"
-                :key="bucket.id"
-                class="py-2 px-3 hover:bg-primary-5"
-                :class="{ hidden: bucket.id === currentBucket }"
-                @click="() => handleMoveBucket(bucket.id)"
-              >
-                {{
-                  t('calloutResponsesPage.moveToBucket', {
-                    bucket: bucket.label,
-                  })
-                }}
-              </li>
-            </ul>
-          </AppDropdownButton>
-          <AppDropdownButton
-            icon="tag"
-            variant="primaryOutlined"
-            :title="t('calloutResponse.data.tags')"
+            @move="(bucket) => handleUpdateAction({ bucket })"
+          />
+          <ToggleTagButton
+            :tag-items="tagItems"
+            :selected-tags="selectedTags"
+            :manage-url="`${responsesUrl}/tags`"
             :loading="doingAction"
-            :disabled="!hasSelected"
-          >
-            <ul>
-              <li
-                v-for="tag in tagItems"
-                :key="tag.id"
-                class="flex items-center justify-between gap-4 py-2 px-3"
-                :class="
-                  selectedTags[tag.id] === selectedCount
-                    ? 'bg-primary-10'
-                    : 'hover:bg-primary-5'
-                "
-                @click="() => handleToggleTag(tag.id)"
-              >
-                <span>
-                  <font-awesome-icon class="mr-2" :icon="['fa', 'tag']" />{{
-                    tag.label
-                  }}
-                </span>
-                <font-awesome-icon
-                  v-if="selectedTags[tag.id] === selectedCount"
-                  :icon="['fa', 'check']"
-                />
-              </li>
-            </ul>
-            <router-link
-              class="block border-t border-primary-40 py-2 px-3 font-semibold text-primary underline hover:bg-primary-5 group-hover:border-primary"
-              :to="`${responsesUrl}/tags`"
-            >
-              <font-awesome-icon class="mr-2" :icon="['fa', 'cog']" />{{
-                t('calloutResponsePage.manageTags')
-              }}
-            </router-link>
-          </AppDropdownButton>
+            :disabled="selectedCount === 0"
+            @toggle="(tagId) => handleUpdateAction({ tags: [tagId] })"
+          />
         </AppButtonGroup>
         <p v-if="selectedCount > 0" class="self-center text-sm">
           <i18n-t
@@ -137,12 +95,12 @@ meta:
         selectable
         class="mt-2 w-full"
       >
-        <template #response="{ item }">
+        <template #number="{ value, item }">
           <router-link
             :to="`${responsesUrl}/${item.id}`"
             class="text-base font-bold text-link"
           >
-            {{ item.id }}
+            {{ t('calloutResponsesPage.responseNo', { no: n(value) }) }}
           </router-link>
         </template>
         <template #contact="{ item }">
@@ -209,15 +167,17 @@ import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
 import { convertComponentsToFilters } from '../../../../../../utils/callouts';
 import { formatDistanceLocale } from '../../../../../../utils/dates/locale-date-formats';
 import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
-import AppDropdownButton from '../../../../../../components/button/AppDropdownButton.vue';
 import { updateCalloutResponses } from '../../../../../../utils/api/callout-response';
 import AppTag from '../../../../../../components/AppTag.vue';
+import MoveBucketButton from '../../../../../../components/pages/admin/callouts/MoveBucketButton.vue';
+import ToggleTagButton from '../../../../../../components/pages/admin/callouts/ToggleTagButton.vue';
+import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
 }>();
 
-const { t } = useI18n();
+const { t, n } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
@@ -236,17 +196,19 @@ const selectedResponseItems = computed(
 );
 
 const selectedCount = computed(() => selectedResponseItems.value.length);
-const hasSelected = computed(() => selectedCount.value > 0);
 
 const selectedTags = computed(() => {
-  const ret = Object.fromEntries(tagItems.value.map((t) => [t.id, 0]));
+  const tagCount = Object.fromEntries(tagItems.value.map((t) => [t.id, 0]));
 
   for (const item of selectedResponseItems.value) {
     for (const tag of item.tags) {
-      ret[tag.id]++;
+      tagCount[tag.id]++;
     }
   }
-  return ret;
+
+  return Object.entries(tagCount)
+    .filter((tc) => tc[1] === selectedCount.value)
+    .map(([tagId]) => tagId);
 });
 
 const tagItems = ref<{ id: string; label: string }[]>([]);
@@ -259,19 +221,12 @@ const responsesUrl = computed(
     }).href
 );
 
-const buckets = computed(() => [
-  { id: '', label: t('calloutResponseBuckets.inbox'), to: responsesUrl.value },
-  {
-    id: 'verified',
-    label: t('calloutResponseBuckets.verified'),
-    to: responsesUrl.value + '?bucket=verified',
-  },
-  {
-    id: 'trash',
-    label: t('calloutResponseBuckets.trash'),
-    to: responsesUrl.value + '?bucket=trash',
-  },
-]);
+const bucketItems = computed(() =>
+  buckets.value.map((bucket) => ({
+    ...bucket,
+    to: responsesUrl.value + '?bucket=' + bucket.id,
+  }))
+);
 
 const formQuestions = computed(() =>
   flattenComponents(props.callout.formSchema.components).filter(
@@ -349,7 +304,7 @@ onBeforeMount(async () => {
   tagItems.value = tags.map((tag) => ({ id: tag.id, label: tag.name }));
 });
 
-async function refreshResponses() {
+function getSearchRules(): RuleGroup {
   const bucketRule: Rule = currentBucket.value
     ? { field: 'bucket', operator: 'equal', value: [currentBucket.value] }
     : { field: 'bucket', operator: 'is_empty', value: [] };
@@ -367,7 +322,21 @@ async function refreshResponses() {
       value: [currentTag.value],
     });
   }
+  return rules;
+}
 
+function getSelectedResponseRules(): RuleGroup {
+  return {
+    condition: 'OR',
+    rules: selectedResponseItems.value.map((item) => ({
+      field: 'id',
+      operator: 'equal',
+      value: [item.id],
+    })),
+  };
+}
+
+async function refreshResponses() {
   responses.value = await fetchResponses(
     props.callout.slug,
     {
@@ -375,7 +344,7 @@ async function refreshResponses() {
       offset: currentPage.value * currentPageSize.value,
       sort: currentSort.value.by,
       order: currentSort.value.type,
-      rules,
+      rules: getSearchRules(),
     },
     ['contact', 'tags']
   );
@@ -388,32 +357,28 @@ async function refreshResponses() {
 
 watchEffect(refreshResponses);
 
+function handleExport() {
+  const rules: RuleGroup =
+    selectedResponseItems.value.length > 0
+      ? getSelectedResponseRules()
+      : getSearchRules();
+
+  const rulesQuery = encodeURIComponent(JSON.stringify(rules));
+
+  window.open(
+    `/api/1.0/callout/${props.callout.slug}/responses.csv?rules=${rulesQuery}`,
+    '_blank'
+  );
+}
+
 async function handleUpdateAction(
   updates: UpdateCalloutResponseData
 ): Promise<void> {
   doingAction.value = true;
 
-  const ruleGroup: RuleGroup = {
-    condition: 'OR',
-    rules: selectedResponseItems.value.map((item) => ({
-      field: 'id',
-      operator: 'equal',
-      value: [item.id],
-    })),
-  };
-
-  await updateCalloutResponses(ruleGroup, updates);
+  await updateCalloutResponses(getSelectedResponseRules(), updates);
   await refreshResponses();
 
   doingAction.value = false;
-}
-
-async function handleMoveBucket(bucket: string): Promise<void> {
-  await handleUpdateAction({ bucket });
-}
-
-async function handleToggleTag(tagId: string): Promise<void> {
-  const action = selectedTags.value[tagId] === selectedCount.value ? '-' : '+';
-  await handleUpdateAction({ tags: [`${action}${tagId}`] });
 }
 </script>

@@ -17,6 +17,7 @@
     "continue": "Weiter",
     "delete": "Löschen",
     "edit": "Bearbeiten",
+    "export": "Exportieren",
     "participate": "Teilnehmen",
     "preview": "Vorschau",
     "publish": "Veröffentlichen",
@@ -299,14 +300,20 @@
     "verified": "Verifiziert"
   },
   "calloutResponsePage": {
+    "actions": {
+      "moveBucket": "Antwort verschieben",
+      "toggleTag": "Tag hinzufügen / entfernen"
+    },
     "manageTags": "Tags bearbeiten",
+    "responseOf": "Antwort {no} von {total}",
     "searchTag": "Suche nach Tags...",
     "selectedCount": "{n} Antwort ausgewählt | {n} Antworten ausgewählt"
   },
   "calloutResponsesPage": {
     "moveToBucket": "Nach {bucket} verschieben",
+    "noTags": "Keine Tags",
     "response": "Antwort",
-    "responseId": "Antwort {id}",
+    "responseNo": "Antwort {no}",
     "showingOf": "Antworten {start} bis {end} von {total} werden angezeigt"
   },
   "callouts": {

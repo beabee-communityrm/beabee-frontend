@@ -8,6 +8,7 @@ import {
   GetCalloutResponseDataWith,
   Serial,
   UpdateCalloutResponseData,
+  GetCalloutResponseData,
 } from './api.interface';
 
 // TODO: how to make this type safe?
@@ -48,4 +49,28 @@ export async function updateCalloutResponses(
     }
   );
   return data;
+}
+
+export async function fetchCalloutResponse<
+  With extends GetCalloutResponseWith = void
+>(
+  id: string,
+  _with?: readonly With[]
+): Promise<GetCalloutResponseDataWith<With>> {
+  const { data } = await axios.get<Serial<GetCalloutResponseDataWith<With>>>(
+    `/callout-responses/${id}`,
+    { params: { with: _with } }
+  );
+  return deserializeCalloutResponse(data);
+}
+
+export async function updateCalloutResponse(
+  id: string,
+  dataIn: UpdateCalloutResponseData
+): Promise<GetCalloutResponseData> {
+  const { data } = await axios.patch<Serial<GetCalloutResponseData>>(
+    `/callout-responses/${id}`,
+    dataIn
+  );
+  return deserializeCalloutResponse(data);
 }
