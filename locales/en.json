@@ -50,7 +50,6 @@
       "text": "Text",
       "url": "URL"
     },
-    "noticeSaved": "Notice saved",
     "title": "Add a notice"
   },
   "adminDashboard": {
@@ -140,7 +139,7 @@
   },
   "advancedSearch": {
     "addRule": "Add rule",
-    "button": "Advanced",
+    "button": "Filters",
     "createFilters": "Create filters for your search",
     "matchAfter": "of the following",
     "matchBefore": "Match",
@@ -283,6 +282,7 @@
   },
   "calloutResponse": {
     "data": {
+      "bucket": "Bucket",
       "callout": "Callout",
       "contact": "Contact",
       "createdAt": "Date submitted",
@@ -293,7 +293,18 @@
       "response": "Response"
     }
   },
+  "calloutResponseBuckets": {
+    "inbox": "Inbox",
+    "trash": "Trash",
+    "verified": "Verified"
+  },
+  "calloutResponsePage": {
+    "manageTags": "Manage tags",
+    "searchTag": "Search by tag...",
+    "selectedCount": "{n} response selected | {n} responses selected"
+  },
   "calloutResponsesPage": {
+    "moveToBucket": "Move to {bucket}",
     "response": "Response",
     "responseId": "Response {id}",
     "showingOf": "Showing {start} to {end} responses out of {total}"
@@ -391,6 +402,7 @@
     "information": "Information",
     "newsletter": "Newsletter",
     "overview": "Overview",
+    "pickTag": "Pick a tag from the list below",
     "roles": "Roles",
     "security": {
       "instructions": "Copy and share this link:",
@@ -815,6 +827,7 @@
     "notice": "By proceeding you are accepting the",
     "now": "Join now!",
     "paymentMethod": "Payment method",
+    "poweredBy": "Powered by beabee",
     "privacy": "Privacy Policy"
   },
   "joinPayment": {
@@ -1002,5 +1015,16 @@
   "setPassword": {
     "description": "Set a new password to login.",
     "title": "Set a password"
+  },
+  "tagEditor": {
+    "add": "Add tag",
+    "addNewTag": "Add a tag",
+    "confirmDelete": {
+      "actionNo": "No, go back",
+      "actionYes": "Yes, remove it",
+      "text": "Are you sure you want to remove this tag? Any responses with this tag will not be deleted.",
+      "title": "Remove tag"
+    },
+    "name": "Name"
   }
 }

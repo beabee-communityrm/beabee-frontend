@@ -35,7 +35,6 @@ meta:
         >
           {{ t('advancedSearch.button') }}
           <font-awesome-icon
-            class="ml-2"
             :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
           />
           <div
@@ -97,11 +96,7 @@ meta:
         </template>
         <template #tags="{ item }">
           <span class="whitespace-normal">
-            <ContactTag
-              v-for="tag in item.profile.tags"
-              :key="tag"
-              :tag="tag"
-            />
+            <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
           </span>
         </template>
         <template #contribution="{ item }">
@@ -151,11 +146,11 @@ import AppTable from '../../../components/table/AppTable.vue';
 import { SortType } from '../../../components/table/table.interface';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import { fetchSegments } from '../../../utils/api/segments';
-import AppButton from '../../../components/forms/AppButton.vue';
+import AppButton from '../../../components/button/AppButton.vue';
 import AppSearch from '../../../components/search/AppSearch.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
-import ContactTag from '../../../components/contact/ContactTag.vue';
+import AppTag from '../../../components/AppTag.vue';
 import {
   headers,
   filterGroups,

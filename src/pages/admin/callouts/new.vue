@@ -62,7 +62,7 @@ import {
 } from '../../../utils/callouts';
 import PageTitle from '../../../components/PageTitle.vue';
 import useVuelidate from '@vuelidate/core';
-import AppAsyncButton from '../../../components/forms/AppAsyncButton.vue';
+import AppAsyncButton from '../../../components/button/AppAsyncButton.vue';
 import { formatDistanceLocale } from '../../../utils/dates/locale-date-formats';
 import { addBreadcrumb } from '../../../store/breadcrumb';
 

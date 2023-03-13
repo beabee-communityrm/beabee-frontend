@@ -11,6 +11,9 @@ import {
   GetCalloutData,
   GetCalloutResponseWith,
   GetCalloutResponseDataWith,
+  GetCalloutTagData,
+  CreateCalloutTagData,
+  UpdateCalloutTagData,
 } from './api.interface';
 import { deserializeDate } from '.';
 import { deserializeCalloutResponse } from './callout-response';
@@ -113,4 +116,47 @@ export async function createResponse(
     guestName: data.guestName,
     guestEmail: data.guestEmail,
   });
+}
+
+export async function fetchTags(slug: string): Promise<GetCalloutTagData[]> {
+  const { data } = await axios.get<Serial<GetCalloutTagData>[]>(
+    `/callout/${slug}/tags`
+  );
+
+  return data;
+}
+
+export async function createTag(
+  slug: string,
+  dataIn: CreateCalloutTagData
+): Promise<GetCalloutTagData> {
+  const { data } = await axios.post<Serial<GetCalloutTagData>>(
+    `/callout/${slug}/tags`,
+    {
+      name: dataIn.name,
+      description: dataIn.description,
+    }
+  );
+
+  return data;
+}
+
+export async function updateTag(
+  slug: string,
+  tagId: string,
+  dataIn: UpdateCalloutTagData
+): Promise<GetCalloutTagData> {
+  const { data } = await axios.patch<Serial<GetCalloutTagData>>(
+    `/callout/${slug}/tags/${tagId}`,
+    {
+      name: dataIn.name,
+      description: dataIn.description,
+    }
+  );
+
+  return data;
+}
+
+export async function deleteTag(slug: string, tagId: string): Promise<void> {
+  await axios.delete(`/callout/${slug}/tags/${tagId}`);
 }

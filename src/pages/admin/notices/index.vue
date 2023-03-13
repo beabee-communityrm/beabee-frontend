@@ -47,7 +47,7 @@ import { Paginated } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
-import AppButton from '../../../components/forms/AppButton.vue';
+import AppButton from '../../../components/button/AppButton.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import { GetNoticeData } from '../../../utils/api/api.interface';
 import AppTable from '../../../components/table/AppTable.vue';

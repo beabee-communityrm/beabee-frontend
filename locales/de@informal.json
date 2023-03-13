@@ -50,7 +50,6 @@
       "text": "Text",
       "url": "URL"
     },
-    "noticeSaved": "Hinweis gespeichert",
     "title": "Hinweis hinzufügen"
   },
   "adminDashboard": {
@@ -140,7 +139,7 @@
   },
   "advancedSearch": {
     "addRule": "Filter hinzufügen",
-    "button": "Erweiterte Suche",
+    "button": "Filter",
     "createFilters": "Filter für die Suche erstellen",
     "matchAfter": "der folgenden Filter enthalten",
     "matchBefore": "Ergebnisse sollen",
@@ -283,6 +282,7 @@
   },
   "calloutResponse": {
     "data": {
+      "bucket": "Ordner",
       "callout": "Callout",
       "contact": "Kontakt",
       "createdAt": "Beantwortet am",
@@ -293,7 +293,18 @@
       "response": "Antwort"
     }
   },
+  "calloutResponseBuckets": {
+    "inbox": "Eingang",
+    "trash": "Papierkorb",
+    "verified": "Verifiziert"
+  },
+  "calloutResponsePage": {
+    "manageTags": "Tags bearbeiten",
+    "searchTag": "Suche nach Tags...",
+    "selectedCount": "{n} Antwort ausgewählt | {n} Antworten ausgewählt"
+  },
   "calloutResponsesPage": {
+    "moveToBucket": "Nach {bucket} verschieben",
     "response": "Antwort",
     "responseId": "Antwort {id}",
     "showingOf": "Antworten {start} bis {end} von {total} werden angezeigt"
@@ -391,6 +402,7 @@
     "information": "Information",
     "newsletter": "Newsletter",
     "overview": "Überblick",
+    "pickTag": "Tag aus der Liste wählen",
     "roles": "Rolle",
     "security": {
       "instructions": "Link kopieren und teilen:",
@@ -813,6 +825,7 @@
     "notice": "Indem du fortfährst, akzeptierst Du unsere",
     "now": "Jetzt Mitglied werden! ",
     "paymentMethod": "Zahlungsart",
+    "poweredBy": "Powered by beabee",
     "privacy": "Datenschutzerklärung"
   },
   "joinPayment": {
@@ -1000,5 +1013,16 @@
   "setPassword": {
     "description": "Neues Passwort eingeben, um fortzufahren.",
     "title": "Passwort vergeben"
+  },
+  "tagEditor": {
+    "add": "Tag hinzufügen",
+    "addNewTag": "Tag hinzufügen",
+    "confirmDelete": {
+      "actionNo": "Nein, gehe zurück",
+      "actionYes": "Ja, löschen",
+      "text": "Bist du sicher, dass du diesen Tag entfernen willst? Die damit getaggten Antworten werden nicht gelöscht.",
+      "title": "Tag entfernen"
+    },
+    "name": "Name"
   }
 }

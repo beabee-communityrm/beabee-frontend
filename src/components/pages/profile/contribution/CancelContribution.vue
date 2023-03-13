@@ -25,7 +25,7 @@
 
 <script lang="ts" setup>
 import { ContributionType, MembershipStatus } from '@beabee/beabee-common';
-import AppButton from '../../../forms/AppButton.vue';
+import AppButton from '../../../button/AppButton.vue';
 import { formatLocale } from '../../../../utils/dates/locale-date-formats';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';

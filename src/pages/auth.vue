@@ -22,7 +22,7 @@ meta:
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import { generalContent } from '../store';
-import AppButton from '../components/forms/AppButton.vue';
+import AppButton from '../components/button/AppButton.vue';
 import AuthBox from '../components/AuthBox.vue';
 import AppLogo from '../components/AppLogo.vue';
 
