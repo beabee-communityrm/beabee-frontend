@@ -62,7 +62,7 @@ meta:
 
 <script lang="ts" setup>
 import AppInput from '../../components/forms/AppInput.vue';
-import AppButton from '../../components/forms/AppButton.vue';
+import AppButton from '../../components/button/AppButton.vue';
 import MessageBox from '../../components/MessageBox.vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';

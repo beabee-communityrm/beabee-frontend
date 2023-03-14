@@ -37,7 +37,7 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppButton from '../forms/AppButton.vue';
+import AppButton from '../button/AppButton.vue';
 import RoleEditorItem from './RoleEditorItem.vue';
 import { ContactRoleData } from '../../utils/api/api.interface';
 import RoleEditorForm from './RoleEditorForm.vue';

@@ -19,6 +19,7 @@
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
+    "export": "Export",
     "participate": "Participate",
     "preview": "Preview",
     "publish": "Publish",
@@ -52,7 +53,6 @@
       "text": "Text",
       "url": "URL"
     },
-    "noticeSaved": "Notice saved",
     "title": "Add a notice"
   },
   "adminDashboard": {
@@ -142,7 +142,7 @@
   },
   "advancedSearch": {
     "addRule": "Add rule",
-    "button": "Advanced",
+    "button": "Filters",
     "createFilters": "Create filters for your search",
     "matchAfter": "of the following",
     "matchBefore": "Match",
@@ -233,11 +233,6 @@
       "services": "Or quickly share using one of these services:"
     },
     "showingPreview": "Response submission is disabled in preview mode",
-    "status": {
-      "endedOn": "on {date}",
-      "endsIn": "Ends in {duration}",
-      "startsIn": "starts in {duration}"
-    },
     "toContributionPage": "Edit my contribution",
     "updateContribution": "please update your contribution",
     "youResponded": "You replied to this callout ♥"
@@ -287,6 +282,41 @@
     },
     "summary": "Summary",
     "updated": "Your callout was successfully updated."
+  },
+  "calloutResponse": {
+    "data": {
+      "bucket": "Bucket",
+      "callout": "Callout",
+      "contact": "Contact",
+      "createdAt": "Date submitted",
+      "tags": "Tags",
+      "updatedAt": "Date updated"
+    },
+    "dataGroup": {
+      "response": "Response"
+    }
+  },
+  "calloutResponseBuckets": {
+    "inbox": "Inbox",
+    "trash": "Trash",
+    "verified": "Verified"
+  },
+  "calloutResponsePage": {
+    "actions": {
+      "moveBucket": "Move bucket",
+      "toggleTag": "Toggle tag"
+    },
+    "manageTags": "Manage tags",
+    "responseOf": "Response {no} out of {total}",
+    "searchTag": "Search by tag...",
+    "selectedCount": "{n} response selected | {n} responses selected"
+  },
+  "calloutResponsesPage": {
+    "moveToBucket": "Move to {bucket}",
+    "noTags": "No tags",
+    "response": "Response",
+    "responseNo": "Response {no}",
+    "showingOf": "Showing {start} to {end} responses out of {total}"
   },
   "callouts": {
     "archive": "Archive",
@@ -343,6 +373,7 @@
     "newsletterStatus": {
       "cleaned": "Cleaned",
       "none": "None",
+      "pending": "Pending",
       "subscribed": "Subscribed",
       "unsubscribed": "Unsubscribed"
     },
@@ -374,11 +405,13 @@
     "annotation": {
       "copy": "<p>All information added in this section is <strong>visible for admins only</strong>. Members will never see these in their profile or member area.</p>\n"
     },
+    "callouts": "Callouts",
     "contribution": "Contribution",
     "contributionType": "Type",
     "information": "Information",
     "newsletter": "Newsletter",
     "overview": "Overview",
+    "pickTag": "Pick a tag from the list below",
     "roles": "Roles",
     "security": {
       "instructions": "Copy and share this link:",
@@ -642,7 +675,7 @@
     "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
   "editNotice": {
-    "title": "Edit notice"
+    "title": "Edit: {title}"
   },
   "footer": {
     "contactUs": "Contact us at",
@@ -765,6 +798,13 @@
     "welcome": "Welcome aboard {firstName}!",
     "yourProfile": "Your profile"
   },
+  "item": {
+    "status": {
+      "endedOn": "on {date}",
+      "endsIn": "Ends in {duration}",
+      "startsIn": "starts in {duration}"
+    }
+  },
   "join": {
     "absorbFeeForce": "{amount} contributions must absorb the {fee} fee.",
     "absorbFeeOptIn": "Yes, I'll absorb the {fee} fee.",
@@ -795,6 +835,7 @@
     "notice": "By proceeding you are accepting the",
     "now": "Join now!",
     "paymentMethod": "Payment method",
+    "poweredBy": "Powered by beabee",
     "privacy": "Privacy Policy"
   },
   "joinPayment": {
@@ -892,7 +933,9 @@
         "title": "Delete notice?"
       }
     },
-    "summary": "Summary"
+    "created": "Your new notice was successfully created.",
+    "summary": "Summary",
+    "updated": "Your notice was successfully updated."
   },
   "notices": {
     "addNotice": "Add notice",
@@ -980,5 +1023,16 @@
   "setPassword": {
     "description": "Set a new password to login.",
     "title": "Set a password"
+  },
+  "tagEditor": {
+    "add": "Add tag",
+    "addNewTag": "Add a tag",
+    "confirmDelete": {
+      "actionNo": "No, go back",
+      "actionYes": "Yes, remove it",
+      "text": "Are you sure you want to remove this tag? Any responses with this tag will not be deleted.",
+      "title": "Remove tag"
+    },
+    "name": "Name"
   }
 }

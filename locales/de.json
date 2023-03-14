@@ -17,6 +17,7 @@
     "continue": "Weiter",
     "delete": "Löschen",
     "edit": "Bearbeiten",
+    "export": "Exportieren",
     "participate": "Teilnehmen",
     "preview": "Vorschau",
     "publish": "Veröffentlichen",
@@ -50,7 +51,6 @@
       "text": "Text",
       "url": "URL"
     },
-    "noticeSaved": "Hinweis gespeichert",
     "title": "Hinweis hinzufügen"
   },
   "adminDashboard": {
@@ -140,7 +140,7 @@
   },
   "advancedSearch": {
     "addRule": "Filter hinzufügen",
-    "button": "Erweiterte Suche",
+    "button": "Filter",
     "createFilters": "Filter für die Suche erstellen",
     "matchAfter": "der folgenden Filter enthalten",
     "matchBefore": "Ergebnisse sollen",
@@ -231,11 +231,6 @@
       "services": "Diesen Callout auf einer der folgenden Plattformen teilen: "
     },
     "showingPreview": "Antworten sind im Vorschaumodus deaktiviert",
-    "status": {
-      "endedOn": "am {date}",
-      "endsIn": "Endet in {duration}",
-      "startsIn": "startet in {duration}"
-    },
     "toContributionPage": "Meinen Beitrag ändern",
     "updateContribution": "Bitte ändern Sie ihren Beitrag.",
     "youResponded": "Sie haben geantwortet ♥"
@@ -286,6 +281,41 @@
     "summary": "Zusammenfassung",
     "updated": "Änderungen gespeichert!"
   },
+  "calloutResponse": {
+    "data": {
+      "bucket": "Ordner",
+      "callout": "Callout",
+      "contact": "Kontakt",
+      "createdAt": "Beantwortet am",
+      "tags": "Tags",
+      "updatedAt": "Geändert am"
+    },
+    "dataGroup": {
+      "response": "Antwort"
+    }
+  },
+  "calloutResponseBuckets": {
+    "inbox": "Eingang",
+    "trash": "Papierkorb",
+    "verified": "Verifiziert"
+  },
+  "calloutResponsePage": {
+    "actions": {
+      "moveBucket": "Antwort verschieben",
+      "toggleTag": "Tag hinzufügen / entfernen"
+    },
+    "manageTags": "Tags bearbeiten",
+    "responseOf": "Antwort {no} von {total}",
+    "searchTag": "Suche nach Tags...",
+    "selectedCount": "{n} Antwort ausgewählt | {n} Antworten ausgewählt"
+  },
+  "calloutResponsesPage": {
+    "moveToBucket": "Nach {bucket} verschieben",
+    "noTags": "Keine Tags",
+    "response": "Antwort",
+    "responseNo": "Antwort {no}",
+    "showingOf": "Antworten {start} bis {end} von {total} werden angezeigt"
+  },
   "callouts": {
     "archive": "Archiv",
     "data": {
@@ -331,6 +361,7 @@
     "goBack": "Zurück",
     "hello": "Hallo",
     "in": "in",
+    "itemsPerPage": "{items} Einträge pro Seite",
     "joined": "Mitglied seit",
     "loading": "Lädt...",
     "login": "Login",
@@ -340,6 +371,7 @@
     "newsletterStatus": {
       "cleaned": "Bereinigt",
       "none": "Kein Status",
+      "pending": "Pending",
       "subscribed": "Subscribed",
       "unsubscribed": "Unsubscribed"
     },
@@ -371,11 +403,13 @@
     "annotation": {
       "copy": "<p>Alle hier eingegebenen Information sind <strong>nur für Administratoren sichtbar</strong>.\nNutzer bekommen das nicht angezeigt.</p>\n"
     },
+    "callouts": "Callouts",
     "contribution": "Beitrag",
     "contributionType": "Zahlungsart",
     "information": "Information",
     "newsletter": "Newsletter",
     "overview": "Überblick",
+    "pickTag": "Tag aus der Liste wählen",
     "roles": "Rolle",
     "security": {
       "instructions": "Link kopieren und teilen:",
@@ -638,7 +672,7 @@
     "warning": "Vorsicht! Du bearbeitest einen veröffentlichten Callout. Wenn du Umfrageelemente bearbeitest riskierst Du, Antworten unbrauchbar zu machen."
   },
   "editNotice": {
-    "title": "Hinweis bearbeiten"
+    "title": "Bearbeiten: {title}"
   },
   "footer": {
     "contactUs": "Kontaktieren Sie uns unter",
@@ -761,6 +795,13 @@
     "welcome": "Herzlich willkommen {firstName} {lastName}!",
     "yourProfile": "Ihr Profil"
   },
+  "item": {
+    "status": {
+      "endedOn": "am {date}",
+      "endsIn": "Endet in {duration}",
+      "startsIn": "startet in {duration}"
+    }
+  },
   "join": {
     "absorbFeeForce": "Bei einem Beitrag von {amount}, müssen Sie die {fee} Transaktionskosten übernehmen.",
     "absorbFeeOptIn": "Ja, ich übernehme die {fee} Transaktionskosten.",
@@ -791,6 +832,7 @@
     "notice": "Indem Sie fortfahren, akzeptieren Sie unsere",
     "now": "Jetzt Mitglied werden! ",
     "paymentMethod": "Zahlungsart",
+    "poweredBy": "Powered by beabee",
     "privacy": "Datenschutzerklärung"
   },
   "joinPayment": {
@@ -887,7 +929,10 @@
         "text": "Bist du sicher, dass du diesen Hinweis löschen willst?",
         "title": "Hinweis löschen?"
       }
-    }
+    },
+    "created": "Super, dein Hinweis wurde erstellt!",
+    "summary": "Zusammenfassung",
+    "updated": "Änderungen gespeichert!"
   },
   "notices": {
     "addNotice": "Hinweis hinzufügen",
@@ -975,5 +1020,16 @@
   "setPassword": {
     "description": "Neues Passwort eingeben, um fortzufahren.",
     "title": "Passwort vergeben"
+  },
+  "tagEditor": {
+    "add": "Tag hinzufügen",
+    "addNewTag": "Tag hinzufügen",
+    "confirmDelete": {
+      "actionNo": "Nein, gehe zurück",
+      "actionYes": "Ja, löschen",
+      "text": "Bist du sicher, dass du diesen Tag entfernen willst? Die damit getaggten Antworten werden nicht gelöscht.",
+      "title": "Tag entfernen"
+    },
+    "name": "Name"
   }
 }

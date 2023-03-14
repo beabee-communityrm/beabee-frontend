@@ -5,16 +5,25 @@ meta:
   role: admin
 </route>
 
-<template><div></div></template>
+<template><router-view :callout="callout" /></template>
+
 <script lang="ts" setup>
-import { onBeforeMount } from 'vue';
-import { GetCalloutData } from '../../../../../utils/api/api.interface';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { addBreadcrumb } from '../../../../../store/breadcrumb';
+import { GetCalloutDataWith } from '../../../../../utils/api/api.interface';
 
 const props = defineProps<{
-  callout: GetCalloutData;
+  callout: GetCalloutDataWith<'form'>;
 }>();
+const { t } = useI18n();
 
-onBeforeMount(() => {
-  window.location.href = '/tools/polls/' + props.callout.slug + '/responses';
-});
+addBreadcrumb(
+  computed(() => [
+    {
+      title: t('calloutAdmin.responses'),
+      to: `/admin/callouts/view/${props.callout.slug}/responses`,
+    },
+  ])
+);
 </script>

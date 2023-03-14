@@ -1,9 +1,9 @@
 <template>
   <a v-if="href" :href="href" :class="buttonClasses">
-    <font-awesome-icon v-if="icon" :icon="icon" class="mr-2" /><slot />
+    <font-awesome-icon v-if="icon" :icon="icon" /><slot />
   </a>
   <router-link v-else-if="to" :to="to" :class="buttonClasses">
-    <font-awesome-icon v-if="icon" :icon="icon" class="mr-2" /><slot />
+    <font-awesome-icon v-if="icon" :icon="icon" /><slot />
   </router-link>
 
   <component
@@ -13,11 +13,7 @@
     :class="buttonClasses"
     :type="type"
   >
-    <font-awesome-icon
-      v-if="icon"
-      :icon="icon"
-      :class="$slots.default ? 'mr-2' : 'mr-0'"
-    /><slot />
+    <font-awesome-icon v-if="icon" :icon="icon" /><slot />
     <span v-if="loading" class="absolute inset-0 bg-white opacity-30" />
     <font-awesome-icon
       v-if="loading"
@@ -26,6 +22,7 @@
       :icon="['fas', 'circle-notch']"
       spin
     />
+    <slot name="after" />
   </component>
 </template>
 
@@ -67,28 +64,27 @@ const variantClasses = {
 const sizeClasses = {
   xs: 'text-sm px-2 py-1',
   sm: 'text-sm p-2',
+  md: 'px-3 py-2.5',
 } as const;
 
 const props = withDefaults(
   defineProps<{
     disabled?: boolean;
+    loading?: boolean;
     type?: 'button' | 'submit';
     href?: string;
     to?: string;
     variant?: keyof typeof variantClasses;
-    size?: 'xs' | 'sm';
-    loading?: boolean;
+    size?: 'xs' | 'sm' | 'md';
     icon?: string;
     is?: 'button' | 'label';
   }>(),
   {
-    disabled: false,
     type: 'button',
     href: undefined,
     to: undefined,
     variant: 'primary',
-    size: undefined,
-    loading: false,
+    size: 'md',
     icon: undefined,
     is: 'button',
   }
@@ -96,9 +92,15 @@ const props = withDefaults(
 
 const buttonClasses = computed(() => {
   return [
-    'leading-tight inline-flex justify-center items-center font-bold rounded whitespace-nowrap relative border',
-    props.size ? sizeClasses[props.size] : 'px-3 py-2.5',
+    // Base styles
+    'leading-tight inline-flex gap-2 justify-center items-center font-bold rounded whitespace-nowrap relative border',
+    // Styles for in a button group
+    'group-[]/btns:rounded-none group-[]/btns:last:rounded-r group-[]/btns:first:rounded-l group-[]/btns:-ml-px group-[]/btns:hover:z-10',
+    // Size styles
+    sizeClasses[props.size],
+    // Variant styles
     variantClasses[props.variant][0],
+    // Disabled/enabled styles
     props.disabled
       ? 'cursor-not-allowed opacity-50'
       : 'cursor-pointer ' + variantClasses[props.variant][1],

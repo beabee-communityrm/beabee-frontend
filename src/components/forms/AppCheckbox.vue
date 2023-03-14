@@ -7,7 +7,7 @@
       :value="true"
       class="mt-1"
     />
-    <p class="ml-2 font-semibold">{{ label }}</p>
+    <p v-if="label" class="ml-2 font-semibold">{{ label }}</p>
   </label>
 </template>
 <script lang="ts" setup>
@@ -17,7 +17,7 @@ const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   modelValue: boolean;
   disabled?: boolean;
-  label: string;
+  label?: string;
 }>();
 
 const modelValueProxy = computed({

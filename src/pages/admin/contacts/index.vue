@@ -26,23 +26,22 @@ meta:
           v-model="currentSearch"
           :placeholder="t('contacts.search')"
         />
-        <button
-          class="ml-2 flex items-center rounded border border-primary-40 px-3 text-sm font-semibold"
-          :class="
-            showAdvancedSearch &&
-            'relative rounded-b-none border border-b-primary/0'
-          "
+        <AppButton
+          variant="primaryOutlined"
+          size="sm"
+          class="ml-2 bg-white/0"
+          :class="showAdvancedSearch && 'relative rounded-b-none'"
           @click="showAdvancedSearch = !showAdvancedSearch"
         >
           {{ t('advancedSearch.button') }}
           <font-awesome-icon
-            class="ml-2"
             :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
           />
           <div
-            class="absolute -left-[1px] top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-[1px]"
+            v-show="showAdvancedSearch"
+            class="absolute -left-px top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-px"
           />
-        </button>
+        </AppButton>
       </div>
       <AppSearch
         v-model="currentRules"
@@ -86,7 +85,7 @@ meta:
             :to="'/admin/contacts/' + item.id"
             class="text-base font-bold text-link"
           >
-            {{ `${item.firstname} ${item.lastname}`.trim() || item.email }}
+            {{ item.displayName }}
           </router-link>
           <p
             v-if="item.profile.description"
@@ -97,11 +96,7 @@ meta:
         </template>
         <template #tags="{ item }">
           <span class="whitespace-normal">
-            <ContactTag
-              v-for="tag in item.profile.tags"
-              :key="tag"
-              :tag="tag"
-            />
+            <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
           </span>
         </template>
         <template #contribution="{ item }">
@@ -148,55 +143,34 @@ import {
 } from '../../../utils/api/api.interface';
 import { fetchContacts } from '../../../utils/api/contact';
 import AppTable from '../../../components/table/AppTable.vue';
-import { Header, SortType } from '../../../components/table/table.interface';
+import { SortType } from '../../../components/table/table.interface';
 import { formatLocale } from '../../../utils/dates/locale-date-formats';
 import { fetchSegments } from '../../../utils/api/segments';
-import AppButton from '../../../components/forms/AppButton.vue';
+import AppButton from '../../../components/button/AppButton.vue';
 import AppSearch from '../../../components/search/AppSearch.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
-import ContactTag from '../../../components/contact/ContactTag.vue';
+import AppTag from '../../../components/AppTag.vue';
 import {
+  headers,
   filterGroups,
   filterItems,
 } from '../../../components/pages/admin/contacts/contacts.interface';
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 import SaveSegment from '../../../components/pages/admin/contacts/SaveSegment.vue';
+import { addBreadcrumb } from '../../../store/breadcrumb';
 
 const { t, n } = useI18n();
 
-const headers: Header[] = [
-  {
-    value: 'firstname',
-    text: t('contacts.data.name'),
-    sortable: true,
-    width: '100%',
-  },
-  { value: 'email', text: t('contacts.data.email'), sortable: true },
-  { value: 'tags', text: t('contacts.data.tags') },
-  {
-    value: 'contribution',
-    text: t('contacts.data.contribution'),
-    align: 'right',
-  },
-  {
-    value: 'joined',
-    text: t('contacts.data.joined'),
-    align: 'right',
-    sortable: true,
-  },
-  {
-    value: 'membershipStarts',
-    text: t('contacts.data.membershipStarts'),
-    align: 'right',
-    sortable: true,
-    wrap: true,
-  },
-];
-
 const route = useRoute();
 const router = useRouter();
+
+addBreadcrumb(
+  computed(() => [
+    { title: t('menu.contacts'), to: '/admin/contacts', icon: 'users' },
+  ])
+);
 
 const showAdvancedSearch = ref(false);
 
@@ -296,7 +270,6 @@ function handleSavedSegment(segment: GetSegmentDataWith<'contactCount'>) {
 }
 
 onBeforeMount(async () => {
-  // Load the total if in a segment, otherwise it will be updated automatically below
   contactsTotal.value = (await fetchContacts({ limit: 1 })).total;
   segments.value = await fetchSegments(['contactCount']);
 });

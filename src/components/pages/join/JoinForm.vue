@@ -62,7 +62,7 @@ import { generalContent, isEmbed } from '../../../store';
 import { useJoin } from './use-join';
 import AccountSection from './AccountSection.vue';
 import JoinFooter from './JoinFooter.vue';
-import AppButton from '../../forms/AppButton.vue';
+import AppButton from '../../button/AppButton.vue';
 import Contribution from '../../contribution/Contribution.vue';
 import MessageBox from '../../MessageBox.vue';
 import AppSubHeading from '../../AppSubHeading.vue';

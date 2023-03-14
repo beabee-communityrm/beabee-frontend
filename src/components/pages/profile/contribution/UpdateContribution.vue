@@ -96,7 +96,7 @@ import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import Contribution from '../../../contribution/Contribution.vue';
-import AppButton from '../../../forms/AppButton.vue';
+import AppButton from '../../../button/AppButton.vue';
 import ProrateContribution from './ProrateContribution.vue';
 import MessageBox from '../../../MessageBox.vue';
 import { ContributionContent } from '../../../contribution/contribution.interface';

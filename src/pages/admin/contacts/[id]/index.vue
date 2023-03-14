@@ -110,7 +110,7 @@ meta:
             v-if="contactTags.length > 0"
             v-model="contactAnnotations.tags"
             :tags="contactTags"
-            label="Tags"
+            :label="t('contacts.data.tags')"
           />
         </div>
       </AppForm>
@@ -157,7 +157,7 @@ import { ContributionType, RoleType } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../components/AppHeading.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
-import AppButton from '../../../../components/forms/AppButton.vue';
+import AppButton from '../../../../components/button/AppButton.vue';
 import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown.vue';
 import RoleEditor from '../../../../components/role/RoleEditor.vue';
 import { onBeforeMount, ref, reactive } from 'vue';

@@ -37,6 +37,6 @@ one, add before and after screenshots.
 - [ ] Run `npm run check` and addressed any problems
 - [ ] PR doesn't have merge conflicts
 
-## Checklist before mering
+## Checklist before merging
 
 - [ ] Translations for all new i18n strings

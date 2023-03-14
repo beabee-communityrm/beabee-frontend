@@ -1,17 +1,22 @@
 import { Paginated } from '@beabee/beabee-common';
-import { deserializeDate } from '.';
 import axios from '../../lib/axios';
 import {
   GetCalloutsQuery,
   Serial,
-  GetCalloutResponseData,
   GetCalloutResponsesQuery,
   CreateCalloutResponseData,
   CreateCalloutData,
   GetCalloutWith,
   GetCalloutDataWith,
   GetCalloutData,
+  GetCalloutResponseWith,
+  GetCalloutResponseDataWith,
+  GetCalloutTagData,
+  CreateCalloutTagData,
+  UpdateCalloutTagData,
 } from './api.interface';
+import { deserializeDate } from '.';
+import { deserializeCalloutResponse } from './callout-response';
 
 // TODO: how to make this type safe?
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,11 +43,11 @@ export async function fetchCallouts<With extends GetCalloutWith = void>(
 }
 
 export async function fetchCallout<With extends GetCalloutWith = void>(
-  id: string,
+  slug: string,
   _with?: readonly With[]
 ): Promise<GetCalloutDataWith<With>> {
   const { data } = await axios.get<Serial<GetCalloutDataWith<With>>>(
-    '/callout/' + id,
+    '/callout/' + slug,
     { params: { with: _with } }
   );
   return deserializeCallout(data);
@@ -74,31 +79,72 @@ export async function deleteCallout(slug: string): Promise<void> {
   await axios.delete('/callout/' + slug);
 }
 
-export async function fetchResponses(
-  id: string,
-  query?: GetCalloutResponsesQuery
-): Promise<Paginated<GetCalloutResponseData>> {
-  const { data } = await axios.get<Paginated<Serial<GetCalloutResponseData>>>(
-    `/callout/${id}/responses`,
-    { params: query }
-  );
+export async function fetchResponses<
+  With extends GetCalloutResponseWith = void
+>(
+  slug: string,
+  query?: GetCalloutResponsesQuery,
+  _with?: readonly With[]
+): Promise<Paginated<GetCalloutResponseDataWith<With>>> {
+  const { data } = await axios.get<
+    Paginated<Serial<GetCalloutResponseDataWith<With>>>
+  >(`/callout/${slug}/responses`, { params: { with: _with, ...query } });
   return {
     ...data,
-    items: data.items.map((item) => ({
-      ...item,
-      createdAt: deserializeDate(item.createdAt),
-      updatedAt: deserializeDate(item.updatedAt),
-    })),
+    items: data.items.map(deserializeCalloutResponse),
   };
 }
 
 export async function createResponse(
-  id: string,
+  slug: string,
   data: CreateCalloutResponseData
 ): Promise<void> {
-  await axios.post(`/callout/${id}/responses`, {
+  await axios.post(`/callout/${slug}/responses`, {
     answers: data.answers,
     guestName: data.guestName,
     guestEmail: data.guestEmail,
   });
+}
+
+export async function fetchTags(slug: string): Promise<GetCalloutTagData[]> {
+  const { data } = await axios.get<Serial<GetCalloutTagData>[]>(
+    `/callout/${slug}/tags`
+  );
+
+  return data;
+}
+
+export async function createTag(
+  slug: string,
+  dataIn: CreateCalloutTagData
+): Promise<GetCalloutTagData> {
+  const { data } = await axios.post<Serial<GetCalloutTagData>>(
+    `/callout/${slug}/tags`,
+    {
+      name: dataIn.name,
+      description: dataIn.description,
+    }
+  );
+
+  return data;
+}
+
+export async function updateTag(
+  slug: string,
+  tagId: string,
+  dataIn: UpdateCalloutTagData
+): Promise<GetCalloutTagData> {
+  const { data } = await axios.patch<Serial<GetCalloutTagData>>(
+    `/callout/${slug}/tags/${tagId}`,
+    {
+      name: dataIn.name,
+      description: dataIn.description,
+    }
+  );
+
+  return data;
+}
+
+export async function deleteTag(slug: string, tagId: string): Promise<void> {
+  await axios.delete(`/callout/${slug}/tags/${tagId}`);
 }
