@@ -74,5 +74,9 @@ export const filterItems = computed<FilterItems<CalloutResponseFilterName>>(
       calloutResponseFilters.contact,
       t('calloutResponse.data.contact')
     ),
+    assignee: withLabel(
+      calloutResponseFilters.assignee,
+      t('calloutResponse.data.assignee')
+    ),
   })
 );

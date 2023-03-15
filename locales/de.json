@@ -283,6 +283,7 @@
   },
   "calloutResponse": {
     "data": {
+      "assignee": "Zugewiesen an",
       "bucket": "Ordner",
       "callout": "Callout",
       "contact": "Kontakt",
@@ -301,6 +302,7 @@
   },
   "calloutResponsePage": {
     "actions": {
+      "assignTo": "Zuweisen",
       "moveBucket": "Antwort verschieben",
       "toggleTag": "Tag hinzufügen / entfernen"
     },

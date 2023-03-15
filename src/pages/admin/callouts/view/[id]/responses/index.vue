@@ -19,6 +19,13 @@ meta:
             ...tagItems,
           ]"
         />
+        <AppSelect
+          v-model="currentAssignee"
+          :items="[
+            { id: '', label: t('calloutResponsesPage.searchAssignee') },
+            ...adminItems,
+          ]"
+        />
         <AppButton
           variant="primaryOutlined"
           size="sm"
@@ -188,6 +195,7 @@ import MoveBucketButton from '../../../../../../components/pages/admin/callouts/
 import ToggleTagButton from '../../../../../../components/pages/admin/callouts/ToggleTagButton.vue';
 import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
 import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
+import { fetchContacts } from '../../../../../../utils/api/contact';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
@@ -238,6 +246,7 @@ const selectedAssigneeId = computed(() => {
   return assigneeId;
 });
 
+const adminItems = ref<{ id: string; label: string }[]>([]);
 const tagItems = ref<{ id: string; label: string }[]>([]);
 
 const responsesUrl = computed(
@@ -278,6 +287,12 @@ const filterItemsWithExtras = computed(() => {
     },
     ...convertComponentsToFilters(formQuestions.value),
   };
+});
+
+const currentAssignee = computed({
+  get: () => (route.query.assignee as string) || '',
+  set: (assignee) =>
+    router.push({ query: { ...route.query, assignee: assignee || undefined } }),
 });
 
 const currentBucket = computed({
@@ -329,6 +344,20 @@ const currentRules = computed({
 onBeforeMount(async () => {
   const tags = await fetchTags(props.callout.slug);
   tagItems.value = tags.map((tag) => ({ id: tag.id, label: tag.name }));
+
+  const admins = await fetchContacts({
+    rules: {
+      condition: 'AND',
+      rules: [
+        { field: 'activePermission', operator: 'equal', value: ['admin'] },
+      ],
+    },
+  });
+
+  adminItems.value = admins.items.map((admin) => ({
+    id: admin.id,
+    label: admin.displayName,
+  }));
 });
 
 function getSearchRules(): RuleGroup {
@@ -349,6 +378,15 @@ function getSearchRules(): RuleGroup {
       value: [currentTag.value],
     });
   }
+
+  if (currentAssignee.value) {
+    rules.rules.push({
+      field: 'assignee',
+      operator: 'equal',
+      value: [currentAssignee.value],
+    });
+  }
+
   return rules;
 }
 

@@ -316,6 +316,7 @@
     "noTags": "No tags",
     "response": "Response",
     "responseNo": "Response {no}",
+    "searchAssignee": "Search by assigned to...",
     "showingOf": "Showing {start} to {end} responses out of {total}"
   },
   "callouts": {
