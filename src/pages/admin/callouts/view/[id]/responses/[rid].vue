@@ -134,7 +134,9 @@ const { t, n } = useI18n();
 addBreadcrumb(computed(() => [{ title: props.rid }]));
 
 const response =
-  ref<GetCalloutResponseDataWith<'answers' | 'contact' | 'tags'>>();
+  ref<
+    GetCalloutResponseDataWith<'answers' | 'assignee' | 'contact' | 'tags'>
+  >();
 const prevResponse = ref<GetCalloutResponseData>();
 const nextResponse = ref<GetCalloutResponseData>();
 const responseNo = ref(0);
@@ -161,6 +163,7 @@ onBeforeMount(async () => {
 async function refreshResponse() {
   const newResponse = await fetchCalloutResponse(props.rid, [
     'answers',
+    'assignee',
     'contact',
     'tags',
   ]);
