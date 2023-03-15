@@ -301,6 +301,7 @@
   },
   "calloutResponsePage": {
     "actions": {
+      "assignTo": "Zuweisen",
       "moveBucket": "Antwort verschieben",
       "toggleTag": "Tag hinzufügen / entfernen"
     },
