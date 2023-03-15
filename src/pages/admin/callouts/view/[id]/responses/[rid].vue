@@ -95,6 +95,9 @@ meta:
         :options="{ readOnly: true }"
       />
     </div>
+    <div>
+      <CalloutResponseComments :response-id="response.id" />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -123,6 +126,7 @@ import {
   fetchCalloutResponse,
   updateCalloutResponse,
 } from '../../../../../../utils/api/callout-response';
+import CalloutResponseComments from '../../../../../../components/callout/CalloutResponseComments.vue';
 
 const props = defineProps<{
   rid: string;

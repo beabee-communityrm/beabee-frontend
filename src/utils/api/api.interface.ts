@@ -377,6 +377,24 @@ export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
     ('contact' extends With ? { contact: GetContactData | null } : Noop) &
     ('tags' extends With ? { tags: { id: string; name: string }[] } : Noop);
 
+export interface CalloutResponseCommentData {
+  responseId: string;
+  text: string;
+}
+
+export interface GetCalloutResponseCommentData
+  extends CalloutResponseCommentData {
+  contact: GetContactData;
+  id: string;
+  createdAt: Date;
+}
+
+export interface CreateCalloutResponseCommentData
+  extends CalloutResponseCommentData {
+  responseId: string;
+  text: string;
+}
+
 export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 
 interface NoticeData {
