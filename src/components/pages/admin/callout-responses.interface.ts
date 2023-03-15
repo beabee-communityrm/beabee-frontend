@@ -20,11 +20,6 @@ export const headers = computed<Header[]>(() => [
     sortable: true,
   },
   {
-    value: 'createdAt',
-    text: t('calloutResponse.data.createdAt'),
-    sortable: true,
-  },
-  {
     value: 'contact',
     text: t('calloutResponse.data.contact'),
   },
@@ -35,6 +30,12 @@ export const headers = computed<Header[]>(() => [
   {
     value: 'assignee',
     text: t('calloutResponse.data.assignee'),
+  },
+  {
+    value: 'createdAt',
+    text: t('calloutResponse.data.createdAt'),
+    sortable: true,
+    align: 'right',
   },
 ]);
 
