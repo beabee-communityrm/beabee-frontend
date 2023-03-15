@@ -4,28 +4,26 @@
     variant="primaryOutlined"
     :title="t('calloutResponsePage.actions.toggleTag')"
   >
-    <slot />
+    <span v-if="withText">
+      {{ t('calloutResponsePage.actions.toggleTag') }}
+    </span>
 
     <template #dropdown>
-      <p v-if="tagItemsWithSelected.length === 0" class="py-2 px-3 italic">
+      <p v-if="tagItems.length === 0" class="py-2 px-3 italic">
         {{ t('calloutResponsesPage.noTags') }}
       </p>
-      <ul v-else>
-        <li
-          v-for="tag in tagItemsWithSelected"
-          :key="tag.id"
-          class="flex items-center justify-between gap-4 py-2 px-3"
-          :class="tag.selected ? 'bg-primary-10' : 'hover:bg-primary-5'"
-          @click="$emit('toggle', (tag.selected ? '-' : '+') + tag.id)"
-        >
-          <span>
-            <font-awesome-icon class="mr-2" :icon="['fa', 'tag']" />{{
-              tag.label
-            }}
-          </span>
-          <font-awesome-icon v-if="tag.selected" :icon="['fa', 'check']" />
-        </li>
-      </ul>
+      <AppSelectableList
+        v-else
+        v-slot="{ item }"
+        :items="tagItems"
+        :selected-item-ids="selectedTags"
+        @click="
+          (item, selected) => $emit('toggle', (selected ? '-' : '+') + item.id)
+        "
+      >
+        <font-awesome-icon class="mr-2" :icon="['fa', 'tag']" />{{ item.label }}
+      </AppSelectableList>
+
       <router-link
         class="block border-t border-primary-40 py-2 px-3 font-semibold text-primary underline hover:bg-primary-5 group-hover:border-primary"
         :to="manageUrl"
@@ -38,23 +36,17 @@
   </AppDropdownButton>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import AppSelectableList from '../../../AppSelectableList.vue';
 import AppDropdownButton from '../../../button/AppDropdownButton.vue';
 
 defineEmits<{ (event: 'toggle', id: string): void }>();
-const props = defineProps<{
+defineProps<{
   tagItems: { id: string; label: string }[];
   selectedTags: string[];
   manageUrl: string;
+  withText?: boolean;
 }>();
-
-const tagItemsWithSelected = computed(() =>
-  props.tagItems.map((tagItem) => ({
-    ...tagItem,
-    selected: props.selectedTags.includes(tagItem.id),
-  }))
-);
 
 const { t } = useI18n();
 </script>

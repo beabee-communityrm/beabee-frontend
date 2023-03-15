@@ -4,34 +4,39 @@
     variant="primaryOutlined"
     :title="t('calloutResponsePage.actions.moveBucket')"
   >
-    <slot />
+    <span v-if="withText">
+      {{ t('calloutResponsePage.actions.moveBucket') }}
+    </span>
 
     <template #dropdown>
-      <ul>
-        <li
-          v-for="bucket in buckets"
-          :key="bucket.id"
-          class="py-2 px-3 hover:bg-primary-5"
-          :class="{ hidden: bucket.id === currentBucket }"
-          @click="$emit('move', bucket.id)"
-        >
-          {{
-            t('calloutResponsesPage.moveToBucket', {
-              bucket: bucket.label,
-            })
-          }}
-        </li>
-      </ul>
+      <AppSelectableList
+        v-slot="{ item }"
+        :items="selectableBuckets"
+        @click="$emit('move', $event.id)"
+      >
+        {{
+          t('calloutResponsesPage.moveToBucket', {
+            bucket: item.label,
+          })
+        }}
+      </AppSelectableList>
     </template>
   </AppDropdownButton>
 </template>
+
 <script lang="ts" setup>
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import AppSelectableList from '../../../AppSelectableList.vue';
 import AppDropdownButton from '../../../button/AppDropdownButton.vue';
 import { buckets } from './callouts.interface';
 
 defineEmits<{ (event: 'move', id: string): void }>();
-defineProps<{ currentBucket: string }>();
+const props = defineProps<{ currentBucket: string; withText?: boolean }>();
 
 const { t } = useI18n();
+
+const selectableBuckets = computed(() =>
+  buckets.value.filter((b) => b.id !== props.currentBucket)
+);
 </script>

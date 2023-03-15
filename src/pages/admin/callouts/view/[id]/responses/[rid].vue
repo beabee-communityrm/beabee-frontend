@@ -68,24 +68,22 @@ meta:
     </AppInfoList>
     <div class="flex gap-2">
       <MoveBucketButton
-        :current-bucket="response.bucket"
         size="sm"
+        with-text
+        :current-bucket="response.bucket"
         :disabled="doingAction"
         :loading="doingAction"
         @move="(bucket) => handleUpdate({ bucket })"
-      >
-        {{ t('calloutResponsePage.actions.moveBucket') }}
-      </MoveBucketButton>
+      />
       <ToggleTagButton
+        size="sm"
+        with-text
         :tag-items="tagItems"
         :selected-tags="response.tags.map((t) => t.id)"
         :manage-url="`/admin/callouts/view/${callout.slug}/responses/tags`"
         :loading="doingAction"
-        size="sm"
         @toggle="(tagId) => handleUpdate({ tags: [tagId] })"
-      >
-        {{ t('calloutResponsePage.actions.toggleTag') }}
-      </ToggleTagButton>
+      />
     </div>
     <div class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg">
       <Form
