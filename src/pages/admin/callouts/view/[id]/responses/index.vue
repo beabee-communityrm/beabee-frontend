@@ -68,6 +68,11 @@ meta:
             :disabled="selectedCount === 0"
             @toggle="(tagId) => handleUpdateAction({ tags: [tagId] })"
           />
+          <SetAssigneeButton
+            :disabled="selectedCount === 0"
+            :current-assignee-id="selectedAssigneeId"
+            @assign="(assigneeId) => handleUpdateAction({ assigneeId })"
+          />
         </AppButtonGroup>
         <p v-if="selectedCount > 0" class="self-center text-sm">
           <i18n-t
@@ -103,13 +108,23 @@ meta:
             {{ t('calloutResponsesPage.responseNo', { no: n(value) }) }}
           </router-link>
         </template>
-        <template #contact="{ item }">
+        <template #assignee="{ value }">
           <router-link
-            v-if="item.contact"
-            :to="`/admin/contacts/${item.contact.id}`"
+            v-if="value"
+            :to="`/admin/contacts/${value.id}`"
             class="text-link"
           >
-            {{ item.contact.displayName }}
+            {{ value.displayName }}
+          </router-link>
+          <span v-else>-</span>
+        </template>
+        <template #contact="{ value }">
+          <router-link
+            v-if="value"
+            :to="`/admin/contacts/${value.id}`"
+            class="text-link"
+          >
+            {{ value.displayName }}
           </router-link>
           <span v-else>-</span>
         </template>
@@ -172,6 +187,7 @@ import AppTag from '../../../../../../components/AppTag.vue';
 import MoveBucketButton from '../../../../../../components/pages/admin/callouts/MoveBucketButton.vue';
 import ToggleTagButton from '../../../../../../components/pages/admin/callouts/ToggleTagButton.vue';
 import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
+import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
@@ -182,14 +198,15 @@ const route = useRoute();
 const router = useRouter();
 
 const responses =
-  ref<Paginated<GetCalloutResponseDataWith<'contact' | 'tags'>>>();
+  ref<Paginated<GetCalloutResponseDataWith<'assignee' | 'contact' | 'tags'>>>();
 const showAdvancedSearch = ref(false);
 const doingAction = ref(false);
 
-const responseItems =
-  ref<
-    (GetCalloutResponseDataWith<'contact' | 'tags'> & { selected: boolean })[]
-  >();
+const responseItems = ref<
+  (GetCalloutResponseDataWith<'assignee' | 'contact' | 'tags'> & {
+    selected: boolean;
+  })[]
+>();
 
 const selectedResponseItems = computed(
   () => responseItems.value?.filter((ri) => ri.selected) || []
@@ -209,6 +226,16 @@ const selectedTags = computed(() => {
   return Object.entries(tagCount)
     .filter((tc) => tc[1] === selectedCount.value)
     .map(([tagId]) => tagId);
+});
+
+const selectedAssigneeId = computed(() => {
+  let assigneeId = selectedResponseItems.value[0]?.assignee?.id;
+  for (const item of selectedResponseItems.value) {
+    if (assigneeId !== item.assignee?.id) {
+      return '';
+    }
+  }
+  return assigneeId;
 });
 
 const tagItems = ref<{ id: string; label: string }[]>([]);
@@ -346,7 +373,7 @@ async function refreshResponses() {
       order: currentSort.value.type,
       rules: getSearchRules(),
     },
-    ['contact', 'tags']
+    ['assignee', 'contact', 'tags']
   );
 
   responseItems.value = responses.value.items.map((r) => ({

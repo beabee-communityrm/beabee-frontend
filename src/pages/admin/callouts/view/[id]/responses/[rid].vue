@@ -65,6 +65,15 @@ meta:
       <AppInfoListItem :name="t('calloutResponse.data.tags')">
         <AppTag v-for="tag in response.tags" :key="tag.id" :tag="tag.name" />
       </AppInfoListItem>
+      <AppInfoListItem :name="t('calloutResponse.data.assignee')">
+        <router-link
+          v-if="response.assignee"
+          :to="`/admin/contacts/${response.assignee.id}`"
+          class="text-link"
+        >
+          {{ response.assignee.displayName }}
+        </router-link>
+      </AppInfoListItem>
     </AppInfoList>
     <div class="flex gap-2">
       <MoveBucketButton
@@ -83,6 +92,14 @@ meta:
         :manage-url="`/admin/callouts/view/${callout.slug}/responses/tags`"
         :loading="doingAction"
         @toggle="(tagId) => handleUpdate({ tags: [tagId] })"
+      />
+      <SetAssigneeButton
+        size="sm"
+        with-text
+        :current-assignee-id="response.assignee?.id"
+        :disabled="doingAction"
+        :loading="doingAction"
+        @assign="(assigneeId) => handleUpdate({ assigneeId })"
       />
     </div>
     <div class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg">
@@ -121,6 +138,7 @@ import {
   fetchCalloutResponse,
   updateCalloutResponse,
 } from '../../../../../../utils/api/callout-response';
+import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
 
 const props = defineProps<{
   rid: string;

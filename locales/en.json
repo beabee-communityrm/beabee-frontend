@@ -283,6 +283,7 @@
   },
   "calloutResponse": {
     "data": {
+      "assignee": "Assigned to",
       "bucket": "Bucket",
       "callout": "Callout",
       "contact": "Contact",
@@ -301,6 +302,7 @@
   },
   "calloutResponsePage": {
     "actions": {
+      "assignTo": "Assign to",
       "moveBucket": "Move bucket",
       "toggleTag": "Toggle tag"
     },
