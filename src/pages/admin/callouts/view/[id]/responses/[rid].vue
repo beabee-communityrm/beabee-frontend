@@ -131,7 +131,15 @@ const props = defineProps<{
 
 const { t, n } = useI18n();
 
-addBreadcrumb(computed(() => [{ title: props.rid }]));
+addBreadcrumb(
+  computed(() => [
+    {
+      title: t('calloutResponsesPage.responseNo', {
+        no: response.value?.number ? n(response.value?.number) : '?',
+      }),
+    },
+  ])
+);
 
 const response =
   ref<
