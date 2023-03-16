@@ -387,13 +387,10 @@ export interface GetCalloutResponseCommentData
   contact: GetContactData;
   id: string;
   createdAt: Date;
+  updatedAt: Date;
 }
 
-export interface CreateCalloutResponseCommentData
-  extends CalloutResponseCommentData {
-  responseId: string;
-  text: string;
-}
+export type CreateCalloutResponseCommentData = CalloutResponseCommentData;
 
 export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 
