@@ -15,7 +15,7 @@ meta:
         <AppSelect
           v-model="currentTag"
           :items="[
-            { id: '', label: t('calloutResponsePage.searchTag') },
+            { id: '', label: t('calloutResponsesPage.searchTag') },
             ...tagItems,
           ]"
         />
