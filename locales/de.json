@@ -283,6 +283,7 @@
   },
   "calloutResponse": {
     "data": {
+      "assignee": "Zugewiesen an",
       "bucket": "Ordner",
       "callout": "Callout",
       "contact": "Kontakt",
@@ -299,14 +300,19 @@
     "trash": "Papierkorb",
     "verified": "Verifiziert"
   },
+  "calloutResponseComments": {
+    "addComment": "Kommentar hinzufügen",
+    "comments": "Kommentare",
+    "updateComment": "Kommentar bearbeiten"
+  },
   "calloutResponsePage": {
     "actions": {
+      "assignTo": "Zuweisen",
       "moveBucket": "Antwort verschieben",
       "toggleTag": "Tag hinzufügen / entfernen"
     },
     "manageTags": "Tags bearbeiten",
     "responseOf": "Antwort {no} von {total}",
-    "searchTag": "Suche nach Tags...",
     "selectedCount": "{n} Antwort ausgewählt | {n} Antworten ausgewählt"
   },
   "calloutResponsesPage": {
@@ -314,6 +320,8 @@
     "noTags": "Keine Tags",
     "response": "Antwort",
     "responseNo": "Antwort {no}",
+    "searchAssignee": "Zugewiesen an...",
+    "searchTag": "Getaggt mit...",
     "showingOf": "Antworten {start} bis {end} von {total} werden angezeigt"
   },
   "callouts": {

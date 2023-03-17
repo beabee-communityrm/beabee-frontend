@@ -1,9 +1,16 @@
 <template>
   <AppForm
     :button-text="
-      props.comment ? 'edit existing comment DEBUG' : 'save new comment DEBUG'
+      props.comment
+        ? t('calloutResponseComments.updateComment')
+        : t('calloutResponseComments.addComment')
     "
-    @submit.prevent="($event) => $emit('submit', data)"
+    @submit.prevent="
+      ($event) => {
+        $emit('submit', data);
+        data.text = ''; //ToDo: How to not get 'field is required' here?
+      }
+    "
   >
     <div class="mb-3">
       <RichTextEditor v-model="data.text" required />
@@ -12,12 +19,12 @@
 </template>
 
 <script lang="ts" setup>
+import { GetCalloutResponseCommentData } from '../../utils/api/api.interface';
+import AppForm from '../forms/AppForm.vue';
+import RichTextEditor from '../rte/RichTextEditor.vue';
+import { CommentFormData } from './calloutResponseComment.interface';
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { GetCalloutResponseCommentData } from '../../utils/api/api.interface';
-import RichTextEditor from '../rte/RichTextEditor.vue';
-import AppForm from '../forms/AppForm.vue';
-import { CommentFormData } from './calloutResponseComment.interface';
 
 const { t } = useI18n();
 

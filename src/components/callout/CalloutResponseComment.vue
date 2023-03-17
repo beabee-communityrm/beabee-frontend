@@ -3,15 +3,14 @@
     {{ props.comment.contact.displayName }}
     -
     {{ formatLocale(props.comment.createdAt, 'Pp') }}
-
-    <AppButton @click="formVisible = true">DEBUG Edit</AppButton>
-    <AppButton @click="deleteComment">DEBUG Delete</AppButton>
+    <AppButton @click="formVisible = true">{{ t('actions.edit') }}</AppButton>
+    <AppButton @click="deleteComment">{{ t('actions.delete') }}</AppButton>
   </div>
 
-  <div v-if="!formVisible" class="mt-3" v-html="props.comment.text" />
+  <div v-if="!formVisible" class="mt-3" v-html="currentComment.text" />
+
   <div v-if="formVisible">
     <CalloutResponseCommentForm
-      :key="String(formVisible)"
       :comment="currentComment"
       @submit="handleEditSubmit"
     />
@@ -19,19 +18,19 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, ref } from 'vue';
-import { useI18n } from 'vue-i18n';
 import {
   GetCalloutResponseCommentData,
   UpdateCalloutResponseCommentData,
 } from '../../utils/api/api.interface';
-import CalloutResponseCommentForm from './CalloutResponseCommentForm.vue';
-import { formatLocale } from '../../utils/dates/locale-date-formats';
-import AppButton from '../button/AppButton.vue';
 import {
   deleteCalloutResponseComment,
   updateCalloutResponseComment,
 } from '../../utils/api/callout-response-comments';
+import { formatLocale } from '../../utils/dates/locale-date-formats';
+import AppButton from '../button/AppButton.vue';
+import CalloutResponseCommentForm from './CalloutResponseCommentForm.vue';
+import { onBeforeMount, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 

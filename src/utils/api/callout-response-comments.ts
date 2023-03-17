@@ -1,4 +1,3 @@
-import { Paginated } from '@beabee/beabee-common';
 import { deserializeDate } from '.';
 import axios from '../../lib/axios';
 import {
@@ -9,6 +8,7 @@ import {
   UpdateCalloutResponseCommentData,
 } from './api.interface';
 import { deserializeContact } from './contact';
+import { Paginated } from '@beabee/beabee-common';
 
 export async function fetchCalloutResponseComments(
   query: GetCalloutResponseCommentsQuery

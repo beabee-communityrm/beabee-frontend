@@ -1,6 +1,8 @@
 <template>
   <div class="mt-10 border-t border-primary-40 pt-10 text-lg">
-    <AppSubHeading class="mb-4">DEBUG comments</AppSubHeading>
+    <AppSubHeading class="mb-4"
+      >{{ t('calloutResponseComments.comments') }}
+    </AppSubHeading>
   </div>
   <div>
     <CalloutResponseComment
@@ -15,23 +17,23 @@
 </template>
 
 <script lang="ts" setup>
-import CalloutResponseCommentForm from './CalloutResponseCommentForm.vue';
-import CalloutResponseComment from './CalloutResponseComment.vue';
-import { useI18n } from 'vue-i18n';
+import {
+  GetCalloutResponseCommentData,
+  GetCalloutResponseCommentsQuery,
+} from '../../utils/api/api.interface';
 import {
   createCalloutResponseComment,
   fetchCalloutResponseComments,
 } from '../../utils/api/callout-response-comments';
-import { getCurrentInstance, onBeforeMount, ref } from 'vue';
-import {
-  CreateCalloutResponseCommentData,
-  GetCalloutResponseCommentData,
-  GetCalloutResponseCommentsQuery,
-} from '../../utils/api/api.interface';
-import { Paginated } from '@beabee/beabee-common';
-import { CommentFormData } from './calloutResponseComment.interface';
-import router from '../../lib/router';
 import AppSubHeading from '../AppSubHeading.vue';
+import CalloutResponseComment from './CalloutResponseComment.vue';
+import CalloutResponseCommentForm from './CalloutResponseCommentForm.vue';
+import { CommentFormData } from './calloutResponseComment.interface';
+import { Paginated } from '@beabee/beabee-common';
+import { onBeforeMount, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps<{
   responseId: string;

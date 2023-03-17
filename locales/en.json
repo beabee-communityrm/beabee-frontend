@@ -283,6 +283,7 @@
   },
   "calloutResponse": {
     "data": {
+      "assignee": "Assigned to",
       "bucket": "Bucket",
       "callout": "Callout",
       "contact": "Contact",
@@ -299,14 +300,19 @@
     "trash": "Trash",
     "verified": "Verified"
   },
+  "calloutResponseComments": {
+    "addComment": "Add Comment",
+    "comments": "Comments",
+    "updateComment": "Update Comment"
+  },
   "calloutResponsePage": {
     "actions": {
+      "assignTo": "Assign to",
       "moveBucket": "Move bucket",
       "toggleTag": "Toggle tag"
     },
     "manageTags": "Manage tags",
     "responseOf": "Response {no} out of {total}",
-    "searchTag": "Search by tag...",
     "selectedCount": "{n} response selected | {n} responses selected"
   },
   "calloutResponsesPage": {
@@ -314,6 +320,8 @@
     "noTags": "No tags",
     "response": "Response",
     "responseNo": "Response {no}",
+    "searchAssignee": "Assigned to...",
+    "searchTag": "Tagged with...",
     "showingOf": "Showing {start} to {end} responses out of {total}"
   },
   "callouts": {
