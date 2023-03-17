@@ -4,18 +4,20 @@ import axios from '../../lib/axios';
 import {
   CreateCalloutResponseCommentData,
   GetCalloutResponseCommentData,
+  GetCalloutResponseCommentsQuery,
   Serial,
 } from './api.interface';
+import { deserializeContact } from './contact';
 
 export async function fetchCalloutResponseComments(
-  responseId: string
+  query: GetCalloutResponseCommentsQuery
 ): Promise<Paginated<GetCalloutResponseCommentData>> {
   const { data } = await axios.get<
     Paginated<Serial<GetCalloutResponseCommentData>>
-  >(`/callout-response-comments`, { params: { responseId: responseId } });
+  >(`/callout-response-comments`, { params: query });
   return {
     ...data,
-    items: data.items.map((comment) => deserializeComment(comment)),
+    items: data.items.map(deserializeComment),
   };
 }
 
@@ -36,5 +38,6 @@ function deserializeComment(
     ...comment,
     createdAt: deserializeDate(comment.createdAt),
     updatedAt: deserializeDate(comment.updatedAt),
+    contact: deserializeContact(comment.contact),
   };
 }

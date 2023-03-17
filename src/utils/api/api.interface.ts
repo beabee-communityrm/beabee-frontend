@@ -323,6 +323,7 @@ export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
 
 export type GetCalloutsQuery = PaginatedQuery; // TODO: constrain fields
 export type GetCalloutResponsesQuery = PaginatedQuery; // TODO: constrain fields
+export type GetCalloutResponseCommentsQuery = PaginatedQuery; // TODO: constrain fields
 
 export interface GetCalloutTagData {
   id: string;
