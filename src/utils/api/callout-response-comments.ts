@@ -31,6 +31,10 @@ export async function createCalloutResponseComment(
   return deserializeComment(data);
 }
 
+export async function deleteCalloutResponseComment(id: string): Promise<void> {
+  await axios.delete('/callout-response-comments/' + id);
+}
+
 function deserializeComment(
   comment: Serial<GetCalloutResponseCommentData>
 ): GetCalloutResponseCommentData {
