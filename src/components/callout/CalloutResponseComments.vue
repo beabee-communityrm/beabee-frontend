@@ -9,6 +9,7 @@
       v-for="comment in comments.items"
       :key="comment.id"
       :comment="comment"
+      @delete="refreshComments"
     ></CalloutResponseComment>
   </div>
   <div class="mt-20">

@@ -4,7 +4,15 @@
     -
     {{ formatLocale(props.comment.createdAt, 'Pp') }}
     <AppButton @click="formVisible = true">{{ t('actions.edit') }}</AppButton>
-    <AppButton @click="deleteComment">{{ t('actions.delete') }}</AppButton>
+    <AppButton
+      @click="
+        ($event) => {
+          deleteComment();
+          $emit('delete');
+        }
+      "
+      >{{ t('actions.delete') }}</AppButton
+    >
   </div>
 
   <div v-if="!formVisible" class="mt-3" v-html="currentComment.text" />
@@ -37,6 +45,8 @@ const { t } = useI18n();
 const props = defineProps<{
   comment: GetCalloutResponseCommentData;
 }>();
+
+defineEmits(['delete']);
 
 const formVisible = ref<boolean>(false);
 const currentComment = ref<GetCalloutResponseCommentData>(props.comment);
