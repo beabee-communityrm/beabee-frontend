@@ -65,27 +65,42 @@ meta:
       <AppInfoListItem :name="t('calloutResponse.data.tags')">
         <AppTag v-for="tag in response.tags" :key="tag.id" :tag="tag.name" />
       </AppInfoListItem>
+      <AppInfoListItem :name="t('calloutResponse.data.assignee')">
+        <router-link
+          v-if="response.assignee"
+          :to="`/admin/contacts/${response.assignee.id}`"
+          class="text-link"
+        >
+          {{ response.assignee.displayName }}
+        </router-link>
+      </AppInfoListItem>
     </AppInfoList>
     <div class="flex gap-2">
       <MoveBucketButton
-        :current-bucket="response.bucket"
         size="sm"
+        with-text
+        :current-bucket="response.bucket"
         :disabled="doingAction"
         :loading="doingAction"
         @move="(bucket) => handleUpdate({ bucket })"
-      >
-        {{ t('calloutResponsePage.actions.moveBucket') }}
-      </MoveBucketButton>
+      />
       <ToggleTagButton
+        size="sm"
+        with-text
         :tag-items="tagItems"
         :selected-tags="response.tags.map((t) => t.id)"
         :manage-url="`/admin/callouts/view/${callout.slug}/responses/tags`"
         :loading="doingAction"
-        size="sm"
         @toggle="(tagId) => handleUpdate({ tags: [tagId] })"
-      >
-        {{ t('calloutResponsePage.actions.toggleTag') }}
-      </ToggleTagButton>
+      />
+      <SetAssigneeButton
+        size="sm"
+        with-text
+        :current-assignee-id="response.assignee?.id"
+        :disabled="doingAction"
+        :loading="doingAction"
+        @assign="(assigneeId) => handleUpdate({ assigneeId })"
+      />
     </div>
     <div class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg">
       <Form
@@ -127,6 +142,7 @@ import {
   updateCalloutResponse,
 } from '../../../../../../utils/api/callout-response';
 import CalloutResponseComments from '../../../../../../components/callout/CalloutResponseComments.vue';
+import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
 
 const props = defineProps<{
   rid: string;
@@ -135,10 +151,20 @@ const props = defineProps<{
 
 const { t, n } = useI18n();
 
-addBreadcrumb(computed(() => [{ title: props.rid }]));
+addBreadcrumb(
+  computed(() => [
+    {
+      title: t('calloutResponsesPage.responseNo', {
+        no: response.value?.number ? n(response.value?.number) : '?',
+      }),
+    },
+  ])
+);
 
 const response =
-  ref<GetCalloutResponseDataWith<'answers' | 'contact' | 'tags'>>();
+  ref<
+    GetCalloutResponseDataWith<'answers' | 'assignee' | 'contact' | 'tags'>
+  >();
 const prevResponse = ref<GetCalloutResponseData>();
 const nextResponse = ref<GetCalloutResponseData>();
 const responseNo = ref(0);
@@ -165,6 +191,7 @@ onBeforeMount(async () => {
 async function refreshResponse() {
   const newResponse = await fetchCalloutResponse(props.rid, [
     'answers',
+    'assignee',
     'contact',
     'tags',
   ]);

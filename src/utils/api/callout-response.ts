@@ -18,6 +18,9 @@ export function deserializeCalloutResponse(response: any): any {
     ...response,
     createdAt: deserializeDate(response.createdAt),
     updatedAt: deserializeDate(response.updatedAt),
+    ...(response.assignee && {
+      assignee: deserializeContact(response.assignee),
+    }),
     ...(response.contact && { contact: deserializeContact(response.contact) }),
   };
 }

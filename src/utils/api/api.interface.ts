@@ -360,12 +360,14 @@ export interface CreateCalloutResponseData {
   answers: CalloutResponseAnswers;
   bucket?: string;
   tags?: string[];
+  assigneeId?: string | null;
 }
 
 export type UpdateCalloutResponseData = Partial<CreateCalloutResponseData>;
 
 export type GetCalloutResponseWith =
   | 'answers'
+  | 'assignee'
   | 'callout'
   | 'contact'
   | 'tags'
@@ -374,6 +376,7 @@ export type GetCalloutResponseWith =
 export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
   GetCalloutResponseData &
     ('answers' extends With ? { answers: CalloutResponseAnswers } : Noop) &
+    ('assignee' extends With ? { assignee: GetContactData | null } : Noop) &
     ('callout' extends With ? { callout: GetCalloutData } : Noop) &
     ('contact' extends With ? { contact: GetContactData | null } : Noop) &
     ('tags' extends With ? { tags: { id: string; name: string }[] } : Noop);
