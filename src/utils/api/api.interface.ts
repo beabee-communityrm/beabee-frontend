@@ -378,9 +378,13 @@ export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
     ('contact' extends With ? { contact: GetContactData | null } : Noop) &
     ('tags' extends With ? { tags: { id: string; name: string }[] } : Noop);
 
-export interface CalloutResponseCommentData {
-  responseId: string;
+export interface UpdateCalloutResponseCommentData {
   text: string;
+}
+
+export interface CalloutResponseCommentData
+  extends UpdateCalloutResponseCommentData {
+  responseId: string;
 }
 
 export interface GetCalloutResponseCommentData

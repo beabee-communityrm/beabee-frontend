@@ -11,34 +11,50 @@
   <div v-if="!formVisible" class="mt-3" v-html="props.comment.text" />
   <div v-if="formVisible">
     <CalloutResponseCommentForm
-      :comment="props.comment"
+      :key="String(formVisible)"
+      :comment="currentComment"
       @submit="handleEditSubmit"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { GetCalloutResponseCommentData } from '../../utils/api/api.interface';
+import {
+  GetCalloutResponseCommentData,
+  UpdateCalloutResponseCommentData,
+} from '../../utils/api/api.interface';
 import CalloutResponseCommentForm from './CalloutResponseCommentForm.vue';
 import { formatLocale } from '../../utils/dates/locale-date-formats';
 import AppButton from '../button/AppButton.vue';
-import { deleteCalloutResponseComment } from '../../utils/api/callout-response-comments';
+import {
+  deleteCalloutResponseComment,
+  updateCalloutResponseComment,
+} from '../../utils/api/callout-response-comments';
 
 const { t } = useI18n();
-
-const formVisible = ref(false);
 
 const props = defineProps<{
   comment: GetCalloutResponseCommentData;
 }>();
 
+const formVisible = ref<boolean>(false);
+const currentComment = ref<GetCalloutResponseCommentData>(props.comment);
+
+onBeforeMount(() => {
+  currentComment.value = props.comment;
+});
+
 async function deleteComment() {
   await deleteCalloutResponseComment(props.comment.id);
 }
 
-async function handleEditSubmit() {
+async function handleEditSubmit(data: UpdateCalloutResponseCommentData) {
+  const updatedComment = await updateCalloutResponseComment(props.comment.id, {
+    text: data.text,
+  });
   formVisible.value = false;
+  currentComment.value.text = updatedComment.text;
 }
 </script>

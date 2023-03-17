@@ -6,6 +6,7 @@ import {
   GetCalloutResponseCommentData,
   GetCalloutResponseCommentsQuery,
   Serial,
+  UpdateCalloutResponseCommentData,
 } from './api.interface';
 import { deserializeContact } from './contact';
 
@@ -33,6 +34,17 @@ export async function createCalloutResponseComment(
 
 export async function deleteCalloutResponseComment(id: string): Promise<void> {
   await axios.delete('/callout-response-comments/' + id);
+}
+
+export async function updateCalloutResponseComment(
+  id: string,
+  dataIn: UpdateCalloutResponseCommentData
+): Promise<GetCalloutResponseCommentData> {
+  const { data } = await axios.patch<Serial<GetCalloutResponseCommentData>>(
+    '/callout-response-comments/' + id,
+    dataIn
+  );
+  return deserializeComment(data);
 }
 
 function deserializeComment(
