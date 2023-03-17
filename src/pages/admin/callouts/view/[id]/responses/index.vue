@@ -15,8 +15,15 @@ meta:
         <AppSelect
           v-model="currentTag"
           :items="[
-            { id: '', label: t('calloutResponsePage.searchTag') },
+            { id: '', label: t('calloutResponsesPage.searchTag') },
             ...tagItems,
+          ]"
+        />
+        <AppSelect
+          v-model="currentAssignee"
+          :items="[
+            { id: '', label: t('calloutResponsesPage.searchAssignee') },
+            ...adminItems,
           ]"
         />
         <AppButton
@@ -68,6 +75,11 @@ meta:
             :disabled="selectedCount === 0"
             @toggle="(tagId) => handleUpdateAction({ tags: [tagId] })"
           />
+          <SetAssigneeButton
+            :disabled="selectedCount === 0"
+            :current-assignee-id="selectedAssigneeId"
+            @assign="(assigneeId) => handleUpdateAction({ assigneeId })"
+          />
         </AppButtonGroup>
         <p v-if="selectedCount > 0" class="self-center text-sm">
           <i18n-t
@@ -103,13 +115,23 @@ meta:
             {{ t('calloutResponsesPage.responseNo', { no: n(value) }) }}
           </router-link>
         </template>
-        <template #contact="{ item }">
+        <template #assignee="{ value }">
           <router-link
-            v-if="item.contact"
-            :to="`/admin/contacts/${item.contact.id}`"
+            v-if="value"
+            :to="`/admin/contacts/${value.id}`"
             class="text-link"
           >
-            {{ item.contact.displayName }}
+            {{ value.displayName }}
+          </router-link>
+          <span v-else>-</span>
+        </template>
+        <template #contact="{ value }">
+          <router-link
+            v-if="value"
+            :to="`/admin/contacts/${value.id}`"
+            class="text-link"
+          >
+            {{ value.displayName }}
           </router-link>
           <span v-else>-</span>
         </template>
@@ -172,6 +194,8 @@ import AppTag from '../../../../../../components/AppTag.vue';
 import MoveBucketButton from '../../../../../../components/pages/admin/callouts/MoveBucketButton.vue';
 import ToggleTagButton from '../../../../../../components/pages/admin/callouts/ToggleTagButton.vue';
 import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
+import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
+import { fetchContacts } from '../../../../../../utils/api/contact';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
@@ -182,14 +206,15 @@ const route = useRoute();
 const router = useRouter();
 
 const responses =
-  ref<Paginated<GetCalloutResponseDataWith<'contact' | 'tags'>>>();
+  ref<Paginated<GetCalloutResponseDataWith<'assignee' | 'contact' | 'tags'>>>();
 const showAdvancedSearch = ref(false);
 const doingAction = ref(false);
 
-const responseItems =
-  ref<
-    (GetCalloutResponseDataWith<'contact' | 'tags'> & { selected: boolean })[]
-  >();
+const responseItems = ref<
+  (GetCalloutResponseDataWith<'assignee' | 'contact' | 'tags'> & {
+    selected: boolean;
+  })[]
+>();
 
 const selectedResponseItems = computed(
   () => responseItems.value?.filter((ri) => ri.selected) || []
@@ -211,6 +236,17 @@ const selectedTags = computed(() => {
     .map(([tagId]) => tagId);
 });
 
+const selectedAssigneeId = computed(() => {
+  let assigneeId = selectedResponseItems.value[0]?.assignee?.id;
+  for (const item of selectedResponseItems.value) {
+    if (assigneeId !== item.assignee?.id) {
+      return '';
+    }
+  }
+  return assigneeId;
+});
+
+const adminItems = ref<{ id: string; label: string }[]>([]);
 const tagItems = ref<{ id: string; label: string }[]>([]);
 
 const responsesUrl = computed(
@@ -251,6 +287,12 @@ const filterItemsWithExtras = computed(() => {
     },
     ...convertComponentsToFilters(formQuestions.value),
   };
+});
+
+const currentAssignee = computed({
+  get: () => (route.query.assignee as string) || '',
+  set: (assignee) =>
+    router.push({ query: { ...route.query, assignee: assignee || undefined } }),
 });
 
 const currentBucket = computed({
@@ -302,6 +344,20 @@ const currentRules = computed({
 onBeforeMount(async () => {
   const tags = await fetchTags(props.callout.slug);
   tagItems.value = tags.map((tag) => ({ id: tag.id, label: tag.name }));
+
+  const admins = await fetchContacts({
+    rules: {
+      condition: 'AND',
+      rules: [
+        { field: 'activePermission', operator: 'equal', value: ['admin'] },
+      ],
+    },
+  });
+
+  adminItems.value = admins.items.map((admin) => ({
+    id: admin.id,
+    label: admin.displayName,
+  }));
 });
 
 function getSearchRules(): RuleGroup {
@@ -322,6 +378,15 @@ function getSearchRules(): RuleGroup {
       value: [currentTag.value],
     });
   }
+
+  if (currentAssignee.value) {
+    rules.rules.push({
+      field: 'assignee',
+      operator: 'equal',
+      value: [currentAssignee.value],
+    });
+  }
+
   return rules;
 }
 
@@ -346,7 +411,7 @@ async function refreshResponses() {
       order: currentSort.value.type,
       rules: getSearchRules(),
     },
-    ['contact', 'tags']
+    ['assignee', 'contact', 'tags']
   );
 
   responseItems.value = responses.value.items.map((r) => ({

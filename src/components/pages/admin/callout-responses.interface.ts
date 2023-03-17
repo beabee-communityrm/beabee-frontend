@@ -28,6 +28,10 @@ export const headers = computed<Header[]>(() => [
     text: t('calloutResponse.data.tags'),
   },
   {
+    value: 'assignee',
+    text: t('calloutResponse.data.assignee'),
+  },
+  {
     value: 'createdAt',
     text: t('calloutResponse.data.createdAt'),
     sortable: true,
@@ -70,6 +74,10 @@ export const filterItems = computed<FilterItems<CalloutResponseFilterName>>(
     contact: withLabel(
       calloutResponseFilters.contact,
       t('calloutResponse.data.contact')
+    ),
+    assignee: withLabel(
+      calloutResponseFilters.assignee,
+      t('calloutResponse.data.assignee')
     ),
   })
 );
