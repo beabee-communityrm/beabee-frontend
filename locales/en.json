@@ -308,7 +308,6 @@
     },
     "manageTags": "Manage tags",
     "responseOf": "Response {no} out of {total}",
-    "searchTag": "Search by tag...",
     "selectedCount": "{n} response selected | {n} responses selected"
   },
   "calloutResponsesPage": {
@@ -316,7 +315,8 @@
     "noTags": "No tags",
     "response": "Response",
     "responseNo": "Response {no}",
-    "searchAssignee": "Search by assigned to...",
+    "searchAssignee": "Assigned to...",
+    "searchTag": "Tagged with...",
     "showingOf": "Showing {start} to {end} responses out of {total}"
   },
   "callouts": {
