@@ -11,7 +11,9 @@
     @delete="refreshComments"
   />
   <div class="bg-white p-4">
-    <AppSubHeading class="mb-2">Add a comment</AppSubHeading>
+    <AppSubHeading class="mb-2">
+      {{ t('calloutResponseComments.addComment') }}
+    </AppSubHeading>
     <CalloutResponseCommentForm @submit="handleSubmit" />
   </div>
 </template>
