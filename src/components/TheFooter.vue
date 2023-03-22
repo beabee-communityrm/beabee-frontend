@@ -66,9 +66,8 @@
 </template>
 
 <script lang="ts" setup>
-import { canAdmin } from '../utils/user';
 import { useI18n } from 'vue-i18n';
-import { generalContent } from '../store';
+import { canAdmin, generalContent } from '../store';
 
 const { t } = useI18n();
 </script>

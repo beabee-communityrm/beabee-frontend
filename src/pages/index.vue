@@ -5,6 +5,6 @@ meta:
 <template><div /></template>
 <script lang="ts" setup>
 import { useRouter } from 'vue-router';
-import { canAdmin } from '../utils/user';
+import { canAdmin } from '../store';
 useRouter().replace(canAdmin.value ? '/admin' : '/profile');
 </script>

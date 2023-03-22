@@ -41,7 +41,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import TheMenuListItem from './TheMenuListItem.vue';
 import TheMenuListSection from './TheMenuListSection.vue';
-import { canAdmin } from '../../utils/user';
+import { canAdmin } from '../../store';
 import { logout } from '../../utils/api/auth';
 
 import { menu, adminMenu } from './menu-list';
