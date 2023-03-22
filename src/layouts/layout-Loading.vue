@@ -20,7 +20,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import AuthBox from '../components/AuthBox.vue';
-import backgroundStyle from '../utils/backgroundStyle';
+import { backgroundStyle } from '../store';
 import AppLogo from '../components/AppLogo.vue';
 
 const { t } = useI18n();

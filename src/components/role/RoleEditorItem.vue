@@ -56,7 +56,7 @@ import AppButton from '../button/AppButton.vue';
 import AppRoundBadge from '../AppRoundBadge.vue';
 import AppConfirmDialog from '../AppConfirmDialog.vue';
 import { ContactRoleData } from '../../utils/api/api.interface';
-import { formatLocale } from '../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../utils/dates';
 import RoleEditorForm from './RoleEditorForm.vue';
 
 const emit = defineEmits(['delete', 'update']);

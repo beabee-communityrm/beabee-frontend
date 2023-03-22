@@ -47,7 +47,7 @@
 import { format } from 'date-fns';
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
+import { formatDistanceLocale } from '../../utils/dates';
 import { GetCalloutData } from '../../utils/api/api.interface';
 
 const { t } = useI18n();

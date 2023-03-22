@@ -124,7 +124,7 @@ import {
 } from '../../utils/api/callout';
 import AppButton from '../../components/button/AppButton.vue';
 import MessageBox from '../../components/MessageBox.vue';
-import { currentUser } from '../../store';
+import { currentUser, canAdmin } from '../../store';
 import GuestFields from '../../components/pages/callouts/GuestFields.vue';
 import SharingPanel from '../../components/pages/callouts/CalloutSharingPanel.vue';
 import axios from '../../lib/axios';
@@ -134,7 +134,6 @@ import 'formiojs/dist/formio.form.css';
 import { useRoute } from 'vue-router';
 import ItemStatusText from '../../components/item/ItemStatusText.vue';
 import { addBreadcrumb } from '../../store/breadcrumb';
-import { canAdmin } from '../../utils/currentUserCan';
 
 type FormSubmission = { data: CalloutResponseAnswers };
 

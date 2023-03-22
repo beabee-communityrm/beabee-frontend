@@ -95,7 +95,7 @@ import {
   GetCalloutDataWith,
   GetCalloutsQuery,
 } from '../../../utils/api/api.interface';
-import { formatLocale } from '../../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../../utils/dates';
 import { fetchCallouts } from '../../../utils/api/callout';
 
 import AppSelect from '../../../components/forms/AppSelect.vue';

@@ -106,7 +106,7 @@ import {
   GetStatsData,
 } from '../../utils/api/api.interface';
 import { fetchContacts } from '../../utils/api/contact';
-import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
+import { formatDistanceLocale } from '../../utils/dates';
 import HintBox from '../../components/pages/admin/HintBox.vue';
 import { fetchCallouts } from '../../utils/api/callout';
 import CalloutSummary from '../../components/callout/CalloutSummary.vue';
