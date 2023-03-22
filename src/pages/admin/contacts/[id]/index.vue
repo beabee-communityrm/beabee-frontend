@@ -174,7 +174,7 @@ import {
 } from '../../../../utils/api/contact';
 import AppInfoList from '../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
-import { formatLocale } from '../../../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../../../utils/dates';
 import { fetchContent } from '../../../../utils/api/content';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 import AppForm from '../../../../components/forms/AppForm.vue';

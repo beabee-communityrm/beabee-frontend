@@ -187,7 +187,7 @@ import {
 } from '../../../../../../utils/api/api.interface';
 import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
 import { convertComponentsToFilters } from '../../../../../../utils/callouts';
-import { formatDistanceLocale } from '../../../../../../utils/dates/locale-date-formats';
+import { formatDistanceLocale } from '../../../../../../utils/dates';
 import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
 import { updateCalloutResponses } from '../../../../../../utils/api/callout-response';
 import AppTag from '../../../../../../components/AppTag.vue';

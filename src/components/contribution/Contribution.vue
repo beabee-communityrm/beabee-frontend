@@ -42,7 +42,7 @@ import ContributionAmount from './ContributionAmount.vue';
 import ContributionFee from './ContributionFee.vue';
 import ContributionMethod from './ContributionMethod.vue';
 import { ContributionContent } from './contribution.interface';
-import calcPaymentFee from '../../utils/calcPaymentFee';
+import calcPaymentFee from '../../utils/payment';
 
 const props = withDefaults(
   defineProps<{

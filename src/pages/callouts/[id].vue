@@ -134,7 +134,7 @@ import 'formiojs/dist/formio.form.css';
 import { useRoute } from 'vue-router';
 import ItemStatusText from '../../components/item/ItemStatusText.vue';
 import { addBreadcrumb } from '../../store/breadcrumb';
-import { canAdmin } from '../../utils/currentUserCan';
+import { canAdmin } from '../../utils/user';
 
 type FormSubmission = { data: CalloutResponseAnswers };
 
