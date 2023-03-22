@@ -28,18 +28,19 @@ const { t } = useI18n();
 
 const validation = useVuelidate();
 
-const emit = defineEmits(['submit', 'cancel']);
+const emit = defineEmits(['cancel']);
 
 const props = defineProps<{
   comment?: GetCalloutResponseCommentData;
+  onSubmit?: (data: CommentFormData) => Promise<void>;
 }>();
 
 const data = reactive<CommentFormData>({
   text: props.comment?.text || '',
 });
 
-function handleSubmit() {
-  emit('submit', data);
+async function handleSubmit() {
+  await props.onSubmit?.(data);
   validation.value.$reset();
   data.text = '';
 }
