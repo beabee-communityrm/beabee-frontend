@@ -91,10 +91,9 @@ async function deleteComment() {
 }
 
 async function handleEditSubmit(data: UpdateCalloutResponseCommentData) {
-  const updatedComment = await updateCalloutResponseComment(props.comment.id, {
+  currentComment.value = await updateCalloutResponseComment(props.comment.id, {
     text: data.text,
   });
   formVisible.value = false;
-  currentComment.value.text = updatedComment.text;
 }
 </script>
