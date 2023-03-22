@@ -93,8 +93,8 @@ meta:
       <AppConfirmDialog
         :open="showDeleteModal"
         :title="t('calloutAdminOverview.actions.confirmDelete.title')"
-        :cancel="t('calloutAdminOverview.actions.confirmDelete.actionNo')"
-        :confirm="t('calloutAdminOverview.actions.confirmDelete.actionYes')"
+        :cancel="t('actions.noBack')"
+        :confirm="t('actions.yesDelete')"
         variant="danger"
         @close="showDeleteModal = false"
         @confirm="confirmDeleteCallout"

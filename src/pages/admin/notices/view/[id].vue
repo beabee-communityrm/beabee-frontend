@@ -44,8 +44,8 @@ meta:
         <AppConfirmDialog
           :open="showDeleteModal"
           :title="t('noticeAdminOverview.actions.confirmDelete.title')"
-          :cancel="t('noticeAdminOverview.actions.confirmDelete.actionNo')"
-          :confirm="t('noticeAdminOverview.actions.confirmDelete.actionYes')"
+          :cancel="t('actions.noBack')"
+          :confirm="t('actions.yesDelete')"
           variant="danger"
           @close="showDeleteModal = false"
           @confirm="confirmDeleteNotice"

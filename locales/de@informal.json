@@ -18,6 +18,7 @@
     "delete": "Löschen",
     "edit": "Bearbeiten",
     "export": "Exportieren",
+    "noBack": "Nein, gehe zurück",
     "participate": "Teilnehmen",
     "preview": "Vorschau",
     "publish": "Veröffentlichen",
@@ -32,7 +33,9 @@
     "submit": "Abschicken",
     "unpublish": "Veröffentlichung aufheben",
     "update": "Änderungen speichern",
-    "view": "Anzeigen"
+    "view": "Anzeigen",
+    "yesDelete": "Ja, Hinweis löschen",
+    "yesRemove": "Ja, löschen"
   },
   "addContact": {
     "contactSaved": "Kontakt gespeichert",
@@ -243,8 +246,6 @@
   "calloutAdminOverview": {
     "actions": {
       "confirmDelete": {
-        "actionNo": "Nein, Callout behalten.",
-        "actionYes": "Ja, Callout löschen.",
         "text": "Bist du sicher, dass du diesen Callout löschen willst?",
         "title": "Callout löschen?"
       }
@@ -305,7 +306,8 @@
       "addComment": "Kommentar hinzufügen",
       "updateComment": "Kommentar bearbeiten"
     },
-    "comments": "Kommentare"
+    "comments": "Kommentare",
+    "confirmDelete": {}
   },
   "calloutResponsePage": {
     "actions": {
@@ -934,8 +936,6 @@
   "noticeAdminOverview": {
     "actions": {
       "confirmDelete": {
-        "actionNo": "Nein, Hinweis behalten",
-        "actionYes": "Ja, Hinweis löschen",
         "text": "Bist du sicher, dass du diesen Hinweis löschen willst?",
         "title": "Hinweis löschen?"
       }
@@ -1004,8 +1004,6 @@
     "add": "Rolle hinzufügen",
     "addNewRole": "Neue Rolle hinzufügen",
     "confirmDelete": {
-      "actionNo": "Nein, gehe zurück",
-      "actionYes": "Ja, löschen",
       "text": "Bist Du sicher, dass Du diese Rolle entfernen willst?",
       "title": "Rolle entfernen"
     },
@@ -1035,8 +1033,6 @@
     "add": "Tag hinzufügen",
     "addNewTag": "Tag hinzufügen",
     "confirmDelete": {
-      "actionNo": "Nein, gehe zurück",
-      "actionYes": "Ja, löschen",
       "text": "Bist du sicher, dass du diesen Tag entfernen willst? Die damit getaggten Antworten werden nicht gelöscht.",
       "title": "Tag entfernen"
     },
