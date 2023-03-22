@@ -35,7 +35,7 @@ const props = defineProps<{
   confirm: string;
   cancel: string;
   title: string;
-  onConfirm?: () => Promise<void>;
+  onConfirm?: () => Promise<void> | void;
 }>();
 
 const isConfirming = ref(false);
