@@ -4,6 +4,7 @@
       {{ t('calloutResponseComments.comments') }}
     </AppHeading>
   </div>
+
   <CalloutResponseComment
     v-for="comment in comments.items"
     :key="comment.id"

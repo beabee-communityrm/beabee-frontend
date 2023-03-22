@@ -46,7 +46,7 @@
       :confirm="t('actions.yesDelete')"
       variant="danger"
       @close="showDeleteModal = false"
-      @confirm="$emit('delete')"
+      @confirm="handleDelete"
     >
       <p>{{ t('calloutResponseComments.confirmDelete.text') }}</p>
     </AppConfirmDialog>
@@ -74,9 +74,8 @@ const { t } = useI18n();
 
 const props = defineProps<{
   comment: GetCalloutResponseCommentData;
+  onDelete?: () => Promise<void>;
 }>();
-
-defineEmits(['delete']);
 
 const formVisible = ref(false);
 const showDeleteModal = ref(false);
@@ -86,14 +85,15 @@ onBeforeMount(() => {
   currentComment.value = props.comment;
 });
 
-async function deleteComment() {
-  await deleteCalloutResponseComment(props.comment.id);
-}
-
 async function handleEditSubmit(data: UpdateCalloutResponseCommentData) {
   currentComment.value = await updateCalloutResponseComment(props.comment.id, {
     text: data.text,
   });
   formVisible.value = false;
+}
+
+async function handleDelete() {
+  await deleteCalloutResponseComment(currentComment.value.id);
+  await props.onDelete?.();
 }
 </script>
