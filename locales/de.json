@@ -301,9 +301,11 @@
     "verified": "Verifiziert"
   },
   "calloutResponseComments": {
-    "addComment": "Kommentar hinzufügen",
-    "comments": "Kommentare",
-    "updateComment": "Kommentar bearbeiten"
+    "actions": {
+      "addComment": "Kommentar hinzufügen",
+      "updateComment": "Kommentar bearbeiten"
+    },
+    "comments": "Kommentare"
   },
   "calloutResponsePage": {
     "actions": {

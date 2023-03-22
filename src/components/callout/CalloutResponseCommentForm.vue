@@ -2,8 +2,8 @@
   <AppForm
     :button-text="
       props.comment
-        ? t('calloutResponseComments.updateComment')
-        : t('calloutResponseComments.addComment')
+        ? t('calloutResponseComments.actions.updateComment')
+        : t('calloutResponseComments.actions.addComment')
     "
     @submit.prevent="
       ($event) => {
