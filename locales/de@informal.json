@@ -293,6 +293,7 @@
       "updatedAt": "Geändert am"
     },
     "dataGroup": {
+      "answers": "Fragen",
       "response": "Antwort"
     }
   },

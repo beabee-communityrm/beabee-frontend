@@ -53,23 +53,18 @@ meta:
         :has-changed="false"
         @reset="currentRules = undefined"
       />
-      <div class="mt-4 flex gap-4">
-        <div>
-          <AppCheckbox v-model="showLatestComment" />
-        </div>
-        <div class="flex gap-4">
-          Show inline answer
-          <AppSelect
-            v-model="currentInlineAnswer"
-            :items="[
-              { id: '', label: t('calloutResponsesPage.noAnswer') },
-              ...Object.entries(formFilterItems).map(([id, item]) => ({
-                id: id.substring(8),
-                label: item.label,
-              })),
-            ]"
-          />
-        </div>
+      <div class="mt-4 flex items-center gap-4">
+        <AppLabel :label="t('calloutResponsesPage.showAnswer')" />
+        <AppSelect
+          v-model="currentInlineAnswer"
+          :items="[
+            { id: '', label: t('calloutResponsesPage.noAnswer') },
+            ...Object.entries(formFilterItems).map(([id, item]) => ({
+              id: id.substring(8),
+              label: item.label,
+            })),
+          ]"
+        />
       </div>
       <div class="mt-4 flex gap-4">
         <AppButtonGroup>
@@ -166,9 +161,15 @@ meta:
           }}
         </template>
         <template #after="{ item }">
-          <div v-if="currentInlineAnswer">
-            {{ item.answers[currentInlineAnswer] }}
-          </div>
+          <p v-if="currentInlineComponent">
+            <b>{{ t('calloutResponsesPage.inlineAnswer') }}</b>
+            {{
+              convertAnswer(
+                currentInlineComponent,
+                item.answers[currentInlineComponent.key]
+              )
+            }}
+          </p>
         </template>
       </AppTable>
       <AppPaginatedResult
@@ -183,6 +184,7 @@ meta:
 </template>
 <script lang="ts" setup>
 import {
+  convertAnswer,
   flattenComponents,
   Paginated,
   Rule,
@@ -219,7 +221,7 @@ import ToggleTagButton from '../../../../../../components/pages/admin/callouts/T
 import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
 import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
 import { fetchContacts } from '../../../../../../utils/api/contact';
-import AppCheckbox from '../../../../../../components/forms/AppCheckbox.vue';
+import AppLabel from '../../../../../../components/forms/AppLabel.vue';
 
 const props = defineProps<{ callout: GetCalloutDataWith<'form'> }>();
 
@@ -283,12 +285,14 @@ const bucketItems = computed(() =>
   }))
 );
 
-const formFilterItems = computed(() =>
-  convertComponentsToFilters(
-    flattenComponents(props.callout.formSchema.components).filter(
-      (c) => !!c.input && c.type !== 'button'
-    )
+const formComponents = computed(() =>
+  flattenComponents(props.callout.formSchema.components).filter(
+    (c) => !!c.input && c.type !== 'button'
   )
+);
+
+const formFilterItems = computed(() =>
+  convertComponentsToFilters(formComponents.value)
 );
 
 const filterGroupsWithQuestions = computed(() => [
@@ -311,6 +315,9 @@ const filterItemsWithExtras = computed(() => {
 });
 
 const currentInlineAnswer = ref('');
+const currentInlineComponent = computed(() =>
+  formComponents.value.find((c) => c.key === currentInlineAnswer.value)
+);
 
 const currentAssignee = computed({
   get: () => (route.query.assignee as string) || '',
