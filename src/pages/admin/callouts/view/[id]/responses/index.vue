@@ -54,6 +54,24 @@ meta:
         @reset="currentRules = undefined"
       />
       <div class="mt-4 flex gap-4">
+        <div>
+          <AppCheckbox v-model="showLatestComment" />
+        </div>
+        <div class="flex gap-4">
+          Show inline answer
+          <AppSelect
+            v-model="currentInlineAnswer"
+            :items="[
+              { id: '', label: t('calloutResponsesPage.noAnswer') },
+              ...Object.entries(formFilterItems).map(([id, item]) => ({
+                id: id.substring(8),
+                label: item.label,
+              })),
+            ]"
+          />
+        </div>
+      </div>
+      <div class="mt-4 flex gap-4">
         <AppButtonGroup>
           <AppButton
             icon="download"
@@ -147,6 +165,11 @@ meta:
             })
           }}
         </template>
+        <template #after="{ item }">
+          <div v-if="currentInlineAnswer">
+            {{ item.answers[currentInlineAnswer] }}
+          </div>
+        </template>
       </AppTable>
       <AppPaginatedResult
         v-model:page="currentPage"
@@ -196,22 +219,26 @@ import ToggleTagButton from '../../../../../../components/pages/admin/callouts/T
 import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
 import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
 import { fetchContacts } from '../../../../../../utils/api/contact';
+import AppCheckbox from '../../../../../../components/forms/AppCheckbox.vue';
 
-const props = defineProps<{
-  callout: GetCalloutDataWith<'form'>;
-}>();
+const props = defineProps<{ callout: GetCalloutDataWith<'form'> }>();
 
 const { t, n } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
 const responses =
-  ref<Paginated<GetCalloutResponseDataWith<'assignee' | 'contact' | 'tags'>>>();
+  ref<
+    Paginated<
+      GetCalloutResponseDataWith<'answers' | 'assignee' | 'contact' | 'tags'>
+    >
+  >();
 const showAdvancedSearch = ref(false);
+const showLatestComment = ref(false);
 const doingAction = ref(false);
 
 const responseItems = ref<
-  (GetCalloutResponseDataWith<'assignee' | 'contact' | 'tags'> & {
+  (GetCalloutResponseDataWith<'answers' | 'assignee' | 'contact' | 'tags'> & {
     selected: boolean;
   })[]
 >();
@@ -264,9 +291,11 @@ const bucketItems = computed(() =>
   }))
 );
 
-const formQuestions = computed(() =>
-  flattenComponents(props.callout.formSchema.components).filter(
-    (c) => !!c.input && c.type !== 'button'
+const formFilterItems = computed(() =>
+  convertComponentsToFilters(
+    flattenComponents(props.callout.formSchema.components).filter(
+      (c) => !!c.input && c.type !== 'button'
+    )
   )
 );
 
@@ -274,7 +303,7 @@ const filterGroupsWithQuestions = computed(() => [
   ...filterGroups.value,
   {
     label: 'Answers',
-    items: formQuestions.value.map((q) => `answers.${q.key}`),
+    items: Object.keys(formFilterItems.value),
   },
 ]);
 
@@ -285,9 +314,11 @@ const filterItemsWithExtras = computed(() => {
       ...filterItems.value.tags,
       options: tagItems.value,
     },
-    ...convertComponentsToFilters(formQuestions.value),
+    ...formFilterItems.value,
   };
 });
+
+const currentInlineAnswer = ref('');
 
 const currentAssignee = computed({
   get: () => (route.query.assignee as string) || '',
@@ -411,7 +442,7 @@ async function refreshResponses() {
       order: currentSort.value.type,
       rules: getSearchRules(),
     },
-    ['assignee', 'contact', 'tags']
+    ['assignee', 'contact', 'tags', 'answers']
   );
 
   responseItems.value = responses.value.items.map((r) => ({
