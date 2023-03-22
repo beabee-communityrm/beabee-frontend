@@ -59,6 +59,8 @@ async function refreshComments() {
       ],
       condition: 'AND',
     },
+    order: 'ASC',
+    sort: 'createdAt',
   };
   const paginatedComments = await fetchCalloutResponseComments(query);
   comments.value = paginatedComments;
