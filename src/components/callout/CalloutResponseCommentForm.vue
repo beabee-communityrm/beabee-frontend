@@ -5,12 +5,7 @@
         ? t('calloutResponseComments.actions.updateComment')
         : t('calloutResponseComments.actions.addComment')
     "
-    @submit.prevent="
-      ($event) => {
-        $emit('submit', data);
-        data.text = ''; //ToDo: How to not get 'field is required' here?
-      }
-    "
+    @submit.prevent="handleSubmit"
   >
     <div class="mb-4">
       <RichTextEditor v-model="data.text" required />
@@ -25,10 +20,13 @@ import RichTextEditor from '../rte/RichTextEditor.vue';
 import { CommentFormData } from './calloutResponseComment.interface';
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
+import useVuelidate from '@vuelidate/core';
 
 const { t } = useI18n();
 
-defineEmits(['submit']);
+const validation = useVuelidate();
+
+const emit = defineEmits(['submit']);
 
 const props = defineProps<{
   comment?: GetCalloutResponseCommentData;
@@ -37,4 +35,10 @@ const props = defineProps<{
 const data = reactive<CommentFormData>({
   text: props.comment?.text || '',
 });
+
+function handleSubmit() {
+  emit('submit', data);
+  validation.value.$reset();
+  data.text = '';
+}
 </script>
