@@ -88,7 +88,7 @@ meta:
           <ToggleTagButton
             :tag-items="tagItems"
             :selected-tags="selectedTags"
-            :manage-url="`${responsesUrl}/tags`"
+            :manage-url="`${route.path}/tags`"
             :loading="doingAction"
             :disabled="selectedCount === 0"
             @toggle="(tagId) => handleUpdateAction({ tags: [tagId] })"
@@ -127,7 +127,7 @@ meta:
       >
         <template #number="{ value, item }">
           <router-link
-            :to="`${responsesUrl}/${item.id}`"
+            :to="`${route.path}/${item.id}`"
             class="text-base font-bold text-link"
           >
             {{ t('calloutResponsesPage.responseNo', { no: n(value) }) }}
@@ -276,18 +276,10 @@ const selectedAssigneeId = computed(() => {
 const adminItems = ref<{ id: string; label: string }[]>([]);
 const tagItems = ref<{ id: string; label: string }[]>([]);
 
-const responsesUrl = computed(
-  () =>
-    router.resolve({
-      name: 'adminCalloutViewResponsesTable',
-      params: { id: props.callout.slug },
-    }).href
-);
-
 const bucketItems = computed(() =>
   buckets.value.map((bucket) => ({
     ...bucket,
-    to: responsesUrl.value + '?bucket=' + bucket.id,
+    to: `${route.path}?bucket=${bucket.id}`,
   }))
 );
 
