@@ -5,7 +5,9 @@
         ? t('calloutResponseComments.actions.updateComment')
         : t('calloutResponseComments.actions.addComment')
     "
+    :reset-button-text="props.comment && t('actions.cancel')"
     @submit.prevent="handleSubmit"
+    @reset="emit('cancel')"
   >
     <div class="mb-4">
       <RichTextEditor v-model="data.text" required />
@@ -26,7 +28,7 @@ const { t } = useI18n();
 
 const validation = useVuelidate();
 
-const emit = defineEmits(['submit']);
+const emit = defineEmits(['submit', 'cancel']);
 
 const props = defineProps<{
   comment?: GetCalloutResponseCommentData;

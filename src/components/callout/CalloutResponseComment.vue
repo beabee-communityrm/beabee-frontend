@@ -19,7 +19,7 @@
           icon="pencil"
           variant="primaryOutlined"
           :title="t('actions.edit')"
-          @click="formVisible = true"
+          @click="formVisible = !formVisible"
         />
         <AppButton
           size="sm"
@@ -40,6 +40,7 @@
       v-if="formVisible"
       :comment="currentComment"
       @submit="handleEditSubmit"
+      @cancel="formVisible = false"
     />
     <div v-else class="content-message" v-html="currentComment.text" />
   </div>
