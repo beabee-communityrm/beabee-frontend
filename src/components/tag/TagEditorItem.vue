@@ -32,8 +32,8 @@
     <AppConfirmDialog
       :open="showDeleteModal"
       :title="t('tagEditor.confirmDelete.title')"
-      :cancel="t('tagEditor.confirmDelete.actionNo')"
-      :confirm="t('tagEditor.confirmDelete.actionYes')"
+      :cancel="t('actions.noBack')"
+      :confirm="t('actions.yesRemove')"
       variant="danger"
       @close="showDeleteModal = false"
       @confirm="$emit('delete', tag.id)"

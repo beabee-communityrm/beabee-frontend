@@ -2,17 +2,11 @@
   <AppButton
     type="button"
     :variant="active ? 'primary' : 'primaryOutlined'"
-    :icon="icon"
-    class="mr-1 mt-1"
     size="sm"
   />
 </template>
 
 <script lang="ts" setup>
 import AppButton from '../button/AppButton.vue';
-
-defineProps<{
-  icon: string;
-  active: boolean;
-}>();
+defineProps<{ active: boolean }>();
 </script>
