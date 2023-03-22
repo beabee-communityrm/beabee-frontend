@@ -4,17 +4,13 @@
       >{{ t('calloutResponseComments.comments') }}
     </AppSubHeading>
   </div>
-  <div>
-    <CalloutResponseComment
-      v-for="comment in comments.items"
-      :key="comment.id"
-      :comment="comment"
-      @delete="refreshComments"
-    ></CalloutResponseComment>
-  </div>
-  <div class="mt-20">
-    <CalloutResponseCommentForm :comment="undefined" @submit="handleSubmit" />
-  </div>
+  <CalloutResponseComment
+    v-for="comment in comments.items"
+    :key="comment.id"
+    :comment="comment"
+    @delete="refreshComments"
+  />
+  <CalloutResponseCommentForm @submit="handleSubmit" />
 </template>
 
 <script lang="ts" setup>
@@ -69,6 +65,6 @@ async function handleSubmit(commentData: CommentFormData) {
     responseId: props.responseId,
   });
 
-  refreshComments();
+  await refreshComments();
 }
 </script>

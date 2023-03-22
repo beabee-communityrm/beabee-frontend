@@ -17,11 +17,12 @@
 
   <div v-if="!formVisible" class="mt-3" v-html="currentComment.text" />
 
-  <div v-if="formVisible">
     <CalloutResponseCommentForm
+      v-if="formVisible"
       :comment="currentComment"
       @submit="handleEditSubmit"
     />
+    <div v-else class="content-message" v-html="currentComment.text" />
   </div>
 </template>
 

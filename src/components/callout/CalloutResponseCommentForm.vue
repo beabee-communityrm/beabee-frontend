@@ -31,14 +31,10 @@ const { t } = useI18n();
 defineEmits(['submit']);
 
 const props = defineProps<{
-  comment: GetCalloutResponseCommentData | undefined;
+  comment?: GetCalloutResponseCommentData;
 }>();
 
-const data = props.comment
-  ? reactive<CommentFormData>({
-      text: props.comment.text,
-    })
-  : reactive<CommentFormData>({
-      text: '',
-    });
+const data = reactive<CommentFormData>({
+  text: props.comment?.text || '',
+});
 </script>
