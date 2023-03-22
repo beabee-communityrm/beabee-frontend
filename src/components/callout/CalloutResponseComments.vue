@@ -1,8 +1,8 @@
 <template>
   <div class="mt-10 border-t border-primary-40 pt-10 text-lg">
-    <AppSubHeading class="mb-4"
-      >{{ t('calloutResponseComments.comments') }}
-    </AppSubHeading>
+    <AppHeading class="mb-4">
+      {{ t('calloutResponseComments.comments') }}
+    </AppHeading>
   </div>
   <CalloutResponseComment
     v-for="comment in comments.items"
@@ -10,7 +10,10 @@
     :comment="comment"
     @delete="refreshComments"
   />
-  <CalloutResponseCommentForm @submit="handleSubmit" />
+  <div class="bg-white p-4">
+    <AppSubHeading class="mb-2">Add a comment</AppSubHeading>
+    <CalloutResponseCommentForm @submit="handleSubmit" />
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -22,6 +25,7 @@ import {
   createCalloutResponseComment,
   fetchCalloutResponseComments,
 } from '../../utils/api/callout-response-comments';
+import AppHeading from '../AppHeading.vue';
 import AppSubHeading from '../AppSubHeading.vue';
 import CalloutResponseComment from './CalloutResponseComment.vue';
 import CalloutResponseCommentForm from './CalloutResponseCommentForm.vue';
