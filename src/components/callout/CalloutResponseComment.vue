@@ -26,12 +26,7 @@
           icon="trash"
           variant="danger"
           :title="t('actions.delete')"
-          @click="
-            ($event) => {
-              deleteComment();
-              $emit('delete');
-            }
-          "
+          @click="showDeleteModal = true"
         />
       </AppButtonGroup>
     </div>
@@ -43,6 +38,18 @@
       @cancel="formVisible = false"
     />
     <div v-else class="content-message" v-html="currentComment.text" />
+
+    <AppConfirmDialog
+      :open="showDeleteModal"
+      :title="t('calloutResponseComments.confirmDelete.title')"
+      :cancel="t('actions.noBack')"
+      :confirm="t('actions.yesDelete')"
+      variant="danger"
+      @close="showDeleteModal = false"
+      @confirm="$emit('delete')"
+    >
+      <p>{{ t('calloutResponseComments.confirmDelete.text') }}</p>
+    </AppConfirmDialog>
   </div>
 </template>
 
@@ -61,6 +68,7 @@ import CalloutResponseCommentForm from './CalloutResponseCommentForm.vue';
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppButtonGroup from '../button/AppButtonGroup.vue';
+import AppConfirmDialog from '../AppConfirmDialog.vue';
 
 const { t } = useI18n();
 
@@ -70,7 +78,8 @@ const props = defineProps<{
 
 defineEmits(['delete']);
 
-const formVisible = ref<boolean>(false);
+const formVisible = ref(false);
+const showDeleteModal = ref(false);
 const currentComment = ref<GetCalloutResponseCommentData>(props.comment);
 
 onBeforeMount(() => {
