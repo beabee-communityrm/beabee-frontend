@@ -1,21 +1,40 @@
 <template>
-  <div class="border-primary-30 mt-10 border-b text-lg">
-    {{ props.comment.contact.displayName }}
-    -
-    {{ formatLocale(props.comment.createdAt, 'Pp') }}
-    <AppButton @click="formVisible = true">{{ t('actions.edit') }}</AppButton>
-    <AppButton
-      @click="
-        ($event) => {
-          deleteComment();
-          $emit('delete');
-        }
-      "
-      >{{ t('actions.delete') }}</AppButton
+  <div class="mb-4 bg-white p-4">
+    <div
+      class="mb-4 flex items-center justify-between border-b border-primary-40 pb-2"
     >
-  </div>
-
-  <div v-if="!formVisible" class="mt-3" v-html="currentComment.text" />
+      <span>
+        <router-link
+          :to="`/admin/contacts/${comment.contact.id}`"
+          class="font-semibold text-link"
+        >
+          {{ comment.contact.displayName }}
+        </router-link>
+        -
+        {{ formatLocale(comment.createdAt, 'Pp') }}
+      </span>
+      <AppButtonGroup>
+        <AppButton
+          size="sm"
+          icon="pencil"
+          variant="primaryOutlined"
+          :title="t('actions.edit')"
+          @click="formVisible = true"
+        />
+        <AppButton
+          size="sm"
+          icon="trash"
+          variant="danger"
+          :title="t('actions.delete')"
+          @click="
+            ($event) => {
+              deleteComment();
+              $emit('delete');
+            }
+          "
+        />
+      </AppButtonGroup>
+    </div>
 
     <CalloutResponseCommentForm
       v-if="formVisible"
@@ -40,6 +59,7 @@ import AppButton from '../button/AppButton.vue';
 import CalloutResponseCommentForm from './CalloutResponseCommentForm.vue';
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import AppButtonGroup from '../button/AppButtonGroup.vue';
 
 const { t } = useI18n();
 

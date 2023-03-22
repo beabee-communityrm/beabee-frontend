@@ -12,7 +12,7 @@
       }
     "
   >
-    <div class="mb-3">
+    <div class="mb-4">
       <RichTextEditor v-model="data.text" required />
     </div>
   </AppForm>
