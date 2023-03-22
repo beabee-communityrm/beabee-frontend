@@ -62,7 +62,7 @@ import {
   deleteCalloutResponseComment,
   updateCalloutResponseComment,
 } from '../../utils/api/callout-response-comments';
-import { formatLocale } from '../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../utils/dates';
 import AppButton from '../button/AppButton.vue';
 import CalloutResponseCommentForm from './CalloutResponseCommentForm.vue';
 import { onBeforeMount, ref } from 'vue';

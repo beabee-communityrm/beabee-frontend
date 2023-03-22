@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 import { ItemWithStatus } from '../../utils/api/api.interface';
-import { formatLocale } from '../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../utils/dates';
 
 defineProps<{ item: ItemWithStatus; inline?: boolean }>();
 </script>

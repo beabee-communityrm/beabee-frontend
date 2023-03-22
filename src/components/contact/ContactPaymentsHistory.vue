@@ -44,7 +44,7 @@ import { computed, ref, watchEffect } from 'vue';
 
 import AppTable from '../table/AppTable.vue';
 import AppPagination from '../AppPagination.vue';
-import { formatLocale } from '../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../utils/dates';
 
 import { fetchPayments } from '../../utils/api/contact';
 import { GetPaymentData } from '../../utils/api/api.interface';

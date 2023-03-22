@@ -94,10 +94,7 @@ import AppSearchInput from '../../components/forms/AppSearchInput.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { fetchCallouts } from '../../utils/api/callout';
 import AppPagination from '../../components/AppPagination.vue';
-import {
-  formatDistanceLocale,
-  formatLocale,
-} from '../../utils/dates/locale-date-formats';
+import { formatDistanceLocale, formatLocale } from '../../utils/dates';
 import AppToggle from '../../components/forms/AppToggle.vue';
 import { Header } from '../../components/table/table.interface';
 import AppTable from '../../components/table/AppTable.vue';

@@ -53,7 +53,7 @@ import { GetNoticeData } from '../../../utils/api/api.interface';
 import AppTable from '../../../components/table/AppTable.vue';
 import { Header, SortType } from '../../../components/table/table.interface';
 import { fetchNotices } from '../../../utils/api/notice';
-import { formatLocale } from '../../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../../utils/dates';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
 import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';

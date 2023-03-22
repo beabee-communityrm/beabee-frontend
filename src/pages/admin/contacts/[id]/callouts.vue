@@ -53,7 +53,7 @@ import {
 import AppPaginatedResult from '../../../../components/AppPaginatedResult.vue';
 import AppTable from '../../../../components/table/AppTable.vue';
 import { Header, SortType } from '../../../../components/table/table.interface';
-import { formatLocale } from '../../../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../../../utils/dates';
 import { fetchCalloutResponses } from '../../../../utils/api/callout-response';
 
 const props = defineProps<{

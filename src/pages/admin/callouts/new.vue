@@ -63,7 +63,7 @@ import {
 import PageTitle from '../../../components/PageTitle.vue';
 import useVuelidate from '@vuelidate/core';
 import AppAsyncButton from '../../../components/button/AppAsyncButton.vue';
-import { formatDistanceLocale } from '../../../utils/dates/locale-date-formats';
+import { formatDistanceLocale } from '../../../utils/dates';
 import { addBreadcrumb } from '../../../store/breadcrumb';
 
 const props = defineProps<{ id?: string }>();

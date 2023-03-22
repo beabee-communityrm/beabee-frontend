@@ -7,5 +7,5 @@
   </main>
 </template>
 <script lang="ts" setup>
-import backgroundStyle from '../utils/backgroundStyle';
+import { backgroundStyle } from '../store';
 </script>

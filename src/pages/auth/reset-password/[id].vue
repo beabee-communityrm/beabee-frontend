@@ -87,7 +87,7 @@ import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import { resetPassword } from '../../../utils/api/auth';
 import { updateCurrentUser } from '../../../store';
-import isInternalUrl from '../../../utils/is-internal-url';
+import { isInternalUrl } from '../../../utils';
 import MessageBox from '../../../components/MessageBox.vue';
 
 const props = withDefaults(

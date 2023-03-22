@@ -144,7 +144,7 @@ import {
 import { fetchContacts } from '../../../utils/api/contact';
 import AppTable from '../../../components/table/AppTable.vue';
 import { SortType } from '../../../components/table/table.interface';
-import { formatLocale } from '../../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../../utils/dates';
 import { fetchSegments } from '../../../utils/api/segments';
 import AppButton from '../../../components/button/AppButton.vue';
 import AppSearch from '../../../components/search/AppSearch.vue';

@@ -2,7 +2,7 @@ import { ContributionPeriod, PaymentMethod } from '@beabee/beabee-common';
 import { reactive, computed, Ref } from 'vue';
 import i18n from '../../../lib/i18n';
 import { JoinContent } from '../../../utils/api/api.interface';
-import calcPaymentFee from '../../../utils/calcPaymentFee';
+import { calcPaymentFee } from '../../../utils/payment';
 
 const { n, t } = i18n.global;
 
