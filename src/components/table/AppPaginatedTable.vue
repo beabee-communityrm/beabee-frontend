@@ -5,10 +5,10 @@
       <div><slot name="actions"></slot></div>
       <AppPaginatedTableResult
         v-model:page="query.page"
-        v-model:page-size="query.limit"
+        v-model:limit="query.limit"
         :keypath="keypath"
         :result="result"
-        no-page-size
+        no-limit
       />
     </div>
     <AppTable
@@ -23,7 +23,7 @@
     </AppTable>
     <AppPaginatedTableResult
       v-model:page="query.page"
-      v-model:page-size="query.limit"
+      v-model:limit="query.limit"
       :keypath="keypath"
       :result="result"
     />
