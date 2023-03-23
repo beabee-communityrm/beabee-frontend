@@ -42,7 +42,7 @@ meta:
       <p>{{ t('callouts.noArchivedCallouts') }}</p>
     </template>
 
-    <template #name="{ item }">
+    <template #value-name="{ item }">
       <router-link
         :to="`/callouts/${item.slug}`"
         class="text-base font-bold text-link"
@@ -50,7 +50,7 @@ meta:
       >
     </template>
 
-    <template #expires="{ item }">
+    <template #value-expires="{ item }">
       <time
         v-if="item.expires"
         :datetime="item.expires.toISOString()"
@@ -65,7 +65,7 @@ meta:
       <span v-else>-</span>
     </template>
 
-    <template #answered="{ item }">
+    <template #value-answered="{ item }">
       <span v-if="item.hasAnswered">
         <font-awesome-icon icon="check-circle" />
         {{ t('callouts.showAnswered') }}
