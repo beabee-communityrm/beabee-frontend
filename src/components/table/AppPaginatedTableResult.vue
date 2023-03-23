@@ -83,12 +83,9 @@ const totalPages = computed(() =>
   props.result ? Math.ceil(props.result.total / currentLimit.value) : 0
 );
 
-watch(
-  () => props.result?.total,
-  () => {
-    if (currentPage.value > totalPages.value - 1) {
-      currentPage.value = Math.max(0, totalPages.value - 1);
-    }
+watch(totalPages, () => {
+  if (currentPage.value > totalPages.value - 1) {
+    currentPage.value = Math.max(0, totalPages.value - 1);
   }
-);
+});
 </script>
