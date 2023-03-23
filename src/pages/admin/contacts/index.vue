@@ -40,14 +40,14 @@ meta:
         @saved="handleSavedSegment"
       />
       <AppPaginatedResult
-        v-model:page="currentPage"
-        v-model:page-size="currentPageSize"
+        v-model:page="currentPaginatedQuery.page"
+        v-model:page-size="currentPaginatedQuery.limit"
         :result="contactsTable"
         keypath="contacts.showingOf"
         class="mt-4"
       />
       <AppTable
-        v-model:sort="currentSort"
+        v-model:sort="currentPaginatedQuery.sort"
         :headers="headers"
         :items="contactsTable?.items || null"
         class="mt-2 w-full whitespace-nowrap"
@@ -97,8 +97,8 @@ meta:
         </template>
       </AppTable>
       <AppPaginatedResult
-        v-model:page="currentPage"
-        v-model:page-size="currentPageSize"
+        v-model:page="currentPaginatedQuery.page"
+        v-model:page-size="currentPaginatedQuery.limit"
         :result="contactsTable"
         keypath="contacts.showingOf"
         class="mt-4"
@@ -124,7 +124,6 @@ import {
 } from '../../../utils/api/api.interface';
 import { fetchContacts } from '../../../utils/api/contact';
 import AppTable from '../../../components/table/AppTable.vue';
-import { SortType } from '../../../components/table/table.interface';
 import { formatLocale } from '../../../utils/dates';
 import { fetchSegments } from '../../../utils/api/segments';
 import AppButton from '../../../components/button/AppButton.vue';
@@ -141,6 +140,7 @@ import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 import SaveSegment from '../../../components/pages/admin/contacts/SaveSegment.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
+import { definePaginatedQuery } from '../../../utils/pagination';
 
 const { t, n } = useI18n();
 
@@ -153,33 +153,7 @@ addBreadcrumb(
   ])
 );
 
-const showAdvancedSearch = ref(false);
-
-const currentPageSize = computed({
-  get: () => Number(route.query.limit) || 25,
-  set: (limit) => router.push({ query: { ...route.query, limit } }),
-});
-
-const currentPage = computed({
-  get: () => Number(route.query.page) || 0,
-  set: (page) => router.push({ query: { ...route.query, page } }),
-});
-
-const currentSort = computed({
-  get: () => ({
-    by: (route.query.sortBy as string) || 'joined',
-    type: (route.query.sortType as SortType) || SortType.Desc,
-  }),
-  set: ({ by, type }) => {
-    router.replace({
-      query: {
-        ...route.query,
-        sortBy: by || undefined,
-        sortType: type,
-      },
-    });
-  },
-});
+const currentPaginatedQuery = definePaginatedQuery('joined');
 
 const currentSearch = computed({
   get: () => (route.query.s as string) || '',
@@ -288,13 +262,8 @@ watchEffect(async () => {
     : searchRules;
 
   const query = {
-    offset: currentPage.value * currentPageSize.value,
-    limit: currentPageSize.value,
+    ...currentPaginatedQuery.query,
     rules,
-    ...(currentSort.value.by && {
-      sort: currentSort.value.by,
-      order: currentSort.value.type,
-    }),
   };
 
   contactsTable.value = await fetchContacts(query, ['profile', 'roles']);

@@ -14,7 +14,7 @@ meta:
     </div>
   </PageTitle>
   <AppTable
-    v-model:sort="currentSort"
+    v-model:sort="currentPaginatedQuery.sort"
     :headers="headers"
     :items="noticesTable.items"
     class="w-full"
@@ -35,8 +35,8 @@ meta:
     </template>
   </AppTable>
   <AppPaginatedResult
-    v-model:page="currentPage"
-    v-model:page-size="currentPageSize"
+    v-model:page="currentPaginatedQuery.page"
+    v-model:page-size="currentPaginatedQuery.limit"
     :result="noticesTable"
     keypath="notices.showingOf"
     class="mt-4"
@@ -46,17 +46,17 @@ meta:
 import { Paginated } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router';
 import AppButton from '../../../components/button/AppButton.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import { GetNoticeData } from '../../../utils/api/api.interface';
 import AppTable from '../../../components/table/AppTable.vue';
-import { Header, SortType } from '../../../components/table/table.interface';
+import { Header } from '../../../components/table/table.interface';
 import { fetchNotices } from '../../../utils/api/notice';
 import { formatLocale } from '../../../utils/dates';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
 import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
+import { definePaginatedQuery } from '../../../utils/pagination';
 
 const { t } = useI18n();
 
@@ -83,34 +83,7 @@ const headers: Header[] = [
   },
 ];
 
-const route = useRoute();
-const router = useRouter();
-
-const currentPageSize = computed({
-  get: () => Number(route.query.limit) || 25,
-  set: (limit) => router.push({ query: { ...route.query, limit } }),
-});
-
-const currentPage = computed({
-  get: () => Number(route.query.page) || 0,
-  set: (page) => router.push({ query: { ...route.query, page } }),
-});
-
-const currentSort = computed({
-  get: () => ({
-    by: (route.query.sortBy as string) || 'createdAt',
-    type: (route.query.sortType as SortType) || SortType.Desc,
-  }),
-  set: ({ by, type }) => {
-    router.replace({
-      query: {
-        ...route.query,
-        sortBy: by,
-        sortType: type,
-      },
-    });
-  },
-});
+const currentPaginatedQuery = definePaginatedQuery('createdAt');
 
 const noticesTable = ref<Paginated<GetNoticeData>>({
   total: 0,
@@ -120,11 +93,6 @@ const noticesTable = ref<Paginated<GetNoticeData>>({
 });
 
 watchEffect(async () => {
-  noticesTable.value = await fetchNotices({
-    limit: currentPageSize.value,
-    offset: currentPage.value * currentPageSize.value,
-    sort: currentSort.value.by,
-    order: currentSort.value.type,
-  });
+  noticesTable.value = await fetchNotices(currentPaginatedQuery.query);
 });
 </script>

@@ -7,7 +7,7 @@ meta:
 <template>
   <div>
     <AppTable
-      v-model:sort="currentSort"
+      v-model:sort="currentPaginatedQuery.sort"
       :headers="headers"
       :items="responses?.items || null"
       class="w-full"
@@ -33,8 +33,8 @@ meta:
       </template>
     </AppTable>
     <AppPaginatedResult
-      v-model:page="currentPage"
-      v-model:page-size="currentPageSize"
+      v-model:page="currentPaginatedQuery.page"
+      v-model:page-size="currentPaginatedQuery.limit"
       :result="responses"
       keypath="calloutResponsesPage.showingOf"
       class="mt-4"
@@ -43,26 +43,24 @@ meta:
 </template>
 <script lang="ts" setup>
 import { Paginated } from '@beabee/beabee-common';
-import { computed, ref, watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router';
 import {
   GetCalloutResponseDataWith,
   GetContactData,
 } from '../../../../utils/api/api.interface';
 import AppPaginatedResult from '../../../../components/AppPaginatedResult.vue';
 import AppTable from '../../../../components/table/AppTable.vue';
-import { Header, SortType } from '../../../../components/table/table.interface';
+import { Header } from '../../../../components/table/table.interface';
 import { formatLocale } from '../../../../utils/dates';
 import { fetchCalloutResponses } from '../../../../utils/api/callout-response';
+import { definePaginatedQuery } from '../../../../utils/pagination';
 
 const props = defineProps<{
   contact: GetContactData;
 }>();
 
 const { t } = useI18n();
-const route = useRoute();
-const router = useRouter();
 
 const headers: Header[] = [
   {
@@ -87,39 +85,12 @@ const headers: Header[] = [
 
 const responses = ref<Paginated<GetCalloutResponseDataWith<'callout'>>>();
 
-const currentPageSize = computed({
-  get: () => Number(route.query.limit) || 25,
-  set: (limit) => router.push({ query: { ...route.query, limit } }),
-});
-
-const currentPage = computed({
-  get: () => Number(route.query.page) || 0,
-  set: (page) => router.push({ query: { ...route.query, page } }),
-});
-
-const currentSort = computed({
-  get: () => ({
-    by: (route.query.sortBy as string) || 'createdAt',
-    type: (route.query.sortType as SortType) || SortType.Desc,
-  }),
-  set: ({ by, type }) => {
-    router.replace({
-      query: {
-        ...route.query,
-        sortBy: by,
-        sortType: type,
-      },
-    });
-  },
-});
+const currentPaginatedQuery = definePaginatedQuery('createdAt');
 
 watchEffect(async () => {
   responses.value = await fetchCalloutResponses(
     {
-      limit: currentPageSize.value,
-      offset: currentPage.value * currentPageSize.value,
-      sort: currentSort.value.by,
-      order: currentSort.value.type,
+      ...currentPaginatedQuery.query,
       rules: {
         condition: 'AND',
         rules: [

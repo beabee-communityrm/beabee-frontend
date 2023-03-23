@@ -72,8 +72,8 @@ meta:
           </i18n-t>
         </p>
         <AppPaginatedResult
-          v-model:page="currentPage"
-          v-model:page-size="currentPageSize"
+          v-model:page="currentPaginatedQuery.page"
+          v-model:page-size="currentPaginatedQuery.limit"
           :result="responses"
           keypath="calloutResponsesPage.showingOf"
           no-page-size
@@ -81,7 +81,7 @@ meta:
         />
       </div>
       <AppTable
-        v-model:sort="currentSort"
+        v-model:sort="currentPaginatedQuery.sort"
         :headers="headers"
         :items="responseItems || null"
         selectable
@@ -129,8 +129,8 @@ meta:
         </template>
       </AppTable>
       <AppPaginatedResult
-        v-model:page="currentPage"
-        v-model:page-size="currentPageSize"
+        v-model:page="currentPaginatedQuery.page"
+        v-model:page-size="currentPaginatedQuery.limit"
         :result="responses"
         keypath="calloutResponsesPage.showingOf"
         class="mt-4"
@@ -159,7 +159,6 @@ import {
 } from '../../../../../../components/pages/admin/callout-responses.interface';
 import AppSearch from '../../../../../../components/search/AppSearch.vue';
 import AppTable from '../../../../../../components/table/AppTable.vue';
-import { SortType } from '../../../../../../components/table/table.interface';
 import {
   GetCalloutDataWith,
   GetCalloutResponseDataWith,
@@ -176,6 +175,7 @@ import ToggleTagButton from '../../../../../../components/pages/admin/callouts/T
 import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
 import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
 import { fetchContacts } from '../../../../../../utils/api/contact';
+import { definePaginatedQuery } from '../../../../../../utils/pagination';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
@@ -286,31 +286,7 @@ const currentTag = computed({
     router.push({ query: { ...route.query, tag: tag || undefined } }),
 });
 
-const currentPageSize = computed({
-  get: () => Number(route.query.limit) || 25,
-  set: (limit) => router.push({ query: { ...route.query, limit } }),
-});
-
-const currentPage = computed({
-  get: () => Number(route.query.page) || 0,
-  set: (page) => router.push({ query: { ...route.query, page } }),
-});
-
-const currentSort = computed({
-  get: () => ({
-    by: (route.query.sortBy as string) || 'createdAt',
-    type: (route.query.sortType as SortType) || SortType.Desc,
-  }),
-  set: ({ by, type }) => {
-    router.replace({
-      query: {
-        ...route.query,
-        sortBy: by,
-        sortType: type,
-      },
-    });
-  },
-});
+const currentPaginatedQuery = definePaginatedQuery('createdAt');
 
 const currentRules = computed({
   get: () =>
@@ -385,10 +361,7 @@ async function refreshResponses() {
   responses.value = await fetchResponses(
     props.callout.slug,
     {
-      limit: currentPageSize.value,
-      offset: currentPage.value * currentPageSize.value,
-      sort: currentSort.value.by,
-      order: currentSort.value.type,
+      ...currentPaginatedQuery.query,
       rules: getSearchRules(),
     },
     ['assignee', 'contact', 'tags']
