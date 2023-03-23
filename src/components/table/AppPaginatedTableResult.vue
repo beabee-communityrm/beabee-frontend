@@ -47,8 +47,8 @@
 import { Paginated } from '@beabee/beabee-common';
 import { computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppSelect from './forms/AppSelect.vue';
-import AppPagination from './AppPagination.vue';
+import AppSelect from '../forms/AppSelect.vue';
+import AppPagination from '../AppPagination.vue';
 
 const emit = defineEmits(['update:page', 'update:pageSize']);
 

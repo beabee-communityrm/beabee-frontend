@@ -33,60 +33,52 @@ meta:
           ]"
         />
       </AppSearch>
-      <div class="flex gap-4">
-        <AppButtonGroup>
-          <AppButton
-            icon="download"
-            variant="primaryOutlined"
-            :title="t('actions.export')"
-            @click="handleExport"
-          />
-          <MoveBucketButton
-            :current-bucket="currentBucket"
-            :disabled="selectedCount === 0"
-            :loading="doingAction"
-            @move="(bucket) => handleUpdateAction({ bucket })"
-          />
-          <ToggleTagButton
-            :tag-items="tagItems"
-            :selected-tags="selectedTags"
-            :manage-url="`${responsesUrl}/tags`"
-            :loading="doingAction"
-            :disabled="selectedCount === 0"
-            @toggle="(tagId) => handleUpdateAction({ tags: [tagId] })"
-          />
-          <SetAssigneeButton
-            :disabled="selectedCount === 0"
-            :current-assignee-id="selectedAssigneeId"
-            @assign="(assigneeId) => handleUpdateAction({ assigneeId })"
-          />
-        </AppButtonGroup>
-        <p v-if="selectedCount > 0" class="self-center text-sm">
-          <i18n-t
-            keypath="calloutResponsePage.selectedCount"
-            :plural="selectedCount"
-          >
-            <template #n>
-              <b>{{ selectedCount }}</b>
-            </template>
-          </i18n-t>
-        </p>
-        <AppPaginatedResult
-          v-model:page="currentPaginatedQuery.page"
-          v-model:page-size="currentPaginatedQuery.limit"
-          :result="responses"
-          keypath="calloutResponsesPage.showingOf"
-          no-page-size
-          class="ml-auto"
-        />
-      </div>
-      <AppTable
-        v-model:sort="currentPaginatedQuery.sort"
+      <AppPaginatedTable
+        v-model:query="currentPaginatedQuery"
+        keypath="calloutResponsesPage.showingOf"
         :headers="headers"
-        :items="responseItems || null"
-        selectable
-        class="mt-2 w-full"
+        :result="responses"
       >
+        <template #actions>
+          <AppButtonGroup>
+            <AppButton
+              icon="download"
+              variant="primaryOutlined"
+              :title="t('actions.export')"
+              @click="handleExport"
+            />
+            <MoveBucketButton
+              :current-bucket="currentBucket"
+              :disabled="selectedCount === 0"
+              :loading="doingAction"
+              @move="(bucket) => handleUpdateAction({ bucket })"
+            />
+            <ToggleTagButton
+              :tag-items="tagItems"
+              :selected-tags="selectedTags"
+              :manage-url="`${responsesUrl}/tags`"
+              :loading="doingAction"
+              :disabled="selectedCount === 0"
+              @toggle="(tagId) => handleUpdateAction({ tags: [tagId] })"
+            />
+            <SetAssigneeButton
+              :disabled="selectedCount === 0"
+              :current-assignee-id="selectedAssigneeId"
+              @assign="(assigneeId) => handleUpdateAction({ assigneeId })"
+            />
+          </AppButtonGroup>
+          <p v-if="selectedCount > 0" class="self-center text-sm">
+            <i18n-t
+              keypath="calloutResponsePage.selectedCount"
+              :plural="selectedCount"
+            >
+              <template #n>
+                <b>{{ selectedCount }}</b>
+              </template>
+            </i18n-t>
+          </p>
+        </template>
+
         <template #number="{ value, item }">
           <router-link
             :to="`${responsesUrl}/${item.id}`"
@@ -127,14 +119,7 @@ meta:
             })
           }}
         </template>
-      </AppTable>
-      <AppPaginatedResult
-        v-model:page="currentPaginatedQuery.page"
-        v-model:page-size="currentPaginatedQuery.limit"
-        :result="responses"
-        keypath="calloutResponsesPage.showingOf"
-        class="mt-4"
-      />
+      </AppPaginatedTable>
     </div>
   </div>
 </template>
@@ -148,7 +133,6 @@ import {
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
-import AppPaginatedResult from '../../../../../../components/AppPaginatedResult.vue';
 import AppButton from '../../../../../../components/button/AppButton.vue';
 import AppSelect from '../../../../../../components/forms/AppSelect.vue';
 import AppVTabs from '../../../../../../components/tabs/AppVTabs.vue';
@@ -158,7 +142,6 @@ import {
   headers,
 } from '../../../../../../components/pages/admin/callout-responses.interface';
 import AppSearch from '../../../../../../components/search/AppSearch.vue';
-import AppTable from '../../../../../../components/table/AppTable.vue';
 import {
   GetCalloutDataWith,
   GetCalloutResponseDataWith,
@@ -176,6 +159,7 @@ import { buckets } from '../../../../../../components/pages/admin/callouts/callo
 import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
 import { fetchContacts } from '../../../../../../utils/api/contact';
 import { definePaginatedQuery } from '../../../../../../utils/pagination';
+import AppPaginatedTable from '../../../../../../components/table/AppPaginatedTable.vue';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;

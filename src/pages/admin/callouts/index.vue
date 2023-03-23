@@ -34,11 +34,11 @@ meta:
           :placeholder="t('callouts.search')"
         />
       </div>
-      <AppTable
-        v-model:sort="currentPaginatedQuery.sort"
+      <AppPaginatedTable
+        v-model:query="currentPaginatedQuery"
+        keypath="callouts.showingOf"
         :headers="headers"
-        :items="calloutsTable?.items || null"
-        class="mt-2 w-full"
+        :result="calloutsTable"
       >
         <template #header-hidden><font-awesome-icon icon="eye" /></template>
         <template #status="{ value }">
@@ -68,14 +68,7 @@ meta:
             value && formatLocale(value, 'PP')
           }}</span>
         </template>
-      </AppTable>
-      <AppPaginatedResult
-        v-model:page="currentPaginatedQuery.page"
-        v-model:page-size="currentPaginatedQuery.limit"
-        :result="calloutsTable"
-        keypath="callouts.showingOf"
-        class="mt-4"
-      />
+      </AppPaginatedTable>
     </div>
   </div>
 </template>
@@ -88,7 +81,6 @@ import { useRoute, useRouter } from 'vue-router';
 import { Header } from '../../../components/table/table.interface';
 import AppButton from '../../../components/button/AppButton.vue';
 import PageTitle from '../../../components/PageTitle.vue';
-import AppTable from '../../../components/table/AppTable.vue';
 import AppAlert from '../../../components/AppAlert.vue';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
 import {
@@ -101,9 +93,9 @@ import { fetchCallouts } from '../../../utils/api/callout';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
-import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
 import { definePaginatedQuery } from '../../../utils/pagination';
+import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
 
 const { t } = useI18n();
 const route = useRoute();

@@ -6,11 +6,11 @@ meta:
 </route>
 <template>
   <div>
-    <AppTable
-      v-model:sort="currentPaginatedQuery.sort"
+    <AppPaginatedTable
+      v-model:query="currentPaginatedQuery"
+      keypath="calloutResponsesPage.showingOf"
       :headers="headers"
-      :items="responses?.items || null"
-      class="w-full"
+      :result="responses"
     >
       <template #response="{ item }">
         <router-link
@@ -31,14 +31,7 @@ meta:
       <template #createdAt="{ value }">
         {{ formatLocale(value, 'Pp') }}
       </template>
-    </AppTable>
-    <AppPaginatedResult
-      v-model:page="currentPaginatedQuery.page"
-      v-model:page-size="currentPaginatedQuery.limit"
-      :result="responses"
-      keypath="calloutResponsesPage.showingOf"
-      class="mt-4"
-    />
+    </AppPaginatedTable>
   </div>
 </template>
 <script lang="ts" setup>
@@ -49,12 +42,11 @@ import {
   GetCalloutResponseDataWith,
   GetContactData,
 } from '../../../../utils/api/api.interface';
-import AppPaginatedResult from '../../../../components/AppPaginatedResult.vue';
-import AppTable from '../../../../components/table/AppTable.vue';
 import { Header } from '../../../../components/table/table.interface';
 import { formatLocale } from '../../../../utils/dates';
 import { fetchCalloutResponses } from '../../../../utils/api/callout-response';
 import { definePaginatedQuery } from '../../../../utils/pagination';
+import AppPaginatedTable from '../../../../components/table/AppPaginatedTable.vue';
 
 const props = defineProps<{
   contact: GetContactData;

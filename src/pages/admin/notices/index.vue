@@ -13,11 +13,11 @@ meta:
       }}</AppButton>
     </div>
   </PageTitle>
-  <AppTable
-    v-model:sort="currentPaginatedQuery.sort"
+  <AppPaginatedTable
+    v-model:query="currentPaginatedQuery"
+    keypath="notices.showingOf"
     :headers="headers"
-    :items="noticesTable.items"
-    class="w-full"
+    :result="noticesTable"
   >
     <template #status="{ value }">
       <AppItemStatus :status="value" />
@@ -33,14 +33,7 @@ meta:
     <template #createdAt="{ value }">
       <span class="whitespace-nowrap">{{ formatLocale(value, 'PP') }}</span>
     </template>
-  </AppTable>
-  <AppPaginatedResult
-    v-model:page="currentPaginatedQuery.page"
-    v-model:page-size="currentPaginatedQuery.limit"
-    :result="noticesTable"
-    keypath="notices.showingOf"
-    class="mt-4"
-  />
+  </AppPaginatedTable>
 </template>
 <script lang="ts" setup>
 import { Paginated } from '@beabee/beabee-common';
@@ -49,14 +42,13 @@ import { useI18n } from 'vue-i18n';
 import AppButton from '../../../components/button/AppButton.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import { GetNoticeData } from '../../../utils/api/api.interface';
-import AppTable from '../../../components/table/AppTable.vue';
 import { Header } from '../../../components/table/table.interface';
 import { fetchNotices } from '../../../utils/api/notice';
 import { formatLocale } from '../../../utils/dates';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
-import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
 import { definePaginatedQuery } from '../../../utils/pagination';
+import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
 
 const { t } = useI18n();
 
@@ -85,12 +77,7 @@ const headers: Header[] = [
 
 const currentPaginatedQuery = definePaginatedQuery('createdAt');
 
-const noticesTable = ref<Paginated<GetNoticeData>>({
-  total: 0,
-  count: 0,
-  offset: 0,
-  items: [],
-});
+const noticesTable = ref<Paginated<GetNoticeData>>();
 
 watchEffect(async () => {
   noticesTable.value = await fetchNotices(currentPaginatedQuery.query);

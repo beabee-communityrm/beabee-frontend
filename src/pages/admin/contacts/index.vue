@@ -39,18 +39,11 @@ meta:
         :rules="currentRules"
         @saved="handleSavedSegment"
       />
-      <AppPaginatedResult
-        v-model:page="currentPaginatedQuery.page"
-        v-model:page-size="currentPaginatedQuery.limit"
+      <AppPaginatedTable
+        v-model:query="currentPaginatedQuery"
+        :headers="headers"
         :result="contactsTable"
         keypath="contacts.showingOf"
-        class="mt-4"
-      />
-      <AppTable
-        v-model:sort="currentPaginatedQuery.sort"
-        :headers="headers"
-        :items="contactsTable?.items || null"
-        class="mt-2 w-full whitespace-nowrap"
       >
         <template #empty>
           <p>
@@ -76,9 +69,7 @@ meta:
           </p>
         </template>
         <template #tags="{ item }">
-          <span class="whitespace-normal">
-            <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
-          </span>
+          <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
         </template>
         <template #contribution="{ item }">
           <span v-if="item.contributionAmount">
@@ -90,19 +81,16 @@ meta:
           </span>
         </template>
         <template #joined="{ value }">
-          {{ formatLocale(value, 'PPP') }}
+          <span class="whitespace-nowrap">{{
+            formatLocale(value, 'PPP')
+          }}</span>
         </template>
         <template #membershipStarts="{ item }">
-          {{ getMembershipStartDate(item) }}
+          <span class="whitespace-nowrap">{{
+            getMembershipStartDate(item)
+          }}</span>
         </template>
-      </AppTable>
-      <AppPaginatedResult
-        v-model:page="currentPaginatedQuery.page"
-        v-model:page-size="currentPaginatedQuery.limit"
-        :result="contactsTable"
-        keypath="contacts.showingOf"
-        class="mt-4"
-      />
+      </AppPaginatedTable>
     </div>
   </div>
 </template>
@@ -123,7 +111,6 @@ import {
   GetSegmentDataWith,
 } from '../../../utils/api/api.interface';
 import { fetchContacts } from '../../../utils/api/contact';
-import AppTable from '../../../components/table/AppTable.vue';
 import { formatLocale } from '../../../utils/dates';
 import { fetchSegments } from '../../../utils/api/segments';
 import AppButton from '../../../components/button/AppButton.vue';
@@ -137,10 +124,10 @@ import {
   filterItems,
 } from '../../../components/pages/admin/contacts/contacts.interface';
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
-import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 import SaveSegment from '../../../components/pages/admin/contacts/SaveSegment.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
 import { definePaginatedQuery } from '../../../utils/pagination';
+import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
 
 const { t, n } = useI18n();
 
