@@ -21,37 +21,18 @@ meta:
       <AppVTabs v-model="currentSegmentId" :items="segmentItems" />
     </div>
     <div class="flex-auto">
-      <div class="flex">
-        <AppSearchInput
-          v-model="currentSearch"
-          :placeholder="t('contacts.search')"
-        />
-        <AppButton
-          variant="primaryOutlined"
-          size="sm"
-          class="ml-2 bg-white/0"
-          :class="showAdvancedSearch && 'relative rounded-b-none'"
-          @click="showAdvancedSearch = !showAdvancedSearch"
-        >
-          {{ t('advancedSearch.button') }}
-          <font-awesome-icon
-            :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
-          />
-          <div
-            v-show="showAdvancedSearch"
-            class="absolute -left-px top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-px"
-          />
-        </AppButton>
-      </div>
       <AppSearch
         v-model="currentRules"
         :filter-groups="filterGroups"
         :filter-items="filterItems"
-        :expanded="showAdvancedSearch"
         :has-changed="hasUnsavedSegment"
         @reset="currentRules = undefined"
-      />
-
+      >
+        <AppSearchInput
+          v-model="currentSearch"
+          :placeholder="t('contacts.search')"
+        />
+      </AppSearch>
       <SaveSegment
         v-if="hasUnsavedSegment && currentRules"
         :segment="currentSegment"
@@ -224,7 +205,7 @@ const currentSegmentId = computed({
   get: () => (route.query.segment as string) || '',
   set: (segment) => {
     router.push({ query: { segment: segment || undefined } });
-    showAdvancedSearch.value = false;
+    // showAdvancedSearch.value = false; // TODO
   },
 });
 

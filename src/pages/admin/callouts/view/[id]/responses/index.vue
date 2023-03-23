@@ -11,7 +11,13 @@ meta:
       <AppVTabs v-model="currentBucket" :items="bucketItems" />
     </div>
     <div class="flex-1">
-      <div class="flex gap-2">
+      <AppSearch
+        v-model="currentRules"
+        :filter-groups="filterGroupsWithQuestions"
+        :filter-items="filterItemsWithExtras"
+        :expanded="showAdvancedSearch"
+        @reset="currentRules = undefined"
+      >
         <AppSelect
           v-model="currentTag"
           :items="[
@@ -26,34 +32,8 @@ meta:
             ...adminItems,
           ]"
         />
-        <AppButton
-          variant="primaryOutlined"
-          size="sm"
-          class="bg-white/0"
-          icon="filter"
-          :class="showAdvancedSearch && 'relative rounded-b-none'"
-          @click="showAdvancedSearch = !showAdvancedSearch"
-        >
-          {{ t('advancedSearch.button') }}
-          <font-awesome-icon
-            class="ml-2"
-            :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
-          />
-          <div
-            v-show="showAdvancedSearch"
-            class="absolute -left-px top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-px"
-          />
-        </AppButton>
-      </div>
-      <AppSearch
-        v-model="currentRules"
-        :filter-groups="filterGroupsWithQuestions"
-        :filter-items="filterItemsWithExtras"
-        :expanded="showAdvancedSearch"
-        :has-changed="false"
-        @reset="currentRules = undefined"
-      />
-      <div class="mt-4 flex gap-4">
+      </AppSearch>
+      <div class="flex gap-4">
         <AppButtonGroup>
           <AppButton
             icon="download"
