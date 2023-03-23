@@ -16,6 +16,7 @@
       v-model:sort="query.sort"
       :headers="headers"
       :items="result?.items || null"
+      :selectable="selectable"
       class="mb-4 w-full"
     >
       <template v-for="(_, name) in $slots" #[name]="slotData">
@@ -49,5 +50,6 @@ defineProps<{
       type: SortType;
     };
   };
+  selectable?: boolean;
 }>();
 </script>

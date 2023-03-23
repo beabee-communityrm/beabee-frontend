@@ -38,6 +38,7 @@ meta:
         keypath="calloutResponsesPage.showingOf"
         :headers="headers"
         :result="responses"
+        selectable
       >
         <template #actions>
           <AppButtonGroup>
@@ -169,19 +170,18 @@ const { t, n } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
-const responses =
-  ref<Paginated<GetCalloutResponseDataWith<'assignee' | 'contact' | 'tags'>>>();
+const responses = ref<
+  Paginated<
+    GetCalloutResponseDataWith<'assignee' | 'contact' | 'tags'> & {
+      selected: boolean;
+    }
+  >
+>();
 const showAdvancedSearch = ref(false);
 const doingAction = ref(false);
 
-const responseItems = ref<
-  (GetCalloutResponseDataWith<'assignee' | 'contact' | 'tags'> & {
-    selected: boolean;
-  })[]
->();
-
 const selectedResponseItems = computed(
-  () => responseItems.value?.filter((ri) => ri.selected) || []
+  () => responses.value?.items.filter((ri) => ri.selected) || []
 );
 
 const selectedCount = computed(() => selectedResponseItems.value.length);
@@ -342,7 +342,7 @@ function getSelectedResponseRules(): RuleGroup {
 }
 
 async function refreshResponses() {
-  responses.value = await fetchResponses(
+  const newResponses = await fetchResponses(
     props.callout.slug,
     {
       ...currentPaginatedQuery.query,
@@ -351,10 +351,10 @@ async function refreshResponses() {
     ['assignee', 'contact', 'tags']
   );
 
-  responseItems.value = responses.value.items.map((r) => ({
-    ...r,
-    selected: false,
-  }));
+  responses.value = {
+    ...newResponses,
+    items: newResponses.items.map((r) => ({ ...r, selected: false })),
+  };
 }
 
 watchEffect(refreshResponses);
