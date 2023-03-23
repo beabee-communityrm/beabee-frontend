@@ -41,10 +41,10 @@ meta:
         :result="calloutsTable"
       >
         <template #header-hidden><font-awesome-icon icon="eye" /></template>
-        <template #status="{ value }">
+        <template #value-status="{ value }">
           <AppItemStatus :status="value" />
         </template>
-        <template #title="{ item, value }">
+        <template #value-title="{ item, value }">
           <router-link
             :to="'/admin/callouts/view/' + item.slug"
             class="text-base font-bold text-link"
@@ -52,18 +52,18 @@ meta:
             {{ value }}
           </router-link>
         </template>
-        <template #hidden="{ value }">
+        <template #value-hidden="{ value }">
           <font-awesome-icon
             :class="value ? 'text-body-80' : 'text-body-60'"
             :icon="value ? 'eye-slash' : 'eye'"
           />
         </template>
-        <template #starts="{ value }">
+        <template #value-starts="{ value }">
           <span class="whitespace-nowrap">{{
             value && formatLocale(value, 'PP')
           }}</span>
         </template>
-        <template #expires="{ value }">
+        <template #value-expires="{ value }">
           <span class="whitespace-nowrap">{{
             value && formatLocale(value, 'PP')
           }}</span>

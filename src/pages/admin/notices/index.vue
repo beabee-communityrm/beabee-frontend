@@ -19,10 +19,10 @@ meta:
     :headers="headers"
     :result="noticesTable"
   >
-    <template #status="{ value }">
+    <template #value-status="{ value }">
       <AppItemStatus :status="value" />
     </template>
-    <template #name="{ item, value }">
+    <template #value-name="{ item, value }">
       <router-link
         :to="'/admin/notices/view/' + item.id"
         class="text-base font-bold text-link"
@@ -30,7 +30,7 @@ meta:
         {{ value }}
       </router-link>
     </template>
-    <template #createdAt="{ value }">
+    <template #value-createdAt="{ value }">
       <span class="whitespace-nowrap">{{ formatLocale(value, 'PP') }}</span>
     </template>
   </AppPaginatedTable>

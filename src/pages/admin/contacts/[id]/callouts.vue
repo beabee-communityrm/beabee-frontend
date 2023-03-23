@@ -12,7 +12,7 @@ meta:
       :headers="headers"
       :result="responses"
     >
-      <template #response="{ item }">
+      <template #value-response="{ item }">
         <router-link
           :to="`/admin/callouts/view/${item.callout.slug}/responses/${item.id}`"
           class="text-base font-bold text-link"
@@ -20,7 +20,7 @@ meta:
           {{ item.id }}
         </router-link>
       </template>
-      <template #callout="{ value }">
+      <template #value-callout="{ value }">
         <router-link
           :to="`/admin/callouts/view/${value.slug}`"
           class="text-link"
@@ -28,7 +28,7 @@ meta:
           {{ value.title }}
         </router-link>
       </template>
-      <template #createdAt="{ value }">
+      <template #value-createdAt="{ value }">
         {{ formatLocale(value, 'Pp') }}
       </template>
     </AppPaginatedTable>

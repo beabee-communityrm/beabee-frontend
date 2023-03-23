@@ -79,7 +79,7 @@ meta:
           </p>
         </template>
 
-        <template #number="{ value, item }">
+        <template #value-number="{ value, item }">
           <router-link
             :to="`${responsesUrl}/${item.id}`"
             class="text-base font-bold text-link"
@@ -87,7 +87,7 @@ meta:
             {{ t('calloutResponsesPage.responseNo', { no: n(value) }) }}
           </router-link>
         </template>
-        <template #assignee="{ value }">
+        <template #value-assignee="{ value }">
           <router-link
             v-if="value"
             :to="`/admin/contacts/${value.id}`"
@@ -97,7 +97,7 @@ meta:
           </router-link>
           <span v-else>-</span>
         </template>
-        <template #contact="{ value }">
+        <template #value-contact="{ value }">
           <router-link
             v-if="value"
             :to="`/admin/contacts/${value.id}`"
@@ -107,12 +107,12 @@ meta:
           </router-link>
           <span v-else>-</span>
         </template>
-        <template #tags="{ value }">
+        <template #value-tags="{ value }">
           <span class="whitespace-normal">
             <AppTag v-for="tag in value" :key="tag.id" :tag="tag.name" />
           </span>
         </template>
-        <template #createdAt="{ value }">
+        <template #value-createdAt="{ value }">
           {{
             t('common.timeAgo', {
               time: formatDistanceLocale(new Date(), value),

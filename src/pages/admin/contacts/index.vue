@@ -54,7 +54,7 @@ meta:
             }}
           </p>
         </template>
-        <template #firstname="{ item }">
+        <template #value-firstname="{ item }">
           <router-link
             :to="'/admin/contacts/' + item.id"
             class="text-base font-bold text-link"
@@ -68,10 +68,10 @@ meta:
             {{ item.profile.description }}
           </p>
         </template>
-        <template #tags="{ item }">
+        <template #value-tags="{ item }">
           <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
         </template>
-        <template #contribution="{ item }">
+        <template #value-contribution="{ item }">
           <span v-if="item.contributionAmount">
             {{ n(item.contributionAmount, 'currency') }}/{{
               item.contributionPeriod === ContributionPeriod.Monthly
@@ -80,12 +80,12 @@ meta:
             }}
           </span>
         </template>
-        <template #joined="{ value }">
+        <template #value-joined="{ value }">
           <span class="whitespace-nowrap">{{
             formatLocale(value, 'PPP')
           }}</span>
         </template>
-        <template #membershipStarts="{ item }">
+        <template #value-membershipStarts="{ item }">
           <span class="whitespace-nowrap">{{
             getMembershipStartDate(item)
           }}</span>
