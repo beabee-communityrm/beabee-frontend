@@ -1,20 +1,34 @@
-import { computed, reactive } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { computed, reactive, WritableComputedRef } from 'vue';
+import {
+  LocationQueryValue,
+  LocationQueryValueRaw,
+  useRoute,
+  useRouter,
+} from 'vue-router';
 import { SortType } from '../components/table/table.interface';
+
+export function defineQueryParam<T extends LocationQueryValueRaw>(
+  param: string,
+  getter: (v: LocationQueryValue) => T,
+  behaviour: 'replace' | 'push' = 'push'
+): WritableComputedRef<T> {
+  const route = useRoute();
+  const router = useRouter();
+  return computed({
+    get: () => getter(route.query[param] as LocationQueryValue),
+    set: (value) =>
+      router[behaviour]({
+        query: { ...route.query, [param]: value || undefined },
+      }),
+  });
+}
 
 export function definePaginatedQuery(sortBy: string) {
   const route = useRoute();
   const router = useRouter();
 
-  const limit = computed({
-    get: () => Number(route.query.limit) || 25,
-    set: (limit) => router.push({ query: { ...route.query, limit } }),
-  });
-
-  const page = computed({
-    get: () => Number(route.query.page) || 0,
-    set: (page) => router.push({ query: { ...route.query, page } }),
-  });
+  const limit = defineQueryParam('limit', (v) => Number(v) || 25);
+  const page = defineQueryParam('page', (v) => Number(v) || 0);
 
   const sort = computed({
     get: () => ({
