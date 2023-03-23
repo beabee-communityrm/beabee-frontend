@@ -77,7 +77,7 @@ meta:
 import { Paginated } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { Header } from '../../../components/table/table.interface';
 import AppButton from '../../../components/button/AppButton.vue';
 import PageTitle from '../../../components/PageTitle.vue';
@@ -94,12 +94,11 @@ import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
-import { definePaginatedQuery } from '../../../utils/pagination';
+import { definePaginatedQuery, defineParam } from '../../../utils/pagination';
 import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
 
 const { t } = useI18n();
 const route = useRoute();
-const router = useRouter();
 
 addBreadcrumb(
   computed(() => [
@@ -174,17 +173,9 @@ const headers: Header[] = [
   },
 ];
 
+const currentSearch = defineParam('s', (v) => v || '');
+const currentStatus = defineParam('filter', (v) => v || '');
 const currentPaginatedQuery = definePaginatedQuery('starts');
-
-const currentSearch = computed({
-  get: () => (route.query.s as string) || '',
-  set: (s) => router.push({ query: { ...route.query, s } }),
-});
-
-const currentStatus = computed({
-  get: () => (route.query.filter as string) || '',
-  set: (filter) => router.push({ query: { ...route.query, filter } }),
-});
 
 const calloutsTable = ref<Paginated<GetCalloutDataWith<'responseCount'>>>();
 

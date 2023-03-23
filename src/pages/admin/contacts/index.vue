@@ -126,7 +126,7 @@ import {
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import SaveSegment from '../../../components/pages/admin/contacts/SaveSegment.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
-import { definePaginatedQuery } from '../../../utils/pagination';
+import { definePaginatedQuery, defineParam } from '../../../utils/pagination';
 import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
 
 const { t, n } = useI18n();
@@ -142,10 +142,7 @@ addBreadcrumb(
 
 const currentPaginatedQuery = definePaginatedQuery('joined');
 
-const currentSearch = computed({
-  get: () => (route.query.s as string) || '',
-  set: (s) => router.push({ query: { ...route.query, s } }),
-});
+const currentSearch = defineParam('s', (v) => v || '');
 
 const currentRules = computed({
   get: () =>
@@ -156,19 +153,18 @@ const currentRules = computed({
     router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
 });
 
+const currentSegmentId = defineParam(
+  'segment',
+  (v) => v || '',
+  'push',
+  'replace'
+);
+
 const currentSegment = computed(() =>
   currentSegmentId.value
     ? segments.value.find((s) => s.id === currentSegmentId.value)
     : undefined
 );
-
-const currentSegmentId = computed({
-  get: () => (route.query.segment as string) || '',
-  set: (segment) => {
-    router.push({ query: { segment: segment || undefined } });
-    // showAdvancedSearch.value = false; // TODO
-  },
-});
 
 const hasUnsavedSegment = computed(
   () =>

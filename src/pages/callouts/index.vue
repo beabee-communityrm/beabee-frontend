@@ -83,7 +83,7 @@ import { ItemStatus, Paginated } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import PageTitle from '../../components/PageTitle.vue';
 import AppHeading from '../../components/AppHeading.vue';
-import { computed, onBeforeMount, ref, watchEffect } from 'vue';
+import { computed, onBeforeMount, ref, watch, watchEffect } from 'vue';
 import {
   GetCalloutData,
   GetCalloutDataWith,
@@ -91,21 +91,18 @@ import {
 } from '../../utils/api/api.interface';
 import CalloutCard from '../../components/callout/CalloutCard.vue';
 import AppSearchInput from '../../components/forms/AppSearchInput.vue';
-import { useRoute, useRouter } from 'vue-router';
 import { fetchCallouts } from '../../utils/api/callout';
 import AppPagination from '../../components/AppPagination.vue';
 import { formatDistanceLocale, formatLocale } from '../../utils/dates';
 import AppToggle from '../../components/forms/AppToggle.vue';
 import { Header } from '../../components/table/table.interface';
 import AppTable from '../../components/table/AppTable.vue';
+import { defineParam } from '../../utils/pagination';
 
 formatDistanceLocale;
 formatLocale;
 
 const { t } = useI18n();
-
-const route = useRoute();
-const router = useRouter();
 
 const headers: Header[] = [
   { value: 'name', text: t('callouts.data.callout') },
@@ -113,21 +110,11 @@ const headers: Header[] = [
   { value: 'answered', text: '' },
 ];
 
-const currentPage = computed({
-  get: () => Number(route.query.page) || 0,
-  set: (page) => router.push({ query: { ...route.query, page } }),
-});
-const currentSearch = computed({
-  get: () => (route.query.s as string) || '',
-  set: (s) => router.push({ query: { ...route.query, s, page: undefined } }),
-});
-const currentShow = computed({
-  get: () => (route.query.show === 'answered' ? 'answered' : 'all'),
-  set: (show) =>
-    router.push({
-      query: { ...route.query, show, page: undefined },
-    }),
-});
+const currentPage = defineParam('page', (v) => Number(v) || 0);
+const currentSearch = defineParam('s', (v) => v || '');
+const currentShow = defineParam('show', (v) =>
+  v === 'answered' ? 'answered' : 'all'
+);
 
 const activeCallouts = ref<Paginated<GetCalloutData>>();
 const archivedCallouts = ref<Paginated<GetCalloutDataWith<'hasAnswered'>>>();
@@ -137,6 +124,11 @@ const totalPages = computed(() =>
     ? Math.ceil(archivedCallouts.value.total / pageSize)
     : 0
 );
+watch(totalPages, (value) => {
+  if (currentPage.value > value) {
+    currentPage.value = Math.max(0, value - 1);
+  }
+});
 
 onBeforeMount(async () => {
   activeCallouts.value = await fetchCallouts({

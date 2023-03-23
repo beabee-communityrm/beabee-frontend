@@ -7,19 +7,24 @@ import {
 } from 'vue-router';
 import { SortType } from '../components/table/table.interface';
 
-export function defineQueryParam<T extends LocationQueryValueRaw>(
+export function defineParam<T extends LocationQueryValueRaw>(
   param: string,
   getter: (v: LocationQueryValue) => T,
-  behaviour: 'replace' | 'push' = 'push'
+  routeBehaviour: 'replace' | 'push' = 'push',
+  queryBehaviour: 'append' | 'replace' = 'append'
 ): WritableComputedRef<T> {
   const route = useRoute();
   const router = useRouter();
   return computed({
     get: () => getter(route.query[param] as LocationQueryValue),
-    set: (value) =>
-      router[behaviour]({
-        query: { ...route.query, [param]: value || undefined },
-      }),
+    set: (value) => {
+      router[routeBehaviour]({
+        query: {
+          ...(queryBehaviour === 'append' && route.query),
+          [param]: value || undefined,
+        },
+      });
+    },
   });
 }
 
@@ -27,8 +32,8 @@ export function definePaginatedQuery(sortBy: string) {
   const route = useRoute();
   const router = useRouter();
 
-  const limit = defineQueryParam('limit', (v) => Number(v) || 25);
-  const page = defineQueryParam('page', (v) => Number(v) || 0);
+  const limit = defineParam('limit', (v) => Number(v) || 25);
+  const page = defineParam('page', (v) => Number(v) || 0);
 
   const sort = computed({
     get: () => ({

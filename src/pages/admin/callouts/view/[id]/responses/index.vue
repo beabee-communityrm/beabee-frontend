@@ -159,7 +159,10 @@ import ToggleTagButton from '../../../../../../components/pages/admin/callouts/T
 import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
 import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
 import { fetchContacts } from '../../../../../../utils/api/contact';
-import { definePaginatedQuery } from '../../../../../../utils/pagination';
+import {
+  definePaginatedQuery,
+  defineParam,
+} from '../../../../../../utils/pagination';
 import AppPaginatedTable from '../../../../../../components/table/AppPaginatedTable.vue';
 
 const props = defineProps<{
@@ -253,22 +256,9 @@ const filterItemsWithExtras = computed(() => {
   };
 });
 
-const currentAssignee = computed({
-  get: () => (route.query.assignee as string) || '',
-  set: (assignee) =>
-    router.push({ query: { ...route.query, assignee: assignee || undefined } }),
-});
-
-const currentBucket = computed({
-  get: () => (route.query.bucket as string) || '',
-  set: (bucket) => router.push({ query: { bucket: bucket || undefined } }),
-});
-
-const currentTag = computed({
-  get: () => (route.query.tag as string) || '',
-  set: (tag) =>
-    router.push({ query: { ...route.query, tag: tag || undefined } }),
-});
+const currentAssignee = defineParam('assignee', (v) => v || '');
+const currentTag = defineParam('tag', (v) => v || '');
+const currentBucket = defineParam('bucket', (v) => v || '', 'push', 'replace');
 
 const currentPaginatedQuery = definePaginatedQuery('createdAt');
 
