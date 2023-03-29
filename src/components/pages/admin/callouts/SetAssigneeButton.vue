@@ -30,7 +30,7 @@ import AppSelectableList from '../../../AppSelectableList.vue';
 import AppDropdownButton from '../../../button/AppDropdownButton.vue';
 
 defineEmits<{ (event: 'assign', id: string | null): void }>();
-defineProps<{ currentAssigneeId: string | undefined; withText?: boolean }>();
+defineProps<{ currentAssigneeId?: string; withText?: boolean }>();
 
 const { t } = useI18n();
 

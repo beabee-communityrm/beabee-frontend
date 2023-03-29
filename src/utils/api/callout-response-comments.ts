@@ -47,7 +47,7 @@ export async function updateCalloutResponseComment(
   return deserializeComment(data);
 }
 
-function deserializeComment(
+export function deserializeComment(
   comment: Serial<GetCalloutResponseCommentData>
 ): GetCalloutResponseCommentData {
   return {

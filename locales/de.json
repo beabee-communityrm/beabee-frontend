@@ -293,6 +293,7 @@
       "updatedAt": "Geändert am"
     },
     "dataGroup": {
+      "answers": "Fragen",
       "response": "Antwort"
     }
   },
@@ -330,6 +331,8 @@
     "responseNo": "Antwort {no}",
     "searchAssignee": "Zugewiesen an...",
     "searchTag": "Getaggt mit...",
+    "showAnswer": "Antwort",
+    "showLatestComment": "Letzter Kommentar",
     "showingOf": "Antworten {start} bis {end} von {total} werden angezeigt"
   },
   "callouts": {
@@ -340,7 +343,6 @@
     },
     "noArchivedCallouts": "Keine Callouts",
     "search": "Callouts durchsuchen",
-    "show": "Anzeigen",
     "showAll": "Alle",
     "showAnswered": "Beantwortet",
     "showingOf": "Callouts {start} bis {end} von {total} werden angezeigt."
@@ -400,6 +402,7 @@
       "superadmin": "Überadmin"
     },
     "share": "Teilen",
+    "show": "Anzeigen",
     "status": {
       "draft": "Entwurf",
       "ended": "Beendet",

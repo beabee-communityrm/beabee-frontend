@@ -370,6 +370,7 @@ export type GetCalloutResponseWith =
   | 'assignee'
   | 'callout'
   | 'contact'
+  | 'latestComment'
   | 'tags'
   | void;
 
@@ -379,6 +380,9 @@ export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
     ('assignee' extends With ? { assignee: GetContactData | null } : Noop) &
     ('callout' extends With ? { callout: GetCalloutData } : Noop) &
     ('contact' extends With ? { contact: GetContactData | null } : Noop) &
+    ('latestComment' extends With
+      ? { latestComment: GetCalloutResponseCommentData | null }
+      : Noop) &
     ('tags' extends With ? { tags: { id: string; name: string }[] } : Noop);
 
 export interface UpdateCalloutResponseCommentData {

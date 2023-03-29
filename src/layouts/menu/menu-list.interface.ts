@@ -1,6 +1,5 @@
 export interface MenuSection {
   title?: string;
-  type: 'main' | 'settings';
   items: MenuItem[];
 }
 

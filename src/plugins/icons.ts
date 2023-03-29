@@ -70,6 +70,8 @@ import {
   faFolder,
   faFilter,
   faDownload,
+  faComment,
+  faUserPen,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -130,6 +132,8 @@ library.add(
   faListOl,
   faHandsHelping,
   faChartLine,
+  faComment,
+  faUserPen,
   faWindowRestore,
   faSort,
   faPlus,

@@ -1,6 +1,6 @@
 <template>
-  <table class="">
-    <thead v-if="!hideHeaders" class="border-b border-primary-20 text-sm">
+  <table class="border-b border-primary-20">
+    <thead v-if="!hideHeaders" class="text-sm">
       <tr class="align-bottom">
         <th v-if="selectable" class="w-0 p-2">
           <AppCheckbox v-model="allSelected" class="h-5" />
@@ -31,45 +31,51 @@
     </thead>
 
     <tbody class="text-xs lg:text-sm">
-      <tr v-if="items === null">
+      <tr
+        v-if="!items || items.length === 0"
+        class="border-t border-primary-20"
+      >
+        <td v-if="selectable" />
         <td :colspan="headers.length" class="p-2">
-          <slot name="loading">
-            <p>{{ t('common.loading') }}</p>
-          </slot>
-        </td>
-      </tr>
-      <tr v-else-if="!items.length">
-        <td :colspan="headers.length" class="p-2">
-          <slot name="empty">
-            <p>{{ t('common.noResults') }}</p>
+          <slot :name="items ? 'empty' : 'loading'">
+            <p>{{ items ? t('common.noResults') : t('common.loading') }}</p>
           </slot>
         </td>
       </tr>
 
-      <tr
-        v-for="(item, i) in items"
-        :key="i"
-        class="border-b border-primary-20 align-top"
-        :class="rowClass(item)"
-      >
-        <td v-if="selectable" class="p-2">
-          <AppCheckbox v-model="item.selected" />
-        </td>
-        <td
-          v-for="(header, j) in headers"
-          :key="j"
-          class="p-2"
-          :align="header.align || undefined"
+      <template v-for="(item, i) in items" :key="i">
+        <tr
+          class="border-t border-primary-20 align-top"
+          :class="rowClass(item)"
         >
-          <slot
-            :name="`value-${header.value}`"
-            :item="item"
-            :value="item[header.value]"
+          <td v-if="selectable" class="p-2">
+            <AppCheckbox v-model="item.selected" />
+          </td>
+          <td
+            v-for="(header, j) in headers"
+            :key="j"
+            class="p-2"
+            :align="header.align || undefined"
           >
-            {{ item[header.value] }}
-          </slot>
-        </td>
-      </tr>
+            <slot
+              :name="`value-${header.value}`"
+              :item="item"
+              :value="item[header.value]"
+            >
+              {{ item[header.value] }}
+            </slot>
+          </td>
+        </tr>
+        <tr
+          v-if="hasSlotContent($slots.after, { item })"
+          :class="rowClass(item)"
+        >
+          <td v-if="selectable" />
+          <td class="p-2 pt-0" :colspan="headers.length">
+            <slot name="after" :item="item" />
+          </td>
+        </tr>
+      </template>
     </tbody>
   </table>
 </template>
@@ -77,6 +83,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { hasSlotContent } from '../../utils';
 import AppCheckbox from '../forms/AppCheckbox.vue';
 import { Header, SortType } from './table.interface';
 
