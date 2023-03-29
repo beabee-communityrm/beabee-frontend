@@ -61,11 +61,12 @@
             :align="header.align || undefined"
           >
             <slot
-              :name="header.value"
+              :name="`value-${header.value}`"
               :item="item"
               :value="item[header.value]"
-              >{{ item[header.value] }}</slot
             >
+              {{ item[header.value] }}
+            </slot>
           </td>
         </tr>
         <template v-if="hasSlotContent($slots.after, { item })">

@@ -11,7 +11,13 @@ meta:
       <AppVTabs v-model="currentBucket" :items="bucketItems" />
     </div>
     <div class="flex-1">
-      <div class="flex gap-2">
+      <AppSearch
+        v-model="currentRules"
+        :filter-groups="filterGroupsWithQuestions"
+        :filter-items="filterItemsWithExtras"
+        :expanded="showAdvancedSearch"
+        @reset="currentRules = undefined"
+      >
         <AppSelect
           v-model="currentTag"
           :items="[
@@ -26,34 +32,8 @@ meta:
             ...adminItems,
           ]"
         />
-        <AppButton
-          variant="primaryOutlined"
-          size="sm"
-          class="bg-white/0"
-          icon="filter"
-          :class="showAdvancedSearch && 'relative rounded-b-none'"
-          @click="showAdvancedSearch = !showAdvancedSearch"
-        >
-          {{ t('advancedSearch.button') }}
-          <font-awesome-icon
-            class="ml-2"
-            :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
-          />
-          <div
-            v-show="showAdvancedSearch"
-            class="absolute -left-px top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-px"
-          />
-        </AppButton>
-      </div>
-      <AppSearch
-        v-model="currentRules"
-        :filter-groups="filterGroupsWithQuestions"
-        :filter-items="filterItemsWithExtras"
-        :expanded="showAdvancedSearch"
-        :has-changed="false"
-        @reset="currentRules = undefined"
-      />
-      <div class="mt-4 flex items-center gap-4">
+      </AppSearch>
+      <div class="mb-4 flex items-center gap-4">
         <AppLabel :label="t('calloutResponsesPage.showAnswer')" />
         <AppSelect
           v-model="currentInlineAnswer"
@@ -66,61 +46,54 @@ meta:
           ]"
         />
       </div>
-      <div class="mt-4 flex gap-4">
-        <AppButtonGroup>
-          <AppButton
-            icon="download"
-            variant="primaryOutlined"
-            :title="t('actions.export')"
-            @click="handleExport"
-          />
-          <MoveBucketButton
-            :current-bucket="currentBucket"
-            :disabled="selectedCount === 0"
-            :loading="doingAction"
-            @move="(bucket) => handleUpdateAction({ bucket })"
-          />
-          <ToggleTagButton
-            :tag-items="tagItems"
-            :selected-tags="selectedTags"
-            :manage-url="`${route.path}/tags`"
-            :loading="doingAction"
-            :disabled="selectedCount === 0"
-            @toggle="(tagId) => handleUpdateAction({ tags: [tagId] })"
-          />
-          <SetAssigneeButton
-            :disabled="selectedCount === 0"
-            :current-assignee-id="selectedAssigneeId"
-            @assign="(assigneeId) => handleUpdateAction({ assigneeId })"
-          />
-        </AppButtonGroup>
-        <p v-if="selectedCount > 0" class="self-center text-sm">
-          <i18n-t
-            keypath="calloutResponsePage.selectedCount"
-            :plural="selectedCount"
-          >
-            <template #n>
-              <b>{{ selectedCount }}</b>
-            </template>
-          </i18n-t>
-        </p>
-        <AppPaginatedResult
-          v-model:page="currentPage"
-          v-model:page-size="currentPageSize"
-          :result="responses"
-          keypath="calloutResponsesPage.showingOf"
-          no-page-size
-          class="ml-auto"
-        />
-      </div>
-      <AppTable
-        v-model:sort="currentSort"
+      <AppPaginatedTable
+        v-model:query="currentPaginatedQuery"
+        keypath="calloutResponsesPage.showingOf"
         :headers="headers"
-        :items="responseItems || null"
+        :result="responses"
         selectable
-        class="mt-2 w-full"
       >
-        <template #number="{ value, item }">
+        <template #actions>
+          <AppButtonGroup>
+            <AppButton
+              icon="download"
+              variant="primaryOutlined"
+              :title="t('actions.export')"
+              @click="handleExport"
+            />
+            <MoveBucketButton
+              :current-bucket="currentBucket"
+              :disabled="selectedCount === 0"
+              :loading="doingAction"
+              @move="(bucket) => handleUpdateAction({ bucket })"
+            />
+            <ToggleTagButton
+              :tag-items="tagItems"
+              :selected-tags="selectedTags"
+              :manage-url="`${route.path}/tags`"
+              :loading="doingAction"
+              :disabled="selectedCount === 0"
+              @toggle="(tagId) => handleUpdateAction({ tags: [tagId] })"
+            />
+            <SetAssigneeButton
+              :disabled="selectedCount === 0"
+              :current-assignee-id="selectedAssigneeId"
+              @assign="(assigneeId) => handleUpdateAction({ assigneeId })"
+            />
+          </AppButtonGroup>
+          <p v-if="selectedCount > 0" class="self-center text-sm">
+            <i18n-t
+              keypath="calloutResponsePage.selectedCount"
+              :plural="selectedCount"
+            >
+              <template #n>
+                <b>{{ selectedCount }}</b>
+              </template>
+            </i18n-t>
+          </p>
+        </template>
+
+        <template #value-number="{ value, item }">
           <router-link
             :to="`${route.path}/${item.id}`"
             class="text-base font-bold text-link"
@@ -128,7 +101,7 @@ meta:
             {{ t('calloutResponsesPage.responseNo', { no: n(value) }) }}
           </router-link>
         </template>
-        <template #assignee="{ value }">
+        <template #value-assignee="{ value }">
           <router-link
             v-if="value"
             :to="`/admin/contacts/${value.id}`"
@@ -138,7 +111,7 @@ meta:
           </router-link>
           <span v-else>-</span>
         </template>
-        <template #contact="{ value }">
+        <template #value-contact="{ value }">
           <router-link
             v-if="value"
             :to="`/admin/contacts/${value.id}`"
@@ -148,18 +121,19 @@ meta:
           </router-link>
           <span v-else>-</span>
         </template>
-        <template #tags="{ value }">
+        <template #value-tags="{ value }">
           <span class="whitespace-normal">
             <AppTag v-for="tag in value" :key="tag.id" :tag="tag.name" />
           </span>
         </template>
-        <template #createdAt="{ value }">
+        <template #value-createdAt="{ value }">
           {{
             t('common.timeAgo', {
               time: formatDistanceLocale(new Date(), value),
             })
           }}
         </template>
+
         <template #after="{ item }">
           <p v-if="currentInlineComponent">
             <b>{{ t('calloutResponsesPage.inlineAnswer') }}</b>
@@ -171,14 +145,7 @@ meta:
             }}
           </p>
         </template>
-      </AppTable>
-      <AppPaginatedResult
-        v-model:page="currentPage"
-        v-model:page-size="currentPageSize"
-        :result="responses"
-        keypath="calloutResponsesPage.showingOf"
-        class="mt-4"
-      />
+      </AppPaginatedTable>
     </div>
   </div>
 </template>
@@ -193,7 +160,6 @@ import {
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
-import AppPaginatedResult from '../../../../../../components/AppPaginatedResult.vue';
 import AppButton from '../../../../../../components/button/AppButton.vue';
 import AppSelect from '../../../../../../components/forms/AppSelect.vue';
 import AppVTabs from '../../../../../../components/tabs/AppVTabs.vue';
@@ -203,8 +169,6 @@ import {
   headers,
 } from '../../../../../../components/pages/admin/callout-responses.interface';
 import AppSearch from '../../../../../../components/search/AppSearch.vue';
-import AppTable from '../../../../../../components/table/AppTable.vue';
-import { SortType } from '../../../../../../components/table/table.interface';
 import {
   GetCalloutDataWith,
   GetCalloutResponseDataWith,
@@ -222,6 +186,11 @@ import { buckets } from '../../../../../../components/pages/admin/callouts/callo
 import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
 import { fetchContacts } from '../../../../../../utils/api/contact';
 import AppLabel from '../../../../../../components/forms/AppLabel.vue';
+import AppPaginatedTable from '../../../../../../components/table/AppPaginatedTable.vue';
+import {
+  definePaginatedQuery,
+  defineParam,
+} from '../../../../../../utils/pagination';
 
 const props = defineProps<{ callout: GetCalloutDataWith<'form'> }>();
 
@@ -229,24 +198,19 @@ const { t, n } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
-const responses =
-  ref<
-    Paginated<
-      GetCalloutResponseDataWith<'answers' | 'assignee' | 'contact' | 'tags'>
-    >
-  >();
+const responses = ref<
+  Paginated<
+    GetCalloutResponseDataWith<'answers' | 'assignee' | 'contact' | 'tags'> & {
+      selected: boolean;
+    }
+  >
+>();
 const showAdvancedSearch = ref(false);
 const showLatestComment = ref(false);
 const doingAction = ref(false);
 
-const responseItems = ref<
-  (GetCalloutResponseDataWith<'answers' | 'assignee' | 'contact' | 'tags'> & {
-    selected: boolean;
-  })[]
->();
-
 const selectedResponseItems = computed(
-  () => responseItems.value?.filter((ri) => ri.selected) || []
+  () => responses.value?.items.filter((ri) => ri.selected) || []
 );
 
 const selectedCount = computed(() => selectedResponseItems.value.length);
@@ -319,48 +283,11 @@ const currentInlineComponent = computed(() =>
   formComponents.value.find((c) => c.key === currentInlineAnswer.value)
 );
 
-const currentAssignee = computed({
-  get: () => (route.query.assignee as string) || '',
-  set: (assignee) =>
-    router.push({ query: { ...route.query, assignee: assignee || undefined } }),
-});
+const currentAssignee = defineParam('assignee', (v) => v || '');
+const currentTag = defineParam('tag', (v) => v || '');
+const currentBucket = defineParam('bucket', (v) => v || '', 'replace');
 
-const currentBucket = computed({
-  get: () => (route.query.bucket as string) || '',
-  set: (bucket) => router.push({ query: { bucket: bucket || undefined } }),
-});
-
-const currentTag = computed({
-  get: () => (route.query.tag as string) || '',
-  set: (tag) =>
-    router.push({ query: { ...route.query, tag: tag || undefined } }),
-});
-
-const currentPageSize = computed({
-  get: () => Number(route.query.limit) || 25,
-  set: (limit) => router.push({ query: { ...route.query, limit } }),
-});
-
-const currentPage = computed({
-  get: () => Number(route.query.page) || 0,
-  set: (page) => router.push({ query: { ...route.query, page } }),
-});
-
-const currentSort = computed({
-  get: () => ({
-    by: (route.query.sortBy as string) || 'createdAt',
-    type: (route.query.sortType as SortType) || SortType.Desc,
-  }),
-  set: ({ by, type }) => {
-    router.replace({
-      query: {
-        ...route.query,
-        sortBy: by,
-        sortType: type,
-      },
-    });
-  },
-});
+const currentPaginatedQuery = definePaginatedQuery('createdAt');
 
 const currentRules = computed({
   get: () =>
@@ -432,22 +359,19 @@ function getSelectedResponseRules(): RuleGroup {
 }
 
 async function refreshResponses() {
-  responses.value = await fetchResponses(
+  const newResponses = await fetchResponses(
     props.callout.slug,
     {
-      limit: currentPageSize.value,
-      offset: currentPage.value * currentPageSize.value,
-      sort: currentSort.value.by,
-      order: currentSort.value.type,
+      ...currentPaginatedQuery.query,
       rules: getSearchRules(),
     },
     ['assignee', 'contact', 'tags', 'answers']
   );
 
-  responseItems.value = responses.value.items.map((r) => ({
-    ...r,
-    selected: false,
-  }));
+  responses.value = {
+    ...newResponses,
+    items: newResponses.items.map((r) => ({ ...r, selected: false })),
+  };
 }
 
 watchEffect(refreshResponses);

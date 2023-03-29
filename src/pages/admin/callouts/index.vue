@@ -34,17 +34,17 @@ meta:
           :placeholder="t('callouts.search')"
         />
       </div>
-      <AppTable
-        v-model:sort="currentSort"
+      <AppPaginatedTable
+        v-model:query="currentPaginatedQuery"
+        keypath="callouts.showingOf"
         :headers="headers"
-        :items="calloutsTable?.items || null"
-        class="mt-2 w-full"
+        :result="calloutsTable"
       >
         <template #header-hidden><font-awesome-icon icon="eye" /></template>
-        <template #status="{ value }">
+        <template #value-status="{ value }">
           <AppItemStatus :status="value" />
         </template>
-        <template #title="{ item, value }">
+        <template #value-title="{ item, value }">
           <router-link
             :to="'/admin/callouts/view/' + item.slug"
             class="text-base font-bold text-link"
@@ -52,30 +52,23 @@ meta:
             {{ value }}
           </router-link>
         </template>
-        <template #hidden="{ value }">
+        <template #value-hidden="{ value }">
           <font-awesome-icon
             :class="value ? 'text-body-80' : 'text-body-60'"
             :icon="value ? 'eye-slash' : 'eye'"
           />
         </template>
-        <template #starts="{ value }">
+        <template #value-starts="{ value }">
           <span class="whitespace-nowrap">{{
             value && formatLocale(value, 'PP')
           }}</span>
         </template>
-        <template #expires="{ value }">
+        <template #value-expires="{ value }">
           <span class="whitespace-nowrap">{{
             value && formatLocale(value, 'PP')
           }}</span>
         </template>
-      </AppTable>
-      <AppPaginatedResult
-        v-model:page="currentPage"
-        v-model:page-size="currentPageSize"
-        :result="calloutsTable"
-        keypath="callouts.showingOf"
-        class="mt-4"
-      />
+      </AppPaginatedTable>
     </div>
   </div>
 </template>
@@ -84,11 +77,10 @@ meta:
 import { Paginated } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router';
-import { Header, SortType } from '../../../components/table/table.interface';
+import { useRoute } from 'vue-router';
+import { Header } from '../../../components/table/table.interface';
 import AppButton from '../../../components/button/AppButton.vue';
 import PageTitle from '../../../components/PageTitle.vue';
-import AppTable from '../../../components/table/AppTable.vue';
 import AppAlert from '../../../components/AppAlert.vue';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
 import {
@@ -101,12 +93,12 @@ import { fetchCallouts } from '../../../utils/api/callout';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
-import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
+import { definePaginatedQuery, defineParam } from '../../../utils/pagination';
+import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
 
 const { t } = useI18n();
 const route = useRoute();
-const router = useRouter();
 
 addBreadcrumb(
   computed(() => [
@@ -181,41 +173,9 @@ const headers: Header[] = [
   },
 ];
 
-const currentPageSize = computed({
-  get: () => Number(route.query.limit) || 25,
-  set: (limit) => router.push({ query: { ...route.query, limit } }),
-});
-
-const currentPage = computed({
-  get: () => Number(route.query.page) || 0,
-  set: (page) => router.push({ query: { ...route.query, page } }),
-});
-
-const currentSort = computed({
-  get: () => ({
-    by: (route.query.sortBy as string) || 'starts',
-    type: (route.query.sortType as SortType) || SortType.Desc,
-  }),
-  set: ({ by, type }) => {
-    router.replace({
-      query: {
-        ...route.query,
-        sortBy: by,
-        sortType: type,
-      },
-    });
-  },
-});
-
-const currentSearch = computed({
-  get: () => (route.query.s as string) || '',
-  set: (s) => router.push({ query: { ...route.query, s } }),
-});
-
-const currentStatus = computed({
-  get: () => (route.query.filter as string) || '',
-  set: (filter) => router.push({ query: { ...route.query, filter } }),
-});
+const currentSearch = defineParam('s', (v) => v || '');
+const currentStatus = defineParam('filter', (v) => v || '');
+const currentPaginatedQuery = definePaginatedQuery('starts');
 
 const calloutsTable = ref<Paginated<GetCalloutDataWith<'responseCount'>>>();
 
@@ -245,10 +205,7 @@ watchEffect(async () => {
   };
   calloutsTable.value = await fetchCallouts(
     {
-      limit: currentPageSize.value,
-      offset: currentPage.value * currentPageSize.value,
-      sort: currentSort.value.by,
-      order: currentSort.value.type,
+      ...currentPaginatedQuery.query,
       rules: rules.rules.length > 0 ? rules : undefined,
     },
     ['responseCount']
