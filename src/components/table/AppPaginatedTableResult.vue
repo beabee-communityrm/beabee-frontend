@@ -17,7 +17,7 @@
       </i18n-t>
     </p>
 
-    <div class="flex gap-2">
+    <div v-if="!noLimit || totalPages > 1" class="flex gap-2">
       <template v-if="!noLimit">
         <p class="flex-1 self-center">
           <i18n-t v-if="result.count > 0" keypath="common.pageCount">
@@ -29,11 +29,7 @@
             >
           </i18n-t>
         </p>
-        <AppSelect
-          v-model="currentLimit"
-          :items="limits"
-          input-class="text-sm"
-        />
+        <AppSelect v-model="currentLimit" :items="limits" />
       </template>
       <AppPagination
         v-if="totalPages > 1"
