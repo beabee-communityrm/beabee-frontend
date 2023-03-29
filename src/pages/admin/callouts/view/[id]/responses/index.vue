@@ -76,6 +76,7 @@ meta:
             />
             <SetAssigneeButton
               :disabled="selectedCount === 0"
+              :loading="doingAction"
               :current-assignee-id="selectedAssigneeId"
               @assign="(assigneeId) => handleUpdateAction({ assigneeId })"
             />
