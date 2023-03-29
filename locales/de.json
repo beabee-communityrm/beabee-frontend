@@ -341,7 +341,6 @@
     },
     "noArchivedCallouts": "Keine Callouts",
     "search": "Callouts durchsuchen",
-    "show": "Anzeigen",
     "showAll": "Alle",
     "showAnswered": "Beantwortet",
     "showingOf": "Callouts {start} bis {end} von {total} werden angezeigt."
@@ -401,6 +400,7 @@
       "superadmin": "Überadmin"
     },
     "share": "Teilen",
+    "show": "Anzeigen",
     "status": {
       "draft": "Entwurf",
       "ended": "Beendet",

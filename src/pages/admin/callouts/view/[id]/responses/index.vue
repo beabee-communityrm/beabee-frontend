@@ -32,7 +32,7 @@ meta:
           ]"
         />
       </AppSearch>
-      <p class="text-sm font-semibold text-body-80">Show</p>
+      <p class="text-sm font-semibold text-body-80">{{ t('common.show') }}</p>
       <div class="mb-4 flex items-center gap-6 text-sm">
         <AppCheckbox
           v-model="showLatestComment"

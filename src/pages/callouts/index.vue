@@ -22,7 +22,7 @@ meta:
       :placeholder="t('callouts.search')"
     />
     <div class="my-2 text-sm font-semibold uppercase text-primary-80 lg:my-0">
-      <span>{{ t('callouts.show') }}</span>
+      <span>{{ t('common.show') }}</span>
       <AppToggle
         v-model="currentShow"
         :items="[

@@ -343,7 +343,6 @@
     },
     "noArchivedCallouts": "No callouts",
     "search": "Search callouts...",
-    "show": "Show",
     "showAll": "All",
     "showAnswered": "Answered",
     "showingOf": "Showing {start} to {end} callouts out of {total}"
@@ -404,6 +403,7 @@
     },
     "selectOne": "Select one...",
     "share": "Share",
+    "show": "Show",
     "status": {
       "draft": "Draft",
       "ended": "Ended",
