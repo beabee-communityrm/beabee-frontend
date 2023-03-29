@@ -31,17 +31,14 @@
     </thead>
 
     <tbody class="text-xs lg:text-sm">
-      <tr v-if="items === null">
+      <tr
+        v-if="!items || items.length === 0"
+        class="border-t border-primary-20"
+      >
+        <td v-if="selectable" />
         <td :colspan="headers.length" class="p-2">
-          <slot name="loading">
-            <p>{{ t('common.loading') }}</p>
-          </slot>
-        </td>
-      </tr>
-      <tr v-else-if="!items.length">
-        <td :colspan="headers.length" class="p-2">
-          <slot name="empty">
-            <p>{{ t('common.noResults') }}</p>
+          <slot :name="items ? 'empty' : 'loading'">
+            <p>{{ items ? t('common.noResults') : t('common.loading') }}</p>
           </slot>
         </td>
       </tr>
