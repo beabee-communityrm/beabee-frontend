@@ -11,10 +11,10 @@
       hide-headers
       class="w-full"
     >
-      <template #chargeDate="{ value }">
+      <template #value-chargeDate="{ value }">
         {{ formatLocale(value, 'PPP') }}
       </template>
-      <template #amount="{ value, item }">
+      <template #value-amount="{ value, item }">
         <span class="mr-3">
           {{ getStatusText(item) }}
         </span>

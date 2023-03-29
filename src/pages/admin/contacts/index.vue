@@ -21,55 +21,29 @@ meta:
       <AppVTabs v-model="currentSegmentId" :items="segmentItems" />
     </div>
     <div class="flex-auto">
-      <div class="flex">
-        <AppSearchInput
-          v-model="currentSearch"
-          :placeholder="t('contacts.search')"
-        />
-        <AppButton
-          variant="primaryOutlined"
-          size="sm"
-          class="ml-2 bg-white/0"
-          :class="showAdvancedSearch && 'relative rounded-b-none'"
-          @click="showAdvancedSearch = !showAdvancedSearch"
-        >
-          {{ t('advancedSearch.button') }}
-          <font-awesome-icon
-            :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
-          />
-          <div
-            v-show="showAdvancedSearch"
-            class="absolute -left-px top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-px"
-          />
-        </AppButton>
-      </div>
       <AppSearch
         v-model="currentRules"
         :filter-groups="filterGroups"
         :filter-items="filterItems"
-        :expanded="showAdvancedSearch"
         :has-changed="hasUnsavedSegment"
         @reset="currentRules = undefined"
-      />
-
+      >
+        <AppSearchInput
+          v-model="currentSearch"
+          :placeholder="t('contacts.search')"
+        />
+      </AppSearch>
       <SaveSegment
         v-if="hasUnsavedSegment && currentRules"
         :segment="currentSegment"
         :rules="currentRules"
         @saved="handleSavedSegment"
       />
-      <AppPaginatedResult
-        v-model:page="currentPage"
-        v-model:page-size="currentPageSize"
+      <AppPaginatedTable
+        v-model:query="currentPaginatedQuery"
+        :headers="headers"
         :result="contactsTable"
         keypath="contacts.showingOf"
-        class="mt-4"
-      />
-      <AppTable
-        v-model:sort="currentSort"
-        :headers="headers"
-        :items="contactsTable?.items || null"
-        class="mt-2 w-full whitespace-nowrap"
       >
         <template #empty>
           <p>
@@ -80,7 +54,7 @@ meta:
             }}
           </p>
         </template>
-        <template #firstname="{ item }">
+        <template #value-firstname="{ item }">
           <router-link
             :to="'/admin/contacts/' + item.id"
             class="text-base font-bold text-link"
@@ -94,12 +68,10 @@ meta:
             {{ item.profile.description }}
           </p>
         </template>
-        <template #tags="{ item }">
-          <span class="whitespace-normal">
-            <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
-          </span>
+        <template #value-tags="{ item }">
+          <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
         </template>
-        <template #contribution="{ item }">
+        <template #value-contribution="{ item }">
           <span v-if="item.contributionAmount">
             {{ n(item.contributionAmount, 'currency') }}/{{
               item.contributionPeriod === ContributionPeriod.Monthly
@@ -108,20 +80,17 @@ meta:
             }}
           </span>
         </template>
-        <template #joined="{ value }">
-          {{ formatLocale(value, 'PPP') }}
+        <template #value-joined="{ value }">
+          <span class="whitespace-nowrap">{{
+            formatLocale(value, 'PPP')
+          }}</span>
         </template>
-        <template #membershipStarts="{ item }">
-          {{ getMembershipStartDate(item) }}
+        <template #value-membershipStarts="{ item }">
+          <span class="whitespace-nowrap">{{
+            getMembershipStartDate(item)
+          }}</span>
         </template>
-      </AppTable>
-      <AppPaginatedResult
-        v-model:page="currentPage"
-        v-model:page-size="currentPageSize"
-        :result="contactsTable"
-        keypath="contacts.showingOf"
-        class="mt-4"
-      />
+      </AppPaginatedTable>
     </div>
   </div>
 </template>
@@ -142,8 +111,6 @@ import {
   GetSegmentDataWith,
 } from '../../../utils/api/api.interface';
 import { fetchContacts } from '../../../utils/api/contact';
-import AppTable from '../../../components/table/AppTable.vue';
-import { SortType } from '../../../components/table/table.interface';
 import { formatLocale } from '../../../utils/dates';
 import { fetchSegments } from '../../../utils/api/segments';
 import AppButton from '../../../components/button/AppButton.vue';
@@ -157,9 +124,10 @@ import {
   filterItems,
 } from '../../../components/pages/admin/contacts/contacts.interface';
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
-import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 import SaveSegment from '../../../components/pages/admin/contacts/SaveSegment.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
+import { definePaginatedQuery, defineParam } from '../../../utils/pagination';
+import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
 
 const { t, n } = useI18n();
 
@@ -172,38 +140,9 @@ addBreadcrumb(
   ])
 );
 
-const showAdvancedSearch = ref(false);
+const currentPaginatedQuery = definePaginatedQuery('joined');
 
-const currentPageSize = computed({
-  get: () => Number(route.query.limit) || 25,
-  set: (limit) => router.push({ query: { ...route.query, limit } }),
-});
-
-const currentPage = computed({
-  get: () => Number(route.query.page) || 0,
-  set: (page) => router.push({ query: { ...route.query, page } }),
-});
-
-const currentSort = computed({
-  get: () => ({
-    by: (route.query.sortBy as string) || 'joined',
-    type: (route.query.sortType as SortType) || SortType.Desc,
-  }),
-  set: ({ by, type }) => {
-    router.replace({
-      query: {
-        ...route.query,
-        sortBy: by || undefined,
-        sortType: type,
-      },
-    });
-  },
-});
-
-const currentSearch = computed({
-  get: () => (route.query.s as string) || '',
-  set: (s) => router.push({ query: { ...route.query, s } }),
-});
+const currentSearch = defineParam('s', (v) => v || '');
 
 const currentRules = computed({
   get: () =>
@@ -214,19 +153,13 @@ const currentRules = computed({
     router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
 });
 
+const currentSegmentId = defineParam('segment', (v) => v || '', 'replace');
+
 const currentSegment = computed(() =>
   currentSegmentId.value
     ? segments.value.find((s) => s.id === currentSegmentId.value)
     : undefined
 );
-
-const currentSegmentId = computed({
-  get: () => (route.query.segment as string) || '',
-  set: (segment) => {
-    router.push({ query: { segment: segment || undefined } });
-    showAdvancedSearch.value = false;
-  },
-});
 
 const hasUnsavedSegment = computed(
   () =>
@@ -307,13 +240,8 @@ watchEffect(async () => {
     : searchRules;
 
   const query = {
-    offset: currentPage.value * currentPageSize.value,
-    limit: currentPageSize.value,
+    ...currentPaginatedQuery.query,
     rules,
-    ...(currentSort.value.by && {
-      sort: currentSort.value.by,
-      order: currentSort.value.type,
-    }),
   };
 
   contactsTable.value = await fetchContacts(query, ['profile', 'roles']);
