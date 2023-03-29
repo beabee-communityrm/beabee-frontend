@@ -36,13 +36,13 @@ meta:
       <div class="mb-4 flex items-center gap-6 text-sm">
         <AppCheckbox
           v-model="showLatestComment"
-          label="Latest comment"
+          :label="t('calloutResponsesPage.showLatestComment')"
           icon="comment"
         />
         <div class="flex items-center gap-2">
           <AppCheckbox
             v-model="showInlineAnswer"
-            label="Answer"
+            :label="t('calloutResponsesPage.showAnswer')"
             icon="user-pen"
           />
           <AppSelect
@@ -50,12 +50,13 @@ meta:
             class="max-w-xs"
             :class="!showInlineAnswer && 'invisible'"
             :items="[
-              { id: '', label: t('calloutResponsesPage.noAnswer') },
+              { id: '', label: t('common.selectOne') },
               ...Object.entries(formFilterItems).map(([id, item]) => ({
                 id: id.substring(8),
                 label: item.label,
               })),
             ]"
+            required
           />
         </div>
       </div>
@@ -154,7 +155,7 @@ meta:
             :class="showLatestComment && item.latestComment ? 'mb-2' : ''"
           >
             <font-awesome-icon :icon="['fa', 'user-pen']" class="mr-2" />
-            <b>{{ t('calloutResponsesPage.inlineAnswer') }}{{ ' ' }}</b>
+            <b>{{ t('calloutResponsesPage.showAnswer') }}:{{ ' ' }}</b>
             <span class="italic">
               {{
                 convertAnswer(

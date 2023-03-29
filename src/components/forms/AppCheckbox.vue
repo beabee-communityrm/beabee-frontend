@@ -7,7 +7,10 @@
       :value="true"
       class="mt-1"
     />
-    <p v-if="label" class="ml-2 font-semibold">{{ label }}</p>
+    <p v-if="label || icon" class="ml-2 font-semibold">
+      <font-awesome-icon v-if="icon" :icon="icon" />
+      {{ label }}
+    </p>
   </label>
 </template>
 <script lang="ts" setup>
@@ -18,6 +21,7 @@ const props = defineProps<{
   modelValue: boolean;
   disabled?: boolean;
   label?: string;
+  icon?: string;
 }>();
 
 const modelValueProxy = computed({

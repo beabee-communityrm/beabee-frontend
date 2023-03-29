@@ -325,15 +325,14 @@
     "selectedCount": "{n} response selected | {n} responses selected"
   },
   "calloutResponsesPage": {
-    "inlineAnswer": "Answer:",
     "moveToBucket": "Move to {bucket}",
-    "noAnswer": "None",
     "noTags": "No tags",
     "response": "Response",
     "responseNo": "Response {no}",
     "searchAssignee": "Assigned to...",
     "searchTag": "Tagged with...",
-    "showAnswer": "Show answer:",
+    "showAnswer": "Answer",
+    "showLatestComment": "Latest comment",
     "showingOf": "Showing {start} to {end} responses out of {total}"
   },
   "callouts": {
@@ -403,6 +402,7 @@
       "member": "Member",
       "superadmin": "Super Admin"
     },
+    "selectOne": "Select one...",
     "share": "Share",
     "status": {
       "draft": "Draft",
