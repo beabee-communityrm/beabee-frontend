@@ -14,7 +14,6 @@
             <TheMenuListItem
               :icon="item.icon"
               :title="t(item.title)"
-              :type="section.type"
               :is-active="
                 item.isActive
                   ? item.isActive.test(route.path)

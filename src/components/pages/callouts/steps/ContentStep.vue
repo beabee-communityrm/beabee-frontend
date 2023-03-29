@@ -183,7 +183,7 @@ onBeforeMount(() => {
   @apply font-body text-sm text-body !important;
 
   .formio-dialog-content {
-    @apply bg-grey-lighter !important;
+    @apply bg-white !important;
   }
 
   .nav {

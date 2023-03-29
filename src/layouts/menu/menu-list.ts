@@ -6,7 +6,6 @@ export const menu = computed(
   () =>
     [
       {
-        type: 'main',
         items: [
           {
             title: 'menu.home',
@@ -22,7 +21,6 @@ export const menu = computed(
         ],
       },
       {
-        type: 'settings',
         items: [
           {
             title: 'menu.account',
@@ -45,7 +43,6 @@ export const menu = computed(
 
 export const adminMenu: MenuSection[] = [
   {
-    type: 'main',
     title: 'menu.admin',
     items: [
       {
@@ -74,7 +71,6 @@ export const adminMenu: MenuSection[] = [
     ],
   },
   {
-    type: 'settings',
     items: [
       {
         title: 'menu.membershipBuilder',
