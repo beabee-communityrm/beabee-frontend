@@ -153,12 +153,7 @@ const currentRules = computed({
     router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
 });
 
-const currentSegmentId = defineParam(
-  'segment',
-  (v) => v || '',
-  'push',
-  'replace'
-);
+const currentSegmentId = defineParam('segment', (v) => v || '', 'replace');
 
 const currentSegment = computed(() =>
   currentSegmentId.value

@@ -10,7 +10,6 @@ import { SortType } from '../components/table/table.interface';
 export function defineParam<T extends LocationQueryValueRaw>(
   param: string,
   getter: (v: LocationQueryValue) => T,
-  routeBehaviour: 'replace' | 'push' = 'push',
   queryBehaviour: 'append' | 'replace' = 'append'
 ): WritableComputedRef<T> {
   const route = useRoute();
@@ -18,7 +17,7 @@ export function defineParam<T extends LocationQueryValueRaw>(
   return computed({
     get: () => getter(route.query[param] as LocationQueryValue),
     set: (value) => {
-      router[routeBehaviour]({
+      router.push({
         query: {
           ...(queryBehaviour === 'append' && route.query),
           [param]: value || undefined,

@@ -258,7 +258,7 @@ const filterItemsWithExtras = computed(() => {
 
 const currentAssignee = defineParam('assignee', (v) => v || '');
 const currentTag = defineParam('tag', (v) => v || '');
-const currentBucket = defineParam('bucket', (v) => v || '', 'push', 'replace');
+const currentBucket = defineParam('bucket', (v) => v || '', 'replace');
 
 const currentPaginatedQuery = definePaginatedQuery('createdAt');
 
