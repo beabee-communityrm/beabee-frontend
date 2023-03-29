@@ -66,12 +66,15 @@
             </slot>
           </td>
         </tr>
-        <template v-if="hasSlotContent($slots.after, { item })">
+        <tr
+          v-if="hasSlotContent($slots.after, { item })"
+          :class="rowClass(item)"
+        >
           <td v-if="selectable" />
           <td class="p-2 pt-0" :colspan="headers.length">
             <slot name="after" :item="item" />
           </td>
-        </template>
+        </tr>
       </template>
     </tbody>
   </table>
