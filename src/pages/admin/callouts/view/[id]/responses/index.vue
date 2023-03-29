@@ -154,13 +154,15 @@ meta:
             :class="showLatestComment && item.latestComment ? 'mb-2' : ''"
           >
             <font-awesome-icon :icon="['fa', 'user-pen']" class="mr-2" />
-            <b>{{ t('calloutResponsesPage.inlineAnswer') }}</b>
-            {{
-              convertAnswer(
-                currentInlineComponent,
-                item.answers[currentInlineComponent.key]
-              )
-            }}
+            <b>{{ t('calloutResponsesPage.inlineAnswer') }}{{ ' ' }}</b>
+            <span class="italic">
+              {{
+                convertAnswer(
+                  currentInlineComponent,
+                  item.answers[currentInlineComponent.key]
+                )
+              }}
+            </span>
           </p>
           <div v-if="showLatestComment && item.latestComment">
             <font-awesome-icon :icon="['fa', 'comment']" class="mr-2" />
@@ -175,8 +177,11 @@ meta:
               }}
               •
             </span>
-            <b>{{ item.latestComment.contact.displayName }}: </b>
-            <span class="inline-block" v-html="item.latestComment.text"></span>
+            <b>{{ item.latestComment.contact.displayName }}:{{ ' ' }}</b>
+            <span
+              class="inline-block italic"
+              v-html="item.latestComment.text"
+            ></span>
           </div>
         </template>
       </AppPaginatedTable>
