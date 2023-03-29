@@ -15,7 +15,6 @@ meta:
         v-model="currentRules"
         :filter-groups="filterGroupsWithQuestions"
         :filter-items="filterItemsWithExtras"
-        :expanded="showAdvancedSearch"
         @reset="currentRules = undefined"
       >
         <AppSelect
@@ -205,7 +204,6 @@ const responses = ref<
     }
   >
 >();
-const showAdvancedSearch = ref(false);
 const showLatestComment = ref(false);
 const doingAction = ref(false);
 
