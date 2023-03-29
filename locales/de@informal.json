@@ -331,6 +331,8 @@
     "responseNo": "Antwort {no}",
     "searchAssignee": "Zugewiesen an...",
     "searchTag": "Getaggt mit...",
+    "showAnswer": "Antwort",
+    "showLatestComment": "Letzter Kommentar",
     "showingOf": "Antworten {start} bis {end} von {total} werden angezeigt"
   },
   "callouts": {
