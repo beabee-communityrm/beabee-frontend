@@ -21,7 +21,7 @@ module.exports = {
       white: shades('white'),
       black: shades('black'),
       grey: {
-        lighter: '#e5e5e5',
+        lighter: '#eee',
         light: '#c7c7c7',
         DEFAULT: '#a4a4a4',
         dark: '#5f5f5f',

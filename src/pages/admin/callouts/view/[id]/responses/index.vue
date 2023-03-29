@@ -32,18 +32,32 @@ meta:
           ]"
         />
       </AppSearch>
-      <div class="mb-4 flex items-center gap-4">
-        <AppLabel :label="t('calloutResponsesPage.showAnswer')" />
-        <AppSelect
-          v-model="currentInlineAnswer"
-          :items="[
-            { id: '', label: t('calloutResponsesPage.noAnswer') },
-            ...Object.entries(formFilterItems).map(([id, item]) => ({
-              id: id.substring(8),
-              label: item.label,
-            })),
-          ]"
+      <p class="text-sm font-semibold text-body-80">Show</p>
+      <div class="mb-4 flex items-center gap-6 text-sm">
+        <AppCheckbox
+          v-model="showLatestComment"
+          label="Latest comment"
+          icon="comment"
         />
+        <div class="flex items-center gap-2">
+          <AppCheckbox
+            v-model="showInlineAnswer"
+            label="Answer"
+            icon="user-pen"
+          />
+          <AppSelect
+            v-model="currentInlineAnswer"
+            class="max-w-xs"
+            :class="!showInlineAnswer && 'invisible'"
+            :items="[
+              { id: '', label: t('calloutResponsesPage.noAnswer') },
+              ...Object.entries(formFilterItems).map(([id, item]) => ({
+                id: id.substring(8),
+                label: item.label,
+              })),
+            ]"
+          />
+        </div>
       </div>
       <AppPaginatedTable
         v-model:query="currentPaginatedQuery"
@@ -135,7 +149,11 @@ meta:
         </template>
 
         <template #after="{ item }">
-          <p v-if="currentInlineComponent">
+          <p
+            v-if="currentInlineComponent && item.answers"
+            :class="showLatestComment && item.latestComment ? 'mb-2' : ''"
+          >
+            <font-awesome-icon :icon="['fa', 'user-pen']" class="mr-2" />
             <b>{{ t('calloutResponsesPage.inlineAnswer') }}</b>
             {{
               convertAnswer(
@@ -144,6 +162,22 @@ meta:
               )
             }}
           </p>
+          <div v-if="showLatestComment && item.latestComment">
+            <font-awesome-icon :icon="['fa', 'comment']" class="mr-2" />
+            <span class="font-semibold text-body-60">
+              {{
+                t('common.timeAgo', {
+                  time: formatDistanceLocale(
+                    new Date(),
+                    item.latestComment.createdAt
+                  ),
+                })
+              }}
+              •
+            </span>
+            <b>{{ item.latestComment.contact.displayName }}: </b>
+            <span class="inline-block" v-html="item.latestComment.text"></span>
+          </div>
         </template>
       </AppPaginatedTable>
     </div>
@@ -171,6 +205,7 @@ import {
 import AppSearch from '../../../../../../components/search/AppSearch.vue';
 import {
   GetCalloutDataWith,
+  GetCalloutResponseWith,
   GetCalloutResponseDataWith,
   UpdateCalloutResponseData,
 } from '../../../../../../utils/api/api.interface';
@@ -185,12 +220,12 @@ import ToggleTagButton from '../../../../../../components/pages/admin/callouts/T
 import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
 import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
 import { fetchContacts } from '../../../../../../utils/api/contact';
-import AppLabel from '../../../../../../components/forms/AppLabel.vue';
 import AppPaginatedTable from '../../../../../../components/table/AppPaginatedTable.vue';
 import {
   definePaginatedQuery,
   defineParam,
 } from '../../../../../../utils/pagination';
+import AppCheckbox from '../../../../../../components/forms/AppCheckbox.vue';
 
 const props = defineProps<{ callout: GetCalloutDataWith<'form'> }>();
 
@@ -200,13 +235,23 @@ const router = useRouter();
 
 const responses = ref<
   Paginated<
-    GetCalloutResponseDataWith<'answers' | 'assignee' | 'contact' | 'tags'> & {
+    GetCalloutResponseDataWith<
+      'answers' | 'assignee' | 'contact' | 'latestComment' | 'tags'
+    > & {
       selected: boolean;
     }
   >
 >();
 const showLatestComment = ref(false);
 const doingAction = ref(false);
+
+const showInlineAnswer = ref(false);
+const currentInlineAnswer = ref('');
+const currentInlineComponent = computed(
+  () =>
+    showInlineAnswer.value &&
+    formComponents.value.find((c) => c.key === currentInlineAnswer.value)
+);
 
 const selectedResponseItems = computed(
   () => responses.value?.items.filter((ri) => ri.selected) || []
@@ -276,11 +321,6 @@ const filterItemsWithExtras = computed(() => {
     ...formFilterItems.value,
   };
 });
-
-const currentInlineAnswer = ref('');
-const currentInlineComponent = computed(() =>
-  formComponents.value.find((c) => c.key === currentInlineAnswer.value)
-);
 
 const currentAssignee = defineParam('assignee', (v) => v || '');
 const currentTag = defineParam('tag', (v) => v || '');
@@ -358,13 +398,21 @@ function getSelectedResponseRules(): RuleGroup {
 }
 
 async function refreshResponses() {
+  const _with: GetCalloutResponseWith[] = ['assignee', 'contact', 'tags'];
+  if (showLatestComment.value) {
+    _with.push('latestComment');
+  }
+  if (showInlineAnswer.value) {
+    _with.push('answers');
+  }
+
   const newResponses = await fetchResponses(
     props.callout.slug,
     {
       ...currentPaginatedQuery.query,
       rules: getSearchRules(),
     },
-    ['assignee', 'contact', 'tags', 'answers']
+    _with
   );
 
   responses.value = {

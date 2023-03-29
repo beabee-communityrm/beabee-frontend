@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-4">
+  <div class="mb-8">
     <div class="mb-2 flex gap-2">
       <slot></slot>
       <AppButton
