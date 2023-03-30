@@ -114,7 +114,6 @@ import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import PageTitle from '../../../components/PageTitle.vue';
 import {
-  GetContactsQuery,
   GetContactDataWith,
   GetSegmentDataWith,
 } from '../../../utils/api/api.interface';
