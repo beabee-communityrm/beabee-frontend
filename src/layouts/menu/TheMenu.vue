@@ -15,7 +15,7 @@
 
       <font-awesome-icon
         class="ml-2 inline-block"
-        :icon="['fas', isMenuVisible ? 'caret-up' : 'caret-down']"
+        :icon="isMenuVisible ? faCaretUp : faCaretDown"
       />
     </div>
 
@@ -43,6 +43,7 @@ import { currentUser } from '../../store';
 import TheMenuList from './TheMenuList.vue';
 import AppLogo from '../../components/AppLogo.vue';
 import { useI18n } from 'vue-i18n';
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 
 const route = useRoute();
 const { t } = useI18n();

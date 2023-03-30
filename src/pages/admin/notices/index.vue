@@ -49,11 +49,12 @@ import AppItemStatus from '../../../components/AppItemStatus.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
 import { definePaginatedQuery } from '../../../utils/pagination';
 import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
+import { faSignHanging } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 
 addBreadcrumb(
-  computed(() => [{ title: t('menu.notices'), icon: 'sign-hanging' }])
+  computed(() => [{ title: t('menu.notices'), icon: faSignHanging }])
 );
 
 const headers: Header[] = [

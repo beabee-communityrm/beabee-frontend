@@ -4,49 +4,49 @@
 
     <div v-if="editor" class="mb-2 flex flex-row gap-1">
       <RichTextEditorButton
-        icon="bold"
+        :icon="faBold"
         :title="t('form.richtext.bold')"
         :active="editor.isActive('bold')"
         @click="run((cmd) => cmd.toggleBold())"
       />
       <RichTextEditorButton
-        icon="italic"
+        :icon="faItalic"
         :title="t('form.richtext.italic')"
         :active="editor.isActive('italic')"
         @click="run((cmd) => cmd.toggleItalic())"
       />
       <RichTextEditorButton
-        icon="underline"
+        :icon="faUnderline"
         :title="t('form.richtext.underline')"
         :active="editor.isActive('underline')"
         @click="run((cmd) => cmd.toggleUnderline())"
       />
       <RichTextEditorButton
-        icon="strikethrough"
+        :icon="faStrikethrough"
         :title="t('form.richtext.strikethrough')"
         :active="editor.isActive('strike')"
         @click="run((cmd) => cmd.toggleStrike())"
       />
       <RichTextEditorButton
-        icon="heading"
+        :icon="faHeading"
         :title="t('form.richtext.heading')"
         :active="editor.isActive('heading', { level: 3 })"
         @click="run((cmd) => cmd.toggleHeading({ level: 3 }))"
       />
       <RichTextEditorButton
-        icon="list"
+        :icon="faList"
         :title="t('form.richtext.bulletlist')"
         :active="editor.isActive('bulletList')"
         @click="run((cmd) => cmd.toggleBulletList())"
       />
       <RichTextEditorButton
-        icon="list-ol"
+        :icon="faListOl"
         :title="t('form.richtext.numberedlist')"
         :active="editor.isActive('orderedList')"
         @click="run((cmd) => cmd.toggleOrderedList())"
       />
       <RichTextEditorButton
-        icon="link"
+        :icon="faLink"
         :title="t('form.richtext.link')"
         :active="editor.isActive('link')"
         @click="setLink"
@@ -75,6 +75,16 @@ import RichTextEditorButton from './RichTextEditorButton.vue';
 import AppLabel from '../forms/AppLabel.vue';
 import useVuelidate from '@vuelidate/core';
 import { helpers, requiredIf } from '@vuelidate/validators';
+import {
+  faBold,
+  faHeading,
+  faItalic,
+  faLink,
+  faList,
+  faListOl,
+  faStrikethrough,
+  faUnderline,
+} from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 

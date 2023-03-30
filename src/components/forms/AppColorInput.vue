@@ -20,7 +20,7 @@
     @color-change="changeColor($event.colors.hex)"
   >
     <template #format-switch-button>
-      <font-awesome-icon :icon="['fa', 'sort']" />
+      <font-awesome-icon :icon="faSort" />
     </template>
   </ColorPicker>
 </template>
@@ -30,6 +30,7 @@ import { ColorPicker } from 'vue-accessible-color-picker';
 import AppInput from './AppInput.vue';
 import { ref, watch } from 'vue';
 import useVuelidate from '@vuelidate/core';
+import { faSort } from '@fortawesome/free-solid-svg-icons';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{

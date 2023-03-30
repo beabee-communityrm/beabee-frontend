@@ -16,14 +16,14 @@
       <AppButtonGroup>
         <AppButton
           size="sm"
-          icon="pencil"
+          :icon="faPencil"
           variant="primaryOutlined"
           :title="t('actions.edit')"
           @click="formVisible = !formVisible"
         />
         <AppButton
           size="sm"
-          icon="trash"
+          :icon="faTrash"
           variant="danger"
           :title="t('actions.delete')"
           @click="showDeleteModal = true"
@@ -69,6 +69,7 @@ import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppButtonGroup from '../button/AppButtonGroup.vue';
 import AppConfirmDialog from '../AppConfirmDialog.vue';
+import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 

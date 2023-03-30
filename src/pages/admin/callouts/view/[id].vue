@@ -14,6 +14,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { faBullhorn } from '@fortawesome/free-solid-svg-icons';
 import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
@@ -30,7 +31,7 @@ const { t } = useI18n();
 
 addBreadcrumb(
   computed(() => [
-    { title: t('menu.callouts'), icon: 'bullhorn', to: '/admin/callouts' },
+    { title: t('menu.callouts'), icon: faBullhorn, to: '/admin/callouts' },
     {
       title: callout.value?.title || '',
       to: '/admin/callouts/view/' + props.id,

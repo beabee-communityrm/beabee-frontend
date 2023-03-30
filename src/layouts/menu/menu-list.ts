@@ -1,45 +1,53 @@
 import { computed } from 'vue';
 import { MenuSection } from './menu-list.interface';
 import { generalContent } from '../../store/generalContent';
+import {
+  faAddressCard,
+  faBullhorn,
+  faChartLine,
+  faCog,
+  faCreditCard,
+  faHandsHelping,
+  faHouse,
+  faSignHanging,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 
-export const menu = computed(
-  () =>
-    [
+export const menu = computed<MenuSection[]>(() => [
+  {
+    items: [
       {
-        items: [
-          {
-            title: 'menu.home',
-            href: '/profile',
-            icon: ['fa', 'house'],
-          },
-          {
-            title: 'menu.callouts',
-            href: '/callouts',
-            icon: ['fa', 'bullhorn'],
-            isActive: /^\/callouts/,
-          },
-        ],
+        title: 'menu.home',
+        href: '/profile',
+        icon: faHouse,
       },
       {
-        items: [
-          {
-            title: 'menu.account',
-            href: '/profile/account',
-            icon: ['fa', 'address-card'],
-          },
-          ...(generalContent.value.hideContribution
-            ? []
-            : [
-                {
-                  title: 'menu.contribution',
-                  href: '/profile/contribution',
-                  icon: ['fa', 'credit-card'],
-                },
-              ]),
-        ],
+        title: 'menu.callouts',
+        href: '/callouts',
+        icon: faBullhorn,
+        isActive: /^\/callouts/,
       },
-    ] as MenuSection[]
-);
+    ],
+  },
+  {
+    items: [
+      {
+        title: 'menu.account',
+        href: '/profile/account',
+        icon: faAddressCard,
+      },
+      ...(generalContent.value.hideContribution
+        ? []
+        : [
+            {
+              title: 'menu.contribution',
+              href: '/profile/contribution',
+              icon: faCreditCard,
+            },
+          ]),
+    ],
+  },
+]);
 
 export const adminMenu: MenuSection[] = [
   {
@@ -48,24 +56,24 @@ export const adminMenu: MenuSection[] = [
       {
         title: 'menu.dashboard',
         href: '/admin',
-        icon: ['fa', 'chart-line'],
+        icon: faChartLine,
       },
       {
         title: 'menu.contacts',
         href: '/admin/contacts',
-        icon: ['fa', 'users'],
+        icon: faUsers,
         isActive: /^\/admin\/contacts.*/,
       },
       {
         title: 'menu.callouts',
         href: '/admin/callouts',
-        icon: ['fa', 'bullhorn'],
+        icon: faBullhorn,
         isActive: /^\/admin\/callouts.*/,
       },
       {
         title: 'menu.notices',
         href: '/admin/notices',
-        icon: ['fa', 'sign-hanging'],
+        icon: faSignHanging,
         isActive: /^\/admin\/notices.*/,
       },
     ],
@@ -75,12 +83,12 @@ export const adminMenu: MenuSection[] = [
       {
         title: 'menu.membershipBuilder',
         href: '/admin/membership-builder',
-        icon: ['fa', 'hands-helping'],
+        icon: faHandsHelping,
       },
       {
         title: 'menu.adminSettings',
         href: '/admin/settings',
-        icon: ['fa', 'cog'],
+        icon: faCog,
         isActive: /^\/admin\/settings.*/,
       },
     ],

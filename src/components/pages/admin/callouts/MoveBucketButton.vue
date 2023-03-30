@@ -1,6 +1,6 @@
 <template>
   <AppDropdownButton
-    icon="folder"
+    :icon="faFolder"
     variant="primaryOutlined"
     :title="t('calloutResponsePage.actions.moveBucket')"
   >
@@ -25,6 +25,7 @@
 </template>
 
 <script lang="ts" setup>
+import { faFolder } from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppSelectableList from '../../../AppSelectableList.vue';

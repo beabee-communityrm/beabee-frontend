@@ -12,9 +12,7 @@
         variant="info"
         class="mb-4"
       >
-        <template #icon
-          ><font-awesome-icon :icon="['fa', 'info-circle']"
-        /></template>
+        <template #icon><font-awesome-icon :icon="faInfoCircle" /></template>
         {{
           t('contribution.nextAmountChanging', {
             nextAmount: n(modelValue.nextAmount, 'currency'),
@@ -113,6 +111,7 @@ import { formatLocale } from '../../../../utils/dates';
 import AppHeading from '../../../AppHeading.vue';
 import { isRequestError } from '../../../../utils/api';
 import { ContributionInfo } from '../../../../utils/api/api.interface';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 const validation = useVuelidate();
 

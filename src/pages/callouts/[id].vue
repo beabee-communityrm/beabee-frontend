@@ -19,7 +19,7 @@ meta:
       </div>
       <AppButton
         v-if="callout.status === ItemStatus.Open"
-        :icon="showSharingPanel ? 'caret-down' : 'share'"
+        :icon="showSharingPanel ? faCaretDown : faShare"
         variant="primaryOutlined"
         @click="showSharingPanel = !showSharingPanel"
         >{{ t('common.share') }}</AppButton
@@ -134,6 +134,11 @@ import 'formiojs/dist/formio.form.css';
 import { useRoute } from 'vue-router';
 import ItemStatusText from '../../components/item/ItemStatusText.vue';
 import { addBreadcrumb } from '../../store/breadcrumb';
+import {
+  faBullhorn,
+  faCaretDown,
+  faShare,
+} from '@fortawesome/free-solid-svg-icons';
 
 type FormSubmission = { data: CalloutResponseAnswers };
 
@@ -150,7 +155,7 @@ addBreadcrumb(
             {
               title: t('menu.callouts'),
               to: '/admin/callouts',
-              icon: 'bullhorn',
+              icon: faBullhorn,
             },
             {
               title: callout.value.title,
@@ -162,7 +167,7 @@ addBreadcrumb(
             {
               title: t('menu.callouts'),
               to: '/callouts',
-              icon: 'bullhorn',
+              icon: faBullhorn,
             },
             { title: callout.value.title },
           ]
