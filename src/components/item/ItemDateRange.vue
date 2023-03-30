@@ -1,12 +1,13 @@
 <template>
   <p v-if="item.starts">
-    <font-awesome-icon :icon="['far', 'calendar']" class="mr-2" />
+    <font-awesome-icon :icon="faCalendar" class="mr-2" />
     {{ formatLocale(item.starts, 'PP') + ' - ' }}
     {{ item.expires && formatLocale(item.expires, 'PP') }}
   </p>
 </template>
 
 <script lang="ts" setup>
+import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 import { ItemWithStatus } from '../../utils/api/api.interface';
 import { formatLocale } from '../../utils/dates';
 

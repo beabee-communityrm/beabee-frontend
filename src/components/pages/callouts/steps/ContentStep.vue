@@ -7,7 +7,7 @@
 
     <AppAlert v-else-if="warnAboutEditing" variant="warning" class="mb-4">
       <template #icon>
-        <font-awesome-icon :icon="['fa', 'exclamation']" />
+        <font-awesome-icon :icon="faExclamation" />
       </template>
       {{ t('editCallout.warning') }}
     </AppAlert>
@@ -55,6 +55,7 @@ import {
   faTimesCircle,
   faPlus,
   IconName,
+  faExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
 

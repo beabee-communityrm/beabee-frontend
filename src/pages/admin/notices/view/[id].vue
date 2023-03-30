@@ -12,7 +12,7 @@ meta:
       <div class="flex-initial basis-3/4">
         <AppAlert v-if="wasJustCreated || wasJustUpdated" class="mb-8">
           <template #icon>
-            <font-awesome-icon :icon="['fa', 'magic']" />
+            <font-awesome-icon :icon="faMagic" />
           </template>
           {{
             wasJustCreated
@@ -31,13 +31,13 @@ meta:
 
       <div class="flex-0 flex flex-wrap gap-2 lg:flex-col">
         <ActionButton
-          icon="pencil-alt"
+          :icon="faPencilAlt"
           :to="`/admin/notices/edit/${notice.id}`"
         >
           {{ t('actions.edit') }}
         </ActionButton>
 
-        <ActionButton icon="trash" @click="showDeleteModal = true">
+        <ActionButton :icon="faTrash" @click="showDeleteModal = true">
           {{ t('actions.delete') }}
         </ActionButton>
 
@@ -72,6 +72,12 @@ import ItemStatus from '../../../../components/item/ItemStatusText.vue';
 import ItemDateRange from '../../../../components/item/ItemDateRange.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { addBreadcrumb } from '../../../../store/breadcrumb';
+import {
+  faMagic,
+  faPencilAlt,
+  faSignHanging,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps<{ id: string }>();
 const { t } = useI18n();
@@ -85,7 +91,7 @@ const wasJustUpdated = route.query.updated !== undefined;
 
 addBreadcrumb(
   computed(() => [
-    { title: t('menu.notices'), to: '/admin/notices', icon: 'sign-hanging' },
+    { title: t('menu.notices'), to: '/admin/notices', icon: faSignHanging },
     { title: notice.value?.name || '' },
   ])
 );

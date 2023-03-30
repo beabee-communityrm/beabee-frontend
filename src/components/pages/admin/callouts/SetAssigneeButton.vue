@@ -1,6 +1,6 @@
 <template>
   <AppDropdownButton
-    icon="user"
+    :icon="faUser"
     variant="primaryOutlined"
     :title="t('calloutResponsePage.actions.assignTo')"
   >
@@ -22,6 +22,7 @@
 </template>
 
 <script lang="ts" setup>
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { GetContactData } from '../../../../utils/api/api.interface';

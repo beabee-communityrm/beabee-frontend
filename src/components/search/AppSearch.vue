@@ -5,15 +5,13 @@
       <AppButton
         variant="primaryOutlined"
         size="sm"
-        icon="filter"
+        :icon="faFilter"
         class="bg-white/0"
         :class="showExpanded && 'relative rounded-b-none'"
         @click="showExpanded = !showExpanded"
       >
         {{ t('advancedSearch.button') }}
-        <font-awesome-icon
-          :icon="['fa', showExpanded ? 'caret-up' : 'caret-down']"
-        />
+        <font-awesome-icon :icon="showExpanded ? faCaretUp : faCaretDown" />
         <div
           v-show="showBox"
           class="absolute -left-px top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-px"
@@ -65,7 +63,7 @@
           >
             <AppButton
               variant="primaryOutlined"
-              icon="plus"
+              :icon="faPlus"
               size="xs"
               @click="addRule"
             >
@@ -114,6 +112,12 @@
 
 <script lang="ts" setup>
 import { RuleGroup } from '@beabee/beabee-common';
+import {
+  faCaretDown,
+  faCaretUp,
+  faFilter,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons';
 import useVuelidate from '@vuelidate/core';
 import { computed, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';

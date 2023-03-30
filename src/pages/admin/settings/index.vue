@@ -160,7 +160,7 @@ meta:
               type="button"
               @click="removeLink(i)"
             >
-              <font-awesome-icon :icon="['fa', 'times']" />
+              <font-awesome-icon :icon="faTimes" />
             </button>
           </div>
         </div>
@@ -169,7 +169,7 @@ meta:
           <AppButton
             variant="primaryOutlined"
             size="sm"
-            icon="plus"
+            :icon="faPlus"
             @click="addLink"
           >
             {{ t('adminSettings.general.footer.otherLinks.add') }}
@@ -194,6 +194,7 @@ import { generalContent as storeGeneralContent } from '../../../store';
 import AppHeading from '../../../components/AppHeading.vue';
 import axios from '../../../lib/axios';
 import AppForm from '../../../components/forms/AppForm.vue';
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 

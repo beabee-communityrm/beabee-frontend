@@ -37,13 +37,13 @@ meta:
         <AppCheckbox
           v-model="showLatestComment"
           :label="t('calloutResponsesPage.showLatestComment')"
-          icon="comment"
+          :icon="faComment"
         />
         <div class="flex items-center gap-2">
           <AppCheckbox
             v-model="showInlineAnswer"
             :label="t('calloutResponsesPage.showAnswer')"
-            icon="user-pen"
+            :icon="faUserPen"
           />
           <AppSelect
             v-model="currentInlineAnswer"
@@ -70,7 +70,7 @@ meta:
         <template #actions>
           <AppButtonGroup>
             <AppButton
-              icon="download"
+              :icon="faDownload"
               variant="primaryOutlined"
               :title="t('actions.export')"
               @click="handleExport"
@@ -154,7 +154,7 @@ meta:
             v-if="currentInlineComponent && item.answers"
             :class="showLatestComment && item.latestComment ? 'mb-2' : ''"
           >
-            <font-awesome-icon :icon="['fa', 'user-pen']" class="mr-2" />
+            <font-awesome-icon :icon="faUserPen" class="mr-2" />
             <b>{{ t('calloutResponsesPage.showAnswer') }}:{{ ' ' }}</b>
             <span class="italic">
               {{
@@ -166,7 +166,7 @@ meta:
             </span>
           </p>
           <div v-if="showLatestComment && item.latestComment">
-            <font-awesome-icon :icon="['fa', 'comment']" class="mr-2" />
+            <font-awesome-icon :icon="faComment" class="mr-2" />
             <span class="font-semibold text-body-60">
               {{
                 t('common.timeAgo', {
@@ -232,6 +232,11 @@ import {
   defineParam,
 } from '../../../../../../utils/pagination';
 import AppCheckbox from '../../../../../../components/forms/AppCheckbox.vue';
+import {
+  faComment,
+  faDownload,
+  faUserPen,
+} from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps<{ callout: GetCalloutDataWith<'form'> }>();
 
