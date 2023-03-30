@@ -45,6 +45,14 @@ meta:
         :result="contactsTable"
         keypath="contacts.showingOf"
       >
+        <template #actions>
+          <AppButton
+            icon="download"
+            variant="primaryOutlined"
+            :title="t('actions.export')"
+            @click="handleExport"
+          />
+        </template>
         <template #empty>
           <p>
             {{
@@ -207,8 +215,8 @@ onBeforeMount(async () => {
   segments.value = await fetchSegments(['contactCount']);
 });
 
-watchEffect(async () => {
-  const searchRules: GetContactsQuery['rules'] = {
+function getSearchRules(): RuleGroup {
+  const searchRules: RuleGroup = {
     condition: 'OR',
     rules: currentSearch.value
       .split(' ')
@@ -232,18 +240,22 @@ watchEffect(async () => {
       ]),
   };
 
-  const rules: GetContactsQuery['rules'] = currentRules.value
+  return currentRules.value
     ? {
         condition: 'AND',
         rules: [currentRules.value, searchRules],
       }
     : searchRules;
+}
 
-  const query = {
-    ...currentPaginatedQuery.query,
-    rules,
-  };
-
+watchEffect(async () => {
+  const query = { ...currentPaginatedQuery.query, rules: getSearchRules() };
   contactsTable.value = await fetchContacts(query, ['profile', 'roles']);
 });
+
+function handleExport() {
+  const rules = getSearchRules();
+  const rulesQuery = encodeURIComponent(JSON.stringify(rules));
+  window.open(`/api/1.0/contact.csv?rules=${rulesQuery}`, '_blank');
+}
 </script>
