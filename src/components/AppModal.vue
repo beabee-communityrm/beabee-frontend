@@ -16,7 +16,7 @@
           type="button"
           @click="$emit('close')"
         >
-          <font-awesome-icon :icon="['fa', 'times']" />
+          <font-awesome-icon :icon="faTimes" />
         </button>
         <AppHeading v-if="title" class="mb-4">
           <span :class="{ 'text-danger': variant === 'danger' }">
@@ -34,6 +34,7 @@
 import { onBeforeUnmount, ref, toRef, watch } from 'vue';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import AppHeading from './AppHeading.vue';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 defineEmits(['close']);
 const props = defineProps<{

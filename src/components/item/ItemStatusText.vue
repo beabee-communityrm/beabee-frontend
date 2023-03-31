@@ -29,10 +29,7 @@
 import { ItemStatus } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import { ItemWithStatus } from '../../utils/api/api.interface';
-import {
-  formatDistanceLocale,
-  formatLocale,
-} from '../../utils/dates/locale-date-formats';
+import { formatDistanceLocale, formatLocale } from '../../utils/dates';
 import AppItemStatus from '../AppItemStatus.vue';
 
 const { t } = useI18n();

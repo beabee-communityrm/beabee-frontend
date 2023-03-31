@@ -1,8 +1,14 @@
-import { currentUser, initCurrentUser, updateCurrentUser } from './currentUser';
-import { generalContent, initGeneralContent } from './generalContent';
+import { initCurrentUser } from './currentUser';
+import { initGeneralContent } from './generalContent';
 
 export const initStore = Promise.all([initCurrentUser, initGeneralContent]);
 
-const isEmbed = window.self !== window.top;
+export const isEmbed = window.self !== window.top;
 
-export { currentUser, updateCurrentUser, generalContent, isEmbed };
+export { generalContent, backgroundStyle } from './generalContent';
+export {
+  currentUser,
+  updateCurrentUser,
+  currentUserCan,
+  canAdmin,
+} from './currentUser';

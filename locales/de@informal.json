@@ -18,6 +18,7 @@
     "delete": "Löschen",
     "edit": "Bearbeiten",
     "export": "Exportieren",
+    "noBack": "Nein, gehe zurück",
     "participate": "Teilnehmen",
     "preview": "Vorschau",
     "publish": "Veröffentlichen",
@@ -32,7 +33,9 @@
     "submit": "Abschicken",
     "unpublish": "Veröffentlichung aufheben",
     "update": "Änderungen speichern",
-    "view": "Anzeigen"
+    "view": "Anzeigen",
+    "yesDelete": "Ja, Hinweis löschen",
+    "yesRemove": "Ja, löschen"
   },
   "addContact": {
     "contactSaved": "Kontakt gespeichert",
@@ -243,8 +246,6 @@
   "calloutAdminOverview": {
     "actions": {
       "confirmDelete": {
-        "actionNo": "Nein, Callout behalten.",
-        "actionYes": "Ja, Callout löschen.",
         "text": "Bist du sicher, dass du diesen Callout löschen willst?",
         "title": "Callout löschen?"
       }
@@ -292,6 +293,7 @@
       "updatedAt": "Geändert am"
     },
     "dataGroup": {
+      "answers": "Fragen",
       "response": "Antwort"
     }
   },
@@ -299,6 +301,18 @@
     "inbox": "Eingang",
     "trash": "Papierkorb",
     "verified": "Verifiziert"
+  },
+  "calloutResponseComments": {
+    "actions": {
+      "addComment": "Kommentar hinzufügen",
+      "updateComment": "Kommentar bearbeiten"
+    },
+    "addComment": "Einen Kommentar hinzufügen",
+    "comments": "Kommentare",
+    "confirmDelete": {
+      "text": "Bist du sicher, dass du diesen Kommentar löschen willst?",
+      "title": "Kommentar löschen?"
+    }
   },
   "calloutResponsePage": {
     "actions": {
@@ -317,6 +331,8 @@
     "responseNo": "Antwort {no}",
     "searchAssignee": "Zugewiesen an...",
     "searchTag": "Getaggt mit...",
+    "showAnswer": "Antwort",
+    "showLatestComment": "Letzter Kommentar",
     "showingOf": "Antworten {start} bis {end} von {total} werden angezeigt"
   },
   "callouts": {
@@ -327,7 +343,6 @@
     },
     "noArchivedCallouts": "Keine Callouts",
     "search": "Callouts durchsuchen",
-    "show": "Anzeigen",
     "showAll": "Alle",
     "showAnswered": "Beantwortet",
     "showingOf": "Callouts {start} bis {end} von {total} werden angezeigt."
@@ -387,6 +402,7 @@
       "superadmin": "Überadmin"
     },
     "share": "Teilen",
+    "show": "Anzeigen",
     "status": {
       "draft": "Entwurf",
       "ended": "Beendet",
@@ -927,8 +943,6 @@
   "noticeAdminOverview": {
     "actions": {
       "confirmDelete": {
-        "actionNo": "Nein, Hinweis behalten",
-        "actionYes": "Ja, Hinweis löschen",
         "text": "Bist du sicher, dass du diesen Hinweis löschen willst?",
         "title": "Hinweis löschen?"
       }
@@ -997,8 +1011,6 @@
     "add": "Rolle hinzufügen",
     "addNewRole": "Neue Rolle hinzufügen",
     "confirmDelete": {
-      "actionNo": "Nein, gehe zurück",
-      "actionYes": "Ja, löschen",
       "text": "Bist Du sicher, dass Du diese Rolle entfernen willst?",
       "title": "Rolle entfernen"
     },
@@ -1028,8 +1040,6 @@
     "add": "Tag hinzufügen",
     "addNewTag": "Tag hinzufügen",
     "confirmDelete": {
-      "actionNo": "Nein, gehe zurück",
-      "actionYes": "Ja, löschen",
       "text": "Bist du sicher, dass du diesen Tag entfernen willst? Die damit getaggten Antworten werden nicht gelöscht.",
       "title": "Tag entfernen"
     },

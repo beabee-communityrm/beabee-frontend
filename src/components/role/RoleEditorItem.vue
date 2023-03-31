@@ -28,8 +28,8 @@
         <AppConfirmDialog
           :open="showDeleteModal"
           :title="t('roleEditor.confirmDelete.title')"
-          :cancel="t('roleEditor.confirmDelete.actionNo')"
-          :confirm="t('roleEditor.confirmDelete.actionYes')"
+          :cancel="t('actions.noBack')"
+          :confirm="t('actions.yesRemove')"
           variant="danger"
           @close="showDeleteModal = false"
           @confirm="emit('delete', role.role)"
@@ -56,7 +56,7 @@ import AppButton from '../button/AppButton.vue';
 import AppRoundBadge from '../AppRoundBadge.vue';
 import AppConfirmDialog from '../AppConfirmDialog.vue';
 import { ContactRoleData } from '../../utils/api/api.interface';
-import { formatLocale } from '../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../utils/dates';
 import RoleEditorForm from './RoleEditorForm.vue';
 
 const emit = defineEmits(['delete', 'update']);

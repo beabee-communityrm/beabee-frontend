@@ -20,7 +20,7 @@ meta:
 
       <AppAlert variant="info" class="mb-4">
         <template #icon>
-          <font-awesome-icon :icon="['fa', 'hand-sparkles']" />
+          <font-awesome-icon :icon="faHandSparkles" />
         </template>
         {{ t('joinPayment.willBeContributing', signUpDescription) }}
       </AppAlert>
@@ -74,6 +74,7 @@ import AppAlert from '../../components/AppAlert.vue';
 import { useJoin } from '../../components/pages/join/use-join';
 import JoinForm from '../../components/pages/join/JoinForm.vue';
 import { JoinContent } from '../../utils/api/api.interface';
+import { faHandSparkles } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 

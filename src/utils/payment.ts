@@ -27,7 +27,10 @@ const stripeFees = {
 
 const gcFee = (amount: number) => 0.2 + amount / 100;
 
-function calcPaymentFee(feeable: Feeable, country: StripeFeeCountry): number {
+export function calcPaymentFee(
+  feeable: Feeable,
+  country: StripeFeeCountry
+): number {
   const feeFn =
     feeable.paymentMethod === PaymentMethod.GoCardlessDirectDebit
       ? gcFee
@@ -37,5 +40,3 @@ function calcPaymentFee(feeable: Feeable, country: StripeFeeCountry): number {
     ? 0
     : feeFn(feeable.amount);
 }
-
-export default calcPaymentFee;

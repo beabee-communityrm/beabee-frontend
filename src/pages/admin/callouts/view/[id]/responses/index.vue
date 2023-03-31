@@ -11,7 +11,12 @@ meta:
       <AppVTabs v-model="currentBucket" :items="bucketItems" />
     </div>
     <div class="flex-1">
-      <div class="flex gap-2">
+      <AppSearch
+        v-model="currentRules"
+        :filter-groups="filterGroupsWithQuestions"
+        :filter-items="filterItemsWithExtras"
+        @reset="currentRules = undefined"
+      >
         <AppSelect
           v-model="currentTag"
           :items="[
@@ -26,96 +31,92 @@ meta:
             ...adminItems,
           ]"
         />
-        <AppButton
-          variant="primaryOutlined"
-          size="sm"
-          class="bg-white/0"
-          icon="filter"
-          :class="showAdvancedSearch && 'relative rounded-b-none'"
-          @click="showAdvancedSearch = !showAdvancedSearch"
-        >
-          {{ t('advancedSearch.button') }}
-          <font-awesome-icon
-            class="ml-2"
-            :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
-          />
-          <div
-            v-show="showAdvancedSearch"
-            class="absolute -left-px top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-px"
-          />
-        </AppButton>
-      </div>
-      <AppSearch
-        v-model="currentRules"
-        :filter-groups="filterGroupsWithQuestions"
-        :filter-items="filterItemsWithExtras"
-        :expanded="showAdvancedSearch"
-        :has-changed="false"
-        @reset="currentRules = undefined"
-      />
-      <div class="mt-4 flex gap-4">
-        <AppButtonGroup>
-          <AppButton
-            icon="download"
-            variant="primaryOutlined"
-            :title="t('actions.export')"
-            @click="handleExport"
-          />
-          <MoveBucketButton
-            :current-bucket="currentBucket"
-            :disabled="selectedCount === 0"
-            :loading="doingAction"
-            @move="(bucket) => handleUpdateAction({ bucket })"
-          />
-          <ToggleTagButton
-            :tag-items="tagItems"
-            :selected-tags="selectedTags"
-            :manage-url="`${responsesUrl}/tags`"
-            :loading="doingAction"
-            :disabled="selectedCount === 0"
-            @toggle="(tagId) => handleUpdateAction({ tags: [tagId] })"
-          />
-          <SetAssigneeButton
-            :disabled="selectedCount === 0"
-            :current-assignee-id="selectedAssigneeId"
-            @assign="(assigneeId) => handleUpdateAction({ assigneeId })"
-          />
-        </AppButtonGroup>
-        <p v-if="selectedCount > 0" class="self-center text-sm">
-          <i18n-t
-            keypath="calloutResponsePage.selectedCount"
-            :plural="selectedCount"
-          >
-            <template #n>
-              <b>{{ selectedCount }}</b>
-            </template>
-          </i18n-t>
-        </p>
-        <AppPaginatedResult
-          v-model:page="currentPage"
-          v-model:page-size="currentPageSize"
-          :result="responses"
-          keypath="calloutResponsesPage.showingOf"
-          no-page-size
-          class="ml-auto"
+      </AppSearch>
+      <p class="text-sm font-semibold text-body-80">{{ t('common.show') }}</p>
+      <div class="mb-4 flex items-center gap-6 text-sm">
+        <AppCheckbox
+          v-model="showLatestComment"
+          :label="t('calloutResponsesPage.showLatestComment')"
+          :icon="faComment"
         />
+        <div class="flex items-center gap-2">
+          <AppCheckbox
+            v-model="showInlineAnswer"
+            :label="t('calloutResponsesPage.showAnswer')"
+            :icon="faUserPen"
+          />
+          <AppSelect
+            v-model="currentInlineAnswer"
+            class="max-w-xs"
+            :class="!showInlineAnswer && 'invisible'"
+            :items="[
+              { id: '', label: t('common.selectOne') },
+              ...Object.entries(formFilterItems).map(([id, item]) => ({
+                id: id.substring(8),
+                label: item.label,
+              })),
+            ]"
+            required
+          />
+        </div>
       </div>
-      <AppTable
-        v-model:sort="currentSort"
+      <AppPaginatedTable
+        v-model:query="currentPaginatedQuery"
+        keypath="calloutResponsesPage.showingOf"
         :headers="headers"
-        :items="responseItems || null"
+        :result="responses"
         selectable
-        class="mt-2 w-full"
       >
-        <template #number="{ value, item }">
+        <template #actions>
+          <AppButtonGroup>
+            <AppButton
+              :icon="faDownload"
+              variant="primaryOutlined"
+              :title="t('actions.export')"
+              @click="handleExport"
+            />
+            <MoveBucketButton
+              :current-bucket="currentBucket"
+              :disabled="selectedCount === 0"
+              :loading="doingAction"
+              @move="(bucket) => handleUpdateAction({ bucket })"
+            />
+            <ToggleTagButton
+              :tag-items="tagItems"
+              :selected-tags="selectedTags"
+              :manage-url="`${route.path}/tags`"
+              :loading="doingAction"
+              :disabled="selectedCount === 0"
+              @toggle="(tagId) => handleUpdateAction({ tags: [tagId] })"
+            />
+            <SetAssigneeButton
+              :disabled="selectedCount === 0"
+              :loading="doingAction"
+              :current-assignee-id="selectedAssigneeId"
+              @assign="(assigneeId) => handleUpdateAction({ assigneeId })"
+            />
+          </AppButtonGroup>
+          <p v-if="selectedCount > 0" class="self-center text-sm">
+            <i18n-t
+              keypath="calloutResponsePage.selectedCount"
+              :plural="selectedCount"
+            >
+              <template #n>
+                <b>{{ selectedCount }}</b>
+              </template>
+            </i18n-t>
+          </p>
+        </template>
+
+        <template #value-number="{ value, item }">
           <router-link
-            :to="`${responsesUrl}/${item.id}`"
+            :to="`${route.path}/${item.id}`"
             class="text-base font-bold text-link"
           >
             {{ t('calloutResponsesPage.responseNo', { no: n(value) }) }}
           </router-link>
         </template>
-        <template #assignee="{ value }">
+        <template #value-assignee="{ value }">
           <router-link
             v-if="value"
             :to="`/admin/contacts/${value.id}`"
@@ -125,7 +126,7 @@ meta:
           </router-link>
           <span v-else>-</span>
         </template>
-        <template #contact="{ value }">
+        <template #value-contact="{ value }">
           <router-link
             v-if="value"
             :to="`/admin/contacts/${value.id}`"
@@ -135,31 +136,62 @@ meta:
           </router-link>
           <span v-else>-</span>
         </template>
-        <template #tags="{ value }">
+        <template #value-tags="{ value }">
           <span class="whitespace-normal">
             <AppTag v-for="tag in value" :key="tag.id" :tag="tag.name" />
           </span>
         </template>
-        <template #createdAt="{ value }">
+        <template #value-createdAt="{ value }">
           {{
             t('common.timeAgo', {
               time: formatDistanceLocale(new Date(), value),
             })
           }}
         </template>
-      </AppTable>
-      <AppPaginatedResult
-        v-model:page="currentPage"
-        v-model:page-size="currentPageSize"
-        :result="responses"
-        keypath="calloutResponsesPage.showingOf"
-        class="mt-4"
-      />
+
+        <template #after="{ item }">
+          <p
+            v-if="currentInlineComponent && item.answers"
+            :class="showLatestComment && item.latestComment ? 'mb-2' : ''"
+          >
+            <font-awesome-icon :icon="faUserPen" class="mr-2" />
+            <b>{{ t('calloutResponsesPage.showAnswer') }}:{{ ' ' }}</b>
+            <span class="italic">
+              {{
+                convertAnswer(
+                  currentInlineComponent,
+                  item.answers[currentInlineComponent.key]
+                )
+              }}
+            </span>
+          </p>
+          <div v-if="showLatestComment && item.latestComment">
+            <font-awesome-icon :icon="faComment" class="mr-2" />
+            <span class="font-semibold text-body-60">
+              {{
+                t('common.timeAgo', {
+                  time: formatDistanceLocale(
+                    new Date(),
+                    item.latestComment.createdAt
+                  ),
+                })
+              }}
+              •
+            </span>
+            <b>{{ item.latestComment.contact.displayName }}:{{ ' ' }}</b>
+            <span
+              class="inline-block italic"
+              v-html="item.latestComment.text"
+            ></span>
+          </div>
+        </template>
+      </AppPaginatedTable>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import {
+  convertAnswer,
   flattenComponents,
   Paginated,
   Rule,
@@ -168,7 +200,6 @@ import {
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
-import AppPaginatedResult from '../../../../../../components/AppPaginatedResult.vue';
 import AppButton from '../../../../../../components/button/AppButton.vue';
 import AppSelect from '../../../../../../components/forms/AppSelect.vue';
 import AppVTabs from '../../../../../../components/tabs/AppVTabs.vue';
@@ -178,16 +209,15 @@ import {
   headers,
 } from '../../../../../../components/pages/admin/callout-responses.interface';
 import AppSearch from '../../../../../../components/search/AppSearch.vue';
-import AppTable from '../../../../../../components/table/AppTable.vue';
-import { SortType } from '../../../../../../components/table/table.interface';
 import {
   GetCalloutDataWith,
+  GetCalloutResponseWith,
   GetCalloutResponseDataWith,
   UpdateCalloutResponseData,
 } from '../../../../../../utils/api/api.interface';
 import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
 import { convertComponentsToFilters } from '../../../../../../utils/callouts';
-import { formatDistanceLocale } from '../../../../../../utils/dates/locale-date-formats';
+import { formatDistanceLocale } from '../../../../../../utils/dates';
 import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
 import { updateCalloutResponses } from '../../../../../../utils/api/callout-response';
 import AppTag from '../../../../../../components/AppTag.vue';
@@ -196,28 +226,46 @@ import ToggleTagButton from '../../../../../../components/pages/admin/callouts/T
 import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
 import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
 import { fetchContacts } from '../../../../../../utils/api/contact';
+import AppPaginatedTable from '../../../../../../components/table/AppPaginatedTable.vue';
+import {
+  definePaginatedQuery,
+  defineParam,
+} from '../../../../../../utils/pagination';
+import AppCheckbox from '../../../../../../components/forms/AppCheckbox.vue';
+import {
+  faComment,
+  faDownload,
+  faUserPen,
+} from '@fortawesome/free-solid-svg-icons';
 
-const props = defineProps<{
-  callout: GetCalloutDataWith<'form'>;
-}>();
+const props = defineProps<{ callout: GetCalloutDataWith<'form'> }>();
 
 const { t, n } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
-const responses =
-  ref<Paginated<GetCalloutResponseDataWith<'assignee' | 'contact' | 'tags'>>>();
-const showAdvancedSearch = ref(false);
+const responses = ref<
+  Paginated<
+    GetCalloutResponseDataWith<
+      'answers' | 'assignee' | 'contact' | 'latestComment' | 'tags'
+    > & {
+      selected: boolean;
+    }
+  >
+>();
+const showLatestComment = ref(false);
 const doingAction = ref(false);
 
-const responseItems = ref<
-  (GetCalloutResponseDataWith<'assignee' | 'contact' | 'tags'> & {
-    selected: boolean;
-  })[]
->();
+const showInlineAnswer = ref(false);
+const currentInlineAnswer = ref('');
+const currentInlineComponent = computed(
+  () =>
+    showInlineAnswer.value &&
+    formComponents.value.find((c) => c.key === currentInlineAnswer.value)
+);
 
 const selectedResponseItems = computed(
-  () => responseItems.value?.filter((ri) => ri.selected) || []
+  () => responses.value?.items.filter((ri) => ri.selected) || []
 );
 
 const selectedCount = computed(() => selectedResponseItems.value.length);
@@ -249,32 +297,28 @@ const selectedAssigneeId = computed(() => {
 const adminItems = ref<{ id: string; label: string }[]>([]);
 const tagItems = ref<{ id: string; label: string }[]>([]);
 
-const responsesUrl = computed(
-  () =>
-    router.resolve({
-      name: 'adminCalloutViewResponsesTable',
-      params: { id: props.callout.slug },
-    }).href
-);
-
 const bucketItems = computed(() =>
   buckets.value.map((bucket) => ({
     ...bucket,
-    to: responsesUrl.value + '?bucket=' + bucket.id,
+    to: `${route.path}?bucket=${bucket.id}`,
   }))
 );
 
-const formQuestions = computed(() =>
+const formComponents = computed(() =>
   flattenComponents(props.callout.formSchema.components).filter(
     (c) => !!c.input && c.type !== 'button'
   )
+);
+
+const formFilterItems = computed(() =>
+  convertComponentsToFilters(formComponents.value)
 );
 
 const filterGroupsWithQuestions = computed(() => [
   ...filterGroups.value,
   {
     label: 'Answers',
-    items: formQuestions.value.map((q) => `answers.${q.key}`),
+    items: Object.keys(formFilterItems.value),
   },
 ]);
 
@@ -285,52 +329,15 @@ const filterItemsWithExtras = computed(() => {
       ...filterItems.value.tags,
       options: tagItems.value,
     },
-    ...convertComponentsToFilters(formQuestions.value),
+    ...formFilterItems.value,
   };
 });
 
-const currentAssignee = computed({
-  get: () => (route.query.assignee as string) || '',
-  set: (assignee) =>
-    router.push({ query: { ...route.query, assignee: assignee || undefined } }),
-});
+const currentAssignee = defineParam('assignee', (v) => v || '');
+const currentTag = defineParam('tag', (v) => v || '');
+const currentBucket = defineParam('bucket', (v) => v || '', 'replace');
 
-const currentBucket = computed({
-  get: () => (route.query.bucket as string) || '',
-  set: (bucket) => router.push({ query: { bucket: bucket || undefined } }),
-});
-
-const currentTag = computed({
-  get: () => (route.query.tag as string) || '',
-  set: (tag) =>
-    router.push({ query: { ...route.query, tag: tag || undefined } }),
-});
-
-const currentPageSize = computed({
-  get: () => Number(route.query.limit) || 25,
-  set: (limit) => router.push({ query: { ...route.query, limit } }),
-});
-
-const currentPage = computed({
-  get: () => Number(route.query.page) || 0,
-  set: (page) => router.push({ query: { ...route.query, page } }),
-});
-
-const currentSort = computed({
-  get: () => ({
-    by: (route.query.sortBy as string) || 'createdAt',
-    type: (route.query.sortType as SortType) || SortType.Desc,
-  }),
-  set: ({ by, type }) => {
-    router.replace({
-      query: {
-        ...route.query,
-        sortBy: by,
-        sortType: type,
-      },
-    });
-  },
-});
+const currentPaginatedQuery = definePaginatedQuery('createdAt');
 
 const currentRules = computed({
   get: () =>
@@ -402,22 +409,27 @@ function getSelectedResponseRules(): RuleGroup {
 }
 
 async function refreshResponses() {
-  responses.value = await fetchResponses(
+  const _with: GetCalloutResponseWith[] = ['assignee', 'contact', 'tags'];
+  if (showLatestComment.value) {
+    _with.push('latestComment');
+  }
+  if (showInlineAnswer.value) {
+    _with.push('answers');
+  }
+
+  const newResponses = await fetchResponses(
     props.callout.slug,
     {
-      limit: currentPageSize.value,
-      offset: currentPage.value * currentPageSize.value,
-      sort: currentSort.value.by,
-      order: currentSort.value.type,
+      ...currentPaginatedQuery.query,
       rules: getSearchRules(),
     },
-    ['assignee', 'contact', 'tags']
+    _with
   );
 
-  responseItems.value = responses.value.items.map((r) => ({
-    ...r,
-    selected: false,
-  }));
+  responses.value = {
+    ...newResponses,
+    items: newResponses.items.map((r) => ({ ...r, selected: false })),
+  };
 }
 
 watchEffect(refreshResponses);

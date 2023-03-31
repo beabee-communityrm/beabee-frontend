@@ -6,13 +6,15 @@
     <font-awesome-icon
       v-if="props.hasRemoveIcon"
       class="ml-2 inline-block cursor-pointer hover:text-link-110"
-      icon="times"
+      :icon="faTimes"
       @click="$emit('click:removeTag')"
     />
   </span>
 </template>
 
 <script lang="ts" setup>
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
 const props = defineProps<{
   tag: string;
   hasRemoveIcon?: boolean;

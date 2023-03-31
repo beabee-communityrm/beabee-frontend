@@ -1,7 +1,7 @@
 <template>
   <div class="flex rounded py-4 pl-4 pr-3.5 text-white" :class="bgColorClass">
     <div>
-      <FontAwesomeIcon class="mt-1.5 text-lg" :icon="['fas', icon]" />
+      <font-awesome-icon class="mt-1.5 text-lg" :icon="icon" />
     </div>
 
     <div class="ml-4 flex-grow pr-3">
@@ -15,9 +15,9 @@
     </div>
 
     <div>
-      <FontAwesomeIcon
+      <font-awesome-icon
         class="cursor-pointer text-xl"
-        :icon="['fas', 'times']"
+        :icon="faTimes"
         @click="removeItem"
       />
     </div>
@@ -25,6 +25,7 @@
 </template>
 
 <script lang="ts" setup>
+import { faBomb, faMagic, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
 import { Notification, NotificationType } from './notification.interface';
 
@@ -37,8 +38,8 @@ const props = defineProps({
 
 const icon = computed(() => {
   return props.notification.type === NotificationType.Success
-    ? 'magic'
-    : 'bomb';
+    ? faMagic
+    : faBomb;
 });
 
 const bgColorClass = computed(() => {

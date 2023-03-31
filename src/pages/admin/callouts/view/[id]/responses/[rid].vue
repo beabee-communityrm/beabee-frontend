@@ -19,7 +19,7 @@ meta:
         <AppButton
           type="button"
           variant="primaryOutlined"
-          icon="caret-left"
+          :icon="faCaretLeft"
           :disabled="!prevResponse"
           :to="
             prevResponse &&
@@ -29,7 +29,7 @@ meta:
         <AppButton
           type="button"
           variant="primaryOutlined"
-          icon="caret-right"
+          :icon="faCaretRight"
           :disabled="!nextResponse"
           :to="
             nextResponse &&
@@ -110,6 +110,9 @@ meta:
         :options="{ readOnly: true }"
       />
     </div>
+    <div>
+      <CalloutResponseComments :response-id="response.id" />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -126,7 +129,7 @@ import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../../../components/AppHeading.vue';
 import AppInfoList from '../../../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../../../components/AppInfoListItem.vue';
-import { formatLocale } from '../../../../../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../../../../../utils/dates';
 import AppButton from '../../../../../../components/button/AppButton.vue';
 import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
 import { addBreadcrumb } from '../../../../../../store/breadcrumb';
@@ -138,7 +141,9 @@ import {
   fetchCalloutResponse,
   updateCalloutResponse,
 } from '../../../../../../utils/api/callout-response';
+import CalloutResponseComments from '../../../../../../components/callout/CalloutResponseComments.vue';
 import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
+import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps<{
   rid: string;

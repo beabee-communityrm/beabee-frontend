@@ -7,6 +7,5 @@
   </main>
 </template>
 <script lang="ts" setup>
-import { isEmbed } from '../store';
-import backgroundStyle from '../utils/backgroundStyle';
+import { backgroundStyle, isEmbed } from '../store';
 </script>
