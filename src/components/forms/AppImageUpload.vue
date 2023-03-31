@@ -25,7 +25,7 @@
           {{ t('actions.chooseFile') }}
         </AppButton>
         <span v-if="uploading">
-          <font-awesome-icon :icon="['fas', 'circle-notch']" spin />
+          <font-awesome-icon :icon="faCircleNotch" spin />
           {{ t('form.uploading') }}
         </span>
       </div>
@@ -41,6 +41,7 @@ import axios from '../../lib/axios';
 import env from '../../env';
 import AppButton from '../button/AppButton.vue';
 import AppLabel from './AppLabel.vue';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{

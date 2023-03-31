@@ -27,11 +27,12 @@
 </template>
 
 <script lang="ts" setup>
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { onBeforeMount, onBeforeUnmount, ref, toRef, watch } from 'vue';
 import AppButton from './AppButton.vue';
 
 const props = defineProps<{
-  icon: string;
+  icon: IconDefinition;
   disabled?: boolean;
 }>();
 

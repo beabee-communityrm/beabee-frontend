@@ -4,7 +4,7 @@
       class="flex w-12 flex-shrink-0 items-center justify-center text-white"
       :class="iconClasses[type]"
     >
-      <font-awesome-icon :icon="['fas', icon]" />
+      <font-awesome-icon :icon="icon" />
     </div>
 
     <div
@@ -19,6 +19,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
+import { faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 
@@ -30,7 +31,7 @@ const props = withDefaults(
 );
 
 const icon = computed(() =>
-  props.type === 'success' ? 'check' : 'exclamation'
+  props.type === 'success' ? faCheck : faExclamation
 );
 
 const iconClasses = {

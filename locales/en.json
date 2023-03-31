@@ -20,6 +20,7 @@
     "delete": "Delete",
     "edit": "Edit",
     "export": "Export",
+    "noBack": "No, go back",
     "participate": "Participate",
     "preview": "Preview",
     "publish": "Publish",
@@ -34,7 +35,9 @@
     "submit": "Submit",
     "unpublish": "Unpublish",
     "update": "Update",
-    "view": "View"
+    "view": "View",
+    "yesDelete": "Yes, delete it",
+    "yesRemove": "Yes, remove it"
   },
   "addContact": {
     "contactSaved": "Contact saved",
@@ -245,8 +248,6 @@
   "calloutAdminOverview": {
     "actions": {
       "confirmDelete": {
-        "actionNo": "No, go back",
-        "actionYes": "Yes, delete it",
         "text": "Are you sure you want to delete this callout?",
         "title": "Delete callout?"
       }
@@ -294,6 +295,7 @@
       "updatedAt": "Date updated"
     },
     "dataGroup": {
+      "answers": "Questions",
       "response": "Response"
     }
   },
@@ -301,6 +303,18 @@
     "inbox": "Inbox",
     "trash": "Trash",
     "verified": "Verified"
+  },
+  "calloutResponseComments": {
+    "actions": {
+      "addComment": "Add comment",
+      "updateComment": "Update comment"
+    },
+    "addComment": "Add a comment",
+    "comments": "Comments",
+    "confirmDelete": {
+      "text": "Are you sure you want to delete this comment?",
+      "title": "Delete comment?"
+    }
   },
   "calloutResponsePage": {
     "actions": {
@@ -319,6 +333,8 @@
     "responseNo": "Response {no}",
     "searchAssignee": "Assigned to...",
     "searchTag": "Tagged with...",
+    "showAnswer": "Answer",
+    "showLatestComment": "Latest comment",
     "showingOf": "Showing {start} to {end} responses out of {total}"
   },
   "callouts": {
@@ -329,7 +345,6 @@
     },
     "noArchivedCallouts": "No callouts",
     "search": "Search callouts...",
-    "show": "Show",
     "showAll": "All",
     "showAnswered": "Answered",
     "showingOf": "Showing {start} to {end} callouts out of {total}"
@@ -388,7 +403,9 @@
       "member": "Member",
       "superadmin": "Super Admin"
     },
+    "selectOne": "Select one...",
     "share": "Share",
+    "show": "Show",
     "status": {
       "draft": "Draft",
       "ended": "Ended",
@@ -930,8 +947,6 @@
   "noticeAdminOverview": {
     "actions": {
       "confirmDelete": {
-        "actionNo": "No, go back",
-        "actionYes": "Yes, delete it",
         "text": "Are you sure you want to delete this notice?",
         "title": "Delete notice?"
       }
@@ -1000,8 +1015,6 @@
     "add": "Add role",
     "addNewRole": "Add a new role",
     "confirmDelete": {
-      "actionNo": "No, go back",
-      "actionYes": "Yes, remove it",
       "text": "Are you sure you want to remove this role?",
       "title": "Remove role"
     },
@@ -1031,8 +1044,6 @@
     "add": "Add tag",
     "addNewTag": "Add a tag",
     "confirmDelete": {
-      "actionNo": "No, go back",
-      "actionYes": "Yes, remove it",
       "text": "Are you sure you want to remove this tag? Any responses with this tag will not be deleted.",
       "title": "Remove tag"
     },

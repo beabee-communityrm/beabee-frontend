@@ -79,13 +79,14 @@ import RoleEditor from '../../../components/role/RoleEditor.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
 import { ContactRoleData } from '../../../utils/api/api.interface';
 import { createContact } from '../../../utils/api/contact';
+import { faUsers } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 const router = useRouter();
 
 addBreadcrumb(
   computed(() => [
-    { title: t('menu.contacts'), to: '/admin/contacts', icon: 'users' },
+    { title: t('menu.contacts'), to: '/admin/contacts', icon: faUsers },
     { title: t('contacts.addContact'), to: '/admin/contacts/new' },
   ])
 );

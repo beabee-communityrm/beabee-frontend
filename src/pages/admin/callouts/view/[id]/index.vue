@@ -10,7 +10,7 @@ meta:
     <div class="flex-initial basis-1/2">
       <AppAlert v-if="wasJustCreated || wasJustUpdated" class="mb-8">
         <template #icon>
-          <font-awesome-icon :icon="['fa', 'magic']" />
+          <font-awesome-icon :icon="faMagic" />
         </template>
         {{
           wasJustCreated
@@ -63,7 +63,7 @@ meta:
       </AppInfoList>
     </div>
     <div class="flex-0 flex flex-wrap gap-2 lg:flex-col">
-      <ActionButton icon="eye" :to="`/callouts/${callout.slug}?preview`">
+      <ActionButton :icon="faEye" :to="`/callouts/${callout.slug}?preview`">
         {{
           callout.status === ItemStatus.Open ||
           callout.status === ItemStatus.Ended
@@ -73,28 +73,28 @@ meta:
       </ActionButton>
       <ActionButton
         v-if="callout.status === ItemStatus.Open"
-        icon="reply"
+        :icon="faReply"
         :to="`/callouts/${callout.slug}`"
       >
         {{ t('actions.participate') }}
       </ActionButton>
       <ActionButton
-        icon="pencil-alt"
+        :icon="faPencilAlt"
         :to="'/admin/callouts/edit/' + callout.slug"
       >
         {{ t('actions.edit') }}
       </ActionButton>
-      <ActionButton icon="clone" @click="replicateThisCallout()">
+      <ActionButton :icon="faClone" @click="replicateThisCallout()">
         {{ t('actions.replicate') }}
       </ActionButton>
-      <ActionButton icon="trash" @click="showDeleteModal = true">
+      <ActionButton :icon="faTrash" @click="showDeleteModal = true">
         {{ t('actions.delete') }}
       </ActionButton>
       <AppConfirmDialog
         :open="showDeleteModal"
         :title="t('calloutAdminOverview.actions.confirmDelete.title')"
-        :cancel="t('calloutAdminOverview.actions.confirmDelete.actionNo')"
-        :confirm="t('calloutAdminOverview.actions.confirmDelete.actionYes')"
+        :cancel="t('actions.noBack')"
+        :confirm="t('actions.yesDelete')"
         variant="danger"
         @close="showDeleteModal = false"
         @confirm="confirmDeleteCallout"
@@ -119,6 +119,14 @@ import CalloutSummary from '../../../../../components/callout/CalloutSummary.vue
 import AppAlert from '../../../../../components/AppAlert.vue';
 import { createCallout } from '../../../../../utils/api/callout';
 import AppConfirmDialog from '../../../../../components/AppConfirmDialog.vue';
+import {
+  faClone,
+  faEye,
+  faMagic,
+  faPencilAlt,
+  faReply,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;

@@ -2,11 +2,11 @@
   <div class="mb-3 rounded border border-primary-20 bg-primary-10">
     <div class="flex items-center bg-primary-5 p-2 pl-4 text-sm">
       <strong class="font-bold text-body-80">
-        <font-awesome-icon :icon="['fa', 'tag']" class="mr-2" />{{ tag.name }}
+        <font-awesome-icon :icon="faTag" class="mr-2" />{{ tag.name }}
       </strong>
       <AppButtonGroup class="ml-auto">
         <AppButton
-          icon="pencil"
+          :icon="faPencil"
           size="sm"
           variant="primaryOutlined"
           @click="formVisible = !formVisible"
@@ -15,7 +15,7 @@
         <AppButton
           variant="danger"
           size="sm"
-          icon="trash"
+          :icon="faTrash"
           @click="showDeleteModal = true"
         >
         </AppButton>
@@ -32,8 +32,8 @@
     <AppConfirmDialog
       :open="showDeleteModal"
       :title="t('tagEditor.confirmDelete.title')"
-      :cancel="t('tagEditor.confirmDelete.actionNo')"
-      :confirm="t('tagEditor.confirmDelete.actionYes')"
+      :cancel="t('actions.noBack')"
+      :confirm="t('actions.yesRemove')"
       variant="danger"
       @close="showDeleteModal = false"
       @confirm="$emit('delete', tag.id)"
@@ -43,6 +43,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { faPencil, faTag, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import {

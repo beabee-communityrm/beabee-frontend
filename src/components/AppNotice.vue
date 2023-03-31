@@ -4,7 +4,7 @@
       <div class="flex md:mt-1.5">
         <font-awesome-icon
           class="mr-2 self-start text-xl text-warning md:mt-1"
-          :icon="['fas', 'bullhorn']"
+          :icon="faBullhorn"
         />
 
         <div class="pr-3 text-sm md:text-lg">
@@ -25,6 +25,7 @@
 <script lang="ts" setup>
 import AppButton from './button/AppButton.vue';
 import { GetNoticeData } from '../utils/api/api.interface';
+import { faBullhorn } from '@fortawesome/free-solid-svg-icons';
 
 defineProps<{
   notice: GetNoticeData;

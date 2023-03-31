@@ -323,6 +323,7 @@ export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
 
 export type GetCalloutsQuery = PaginatedQuery; // TODO: constrain fields
 export type GetCalloutResponsesQuery = PaginatedQuery; // TODO: constrain fields
+export type GetCalloutResponseCommentsQuery = PaginatedQuery; // TODO: constrain fields
 
 export interface GetCalloutTagData {
   id: string;
@@ -369,6 +370,7 @@ export type GetCalloutResponseWith =
   | 'assignee'
   | 'callout'
   | 'contact'
+  | 'latestComment'
   | 'tags'
   | void;
 
@@ -378,7 +380,29 @@ export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
     ('assignee' extends With ? { assignee: GetContactData | null } : Noop) &
     ('callout' extends With ? { callout: GetCalloutData } : Noop) &
     ('contact' extends With ? { contact: GetContactData | null } : Noop) &
+    ('latestComment' extends With
+      ? { latestComment: GetCalloutResponseCommentData | null }
+      : Noop) &
     ('tags' extends With ? { tags: { id: string; name: string }[] } : Noop);
+
+export interface UpdateCalloutResponseCommentData {
+  text: string;
+}
+
+export interface CalloutResponseCommentData
+  extends UpdateCalloutResponseCommentData {
+  responseId: string;
+}
+
+export interface GetCalloutResponseCommentData
+  extends CalloutResponseCommentData {
+  contact: GetContactData;
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export type CreateCalloutResponseCommentData = CalloutResponseCommentData;
 
 export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 

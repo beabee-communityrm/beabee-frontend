@@ -9,7 +9,7 @@
 
       <font-awesome-icon
         class="text-[60px] text-body-60"
-        :icon="['fas', 'circle-notch']"
+        :icon="faCircleNotch"
         spin
       />
 
@@ -20,8 +20,9 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import AuthBox from '../components/AuthBox.vue';
-import backgroundStyle from '../utils/backgroundStyle';
+import { backgroundStyle } from '../store';
 import AppLogo from '../components/AppLogo.vue';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 </script>

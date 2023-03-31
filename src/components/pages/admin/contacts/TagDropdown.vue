@@ -18,7 +18,7 @@
       <p class="align-middle">
         <font-awesome-icon
           class="mr-2 ml-2 inline-block cursor-pointer"
-          icon="caret-down"
+          :icon="faCaretDown"
         />
         {{ t('contactOverview.pickTag') }}
       </p>
@@ -31,7 +31,7 @@
         >
           <font-awesome-icon
             class="mr-2 ml-2 inline-block cursor-pointer"
-            icon="tag"
+            :icon="faTag"
           />
           {{ tag }}
         </p>
@@ -41,6 +41,7 @@
 </template>
 
 <script lang="ts" setup>
+import { faCaretDown, faTag } from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';

@@ -128,7 +128,7 @@ meta:
           v-if="changingRoles"
           class="absolute inset-0 flex items-center justify-center bg-primary-5/50"
         >
-          <font-awesome-icon :icon="['fas', 'circle-notch']" spin />
+          <font-awesome-icon :icon="faCircleNotch" spin />
         </div>
       </div>
     </div>
@@ -174,10 +174,11 @@ import {
 } from '../../../../utils/api/contact';
 import AppInfoList from '../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
-import { formatLocale } from '../../../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../../../utils/dates';
 import { fetchContent } from '../../../../utils/api/content';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 import AppForm from '../../../../components/forms/AppForm.vue';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 const { t, n } = useI18n();
 

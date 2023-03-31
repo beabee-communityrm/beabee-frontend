@@ -1,15 +1,14 @@
 <template>
   <div class="flex text-body-80">
-    <FontAwesomeIcon
-      class="font-primary-80 text-base"
-      :icon="['fas', 'info-circle']"
-    />
+    <font-awesome-icon class="font-primary-80 text-base" :icon="faInfoCircle" />
 
     <span class="ml-1 text-xs font-semibold">{{ message }}</span>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+
 defineProps({
   message: {
     type: String,

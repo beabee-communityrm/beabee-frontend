@@ -10,6 +10,7 @@ import {
   UpdateCalloutResponseData,
   GetCalloutResponseData,
 } from './api.interface';
+import { deserializeComment } from './callout-response-comments';
 
 // TODO: how to make this type safe?
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,6 +23,9 @@ export function deserializeCalloutResponse(response: any): any {
       assignee: deserializeContact(response.assignee),
     }),
     ...(response.contact && { contact: deserializeContact(response.contact) }),
+    ...(response.latestComment && {
+      latestComment: deserializeComment(response.latestComment),
+    }),
   };
 }
 

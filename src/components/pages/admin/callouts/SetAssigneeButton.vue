@@ -1,6 +1,6 @@
 <template>
   <AppDropdownButton
-    icon="user"
+    :icon="faUser"
     variant="primaryOutlined"
     :title="t('calloutResponsePage.actions.assignTo')"
   >
@@ -22,6 +22,7 @@
 </template>
 
 <script lang="ts" setup>
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { GetContactData } from '../../../../utils/api/api.interface';
@@ -30,7 +31,7 @@ import AppSelectableList from '../../../AppSelectableList.vue';
 import AppDropdownButton from '../../../button/AppDropdownButton.vue';
 
 defineEmits<{ (event: 'assign', id: string | null): void }>();
-defineProps<{ currentAssigneeId: string | undefined; withText?: boolean }>();
+defineProps<{ currentAssigneeId?: string; withText?: boolean }>();
 
 const { t } = useI18n();
 

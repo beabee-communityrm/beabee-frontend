@@ -9,7 +9,7 @@
         readonly
       />
       <button type="button" class="-mr-2 px-2" @click="emit('remove')">
-        <font-awesome-icon :icon="['fa', 'times']" />
+        <font-awesome-icon :icon="faTimes" />
       </button>
     </template>
   </template>
@@ -19,7 +19,7 @@
       type="button"
       @click="emit('remove')"
     >
-      <font-awesome-icon :icon="['fa', 'times']" />
+      <font-awesome-icon :icon="faTimes" />
     </button>
     <AppSelect
       :model-value="rule?.field || ''"
@@ -58,6 +58,7 @@ import {
   FilterItems,
   getDefaultValue,
 } from './search.interface';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const emit = defineEmits(['update:rule', 'remove']);
 const props = defineProps<{
