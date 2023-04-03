@@ -416,6 +416,10 @@
     "year": "Jahr | Jahren",
     "yes": "Ja"
   },
+  "contactContribution": {
+    "confirmCancel": {},
+    "editNotice": "Der Beitrag kann aktuell nur bei manuell zahlenden Mitgliedern geändert werden."
+  },
   "contactOverview": {
     "about": "Über",
     "account": "Account",
@@ -479,7 +483,6 @@
       "contribution": "Beitrag",
       "role": "Rolle"
     },
-    "editNotice": "Der Beitrag kann aktuell nur bei manuell zahlenden Mitgliedern geändert werden.",
     "noContacts": "Keine Kontakte",
     "noResults": "Keine Kontakte gefunden",
     "numResults": "{n} Kontakt gefunden | {n} Kontakte gefunden",
@@ -490,7 +493,7 @@
     "bankAccount": "Bankverbindung",
     "billing": "Zahlungsart",
     "cancelContribution": "Mitgliedschaft kündigen",
-    "cancelDescription": "Wenn du jetzt kündigst, endet deine Mitgliedschaft am {day} {month}.",
+    "cancelDescription": "Wenn du jetzt kündigst, endet deine Mitgliedschaft am {date}.",
     "cancelMessage": "Schade, dass du uns verlässt.",
     "cancelledContribution": "Deine Mitgliedschaft wurde gekündigt.",
     "changeBank": "Ändere deine Bankverbindung.",

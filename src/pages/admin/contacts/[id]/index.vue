@@ -80,6 +80,17 @@ meta:
           :name="t('contactOverview.contributionType')"
           :value="contact.contribution.type"
         />
+        <AppInfoListItem
+          v-if="contact.contribution.paymentSource?.method"
+          :name="t('contribution.paymentMethod')"
+        >
+          <PaymentMethod :source="contact.contribution.paymentSource" />
+        </AppInfoListItem>
+        <AppInfoListItem
+          v-if="contact.contribution.cancellationDate"
+          :name="t('contactOverview.cancellationDate')"
+          :value="formatLocale(contact.contribution.cancellationDate, 'PPP')"
+        />
       </AppInfoList>
     </div>
     <div class="row-span-3 max-w-xl">
@@ -179,6 +190,7 @@ import { fetchContent } from '../../../../utils/api/content';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 import AppForm from '../../../../components/forms/AppForm.vue';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import PaymentMethod from '../../../../components/payment-method/PaymentMethod.vue';
 
 const { t, n } = useI18n();
 
