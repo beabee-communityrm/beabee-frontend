@@ -419,6 +419,14 @@
     "year": "year | years",
     "yes": "Yes"
   },
+  "contactContribution": {
+    "confirmCancel": {
+      "confirm": "Yes, cancel it",
+      "text": "Are you sure you want to cancel this contact's contribution? This can't be undone.",
+      "title": "Cancel contribution?"
+    },
+    "editNotice": "Updating a contact's contribution is currently only possible for those with a manual contribution."
+  },
   "contactOverview": {
     "about": "About",
     "account": "Account",
@@ -426,6 +434,7 @@
       "copy": "<p>All information added in this section is <strong>visible for admins only</strong>. Members will never see these in their profile or member area.</p>\n"
     },
     "callouts": "Callouts",
+    "cancellationDate": "Cancelled on",
     "contribution": "Contribution",
     "contributionType": "Type",
     "information": "Information",
@@ -482,7 +491,6 @@
       "contribution": "Contribution",
       "role": "Role"
     },
-    "editNotice": "Updating a contact's contribution is currently only possible for those with a manual contribution.",
     "noContacts": "No contacts added yet",
     "noResults": "No contacts found",
     "numResults": "{n} contact found | {n} contacts found",
@@ -490,10 +498,11 @@
     "showingOf": "Showing {start} to {end} contacts out of {total}"
   },
   "contribution": {
+    "adminCancelDescription": "If you cancel the contact's contribution their membership will finish at the end of their current payment cycle on {date}.",
     "bankAccount": "Bank account",
     "billing": "Billing",
     "cancelContribution": "Cancel contribution",
-    "cancelDescription": "If you cancel your contribution your membership will finish at the end of your current payment cycle, {day} of {month}.",
+    "cancelDescription": "If you cancel your contribution your membership will finish at the end of your current payment cycle on {date}.",
     "cancelMessage": "We're sorry to see you go.",
     "cancelledContribution": "Your contribution has been cancelled.",
     "changeBank": "Change to a different bank account",

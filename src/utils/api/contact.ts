@@ -177,8 +177,8 @@ export async function completeStartContribution(
   );
   return deserializeContribution(data);
 }
-export async function cancelContribution(): Promise<void> {
-  await axios.post('/contact/me/contribution/cancel');
+export async function cancelContribution(id: string): Promise<void> {
+  await axios.post(`/contact/${id}/contribution/cancel`);
 }
 
 export const updatePaymentMethodCompleteUrl =
