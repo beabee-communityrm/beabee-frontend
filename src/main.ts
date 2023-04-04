@@ -20,13 +20,13 @@ const app = createApp(App);
 initErrorHandler(app);
 
 app.use(VueMatomo, {
-  host: 'https://stats2.xtreamlab.net',
+  host: 'https://thebristolcable.matomo.cloud',
   siteId: 1,
-  trackerFileName: 'piwik',
   router,
   enableLinkTracking: true,
   enableHeartBeatTimer: true,
   cookieDomain: '*.thebristolcable.org',
+  domains: ['*.membership.thebristolcable.org', '*.thebristolcable.org'],
 });
 
 app.use({ ...router });
