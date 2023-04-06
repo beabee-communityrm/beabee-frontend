@@ -35,7 +35,7 @@ meta:
       class="mb-6 flex rounded bg-white p-6 text-lg text-success"
     >
       <div class="flex-0 mr-4 text-2xl">
-        <font-awesome-icon icon="thumbs-up" />
+        <font-awesome-icon :icon="faThumbsUp" />
       </div>
       <div>
         <h3 class="font-semibold">
@@ -138,6 +138,7 @@ import {
   faBullhorn,
   faCaretDown,
   faShare,
+  faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
 
 type FormSubmission = { data: CalloutResponseAnswers };
