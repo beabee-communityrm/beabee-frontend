@@ -67,7 +67,7 @@ meta:
 
     <template #value-answered="{ item }">
       <span v-if="item.hasAnswered">
-        <font-awesome-icon icon="check-circle" />
+        <font-awesome-icon :icon="faCheckCircle" />
         {{ t('callouts.showAnswered') }}
       </span>
     </template>
@@ -98,6 +98,7 @@ import AppToggle from '../../components/forms/AppToggle.vue';
 import { Header } from '../../components/table/table.interface';
 import AppTable from '../../components/table/AppTable.vue';
 import { defineParam } from '../../utils/pagination';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 formatDistanceLocale;
 formatLocale;
