@@ -243,11 +243,9 @@ onBeforeMount(() => {
       @apply border-b-2 border-link font-bold text-link;
     }
 
-    /* Hide API, Logic and Layout tabs */
-    /* &:nth-child(4), */
-    &:nth-child(6),
-    &:nth-child(7),
-    &:nth-child(8) {
+    /* Hide Logic and Layout tabs */
+    &:nth-last-child(2),
+    &:last-child {
       @apply hidden;
     }
   }
@@ -361,6 +359,7 @@ onBeforeMount(() => {
   .formio-component-multiple,
   .formio-component-encrypted,
   .formio-component-clearOnHide,
+  .formio-component-shortcutButtons,
   .formio-component-validateOn {
     @apply hidden;
   }
