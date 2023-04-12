@@ -158,7 +158,7 @@ meta:
             <b>{{ t('calloutResponsesPage.showAnswer') }}:{{ ' ' }}</b>
             <span class="italic">
               {{
-                convertAnswer(
+                stringifyAnswer(
                   currentInlineComponent,
                   item.answers[currentInlineComponent.key]
                 )
@@ -191,11 +191,11 @@ meta:
 </template>
 <script lang="ts" setup>
 import {
-  convertAnswer,
   flattenComponents,
   Paginated,
   Rule,
   RuleGroup,
+  stringifyAnswer,
 } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
