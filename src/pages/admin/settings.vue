@@ -37,6 +37,10 @@ const tabs = computed(() =>
       id: 'adminSettingsTheme',
       label: t('adminSettings.theme.label'),
     },
+    {
+      id: 'adminSettingsApikeys',
+      label: t('adminSettings.apikey.label'),
+    },
   ].map((item) => ({
     ...item,
     to: router.resolve({ name: item.id }).href,
