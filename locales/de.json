@@ -84,9 +84,7 @@
     "email": {
       "fromEmail": "E-Mail-Adresse",
       "fromName": "Name",
-      "label": "E-Mail",
-      "text": "Der gesamte E-Mail-Verkehr mit Mitgliedern wird über diese E-Mail-Adresse abgewickelt, also auch automatische System-E-Mails.",
-      "title": "Lege eine E-Mail-Adresse für Mitglieder-Support fest"
+      "label": "E-Mail"
     },
     "general": {
       "footer": {
@@ -401,6 +399,7 @@
       "member": "Mitglied",
       "superadmin": "Überadmin"
     },
+    "selectOne": "Auswählen",
     "share": "Teilen",
     "show": "Anzeigen",
     "status": {

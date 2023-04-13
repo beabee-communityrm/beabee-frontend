@@ -13,7 +13,7 @@
         :section="section"
         :is-first="index === 0"
       />
-      <div class="px-2 xl:px-4">
+      <div v-if="!env.cnrMode" class="px-2 xl:px-4">
         <div class="my-2 border-t border-primary-40" />
         <a href="/members" class="block text-body-80">
           <TheMenuListItem
@@ -40,6 +40,7 @@ import TheMenuListItem from './TheMenuListItem.vue';
 import TheMenuListSection from './TheMenuListSection.vue';
 import { canAdmin } from '../../store';
 import { logout } from '../../utils/api/auth';
+import env from '../../env';
 
 import { menu, adminMenu } from './menu-list';
 import {
