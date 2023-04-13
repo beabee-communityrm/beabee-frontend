@@ -35,7 +35,7 @@ meta:
       class="mb-6 flex rounded bg-white p-6 text-lg text-success"
     >
       <div class="flex-0 mr-4 text-2xl">
-        <font-awesome-icon icon="thumbs-up" />
+        <font-awesome-icon :icon="faThumbsUp" />
       </div>
       <div>
         <h3 class="font-semibold">
@@ -138,7 +138,10 @@ import {
   faBullhorn,
   faCaretDown,
   faShare,
+  faThumbsUp,
+  faCalendar,
 } from '@fortawesome/free-solid-svg-icons';
+import { dom, library } from '@fortawesome/fontawesome-svg-core';
 
 type FormSubmission = { data: CalloutResponseAnswers };
 
@@ -282,6 +285,9 @@ async function handleSubmitResponse(submission: FormSubmission) {
 }
 
 onBeforeMount(async () => {
+  library.add(faCalendar);
+  dom.watch();
+
   formError.value = '';
   hasSubmittedResponse.value = false;
 

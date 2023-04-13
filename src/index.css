@@ -72,6 +72,14 @@
     }
   }
 
+  .row {
+    @apply flex gap-4;
+  }
+
+  .col {
+    @apply flex-1;
+  }
+
   /* Button styling */
   .btn:not(.component-settings-button):not(.formcomponent) {
     @apply relative inline-flex h-10 cursor-pointer items-center justify-center whitespace-nowrap rounded bg-link px-2 text-center font-bold text-white;
@@ -119,6 +127,13 @@
   }
   .formio-choices.form-group {
     @apply mb-0;
+  }
+
+  .input-group {
+    @apply flex items-center;
+  }
+  .input-group-append {
+    @apply ml-2;
   }
 }
 
@@ -172,6 +187,10 @@
 
   .formio-select-autocomplete-input {
     @apply absolute -z-10 opacity-0;
+  }
+
+  .formio-component-columns > [class^='col'] {
+    @apply flex-1;
   }
 
   /* Styling for input errors */
