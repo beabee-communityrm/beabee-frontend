@@ -35,7 +35,7 @@
             ]"
           />
           <span class="ml-3 mr-2">
-            <font-awesome-icon icon="link" />
+            <font-awesome-icon :icon="faLink" />
           </span>
           <AppSelect
             v-model="foo"
@@ -55,6 +55,7 @@ import { onMounted } from 'vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
 import { MailchimpSyncStepProps } from '../callouts.interface';
 import AppSelect from '../../../forms/AppSelect.vue';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
 
 const emit = defineEmits(['update:validated']);
 defineProps<{ data: MailchimpSyncStepProps }>();

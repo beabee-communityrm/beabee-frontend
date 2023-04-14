@@ -3,4 +3,5 @@ export default {
   apiUrl: '__apiUrl__',
   revision: '__revision__',
   appsignalKey: '__appsignalKey__',
+  cnrMode: '__cnrMode__',
 };

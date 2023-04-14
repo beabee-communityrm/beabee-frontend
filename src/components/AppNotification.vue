@@ -25,7 +25,7 @@
           class="inline-block w-5 cursor-pointer text-center leading-5 hover:bg-grey-lighter hover:text-body"
           @click="emit('remove')"
         >
-          <font-awesome-icon :icon="['fa', 'times']" />
+          <font-awesome-icon :icon="faTimes" />
         </a>
       </template>
     </header>
@@ -35,6 +35,7 @@
 </template>
 
 <script lang="ts" setup>
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { computed, ref } from 'vue';
 
 const emit = defineEmits(['remove']);

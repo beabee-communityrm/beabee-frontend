@@ -50,7 +50,11 @@ meta:
         :stripe-public-key="content.stripePublicKey"
       />
 
-      <CancelContribution :contribution="contribution" />
+      <ContactCancelContribution
+        id="me"
+        :contribution="contribution"
+        @cancel="$router.push('/profile/contribution/cancel')"
+      />
     </div>
     <div>
       <ContactPaymentsHistory id="me" class="lg:ml-10" />
@@ -69,7 +73,7 @@ import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import ContributionBox from '../../../components/pages/profile/contribution/ContributionBox.vue';
-import CancelContribution from '../../../components/pages/profile/contribution/CancelContribution.vue';
+import ContactCancelContribution from '../../../components/contact/ContactCancelContribution.vue';
 import PaymentSource from '../../../components/pages/profile/contribution/PaymentSource.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import ContactPaymentsHistory from '../../../components/contact/ContactPaymentsHistory.vue';

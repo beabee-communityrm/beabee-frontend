@@ -31,7 +31,7 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import PageTitle from '../../../components/PageTitle.vue';
-import AppButton from '../../../components/forms/AppButton.vue';
+import AppButton from '../../../components/button/AppButton.vue';
 import { cancelContribution } from '../../../utils/api/contact';
 
 const { t } = useI18n();
@@ -41,7 +41,7 @@ const loading = ref(false);
 async function submit() {
   loading.value = true;
   try {
-    await cancelContribution();
+    await cancelContribution('me');
     router.push({
       path: '/profile/contribution',
       query: { cancelled: null },

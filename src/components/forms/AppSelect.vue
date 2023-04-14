@@ -3,8 +3,13 @@
     <AppLabel v-if="label" :label="label" :required="required" />
     <select
       v-model="value"
-      class="w-full rounded border border-primary-40 bg-white p-2 leading-tight focus:shadow-input focus:outline-none"
-      :class="inputClass"
+      class="w-full rounded border p-2 leading-tight focus:shadow-input focus:outline-none"
+      :class="{
+        [inputClass || '']: true,
+        'cursor-not-allowed border-primary-20 bg-grey-lighter': disabled,
+        'border-primary-40 bg-white': !disabled,
+      }"
+      :disabled="disabled"
       :required="required"
     >
       <template v-for="item in items">
@@ -54,6 +59,7 @@ const props = defineProps<{
   label?: string;
   modelValue?: string | number | null;
   items: (SelectItem | SelectGroup)[];
+  disabled?: boolean;
   required?: boolean;
   inputClass?: string;
 }>();

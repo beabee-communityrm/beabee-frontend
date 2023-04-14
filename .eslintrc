@@ -12,6 +12,7 @@
     "eslint-config-prettier"
   ],
   "rules": {
-    "vue/no-v-html": "off"
+    "vue/no-v-html": "off",
+    "no-console": "warn"
   }
 }

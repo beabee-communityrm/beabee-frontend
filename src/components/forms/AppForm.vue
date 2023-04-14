@@ -32,7 +32,7 @@ import { useI18n } from 'vue-i18n';
 import { addNotification } from '../../store/notifications';
 import { getRequestError } from '../../utils/api';
 import AppNotification from '../AppNotification.vue';
-import AppButton from './AppButton.vue';
+import AppButton from '../button/AppButton.vue';
 
 const emit = defineEmits(['reset']);
 const props = defineProps<{

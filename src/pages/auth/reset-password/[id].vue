@@ -81,13 +81,13 @@ meta:
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
 import AppInput from '../../../components/forms/AppInput.vue';
-import AppButton from '../../../components/forms/AppButton.vue';
+import AppButton from '../../../components/button/AppButton.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import { resetPassword } from '../../../utils/api/auth';
 import { updateCurrentUser } from '../../../store';
-import isInternalUrl from '../../../utils/is-internal-url';
+import { isInternalUrl } from '../../../utils';
 import MessageBox from '../../../components/MessageBox.vue';
 
 const props = withDefaults(

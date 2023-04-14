@@ -17,6 +17,7 @@ import PageTitle from '../../components/PageTitle.vue';
 import AppTabs from '../../components/tabs/AppTabs.vue';
 import { computed } from 'vue';
 import { addBreadcrumb } from '../../store/breadcrumb';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -51,7 +52,7 @@ addBreadcrumb(
     {
       title: t('menu.adminSettings'),
       to: '/admin/settings',
-      icon: 'cogs',
+      icon: faCog,
     },
     ...(selectedTab.value
       ? [

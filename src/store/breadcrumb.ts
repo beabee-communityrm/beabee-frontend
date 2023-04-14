@@ -1,9 +1,10 @@
 import { onBeforeMount, onBeforeUnmount, Ref, reactive } from 'vue';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 interface Item {
   title: string;
   to?: string;
-  icon?: string;
+  icon?: IconDefinition;
 }
 
 export const breadcrumbItems = reactive<Ref<Item[]>[]>([]);

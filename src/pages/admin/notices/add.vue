@@ -25,19 +25,23 @@ import {
   GetNoticeData,
 } from '../../../utils/api/api.interface';
 import { addBreadcrumb } from '../../../store/breadcrumb';
+import { faSignHanging } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 const router = useRouter();
 
 addBreadcrumb(
   computed(() => [
-    { title: t('menu.notices'), to: '/admin/notices', icon: 'sign-hanging' },
+    { title: t('menu.notices'), to: '/admin/notices', icon: faSignHanging },
     { title: t('addNotice.title') },
   ])
 );
 
 async function handleSubmit(noticeData: CreateNoticeData) {
   const notice: GetNoticeData = await createNotice(noticeData);
-  router.push('/admin/notices/view/' + notice.id);
+  router.push({
+    path: '/admin/notices/view/' + notice.id,
+    query: { ['created']: null },
+  });
 }
 </script>

@@ -6,157 +6,338 @@ meta:
 </route>
 
 <template>
-  <div>
-    <div class="flex gap-2">
-      <!-- <AppSelect :items="[]" /> -->
-      <AppButton
-        variant="primaryOutlined"
-        size="sm"
-        class="bg-white/0"
-        :class="showAdvancedSearch && 'relative rounded-b-none'"
-        @click="showAdvancedSearch = !showAdvancedSearch"
-      >
-        {{ t('advancedSearch.button') }}
-        <font-awesome-icon
-          class="ml-2"
-          :icon="['fa', showAdvancedSearch ? 'caret-up' : 'caret-down']"
-        />
-        <div
-          v-show="showAdvancedSearch"
-          class="absolute -left-px top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-px"
-        />
-      </AppButton>
+  <div class="md:flex">
+    <div class="hidden flex-none basis-[220px] md:block">
+      <AppVTabs v-model="currentBucket" :items="bucketItems" />
     </div>
-    <AppSearch
-      v-model="currentRules"
-      :filter-groups="filterGroupsWithQuestions"
-      :filter-items="filterItemsWithQuestions"
-      :expanded="showAdvancedSearch"
-      :has-changed="false"
-      @reset="currentRules = undefined"
-    />
-    <AppTable
-      v-model:sort="currentSort"
-      :headers="headers"
-      :items="responses?.items || null"
-      class="w-full"
-    >
-      <template #response="{ item }">
-        <router-link
-          :to="`/admin/callouts/view/${callout.slug}/responses/${item.id}`"
-          class="text-base font-bold text-link"
-        >
-          {{ item.id }}
-        </router-link>
-      </template>
-      <template #contact="{ item }">
-        <router-link
-          v-if="item.contact"
-          :to="`/admin/contacts/${item.contact.id}`"
-          class="text-link"
-        >
-          {{ item.contact.displayName }}
-        </router-link>
-        <span v-else>-</span>
-      </template>
-      <template #createdAt="{ value }">
-        {{
-          t('common.timeAgo', {
-            time: formatDistanceLocale(new Date(), value),
-          })
-        }}
-      </template>
-    </AppTable>
-    <AppPaginatedResult
-      v-model:page="currentPage"
-      v-model:page-size="currentPageSize"
-      :result="responses"
-      keypath="calloutResponsesPage.showingOf"
-      class="mt-4"
-    />
+    <div class="flex-1">
+      <AppSearch
+        v-model="currentRules"
+        :filter-groups="filterGroupsWithQuestions"
+        :filter-items="filterItemsWithExtras"
+        @reset="currentRules = undefined"
+      >
+        <AppSelect
+          v-model="currentTag"
+          :items="[
+            { id: '', label: t('calloutResponsesPage.searchTag') },
+            ...tagItems,
+          ]"
+        />
+        <AppSelect
+          v-model="currentAssignee"
+          :items="[
+            { id: '', label: t('calloutResponsesPage.searchAssignee') },
+            ...adminItems,
+          ]"
+        />
+      </AppSearch>
+      <p class="text-sm font-semibold text-body-80">{{ t('common.show') }}</p>
+      <div class="mb-4 flex items-center gap-6 text-sm">
+        <AppCheckbox
+          v-model="showLatestComment"
+          :label="t('calloutResponsesPage.showLatestComment')"
+          :icon="faComment"
+        />
+        <div class="flex items-center gap-2">
+          <AppCheckbox
+            v-model="showInlineAnswer"
+            :label="t('calloutResponsesPage.showAnswer')"
+            :icon="faUserPen"
+          />
+          <AppSelect
+            v-model="currentInlineAnswer"
+            class="max-w-xs"
+            :class="!showInlineAnswer && 'invisible'"
+            :items="[
+              { id: '', label: t('common.selectOne') },
+              ...Object.entries(formFilterItems).map(([id, item]) => ({
+                id: id.substring(8),
+                label: item.label,
+              })),
+            ]"
+            required
+          />
+        </div>
+      </div>
+      <AppPaginatedTable
+        v-model:query="currentPaginatedQuery"
+        keypath="calloutResponsesPage.showingOf"
+        :headers="headers"
+        :result="responses"
+        selectable
+      >
+        <template #actions>
+          <AppButtonGroup>
+            <AppButton
+              :icon="faDownload"
+              variant="primaryOutlined"
+              :title="t('actions.export')"
+              @click="handleExport"
+            />
+            <MoveBucketButton
+              :current-bucket="currentBucket"
+              :disabled="selectedCount === 0"
+              :loading="doingAction"
+              @move="(bucket) => handleUpdateAction({ bucket })"
+            />
+            <ToggleTagButton
+              :tag-items="tagItems"
+              :selected-tags="selectedTags"
+              :manage-url="`${route.path}/tags`"
+              :loading="doingAction"
+              :disabled="selectedCount === 0"
+              @toggle="(tagId) => handleUpdateAction({ tags: [tagId] })"
+            />
+            <SetAssigneeButton
+              :disabled="selectedCount === 0"
+              :loading="doingAction"
+              :current-assignee-id="selectedAssigneeId"
+              @assign="(assigneeId) => handleUpdateAction({ assigneeId })"
+            />
+          </AppButtonGroup>
+          <p v-if="selectedCount > 0" class="self-center text-sm">
+            <i18n-t
+              keypath="calloutResponsePage.selectedCount"
+              :plural="selectedCount"
+            >
+              <template #n>
+                <b>{{ selectedCount }}</b>
+              </template>
+            </i18n-t>
+          </p>
+        </template>
+
+        <template #value-number="{ value, item }">
+          <router-link
+            :to="`${route.path}/${item.id}`"
+            class="text-base font-bold text-link"
+          >
+            {{ t('calloutResponsesPage.responseNo', { no: n(value) }) }}
+          </router-link>
+        </template>
+        <template #value-assignee="{ value }">
+          <router-link
+            v-if="value"
+            :to="`/admin/contacts/${value.id}`"
+            class="text-link"
+          >
+            {{ value.displayName }}
+          </router-link>
+          <span v-else>-</span>
+        </template>
+        <template #value-contact="{ value }">
+          <router-link
+            v-if="value"
+            :to="`/admin/contacts/${value.id}`"
+            class="text-link"
+          >
+            {{ value.displayName }}
+          </router-link>
+          <span v-else>-</span>
+        </template>
+        <template #value-tags="{ value }">
+          <span class="whitespace-normal">
+            <AppTag v-for="tag in value" :key="tag.id" :tag="tag.name" />
+          </span>
+        </template>
+        <template #value-createdAt="{ value }">
+          {{
+            t('common.timeAgo', {
+              time: formatDistanceLocale(new Date(), value),
+            })
+          }}
+        </template>
+
+        <template #after="{ item }">
+          <p
+            v-if="currentInlineComponent && item.answers"
+            :class="showLatestComment && item.latestComment ? 'mb-2' : ''"
+          >
+            <font-awesome-icon :icon="faUserPen" class="mr-2" />
+            <b>{{ t('calloutResponsesPage.showAnswer') }}:{{ ' ' }}</b>
+            <span class="italic">
+              {{
+                stringifyAnswer(
+                  currentInlineComponent,
+                  item.answers[currentInlineComponent.key]
+                )
+              }}
+            </span>
+          </p>
+          <div v-if="showLatestComment && item.latestComment">
+            <font-awesome-icon :icon="faComment" class="mr-2" />
+            <span class="font-semibold text-body-60">
+              {{
+                t('common.timeAgo', {
+                  time: formatDistanceLocale(
+                    new Date(),
+                    item.latestComment.createdAt
+                  ),
+                })
+              }}
+              •
+            </span>
+            <b>{{ item.latestComment.contact.displayName }}:{{ ' ' }}</b>
+            <span
+              class="inline-block italic"
+              v-html="item.latestComment.text"
+            ></span>
+          </div>
+        </template>
+      </AppPaginatedTable>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { flattenComponents, Paginated, RuleGroup } from '@beabee/beabee-common';
-import { computed, ref, watchEffect } from 'vue';
+import {
+  flattenComponents,
+  Paginated,
+  Rule,
+  RuleGroup,
+  stringifyAnswer,
+} from '@beabee/beabee-common';
+import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
-import AppPaginatedResult from '../../../../../../components/AppPaginatedResult.vue';
-import AppButton from '../../../../../../components/forms/AppButton.vue';
+import AppButton from '../../../../../../components/button/AppButton.vue';
 import AppSelect from '../../../../../../components/forms/AppSelect.vue';
+import AppVTabs from '../../../../../../components/tabs/AppVTabs.vue';
 import {
   filterGroups,
   filterItems,
   headers,
 } from '../../../../../../components/pages/admin/callout-responses.interface';
 import AppSearch from '../../../../../../components/search/AppSearch.vue';
-import AppTable from '../../../../../../components/table/AppTable.vue';
-import { SortType } from '../../../../../../components/table/table.interface';
 import {
   GetCalloutDataWith,
+  GetCalloutResponseWith,
   GetCalloutResponseDataWith,
+  UpdateCalloutResponseData,
 } from '../../../../../../utils/api/api.interface';
-import { fetchResponses } from '../../../../../../utils/api/callout';
+import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
 import { convertComponentsToFilters } from '../../../../../../utils/callouts';
-import { formatDistanceLocale } from '../../../../../../utils/dates/locale-date-formats';
+import { formatDistanceLocale } from '../../../../../../utils/dates';
+import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
+import { updateCalloutResponses } from '../../../../../../utils/api/callout-response';
+import AppTag from '../../../../../../components/AppTag.vue';
+import MoveBucketButton from '../../../../../../components/pages/admin/callouts/MoveBucketButton.vue';
+import ToggleTagButton from '../../../../../../components/pages/admin/callouts/ToggleTagButton.vue';
+import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
+import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
+import { fetchContacts } from '../../../../../../utils/api/contact';
+import AppPaginatedTable from '../../../../../../components/table/AppPaginatedTable.vue';
+import {
+  definePaginatedQuery,
+  defineParam,
+} from '../../../../../../utils/pagination';
+import AppCheckbox from '../../../../../../components/forms/AppCheckbox.vue';
+import {
+  faComment,
+  faDownload,
+  faUserPen,
+} from '@fortawesome/free-solid-svg-icons';
 
-const props = defineProps<{
-  callout: GetCalloutDataWith<'form'>;
-}>();
+const props = defineProps<{ callout: GetCalloutDataWith<'form'> }>();
 
-const { t } = useI18n();
+const { t, n } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
-const responses = ref<Paginated<GetCalloutResponseDataWith<'contact'>>>();
-const showAdvancedSearch = ref(false);
+const responses = ref<
+  Paginated<
+    GetCalloutResponseDataWith<
+      'answers' | 'assignee' | 'contact' | 'latestComment' | 'tags'
+    > & {
+      selected: boolean;
+    }
+  >
+>();
+const showLatestComment = ref(false);
+const doingAction = ref(false);
 
-const formQuestions = computed(() =>
+const showInlineAnswer = ref(false);
+const currentInlineAnswer = ref('');
+const currentInlineComponent = computed(
+  () =>
+    showInlineAnswer.value &&
+    formComponents.value.find((c) => c.key === currentInlineAnswer.value)
+);
+
+const selectedResponseItems = computed(
+  () => responses.value?.items.filter((ri) => ri.selected) || []
+);
+
+const selectedCount = computed(() => selectedResponseItems.value.length);
+
+const selectedTags = computed(() => {
+  const tagCount = Object.fromEntries(tagItems.value.map((t) => [t.id, 0]));
+
+  for (const item of selectedResponseItems.value) {
+    for (const tag of item.tags) {
+      tagCount[tag.id]++;
+    }
+  }
+
+  return Object.entries(tagCount)
+    .filter((tc) => tc[1] === selectedCount.value)
+    .map(([tagId]) => tagId);
+});
+
+const selectedAssigneeId = computed(() => {
+  let assigneeId = selectedResponseItems.value[0]?.assignee?.id;
+  for (const item of selectedResponseItems.value) {
+    if (assigneeId !== item.assignee?.id) {
+      return '';
+    }
+  }
+  return assigneeId;
+});
+
+const adminItems = ref<{ id: string; label: string }[]>([]);
+const tagItems = ref<{ id: string; label: string }[]>([]);
+
+const bucketItems = computed(() =>
+  buckets.value.map((bucket) => ({
+    ...bucket,
+    to: `${route.path}?bucket=${bucket.id}`,
+  }))
+);
+
+const formComponents = computed(() =>
   flattenComponents(props.callout.formSchema.components).filter(
     (c) => !!c.input && c.type !== 'button'
   )
+);
+
+const formFilterItems = computed(() =>
+  convertComponentsToFilters(formComponents.value)
 );
 
 const filterGroupsWithQuestions = computed(() => [
   ...filterGroups.value,
   {
     label: 'Answers',
-    items: formQuestions.value.map((q) => `answers.${q.key}`),
+    items: Object.keys(formFilterItems.value),
   },
 ]);
 
-const filterItemsWithQuestions = computed(() => {
+const filterItemsWithExtras = computed(() => {
   return {
     ...filterItems.value,
-    ...convertComponentsToFilters(formQuestions.value),
+    tags: {
+      ...filterItems.value.tags,
+      options: tagItems.value,
+    },
+    ...formFilterItems.value,
   };
 });
 
-const currentPageSize = computed({
-  get: () => Number(route.query.limit) || 25,
-  set: (limit) => router.push({ query: { ...route.query, limit } }),
-});
+const currentAssignee = defineParam('assignee', (v) => v || '');
+const currentTag = defineParam('tag', (v) => v || '');
+const currentBucket = defineParam('bucket', (v) => v || '', 'replace');
 
-const currentPage = computed({
-  get: () => Number(route.query.page) || 0,
-  set: (page) => router.push({ query: { ...route.query, page } }),
-});
-
-const currentSort = computed({
-  get: () => ({
-    by: (route.query.sortBy as string) || 'createdAt',
-    type: (route.query.sortType as SortType) || SortType.Desc,
-  }),
-  set: ({ by, type }) => {
-    router.replace({
-      query: {
-        ...route.query,
-        sortBy: by,
-        sortType: type,
-      },
-    });
-  },
-});
+const currentPaginatedQuery = definePaginatedQuery('createdAt');
 
 const currentRules = computed({
   get: () =>
@@ -167,17 +348,114 @@ const currentRules = computed({
     router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
 });
 
-watchEffect(async () => {
-  responses.value = await fetchResponses(
+onBeforeMount(async () => {
+  const tags = await fetchTags(props.callout.slug);
+  tagItems.value = tags.map((tag) => ({ id: tag.id, label: tag.name }));
+
+  const admins = await fetchContacts({
+    rules: {
+      condition: 'AND',
+      rules: [
+        { field: 'activePermission', operator: 'equal', value: ['admin'] },
+      ],
+    },
+  });
+
+  adminItems.value = admins.items.map((admin) => ({
+    id: admin.id,
+    label: admin.displayName,
+  }));
+});
+
+function getSearchRules(): RuleGroup {
+  const bucketRule: Rule = currentBucket.value
+    ? { field: 'bucket', operator: 'equal', value: [currentBucket.value] }
+    : { field: 'bucket', operator: 'is_empty', value: [] };
+
+  const rules: RuleGroup = { condition: 'AND', rules: [bucketRule] };
+
+  if (currentRules.value) {
+    rules.rules.push(currentRules.value);
+  }
+
+  if (currentTag.value) {
+    rules.rules.push({
+      field: 'tags',
+      operator: 'contains',
+      value: [currentTag.value],
+    });
+  }
+
+  if (currentAssignee.value) {
+    rules.rules.push({
+      field: 'assignee',
+      operator: 'equal',
+      value: [currentAssignee.value],
+    });
+  }
+
+  return rules;
+}
+
+function getSelectedResponseRules(): RuleGroup {
+  return {
+    condition: 'OR',
+    rules: selectedResponseItems.value.map((item) => ({
+      field: 'id',
+      operator: 'equal',
+      value: [item.id],
+    })),
+  };
+}
+
+async function refreshResponses() {
+  const _with: GetCalloutResponseWith[] = ['assignee', 'contact', 'tags'];
+  if (showLatestComment.value) {
+    _with.push('latestComment');
+  }
+  if (showInlineAnswer.value) {
+    _with.push('answers');
+  }
+
+  const newResponses = await fetchResponses(
     props.callout.slug,
     {
-      limit: currentPageSize.value,
-      offset: currentPage.value * currentPageSize.value,
-      sort: currentSort.value.by,
-      order: currentSort.value.type,
-      rules: currentRules.value,
+      ...currentPaginatedQuery.query,
+      rules: getSearchRules(),
     },
-    ['contact']
+    _with
   );
-});
+
+  responses.value = {
+    ...newResponses,
+    items: newResponses.items.map((r) => ({ ...r, selected: false })),
+  };
+}
+
+watchEffect(refreshResponses);
+
+function handleExport() {
+  const rules: RuleGroup =
+    selectedResponseItems.value.length > 0
+      ? getSelectedResponseRules()
+      : getSearchRules();
+
+  const rulesQuery = encodeURIComponent(JSON.stringify(rules));
+
+  window.open(
+    `/api/1.0/callout/${props.callout.slug}/responses.csv?rules=${rulesQuery}`,
+    '_blank'
+  );
+}
+
+async function handleUpdateAction(
+  updates: UpdateCalloutResponseData
+): Promise<void> {
+  doingAction.value = true;
+
+  await updateCalloutResponses(getSelectedResponseRules(), updates);
+  await refreshResponses();
+
+  doingAction.value = false;
+}
 </script>

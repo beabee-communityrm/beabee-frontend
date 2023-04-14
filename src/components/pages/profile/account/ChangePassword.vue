@@ -6,7 +6,7 @@
   <AppButton
     v-if="!showForm"
     variant="primaryOutlined"
-    icon="key"
+    :icon="faKey"
     @click="
       showForm = true;
       saved = false;
@@ -49,10 +49,11 @@
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { updateContact } from '../../../../utils/api/contact';
-import AppButton from '../../../forms/AppButton.vue';
+import AppButton from '../../../button/AppButton.vue';
 import AppInput from '../../../forms/AppInput.vue';
 import AppHeading from '../../../AppHeading.vue';
 import AppForm from '../../../forms/AppForm.vue';
+import { faKey } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 

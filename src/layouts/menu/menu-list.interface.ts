@@ -1,12 +1,13 @@
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+
 export interface MenuSection {
   title?: string;
-  type: 'main' | 'settings';
   items: MenuItem[];
 }
 
 export interface MenuItem {
   title: string;
   href: string;
-  icon: [string, string];
+  icon: IconDefinition;
   isActive?: RegExp;
 }

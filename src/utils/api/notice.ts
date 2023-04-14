@@ -49,9 +49,7 @@ export async function fetchNotice(id: string): Promise<GetNoticeData> {
 export async function createNotice(
   dataIn: CreateNoticeData
 ): Promise<GetNoticeData> {
-  console.log(dataIn);
   const { data } = await axios.post<Serial<GetNoticeData>>('/notice', dataIn);
-  console.log(data);
   return deserializeNotice(data);
 }
 

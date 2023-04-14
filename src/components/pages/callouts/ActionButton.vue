@@ -4,9 +4,7 @@
   ></AppButton>
 </template>
 <script lang="ts" setup>
-import AppButton from '../../forms/AppButton.vue';
-
-defineProps<{
-  icon: string;
-}>();
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import AppButton from '../../button/AppButton.vue';
+defineProps<{ icon: IconDefinition }>();
 </script>

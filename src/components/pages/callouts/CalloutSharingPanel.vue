@@ -6,9 +6,9 @@
       class="mt-2 mb-4 flex flex-row items-center justify-between rounded bg-white pl-3"
     >
       <span class="mr-2 text-link">{{ calloutUrl }}</span>
-      <AppButton icon="copy" size="sm" @click="copyToClipboard">{{
-        t('common.copy')
-      }}</AppButton>
+      <AppButton :icon="faCopy" size="sm" @click="copyToClipboard">
+        {{ t('common.copy') }}
+      </AppButton>
     </div>
 
     {{ t('callout.share.services') }}
@@ -23,7 +23,7 @@
           target="_blank"
           rel="nofollow noopener"
         >
-          <font-awesome-icon :icon="['fab', 'facebook']" class="mr-1" />
+          <font-awesome-icon :icon="faFacebook" class="mr-1" />
           Facebook
         </a>
       </div>
@@ -36,7 +36,7 @@
           target="_blank"
           rel="nofollow noopener"
         >
-          <font-awesome-icon :icon="['fab', 'linkedin']" class="mr-1" />
+          <font-awesome-icon :icon="faLinkedin" class="mr-1" />
           LinkedIn
         </a>
       </div>
@@ -49,7 +49,7 @@
           target="_blank"
           rel="nofollow noopener"
         >
-          <font-awesome-icon :icon="['fab', 'telegram']" class="mr-1" />
+          <font-awesome-icon :icon="faTelegram" class="mr-1" />
           Telegram
         </a>
       </div>
@@ -61,7 +61,7 @@
           target="_blank"
           rel="nofollow noopener"
         >
-          <font-awesome-icon :icon="['fab', 'twitter']" class="mr-1" />
+          <font-awesome-icon :icon="faTwitter" class="mr-1" />
           Twitter
         </a>
       </div>
@@ -74,7 +74,7 @@
           target="_blank"
           rel="nofollow noopener"
         >
-          <font-awesome-icon :icon="['fab', 'whatsapp']" class="mr-1" />
+          <font-awesome-icon :icon="faWhatsapp" class="mr-1" />
           WhatsApp
         </a>
       </div>
@@ -84,7 +84,7 @@
           target="_blank"
           rel="nofollow noopener"
         >
-          <font-awesome-icon :icon="['fa', 'envelope']" class="mr-1" />
+          <font-awesome-icon :icon="faEnvelope" class="mr-1" />
           {{ t('form.email') }}
         </a>
       </div>
@@ -93,9 +93,17 @@
 </template>
 
 <script lang="ts" setup>
+import {
+  faFacebook,
+  faLinkedin,
+  faTelegram,
+  faTwitter,
+  faWhatsapp,
+} from '@fortawesome/free-brands-svg-icons';
+import { faCopy, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useI18n } from 'vue-i18n';
 import env from '../../../env';
-import AppButton from '../../forms/AppButton.vue';
+import AppButton from '../../button/AppButton.vue';
 
 const { t } = useI18n();
 

@@ -17,10 +17,10 @@
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
-    "next": "Next",
+    "export": "Export",
+    "noBack": "No, go back",
     "participate": "Participate",
     "preview": "Preview",
-    "previous": "Previous",
     "publish": "Publish",
     "replicate": "Replicate",
     "reset": "Reset",
@@ -33,7 +33,9 @@
     "submit": "Submit",
     "unpublish": "Unpublish",
     "update": "Update",
-    "view": "View"
+    "view": "View",
+    "yesDelete": "Yes, delete it",
+    "yesRemove": "Yes, remove it"
   },
   "addContact": {
     "contactSaved": "Contact saved",
@@ -52,7 +54,6 @@
       "text": "Text",
       "url": "URL"
     },
-    "noticeSaved": "Notice saved",
     "title": "Add a notice"
   },
   "adminDashboard": {
@@ -84,8 +85,8 @@
       "fromEmail": "From email",
       "fromName": "From name",
       "label": "Email",
-      "text": "All email communication with your members will be sent from this email address.",
-      "title": "Set a general email for member support"
+      "text": "All email communication will be sent from this email address.",
+      "title": "Set a general email address"
     },
     "general": {
       "footer": {
@@ -142,7 +143,7 @@
   },
   "advancedSearch": {
     "addRule": "Add rule",
-    "button": "Advanced",
+    "button": "Filters",
     "createFilters": "Create filters for your search",
     "matchAfter": "of the following",
     "matchBefore": "Match",
@@ -233,11 +234,6 @@
       "services": "Or quickly share using one of these services:"
     },
     "showingPreview": "Response submission is disabled in preview mode",
-    "status": {
-      "endedOn": "on {date}",
-      "endsIn": "Ends in {duration}",
-      "startsIn": "starts in {duration}"
-    },
     "toContributionPage": "Edit my contribution",
     "updateContribution": "please update your contribution",
     "youResponded": "You replied to this callout ♥"
@@ -250,8 +246,6 @@
   "calloutAdminOverview": {
     "actions": {
       "confirmDelete": {
-        "actionNo": "No, go back",
-        "actionYes": "Yes, delete it",
         "text": "Are you sure you want to delete this callout?",
         "title": "Delete callout?"
       }
@@ -290,6 +284,8 @@
   },
   "calloutResponse": {
     "data": {
+      "assignee": "Assigned to",
+      "bucket": "Bucket",
       "callout": "Callout",
       "contact": "Contact",
       "createdAt": "Date submitted",
@@ -297,12 +293,46 @@
       "updatedAt": "Date updated"
     },
     "dataGroup": {
+      "answers": "Questions",
       "response": "Response"
     }
   },
+  "calloutResponseBuckets": {
+    "inbox": "Inbox",
+    "trash": "Trash",
+    "verified": "Verified"
+  },
+  "calloutResponseComments": {
+    "actions": {
+      "addComment": "Add comment",
+      "updateComment": "Update comment"
+    },
+    "addComment": "Add a comment",
+    "comments": "Comments",
+    "confirmDelete": {
+      "text": "Are you sure you want to delete this comment?",
+      "title": "Delete comment?"
+    }
+  },
+  "calloutResponsePage": {
+    "actions": {
+      "assignTo": "Assign to",
+      "moveBucket": "Move bucket",
+      "toggleTag": "Toggle tag"
+    },
+    "manageTags": "Manage tags",
+    "responseOf": "Response {no} out of {total}",
+    "selectedCount": "{n} response selected | {n} responses selected"
+  },
   "calloutResponsesPage": {
+    "moveToBucket": "Move to {bucket}",
+    "noTags": "No tags",
     "response": "Response",
-    "responseId": "Response {id}",
+    "responseNo": "Response {no}",
+    "searchAssignee": "Assigned to...",
+    "searchTag": "Tagged with...",
+    "showAnswer": "Answer",
+    "showLatestComment": "Latest comment",
     "showingOf": "Showing {start} to {end} responses out of {total}"
   },
   "callouts": {
@@ -313,7 +343,6 @@
     },
     "noArchivedCallouts": "No callouts",
     "search": "Search callouts...",
-    "show": "Show",
     "showAll": "All",
     "showAnswered": "Answered",
     "showingOf": "Showing {start} to {end} callouts out of {total}"
@@ -372,7 +401,9 @@
       "member": "Member",
       "superadmin": "Super Admin"
     },
+    "selectOne": "Select one...",
     "share": "Share",
+    "show": "Show",
     "status": {
       "draft": "Draft",
       "ended": "Ended",
@@ -386,6 +417,14 @@
     "year": "year | years",
     "yes": "Yes"
   },
+  "contactContribution": {
+    "confirmCancel": {
+      "confirm": "Yes, cancel it",
+      "text": "Are you sure you want to cancel this contact's contribution? This can't be undone.",
+      "title": "Cancel contribution?"
+    },
+    "editNotice": "Updating a contact's contribution is currently only possible for those with a manual contribution."
+  },
   "contactOverview": {
     "about": "About",
     "account": "Account",
@@ -393,11 +432,13 @@
       "copy": "<p>All information added in this section is <strong>visible for admins only</strong>. Members will never see these in their profile or member area.</p>\n"
     },
     "callouts": "Callouts",
+    "cancellationDate": "Cancelled on",
     "contribution": "Contribution",
     "contributionType": "Type",
     "information": "Information",
     "newsletter": "Newsletter",
     "overview": "Overview",
+    "pickTag": "Pick a tag from the list below",
     "roles": "Roles",
     "security": {
       "instructions": "Copy and share this link:",
@@ -448,7 +489,6 @@
       "contribution": "Contribution",
       "role": "Role"
     },
-    "editNotice": "Updating a contact's contribution is currently only possible for those with a manual contribution.",
     "noContacts": "No contacts added yet",
     "noResults": "No contacts found",
     "numResults": "{n} contact found | {n} contacts found",
@@ -456,10 +496,11 @@
     "showingOf": "Showing {start} to {end} contacts out of {total}"
   },
   "contribution": {
+    "adminCancelDescription": "If you cancel the contact's contribution their membership will finish at the end of their current payment cycle on {date}.",
     "bankAccount": "Bank account",
     "billing": "Billing",
     "cancelContribution": "Cancel contribution",
-    "cancelDescription": "If you cancel your contribution your membership will finish at the end of your current payment cycle, {day} of {month}.",
+    "cancelDescription": "If you cancel your contribution your membership will finish at the end of your current payment cycle on {date}.",
     "cancelMessage": "We're sorry to see you go.",
     "cancelledContribution": "Your contribution has been cancelled.",
     "changeBank": "Change to a different bank account",
@@ -660,7 +701,7 @@
     "warning": "Careful! You are editing a live callout. Changing form properties carries the risk of rendering previous answers unusable."
   },
   "editNotice": {
-    "title": "Edit notice"
+    "title": "Edit: {title}"
   },
   "footer": {
     "contactUs": "Contact us at",
@@ -783,6 +824,13 @@
     "welcome": "Welcome aboard {firstName}!",
     "yourProfile": "Your profile"
   },
+  "item": {
+    "status": {
+      "endedOn": "on {date}",
+      "endsIn": "Ends in {duration}",
+      "startsIn": "starts in {duration}"
+    }
+  },
   "join": {
     "absorbFeeForce": "{amount} contributions must absorb the {fee} fee.",
     "absorbFeeOptIn": "Yes, I'll absorb the {fee} fee.",
@@ -813,6 +861,7 @@
     "notice": "By proceeding you are accepting the",
     "now": "Join now!",
     "paymentMethod": "Payment method",
+    "poweredBy": "Powered by beabee",
     "privacy": "Privacy Policy"
   },
   "joinPayment": {
@@ -904,13 +953,13 @@
   "noticeAdminOverview": {
     "actions": {
       "confirmDelete": {
-        "actionNo": "No, go back",
-        "actionYes": "Yes, delete it",
         "text": "Are you sure you want to delete this notice?",
         "title": "Delete notice?"
       }
     },
-    "summary": "Summary"
+    "created": "Your new notice was successfully created.",
+    "summary": "Summary",
+    "updated": "Your notice was successfully updated."
   },
   "notices": {
     "addNotice": "Add notice",
@@ -972,8 +1021,6 @@
     "add": "Add role",
     "addNewRole": "Add a new role",
     "confirmDelete": {
-      "actionNo": "No, go back",
-      "actionYes": "Yes, remove it",
       "text": "Are you sure you want to remove this role?",
       "title": "Remove role"
     },
@@ -998,5 +1045,14 @@
   "setPassword": {
     "description": "Set a new password to login.",
     "title": "Set a password"
+  },
+  "tagEditor": {
+    "add": "Add tag",
+    "addNewTag": "Add a tag",
+    "confirmDelete": {
+      "text": "Are you sure you want to remove this tag? Any responses with this tag will not be deleted.",
+      "title": "Remove tag"
+    },
+    "name": "Name"
   }
 }

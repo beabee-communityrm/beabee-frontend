@@ -106,13 +106,14 @@ import {
   GetStatsData,
 } from '../../utils/api/api.interface';
 import { fetchContacts } from '../../utils/api/contact';
-import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
+import { formatDistanceLocale } from '../../utils/dates';
 import HintBox from '../../components/pages/admin/HintBox.vue';
 import { fetchCallouts } from '../../utils/api/callout';
 import CalloutSummary from '../../components/callout/CalloutSummary.vue';
 import { fetchStats } from '../../utils/api/stats';
 import { subDays } from 'date-fns';
 import { addBreadcrumb } from '../../store/breadcrumb';
+import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 
 const { n, t } = useI18n();
 
@@ -121,7 +122,7 @@ addBreadcrumb(
     {
       title: t('menu.dashboard'),
       to: '/admin',
-      icon: 'chart-line',
+      icon: faChartLine,
     },
   ])
 );

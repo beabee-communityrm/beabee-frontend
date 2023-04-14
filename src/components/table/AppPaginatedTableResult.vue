@@ -17,22 +17,20 @@
       </i18n-t>
     </p>
 
-    <div class="flex gap-2">
-      <p class="flex-1 self-center">
-        <i18n-t v-if="result.count > 0" keypath="common.pageCount">
-          <template #pageNumber
-            ><b>{{ n(props.page + 1) }}</b></template
-          >
-          <template #pageTotal
-            ><b>{{ n(totalPages) }}</b></template
-          >
-        </i18n-t>
-      </p>
-      <AppSelect
-        v-model="currentPageSize"
-        :items="pageSizes"
-        input-class="text-sm"
-      />
+    <div v-if="!noLimit || totalPages > 1" class="flex gap-2">
+      <template v-if="!noLimit">
+        <p class="flex-1 self-center">
+          <i18n-t v-if="result.count > 0" keypath="common.pageCount">
+            <template #pageNumber
+              ><b>{{ n(props.page + 1) }}</b></template
+            >
+            <template #pageTotal
+              ><b>{{ n(totalPages) }}</b></template
+            >
+          </i18n-t>
+        </p>
+        <AppSelect v-model="currentLimit" :items="limits" />
+      </template>
       <AppPagination
         v-if="totalPages > 1"
         v-model="currentPage"
@@ -43,18 +41,19 @@
 </template>
 <script lang="ts" setup>
 import { Paginated } from '@beabee/beabee-common';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppSelect from './forms/AppSelect.vue';
-import AppPagination from './AppPagination.vue';
+import AppSelect from '../forms/AppSelect.vue';
+import AppPagination from '../AppPagination.vue';
 
-const emit = defineEmits(['update:page', 'update:pageSize']);
+const emit = defineEmits(['update:page', 'update:limit']);
 
 const props = defineProps<{
   page: number;
-  pageSize: number;
+  limit: number;
   result: Paginated<unknown> | undefined;
   keypath: string;
+  noLimit?: boolean;
 }>();
 
 const { t, n } = useI18n();
@@ -64,12 +63,12 @@ const currentPage = computed({
   set: (newPage) => emit('update:page', newPage),
 });
 
-const currentPageSize = computed({
-  get: () => props.pageSize,
-  set: (newPageSize) => emit('update:pageSize', newPageSize),
+const currentLimit = computed({
+  get: () => props.limit,
+  set: (newLimit) => emit('update:limit', newLimit),
 });
 
-const pageSizes = computed(() =>
+const limits = computed(() =>
   [12, 25, 50, 100].map((x) => ({
     id: x,
     label: t('common.itemsPerPage', { items: n(x) }),
@@ -77,6 +76,12 @@ const pageSizes = computed(() =>
 );
 
 const totalPages = computed(() =>
-  props.result ? Math.ceil(props.result.total / currentPageSize.value) : 0
+  props.result ? Math.ceil(props.result.total / currentLimit.value) : 0
 );
+
+watch(totalPages, () => {
+  if (currentPage.value > totalPages.value - 1) {
+    currentPage.value = Math.max(0, totalPages.value - 1);
+  }
+});
 </script>

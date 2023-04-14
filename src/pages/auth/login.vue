@@ -62,13 +62,13 @@ meta:
 
 <script lang="ts" setup>
 import AppInput from '../../components/forms/AppInput.vue';
-import AppButton from '../../components/forms/AppButton.vue';
+import AppButton from '../../components/button/AppButton.vue';
 import MessageBox from '../../components/MessageBox.vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import { reactive, ref } from 'vue';
-import isInternalUrl from '../../utils/is-internal-url';
+import { isInternalUrl } from '../../utils';
 import { updateCurrentUser } from '../../store';
 import { LoginData } from '../../utils/api/api.interface';
 import { login } from '../../utils/api/auth';

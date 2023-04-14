@@ -1,7 +1,7 @@
 <template>
   <AppLabel v-if="label" :label="label" />
   <div class="mb-1 mt-1 flex flex-row flex-wrap">
-    <ContactTag
+    <AppTag
       v-for="tag in modelValue"
       :key="tag"
       :tag="tag"
@@ -18,9 +18,9 @@
       <p class="align-middle">
         <font-awesome-icon
           class="mr-2 ml-2 inline-block cursor-pointer"
-          icon="caret-down"
+          :icon="faCaretDown"
         />
-        Pick a tag from the list below
+        {{ t('contactOverview.pickTag') }}
       </p>
       <div :class="isTagMenuVisible ? 'block' : 'hidden'" class="">
         <p
@@ -31,7 +31,7 @@
         >
           <font-awesome-icon
             class="mr-2 ml-2 inline-block cursor-pointer"
-            icon="tag"
+            :icon="faTag"
           />
           {{ tag }}
         </p>
@@ -41,17 +41,21 @@
 </template>
 
 <script lang="ts" setup>
+import { faCaretDown, faTag } from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'vue';
 import { computed } from 'vue';
-import ContactTag from '../../../contact/ContactTag.vue';
+import { useI18n } from 'vue-i18n';
+import AppTag from '../../../AppTag.vue';
 import AppLabel from '../../../forms/AppLabel.vue';
 
+const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   tags: string[];
   modelValue: string[];
   label?: string;
 }>();
-const emit = defineEmits(['update:modelValue']);
+
+const { t } = useI18n();
 
 const isTagMenuVisible = ref(false);
 

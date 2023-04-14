@@ -28,7 +28,7 @@
 import { ContributionPeriod } from '@beabee/beabee-common';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { formatLocale } from '../../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../../utils/dates';
 import { GetContactData } from '../../../utils/api/api.interface';
 
 const { t, n } = useI18n();

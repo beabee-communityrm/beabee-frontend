@@ -11,7 +11,7 @@
     </div>
     <p>
       <router-link :to="calloutLink" class="relative z-10">
-        <font-awesome-icon icon="external-link-alt" />
+        <font-awesome-icon :icon="faExternalLinkAlt" />
         <span class="ml-2 text-link">{{ env.appUrl }}{{ calloutLink }}</span>
       </router-link>
     </p>
@@ -57,6 +57,7 @@ import env from './../../env';
 import ItemStatusText from '../item/ItemStatusText.vue';
 import ItemDateRange from '../item/ItemDateRange.vue';
 import AppSubHeading from '../AppSubHeading.vue';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 

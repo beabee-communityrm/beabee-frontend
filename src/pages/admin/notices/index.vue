@@ -13,16 +13,16 @@ meta:
       }}</AppButton>
     </div>
   </PageTitle>
-  <AppTable
-    v-model:sort="currentSort"
+  <AppPaginatedTable
+    v-model:query="currentPaginatedQuery"
+    keypath="notices.showingOf"
     :headers="headers"
-    :items="noticesTable.items"
-    class="w-full"
+    :result="noticesTable"
   >
-    <template #status="{ value }">
+    <template #value-status="{ value }">
       <AppItemStatus :status="value" />
     </template>
-    <template #name="{ item, value }">
+    <template #value-name="{ item, value }">
       <router-link
         :to="'/admin/notices/view/' + item.id"
         class="text-base font-bold text-link"
@@ -30,38 +30,31 @@ meta:
         {{ value }}
       </router-link>
     </template>
-    <template #createdAt="{ value }">
+    <template #value-createdAt="{ value }">
       <span class="whitespace-nowrap">{{ formatLocale(value, 'PP') }}</span>
     </template>
-  </AppTable>
-  <AppPaginatedResult
-    v-model:page="currentPage"
-    v-model:page-size="currentPageSize"
-    :result="noticesTable"
-    keypath="notices.showingOf"
-    class="mt-4"
-  />
+  </AppPaginatedTable>
 </template>
 <script lang="ts" setup>
 import { Paginated } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router';
-import AppButton from '../../../components/forms/AppButton.vue';
+import AppButton from '../../../components/button/AppButton.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import { GetNoticeData } from '../../../utils/api/api.interface';
-import AppTable from '../../../components/table/AppTable.vue';
-import { Header, SortType } from '../../../components/table/table.interface';
+import { Header } from '../../../components/table/table.interface';
 import { fetchNotices } from '../../../utils/api/notice';
-import { formatLocale } from '../../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../../utils/dates';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
-import AppPaginatedResult from '../../../components/AppPaginatedResult.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
+import { definePaginatedQuery } from '../../../utils/pagination';
+import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
+import { faSignHanging } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 
 addBreadcrumb(
-  computed(() => [{ title: t('menu.notices'), icon: 'sign-hanging' }])
+  computed(() => [{ title: t('menu.notices'), icon: faSignHanging }])
 );
 
 const headers: Header[] = [
@@ -83,48 +76,11 @@ const headers: Header[] = [
   },
 ];
 
-const route = useRoute();
-const router = useRouter();
+const currentPaginatedQuery = definePaginatedQuery('createdAt');
 
-const currentPageSize = computed({
-  get: () => Number(route.query.limit) || 25,
-  set: (limit) => router.push({ query: { ...route.query, limit } }),
-});
-
-const currentPage = computed({
-  get: () => Number(route.query.page) || 0,
-  set: (page) => router.push({ query: { ...route.query, page } }),
-});
-
-const currentSort = computed({
-  get: () => ({
-    by: (route.query.sortBy as string) || 'createdAt',
-    type: (route.query.sortType as SortType) || SortType.Desc,
-  }),
-  set: ({ by, type }) => {
-    router.replace({
-      query: {
-        ...route.query,
-        sortBy: by,
-        sortType: type,
-      },
-    });
-  },
-});
-
-const noticesTable = ref<Paginated<GetNoticeData>>({
-  total: 0,
-  count: 0,
-  offset: 0,
-  items: [],
-});
+const noticesTable = ref<Paginated<GetNoticeData>>();
 
 watchEffect(async () => {
-  noticesTable.value = await fetchNotices({
-    limit: currentPageSize.value,
-    offset: currentPage.value * currentPageSize.value,
-    sort: currentSort.value.by,
-    order: currentSort.value.type,
-  });
+  noticesTable.value = await fetchNotices(currentPaginatedQuery.query);
 });
 </script>

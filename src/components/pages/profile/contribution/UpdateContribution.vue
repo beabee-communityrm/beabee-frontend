@@ -12,9 +12,7 @@
         variant="info"
         class="mb-4"
       >
-        <template #icon
-          ><font-awesome-icon :icon="['fa', 'info-circle']"
-        /></template>
+        <template #icon><font-awesome-icon :icon="faInfoCircle" /></template>
         {{
           t('contribution.nextAmountChanging', {
             nextAmount: n(modelValue.nextAmount, 'currency'),
@@ -96,7 +94,7 @@ import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import Contribution from '../../../contribution/Contribution.vue';
-import AppButton from '../../../forms/AppButton.vue';
+import AppButton from '../../../button/AppButton.vue';
 import ProrateContribution from './ProrateContribution.vue';
 import MessageBox from '../../../MessageBox.vue';
 import { ContributionContent } from '../../../contribution/contribution.interface';
@@ -109,10 +107,11 @@ import AppModal from '../../../AppModal.vue';
 import StripePayment from '../../../StripePayment.vue';
 import { currentUser } from '../../../../store/currentUser';
 import AppAlert from '../../../AppAlert.vue';
-import { formatLocale } from '../../../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../../../utils/dates';
 import AppHeading from '../../../AppHeading.vue';
 import { isRequestError } from '../../../../utils/api';
 import { ContributionInfo } from '../../../../utils/api/api.interface';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 const validation = useVuelidate();
 

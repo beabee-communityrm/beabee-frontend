@@ -23,7 +23,7 @@ meta:
         <AppAsyncButton
           v-if="!isLive"
           variant="primaryOutlined"
-          icon="eye"
+          :icon="faEye"
           :disabled="!status"
           @click="handlePreview"
         >
@@ -62,10 +62,11 @@ import {
 } from '../../../utils/callouts';
 import PageTitle from '../../../components/PageTitle.vue';
 import useVuelidate from '@vuelidate/core';
-import AppAsyncButton from '../../../components/forms/AppAsyncButton.vue';
-import { formatDistanceLocale } from '../../../utils/dates/locale-date-formats';
+import AppAsyncButton from '../../../components/button/AppAsyncButton.vue';
+import { formatDistanceLocale } from '../../../utils/dates';
 import { addBreadcrumb } from '../../../store/breadcrumb';
 import { addNotification } from '../../../store/notifications';
+import { faBullhorn, faEye } from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps<{ id?: string }>();
 
@@ -79,7 +80,7 @@ addBreadcrumb(
       ? [
           {
             title: t('menu.callouts'),
-            icon: 'bullhorn',
+            icon: faBullhorn,
             to: '/admin/callouts',
           },
           ...(props.id

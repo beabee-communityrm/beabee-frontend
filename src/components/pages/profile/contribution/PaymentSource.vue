@@ -2,10 +2,7 @@
   <div>
     <AppHeading class="mb-4">{{ t('contribution.paymentMethod') }}</AppHeading>
 
-    <div class="mb-4">
-      <PaymentMethodIcon :method="paymentSource.method" />
-      {{ paymentSourceDescription }}
-    </div>
+    <PaymentMethod class="mb-4" :source="paymentSource" />
 
     <MessageBox v-if="cantUpdate" class="mb-4" type="error">
       {{ t('contribution.paymentSourceUpdateError') }}
@@ -39,10 +36,9 @@
 </template>
 
 <script lang="ts" setup>
-import { PaymentMethod } from '@beabee/beabee-common';
 import { onBeforeMount, ref } from 'vue';
 import MessageBox from '../../../MessageBox.vue';
-import AppButton from '../../../forms/AppButton.vue';
+import AppButton from '../../../button/AppButton.vue';
 import { useI18n } from 'vue-i18n';
 import {
   ManualPaymentSource,
@@ -54,10 +50,10 @@ import {
 } from '../../../../utils/api/contact';
 import StripePayment from '../../../StripePayment.vue';
 import AppModal from '../../../AppModal.vue';
-import PaymentMethodIcon from '../../../payment-method/PaymentMethodIcon.vue';
 import { computed } from 'vue';
 import AppHeading from '../../../AppHeading.vue';
 import { isRequestError } from '../../../../utils/api';
+import PaymentMethod from '../../../payment-method/PaymentMethod.vue';
 
 const { t } = useI18n();
 
@@ -71,24 +67,6 @@ const loading = ref(false);
 const cantUpdate = ref(false);
 const stripeClientSecret = ref('');
 const stripePaymentLoaded = ref(false);
-
-const paymentSourceDescription = computed(() => {
-  const source = props.paymentSource;
-  switch (source.method) {
-    case PaymentMethod.StripeCard:
-      return `•••• •••• •••• ${source.last4}, ${String(
-        source.expiryMonth
-      ).padStart(2, '0')}/${source.expiryYear}`;
-    case PaymentMethod.StripeBACS:
-      return `${source.sortCode} ••••••••••${source.last4}`;
-    case PaymentMethod.StripeSEPA:
-      return `${source.country}••${source.bankCode}${source.branchCode}••••${source.last4}`;
-    case PaymentMethod.GoCardlessDirectDebit:
-      return `${source.accountHolderName}, ${source.bankName}, ••••••••••${source.accountNumberEnding}`;
-    default:
-      return '';
-  }
-});
 
 const changeLabel = computed(() =>
   t(`paymentMethods.${props.paymentSource.method}.changeLabel`)

@@ -19,7 +19,7 @@ meta:
       </div>
       <AppButton
         v-if="callout.status === ItemStatus.Open"
-        :icon="showSharingPanel ? 'caret-down' : 'share'"
+        :icon="showSharingPanel ? faCaretDown : faShare"
         variant="primaryOutlined"
         @click="showSharingPanel = !showSharingPanel"
         >{{ t('common.share') }}</AppButton
@@ -35,7 +35,7 @@ meta:
       class="mb-6 flex rounded bg-white p-6 text-lg text-success"
     >
       <div class="flex-0 mr-4 text-2xl">
-        <font-awesome-icon icon="thumbs-up" />
+        <font-awesome-icon :icon="faThumbsUp" />
       </div>
       <div>
         <h3 class="font-semibold">
@@ -122,9 +122,9 @@ import {
   fetchCallout,
   fetchResponses,
 } from '../../utils/api/callout';
-import AppButton from '../../components/forms/AppButton.vue';
+import AppButton from '../../components/button/AppButton.vue';
 import MessageBox from '../../components/MessageBox.vue';
-import { currentUser } from '../../store';
+import { currentUser, canAdmin } from '../../store';
 import GuestFields from '../../components/pages/callouts/GuestFields.vue';
 import SharingPanel from '../../components/pages/callouts/CalloutSharingPanel.vue';
 import axios from '../../lib/axios';
@@ -134,7 +134,14 @@ import 'formiojs/dist/formio.form.css';
 import { useRoute } from 'vue-router';
 import ItemStatusText from '../../components/item/ItemStatusText.vue';
 import { addBreadcrumb } from '../../store/breadcrumb';
-import { canAdmin } from '../../utils/currentUserCan';
+import {
+  faBullhorn,
+  faCaretDown,
+  faShare,
+  faThumbsUp,
+  faCalendar,
+} from '@fortawesome/free-solid-svg-icons';
+import { dom, library } from '@fortawesome/fontawesome-svg-core';
 
 type FormSubmission = { data: CalloutResponseAnswers };
 
@@ -151,7 +158,7 @@ addBreadcrumb(
             {
               title: t('menu.callouts'),
               to: '/admin/callouts',
-              icon: 'bullhorn',
+              icon: faBullhorn,
             },
             {
               title: callout.value.title,
@@ -163,7 +170,7 @@ addBreadcrumb(
             {
               title: t('menu.callouts'),
               to: '/callouts',
-              icon: 'bullhorn',
+              icon: faBullhorn,
             },
             { title: callout.value.title },
           ]
@@ -278,6 +285,9 @@ async function handleSubmitResponse(submission: FormSubmission) {
 }
 
 onBeforeMount(async () => {
+  library.add(faCalendar);
+  dom.watch();
+
   formError.value = '';
   hasSubmittedResponse.value = false;
 

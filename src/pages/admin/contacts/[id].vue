@@ -27,6 +27,7 @@ import { fetchContact } from '../../../utils/api/contact';
 import AppTabs from '../../../components/tabs/AppTabs.vue';
 import { useI18n } from 'vue-i18n';
 import { addBreadcrumb } from '../../../store/breadcrumb';
+import { faUsers } from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps<{ id: string }>();
 
@@ -72,7 +73,7 @@ addBreadcrumb(
     {
       title: t('menu.contacts'),
       to: '/admin/contacts',
-      icon: 'users',
+      icon: faUsers,
     },
     ...(contact.value && selectedTab.value
       ? [
