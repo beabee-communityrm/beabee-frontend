@@ -1,5 +1,5 @@
 <template>
-  <AppButton variant="link" size="sm" icon="floppy-disk" @click="handleOpen">
+  <AppButton variant="link" size="sm" :icon="faFloppyDisk" @click="handleOpen">
     {{ t('advancedSearch.saveSegment.title') }}
   </AppButton>
   <AppModal
@@ -53,6 +53,7 @@
 
 <script lang="ts" setup>
 import { RuleGroup } from '@beabee/beabee-common';
+import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import useVuelidate from '@vuelidate/core';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';

@@ -19,7 +19,7 @@
       v-if="loading"
       class="absolute text-2xl"
       :class="loadingIconClasses"
-      :icon="['fas', 'circle-notch']"
+      :icon="faCircleNotch"
       spin
     />
     <slot name="after" />
@@ -27,6 +27,10 @@
 </template>
 
 <script lang="ts" setup>
+import {
+  faCircleNotch,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
 
 // Variant classes for [base, hover, loading icon]
@@ -76,7 +80,7 @@ const props = withDefaults(
     to?: string;
     variant?: keyof typeof variantClasses;
     size?: 'xs' | 'sm' | 'md';
-    icon?: string;
+    icon?: IconDefinition;
     is?: 'button' | 'label';
   }>(),
   {

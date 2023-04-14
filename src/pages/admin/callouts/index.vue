@@ -18,7 +18,7 @@ meta:
 
   <AppAlert v-if="wasJustDeleted" class="mb-8">
     <template #icon>
-      <font-awesome-icon :icon="['fa', 'magic']" />
+      <font-awesome-icon :icon="faMagic" />
     </template>
     {{ t('calloutAdmin.deleted') }}
   </AppAlert>
@@ -40,7 +40,7 @@ meta:
         :headers="headers"
         :result="calloutsTable"
       >
-        <template #header-hidden><font-awesome-icon icon="eye" /></template>
+        <template #header-hidden><font-awesome-icon :icon="faEye" /></template>
         <template #value-status="{ value }">
           <AppItemStatus :status="value" />
         </template>
@@ -55,7 +55,7 @@ meta:
         <template #value-hidden="{ value }">
           <font-awesome-icon
             :class="value ? 'text-body-80' : 'text-body-60'"
-            :icon="value ? 'eye-slash' : 'eye'"
+            :icon="value ? faEyeSlash : faEye"
           />
         </template>
         <template #value-starts="{ value }">
@@ -96,6 +96,12 @@ import AppVTabs from '../../../components/tabs/AppVTabs.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
 import { definePaginatedQuery, defineParam } from '../../../utils/pagination';
 import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
+import {
+  faBullhorn,
+  faEye,
+  faEyeSlash,
+  faMagic,
+} from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -104,7 +110,7 @@ addBreadcrumb(
   computed(() => [
     {
       title: t('menu.callouts'),
-      icon: 'bullhorn',
+      icon: faBullhorn,
       to: '/admin/callouts',
     },
   ])

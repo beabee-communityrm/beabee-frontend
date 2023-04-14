@@ -19,7 +19,7 @@ meta:
         <AppButton
           type="button"
           variant="primaryOutlined"
-          icon="caret-left"
+          :icon="faCaretLeft"
           :disabled="!prevResponse"
           :to="
             prevResponse &&
@@ -29,7 +29,7 @@ meta:
         <AppButton
           type="button"
           variant="primaryOutlined"
-          icon="caret-right"
+          :icon="faCaretRight"
           :disabled="!nextResponse"
           :to="
             nextResponse &&
@@ -143,6 +143,7 @@ import {
 } from '../../../../../../utils/api/callout-response';
 import CalloutResponseComments from '../../../../../../components/callout/CalloutResponseComments.vue';
 import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
+import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps<{
   rid: string;

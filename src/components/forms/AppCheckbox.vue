@@ -14,6 +14,7 @@
   </label>
 </template>
 <script lang="ts" setup>
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { computed } from 'vue';
 
 const emit = defineEmits(['update:modelValue']);
@@ -21,7 +22,7 @@ const props = defineProps<{
   modelValue: boolean;
   disabled?: boolean;
   label?: string;
-  icon?: string;
+  icon?: IconDefinition;
 }>();
 
 const modelValueProxy = computed({

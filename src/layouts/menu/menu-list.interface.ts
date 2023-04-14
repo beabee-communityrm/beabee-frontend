@@ -1,3 +1,5 @@
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+
 export interface MenuSection {
   title?: string;
   items: MenuItem[];
@@ -6,6 +8,6 @@ export interface MenuSection {
 export interface MenuItem {
   title: string;
   href: string;
-  icon: [string, string];
+  icon: IconDefinition;
   isActive?: RegExp;
 }

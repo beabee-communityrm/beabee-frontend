@@ -10,14 +10,12 @@
       @click="$emit('click', item, selectedByItemId[item.id])"
     >
       <span><slot :item="item" /></span>
-      <font-awesome-icon
-        v-if="selectedByItemId[item.id]"
-        :icon="['fa', 'check']"
-      />
+      <font-awesome-icon v-if="selectedByItemId[item.id]" :icon="faCheck" />
     </li>
   </ul>
 </template>
 <script lang="ts" setup>
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
 
 // Should be a generic

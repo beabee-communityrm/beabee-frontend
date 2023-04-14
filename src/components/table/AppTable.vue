@@ -24,7 +24,7 @@
           <font-awesome-icon
             v-if="header.value === sort?.by"
             class="ml-2"
-            :icon="sort.type === SortType.Asc ? 'caret-down' : 'caret-up'"
+            :icon="sort.type === SortType.Asc ? faCaretDown : faCaretUp"
           />
         </th>
       </tr>
@@ -81,6 +81,7 @@
 </template>
 
 <script lang="ts" setup>
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { hasSlotContent } from '../../utils';

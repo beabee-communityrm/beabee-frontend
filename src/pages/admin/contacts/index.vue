@@ -47,7 +47,7 @@ meta:
       >
         <template #actions>
           <AppButton
-            icon="download"
+            :icon="faDownload"
             variant="primaryOutlined"
             :title="t('actions.export')"
             @click="handleExport"
@@ -135,6 +135,7 @@ import SaveSegment from '../../../components/pages/admin/contacts/SaveSegment.vu
 import { addBreadcrumb } from '../../../store/breadcrumb';
 import { definePaginatedQuery, defineParam } from '../../../utils/pagination';
 import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
+import { faDownload, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 const { t, n } = useI18n();
 
@@ -143,7 +144,7 @@ const router = useRouter();
 
 addBreadcrumb(
   computed(() => [
-    { title: t('menu.contacts'), to: '/admin/contacts', icon: 'users' },
+    { title: t('menu.contacts'), to: '/admin/contacts', icon: faUsers },
   ])
 );
 

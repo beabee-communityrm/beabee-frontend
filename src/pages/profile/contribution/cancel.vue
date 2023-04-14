@@ -41,7 +41,7 @@ const loading = ref(false);
 async function submit() {
   loading.value = true;
   try {
-    await cancelContribution();
+    await cancelContribution('me');
     router.push({
       path: '/profile/contribution',
       query: { cancelled: null },

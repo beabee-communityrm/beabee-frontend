@@ -113,6 +113,7 @@ import CalloutSummary from '../../components/callout/CalloutSummary.vue';
 import { fetchStats } from '../../utils/api/stats';
 import { subDays } from 'date-fns';
 import { addBreadcrumb } from '../../store/breadcrumb';
+import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 
 const { n, t } = useI18n();
 
@@ -121,7 +122,7 @@ addBreadcrumb(
     {
       title: t('menu.dashboard'),
       to: '/admin',
-      icon: 'chart-line',
+      icon: faChartLine,
     },
   ])
 );

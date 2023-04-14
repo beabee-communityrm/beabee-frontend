@@ -19,6 +19,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { faSignHanging } from '@fortawesome/free-solid-svg-icons';
 import { ref, onBeforeMount, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
@@ -40,7 +41,7 @@ const notice = ref<GetNoticeData | undefined>();
 
 addBreadcrumb(
   computed(() => [
-    { title: t('menu.notices'), to: '/admin/notices', icon: 'sign-hanging' },
+    { title: t('menu.notices'), to: '/admin/notices', icon: faSignHanging },
     ...(notice.value
       ? [
           {

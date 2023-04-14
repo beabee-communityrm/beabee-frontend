@@ -17,13 +17,16 @@
   </ul>
 </template>
 <script lang="ts" setup>
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAngleRight,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
 
 defineProps<{
   items: {
     title: string;
     to?: string;
-    icon?: string;
+    icon?: IconDefinition;
   }[];
 }>();
 </script>
