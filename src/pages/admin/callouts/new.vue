@@ -171,14 +171,13 @@ async function saveCallout(asDraft = false) {
 }
 
 async function handleUpdate() {
-  const callout = await saveCallout();
+  await saveCallout();
   addNotification({
     title: props.id
       ? t('calloutAdminOverview.updated')
       : t('calloutAdminOverview.added'),
     variant: 'success',
   });
-  router.push({ path: '/admin/callouts/view/' + callout.slug });
 }
 
 async function handleSaveDraft() {
