@@ -17,12 +17,12 @@ meta:
     <div v-if="stripeClientSecret" v-show="stripePaymentLoaded">
       <JoinHeader :title="joinContent.title" />
 
-      <AppAlert variant="info" class="mb-4">
-        <template #icon>
-          <font-awesome-icon :icon="faHandSparkles" />
-        </template>
-        {{ t('joinPayment.willBeContributing', signUpDescription) }}
-      </AppAlert>
+      <AppNotification
+        variant="info"
+        :title="t('joinPayment.willBeContributing', signUpDescription)"
+        :icon="faHandSparkles"
+        class="mb-4"
+      />
 
       <p class="mb-3 text-xs font-semibold text-body-80">
         {{ t('joinPayment.note') }}
@@ -68,11 +68,11 @@ import { generalContent } from '../../store';
 import StripePayment from '../../components/StripePayment.vue';
 import { fetchContent } from '../../utils/api/content';
 import { signUp, completeUrl } from '../../utils/api/signup';
-import AppAlert from '../../components/AppAlert.vue';
 import { useJoin } from '../../components/pages/join/use-join';
 import JoinForm from '../../components/pages/join/JoinForm.vue';
 import { JoinContent } from '../../utils/api/api.interface';
 import { faHandSparkles } from '@fortawesome/free-solid-svg-icons';
+import AppNotification from '../../components/AppNotification.vue';
 
 const { t } = useI18n();
 

@@ -7,8 +7,12 @@
       class="flex items-start gap-4"
       :class="$slots.default ? 'mb-2' : ''"
     >
-      <span class="flex-1 font-bold" :class="colorClass[1]">
-        {{ title }}
+      <span
+        class="flex flex-1 items-baseline gap-2 font-bold"
+        :class="colorClass[1]"
+      >
+        <span><font-awesome-icon v-if="icon" :icon="icon" /></span>
+        <span>{{ title }}</span>
       </span>
       <template v-if="removeable !== false">
         <svg
@@ -38,13 +42,14 @@
 </template>
 
 <script lang="ts" setup>
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { computed, ref } from 'vue';
 
 const emit = defineEmits(['remove']);
 const props = defineProps<{
-  variant: 'success' | 'warning' | 'error';
+  variant: 'success' | 'warning' | 'error' | 'info';
   title: string;
+  icon?: IconDefinition;
   removeable?: 'auto' | boolean;
 }>();
 
@@ -74,8 +79,10 @@ const colorClass = computed(() => {
       return ['border-success', 'text-success', 'stroke-success'];
     case 'warning':
       return ['border-warning', '', 'stroke-warning'];
-    default:
+    case 'error':
       return ['border-danger', 'text-danger', 'stroke-danger'];
+    default:
+      return ['border-primary', 'text-primary', 'stroke-primary'];
   }
 });
 </script>

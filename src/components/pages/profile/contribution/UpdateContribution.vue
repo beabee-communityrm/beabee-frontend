@@ -9,19 +9,21 @@
         {{ t('contribution.manualPayment') }}
       </p>
 
-      <AppAlert
-        v-if="modelValue.nextAmount && modelValue.renewalDate"
+      <AppNotification
+        v-if="true || (modelValue.nextAmount && modelValue.renewalDate)"
         variant="info"
-        class="mb-4"
-      >
-        <template #icon><font-awesome-icon :icon="faInfoCircle" /></template>
-        {{
+        :title="
           t('contribution.nextAmountChanging', {
-            nextAmount: n(modelValue.nextAmount, 'currency'),
-            renewalDate: formatLocale(modelValue.renewalDate, 'PPP'),
+            nextAmount: n(modelValue.nextAmount || 5, 'currency'),
+            renewalDate: formatLocale(
+              modelValue.renewalDate || new Date(),
+              'PPP'
+            ),
           })
-        }}
-      </AppAlert>
+        "
+        :icon="faInfoCircle"
+        class="mb-4"
+      />
 
       <Contribution
         v-model:amount="newContribution.amount"
@@ -106,7 +108,6 @@ import {
 import AppModal from '../../../AppModal.vue';
 import StripePayment from '../../../StripePayment.vue';
 import { currentUser } from '../../../../store/currentUser';
-import AppAlert from '../../../AppAlert.vue';
 import { formatLocale } from '../../../../utils/dates';
 import AppHeading from '../../../AppHeading.vue';
 import { isRequestError } from '../../../../utils/api';
