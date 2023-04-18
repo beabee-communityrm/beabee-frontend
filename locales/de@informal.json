@@ -1005,6 +1005,8 @@
     "description": "Neues Passwort eingeben, um fortzufahren.",
     "error": "Das Zurücksetzen des Passworts ist schiefgelaufen. Der Link scheint abgelaufen zu sein. Du kannst {newLink}.",
     "errorLink": "einen neuen Link anfordern",
+    "errorText": "Der Link scheint abgelaufen zu sein. Du kannst {newLink}.",
+    "errorTitle": "Das Zurücksetzen des Passworts ist schiefgelaufen.",
     "login": "Einloggen",
     "newPassword": "Neues Passwort",
     "title": "Passwort aktualisieren?"

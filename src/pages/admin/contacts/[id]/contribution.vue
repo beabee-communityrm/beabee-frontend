@@ -72,7 +72,6 @@ import {
 import { UpdateContribution } from '../../../../components/contact/contact.interface';
 import AppForm from '../../../../components/forms/AppForm.vue';
 import ContactContributionFields from '../../../../components/contact/ContactContributionFields.vue';
-import MessageBox from '../../../../components/MessageBox.vue';
 import ContactCancelContribution from '../../../../components/contact/ContactCancelContribution.vue';
 import AppConfirmDialog from '../../../../components/AppConfirmDialog.vue';
 import { cancelContribution } from '../../../../utils/api/contact';
