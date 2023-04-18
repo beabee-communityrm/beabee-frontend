@@ -808,7 +808,6 @@
     "manageYourContribution": "Beitrag ändern",
     "newCallout": "Neuer Callout!",
     "openCallouts": "Aktuelle Callouts",
-    "passwordReset": "Dein Passwort wurde aktualisiert.",
     "quickActions": "Schnellaktionen",
     "title": "Home",
     "viewAllCallouts": "Alle Callouts anzeigen",
@@ -1009,6 +1008,7 @@
     "errorTitle": "Das Zurücksetzen des Passworts ist schiefgelaufen.",
     "login": "Einloggen",
     "newPassword": "Neues Passwort",
+    "success": "Dein Passwort wurde aktualisiert.",
     "title": "Passwort aktualisieren?"
   },
   "roleEditor": {

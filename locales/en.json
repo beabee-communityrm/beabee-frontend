@@ -819,7 +819,6 @@
     "manageYourContribution": "Manage your contribution",
     "newCallout": "New callout!",
     "openCallouts": "Open callouts",
-    "passwordReset": "Your password has been reset.",
     "quickActions": "Quick actions",
     "title": "Home",
     "viewAllCallouts": "View all callouts",
@@ -1020,6 +1019,7 @@
     "errorTitle": "Password reset failed",
     "login": "Login to your account",
     "newPassword": "New password",
+    "success": "Your password has been reset.",
     "title": "Reset your password?"
   },
   "roleEditor": {

@@ -54,10 +54,12 @@ async function handleSubmit(evt: Event) {
 
   try {
     await props.onSubmit?.(evt);
-    addNotification({
-      title: props.successText || '',
-      variant: 'success',
-    });
+    if (props.successText) {
+      addNotification({
+        title: props.successText || '',
+        variant: 'success',
+      });
+    }
   } catch (err) {
     const knownError = getRequestError(err);
     const errorText =

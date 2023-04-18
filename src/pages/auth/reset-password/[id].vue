@@ -94,6 +94,7 @@ import { resetPassword } from '../../../utils/api/auth';
 import { updateCurrentUser } from '../../../store';
 import { isInternalUrl } from '../../../utils';
 import AppNotification from '../../../components/AppNotification.vue';
+import { addNotification } from '../../../store/notifications';
 
 const props = withDefaults(
   defineProps<{
@@ -127,7 +128,11 @@ async function handleSubmit() {
       // TODO: use router when legacy app is gone
       window.location.href = redirectTo;
     } else {
-      router.push({ path: '/profile', query: { passwordReset: 'true' } });
+      addNotification({
+        variant: 'success',
+        title: t('resetPassword.success'),
+      });
+      router.push({ path: '/profile' });
     }
   } catch (err) {
     hasError.value = true;
