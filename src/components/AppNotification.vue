@@ -1,9 +1,12 @@
 <template>
   <aside
-    class="border-t-8 bg-white p-4 text-sm text-body-80"
+    class="rounded border border-t-8 bg-white p-4 text-sm text-body-80"
     :class="colorClass[0]"
   >
-    <header class="mb-2 flex items-start gap-4">
+    <header
+      class="flex items-start gap-4"
+      :class="$slots.default ? 'mb-2' : ''"
+    >
       <span class="flex-1 font-bold" :class="colorClass[1]">
         {{ title }}
       </span>
@@ -68,11 +71,11 @@ const circleStyle = computed(() => ({
 const colorClass = computed(() => {
   switch (props.variant) {
     case 'success':
-      return ['border-t-success', 'text-success', 'stroke-success'];
+      return ['border-success', 'text-success', 'stroke-success'];
     case 'warning':
-      return ['border-t-warning', '', 'stroke-warning'];
+      return ['border-warning', '', 'stroke-warning'];
     default:
-      return ['border-t-danger', 'text-danger', 'stroke-danger'];
+      return ['border-danger', 'text-danger', 'stroke-danger'];
   }
 });
 </script>

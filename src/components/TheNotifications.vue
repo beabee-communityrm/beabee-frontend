@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed bottom-16 right-16 z-50 w-96">
+  <div class="fixed bottom-16 left-16 z-50 w-96">
     <div class="flex flex-col gap-4">
       <transition-group name="notification">
         <AppNotfication
