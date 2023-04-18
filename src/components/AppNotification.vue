@@ -7,7 +7,7 @@
       <span class="flex-1 font-bold" :class="colorClass[1]">
         {{ title }}
       </span>
-      <template v-if="removeable !== undefined">
+      <template v-if="removeable !== false">
         <svg
           class="h-5 w-5 -rotate-90"
           :class="colorClass[2]"
@@ -42,7 +42,7 @@ const emit = defineEmits(['remove']);
 const props = defineProps<{
   variant: 'success' | 'warning' | 'error';
   title: string;
-  removeable?: 'auto' | '' | true;
+  removeable?: 'auto' | boolean;
 }>();
 
 const circleRadius = 10;
