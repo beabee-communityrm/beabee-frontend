@@ -40,13 +40,12 @@
         :renewal-date="modelValue.renewalDate || new Date()"
       />
 
-      <MessageBox v-if="hasUpdated" class="mb-4" type="success">
-        {{ t('contribution.updatedContribution') }}
-      </MessageBox>
-
-      <MessageBox v-if="cantUpdate" class="mb-4" type="error">
-        {{ t('contribution.contributionUpdateError') }}
-      </MessageBox>
+      <AppNotification
+        v-if="cantUpdate"
+        class="mb-4"
+        variant="error"
+        :title="t('contribution.contributionUpdateError')"
+      />
 
       <AppButton
         :disabled="!canSubmit || validation.$invalid"
@@ -98,7 +97,6 @@ import useVuelidate from '@vuelidate/core';
 import Contribution from '../../../contribution/Contribution.vue';
 import AppButton from '../../../button/AppButton.vue';
 import ProrateContribution from './ProrateContribution.vue';
-import MessageBox from '../../../MessageBox.vue';
 import { ContributionContent } from '../../../contribution/contribution.interface';
 import {
   startContribution,
@@ -114,6 +112,8 @@ import AppHeading from '../../../AppHeading.vue';
 import { isRequestError } from '../../../../utils/api';
 import { ContributionInfo } from '../../../../utils/api/api.interface';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { addNotification } from '../../../../store/notifications';
+import AppNotification from '../../../AppNotification.vue';
 
 const validation = useVuelidate();
 
@@ -134,7 +134,6 @@ const newContribution = reactive({
 });
 
 const cantUpdate = ref(false);
-const hasUpdated = ref(false);
 const loading = ref(false);
 const stripeClientSecret = ref('');
 const stripePaymentLoaded = ref(false);
@@ -188,7 +187,10 @@ async function handleUpdate() {
     const data = await updateContribution(newContribution);
     emit('update:modelValue', data);
 
-    hasUpdated.value = true;
+    addNotification({
+      variant: 'success',
+      title: t('contribution.updatedContribution'),
+    });
   } catch (err) {
     if (isRequestError(err, 'cant-update-contribution')) {
       cantUpdate.value = true;
@@ -213,7 +215,6 @@ function onStripeLoaded() {
 
 function reset() {
   cantUpdate.value = false;
-  hasUpdated.value = false;
   loading.value = false;
   stripeClientSecret.value = '';
   stripePaymentLoaded.value = false;
