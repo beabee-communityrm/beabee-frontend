@@ -100,7 +100,7 @@ meta:
         :options="formOpts"
         @submit="handleSubmitResponse as any"
       />
-      <InfoMessage v-if="isPreview" :message="t('callout.showingPreview')" />
+      <AppInputHelp v-if="isPreview" :message="t('callout.showingPreview')" />
       <AppNotification
         v-if="formError"
         class="mt-4"
@@ -130,7 +130,7 @@ import { currentUser, canAdmin } from '../../store';
 import GuestFields from '../../components/pages/callouts/GuestFields.vue';
 import SharingPanel from '../../components/pages/callouts/CalloutSharingPanel.vue';
 import axios from '../../lib/axios';
-import InfoMessage from '../../components/InfoMessage.vue';
+import AppInputHelp from '../../components/forms/AppInputHelp.vue';
 
 import 'formiojs/dist/formio.form.css';
 import { useRoute } from 'vue-router';
