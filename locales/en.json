@@ -423,7 +423,10 @@
       "text": "Are you sure you want to cancel this contact's contribution? This can't be undone.",
       "title": "Cancel contribution?"
     },
-    "editNotice": "Updating a contact's contribution is currently only possible for those with a manual contribution."
+    "updateNotice": {
+      "text": "You can't currently update a contact's contribution, contact support{'@'}beabee.io for support.",
+      "title": "Not currently available"
+    }
   },
   "contactOverview": {
     "about": "About",

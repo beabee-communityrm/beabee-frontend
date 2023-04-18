@@ -1,7 +1,9 @@
 <template>
   <div>
     <form @submit.prevent="handleSubmit">
-      <AppHeading class="mb-2">{{ t('contribution.billing') }} </AppHeading>
+      <AppHeading class="mb-2">
+        {{ t('contribution.updateContribution') }}
+      </AppHeading>
 
       <p v-if="isManualActiveMember" class="mb-4">
         {{ t('contribution.manualPayment') }}

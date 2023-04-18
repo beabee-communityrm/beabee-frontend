@@ -417,7 +417,7 @@
   },
   "contactContribution": {
     "confirmCancel": {},
-    "editNotice": "Der Beitrag kann aktuell nur bei manuell zahlenden Mitgliedern geändert werden."
+    "updateNotice": {}
   },
   "contactOverview": {
     "about": "Über",

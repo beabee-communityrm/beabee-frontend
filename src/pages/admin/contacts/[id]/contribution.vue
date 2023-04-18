@@ -9,7 +9,7 @@ meta:
   <div class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
     <div>
       <AppHeading class="mb-2">
-        {{ t('contribution.billing') }}
+        {{ t('contribution.updateContribution') }}
       </AppHeading>
       <template v-if="contributionData && contributionInfo">
         <AppForm
@@ -24,9 +24,13 @@ meta:
           <ContactContributionFields v-model="contributionData" />
         </AppForm>
         <template v-else>
-          <MessageBox type="warning" class="mb-6">
-            {{ t('contactContribution.editNotice') }}
-          </MessageBox>
+          <AppNotification
+            variant="warning"
+            class="mb-6"
+            :title="t('contactContribution.updateNotice.title')"
+          >
+            {{ t('contactContribution.updateNotice.text') }}
+          </AppNotification>
 
           <ContactCancelContribution
             :id="contact.id"
@@ -73,6 +77,7 @@ import ContactCancelContribution from '../../../../components/contact/ContactCan
 import AppConfirmDialog from '../../../../components/AppConfirmDialog.vue';
 import { cancelContribution } from '../../../../utils/api/contact';
 import { useRouter } from 'vue-router';
+import AppNotification from '../../../../components/AppNotification.vue';
 
 const { t } = useI18n();
 
