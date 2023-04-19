@@ -2,10 +2,8 @@ name: Release
 
 on:
   push:
-    tags:
-      - 'v*'
     branches:
-      - 'feat*'
+      - 'feat/*'
 
 jobs:
   check:
