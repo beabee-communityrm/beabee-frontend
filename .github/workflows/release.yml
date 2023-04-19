@@ -2,8 +2,8 @@ name: Release
 
 on:
   push:
-    branches:
-      - 'feat/*'
+    tags:
+      - 'v/*'
 
 jobs:
   check:
@@ -22,10 +22,9 @@ jobs:
       - id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ secrets.DOCKER_ORGANISATION }}/frontend-test
+          images: ${{ secrets.DOCKER_ORGANISATION }}/frontend
           tags: |
             type=ref,event=tag
-            type=ref,event=branch
             release
 
       - uses: docker/login-action@v2
