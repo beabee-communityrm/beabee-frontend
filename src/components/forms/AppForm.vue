@@ -15,6 +15,7 @@
         variant="link"
         :loading="isLoading"
         :disabled="validation.$invalid"
+        :class="fullButton ? 'w-full' : ''"
       >
         {{ buttonText }}
       </AppButton>
@@ -40,6 +41,7 @@ const props = defineProps<{
   resetButtonText?: string;
   successText?: string;
   errorText?: string | Record<string, string>;
+  fullButton?: boolean;
   onSubmit?: (evt: Event) => Promise<unknown> | unknown;
 }>();
 

@@ -1,5 +1,9 @@
 <template>
-  <form @submit.prevent="emit('submit', data)">
+  <AppForm
+    :button-text="t('joinSetup.continue')"
+    full-button
+    @submit="onSubmit"
+  >
     <JoinHeader
       :title="
         t('joinSetup.welcome', {
@@ -42,19 +46,7 @@
       :label="setupContent.newsletterOptIn"
       class="mb-6"
     />
-
-    <MessageBox v-if="validation.$errors.length > 0" class="mb-2" />
-
-    <AppButton
-      variant="link"
-      type="submit"
-      :loading="loading"
-      :disabled="validation.$invalid"
-      class="mb-3 w-full"
-    >
-      {{ t('joinSetup.continue') }}
-    </AppButton>
-  </form>
+  </AppForm>
 </template>
 <script lang="ts" setup>
 import { NewsletterStatus } from '@beabee/beabee-common';
@@ -64,22 +56,21 @@ import { useI18n } from 'vue-i18n';
 import { JoinSetupContent } from '../../../utils/api/api.interface';
 import JoinHeader from './JoinHeader.vue';
 import AppAddress from '../../AppAddress.vue';
-import AppButton from '../../button/AppButton.vue';
-import MessageBox from '../../MessageBox.vue';
 import ContactBasicFields from '../../contact/ContactBasicFields.vue';
 import ContactMailOptIn from '../../contact/ContactMailOptIn.vue';
 import { fetchContact } from '../../../utils/api/contact';
 import { SetupContactData } from './join.interface';
 import AppOptIn from '../../AppOptIn.vue';
+import AppForm from '../../forms/AppForm.vue';
 
-const emit = defineEmits(['submit']);
 const props = defineProps<{
   setupContent: JoinSetupContent;
-  loading?: boolean;
+  onSubmit?: (data: SetupContactData) => Promise<unknown> | unknown;
 }>();
 
 const { t } = useI18n();
-const validation = useVuelidate({ $stopPropagation: true });
+
+useVuelidate({ $stopPropagation: true });
 
 const contact = await fetchContact('me', ['profile']);
 
