@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [push]
     steps:
-      - uses: action/checkout@v3
+      - uses: actions/checkout@v3
         with:
           repository: beabee-communityrm/test-deploy
           ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
