@@ -8,7 +8,7 @@ meta:
 <template>
   <AppConfirmDialog
     :open="showDeleteModal"
-    :title="'Delete?'"
+    :title="t('adminSettings.apikey.confirmDelete.title')"
     :cancel="t('actions.noBack')"
     :confirm="t('actions.yesDelete')"
     variant="danger"
@@ -20,8 +20,19 @@ meta:
     "
     @confirm="confirmDeleteApiKey"
   >
-    <p>{{ t('calloutAdminOverview.actions.confirmDelete.text') }}</p>
+    <p>{{ t('adminSettings.apikey.confirmDelete.text') }}</p>
   </AppConfirmDialog>
+
+  <AppConfirmDialog
+    :open="showConfirmCreateModal"
+    :title="t('adminSettings.apikey.confirmCreate.title')"
+    :confirm="t('actions.continue')"
+    variant="danger"
+    @close="confirmCreateApiKey"
+    @confirm="confirmCreateApiKey"
+    ><p>{{ t('adminSettings.apikey.confirmCreate.text') }}</p>
+    <p>{{ tokenToShow }}</p></AppConfirmDialog
+  >
 
   <AppPaginatedTable
     v-model:query="currentPaginatedQuery"
@@ -29,8 +40,8 @@ meta:
     :headers="headers"
     :result="apiKeyTable"
   >
-    <template #value-description="{ item }">
-      <span> {{ item.description }} </span>
+    <template #value-apikey="{ value }">
+      <span> {{ value.description }} </span>
     </template>
     <template #value-joined="{ value }">
       <span> {{ formatLocale(value, 'PPPppp') }}</span>
@@ -40,7 +51,7 @@ meta:
     </template>
     <template #value-id="{ value }"
       ><AppButton
-        :title="'Delete'"
+        :title="t('actions.delete')"
         @click="
           ($event) => {
             showDeleteModal = true;
@@ -48,7 +59,7 @@ meta:
           }
         "
       >
-        {{ 'Delete' }}</AppButton
+        {{ t('actions.delete') }}</AppButton
       >
     </template>
   </AppPaginatedTable>
@@ -87,45 +98,61 @@ import { formatLocale } from '../../../utils/dates';
 const { t } = useI18n();
 
 const showDeleteModal = ref(false);
+const showConfirmCreateModal = ref(false);
 const apiKeyToDelete = ref('');
-
-const headers: Header[] = [
-  {
-    value: 'apiKey',
-    text: 'Description',
-  },
-  {
-    value: 'joined',
-    text: t('notices.data.createdAt'),
-    align: 'right',
-    sortable: true,
-  },
-  {
-    value: 'apiKey',
-    text: 'test',
-    align: 'right',
-  },
-  { value: 'id', text: 'Actions' },
-];
-
-const currentPaginatedQuery = definePaginatedQuery('joined');
-
-const apiKeyTable = ref<Paginated<GetApiKeyData>>();
-
-watchEffect(async () => {
-  apiKeyTable.value = await fetchApiKeys(currentPaginatedQuery.query);
-});
+const tokenToShow = ref('');
 
 const newApiKeyData = reactive({
   description: '',
 });
 
+const headers: Header[] = [
+  {
+    value: 'apiKey',
+    text: t('form.description'),
+  },
+  {
+    value: 'joined',
+    text: t('adminSettings.apikey.createdAt'),
+    align: 'right',
+    sortable: true,
+  },
+  {
+    value: 'apiKey',
+    text: t('adminSettings.apikey.id'),
+    align: 'right',
+  },
+  { value: 'id', text: t('actions.delete') },
+];
+
+const apiKeyTable = ref<Paginated<GetApiKeyData>>();
+
+const currentPaginatedQuery = definePaginatedQuery('joined');
+watchEffect(async () => {
+  apiKeyTable.value = await fetchApiKeys(currentPaginatedQuery.query);
+});
+
 async function generateApiKey() {
-  const token: GetTokenData = await createApiKey(newApiKeyData);
+  const tokenData: GetTokenData = await createApiKey(newApiKeyData);
+  tokenToShow.value = tokenData.token;
+  newApiKeyData.description = '';
+  showConfirmCreateModal.value = true;
+  await refreshApiKeys();
+}
+
+async function refreshApiKeys() {
+  apiKeyTable.value = await fetchApiKeys(currentPaginatedQuery.query);
 }
 
 async function confirmDeleteApiKey() {
   await deleteApiKey(apiKeyToDelete.value);
   showDeleteModal.value = false;
+  apiKeyToDelete.value = '';
+  await refreshApiKeys();
+}
+
+async function confirmCreateApiKey() {
+  showConfirmCreateModal.value = false;
+  tokenToShow.value = '';
 }
 </script>

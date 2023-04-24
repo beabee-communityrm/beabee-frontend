@@ -81,6 +81,22 @@
     "welcomeBack": "Welcome back {firstName}!"
   },
   "adminSettings": {
+    "apikey": {
+      "confirmCreate": {
+        "text": "Please save the following token. It CAN NOT be retrieved later:",
+        "title": "API Key successfully created"
+      },
+      "confirmDelete": {
+        "text": "Are you sure you want to delete this API Key?",
+        "title": "Delete API Key?"
+      },
+      "createdAt": "Created",
+      "generate": "Generate API Key",
+      "id": "ID",
+      "label": "API Keys",
+      "name": "Name",
+      "showingOf": "Showing {start} to {end} API Keys out of {total}"
+    },
     "email": {
       "fromEmail": "From email",
       "fromName": "From name",
