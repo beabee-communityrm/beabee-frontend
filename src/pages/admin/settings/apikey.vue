@@ -70,7 +70,7 @@ meta:
   >
     <AppInput
       v-model="newApiKeyData.description"
-      :label="t('adminSettings.apikey.name')"
+      :label="t('adminSettings.apikey.description')"
       required
     />
   </AppForm>
@@ -80,6 +80,7 @@ meta:
 import { useI18n } from 'vue-i18n';
 import AppForm from '../../../components/forms/AppForm.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
+
 import { reactive, ref, watchEffect } from 'vue';
 import { GetApiKeyData, GetTokenData } from '../../../utils/api/api.interface';
 import {

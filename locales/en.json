@@ -91,10 +91,10 @@
         "title": "Delete API Key?"
       },
       "createdAt": "Created",
+      "description": "Description",
       "generate": "Generate API Key",
       "id": "ID",
       "label": "API Keys",
-      "name": "Name",
       "showingOf": "Showing {start} to {end} API Keys out of {total}"
     },
     "email": {

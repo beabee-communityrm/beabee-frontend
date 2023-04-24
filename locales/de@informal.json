@@ -91,10 +91,10 @@
         "title": "API Key löschen?"
       },
       "createdAt": "Erstellt",
+      "description": "Beschreibung",
       "generate": "API Key generieren",
       "id": "ID",
       "label": "API Keys",
-      "name": "Name",
       "showingOf": "API Keys {start} bis {end} von {total} werden angezeigt."
     },
     "email": {
