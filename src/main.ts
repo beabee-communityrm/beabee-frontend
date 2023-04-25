@@ -23,6 +23,7 @@ app.use(VueMatomo, {
   host: 'https://thebristolcable.matomo.cloud',
   siteId: 1,
   router,
+  trackInitialView: false, // Seems to always track / as initial view
   enableLinkTracking: true,
   enableHeartBeatTimer: true,
   cookieDomain: '*.thebristolcable.org',
