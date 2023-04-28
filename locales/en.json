@@ -95,7 +95,8 @@
       "generate": "Generate API Key",
       "id": "ID",
       "label": "API Keys",
-      "showingOf": "Showing {start} to {end} API Keys out of {total}"
+      "showingOf": "Showing {start} to {end} API Keys out of {total}",
+      "token": "Token"
     },
     "email": {
       "fromEmail": "From email",

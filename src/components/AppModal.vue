@@ -3,7 +3,6 @@
     <div
       class="fixed inset-0 z-50 flex h-full items-center justify-center bg-black bg-opacity-50 p-4"
       :class="{ hidden: !open }"
-      @click="$emit('close')"
     >
       <div
         ref="divRef"

@@ -31,8 +31,14 @@ meta:
     @close="confirmCreateApiKey"
     @confirm="confirmCreateApiKey"
     ><p>{{ t('adminSettings.apikey.confirmCreate.text') }}</p>
-    <p>{{ tokenToShow }}</p></AppConfirmDialog
-  >
+
+    <div>
+      <AppButton :icon="faCopy" size="sm" @click="copyToClipboard">
+        {{ t('common.copy') }}
+      </AppButton>
+      <pre white-space="nowrap">{{ tokenToShow }} </pre>
+    </div>
+  </AppConfirmDialog>
 
   <AppPaginatedTable
     v-model:query="currentPaginatedQuery"
@@ -40,14 +46,14 @@ meta:
     :headers="headers"
     :result="apiKeyTable"
   >
-    <template #value-apikey="{ value }">
-      <span> {{ value.description }} </span>
+    <template #value-apiKey-description="{ item }">
+      <span> {{ item.apiKey.description }} </span>
     </template>
     <template #value-joined="{ value }">
       <span> {{ formatLocale(value, 'PPPppp') }}</span>
     </template>
-    <template #value-apiKey="{ value }">
-      <span>{{ value.id }} </span>
+    <template #value-apiKey-id="{ item }">
+      <span>{{ item.apiKey.id }}********** </span>
     </template>
     <template #value-id="{ value }"
       ><AppButton
@@ -77,9 +83,12 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import useVuelidate from '@vuelidate/core';
 import { useI18n } from 'vue-i18n';
 import AppForm from '../../../components/forms/AppForm.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
+
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
 
 import { reactive, ref, watchEffect } from 'vue';
 import { GetApiKeyData, GetTokenData } from '../../../utils/api/api.interface';
@@ -98,6 +107,8 @@ import { formatLocale } from '../../../utils/dates';
 
 const { t } = useI18n();
 
+const validation = useVuelidate();
+
 const showDeleteModal = ref(false);
 const showConfirmCreateModal = ref(false);
 const apiKeyToDelete = ref('');
@@ -109,7 +120,7 @@ const newApiKeyData = reactive({
 
 const headers: Header[] = [
   {
-    value: 'apiKey',
+    value: 'apiKey-description',
     text: t('form.description'),
   },
   {
@@ -119,11 +130,11 @@ const headers: Header[] = [
     sortable: true,
   },
   {
-    value: 'apiKey',
-    text: t('adminSettings.apikey.id'),
+    value: 'apiKey-id',
+    text: t('adminSettings.apikey.token'),
     align: 'right',
   },
-  { value: 'id', text: t('actions.delete') },
+  { value: 'id', text: t('actions.delete'), align: 'right' },
 ];
 
 const apiKeyTable = ref<Paginated<GetApiKeyData>>();
@@ -137,6 +148,7 @@ async function generateApiKey() {
   const tokenData: GetTokenData = await createApiKey(newApiKeyData);
   tokenToShow.value = tokenData.token;
   newApiKeyData.description = '';
+  validation.value.$reset();
   showConfirmCreateModal.value = true;
   await refreshApiKeys();
 }
@@ -155,5 +167,9 @@ async function confirmDeleteApiKey() {
 async function confirmCreateApiKey() {
   showConfirmCreateModal.value = false;
   tokenToShow.value = '';
+}
+
+function copyToClipboard() {
+  navigator.clipboard.writeText(tokenToShow.value);
 }
 </script>
