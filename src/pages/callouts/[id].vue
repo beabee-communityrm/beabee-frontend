@@ -139,7 +139,9 @@ import {
   faCaretDown,
   faShare,
   faThumbsUp,
+  faCalendar,
 } from '@fortawesome/free-solid-svg-icons';
+import { dom, library } from '@fortawesome/fontawesome-svg-core';
 
 type FormSubmission = { data: CalloutResponseAnswers };
 
@@ -283,6 +285,9 @@ async function handleSubmitResponse(submission: FormSubmission) {
 }
 
 onBeforeMount(async () => {
+  library.add(faCalendar);
+  dom.watch();
+
   formError.value = '';
   hasSubmittedResponse.value = false;
 

@@ -56,6 +56,24 @@ import {
   faPlus,
   IconName,
   faExclamation,
+  faCode,
+  faColumns,
+  faThLarge,
+  faListAlt,
+  faTable,
+  faFolder,
+  faSquare,
+  faParagraph,
+  faAt,
+  faLink,
+  faPhoneSquare,
+  faTags,
+  faHome,
+  faCalendar,
+  faClock,
+  faUsd,
+  faList,
+  faPencil,
 } from '@fortawesome/free-solid-svg-icons';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
 
@@ -101,9 +119,7 @@ watch(
 
 const formOpts = {
   builder: {
-    advanced: false,
     data: false,
-    layout: false,
     resource: false,
     premium: false,
   },
@@ -131,7 +147,26 @@ onBeforeMount(() => {
     faCopy,
     faBars,
     faPlus,
+    faCode,
+    faColumns,
+    faThLarge,
+    faListAlt,
+    faTable,
+    faAt,
+    faLink,
+    faPhoneSquare,
+    faTags,
+    faHome,
+    faCalendar,
+    faUsd,
+    faList,
+    faPencil,
+
     // Use different icon names so they match
+    { ...faClock, iconName: 'clock-o' as IconName },
+    { ...faParagraph, iconName: 'html5' },
+    { ...faFolder, iconName: 'folder-o' as IconName },
+    { ...faSquare, iconName: 'square-o' as IconName },
     { ...faTimesCircle, iconName: 'times-circle-o' as IconName },
     { ...faDotCircle, iconName: 'dot-circle-o' as IconName },
     { ...faArrowsAlt, iconName: 'arrows' },
@@ -166,13 +201,25 @@ onBeforeMount(() => {
     }
   }
 
-  .form-builder-group-header,
+  .form-builder-panel {
+    @apply mb-2;
+  }
+
+  .form-builder-group-header {
+    @apply cursor-pointer rounded bg-primary-20 text-sm font-semibold hover:bg-primary-40;
+  }
+
+  .builder-group-button {
+    @apply w-full p-2;
+  }
+
   .builder-sidebar_search {
     @apply hidden;
   }
 
-  #group-container-basic {
-    @apply flex w-full flex-col gap-1 p-0;
+  #group-container-basic,
+  #group-container-layout {
+    @apply flex w-full flex-col gap-1 border border-primary-10 p-2;
   }
 
   .component-settings-button {
@@ -196,11 +243,9 @@ onBeforeMount(() => {
       @apply border-b-2 border-link font-bold text-link;
     }
 
-    /* Hide API, Logic and Layout tabs */
-    &:nth-child(4),
-    &:nth-child(6),
-    &:nth-child(7),
-    &:nth-child(8) {
+    /* Hide Logic and Layout tabs */
+    &:nth-last-child(2),
+    &:last-child {
       @apply hidden;
     }
   }
@@ -314,6 +359,7 @@ onBeforeMount(() => {
   .formio-component-multiple,
   .formio-component-encrypted,
   .formio-component-clearOnHide,
+  .formio-component-shortcutButtons,
   .formio-component-validateOn {
     @apply hidden;
   }
