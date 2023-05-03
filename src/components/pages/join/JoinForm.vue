@@ -1,7 +1,7 @@
 <template>
   <JoinHeader :title="joinContent.title" />
 
-  <AppForm :button-text="buttonText" full-button @submit.prevent="onSubmit">
+  <AppForm :button-text="buttonText" full-button @submit="onSubmit">
     <div class="content-message mb-4" v-html="joinContent.subtitle" />
 
     <AppSubHeading v-if="joinContent.showNoContribution" class="mb-1">

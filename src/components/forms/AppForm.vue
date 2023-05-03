@@ -58,7 +58,7 @@ async function handleSubmit(evt: Event) {
     await props.onSubmit?.(evt);
     if (props.successText) {
       addNotification({
-        title: props.successText || '',
+        title: props.successText,
         variant: 'success',
       });
     }
