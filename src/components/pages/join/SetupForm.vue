@@ -2,7 +2,7 @@
   <AppForm
     :button-text="t('joinSetup.continue')"
     full-button
-    @submit="onSubmit"
+    @submit.prevent="onSubmit?.(data)"
   >
     <JoinHeader
       :title="
