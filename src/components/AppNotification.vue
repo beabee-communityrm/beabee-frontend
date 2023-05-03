@@ -59,7 +59,7 @@ const circleProgress = ref<number>(0);
 const circleStep = 1 / 8;
 
 if (props.removeable === 'auto') {
-  circleProgress.value = 0.2;
+  circleProgress.value = circleStep;
   const interval = window.setInterval(() => {
     circleProgress.value = circleProgress.value + circleStep;
     if (circleProgress.value > 1) {
