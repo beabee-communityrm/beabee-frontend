@@ -79,7 +79,10 @@ meta:
               :current-bucket="currentBucket"
               :disabled="selectedCount === 0"
               :loading="doingAction"
-              @move="(bucket) => handleUpdateAction({ bucket })"
+              @move="
+                (bucket, successText) =>
+                  handleUpdateAction({ bucket }, successText)
+              "
             />
             <ToggleTagButton
               :tag-items="tagItems"
@@ -87,13 +90,19 @@ meta:
               :manage-url="`${route.path}/tags`"
               :loading="doingAction"
               :disabled="selectedCount === 0"
-              @toggle="(tagId) => handleUpdateAction({ tags: [tagId] })"
+              @toggle="
+                (tagId, successText) =>
+                  handleUpdateAction({ tags: [tagId] }, successText)
+              "
             />
             <SetAssigneeButton
               :disabled="selectedCount === 0"
               :loading="doingAction"
               :current-assignee-id="selectedAssigneeId"
-              @assign="(assigneeId) => handleUpdateAction({ assigneeId })"
+              @assign="
+                (assigneeId, successText) =>
+                  handleUpdateAction({ assigneeId }, successText)
+              "
             />
           </AppButtonGroup>
           <p v-if="selectedCount > 0" class="self-center text-sm">
@@ -237,6 +246,7 @@ import {
   faDownload,
   faUserPen,
 } from '@fortawesome/free-solid-svg-icons';
+import { addNotification } from '../../../../../../store/notifications';
 
 const props = defineProps<{ callout: GetCalloutDataWith<'form'> }>();
 
@@ -449,12 +459,18 @@ function handleExport() {
 }
 
 async function handleUpdateAction(
-  updates: UpdateCalloutResponseData
+  updates: UpdateCalloutResponseData,
+  successText: string
 ): Promise<void> {
   doingAction.value = true;
 
   await updateCalloutResponses(getSelectedResponseRules(), updates);
   await refreshResponses();
+
+  addNotification({
+    variant: 'success',
+    title: successText,
+  });
 
   doingAction.value = false;
 }

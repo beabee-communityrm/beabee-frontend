@@ -82,7 +82,7 @@ meta:
         :current-bucket="response.bucket"
         :disabled="doingAction"
         :loading="doingAction"
-        @move="(bucket) => handleUpdate({ bucket })"
+        @move="(bucket, successText) => handleUpdate({ bucket }, successText)"
       />
       <ToggleTagButton
         size="sm"
@@ -91,7 +91,9 @@ meta:
         :selected-tags="response.tags.map((t) => t.id)"
         :manage-url="`/admin/callouts/view/${callout.slug}/responses/tags`"
         :loading="doingAction"
-        @toggle="(tagId) => handleUpdate({ tags: [tagId] })"
+        @toggle="
+          (tagId, successText) => handleUpdate({ tags: [tagId] }, successText)
+        "
       />
       <SetAssigneeButton
         size="sm"
@@ -99,7 +101,9 @@ meta:
         :current-assignee-id="response.assignee?.id"
         :disabled="doingAction"
         :loading="doingAction"
-        @assign="(assigneeId) => handleUpdate({ assigneeId })"
+        @assign="
+          (assigneeId, successText) => handleUpdate({ assigneeId }, successText)
+        "
       />
     </div>
     <div class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg">
@@ -144,6 +148,7 @@ import {
 import CalloutResponseComments from '../../../../../../components/callout/CalloutResponseComments.vue';
 import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { addNotification } from '../../../../../../store/notifications';
 
 const props = defineProps<{
   rid: string;
@@ -175,12 +180,18 @@ const tagItems = ref<{ id: string; label: string }[]>([]);
 
 const doingAction = ref(false);
 
-async function handleUpdate(data: UpdateCalloutResponseData) {
+async function handleUpdate(
+  data: UpdateCalloutResponseData,
+  successText: string
+) {
   if (!response.value) return;
 
   doingAction.value = true;
   await updateCalloutResponse(response.value.id, data);
   await refreshResponse();
+
+  addNotification({ variant: 'success', title: successText });
+
   doingAction.value = false;
 }
 

@@ -340,6 +340,13 @@
       "toggleTag": "Toggle tag"
     },
     "manageTags": "Manage tags",
+    "notifications": {
+      "addedAssignee": "Assigned to \"{assignee}\"",
+      "addedTag": "Added tag \"{tag}\"",
+      "movedToBucket": "Moved to {bucket}",
+      "removedAssignee": "Unassigned from \"{assignee}\"",
+      "removedTag": "Removed tag \"{tag}\" "
+    },
     "responseOf": "Response {no} out of {total}",
     "selectedCount": "{n} response selected | {n} responses selected"
   },

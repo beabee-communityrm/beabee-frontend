@@ -338,6 +338,7 @@
       "toggleTag": "Tag hinzufügen / entfernen"
     },
     "manageTags": "Tags bearbeiten",
+    "notifications": {},
     "responseOf": "Antwort {no} von {total}",
     "selectedCount": "{n} Antwort ausgewählt | {n} Antworten ausgewählt"
   },
