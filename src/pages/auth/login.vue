@@ -86,6 +86,7 @@ async function submitLogin() {
     await updateCurrentUser();
     // TODO: use router when legacy app is gone
     window.location.href = isInternalUrl(redirectTo) ? redirectTo : '/';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     if (err.response?.status === 401) hasCredentialError.value = true;
   } finally {
