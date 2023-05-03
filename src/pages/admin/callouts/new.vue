@@ -17,9 +17,6 @@ meta:
       no-collapse
     >
       <div class="flex items-center gap-2">
-        <span v-if="lastSavedText" class="text-sm text-body-60">
-          {{ lastSavedText }}
-        </span>
         <AppAsyncButton
           v-if="!isLive"
           variant="primaryOutlined"
@@ -127,16 +124,6 @@ const isLive = computed(
 const isNewOrDraft = computed(
   () => !status.value || status.value === ItemStatus.Draft
 );
-
-const lastSavedText = computed(() => {
-  if (!lastSaved.value) return;
-
-  return +now.value - +lastSaved.value < 20000
-    ? t('createCallout.lastSavedNow')
-    : t('createCallout.lastSaved', {
-        duration: formatDistanceLocale(now.value, lastSaved.value),
-      });
-});
 
 const updateAction = computed(() =>
   isLive.value || (status.value === ItemStatus.Scheduled && !isPublish.value)
