@@ -10,7 +10,7 @@
       </p>
 
       <AppNotification
-        v-if="true || (modelValue.nextAmount && modelValue.renewalDate)"
+        v-if="modelValue.nextAmount && modelValue.renewalDate"
         variant="info"
         :title="
           t('contribution.nextAmountChanging', {
