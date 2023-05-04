@@ -317,7 +317,7 @@ const formFilterItems = computed(() =>
 const filterGroupsWithQuestions = computed(() => [
   ...filterGroups.value,
   {
-    label: 'Answers',
+    label: t('calloutResponse.dataGroup.answers'),
     items: Object.keys(formFilterItems.value),
   },
 ]);

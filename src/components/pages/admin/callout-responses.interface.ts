@@ -43,7 +43,7 @@ export const filterGroups = computed<FilterGroup<CalloutResponseFilterName>[]>(
   () => [
     {
       label: t('calloutResponse.dataGroup.response'),
-      items: ['createdAt', 'tags'],
+      items: ['createdAt', 'tags', 'answers'],
     },
   ]
 );
@@ -78,6 +78,10 @@ export const filterItems = computed<FilterItems<CalloutResponseFilterName>>(
     assignee: withLabel(
       calloutResponseFilters.assignee,
       t('calloutResponse.data.assignee')
+    ),
+    answers: withLabel(
+      calloutResponseFilters.answers,
+      t('calloutResponse.data.answers')
     ),
   })
 );
