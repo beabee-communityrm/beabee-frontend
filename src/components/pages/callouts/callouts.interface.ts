@@ -21,6 +21,7 @@ export interface SettingsStepProps {
   whoCanTakePart: 'members' | 'everyone';
   allowAnonymousResponses: 'none' | 'guests' | 'all';
   showOnUserDashboards: boolean;
+  multipleResponses: boolean;
   usersCanEditAnswers: boolean;
 }
 

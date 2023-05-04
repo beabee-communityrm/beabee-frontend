@@ -34,6 +34,7 @@ export function convertCalloutToSteps(
           : 'none',
       showOnUserDashboards: !callout?.hidden,
       usersCanEditAnswers: callout?.allowUpdate || false,
+      multipleResponses: callout?.allowMultiple || false,
     },
     endMessage: {
       whenFinished: callout?.thanksRedirect ? 'redirect' : 'message',
@@ -73,8 +74,9 @@ export function convertStepsToCallout(
     expires: steps.dates.hasEndDate
       ? new Date(steps.dates.endDate + 'T' + steps.dates.endTime)
       : null,
-    allowUpdate: steps.settings.usersCanEditAnswers,
-    allowMultiple: false,
+    allowMultiple: steps.settings.multipleResponses,
+    allowUpdate:
+      !steps.settings.multipleResponses && steps.settings.usersCanEditAnswers,
     hidden: !steps.settings.showOnUserDashboards,
     access:
       steps.settings.whoCanTakePart === 'members'

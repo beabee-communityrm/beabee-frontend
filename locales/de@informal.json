@@ -631,6 +631,9 @@
               "yes": "Ja"
             }
           },
+          "multiple": {
+            "opts": {}
+          },
           "visible": {
             "help": "<p>Du kannst den Callout <strong>nicht anzeigen</strong> lassen. Dann ist er nur über den Link erreichbar.</p>\n",
             "label": "Soll der Callout deinen Mitgliedern im Dashboard angezeigt werden?",
@@ -701,9 +704,6 @@
             "opts": {}
           },
           "editable": {
-            "opts": {}
-          },
-          "multiple": {
             "opts": {}
           },
           "visible": {

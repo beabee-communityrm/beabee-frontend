@@ -644,6 +644,14 @@
               "yes": "Yes"
             }
           },
+          "multiple": {
+            "help": "<p>If yes, then logged in users will be able to <strong>respond multiple times</strong> to the callout.</p>\n",
+            "label": "Can users answer the callout more than once?",
+            "opts": {
+              "no": "No, only one response",
+              "yes": "Yes"
+            }
+          },
           "visible": {
             "help": "<p>You can make the callout <strong>not appear</strong> to users if you only want it to be answered by people who you share the link with.</p>\n",
             "label": "Should it be visible in the users' dashboards?",
@@ -716,14 +724,6 @@
           },
           "editable": {
             "opts": {}
-          },
-          "multiple": {
-            "help": "<p>If yes, then logged in users will be able to <strong>respond multiple times</strong> to the callout.</p>\n",
-            "label": "Can users answer the callout more than once?",
-            "opts": {
-              "no": "No, only one response",
-              "yes": "Yes"
-            }
           },
           "visible": {
             "opts": {}

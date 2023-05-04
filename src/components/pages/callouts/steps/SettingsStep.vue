@@ -41,7 +41,22 @@
         required
       />
     </AppFormSection>
-    <AppFormSection :help="inputT('editable.help')">
+    <AppFormSection :help="inputT('multiple.help')">
+      <AppRadioGroup
+        v-model="data.multipleResponses"
+        name="multipleResponses"
+        :label="inputT('multiple.label')"
+        :options="[
+          [true, inputT('multiple.opts.yes')],
+          [false, inputT('multiple.opts.no')],
+        ]"
+        required
+      />
+    </AppFormSection>
+    <AppFormSection
+      v-if="!data.multipleResponses"
+      :help="inputT('editable.help')"
+    >
       <AppRadioGroup
         v-model="data.usersCanEditAnswers"
         name="usersCanEditAnswers"
