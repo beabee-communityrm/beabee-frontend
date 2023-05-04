@@ -23,10 +23,15 @@ export function convertCalloutToSteps(
       shareTitle: callout?.shareTitle || '',
       shareDescription: callout?.shareDescription || '',
     },
-    visibility: {
+    settings: {
       whoCanTakePart:
         !callout || callout.access === 'member' ? 'members' : 'everyone',
-      allowAnonymousResponses: callout?.access === 'anonymous',
+      allowAnonymousResponses:
+        callout?.access === 'anonymous'
+          ? 'guests'
+          : callout?.access === 'only-anonymous'
+          ? 'all'
+          : 'none',
       showOnUserDashboards: !callout?.hidden,
       usersCanEditAnswers: callout?.allowUpdate || false,
     },
@@ -68,15 +73,17 @@ export function convertStepsToCallout(
     expires: steps.dates.hasEndDate
       ? new Date(steps.dates.endDate + 'T' + steps.dates.endTime)
       : null,
-    allowUpdate: steps.visibility.usersCanEditAnswers,
+    allowUpdate: steps.settings.usersCanEditAnswers,
     allowMultiple: false,
-    hidden: !steps.visibility.showOnUserDashboards,
+    hidden: !steps.settings.showOnUserDashboards,
     access:
-      steps.visibility.whoCanTakePart === 'members'
+      steps.settings.whoCanTakePart === 'members'
         ? 'member'
-        : steps.visibility.allowAnonymousResponses
+        : steps.settings.allowAnonymousResponses === 'none'
+        ? 'guest'
+        : steps.settings.allowAnonymousResponses === 'guests'
         ? 'anonymous'
-        : 'guest',
+        : 'only-anonymous',
     ...(steps.endMessage.whenFinished === 'message'
       ? {
           thanksText: steps.endMessage.thankYouText,

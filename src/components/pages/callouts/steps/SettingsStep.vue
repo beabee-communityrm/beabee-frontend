@@ -34,8 +34,9 @@
         name="showOnUserDashboards"
         :label="inputT('visible.label')"
         :options="[
-          [true, inputT('visible.opts.yes')],
-          [false, inputT('visible.opts.no')],
+          ['none', inputT('anonymous.opts.none')],
+          ['guests', inputT('anonymous.opts.guests')],
+          ['all', inputT('anonymous.opts.all')],
         ]"
         required
       />
@@ -62,19 +63,18 @@ import { ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
 import AppFormSection from '../../../forms/AppFormSection.vue';
-import { VisibilityStepProps } from '../callouts.interface';
+import { SettingsStepProps } from '../callouts.interface';
 import { sameAs } from '@vuelidate/validators';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
-  data: VisibilityStepProps;
+  data: SettingsStepProps;
   status: ItemStatus | undefined;
   isActive: boolean;
 }>();
 
 const { t } = useI18n();
-const inputT = (key: string) =>
-  t('createCallout.steps.visibility.inputs.' + key);
+const inputT = (key: string) => t('createCallout.steps.settings.inputs.' + key);
 
 // Force step to stay unvalidated until it is visited for new callouts
 const hasVisited = ref(!!props.status);
