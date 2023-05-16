@@ -26,7 +26,6 @@ export const headers = computed<Header[]>(() => [
     width: '100%',
   },
   { value: 'email', text: t('contacts.data.email'), sortable: true },
-  { value: 'tags', text: t('contacts.data.tags') },
   {
     value: 'contribution',
     text: t('contacts.data.contribution'),

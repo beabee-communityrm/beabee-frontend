@@ -69,15 +69,6 @@ meta:
           >
             {{ item.displayName }}
           </router-link>
-          <p
-            v-if="item.profile.description"
-            class="mt-1 whitespace-normal text-xs"
-          >
-            {{ item.profile.description }}
-          </p>
-        </template>
-        <template #value-tags="{ item }">
-          <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
         </template>
         <template #value-contribution="{ item }">
           <span v-if="item.contributionAmount">
@@ -97,6 +88,16 @@ meta:
           <span class="whitespace-nowrap">{{
             getMembershipStartDate(item)
           }}</span>
+        </template>
+        <template #after="{ item }">
+          <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
+          <p
+            v-if="item.profile.description"
+            class="whitespace-normal text-xs"
+            :class="item.profile.tags.length > 0 ? 'mt-2' : ''"
+          >
+            {{ item.profile.description }}
+          </p>
         </template>
       </AppPaginatedTable>
     </div>
