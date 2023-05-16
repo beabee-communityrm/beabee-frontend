@@ -54,7 +54,7 @@ meta:
         </template>
         <template #value-hidden="{ value }">
           <font-awesome-icon
-            :class="value ? 'text-body-80' : 'text-body-60'"
+            :class="value ? 'text-body-60' : 'text-body-80'"
             :icon="value ? faEyeSlash : faEye"
           />
         </template>
@@ -164,6 +164,7 @@ const headers: Header[] = [
   {
     value: 'responseCount',
     text: t('calloutsAdmin.data.responses'),
+    align: 'right',
   },
   {
     value: 'starts',
