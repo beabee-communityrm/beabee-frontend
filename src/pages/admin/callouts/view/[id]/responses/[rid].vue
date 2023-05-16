@@ -14,6 +14,9 @@ meta:
         <template #total>
           <b>{{ n(totalResponses) }}</b>
         </template>
+        <template #bucket>
+          <b>{{ bucketName }}</b>
+        </template>
       </i18n-t>
       <AppButtonGroup>
         <AppButton
@@ -38,6 +41,7 @@ meta:
         />
       </AppButtonGroup>
     </div>
+
     <AppHeading class="mb-4">
       {{ t('calloutResponsesPage.responseNo', { no: n(response.number) }) }}
     </AppHeading>
@@ -57,10 +61,7 @@ meta:
       />
       <AppInfoListItem
         :name="t('calloutResponse.data.bucket')"
-        :value="
-          buckets.find((bucket) => bucket.id === response!.bucket)?.label ||
-          response.bucket
-        "
+        :value="bucketName"
       />
       <AppInfoListItem :name="t('calloutResponse.data.tags')">
         <AppTag v-for="tag in response.tags" :key="tag.id" :tag="tag.name" />
@@ -75,6 +76,7 @@ meta:
         </router-link>
       </AppInfoListItem>
     </AppInfoList>
+
     <div class="flex gap-2">
       <MoveBucketButton
         size="sm"
@@ -105,13 +107,26 @@ meta:
           (assigneeId, successText) => handleUpdate({ assigneeId }, successText)
         "
       />
+      <AppButton
+        type="button"
+        :icon="faPen"
+        size="sm"
+        variant="primaryOutlined"
+        @click="editMode = !editMode"
+      >
+        {{ t('calloutResponsePage.actions.editResponse') }}
+      </AppButton>
     </div>
     <div class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg">
+      <AppAlert v-if="editMode" variant="warning" class="mb-4">
+        {{ t('calloutResponsePage.editMode') }}
+      </AppAlert>
       <Form
-        :key="response.id /*Form doesn't respect reactivity */"
+        :key="response.id + editMode /* Form doesn't respect reactivity */"
         :form="callout.formSchema"
         :submission="{ data: response.answers }"
-        :options="{ readOnly: true }"
+        :options="{ readOnly: !editMode, noAlerts: true }"
+        @submit="handleEditResponse"
       />
     </div>
     <div>
@@ -122,6 +137,7 @@ meta:
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import {
+  CalloutResponseAnswers,
   GetCalloutDataWith,
   GetCalloutResponseData,
   GetCalloutResponseDataWith,
@@ -147,7 +163,11 @@ import {
 } from '../../../../../../utils/api/callout-response';
 import CalloutResponseComments from '../../../../../../components/callout/CalloutResponseComments.vue';
 import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
-import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCaretLeft,
+  faCaretRight,
+  faPen,
+} from '@fortawesome/free-solid-svg-icons';
 import { addNotification } from '../../../../../../store/notifications';
 
 const props = defineProps<{
@@ -178,7 +198,15 @@ const totalResponses = ref(0);
 
 const tagItems = ref<{ id: string; label: string }[]>([]);
 
+const editMode = ref(false);
 const doingAction = ref(false);
+
+const bucketName = computed(() =>
+  response.value
+    ? buckets.value.find((bucket) => bucket.id === response.value?.bucket)
+        ?.label || response.value.bucket
+    : ''
+);
 
 async function handleUpdate(
   data: UpdateCalloutResponseData,
@@ -193,6 +221,13 @@ async function handleUpdate(
   addNotification({ variant: 'success', title: successText });
 
   doingAction.value = false;
+}
+
+async function handleEditResponse(submission: {
+  data: CalloutResponseAnswers;
+}) {
+  await handleUpdate({ answers: submission.data }, t('actions.saved'));
+  editMode.value = false;
 }
 
 onBeforeMount(async () => {

@@ -341,9 +341,11 @@
   "calloutResponsePage": {
     "actions": {
       "assignTo": "Assign to",
+      "editResponse": "Edit response",
       "moveBucket": "Move bucket",
       "toggleTag": "Toggle tag"
     },
+    "editMode": "You are in edit mode, be careful!",
     "manageTags": "Manage tags",
     "notifications": {
       "addedAssignee": "Assigned to \"{assignee}\"",
@@ -352,7 +354,7 @@
       "removedAssignee": "Unassigned from \"{assignee}\"",
       "removedTag": "Removed tag \"{tag}\" "
     },
-    "responseOf": "Response {no} out of {total}",
+    "responseOf": "Response {no} out of {total} in {bucket}",
     "selectedCount": "{n} response selected | {n} responses selected"
   },
   "calloutResponsesPage": {

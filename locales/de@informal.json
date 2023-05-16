@@ -341,9 +341,11 @@
   "calloutResponsePage": {
     "actions": {
       "assignTo": "Zuweisen",
+      "editResponse": "Antwort bearbeiten",
       "moveBucket": "Antwort verschieben",
       "toggleTag": "Tag hinzufügen / entfernen"
     },
+    "editMode": "Vorsicht, du befindest dich im Bearbeitungsmodus!",
     "manageTags": "Tags bearbeiten",
     "notifications": {
       "addedAssignee": "\"{assignee}\" zugewiesen",
@@ -352,7 +354,7 @@
       "removedAssignee": "Nicht mehr \"{assignee}\" zugewiesen",
       "removedTag": "Tag \"{tag}\" entfernt"
     },
-    "responseOf": "Antwort {no} von {total}",
+    "responseOf": "Antwort {no} von {total} in {bucket}",
     "selectedCount": "{n} Antwort ausgewählt | {n} Antworten ausgewählt"
   },
   "calloutResponsesPage": {
