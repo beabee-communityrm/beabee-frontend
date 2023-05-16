@@ -23,12 +23,19 @@
     </AppFormSection>
     <div class="mt-8">
       <ul class="flex">
-        <li v-for="panel in data.formSchema.components" :key="panel.key">
-          {{ panel.label }}
+        <li
+          v-for="(page, pageNo) in data.formSchema.components"
+          :key="page.key"
+          @click="handleChangePage(pageNo)"
+        >
+          {{ page.label }}
         </li>
       </ul>
+      <AppButton variant="primary" @click="handleAddPage">
+        {{ t('createCallout.steps.content.addSlide') }}
+      </AppButton>
       <div class="callout-form-builder">
-        <FormBuilderVue
+        <FormBuilder
           ref="formBuilderRef"
           :form="data.formSchema"
           :options="formOpts"
@@ -39,11 +46,14 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ItemStatus } from '@beabee/beabee-common';
+import {
+  CalloutComponentSchema,
+  CalloutFormSchema,
+  ItemStatus,
+} from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { onBeforeMount, ref, watch } from 'vue';
-import { FormBuilder as FormBuilderVue } from 'vue-formio';
-import { FormBuilder } from 'formiojs';
+import { FormBuilder } from 'vue-formio';
 import {
   faQuestionCircle,
   faTerminal,
@@ -94,6 +104,7 @@ import AppFormSection from '../../../forms/AppFormSection.vue';
 
 import 'formiojs/dist/formio.builder.css';
 import AppNotification from '../../../AppNotification.vue';
+import AppButton from '../../../button/AppButton.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
@@ -132,13 +143,48 @@ const formOpts = {
     premium: false,
   },
 };
-const formBuilderRef = ref<FormBuilder>();
+
+interface FormBuilderRef {
+  form: CalloutFormSchema;
+  builder: {
+    instance: {
+      addPage(page: { schema: CalloutComponentSchema }): void;
+      removePage(page: number): void;
+      setPage(page: number): void;
+    };
+  };
+}
+
+const formBuilderRef = ref<FormBuilderRef>();
 
 function handleFormChange() {
-  // eslint-disable-next-line vue/no-mutating-props
-  props.data.formSchema = formBuilderRef.value?.form;
+  if (!formBuilderRef.value) return; // Can't change without being loaded
 
-  console.log('ref', formBuilderRef.value?.builder.instance);
+  // eslint-disable-next-line vue/no-mutating-props
+  props.data.formSchema = formBuilderRef.value.form;
+}
+
+function handleChangePage(page: number) {
+  if (!formBuilderRef.value) return; // Can't change without being loaded
+
+  formBuilderRef.value.builder.instance.setPage(page);
+}
+
+function handleAddPage() {
+  if (!formBuilderRef.value) return; // Can't change without being loaded
+
+  const newPageNo = props.data.formSchema.components.length + 1;
+
+  formBuilderRef.value.builder.instance.addPage({
+    schema: {
+      type: 'panel',
+      title: 'Slide ' + newPageNo,
+      label: 'Slide ' + newPageNo,
+      key: 'slide' + newPageNo,
+      input: false,
+      components: [],
+    },
+  });
 }
 
 onBeforeMount(() => {
