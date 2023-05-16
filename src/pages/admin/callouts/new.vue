@@ -197,14 +197,25 @@ async function reset() {
 
   if (!steps.value.content.formSchema.components.length) {
     steps.value.content.formSchema.components.push({
-      type: 'button',
-      label: t('actions.submit'),
-      key: 'submit',
-      size: 'md',
-      block: false,
-      action: 'submit',
-      disableOnInvalid: true,
-      theme: 'primary',
+      title: 'Slide 1',
+      label: 'Slide 1',
+      type: 'panel',
+      key: 'slide1',
+      input: false,
+      tableView: false,
+      components: [
+        {
+          type: 'button',
+          label: t('actions.submit'),
+          key: 'submit',
+          input: true,
+          size: 'md',
+          block: false,
+          action: 'submit',
+          disableOnInvalid: true,
+          theme: 'primary',
+        },
+      ],
     });
   }
 }

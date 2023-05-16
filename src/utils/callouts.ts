@@ -10,7 +10,7 @@ export function convertCalloutToSteps(
   return {
     content: {
       introText: callout?.intro || '',
-      formSchema: callout?.formSchema || { components: [] },
+      formSchema: callout?.formSchema || { display: 'wizard', components: [] },
     },
     titleAndImage: {
       title: callout?.title || '',

@@ -21,13 +21,20 @@
         required
       />
     </AppFormSection>
-    <div class="callout-form-builder mt-8">
-      <FormBuilderVue
-        ref="formBuilderRef"
-        :form="data.formSchema"
-        :options="formOpts"
-        @change="handleFormChange"
-      />
+    <div class="mt-8">
+      <ul class="flex">
+        <li v-for="panel in data.formSchema.components" :key="panel.key">
+          {{ panel.label }}
+        </li>
+      </ul>
+      <div class="callout-form-builder">
+        <FormBuilderVue
+          ref="formBuilderRef"
+          :form="data.formSchema"
+          :options="formOpts"
+          @change="handleFormChange"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -130,6 +137,8 @@ const formBuilderRef = ref<FormBuilder>();
 function handleFormChange() {
   // eslint-disable-next-line vue/no-mutating-props
   props.data.formSchema = formBuilderRef.value?.form;
+
+  console.log('ref', formBuilderRef.value?.builder.instance);
 }
 
 onBeforeMount(() => {
@@ -192,7 +201,7 @@ onBeforeMount(() => {
   }
 
   .formcomponents {
-    @apply flex-initial basis-[15rem];
+    @apply flex-initial basis-[12rem];
   }
 
   .formcomponent {
@@ -200,6 +209,10 @@ onBeforeMount(() => {
     &.gu-transit {
       @apply mb-4 text-base !important;
     }
+  }
+
+  .formio-form {
+    @apply bg-white p-4 shadow-md;
   }
 
   .form-builder-panel {
@@ -214,6 +227,7 @@ onBeforeMount(() => {
     @apply w-full p-2;
   }
 
+  .breadcrumb,
   .builder-sidebar_search {
     @apply hidden;
   }
