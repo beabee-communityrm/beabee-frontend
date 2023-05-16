@@ -162,6 +162,7 @@
     "addRule": "Filter hinzufügen",
     "button": "Filter",
     "createFilters": "Filter für die Suche erstellen",
+    "createdSegment": "Erstelltes Segment \"{segment}\"",
     "matchAfter": "der folgenden Filter enthalten",
     "matchBefore": "Ergebnisse sollen",
     "matchType": {
@@ -233,7 +234,8 @@
       "title": "Segment speichern",
       "updateSegment": "Segment aktualisieren"
     },
-    "selectFilter": "Filter auswählen"
+    "selectFilter": "Filter auswählen",
+    "updatedSegment": "Aktualisiertes Segment \"{segment}\""
   },
   "callout": {
     "contactDetails": "Kontaktdaten",
@@ -338,7 +340,13 @@
       "toggleTag": "Tag hinzufügen / entfernen"
     },
     "manageTags": "Tags bearbeiten",
-    "notifications": {},
+    "notifications": {
+      "addedAssignee": "\"{Empfänger}\" zugewiesen",
+      "addedTag": "Tag \"{tag}\" hinzugefügt",
+      "movedToBucket": "Verschoben in {bucket}",
+      "removedAssignee": "Nicht mehr \"{assignee}\" zugewiesen",
+      "removedTag": "Tag \"{tag}\" entfernt"
+    },
     "responseOf": "Antwort {no} von {total}",
     "selectedCount": "{n} Antwort ausgewählt | {n} Antworten ausgewählt"
   },
@@ -437,7 +445,10 @@
   },
   "contactContribution": {
     "confirmCancel": {},
-    "updateNotice": {}
+    "updateNotice": {
+      "text": "Du kannst den Beitrag eines Kontakts derzeit nicht aktualisieren. Wende dich an support{'@'}beabee.io, um Unterstützung zu erhalten.",
+      "title": "Derzeit nicht verfügbar"
+    }
   },
   "contactOverview": {
     "about": "Über",
@@ -1021,7 +1032,6 @@
     "changePassword": "Passwort ändern",
     "confirmPassword": "Passwort bestätigen",
     "description": "Neues Passwort eingeben, um fortzufahren.",
-    "error": "Das Zurücksetzen des Passworts ist schiefgelaufen. Der Link scheint abgelaufen zu sein. Du kannst {newLink}.",
     "errorLink": "einen neuen Link anfordern",
     "errorText": "Der Link scheint abgelaufen zu sein. Du kannst {newLink}.",
     "errorTitle": "Das Zurücksetzen des Passworts ist schiefgelaufen.",

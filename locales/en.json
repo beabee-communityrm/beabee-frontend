@@ -1038,7 +1038,6 @@
     "changePassword": "Change password",
     "confirmPassword": "Confirm password",
     "description": "Set a new password to login.",
-    "error": "Password reset failed, the link might have expired. You could {newLink}.",
     "errorLink": "request another link",
     "errorText": "The link might have expired, you could {newLink}.",
     "errorTitle": "Password reset failed",
