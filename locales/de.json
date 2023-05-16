@@ -727,22 +727,6 @@
         },
         "title": "Titel und Bild",
         "urlWillBe": "Der Permalink wird so aussehen"
-      },
-      "visibility": {
-        "inputs": {
-          "anonymous": {
-            "opts": {}
-          },
-          "editable": {
-            "opts": {}
-          },
-          "visible": {
-            "opts": {}
-          },
-          "who": {
-            "opts": {}
-          }
-        }
       }
     },
     "title": "Callout anlegen",

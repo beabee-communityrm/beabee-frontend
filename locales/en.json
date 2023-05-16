@@ -733,22 +733,6 @@
         },
         "title": "Title and image",
         "urlWillBe": "Permalink will be"
-      },
-      "visibility": {
-        "inputs": {
-          "anonymous": {
-            "opts": {}
-          },
-          "editable": {
-            "opts": {}
-          },
-          "visible": {
-            "opts": {}
-          },
-          "who": {
-            "opts": {}
-          }
-        }
       }
     },
     "title": "Create a callout",
