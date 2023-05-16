@@ -24,10 +24,6 @@ export const headers = computed<Header[]>(() => [
     text: t('calloutResponse.data.contact'),
   },
   {
-    value: 'tags',
-    text: t('calloutResponse.data.tags'),
-  },
-  {
     value: 'assignee',
     text: t('calloutResponse.data.assignee'),
   },

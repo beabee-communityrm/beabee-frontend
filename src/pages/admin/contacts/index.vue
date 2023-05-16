@@ -90,14 +90,16 @@ meta:
           }}</span>
         </template>
         <template #after="{ item }">
-          <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
-          <p
-            v-if="item.profile.description"
-            class="whitespace-normal text-xs"
-            :class="item.profile.tags.length > 0 ? 'mt-2' : ''"
-          >
+          <p v-if="item.profile.description" class="whitespace-normal text-xs">
             {{ item.profile.description }}
           </p>
+          <div
+            v-if="item.profile.tags.length > 0"
+            :class="item.profile.description && 'mt-2'"
+          >
+            <font-awesome-icon :icon="faTag" class="mr-2" />
+            <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
+          </div>
         </template>
       </AppPaginatedTable>
     </div>
@@ -136,7 +138,7 @@ import SaveSegment from '../../../components/pages/admin/contacts/SaveSegment.vu
 import { addBreadcrumb } from '../../../store/breadcrumb';
 import { definePaginatedQuery, defineParam } from '../../../utils/pagination';
 import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
-import { faDownload, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faTag, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 const { t, n } = useI18n();
 

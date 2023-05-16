@@ -136,11 +136,6 @@ meta:
           </router-link>
           <span v-else>-</span>
         </template>
-        <template #value-tags="{ value }">
-          <span class="whitespace-normal">
-            <AppTag v-for="tag in value" :key="tag.id" :tag="tag.name" />
-          </span>
-        </template>
         <template #value-createdAt="{ value }">
           {{
             t('common.timeAgo', {
@@ -150,39 +145,49 @@ meta:
         </template>
 
         <template #after="{ item }">
-          <p
-            v-if="currentInlineComponent && item.answers"
-            :class="showLatestComment && item.latestComment ? 'mb-2' : ''"
+          <div
+            v-if="
+              item.tags.length > 0 ||
+              (currentInlineComponent && item.answers) ||
+              (showLatestComment && item.latestComment)
+            "
+            class="flex flex-col gap-2"
           >
-            <font-awesome-icon :icon="faUserPen" class="mr-2" />
-            <b>{{ t('calloutResponsesPage.showAnswer') }}:{{ ' ' }}</b>
-            <span class="italic">
-              {{
-                stringifyAnswer(
-                  currentInlineComponent,
-                  item.answers[currentInlineComponent.key]
-                )
-              }}
-            </span>
-          </p>
-          <div v-if="showLatestComment && item.latestComment">
-            <font-awesome-icon :icon="faComment" class="mr-2" />
-            <span class="font-semibold text-body-60">
-              {{
-                t('common.timeAgo', {
-                  time: formatDistanceLocale(
-                    new Date(),
-                    item.latestComment.createdAt
-                  ),
-                })
-              }}
-              •
-            </span>
-            <b>{{ item.latestComment.contact.displayName }}:{{ ' ' }}</b>
-            <span
-              class="inline-block italic"
-              v-html="item.latestComment.text"
-            ></span>
+            <div v-if="item.tags.length > 0">
+              <font-awesome-icon :icon="faTag" class="mr-2" />
+              <AppTag v-for="tag in item.tags" :key="tag.id" :tag="tag.name" />
+            </div>
+            <p v-if="currentInlineComponent && item.answers">
+              <font-awesome-icon :icon="faUserPen" class="mr-2" />
+              <b>{{ t('calloutResponsesPage.showAnswer') }}:{{ ' ' }}</b>
+              <span class="italic">
+                {{
+                  stringifyAnswer(
+                    currentInlineComponent,
+                    item.answers[currentInlineComponent.key]
+                  )
+                }}
+              </span>
+            </p>
+            <div v-if="showLatestComment && item.latestComment">
+              <font-awesome-icon :icon="faComment" class="mr-2" />
+              <span class="font-semibold text-body-60">
+                {{
+                  t('common.timeAgo', {
+                    time: formatDistanceLocale(
+                      new Date(),
+                      item.latestComment.createdAt
+                    ),
+                  })
+                }}
+                •
+              </span>
+              <b>{{ item.latestComment.contact.displayName }}:{{ ' ' }}</b>
+              <span
+                class="inline-block italic"
+                v-html="item.latestComment.text"
+              ></span>
+            </div>
           </div>
         </template>
       </AppPaginatedTable>
@@ -235,6 +240,7 @@ import AppCheckbox from '../../../../../../components/forms/AppCheckbox.vue';
 import {
   faComment,
   faDownload,
+  faTag,
   faUserPen,
 } from '@fortawesome/free-solid-svg-icons';
 
