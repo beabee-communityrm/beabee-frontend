@@ -354,7 +354,7 @@
       "removedAssignee": "Unassigned from \"{assignee}\"",
       "removedTag": "Removed tag \"{tag}\" "
     },
-    "responseOf": "Response {no} out of {total}",
+    "responseOf": "Response {no} out of {total} in {bucket}",
     "selectedCount": "{n} response selected | {n} responses selected"
   },
   "calloutResponsesPage": {
