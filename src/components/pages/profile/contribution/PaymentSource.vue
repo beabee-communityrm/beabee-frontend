@@ -4,9 +4,12 @@
 
     <PaymentMethod class="mb-4" :source="paymentSource" />
 
-    <MessageBox v-if="cantUpdate" class="mb-4" type="error">
-      {{ t('contribution.paymentSourceUpdateError') }}
-    </MessageBox>
+    <AppNotification
+      v-if="cantUpdate"
+      class="mb-4"
+      variant="error"
+      :title="t('contribution.paymentSourceUpdateError')"
+    />
 
     <AppButton
       :loading="loading"
@@ -37,7 +40,6 @@
 
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue';
-import MessageBox from '../../../MessageBox.vue';
 import AppButton from '../../../button/AppButton.vue';
 import { useI18n } from 'vue-i18n';
 import {
@@ -54,6 +56,7 @@ import { computed } from 'vue';
 import AppHeading from '../../../AppHeading.vue';
 import { isRequestError } from '../../../../utils/api';
 import PaymentMethod from '../../../payment-method/PaymentMethod.vue';
+import AppNotification from '../../../AppNotification.vue';
 
 const { t } = useI18n();
 
@@ -84,6 +87,7 @@ function onStripeLoaded() {
 }
 
 async function handleUpdate() {
+  cantUpdate.value = false;
   loading.value = true;
   try {
     const data = await updatePaymentMethod();

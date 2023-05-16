@@ -84,7 +84,7 @@ meta:
         :current-bucket="response.bucket"
         :disabled="doingAction"
         :loading="doingAction"
-        @move="(bucket) => handleUpdate({ bucket })"
+        @move="(bucket, successText) => handleUpdate({ bucket }, successText)"
       />
       <ToggleTagButton
         size="sm"
@@ -93,7 +93,9 @@ meta:
         :selected-tags="response.tags.map((t) => t.id)"
         :manage-url="`/admin/callouts/view/${callout.slug}/responses/tags`"
         :loading="doingAction"
-        @toggle="(tagId) => handleUpdate({ tags: [tagId] })"
+        @toggle="
+          (tagId, successText) => handleUpdate({ tags: [tagId] }, successText)
+        "
       />
       <SetAssigneeButton
         size="sm"
@@ -101,7 +103,9 @@ meta:
         :current-assignee-id="response.assignee?.id"
         :disabled="doingAction"
         :loading="doingAction"
-        @assign="(assigneeId) => handleUpdate({ assigneeId })"
+        @assign="
+          (assigneeId, successText) => handleUpdate({ assigneeId }, successText)
+        "
       />
       <AppButton
         type="button"
@@ -164,7 +168,7 @@ import {
   faCaretRight,
   faPen,
 } from '@fortawesome/free-solid-svg-icons';
-import AppAlert from '../../../../../../components/AppAlert.vue';
+import { addNotification } from '../../../../../../store/notifications';
 
 const props = defineProps<{
   rid: string;
@@ -204,19 +208,25 @@ const bucketName = computed(() =>
     : ''
 );
 
-async function handleUpdate(data: UpdateCalloutResponseData) {
+async function handleUpdate(
+  data: UpdateCalloutResponseData,
+  successText: string
+) {
   if (!response.value) return;
 
   doingAction.value = true;
   await updateCalloutResponse(response.value.id, data);
   await refreshResponse();
+
+  addNotification({ variant: 'success', title: successText });
+
   doingAction.value = false;
 }
 
 async function handleEditResponse(submission: {
   data: CalloutResponseAnswers;
 }) {
-  await handleUpdate({ answers: submission.data });
+  await handleUpdate({ answers: submission.data }, t('actions.saved'));
   editMode.value = false;
 }
 

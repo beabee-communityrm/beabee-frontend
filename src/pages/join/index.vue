@@ -8,21 +8,20 @@ meta:
 <template>
   <AuthBox>
     <JoinForm
-      v-if="!stripePaymentLoaded"
+      v-if="!stripeClientSecret"
       :join-content="joinContent"
-      :loading="loading"
       @submit.prevent="submitSignUp"
     />
 
-    <div v-if="stripeClientSecret" v-show="stripePaymentLoaded">
+    <div v-else>
       <JoinHeader :title="joinContent.title" />
 
-      <AppAlert variant="info" class="mb-4">
-        <template #icon>
-          <font-awesome-icon :icon="faHandSparkles" />
-        </template>
-        {{ t('joinPayment.willBeContributing', signUpDescription) }}
-      </AppAlert>
+      <AppNotification
+        variant="info"
+        :title="t('joinPayment.willBeContributing', signUpDescription)"
+        :icon="faHandSparkles"
+        class="mb-4"
+      />
 
       <p class="mb-3 text-xs font-semibold text-body-80">
         {{ t('joinPayment.note') }}
@@ -32,10 +31,7 @@ meta:
           <template #back>
             <a
               class="cursor-pointer text-link underline"
-              @click="
-                stripeClientSecret = '';
-                stripePaymentLoaded = false;
-              "
+              @click="stripeClientSecret = ''"
             >
               {{ t('joinPayment.goBackButton') }}
             </a>
@@ -48,10 +44,6 @@ meta:
         :email="signUpData.email"
         :return-url="completeUrl"
         show-name-fields
-        @loaded="
-          stripePaymentLoaded = true;
-          loading = false;
-        "
       />
     </div>
   </AuthBox>
@@ -68,19 +60,17 @@ import { generalContent } from '../../store';
 import StripePayment from '../../components/StripePayment.vue';
 import { fetchContent } from '../../utils/api/content';
 import { signUp, completeUrl } from '../../utils/api/signup';
-import AppAlert from '../../components/AppAlert.vue';
 import { useJoin } from '../../components/pages/join/use-join';
 import JoinForm from '../../components/pages/join/JoinForm.vue';
 import { JoinContent } from '../../utils/api/api.interface';
 import { faHandSparkles } from '@fortawesome/free-solid-svg-icons';
+import AppNotification from '../../components/AppNotification.vue';
 
 const { t } = useI18n();
 
 const route = useRoute();
 const router = useRouter();
 
-const loading = ref(false);
-const stripePaymentLoaded = ref(false);
 const stripeClientSecret = ref('');
 
 const joinContent = ref<JoinContent>({
@@ -100,25 +90,17 @@ const joinContent = ref<JoinContent>({
 const { signUpData, signUpDescription } = useJoin(joinContent);
 
 async function submitSignUp() {
-  loading.value = true;
-  try {
-    const data = await signUp(signUpData);
-    if (data.redirectUrl) {
-      window.location.href = data.redirectUrl;
-    } else if (data.clientSecret) {
-      stripeClientSecret.value = data.clientSecret;
-    } else {
-      router.push({ path: '/join/confirm-email' });
-    }
-  } catch (err) {
-    loading.value = false;
-    throw err;
+  const data = await signUp(signUpData);
+  if (data.redirectUrl) {
+    window.location.href = data.redirectUrl;
+  } else if (data.clientSecret) {
+    stripeClientSecret.value = data.clientSecret;
+  } else {
+    router.push({ path: '/join/confirm-email' });
   }
 }
 
 onBeforeMount(async () => {
-  loading.value = false;
-  stripePaymentLoaded.value = false;
   stripeClientSecret.value = '';
 
   joinContent.value = await fetchContent('join');
