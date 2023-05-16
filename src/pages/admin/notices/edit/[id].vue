@@ -32,6 +32,7 @@ import {
   GetNoticeData,
 } from '../../../../utils/api/api.interface';
 import { updateNotice, fetchNotice } from '../../../../utils/api/notice';
+import { addNotification } from '../../../../store/notifications';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -60,14 +61,11 @@ onBeforeMount(async () => {
 
 async function handleSubmit(formData: CreateNoticeData) {
   if (!notice.value) return; // ToDo: Redirect to 404 if notice could not be fetched
-  const updatedNotice: GetNoticeData | undefined = await updateNotice(
-    notice.value.id,
-    formData
-  );
-  if (updatedNotice)
-    router.push({
-      path: '/admin/notices/view/' + updatedNotice.id,
-      query: { ['updated']: null },
-    });
+  await updateNotice(notice.value.id, formData);
+  addNotification({
+    variant: 'success',
+    title: t('noticeAdminOverview.updated'),
+  });
+  router.push({ path: '/admin/notices/view/' + notice.value.id });
 }
 </script>

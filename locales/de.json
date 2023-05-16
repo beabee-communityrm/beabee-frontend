@@ -162,6 +162,7 @@
     "addRule": "Filter hinzufügen",
     "button": "Filter",
     "createFilters": "Filter für die Suche erstellen",
+    "createdSegment": "Erstelltes Segment \"{segment}\"",
     "matchAfter": "der folgenden Filter enthalten",
     "matchBefore": "Ergebnisse sollen",
     "matchType": {
@@ -237,7 +238,8 @@
       "title": "Segment speichern",
       "updateSegment": "Segment aktualisieren"
     },
-    "selectFilter": "Filter auswählen"
+    "selectFilter": "Filter auswählen",
+    "updatedSegment": "Aktualisiertes Segment \"{segment}\""
   },
   "callout": {
     "contactDetails": "Kontaktdaten",
@@ -342,6 +344,13 @@
       "toggleTag": "Tag hinzufügen / entfernen"
     },
     "manageTags": "Tags bearbeiten",
+    "notifications": {
+      "addedAssignee": "\"{assignee}\" zugewiesen",
+      "addedTag": "Tag \"{tag}\" hinzugefügt",
+      "movedToBucket": "Verschoben in {bucket}",
+      "removedAssignee": "Nicht mehr \"{assignee}\" zugewiesen",
+      "removedTag": "Tag \"{tag}\" entfernt"
+    },
     "responseOf": "Antwort {no} von {total}",
     "selectedCount": "{n} Antwort ausgewählt | {n} Antworten ausgewählt"
   },
@@ -440,7 +449,10 @@
   },
   "contactContribution": {
     "confirmCancel": {},
-    "editNotice": "Der Beitrag kann aktuell nur bei manuell zahlenden Mitgliedern geändert werden."
+    "updateNotice": {
+      "text": "Du kannst den Beitrag eines Kontakts derzeit nicht aktualisieren. Wende dich an support{'@'}beabee.io, um Unterstützung zu erhalten.",
+      "title": "Derzeit nicht verfügbar"
+    }
   },
   "contactOverview": {
     "about": "Über",
@@ -831,7 +843,6 @@
     "manageYourContribution": "Beitrag ändern",
     "newCallout": "Neuer Callout!",
     "openCallouts": "Aktuelle Callouts",
-    "passwordReset": "Ihr Passwort wurde aktualisiert.",
     "quickActions": "Schnellaktionen",
     "title": "Home",
     "viewAllCallouts": "Alle Callouts anzeigen",
@@ -1025,10 +1036,12 @@
     "changePassword": "Passwort ändern",
     "confirmPassword": "Passwort bestätigen",
     "description": "Neues Passwort eingeben, um fortzufahren.",
-    "error": "Das Zurücksetzen des Passworts ist schiefgelaufen. Der Link scheint abgelaufen zu sein. Sie können {newLink}.",
     "errorLink": "einen neuen Link anfordern",
+    "errorText": "Der Link scheint abgelaufen zu sein. Sie können {newLink}.",
+    "errorTitle": "Das Zurücksetzen des Passworts ist schiefgelaufen",
     "login": "Einloggen",
     "newPassword": "Neues Passwort",
+    "success": "Ihr Passwort wurde aktualisiert.",
     "title": "Passwort aktualisieren?"
   },
   "roleEditor": {

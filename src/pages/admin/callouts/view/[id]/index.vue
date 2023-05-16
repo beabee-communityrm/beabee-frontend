@@ -8,17 +8,6 @@ meta:
 <template>
   <div class="flex flex-col-reverse gap-8 lg:flex-row lg:justify-between">
     <div class="flex-initial basis-1/2">
-      <AppAlert v-if="wasJustCreated || wasJustUpdated" class="mb-8">
-        <template #icon>
-          <font-awesome-icon :icon="faMagic" />
-        </template>
-        {{
-          wasJustCreated
-            ? t('calloutAdminOverview.created')
-            : t('calloutAdminOverview.updated')
-        }}
-      </AppAlert>
-
       <AppHeading>{{ t('calloutAdminOverview.summary') }}</AppHeading>
 
       <div class="mb-8 rounded bg-white p-4">
@@ -108,7 +97,7 @@ meta:
 import { ItemStatus } from '@beabee/beabee-common';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { GetCalloutDataWith } from '../../../../../utils/api/api.interface';
 import { deleteCallout } from '../../../../../utils/api/callout';
 import AppHeading from '../../../../../components/AppHeading.vue';
@@ -116,13 +105,12 @@ import AppInfoList from '../../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../../components/AppInfoListItem.vue';
 import ActionButton from '../../../../../components/pages/callouts/ActionButton.vue';
 import CalloutSummary from '../../../../../components/callout/CalloutSummary.vue';
-import AppAlert from '../../../../../components/AppAlert.vue';
 import { createCallout } from '../../../../../utils/api/callout';
 import AppConfirmDialog from '../../../../../components/AppConfirmDialog.vue';
+import { addNotification } from '../../../../../store/notifications';
 import {
   faClone,
   faEye,
-  faMagic,
   faPencilAlt,
   faReply,
   faTrash,
@@ -133,19 +121,17 @@ const props = defineProps<{
 }>();
 const { t } = useI18n();
 
-const route = useRoute();
 const router = useRouter();
-const wasJustCreated = route.query.created !== undefined;
-const wasJustUpdated = route.query.updated !== undefined;
 
 const showDeleteModal = ref(false);
 
 async function confirmDeleteCallout() {
   await deleteCallout(props.callout.slug);
-  router.push({
-    path: '/admin/callouts',
-    query: { deleted: null },
+  addNotification({
+    title: t('calloutAdmin.deleted'),
+    variant: 'error',
   });
+  router.push({ path: '/admin/callouts' });
 }
 
 async function replicateThisCallout() {

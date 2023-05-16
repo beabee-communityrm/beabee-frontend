@@ -8,23 +8,25 @@
         <th
           v-for="(header, i) in headers"
           :key="i"
-          class="relative p-2 font-semibold text-body-80"
+          class="relative whitespace-nowrap p-2 font-semibold text-body-80"
           :class="{
             'cursor-pointer': header.sortable,
             'font-bold text-primary': header.value === sort?.by,
-            'whitespace-normal': header.wrap,
-            'whitespace-nowrap': !header.wrap,
           }"
           :align="header.align || 'left'"
           :style="{ width: header.width }"
           @click="sortBy(header)"
         >
           <slot :name="`header-${header.value}`">{{ header.text }}</slot>
-
           <font-awesome-icon
             v-if="header.value === sort?.by"
             class="ml-2"
             :icon="sort.type === SortType.Asc ? faCaretDown : faCaretUp"
+          />
+          <font-awesome-icon
+            v-else-if="header.sortable"
+            class="ml-2 text-body-60"
+            :icon="faSort"
           />
         </th>
       </tr>
@@ -81,7 +83,11 @@
 </template>
 
 <script lang="ts" setup>
-import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCaretDown,
+  faCaretUp,
+  faSort,
+} from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { hasSlotContent } from '../../utils';

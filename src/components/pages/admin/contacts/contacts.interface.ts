@@ -26,11 +26,11 @@ export const headers = computed<Header[]>(() => [
     width: '100%',
   },
   { value: 'email', text: t('contacts.data.email'), sortable: true },
-  { value: 'tags', text: t('contacts.data.tags') },
   {
-    value: 'contribution',
+    value: 'contributionMonthlyAmount',
     text: t('contacts.data.contribution'),
     align: 'right',
+    sortable: true,
   },
   {
     value: 'joined',
@@ -43,7 +43,6 @@ export const headers = computed<Header[]>(() => [
     text: t('contacts.data.membershipStarts'),
     align: 'right',
     sortable: true,
-    wrap: true,
   },
 ]);
 

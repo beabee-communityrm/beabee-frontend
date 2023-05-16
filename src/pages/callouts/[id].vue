@@ -100,10 +100,13 @@ meta:
         :options="formOpts"
         @submit="handleSubmitResponse as any"
       />
-      <InfoMessage v-if="isPreview" :message="t('callout.showingPreview')" />
-      <MessageBox v-if="formError" class="mt-4" type="error">
-        {{ formError }}
-      </MessageBox>
+      <AppInputHelp v-if="isPreview" :message="t('callout.showingPreview')" />
+      <AppNotification
+        v-if="formError"
+        class="mt-4"
+        variant="error"
+        :title="formError"
+      />
     </form>
   </div>
 </template>
@@ -123,12 +126,11 @@ import {
   fetchResponses,
 } from '../../utils/api/callout';
 import AppButton from '../../components/button/AppButton.vue';
-import MessageBox from '../../components/MessageBox.vue';
 import { currentUser, canAdmin } from '../../store';
 import GuestFields from '../../components/pages/callouts/GuestFields.vue';
 import SharingPanel from '../../components/pages/callouts/CalloutSharingPanel.vue';
 import axios from '../../lib/axios';
-import InfoMessage from '../../components/InfoMessage.vue';
+import AppInputHelp from '../../components/forms/AppInputHelp.vue';
 
 import 'formiojs/dist/formio.form.css';
 import { useRoute } from 'vue-router';
@@ -142,6 +144,7 @@ import {
   faCalendar,
 } from '@fortawesome/free-solid-svg-icons';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
+import AppNotification from '../../components/AppNotification.vue';
 
 type FormSubmission = { data: CalloutResponseAnswers };
 
