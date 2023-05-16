@@ -43,7 +43,6 @@ export const headers = computed<Header[]>(() => [
     text: t('contacts.data.membershipStarts'),
     align: 'right',
     sortable: true,
-    wrap: true,
   },
 ]);
 

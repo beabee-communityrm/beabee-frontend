@@ -3,7 +3,6 @@ export interface Header {
   value: string;
   sortable?: boolean;
   width?: string;
-  wrap?: boolean;
   align?: 'left' | 'right' | 'center';
 }
 
