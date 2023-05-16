@@ -307,6 +307,7 @@
   },
   "calloutResponse": {
     "data": {
+      "answers": "Antworten",
       "assignee": "Zugewiesen an",
       "bucket": "Ordner",
       "callout": "Callout",
