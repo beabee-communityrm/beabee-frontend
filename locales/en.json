@@ -184,6 +184,10 @@
         "contains": "includes",
         "not_contains": "doesn't include"
       },
+      "blob": {
+        "contains": "contains",
+        "not_contains": "doesn't contain"
+      },
       "boolean": {
         "equal": "is"
       },
@@ -303,6 +307,7 @@
   },
   "calloutResponse": {
     "data": {
+      "answers": "Answers",
       "assignee": "Assigned to",
       "bucket": "Bucket",
       "callout": "Callout",

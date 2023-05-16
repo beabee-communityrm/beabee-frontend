@@ -121,6 +121,7 @@ const ruleDefaultsByType: Record<
   () => Pick<Rule, 'operator' | 'value'>
 > = {
   text: () => withDefault('text', 'equal'),
+  blob: () => withDefault('blob', 'contains'),
   number: () => withDefault('number', 'equal'),
   enum: () => withDefault('enum', 'equal'),
   boolean: () => withDefault('boolean', 'equal'),
