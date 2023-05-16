@@ -118,9 +118,12 @@ meta:
       </AppButton>
     </div>
     <div class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg">
-      <AppAlert v-if="editMode" variant="warning" class="mb-4">
-        {{ t('calloutResponsePage.editMode') }}
-      </AppAlert>
+      <AppNotification
+        v-if="editMode"
+        variant="warning"
+        class="mb-6"
+        :title="t('calloutResponsePage.editMode')"
+      />
       <Form
         :key="response.id + editMode /* Form doesn't respect reactivity */"
         :form="callout.formSchema"
@@ -169,6 +172,7 @@ import {
   faPen,
 } from '@fortawesome/free-solid-svg-icons';
 import { addNotification } from '../../../../../../store/notifications';
+import AppNotification from '../../../../../../components/AppNotification.vue';
 
 const props = defineProps<{
   rid: string;
@@ -226,7 +230,7 @@ async function handleUpdate(
 async function handleEditResponse(submission: {
   data: CalloutResponseAnswers;
 }) {
-  await handleUpdate({ answers: submission.data }, t('actions.saved'));
+  await handleUpdate({ answers: submission.data }, t('form.saved'));
   editMode.value = false;
 }
 
