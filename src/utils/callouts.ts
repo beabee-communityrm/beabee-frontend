@@ -142,6 +142,9 @@ function convertComponentToFilter(
         options: convertValuesToOptions(component.values),
       };
 
+    case 'textarea':
+      return { ...baseItem, type: 'blob' };
+
     default:
       return { ...baseItem, type: 'text' };
   }

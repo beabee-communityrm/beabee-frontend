@@ -17,9 +17,6 @@ meta:
       no-collapse
     >
       <div class="flex items-center gap-2">
-        <span v-if="lastSavedText" class="text-sm text-body-60">
-          {{ lastSavedText }}
-        </span>
         <AppAsyncButton
           v-if="!isLive"
           variant="primaryOutlined"
@@ -63,8 +60,8 @@ import {
 import PageTitle from '../../../components/PageTitle.vue';
 import useVuelidate from '@vuelidate/core';
 import AppAsyncButton from '../../../components/button/AppAsyncButton.vue';
-import { formatDistanceLocale } from '../../../utils/dates';
 import { addBreadcrumb } from '../../../store/breadcrumb';
+import { addNotification } from '../../../store/notifications';
 import { faBullhorn, faEye } from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps<{ id?: string }>();
@@ -127,16 +124,6 @@ const isNewOrDraft = computed(
   () => !status.value || status.value === ItemStatus.Draft
 );
 
-const lastSavedText = computed(() => {
-  if (!lastSaved.value) return;
-
-  return +now.value - +lastSaved.value < 20000
-    ? t('createCallout.lastSavedNow')
-    : t('createCallout.lastSaved', {
-        duration: formatDistanceLocale(now.value, lastSaved.value),
-      });
-});
-
 const updateAction = computed(() =>
   isLive.value || (status.value === ItemStatus.Scheduled && !isPublish.value)
     ? t('actions.update')
@@ -170,15 +157,21 @@ async function saveCallout(asDraft = false) {
 }
 
 async function handleUpdate() {
-  const callout = await saveCallout();
-  router.push({
-    path: '/admin/callouts/view/' + callout.slug,
-    query: { [props.id ? 'updated' : 'created']: null },
+  await saveCallout();
+  addNotification({
+    title: props.id
+      ? t('calloutAdminOverview.updated')
+      : t('calloutAdminOverview.added'),
+    variant: 'success',
   });
 }
 
 async function handleSaveDraft() {
   const callout = await saveCallout(true);
+  addNotification({
+    title: 'Saved draft',
+    variant: 'success',
+  });
   router.push({ path: '/admin/callouts/edit/' + callout.slug });
   // If reverting from other status then reset form
   if (!isNewOrDraft.value) {

@@ -21,7 +21,9 @@
     v-else
     v-model="value"
     :type="
-      item.type === 'contact' || item.type === 'array' ? 'text' : item.type
+      item.type === 'contact' || item.type === 'array' || item.type === 'blob'
+        ? 'text'
+        : item.type
     "
     :prefix="prefix"
     required

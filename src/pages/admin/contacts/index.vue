@@ -69,17 +69,8 @@ meta:
           >
             {{ item.displayName }}
           </router-link>
-          <p
-            v-if="item.profile.description"
-            class="mt-1 whitespace-normal text-xs"
-          >
-            {{ item.profile.description }}
-          </p>
         </template>
-        <template #value-tags="{ item }">
-          <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
-        </template>
-        <template #value-contribution="{ item }">
+        <template #value-contributionMonthlyAmount="{ item }">
           <span v-if="item.contributionAmount">
             {{ n(item.contributionAmount, 'currency') }}/{{
               item.contributionPeriod === ContributionPeriod.Monthly
@@ -97,6 +88,18 @@ meta:
           <span class="whitespace-nowrap">{{
             getMembershipStartDate(item)
           }}</span>
+        </template>
+        <template #after="{ item }">
+          <p v-if="item.profile.description" class="whitespace-normal text-xs">
+            {{ item.profile.description }}
+          </p>
+          <div
+            v-if="item.profile.tags.length > 0"
+            :class="item.profile.description && 'mt-2'"
+          >
+            <font-awesome-icon :icon="faTag" class="mr-2" />
+            <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
+          </div>
         </template>
       </AppPaginatedTable>
     </div>
@@ -135,7 +138,7 @@ import SaveSegment from '../../../components/pages/admin/contacts/SaveSegment.vu
 import { addBreadcrumb } from '../../../store/breadcrumb';
 import { definePaginatedQuery, defineParam } from '../../../utils/pagination';
 import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
-import { faDownload, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faTag, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 const { t, n } = useI18n();
 
