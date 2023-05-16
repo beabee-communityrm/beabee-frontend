@@ -136,11 +136,6 @@ meta:
           </router-link>
           <span v-else>-</span>
         </template>
-        <template #value-tags="{ value }">
-          <span class="whitespace-normal">
-            <AppTag v-for="tag in value" :key="tag.id" :tag="tag.name" />
-          </span>
-        </template>
         <template #value-createdAt="{ value }">
           {{
             t('common.timeAgo', {
@@ -150,9 +145,13 @@ meta:
         </template>
 
         <template #after="{ item }">
+          <AppTag v-for="tag in item.tags" :key="tag.id" :tag="tag.name" />
           <p
             v-if="currentInlineComponent && item.answers"
-            :class="showLatestComment && item.latestComment ? 'mb-2' : ''"
+            :class="{
+              'mt-2': item.tags.length > 0,
+              'mb-2': showLatestComment && item.latestComment,
+            }"
           >
             <font-awesome-icon :icon="faUserPen" class="mr-2" />
             <b>{{ t('calloutResponsesPage.showAnswer') }}:{{ ' ' }}</b>
