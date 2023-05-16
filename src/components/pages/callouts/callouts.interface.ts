@@ -17,10 +17,11 @@ export interface TitleAndImageStepProps {
   shareDescription: string;
 }
 
-export interface VisibilityStepProps {
+export interface SettingsStepProps {
   whoCanTakePart: 'members' | 'everyone';
-  allowAnonymousResponses: boolean;
+  allowAnonymousResponses: 'none' | 'guests' | 'all';
   showOnUserDashboards: boolean;
+  multipleResponses: boolean;
   usersCanEditAnswers: boolean;
 }
 
@@ -46,7 +47,7 @@ export interface DateAndDurationStepProps {
 export interface CalloutStepsProps {
   content: ContentStepProps;
   titleAndImage: TitleAndImageStepProps;
-  visibility: VisibilityStepProps;
+  settings: SettingsStepProps;
   endMessage: EndMessageStepProps;
   //mailchimp: MailchimpSyncStepProps;
   dates: DateAndDurationStepProps;

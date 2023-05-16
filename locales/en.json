@@ -641,6 +641,53 @@
         "description": "Set up Mailchimp integration",
         "title": "Mailchimp sync"
       },
+      "settings": {
+        "description": "Choose who will see your callout and more",
+        "inputs": {
+          "anonymous": {
+            "help": "<p>If you allow <strong>anonymous responses</strong>, users will not be asked for their contact information.</p>\n",
+            "label": "Should guests be asked for their contact information?",
+            "opts": {
+              "all": "All responses should be anonymous, including from logged in users",
+              "guests": "No, responses from guests can be anonymous",
+              "none": "Yes, ask guests for their contact information"
+            }
+          },
+          "editable": {
+            "help": "<p>If yes, the users will be able to <strong>update their answers</strong> until the callout reaches its end date.</p>\n",
+            "label": "Should people be able to change their answers before the callout ends?",
+            "opts": {
+              "no": "No, answers are final",
+              "yes": "Yes"
+            }
+          },
+          "multiple": {
+            "help": "<p>If yes, then logged in users will be able to <strong>respond multiple times</strong> to the callout.</p>\n",
+            "label": "Can users answer the callout more than once?",
+            "opts": {
+              "no": "No, only one response",
+              "yes": "Yes"
+            }
+          },
+          "visible": {
+            "help": "<p>You can make the callout <strong>not appear</strong> to users if you only want it to be answered by people who you share the link with.</p>\n",
+            "label": "Should it be visible in the users' dashboards?",
+            "opts": {
+              "no": "No, it can only be accessed through its link",
+              "yes": "Yes, show it to users"
+            }
+          },
+          "who": {
+            "help": "<p>Callouts can be presented to <strong>Everyone</strong> or restricted to <strong>Members only</strong> participation</p>\n",
+            "label": "Who can take part?",
+            "opts": {
+              "everyone": "Everyone",
+              "members": "Members only"
+            }
+          }
+        },
+        "title": "Settings"
+      },
       "titleAndImage": {
         "description": "Set a title, description and image for the callout",
         "inputs": {
@@ -686,44 +733,6 @@
         },
         "title": "Title and image",
         "urlWillBe": "Permalink will be"
-      },
-      "visibility": {
-        "description": "Choose who will see your callout",
-        "inputs": {
-          "anonymous": {
-            "help": "<p>If you allow <strong>anonymous responses</strong>, guests will not be asked for their contact information.</p>\n",
-            "label": "Should guests be able to answer anonymously?",
-            "opts": {
-              "no": "No, require contact details",
-              "yes": "Yes, contact info is not needed"
-            }
-          },
-          "editable": {
-            "help": "<p>If yes, the users will be able to <strong>update their answers</strong> until the callout reaches its end date.</p>\n",
-            "label": "Should people be able to change their answers before the callout ends?",
-            "opts": {
-              "no": "No, answers are final",
-              "yes": "Yes"
-            }
-          },
-          "visible": {
-            "help": "<p>You can make the callout <strong>not appear</strong> to users if you only want it to be answered by people who you share the link with.</p>\n",
-            "label": "Should it be visible in the users' dashboards?",
-            "opts": {
-              "no": "No, it can only be accessed through its link",
-              "yes": "Yes, show it to users"
-            }
-          },
-          "who": {
-            "help": "<p>Callouts can be presented to <strong>Everyone</strong> or restricted to <strong>Members only</strong> participation</p>\n",
-            "label": "Who can take part?",
-            "opts": {
-              "everyone": "Everyone",
-              "members": "Members only"
-            }
-          }
-        },
-        "title": "Visibility settings"
       }
     },
     "title": "Create a callout",
