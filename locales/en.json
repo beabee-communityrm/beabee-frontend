@@ -321,7 +321,7 @@
       "toggleTag": "Toggle tag"
     },
     "manageTags": "Manage tags",
-    "responseOf": "Response {no} out of {total}",
+    "responseOf": "Response {no} out of {total} in {bucket}",
     "selectedCount": "{n} response selected | {n} responses selected"
   },
   "calloutResponsesPage": {

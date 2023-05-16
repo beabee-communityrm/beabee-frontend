@@ -14,6 +14,9 @@ meta:
         <template #total>
           <b>{{ n(totalResponses) }}</b>
         </template>
+        <template #bucket>
+          <b>{{ bucketName }}</b>
+        </template>
       </i18n-t>
       <AppButtonGroup>
         <AppButton
@@ -38,6 +41,7 @@ meta:
         />
       </AppButtonGroup>
     </div>
+
     <AppHeading class="mb-4">
       {{ t('calloutResponsesPage.responseNo', { no: n(response.number) }) }}
     </AppHeading>
@@ -57,10 +61,7 @@ meta:
       />
       <AppInfoListItem
         :name="t('calloutResponse.data.bucket')"
-        :value="
-          buckets.find((bucket) => bucket.id === response!.bucket)?.label ||
-          response.bucket
-        "
+        :value="bucketName"
       />
       <AppInfoListItem :name="t('calloutResponse.data.tags')">
         <AppTag v-for="tag in response.tags" :key="tag.id" :tag="tag.name" />
@@ -75,6 +76,7 @@ meta:
         </router-link>
       </AppInfoListItem>
     </AppInfoList>
+
     <div class="flex gap-2">
       <MoveBucketButton
         size="sm"
@@ -174,6 +176,13 @@ const totalResponses = ref(0);
 const tagItems = ref<{ id: string; label: string }[]>([]);
 
 const doingAction = ref(false);
+
+const bucketName = computed(() =>
+  response.value
+    ? buckets.value.find((bucket) => bucket.id === response.value!.bucket)
+        ?.label || response.value.bucket
+    : ''
+);
 
 async function handleUpdate(data: UpdateCalloutResponseData) {
   if (!response.value) return;
