@@ -103,13 +103,26 @@ meta:
         :loading="doingAction"
         @assign="(assigneeId) => handleUpdate({ assigneeId })"
       />
+      <AppButton
+        type="button"
+        :icon="faPen"
+        size="sm"
+        variant="primaryOutlined"
+        @click="editMode = !editMode"
+      >
+        {{ t('calloutResponsePage.actions.editResponse') }}
+      </AppButton>
     </div>
     <div class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg">
+      <AppAlert v-if="editMode" variant="warning" class="mb-4">
+        {{ t('calloutResponsePage.editMode') }}
+      </AppAlert>
       <Form
-        :key="response.id /*Form doesn't respect reactivity */"
+        :key="response.id + editMode /* Form doesn't respect reactivity */"
         :form="callout.formSchema"
         :submission="{ data: response.answers }"
-        :options="{ readOnly: true }"
+        :options="{ readOnly: !editMode, noAlerts: true }"
+        @submit="handleEditResponse"
       />
     </div>
     <div>
@@ -120,6 +133,7 @@ meta:
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import {
+  CalloutResponseAnswers,
   GetCalloutDataWith,
   GetCalloutResponseData,
   GetCalloutResponseDataWith,
@@ -145,7 +159,12 @@ import {
 } from '../../../../../../utils/api/callout-response';
 import CalloutResponseComments from '../../../../../../components/callout/CalloutResponseComments.vue';
 import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
-import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCaretLeft,
+  faCaretRight,
+  faPen,
+} from '@fortawesome/free-solid-svg-icons';
+import AppAlert from '../../../../../../components/AppAlert.vue';
 
 const props = defineProps<{
   rid: string;
@@ -175,11 +194,12 @@ const totalResponses = ref(0);
 
 const tagItems = ref<{ id: string; label: string }[]>([]);
 
+const editMode = ref(false);
 const doingAction = ref(false);
 
 const bucketName = computed(() =>
   response.value
-    ? buckets.value.find((bucket) => bucket.id === response.value!.bucket)
+    ? buckets.value.find((bucket) => bucket.id === response.value?.bucket)
         ?.label || response.value.bucket
     : ''
 );
@@ -191,6 +211,13 @@ async function handleUpdate(data: UpdateCalloutResponseData) {
   await updateCalloutResponse(response.value.id, data);
   await refreshResponse();
   doingAction.value = false;
+}
+
+async function handleEditResponse(submission: {
+  data: CalloutResponseAnswers;
+}) {
+  await handleUpdate({ answers: submission.data });
+  editMode.value = false;
 }
 
 onBeforeMount(async () => {
