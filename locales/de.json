@@ -341,7 +341,7 @@
     },
     "manageTags": "Tags bearbeiten",
     "notifications": {
-      "addedAssignee": "\"{Empfänger}\" zugewiesen",
+      "addedAssignee": "\"{assignee}\" zugewiesen",
       "addedTag": "Tag \"{tag}\" hinzugefügt",
       "movedToBucket": "Verschoben in {bucket}",
       "removedAssignee": "Nicht mehr \"{assignee}\" zugewiesen",
