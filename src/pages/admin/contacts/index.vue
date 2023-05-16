@@ -70,7 +70,7 @@ meta:
             {{ item.displayName }}
           </router-link>
         </template>
-        <template #value-contribution="{ item }">
+        <template #value-contributionMonthlyAmount="{ item }">
           <span v-if="item.contributionAmount">
             {{ n(item.contributionAmount, 'currency') }}/{{
               item.contributionPeriod === ContributionPeriod.Monthly
