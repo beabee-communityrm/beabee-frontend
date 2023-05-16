@@ -636,9 +636,16 @@
         "title": "Mailchimp-Synchronisation"
       },
       "settings": {
+        "description": "Entscheide unter anderem, wer deinen Callout sehen kann.",
         "inputs": {
           "anonymous": {
-            "opts": {}
+            "help": "<p>Wenn du <strong>anonyme Antworten</strong> erlaubst, werden Teilenehmer nicht nach ihren Kontaktdaten gefragt.</p>\n",
+            "label": "Sollen Gastteilnehmer nach Kontaktdaten gefragt werden?",
+            "opts": {
+              "all": "Alle Antworten sollen anonym sein, auch bei eingeloggten Teilnehmern.",
+              "guests": "Nein, Gastteilnehmer können sollen anonym antworten können.",
+              "none": "Ja, nach Kontaktdaten fragen."
+            }
           },
           "editable": {
             "help": "<p>Wenn ja, können Teilnehmende <strong>ihre abgeschickten Antworten bearbeiten</strong>, solange der Callout aktiv ist.</p>\n",
@@ -649,7 +656,12 @@
             }
           },
           "multiple": {
-            "opts": {}
+            "help": "<p>Wenn ja, können eingeloggte Nutzer <strong>mehrfach</strong> am Callout teilnehmen.</p>\n",
+            "label": "Sollen Nutzer mehrfach teilnehmen können?",
+            "opts": {
+              "no": "Nein, nur eine Teilnahme",
+              "yes": "Ja"
+            }
           },
           "visible": {
             "help": "<p>Du kannst den Callout <strong>nicht anzeigen</strong> lassen. Dann ist er nur über den Link erreichbar.</p>\n",
@@ -667,7 +679,8 @@
               "members": "Nur Mitglieder"
             }
           }
-        }
+        },
+        "title": "Einstellungen"
       },
       "titleAndImage": {
         "description": "Gib deinem Callout einen Titel, eine Beschreibung und ein Bild.",
