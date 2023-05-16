@@ -1,16 +1,18 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div>
-    <AppAlert v-if="wasJustReplicated" variant="success" class="mb-4">
-      {{ t('editCallout.replicated') }}
-    </AppAlert>
-
-    <AppAlert v-else-if="warnAboutEditing" variant="warning" class="mb-4">
-      <template #icon>
-        <font-awesome-icon :icon="faExclamation" />
-      </template>
-      {{ t('editCallout.warning') }}
-    </AppAlert>
+    <AppNotification
+      v-if="wasJustReplicated"
+      variant="success"
+      class="mb-4"
+      :title="t('editCallout.replicated')"
+    />
+    <AppNotification
+      v-if="warnAboutEditing"
+      variant="warning"
+      class="mb-4"
+      :title="t('editCallout.warning')"
+    />
 
     <AppFormSection :help="inputT('intro.help')">
       <RichTextEditor
@@ -55,7 +57,6 @@ import {
   faTimesCircle,
   faPlus,
   IconName,
-  faExclamation,
   faCode,
   faColumns,
   faThLarge,
@@ -81,11 +82,11 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { ContentStepProps } from '../callouts.interface';
-import AppAlert from '../../../AppAlert.vue';
 import RichTextEditor from '../../../rte/RichTextEditor.vue';
 import AppFormSection from '../../../forms/AppFormSection.vue';
 
 import 'formiojs/dist/formio.builder.css';
+import AppNotification from '../../../AppNotification.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{

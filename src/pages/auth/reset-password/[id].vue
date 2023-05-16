@@ -44,9 +44,14 @@ meta:
       />
     </div>
 
-    <MessageBox v-if="hasError" type="error" class="mb-4">
+    <AppNotification
+      v-if="hasError"
+      variant="error"
+      class="mb-4"
+      :title="t('resetPassword.errorTitle')"
+    >
       <p>
-        <i18n-t keypath="resetPassword.error">
+        <i18n-t keypath="resetPassword.errorText">
           <template #newLink>
             <router-link to="/auth/forgot-password" class="underline">{{
               t('resetPassword.errorLink')
@@ -54,7 +59,7 @@ meta:
           </template>
         </i18n-t>
       </p>
-    </MessageBox>
+    </AppNotification>
 
     <AppButton
       variant="link"
@@ -88,7 +93,8 @@ import useVuelidate from '@vuelidate/core';
 import { resetPassword } from '../../../utils/api/auth';
 import { updateCurrentUser } from '../../../store';
 import { isInternalUrl } from '../../../utils';
-import MessageBox from '../../../components/MessageBox.vue';
+import AppNotification from '../../../components/AppNotification.vue';
+import { addNotification } from '../../../store/notifications';
 
 const props = withDefaults(
   defineProps<{
@@ -122,7 +128,11 @@ async function handleSubmit() {
       // TODO: use router when legacy app is gone
       window.location.href = redirectTo;
     } else {
-      router.push({ path: '/profile', query: { passwordReset: 'true' } });
+      addNotification({
+        variant: 'success',
+        title: t('resetPassword.success'),
+      });
+      router.push({ path: '/profile' });
     }
   } catch (err) {
     hasError.value = true;

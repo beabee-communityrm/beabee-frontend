@@ -12,7 +12,7 @@
       <AppSelectableList
         v-slot="{ item }"
         :items="selectableBuckets"
-        @click="$emit('move', $event.id)"
+        @click="handleMove"
       >
         {{
           t('calloutResponsesPage.moveToBucket', {
@@ -32,7 +32,9 @@ import AppSelectableList from '../../../AppSelectableList.vue';
 import AppDropdownButton from '../../../button/AppDropdownButton.vue';
 import { buckets } from './callouts.interface';
 
-defineEmits<{ (event: 'move', id: string): void }>();
+const emit = defineEmits<{
+  (event: 'move', id: string, successText: string): void;
+}>();
 const props = defineProps<{ currentBucket: string; withText?: boolean }>();
 
 const { t } = useI18n();
@@ -40,4 +42,16 @@ const { t } = useI18n();
 const selectableBuckets = computed(() =>
   buckets.value.filter((b) => b.id !== props.currentBucket)
 );
+
+function handleMove(item: unknown) {
+  const bucket = item as { id: string; label: string };
+
+  emit(
+    'move',
+    bucket.id,
+    t('calloutResponsePage.notifications.movedToBucket', {
+      bucket: bucket.label,
+    })
+  );
+}
 </script>

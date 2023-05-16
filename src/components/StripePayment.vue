@@ -13,7 +13,7 @@
 
   <div ref="divRef"></div>
 
-  <MessageBox v-if="error" type="error" class="mt-4">{{ error }}</MessageBox>
+  <AppNotification v-if="error" variant="error" class="mt-4" :title="error" />
 
   <AppButton
     :disabled="!paymentReady || validation.$invalid"
@@ -32,11 +32,11 @@ import { loadStripe } from '@stripe/stripe-js/pure';
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppButton from './button/AppButton.vue';
-import MessageBox from './MessageBox.vue';
 import AppInput from './forms/AppInput.vue';
 import AppLabel from './forms/AppLabel.vue';
 
 import theme from 'virtual:theme';
+import AppNotification from './AppNotification.vue';
 
 const emit = defineEmits(['loaded']);
 

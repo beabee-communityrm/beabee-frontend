@@ -1,6 +1,6 @@
 <template>
   <div v-if="canCancel">
-    <AppHeading class="mb-4">
+    <AppHeading class="mb-2">
       {{ t('contribution.cancelContribution') }}
     </AppHeading>
 

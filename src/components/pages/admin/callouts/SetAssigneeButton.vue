@@ -13,7 +13,7 @@
         v-slot="{ item }"
         :items="admins"
         :selected-item-ids="currentAssigneeId ? [currentAssigneeId] : []"
-        @click="(item, selected) => $emit('assign', selected ? null : item.id)"
+        @click="handleAssign"
       >
         {{ item.displayName }}
       </AppSelectableList>
@@ -30,12 +30,31 @@ import { fetchContacts } from '../../../../utils/api/contact';
 import AppSelectableList from '../../../AppSelectableList.vue';
 import AppDropdownButton from '../../../button/AppDropdownButton.vue';
 
-defineEmits<{ (event: 'assign', id: string | null): void }>();
+const emit = defineEmits<{
+  (event: 'assign', id: string | null, successText: string): void;
+}>();
 defineProps<{ currentAssigneeId?: string; withText?: boolean }>();
 
 const { t } = useI18n();
 
 const admins = ref<GetContactData[]>([]);
+
+function handleAssign(item: unknown, selected: boolean) {
+  const assignee = item as GetContactData;
+
+  emit(
+    'assign',
+    selected ? null : assignee.id,
+    t(
+      selected
+        ? 'calloutResponsePage.notifications.removedAssignee'
+        : 'calloutResponsePage.notifications.addedAssignee',
+      {
+        assignee: assignee.displayName,
+      }
+    )
+  );
+}
 
 onBeforeMount(async () => {
   // TODO: should paginate

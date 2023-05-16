@@ -81,6 +81,23 @@
     "welcomeBack": "Welcome back {firstName}!"
   },
   "adminSettings": {
+    "apikey": {
+      "confirmCreate": {
+        "text": "Please save the following token. It CAN NOT be retrieved later:",
+        "title": "API Key successfully created"
+      },
+      "confirmDelete": {
+        "text": "Are you sure you want to delete this API Key?",
+        "title": "Delete API Key?"
+      },
+      "createdAt": "Created",
+      "description": "Description",
+      "generate": "Generate API Key",
+      "id": "ID",
+      "label": "API Keys",
+      "showingOf": "Showing {start} to {end} API Keys out of {total}",
+      "token": "Token"
+    },
     "email": {
       "fromEmail": "From email",
       "fromName": "From name",
@@ -145,6 +162,7 @@
     "addRule": "Add rule",
     "button": "Filters",
     "createFilters": "Create filters for your search",
+    "createdSegment": "Created segment \"{segment}\"",
     "matchAfter": "of the following",
     "matchBefore": "Match",
     "matchType": {
@@ -216,7 +234,8 @@
       "title": "Save segment",
       "updateSegment": "Update segment"
     },
-    "selectFilter": "Select a filter"
+    "selectFilter": "Select a filter",
+    "updatedSegment": "Updated segment \"{segment}\""
   },
   "callout": {
     "contactDetails": "Contact details",
@@ -321,6 +340,13 @@
       "toggleTag": "Toggle tag"
     },
     "manageTags": "Manage tags",
+    "notifications": {
+      "addedAssignee": "Assigned to \"{assignee}\"",
+      "addedTag": "Added tag \"{tag}\"",
+      "movedToBucket": "Moved to {bucket}",
+      "removedAssignee": "Unassigned from \"{assignee}\"",
+      "removedTag": "Removed tag \"{tag}\" "
+    },
     "responseOf": "Response {no} out of {total}",
     "selectedCount": "{n} response selected | {n} responses selected"
   },
@@ -423,7 +449,10 @@
       "text": "Are you sure you want to cancel this contact's contribution? This can't be undone.",
       "title": "Cancel contribution?"
     },
-    "editNotice": "Updating a contact's contribution is currently only possible for those with a manual contribution."
+    "updateNotice": {
+      "text": "You can't currently update a contact's contribution, contact support{'@'}beabee.io for support.",
+      "title": "Not currently available"
+    }
   },
   "contactOverview": {
     "about": "About",
@@ -816,7 +845,6 @@
     "manageYourContribution": "Manage your contribution",
     "newCallout": "New callout!",
     "openCallouts": "Open callouts",
-    "passwordReset": "Your password has been reset.",
     "quickActions": "Quick actions",
     "title": "Home",
     "viewAllCallouts": "View all callouts",
@@ -971,8 +999,7 @@
     "showingOf": "Showing {start} to {end} notices out of {total}"
   },
   "notification": {
-    "error": "Something went wrong. Try reloading the page.",
-    "success": "Your action was successful."
+    "error": "Something went wrong. Try reloading the page."
   },
   "pageTitle": {
     "confirmEmail": "Confirm email",
@@ -1011,10 +1038,12 @@
     "changePassword": "Change password",
     "confirmPassword": "Confirm password",
     "description": "Set a new password to login.",
-    "error": "Password reset failed, the link might have expired. You could {newLink}.",
     "errorLink": "request another link",
+    "errorText": "The link might have expired, you could {newLink}.",
+    "errorTitle": "Password reset failed",
     "login": "Login to your account",
     "newPassword": "New password",
+    "success": "Your password has been reset.",
     "title": "Reset your password?"
   },
   "roleEditor": {
