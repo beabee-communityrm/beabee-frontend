@@ -451,7 +451,11 @@
     "yes": "Ja"
   },
   "contactContribution": {
-    "confirmCancel": {},
+    "confirmCancel": {
+      "confirm": "Ja, Mitgliedschaft kündigen",
+      "text": "Bist du sicher, dass du die Mitgliedschaft dieses Kontakts kündigen willst? Das kann nicht rückgängig gemacht werden. ",
+      "title": "Mitgliedschaft kündigen?"
+    },
     "updateNotice": {
       "text": "Du kannst den Beitrag eines Kontakts derzeit nicht aktualisieren. Wende dich an support{'@'}beabee.io, um Unterstützung zu erhalten.",
       "title": "Derzeit nicht verfügbar"
@@ -464,6 +468,7 @@
       "copy": "<p>Alle hier eingegebenen Information sind <strong>nur für Administratoren sichtbar</strong>.\nNutzer bekommen das nicht angezeigt.</p>\n"
     },
     "callouts": "Callouts",
+    "cancellationDate": "Gekündigt am",
     "contribution": "Beitrag",
     "contributionType": "Zahlungsart",
     "information": "Information",
@@ -527,6 +532,7 @@
     "showingOf": "{start} to {end} von {total} Kontakten werden angezeigt."
   },
   "contribution": {
+    "adminCancelDescription": "Wenn du die Mitgliedschaft des Kontakts kündigst, endet sie am Ende des aktuellen Zahlungszyklus am {date}.",
     "bankAccount": "Bankverbindung",
     "billing": "Zahlungsart",
     "cancelContribution": "Mitgliedschaft kündigen",
