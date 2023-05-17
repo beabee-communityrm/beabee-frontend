@@ -88,6 +88,12 @@ meta:
       :class="{ 'opacity-50': isFormReadOnly }"
       @submit.prevent
     >
+      <AppNotification
+        v-if="isPreview"
+        variant="warning"
+        :title="t('callout.showingPreview')"
+        class="mb-4"
+      />
       <GuestFields
         v-if="showGuestFields"
         v-model:name="guestName"
@@ -100,7 +106,6 @@ meta:
         :options="formOpts"
         @submit="handleSubmitResponse as any"
       />
-      <AppInputHelp v-if="isPreview" :message="t('callout.showingPreview')" />
       <AppNotification
         v-if="formError"
         class="mt-4"
@@ -130,7 +135,6 @@ import { currentUser, canAdmin } from '../../store';
 import GuestFields from '../../components/pages/callouts/GuestFields.vue';
 import SharingPanel from '../../components/pages/callouts/CalloutSharingPanel.vue';
 import axios from '../../lib/axios';
-import AppInputHelp from '../../components/forms/AppInputHelp.vue';
 
 import 'formiojs/dist/formio.form.css';
 import { useRoute } from 'vue-router';
