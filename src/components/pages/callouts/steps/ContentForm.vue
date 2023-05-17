@@ -1,19 +1,26 @@
 <template>
   <div>
     <div class="mb-6">
-      <ul class="flex">
+      <ul class="flex gap-4">
         <li
           v-for="(page, pageNo) in modelValue.components"
           :key="page.key"
+          class="rounded p-4"
+          :class="
+            currentPageNo === pageNo
+              ? 'bg-white'
+              : 'cursor-pointer bg-primary-10 hover:bg-white'
+          "
           @click="handleChangePage(pageNo)"
         >
-          {{ page.label }}
+          {{ page.title }}
+        </li>
+        <li>
+          <AppButton variant="primary" @click="handleAddPage">
+            {{ t('calloutBuilder.actions.addSlide') }}
+          </AppButton>
         </li>
       </ul>
-
-      <AppButton variant="primary" @click="handleAddPage">
-        {{ t('calloutBuilder.actions.addSlide') }}
-      </AppButton>
     </div>
 
     <div class="callout-form-builder">
@@ -80,13 +87,6 @@ import { getPageSchema } from '../../../../utils/callouts';
 
 import 'formiojs/dist/formio.builder.css';
 
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: CalloutFormSchema): void;
-}>();
-const props = defineProps<{ modelValue: CalloutFormSchema }>();
-
-const { t } = useI18n();
-
 const formOpts = { builder: { data: false, resource: false, premium: false } };
 
 interface FormBuilderRef {
@@ -99,7 +99,16 @@ interface FormBuilderRef {
     };
   };
 }
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: CalloutFormSchema): void;
+}>();
+const props = defineProps<{ modelValue: CalloutFormSchema }>();
+
+const { t } = useI18n();
+
 const formBuilderRef = ref<FormBuilderRef>();
+const currentPageNo = ref(0);
 
 function handleChange() {
   if (!formBuilderRef.value) return; // Can't change without being loaded
@@ -109,6 +118,7 @@ function handleChange() {
 function handleChangePage(pageNo: number) {
   if (!formBuilderRef.value) return; // Can't change without being loaded
   formBuilderRef.value.builder.instance.setPage(pageNo);
+  currentPageNo.value = pageNo;
 }
 
 function handleAddPage() {
@@ -338,7 +348,6 @@ onBeforeMount(() => {
   .formio-component-shortcut,
   .formio-component-action,
   .formio-component-saveOnEnter,
-  .formio-component-block,
   .formio-component-editor,
   .formio-component-inputType,
   .formio-component-labelMargin,

@@ -252,6 +252,12 @@ const formSubmission = computed(() => {
 const formOpts = computed(() => ({
   readOnly: isFormReadOnly.value,
   noAlerts: true,
+  buttonSettings: {
+    showCancel: false,
+    showPrevious: false,
+    showNext: false,
+    showSubmit: false,
+  },
   hooks: {
     beforeSubmit: (submission: FormSubmission, next: () => void) => {
       if (isPreview.value) {
