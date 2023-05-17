@@ -6,7 +6,7 @@
     :class="hasError && 'border-danger-70 bg-danger-10'"
     :required="required"
     v-bind="$attrs"
-    @blur="validation.value.$touch"
+    @blur="validation.$touch"
   />
 
   <div
