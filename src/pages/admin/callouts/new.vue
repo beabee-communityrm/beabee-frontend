@@ -56,6 +56,7 @@ import CalloutForm from '../../../components/pages/callouts/CalloutForm.vue';
 import {
   convertCalloutToSteps,
   convertStepsToCallout,
+  getPageSchema,
 } from '../../../utils/callouts';
 import PageTitle from '../../../components/PageTitle.vue';
 import useVuelidate from '@vuelidate/core';
@@ -196,27 +197,19 @@ async function reset() {
   status.value = callout?.status;
 
   if (!steps.value.content.formSchema.components.length) {
-    steps.value.content.formSchema.components.push({
-      title: 'Slide 1',
-      label: 'Slide 1',
-      type: 'panel',
-      key: 'slide1',
-      input: false,
-      tableView: false,
-      components: [
-        {
-          type: 'button',
-          label: t('actions.submit'),
-          key: 'submit',
-          input: true,
-          size: 'md',
-          block: false,
-          action: 'submit',
-          disableOnInvalid: true,
-          theme: 'primary',
-        },
-      ],
+    const newPage = getPageSchema(1);
+    newPage.components.push({
+      type: 'button',
+      label: t('actions.submit'),
+      key: 'submit',
+      input: true,
+      size: 'md',
+      block: false,
+      action: 'submit',
+      disableOnInvalid: true,
+      theme: 'primary',
     });
+    steps.value.content.formSchema.components.push(newPage);
   }
 }
 

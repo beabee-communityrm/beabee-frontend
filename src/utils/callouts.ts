@@ -1,8 +1,28 @@
-import { CalloutComponentSchema, ItemStatus } from '@beabee/beabee-common';
+import {
+  CalloutComponentSchema,
+  ItemStatus,
+  NestableCalloutComponentSchema,
+} from '@beabee/beabee-common';
 import { format } from 'date-fns';
 import { CalloutStepsProps } from '../components/pages/callouts/callouts.interface';
 import { FilterItem, FilterItems } from '../components/search/search.interface';
 import { CreateCalloutData, GetCalloutDataWith } from './api/api.interface';
+
+import i18n from '../lib/i18n';
+
+const { t, n } = i18n.global;
+
+export function getPageSchema(pageNo: number): NestableCalloutComponentSchema {
+  const title = t('calloutBuilder.pageNo', { pageNo: n(pageNo) });
+  return {
+    type: 'panel',
+    title,
+    label: title,
+    key: 'slide' + pageNo,
+    input: false,
+    components: [],
+  };
+}
 
 export function convertCalloutToSteps(
   callout?: GetCalloutDataWith<'form'>
