@@ -63,6 +63,10 @@
 .callout-form,
 .callout-form-builder .formarea,
 .formio-dialog {
+  .formio-form {
+    @apply bg-white p-4 shadow-md;
+  }
+
   /* Input styling */
   .form-control {
     @apply w-full rounded border border-primary-40 bg-white p-2 focus:shadow-input focus:outline-none;
@@ -178,7 +182,7 @@
 
   /* Block checkboxes */
   .form-check-label {
-    @apply mb-2 flex align-baseline;
+    @apply flex items-baseline;
 
     .form-check-input {
       @apply mr-2 flex-none;
@@ -189,16 +193,25 @@
     @apply absolute -z-10 opacity-0;
   }
 
+  /* Equal columns for column component */
   .formio-component-columns > [class^='col'] {
     @apply flex-1;
   }
 
+  .formio-component-panel > .card {
+    @apply mb-0 border-0;
+
+    & > .card-header {
+      @apply -mx-4 -mt-4 mb-4 border-b p-4;
+    }
+  }
+
   /* Styling for input errors */
   .formio-errors {
-    @apply mt-1.5 text-sm font-semibold;
+    @apply text-sm font-semibold;
 
     .form-text {
-      @apply text-danger;
+      @apply mb-0 text-danger;
     }
   }
 

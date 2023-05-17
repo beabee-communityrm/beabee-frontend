@@ -305,6 +305,12 @@
     "summary": "Summary",
     "updated": "Your callout was successfully updated."
   },
+  "calloutBuilder": {
+    "actions": {
+      "addSlide": "Add slide"
+    },
+    "pageNo": "Slide {pageNo}"
+  },
   "calloutResponse": {
     "data": {
       "answers": "Answers",
