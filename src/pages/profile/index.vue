@@ -5,14 +5,6 @@ meta:
 </route>
 
 <template>
-  <AppAlert v-if="isPasswordReset" class="mb-8">
-    <template #icon>
-      <font-awesome-icon class="-rotate-90 transform" :icon="faKey" />
-    </template>
-
-    {{ t('homePage.passwordReset') }}
-  </AppAlert>
-
   <PageTitle :title="`${t('common.hello')} ${user.firstname}!`" no-collapse />
 
   <section
@@ -77,7 +69,6 @@ import QuickActions from '../../components/pages/profile/QuickActions.vue';
 import SectionTitle from '../../components/pages/profile/SectionTitle.vue';
 import PageTitle from '../../components/PageTitle.vue';
 import AppButton from '../../components/button/AppButton.vue';
-import AppAlert from '../../components/AppAlert.vue';
 import CalloutCard from '../../components/callout/CalloutCard.vue';
 import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
 import {
@@ -88,11 +79,8 @@ import {
 import { fetchContent } from '../../utils/api/content';
 import { fetchCallouts } from '../../utils/api/callout';
 import { currentUser, generalContent } from '../../store';
-import { faKey } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
-
-const isPasswordReset = useRoute().query.passwordReset === 'true';
 
 const hasWelcomeMessageQuery = useRoute().query.welcomeMessage === 'true';
 

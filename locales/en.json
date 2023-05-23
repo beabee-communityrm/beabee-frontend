@@ -83,6 +83,23 @@
     "welcomeBack": "Welcome back {firstName}!"
   },
   "adminSettings": {
+    "apikey": {
+      "confirmCreate": {
+        "text": "Please save the following token. It CAN NOT be retrieved later:",
+        "title": "API Key successfully created"
+      },
+      "confirmDelete": {
+        "text": "Are you sure you want to delete this API Key?",
+        "title": "Delete API Key?"
+      },
+      "createdAt": "Created",
+      "description": "Description",
+      "generate": "Generate API Key",
+      "id": "ID",
+      "label": "API Keys",
+      "showingOf": "Showing {start} to {end} API Keys out of {total}",
+      "token": "Token"
+    },
     "email": {
       "fromEmail": "From email",
       "fromName": "From name",
@@ -147,6 +164,7 @@
     "addRule": "Add rule",
     "button": "Filters",
     "createFilters": "Create filters for your search",
+    "createdSegment": "Created segment \"{segment}\"",
     "matchAfter": "of the following",
     "matchBefore": "Match",
     "matchType": {
@@ -167,6 +185,10 @@
       "array": {
         "contains": "includes",
         "not_contains": "doesn't include"
+      },
+      "blob": {
+        "contains": "contains",
+        "not_contains": "doesn't contain"
       },
       "boolean": {
         "equal": "is"
@@ -218,7 +240,8 @@
       "title": "Save segment",
       "updateSegment": "Update segment"
     },
-    "selectFilter": "Select a filter"
+    "selectFilter": "Select a filter",
+    "updatedSegment": "Updated segment \"{segment}\""
   },
   "callout": {
     "contactDetails": "Contact details",
@@ -286,6 +309,7 @@
   },
   "calloutResponse": {
     "data": {
+      "answers": "Answers",
       "assignee": "Assigned to",
       "bucket": "Bucket",
       "callout": "Callout",
@@ -319,11 +343,20 @@
   "calloutResponsePage": {
     "actions": {
       "assignTo": "Assign to",
+      "editResponse": "Edit response",
       "moveBucket": "Move bucket",
       "toggleTag": "Toggle tag"
     },
+    "editMode": "You are in edit mode, be careful!",
     "manageTags": "Manage tags",
-    "responseOf": "Response {no} out of {total}",
+    "notifications": {
+      "addedAssignee": "Assigned to \"{assignee}\"",
+      "addedTag": "Added tag \"{tag}\"",
+      "movedToBucket": "Moved to {bucket}",
+      "removedAssignee": "Unassigned from \"{assignee}\"",
+      "removedTag": "Removed tag \"{tag}\" "
+    },
+    "responseOf": "Response {no} out of {total} in {bucket}",
     "selectedCount": "{n} response selected | {n} responses selected"
   },
   "calloutResponsesPage": {
@@ -425,7 +458,10 @@
       "text": "Are you sure you want to cancel this contact's contribution? This can't be undone.",
       "title": "Cancel contribution?"
     },
-    "editNotice": "Updating a contact's contribution is currently only possible for those with a manual contribution."
+    "updateNotice": {
+      "text": "You can't currently update a contact's contribution, contact support{'@'}beabee.io for support.",
+      "title": "Not currently available"
+    }
   },
   "contactOverview": {
     "about": "About",
@@ -609,6 +645,53 @@
         "description": "Set up Mailchimp integration",
         "title": "Mailchimp sync"
       },
+      "settings": {
+        "description": "Choose who will see your callout and more",
+        "inputs": {
+          "anonymous": {
+            "help": "<p>If you allow <strong>anonymous responses</strong>, users will not be asked for their contact information.</p>\n",
+            "label": "Should guests be asked for their contact information?",
+            "opts": {
+              "all": "All responses should be anonymous, including from logged in users",
+              "guests": "No, responses from guests can be anonymous",
+              "none": "Yes, ask guests for their contact information"
+            }
+          },
+          "editable": {
+            "help": "<p>If yes, the users will be able to <strong>update their answers</strong> until the callout reaches its end date.</p>\n",
+            "label": "Should people be able to change their answers before the callout ends?",
+            "opts": {
+              "no": "No, answers are final",
+              "yes": "Yes"
+            }
+          },
+          "multiple": {
+            "help": "<p>If yes, then logged in users will be able to <strong>respond multiple times</strong> to the callout.</p>\n",
+            "label": "Can users answer the callout more than once?",
+            "opts": {
+              "no": "No, only one response",
+              "yes": "Yes"
+            }
+          },
+          "visible": {
+            "help": "<p>You can make the callout <strong>not appear</strong> to users if you only want it to be answered by people who you share the link with.</p>\n",
+            "label": "Should it be visible in the users' dashboards?",
+            "opts": {
+              "no": "No, it can only be accessed through its link",
+              "yes": "Yes, show it to users"
+            }
+          },
+          "who": {
+            "help": "<p>Callouts can be presented to <strong>Everyone</strong> or restricted to <strong>Members only</strong> participation</p>\n",
+            "label": "Who can take part?",
+            "opts": {
+              "everyone": "Everyone",
+              "members": "Members only"
+            }
+          }
+        },
+        "title": "Settings"
+      },
       "titleAndImage": {
         "description": "Set a title, description and image for the callout",
         "inputs": {
@@ -654,45 +737,6 @@
         },
         "title": "Title and image",
         "urlWillBe": "Permalink will be"
-      },
-      "visibility": {
-        "description": "Choose who will see your callout",
-        "inputs": {
-          "anonymous": {
-            "help": "<p>If you allow <strong>anonymous responses</strong>, users will not be asked for their contact information.</p>\n",
-            "label": "Should guests be asked for their contact information?",
-            "opts": {
-              "none": "Yes, ask guests for their contact information",
-              "guests": "No, responses from guests can be anonymous",
-              "all": "All responses should be anonymous, including from members"
-            }
-          },
-          "editable": {
-            "help": "<p>If yes, the users will be able to <strong>update their answers</strong> until the callout reaches its end date.</p>\n",
-            "label": "Should people be able to change their answers before the callout ends?",
-            "opts": {
-              "no": "No, answers are final",
-              "yes": "Yes"
-            }
-          },
-          "visible": {
-            "help": "<p>You can make the callout <strong>not appear</strong> to users if you only want it to be answered by people who you share the link with.</p>\n",
-            "label": "Should it be visible in the users' dashboards?",
-            "opts": {
-              "no": "No, it can only be accessed through its link",
-              "yes": "Yes, show it to users"
-            }
-          },
-          "who": {
-            "help": "<p>Callouts can be presented to <strong>Everyone</strong> or restricted to <strong>Members only</strong> participation</p>\n",
-            "label": "Who can take part?",
-            "opts": {
-              "everyone": "Everyone",
-              "members": "Members only"
-            }
-          }
-        },
-        "title": "Visibility settings"
       }
     },
     "title": "Create a callout",
@@ -819,7 +863,6 @@
     "manageYourContribution": "Manage your contribution",
     "newCallout": "New callout!",
     "openCallouts": "Open callouts",
-    "passwordReset": "Your password has been reset.",
     "quickActions": "Quick actions",
     "title": "Home",
     "viewAllCallouts": "View all callouts",
@@ -974,8 +1017,7 @@
     "showingOf": "Showing {start} to {end} notices out of {total}"
   },
   "notification": {
-    "error": "Something went wrong. Try reloading the page.",
-    "success": "Your action was successful."
+    "error": "Something went wrong. Try reloading the page."
   },
   "pageTitle": {
     "confirmEmail": "Confirm email",
@@ -1014,10 +1056,12 @@
     "changePassword": "Change password",
     "confirmPassword": "Confirm password",
     "description": "Set a new password to login.",
-    "error": "Password reset failed, the link might have expired. You could {newLink}.",
     "errorLink": "request another link",
+    "errorText": "The link might have expired, you could {newLink}.",
+    "errorTitle": "Password reset failed",
     "login": "Login to your account",
     "newPassword": "New password",
+    "success": "Your password has been reset.",
     "title": "Reset your password?"
   },
   "roleEditor": {

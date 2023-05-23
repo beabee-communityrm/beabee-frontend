@@ -28,7 +28,7 @@ import AppHeading from '../../AppHeading.vue';
 import AppStepper from '../../stepper/AppStepper.vue';
 import { CalloutStepsProps } from './callouts.interface';
 
-import StepVisibility from './steps/VisibilityStep.vue';
+import StepSettings from './steps/SettingsStep.vue';
 import StepTitleAndImage from './steps/TitleAndImage.vue';
 import StepEndMessage from './steps/EndMessage.vue';
 // import StepMailchimpSync from './steps/MailchimpSync.vue';
@@ -59,13 +59,13 @@ const steps = reactive({
     component: markRaw(StepTitleAndImage),
     data: props.stepsProps.titleAndImage,
   },
-  visibility: {
-    name: t('createCallout.steps.visibility.title'),
-    description: t('createCallout.steps.visibility.description'),
+  settings: {
+    name: t('createCallout.steps.settings.title'),
+    description: t('createCallout.steps.settings.description'),
     validated: false,
     error: false,
-    component: markRaw(StepVisibility),
-    data: props.stepsProps.visibility,
+    component: markRaw(StepSettings),
+    data: props.stepsProps.settings,
   },
   endMessage: {
     name: t('createCallout.steps.endMessage.title'),
@@ -95,8 +95,8 @@ const steps = reactive({
 const stepsInOrder = [
   steps.content,
   steps.titleAndImage,
-  steps.visibility,
   steps.endMessage,
+  steps.settings,
   //steps.mailchimp,
   steps.dates,
 ];

@@ -23,7 +23,7 @@ export function convertCalloutToSteps(
       shareTitle: callout?.shareTitle || '',
       shareDescription: callout?.shareDescription || '',
     },
-    visibility: {
+    settings: {
       whoCanTakePart:
         !callout || callout.access === 'member' ? 'members' : 'everyone',
       allowAnonymousResponses:
@@ -34,6 +34,7 @@ export function convertCalloutToSteps(
           : 'none',
       showOnUserDashboards: !callout?.hidden,
       usersCanEditAnswers: callout?.allowUpdate || false,
+      multipleResponses: callout?.allowMultiple || false,
     },
     endMessage: {
       whenFinished: callout?.thanksRedirect ? 'redirect' : 'message',
@@ -73,15 +74,16 @@ export function convertStepsToCallout(
     expires: steps.dates.hasEndDate
       ? new Date(steps.dates.endDate + 'T' + steps.dates.endTime)
       : null,
-    allowUpdate: steps.visibility.usersCanEditAnswers,
-    allowMultiple: false,
-    hidden: !steps.visibility.showOnUserDashboards,
+    allowMultiple: steps.settings.multipleResponses,
+    allowUpdate:
+      !steps.settings.multipleResponses && steps.settings.usersCanEditAnswers,
+    hidden: !steps.settings.showOnUserDashboards,
     access:
-      steps.visibility.whoCanTakePart === 'members'
+      steps.settings.whoCanTakePart === 'members'
         ? 'member'
-        : steps.visibility.allowAnonymousResponses === 'none'
+        : steps.settings.allowAnonymousResponses === 'none'
         ? 'guest'
-        : steps.visibility.allowAnonymousResponses === 'guests'
+        : steps.settings.allowAnonymousResponses === 'guests'
         ? 'anonymous'
         : 'only-anonymous',
     ...(steps.endMessage.whenFinished === 'message'
@@ -139,6 +141,9 @@ function convertComponentToFilter(
         type: component.type === 'radio' ? 'enum' : 'array',
         options: convertValuesToOptions(component.values),
       };
+
+    case 'textarea':
+      return { ...baseItem, type: 'blob' };
 
     default:
       return { ...baseItem, type: 'text' };

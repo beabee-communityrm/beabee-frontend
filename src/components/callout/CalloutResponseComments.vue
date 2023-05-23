@@ -34,7 +34,7 @@ import CalloutResponseComment from './CalloutResponseComment.vue';
 import CalloutResponseCommentForm from './CalloutResponseCommentForm.vue';
 import { CommentFormData } from './calloutResponseComment.interface';
 import { Paginated } from '@beabee/beabee-common';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
@@ -62,9 +62,10 @@ async function refreshComments() {
     order: 'ASC',
     sort: 'createdAt',
   };
-  const paginatedComments = await fetchCalloutResponseComments(query);
-  comments.value = paginatedComments;
+  comments.value = await fetchCalloutResponseComments(query);
 }
+
+watch(toRef(props, 'responseId'), refreshComments);
 
 onBeforeMount(refreshComments);
 

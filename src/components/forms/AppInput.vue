@@ -39,7 +39,7 @@
   </div>
 
   <div v-if="infoMessage" class="mt-1.5 text-xs">
-    <InfoMessage :message="infoMessage" />
+    <AppInputHelp :message="infoMessage" />
   </div>
 </template>
 
@@ -48,7 +48,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import { email, helpers, requiredIf, sameAs, url } from '@vuelidate/validators';
-import InfoMessage from '../InfoMessage.vue';
+import AppInputHelp from './AppInputHelp.vue';
 import AppLabel from './AppLabel.vue';
 
 const emit = defineEmits(['update:modelValue']);

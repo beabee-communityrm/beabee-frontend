@@ -10,17 +10,6 @@ meta:
     <PageTitle :title="`${notice.name}`"></PageTitle>
     <div class="flex flex-col-reverse gap-8 lg:flex-row lg:justify-between">
       <div class="flex-initial basis-3/4">
-        <AppAlert v-if="wasJustCreated || wasJustUpdated" class="mb-8">
-          <template #icon>
-            <font-awesome-icon :icon="faMagic" />
-          </template>
-          {{
-            wasJustCreated
-              ? t('noticeAdminOverview.created')
-              : t('noticeAdminOverview.updated')
-          }}
-        </AppAlert>
-
         <AppHeading class="mb-4">
           {{ t('noticeAdminOverview.summary') }}
         </AppHeading>
@@ -60,7 +49,6 @@ meta:
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppAlert from '../../../../components/AppAlert.vue';
 import AppConfirmDialog from '../../../../components/AppConfirmDialog.vue';
 import AppHeading from '../../../../components/AppHeading.vue';
 import AppNotice from '../../../../components/AppNotice.vue';
@@ -70,10 +58,9 @@ import { GetNoticeData } from '../../../../utils/api/api.interface';
 import { deleteNotice, fetchNotice } from '../../../../utils/api/notice';
 import ItemStatus from '../../../../components/item/ItemStatusText.vue';
 import ItemDateRange from '../../../../components/item/ItemDateRange.vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { addBreadcrumb } from '../../../../store/breadcrumb';
 import {
-  faMagic,
   faPencilAlt,
   faSignHanging,
   faTrash,
@@ -84,10 +71,6 @@ const { t } = useI18n();
 
 const notice = ref<GetNoticeData | undefined>();
 const router = useRouter();
-
-const route = useRoute();
-const wasJustCreated = route.query.created !== undefined;
-const wasJustUpdated = route.query.updated !== undefined;
 
 addBreadcrumb(
   computed(() => [

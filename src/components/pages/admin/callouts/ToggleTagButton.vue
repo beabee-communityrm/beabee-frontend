@@ -17,9 +17,7 @@
         v-slot="{ item }"
         :items="tagItems"
         :selected-item-ids="selectedTags"
-        @click="
-          (item, selected) => $emit('toggle', (selected ? '-' : '+') + item.id)
-        "
+        @click="handleToggle"
       >
         <font-awesome-icon class="mr-2" :icon="faTag" />{{ item.label }}
       </AppSelectableList>
@@ -41,7 +39,9 @@ import { useI18n } from 'vue-i18n';
 import AppSelectableList from '../../../AppSelectableList.vue';
 import AppDropdownButton from '../../../button/AppDropdownButton.vue';
 
-defineEmits<{ (event: 'toggle', id: string): void }>();
+const emit = defineEmits<{
+  (event: 'toggle', id: string, successText: string): void;
+}>();
 defineProps<{
   tagItems: { id: string; label: string }[];
   selectedTags: string[];
@@ -50,4 +50,20 @@ defineProps<{
 }>();
 
 const { t } = useI18n();
+
+function handleToggle(item: unknown, selected: boolean) {
+  const tag = item as { id: string; label: string };
+  emit(
+    'toggle',
+    selected ? '-' + tag.id : '+' + tag.id,
+    t(
+      selected
+        ? 'calloutResponsePage.notifications.removedTag'
+        : 'calloutResponsePage.notifications.addedTag',
+      {
+        tag: tag.label,
+      }
+    )
+  );
+}
 </script>
