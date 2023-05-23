@@ -86,7 +86,7 @@ meta:
       :style="`background-image: url(${backgroundUrl})`"
     >
       <AuthBox>
-        <JoinForm :join-content="joinContent" @submit.prevent="" />
+        <JoinForm :join-content="joinContent" />
       </AuthBox>
     </div>
   </div>

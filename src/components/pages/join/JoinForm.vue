@@ -1,10 +1,10 @@
 <template>
   <JoinHeader v-if="!isEmbed" :title="joinContent.title" />
 
-  <form v-bind="$attrs">
+  <AppForm :button-text="buttonText" full-button @submit="onSubmit">
     <div
       v-if="!isEmbed"
-      class="content-message mb-3"
+      class="content-message mb-4"
       v-html="joinContent.subtitle"
     />
 
@@ -39,20 +39,24 @@
       v-model:email="signUpData.email"
       v-model:password="signUpData.password"
     />
+  </AppForm>
 
-    <MessageBox v-if="validation.$errors.length > 0" class="mb-2" />
-
-    <AppButton
-      :disabled="validation.$invalid"
-      :loading="loading"
-      variant="link"
-      type="submit"
-      class="mb-3 w-full"
-      >{{ buttonText }}</AppButton
-    >
-
-    <JoinFooter :privacy-link="generalContent.privacyLink" />
-  </form>
+  <p class="mt-6 mb-2 text-center text-xs">
+    {{ t('join.notice') }}
+    <a
+      class="text-link underline hover:text-primary"
+      :href="generalContent.privacyLink"
+      target="_blank"
+      rel="noreferrer"
+      >{{ t('join.privacy') }}</a
+    >.
+  </p>
+  <p class="text-center text-xs">
+    <a href="https://beabee.io" target="_blank">
+      <img class="inline" :src="beabeeLogo" width="30" />
+      {{ t('join.poweredBy') }}
+    </a>
+  </p>
 </template>
 <script lang="ts" setup>
 import { computed, toRef } from 'vue';
@@ -61,16 +65,18 @@ import useVuelidate from '@vuelidate/core';
 import { generalContent, isEmbed } from '../../../store';
 import { useJoin } from './use-join';
 import AccountSection from './AccountSection.vue';
-import JoinFooter from './JoinFooter.vue';
-import AppButton from '../../button/AppButton.vue';
 import Contribution from '../../contribution/Contribution.vue';
-import MessageBox from '../../MessageBox.vue';
 import AppSubHeading from '../../AppSubHeading.vue';
 import { JoinContent } from '../../../utils/api/api.interface';
 import JoinHeader from './JoinHeader.vue';
 import AppCheckbox from '../../forms/AppCheckbox.vue';
+import AppForm from '../../forms/AppForm.vue';
+import beabeeLogo from '../../../assets/images/beabee-logo.png';
 
-const props = defineProps<{ joinContent: JoinContent; loading?: boolean }>();
+const props = defineProps<{
+  joinContent: JoinContent;
+  onSubmit?: () => Promise<void>;
+}>();
 
 const { t } = useI18n();
 
@@ -82,5 +88,5 @@ const buttonText = computed(() => {
     : t('join.contribute', signUpDescription.value);
 });
 
-const validation = useVuelidate({ $stopPropagation: true });
+useVuelidate({ $stopPropagation: true });
 </script>

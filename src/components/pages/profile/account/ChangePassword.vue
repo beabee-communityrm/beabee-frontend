@@ -3,10 +3,6 @@
     {{ t('accountPage.loginDetail') }}
   </AppHeading>
 
-  <MessageBox v-if="saved" class="mb-4" type="success">{{
-    t('accountPage.savedPassword')
-  }}</MessageBox>
-
   <AppButton
     v-if="!showForm"
     variant="primaryOutlined"
@@ -21,6 +17,7 @@
 
   <AppForm
     v-else
+    :success-text="t('accountPage.savedPassword')"
     :button-text="t('form.saveChanges')"
     :reset-button-text="t('form.cancel')"
     @submit="handleFormSubmit"
@@ -53,7 +50,6 @@ import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { updateContact } from '../../../../utils/api/contact';
 import AppButton from '../../../button/AppButton.vue';
-import MessageBox from '../../../MessageBox.vue';
 import AppInput from '../../../forms/AppInput.vue';
 import AppHeading from '../../../AppHeading.vue';
 import AppForm from '../../../forms/AppForm.vue';
