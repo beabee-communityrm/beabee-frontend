@@ -171,7 +171,8 @@ const showChangePeriod = computed(
 const canSubmit = computed(
   () =>
     !isAutoActiveMember.value ||
-    props.modelValue.amount != newContribution.amount
+    props.modelValue.amount != newContribution.amount ||
+    props.modelValue.payFee != newContribution.payFee
 );
 
 async function handleCreate() {
