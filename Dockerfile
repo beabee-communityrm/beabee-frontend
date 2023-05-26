@@ -8,7 +8,7 @@ RUN npm ci
 COPY . ./
 RUN NODE_ENV=production npx vite build
 
-FROM nginx:1.23.3-alpine
+FROM nginx:1.24-alpine
 
 ARG REVISION
 
