@@ -150,6 +150,11 @@
     @apply hidden !important;
   }
 
+  /* Hide wizard pagination */
+  .pagination {
+    @apply hidden;
+  }
+
   /* Standard spacing for questions and flex to manipulate order */
   .formio-component-content,
   .form-group {
@@ -202,7 +207,7 @@
     @apply mb-0 border-0;
 
     & > .card-header {
-      @apply -mx-4 -mt-4 mb-4 border-b p-4;
+      @apply hidden;
     }
   }
 

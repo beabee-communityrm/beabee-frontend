@@ -1,35 +1,74 @@
 <template>
   <div>
-    <div class="mb-6">
-      <ul class="flex gap-4">
-        <li
-          v-for="(page, pageNo) in modelValue.components"
-          :key="page.key"
-          class="rounded p-4"
-          :class="
-            currentPageNo === pageNo
-              ? 'bg-white'
-              : 'cursor-pointer bg-primary-10 hover:bg-white'
-          "
-          @click="handleChangePage(pageNo)"
-        >
-          {{ page.title }}
-        </li>
-        <li>
-          <AppButton variant="primary" @click="handleAddPage">
-            {{ t('calloutBuilder.actions.addSlide') }}
-          </AppButton>
-        </li>
-      </ul>
+    <div class="flex gap-8">
+      <div class="max-w-2xl flex-1">
+        <ul class="mb-4 flex flex-wrap gap-4">
+          <li
+            v-for="(page, pageNo) in modelValue.components"
+            :key="page.key"
+            class="rounded p-4"
+            :class="
+              currentPageNo === pageNo
+                ? 'bg-white'
+                : 'cursor-pointer bg-primary-10 hover:bg-white'
+            "
+            @click="currentPageNo = pageNo"
+          >
+            {{ page.title }}
+          </li>
+          <li>
+            <AppButton variant="primary" @click="handleAddPage">
+              {{ t('calloutBuilder.actions.addSlide') }}
+            </AppButton>
+          </li>
+        </ul>
+        <div class="flex items-center justify-between bg-white p-4 shadow-md">
+          <AppHeading>{{ currentPage.title }}</AppHeading>
+          <div><AppButton variant="dangerOutlined" :icon="faTrash" /></div>
+        </div>
+      </div>
+      <div class="flex-initial basis-48" />
     </div>
 
-    <div class="callout-form-builder">
-      <FormBuilder
-        ref="formBuilderRef"
-        :form="modelValue"
-        :options="formOpts"
-        @change="handleChange"
-      />
+    <div class="min-h-[32rem]">
+      <div class="callout-form-builder">
+        <FormBuilder
+          ref="formBuilderRef"
+          :form="modelValue"
+          :options="formOpts"
+          @change="handleChange"
+        />
+      </div>
+      <div class="flex gap-8">
+        <section class="z-10 mb-6 max-w-2xl flex-1 bg-white p-4 pb-0 shadow-md">
+          <div class="mb-4 flex gap-4">
+            <div class="flex-1">
+              <div v-if="!isFirstPage">
+                <AppCheckbox
+                  v-model="prevButton"
+                  label="Show prev button"
+                  class="mb-2"
+                />
+                <AppInput v-if="prevButton" required />
+              </div>
+            </div>
+            <div class="flex-1">
+              <div v-if="isLastPage">
+                <AppInput label="Submit button text" required />
+              </div>
+              <div v-else>
+                <AppCheckbox
+                  v-model="nextButton"
+                  label="Show next button"
+                  class="mb-2"
+                />
+                <AppInput v-if="nextButton" required />
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="flex-initial basis-48"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -76,9 +115,13 @@ import {
   faUsd,
   faList,
   faPencil,
+  faSquarePlus,
+  faSquareMinus,
+  faDownload,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
-import { onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
 import { FormBuilder } from 'vue-formio';
 import { useI18n } from 'vue-i18n';
 
@@ -86,6 +129,9 @@ import AppButton from '../../../button/AppButton.vue';
 import { getPageSchema } from '../../../../utils/callouts';
 
 import 'formiojs/dist/formio.builder.css';
+import AppCheckbox from '../../../forms/AppCheckbox.vue';
+import AppInput from '../../../forms/AppInput.vue';
+import AppHeading from '../../../AppHeading.vue';
 
 const formOpts = { builder: { data: false, resource: false, premium: false } };
 
@@ -107,23 +153,57 @@ const props = defineProps<{ modelValue: CalloutFormSchema }>();
 
 const { t } = useI18n();
 
+interface PageNavigation {
+  showNextButton: boolean;
+  showPrevButton: boolean;
+  nextButtonText: string;
+  prevButtonText: string;
+}
+
 const formBuilderRef = ref<FormBuilderRef>();
 const currentPageNo = ref(0);
+const pagesNavigation: { [key: string]: PageNavigation } = reactive({});
+
+const nextButton = ref(true);
+const prevButton = ref(true);
+
+const currentPage = computed(
+  () => props.modelValue.components[currentPageNo.value]
+);
+const isFirstPage = computed(() => currentPageNo.value === 0);
+const isLastPage = computed(
+  () => currentPageNo.value === props.modelValue.components.length - 1
+);
 
 function handleChange() {
   if (!formBuilderRef.value) return; // Can't change without being loaded
+
   emit('update:modelValue', formBuilderRef.value.form);
+
+  const maxPageNo = formBuilderRef.value.form.components.length - 1;
+  if (currentPageNo.value > maxPageNo) {
+    currentPageNo.value = maxPageNo;
+  }
 }
 
-function handleChangePage(pageNo: number) {
-  if (!formBuilderRef.value) return; // Can't change without being loaded
-  formBuilderRef.value.builder.instance.setPage(pageNo);
-  currentPageNo.value = pageNo;
-}
+watch(currentPageNo, (newPageNo) => {
+  if (formBuilderRef.value) {
+    formBuilderRef.value.builder.instance.setPage(newPageNo);
+  }
+});
 
 function handleAddPage() {
   if (!formBuilderRef.value) return; // Can't change without being loaded
   const newPageNo = props.modelValue.components.length + 1;
+  const newPageSchema = getPageSchema(newPageNo);
+
+  pagesNavigation[newPageSchema.key] = {
+    showNextButton: true,
+    showPrevButton: true,
+    nextButtonText: 'Next',
+    prevButtonText: 'Prev',
+  };
+
   formBuilderRef.value.builder.instance.addPage({
     schema: getPageSchema(newPageNo),
   });
@@ -159,6 +239,7 @@ onBeforeMount(() => {
     faUsd,
     faList,
     faPencil,
+    faDownload,
 
     // Use different icon names so they match
     { ...faClock, iconName: 'clock-o' as IconName },
@@ -168,7 +249,9 @@ onBeforeMount(() => {
     { ...faTimesCircle, iconName: 'times-circle-o' as IconName },
     { ...faDotCircle, iconName: 'dot-circle-o' as IconName },
     { ...faArrowsAlt, iconName: 'arrows' },
-    { ...faTimes, iconName: 'remove' as IconName }
+    { ...faTimes, iconName: 'remove' as IconName },
+    { ...faSquarePlus, iconName: 'plus-square-o' as IconName },
+    { ...faSquareMinus, iconName: 'minus-square-o' as IconName }
   );
   // This will automatically replace all <i> tags with the icons above
   dom.watch();
@@ -193,7 +276,7 @@ onBeforeMount(() => {
   }
 
   .formcomponents {
-    @apply flex-initial basis-[12rem];
+    @apply h-0 flex-initial basis-48;
   }
 
   .formcomponent {

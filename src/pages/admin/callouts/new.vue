@@ -197,19 +197,7 @@ async function reset() {
   status.value = callout?.status;
 
   if (!steps.value.content.formSchema.components.length) {
-    const newPage = getPageSchema(1);
-    newPage.components.push({
-      type: 'button',
-      label: t('actions.submit'),
-      key: 'submit',
-      input: true,
-      size: 'md',
-      block: false,
-      action: 'submit',
-      disableOnInvalid: true,
-      theme: 'primary',
-    });
-    steps.value.content.formSchema.components.push(newPage);
+    steps.value.content.formSchema.components.push(getPageSchema(1));
   }
 }
 
