@@ -76,6 +76,11 @@ meta:
       <ActionButton :icon="faClone" @click="replicateThisCallout()">
         {{ t('actions.replicate') }}
       </ActionButton>
+      <ActionButton 
+        v-if="callout.status === ItemStatus.Open"
+        :icon="faHourglassEnd" @click="endThisCallout()">
+        {{ t('actions.endnow') }}
+      </ActionButton>
       <ActionButton :icon="faTrash" @click="showDeleteModal = true">
         {{ t('actions.delete') }}
       </ActionButton>
@@ -99,7 +104,7 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { GetCalloutDataWith } from '../../../../../utils/api/api.interface';
-import { deleteCallout } from '../../../../../utils/api/callout';
+import { deleteCallout, updateCallout } from '../../../../../utils/api/callout';
 import AppHeading from '../../../../../components/AppHeading.vue';
 import AppInfoList from '../../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../../components/AppInfoListItem.vue';
@@ -114,6 +119,7 @@ import {
   faPencilAlt,
   faReply,
   faTrash,
+  faHourglassEnd,
 } from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps<{
@@ -130,6 +136,21 @@ async function confirmDeleteCallout() {
   addNotification({
     title: t('calloutAdmin.deleted'),
     variant: 'error',
+  });
+  router.push({ path: '/admin/callouts' });
+}
+
+async function endThisCallout() {
+  const now = new Date()
+  const calloutData = {
+    ...props.callout,
+    status: undefined,
+    expires: now,
+  }
+  await updateCallout(props.callout.slug, calloutData);
+  addNotification({
+    title: t('calloutAdmin.ended'),
+    variant: 'success',
   });
   router.push({ path: '/admin/callouts' });
 }

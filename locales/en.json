@@ -17,6 +17,7 @@
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
+    "endnow": "End now",
     "export": "Export",
     "noBack": "No, go back",
     "participate": "Participate",
@@ -263,6 +264,7 @@
   },
   "calloutAdmin": {
     "deleted": "Callout deleted.",
+    "ended": "Callout ended. You can reopen it by editing it.",
     "overview": "Overview",
     "responses": "Responses"
   },
