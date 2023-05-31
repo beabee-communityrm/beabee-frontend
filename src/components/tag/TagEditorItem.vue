@@ -6,18 +6,17 @@
       </strong>
       <AppButtonGroup class="ml-auto">
         <AppButton
-          :icon="faPencil"
           size="sm"
-          variant="primaryOutlined"
+          variant="text"
           @click="formVisible = !formVisible"
-          >{{
-        }}</AppButton>
+          >{{ t('actions.edit') }}</AppButton
+        >
         <AppButton
-          variant="danger"
           size="sm"
-          :icon="faTrash"
+          variant="dangerText"
           @click="showDeleteModal = true"
         >
+          {{ t('actions.delete') }}
         </AppButton>
       </AppButtonGroup>
     </div>
