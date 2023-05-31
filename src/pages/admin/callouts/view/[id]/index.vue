@@ -76,9 +76,11 @@ meta:
       <ActionButton :icon="faClone" @click="replicateThisCallout()">
         {{ t('actions.replicate') }}
       </ActionButton>
-      <ActionButton 
+      <ActionButton
         v-if="callout.status === ItemStatus.Open"
-        :icon="faHourglassEnd" @click="endThisCallout()">
+        :icon="faHourglassEnd"
+        @click="endThisCallout()"
+      >
         {{ t('actions.endnow') }}
       </ActionButton>
       <ActionButton :icon="faTrash" @click="showDeleteModal = true">
@@ -141,12 +143,12 @@ async function confirmDeleteCallout() {
 }
 
 async function endThisCallout() {
-  const now = new Date()
+  const now = new Date();
   const calloutData = {
     ...props.callout,
     status: undefined,
     expires: now,
-  }
+  };
   await updateCallout(props.callout.slug, calloutData);
   addNotification({
     title: t('calloutAdmin.ended'),
