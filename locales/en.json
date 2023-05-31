@@ -5,6 +5,19 @@
     "deliveryAddress": "Delivery address",
     "deliveryOptIn": "Delivery opt-in",
     "loginDetail": "Login details",
+    "newsletter": {
+      "cantUpdate": "To change this contact's newsletter status, please contact support{'@'}beabee.io.",
+      "currentStatus": {
+        "cleaned": "This contact has been cleaned from your newsletter list, their email address is probably bouncing.",
+        "none": "This contact isn't subscribed to your newsletter list.",
+        "pending": "This contact has been sent an opt-in for your newsletter list, they must accept it to become subscribed.",
+        "subscribed": "This contact is subscribed to your newsletter list.",
+        "unsubscribed": "This contact isn't subscribed to your newsletter list."
+      },
+      "subscribe": "Subscribe them to the newsletter",
+      "title": "Newsletter",
+      "unsubscribe": "Unsubscribe them from the newsletter"
+    },
     "savedPassword": "New password saved",
     "subTitle": "Required fields are marked with an asterisk. All information submitted here is private.",
     "title": "Account"
@@ -17,6 +30,7 @@
     "continue": "Continue",
     "delete": "Delete",
     "edit": "Edit",
+    "endnow": "End now",
     "export": "Export",
     "noBack": "No, go back",
     "participate": "Participate",
@@ -263,6 +277,7 @@
   },
   "calloutAdmin": {
     "deleted": "Callout deleted.",
+    "ended": "Callout ended. You can reopen it by editing it.",
     "overview": "Overview",
     "responses": "Responses"
   },

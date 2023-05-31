@@ -5,6 +5,19 @@
     "deliveryAddress": "Adresse",
     "deliveryOptIn": "Postsendung",
     "loginDetail": "Anmeldedaten",
+    "newsletter": {
+      "cantUpdate": "Um den Newsletter-Status dieses Kontakts zu ändern, wende dich bitte an support{'@'}beabee.io.",
+      "currentStatus": {
+        "cleaned": "Dieser Kontakt wurde aus deiner Newsletter-Liste entfernt, die E-Mail-Adresse hat wahrscheinlich gebounct.",
+        "none": "Dieser Kontakt ist nicht für deine Newsletterliste angemeldet.",
+        "pending": "Dieser Kontakt hat ein Opt-in für Ihre Newsletter-Liste erhalten, das er akzeptieren muss, um sich anzumelden.",
+        "subscribed": "Dieser Kontakt ist für deine Newsletterliste angemeldet.",
+        "unsubscribed": "Dieser Kontakt ist nicht für deine Newsletterliste angemeldet."
+      },
+      "subscribe": "Für den Newsletter anmelden",
+      "title": "Newsletter",
+      "unsubscribe": "Vom Newsletter abmelden"
+    },
     "savedPassword": "Das neue Passwort wurde gespeichert.",
     "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt.",
     "title": "Account"
