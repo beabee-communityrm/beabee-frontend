@@ -5,6 +5,9 @@
     "deliveryAddress": "Adresse",
     "deliveryOptIn": "Postsendung",
     "loginDetail": "Anmeldedaten",
+    "newsletter": {
+      "currentStatus": {}
+    },
     "savedPassword": "Das neue Passwort wurde gespeichert.",
     "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt.",
     "title": "Account"
