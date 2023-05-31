@@ -24,13 +24,27 @@ export function getPageSchema(pageNo: number): NestableCalloutComponentSchema {
   };
 }
 
+export function getPageNavigationSchema() {
+  return {
+    showNext: true,
+    showPrev: true,
+    nextText: 'Next',
+    prevText: 'Prev',
+    submitText: 'Submit',
+  };
+}
+
 export function convertCalloutToSteps(
   callout?: GetCalloutDataWith<'form'>
 ): CalloutStepsProps {
   return {
     content: {
       introText: callout?.intro || '',
-      formSchema: callout?.formSchema || { display: 'wizard', components: [] },
+      formSchema: callout?.formSchema || {
+        display: 'wizard',
+        components: [],
+        navigation: [],
+      },
     },
     titleAndImage: {
       title: callout?.title || '',

@@ -23,7 +23,7 @@
           </li>
         </ul>
         <div class="flex items-center justify-between bg-white p-4 shadow-md">
-          <AppHeading>{{ currentPage.title }}</AppHeading>
+          <AppHeading>{{ currentPageComponents.title }}</AppHeading>
           <div><AppButton variant="dangerOutlined" :icon="faTrash" /></div>
         </div>
       </div>
@@ -31,38 +31,49 @@
     </div>
 
     <div class="min-h-[32rem]">
-      <div class="callout-form-builder">
-        <FormBuilder
-          ref="formBuilderRef"
-          :form="modelValue"
-          :options="formOpts"
-          @change="handleChange"
-        />
-      </div>
+      <FormBuilder
+        ref="formBuilderRef"
+        class="callout-form-builder"
+        :form="modelValue"
+        :options="formOpts"
+        @change="handleChange"
+      />
       <div class="flex gap-8">
         <section class="z-10 mb-6 max-w-2xl flex-1 bg-white p-4 pb-0 shadow-md">
           <div class="mb-4 flex gap-4">
             <div class="flex-1">
               <div v-if="!isFirstPage">
                 <AppCheckbox
-                  v-model="prevButton"
+                  v-model="currentPageNavigation.showPrev"
                   label="Show prev button"
                   class="mb-2"
                 />
-                <AppInput v-if="prevButton" required />
+                <AppInput
+                  v-if="currentPageNavigation.showPrev"
+                  v-model="currentPageNavigation.prevText"
+                  required
+                />
               </div>
             </div>
             <div class="flex-1">
               <div v-if="isLastPage">
-                <AppInput label="Submit button text" required />
+                <AppInput
+                  v-model="currentPageNavigation.submitText"
+                  label="Submit button text"
+                  required
+                />
               </div>
               <div v-else>
                 <AppCheckbox
-                  v-model="nextButton"
+                  v-model="currentPageNavigation.showNext"
                   label="Show next button"
                   class="mb-2"
                 />
-                <AppInput v-if="nextButton" required />
+                <AppInput
+                  v-if="currentPageNavigation.showNext"
+                  v-model="currentPageNavigation.nextText"
+                  required
+                />
               </div>
             </div>
           </div>
@@ -121,12 +132,15 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
-import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
+import { computed, onBeforeMount, ref, watch } from 'vue';
 import { FormBuilder } from 'vue-formio';
 import { useI18n } from 'vue-i18n';
 
 import AppButton from '../../../button/AppButton.vue';
-import { getPageSchema } from '../../../../utils/callouts';
+import {
+  getPageSchema,
+  getPageNavigationSchema,
+} from '../../../../utils/callouts';
 
 import 'formiojs/dist/formio.builder.css';
 import AppCheckbox from '../../../forms/AppCheckbox.vue';
@@ -146,30 +160,21 @@ interface FormBuilderRef {
   };
 }
 
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: CalloutFormSchema): void;
-}>();
 const props = defineProps<{ modelValue: CalloutFormSchema }>();
 
 const { t } = useI18n();
 
-interface PageNavigation {
-  showNextButton: boolean;
-  showPrevButton: boolean;
-  nextButtonText: string;
-  prevButtonText: string;
-}
-
 const formBuilderRef = ref<FormBuilderRef>();
+
 const currentPageNo = ref(0);
-const pagesNavigation: { [key: string]: PageNavigation } = reactive({});
 
-const nextButton = ref(true);
-const prevButton = ref(true);
-
-const currentPage = computed(
+const currentPageComponents = computed(
   () => props.modelValue.components[currentPageNo.value]
 );
+const currentPageNavigation = computed(
+  () => props.modelValue.navigation[currentPageNo.value]
+);
+
 const isFirstPage = computed(() => currentPageNo.value === 0);
 const isLastPage = computed(
   () => currentPageNo.value === props.modelValue.components.length - 1
@@ -178,7 +183,8 @@ const isLastPage = computed(
 function handleChange() {
   if (!formBuilderRef.value) return; // Can't change without being loaded
 
-  emit('update:modelValue', formBuilderRef.value.form);
+  // eslint-disable-next-line vue/no-mutating-props
+  props.modelValue.components = formBuilderRef.value.form.components;
 
   const maxPageNo = formBuilderRef.value.form.components.length - 1;
   if (currentPageNo.value > maxPageNo) {
@@ -195,14 +201,9 @@ watch(currentPageNo, (newPageNo) => {
 function handleAddPage() {
   if (!formBuilderRef.value) return; // Can't change without being loaded
   const newPageNo = props.modelValue.components.length + 1;
-  const newPageSchema = getPageSchema(newPageNo);
 
-  pagesNavigation[newPageSchema.key] = {
-    showNextButton: true,
-    showPrevButton: true,
-    nextButtonText: 'Next',
-    prevButtonText: 'Prev',
-  };
+  // eslint-disable-next-line vue/no-mutating-props
+  props.modelValue.navigation.push(getPageNavigationSchema());
 
   formBuilderRef.value.builder.instance.addPage({
     schema: getPageSchema(newPageNo),

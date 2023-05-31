@@ -151,7 +151,8 @@
   }
 
   /* Hide wizard pagination */
-  .pagination {
+  .pagination,
+  .formio-wizard-nav-container {
     @apply hidden;
   }
 

@@ -84,7 +84,7 @@ meta:
 
     <form
       v-if="showResponseForm"
-      class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg"
+      class="mt-10 border-t border-primary-40 pt-10 text-lg"
       :class="{ 'opacity-50': isFormReadOnly }"
       @submit.prevent
     >
@@ -101,8 +101,9 @@ meta:
       />
       <Form
         v-if="currentUserResponses /* Form.IO doesn't respect reactivity */"
+        class="callout-form"
         :form="callout.formSchema"
-        :submission="formSubmission"
+        :submission="currentUserLatestResponse"
         :options="formOpts"
         @submit="handleSubmitResponse as any"
       />
@@ -117,7 +118,7 @@ meta:
 </template>
 <script lang="ts" setup>
 import { Paginated, ItemStatus } from '@beabee/beabee-common';
-import { computed, onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, ref, watch } from 'vue';
 import { Form } from 'vue-formio';
 import { useI18n } from 'vue-i18n';
 import {
@@ -192,6 +193,9 @@ const isPreview = computed(
 const callout = ref<GetCalloutDataWith<'form'>>();
 const currentUserResponses =
   ref<Paginated<GetCalloutResponseDataWith<'answers'>>>();
+const currentPageNo = ref(0);
+
+watch();
 
 const guestName = ref('');
 const guestEmail = ref('');
@@ -240,7 +244,7 @@ const isFormReadOnly = computed(
       !callout.value?.allowMultiple)
 );
 
-const formSubmission = computed(() => {
+const currentUserLatestResponse = computed(() => {
   return !callout.value?.allowMultiple &&
     // Should use `hasResponded` but type narrowing fails
     !!currentUserResponses.value &&
@@ -252,12 +256,6 @@ const formSubmission = computed(() => {
 const formOpts = computed(() => ({
   readOnly: isFormReadOnly.value,
   noAlerts: true,
-  buttonSettings: {
-    showCancel: false,
-    showPrevious: false,
-    showNext: false,
-    showSubmit: false,
-  },
   hooks: {
     beforeSubmit: (submission: FormSubmission, next: () => void) => {
       if (isPreview.value) {
