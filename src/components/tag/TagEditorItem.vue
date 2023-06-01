@@ -42,7 +42,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { faPencil, faTag, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import {
