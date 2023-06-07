@@ -17,23 +17,14 @@
     </p>
 
     <div class="mt-3 flex flex-1 items-end justify-between md:flex-row">
-      <div v-if="'responseCount' in callout" class="flex-1">
-        <i18n-t
-          keypath="adminDashboard.responsesSoFar"
-          tag="p"
-          :plural="callout.responseCount"
-        >
-          <template #n>
-            <b>{{ callout.responseCount }}</b>
-          </template>
-        </i18n-t>
+      <div class="flex-1">
         <router-link
           :to="`/admin/callouts/view/${callout.slug}/responses`"
           class="relative z-10"
         >
-          <p class="text-sm font-semibold text-link">
+          <AppButton class="text-sm font-semibold">
             {{ t('adminDashboard.seeAllResponses') }}
-          </p>
+          </AppButton>
         </router-link>
       </div>
       <div class="text-sm font-semibold">
@@ -57,6 +48,7 @@ import env from './../../env';
 import ItemStatusText from '../item/ItemStatusText.vue';
 import ItemDateRange from '../item/ItemDateRange.vue';
 import AppSubHeading from '../AppSubHeading.vue';
+import AppButton from '../button/AppButton.vue';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
