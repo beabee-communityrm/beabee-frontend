@@ -14,6 +14,9 @@ meta:
         <template #total>
           <b>{{ n(totalResponses) }}</b>
         </template>
+        <template #bucket>
+          <b>{{ bucketName }}</b>
+        </template>
       </i18n-t>
       <AppButtonGroup>
         <AppButton
@@ -38,6 +41,7 @@ meta:
         />
       </AppButtonGroup>
     </div>
+
     <AppHeading class="mb-4">
       {{ t('calloutResponsesPage.responseNo', { no: n(response.number) }) }}
     </AppHeading>
@@ -57,10 +61,7 @@ meta:
       />
       <AppInfoListItem
         :name="t('calloutResponse.data.bucket')"
-        :value="
-          buckets.find((bucket) => bucket.id === response!.bucket)?.label ||
-          response.bucket
-        "
+        :value="bucketName"
       />
       <AppInfoListItem :name="t('calloutResponse.data.tags')">
         <AppTag v-for="tag in response.tags" :key="tag.id" :tag="tag.name" />
@@ -75,6 +76,7 @@ meta:
         </router-link>
       </AppInfoListItem>
     </AppInfoList>
+
     <div class="flex gap-2">
       <MoveBucketButton
         size="sm"
@@ -82,7 +84,7 @@ meta:
         :current-bucket="response.bucket"
         :disabled="doingAction"
         :loading="doingAction"
-        @move="(bucket) => handleUpdate({ bucket })"
+        @move="(bucket, successText) => handleUpdate({ bucket }, successText)"
       />
       <ToggleTagButton
         size="sm"
@@ -91,7 +93,9 @@ meta:
         :selected-tags="response.tags.map((t) => t.id)"
         :manage-url="`/admin/callouts/view/${callout.slug}/responses/tags`"
         :loading="doingAction"
-        @toggle="(tagId) => handleUpdate({ tags: [tagId] })"
+        @toggle="
+          (tagId, successText) => handleUpdate({ tags: [tagId] }, successText)
+        "
       />
       <SetAssigneeButton
         size="sm"
@@ -99,15 +103,33 @@ meta:
         :current-assignee-id="response.assignee?.id"
         :disabled="doingAction"
         :loading="doingAction"
-        @assign="(assigneeId) => handleUpdate({ assigneeId })"
+        @assign="
+          (assigneeId, successText) => handleUpdate({ assigneeId }, successText)
+        "
       />
+      <AppButton
+        type="button"
+        :icon="faPen"
+        size="sm"
+        variant="primaryOutlined"
+        @click="editMode = !editMode"
+      >
+        {{ t('calloutResponsePage.actions.editResponse') }}
+      </AppButton>
     </div>
     <div class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg">
+      <AppNotification
+        v-if="editMode"
+        variant="warning"
+        class="mb-6"
+        :title="t('calloutResponsePage.editMode')"
+      />
       <Form
-        :key="response.id /*Form doesn't respect reactivity */"
+        :key="response.id + editMode /* Form doesn't respect reactivity */"
         :form="callout.formSchema"
         :submission="{ data: response.answers }"
-        :options="{ readOnly: true }"
+        :options="{ readOnly: !editMode, noAlerts: true }"
+        @submit="handleEditResponse"
       />
     </div>
     <div>
@@ -118,6 +140,7 @@ meta:
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import {
+  CalloutResponseAnswers,
   GetCalloutDataWith,
   GetCalloutResponseData,
   GetCalloutResponseDataWith,
@@ -143,7 +166,13 @@ import {
 } from '../../../../../../utils/api/callout-response';
 import CalloutResponseComments from '../../../../../../components/callout/CalloutResponseComments.vue';
 import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
-import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCaretLeft,
+  faCaretRight,
+  faPen,
+} from '@fortawesome/free-solid-svg-icons';
+import { addNotification } from '../../../../../../store/notifications';
+import AppNotification from '../../../../../../components/AppNotification.vue';
 
 const props = defineProps<{
   rid: string;
@@ -173,15 +202,36 @@ const totalResponses = ref(0);
 
 const tagItems = ref<{ id: string; label: string }[]>([]);
 
+const editMode = ref(false);
 const doingAction = ref(false);
 
-async function handleUpdate(data: UpdateCalloutResponseData) {
+const bucketName = computed(() =>
+  response.value
+    ? buckets.value.find((bucket) => bucket.id === response.value?.bucket)
+        ?.label || response.value.bucket
+    : ''
+);
+
+async function handleUpdate(
+  data: UpdateCalloutResponseData,
+  successText: string
+) {
   if (!response.value) return;
 
   doingAction.value = true;
   await updateCalloutResponse(response.value.id, data);
   await refreshResponse();
+
+  addNotification({ variant: 'success', title: successText });
+
   doingAction.value = false;
+}
+
+async function handleEditResponse(submission: {
+  data: CalloutResponseAnswers;
+}) {
+  await handleUpdate({ answers: submission.data }, t('form.saved'));
+  editMode.value = false;
 }
 
 onBeforeMount(async () => {

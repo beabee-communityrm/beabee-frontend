@@ -16,13 +16,6 @@ meta:
     </div>
   </PageTitle>
 
-  <AppAlert v-if="wasJustDeleted" class="mb-8">
-    <template #icon>
-      <font-awesome-icon :icon="faMagic" />
-    </template>
-    {{ t('calloutAdmin.deleted') }}
-  </AppAlert>
-
   <div class="md:flex">
     <div class="hidden flex-none basis-[220px] lg:block">
       <AppVTabs v-model="currentStatus" :items="statusItems" />
@@ -54,7 +47,7 @@ meta:
         </template>
         <template #value-hidden="{ value }">
           <font-awesome-icon
-            :class="value ? 'text-body-80' : 'text-body-60'"
+            :class="value ? 'text-body-60' : 'text-body-80'"
             :icon="value ? faEyeSlash : faEye"
           />
         </template>
@@ -77,11 +70,9 @@ meta:
 import { Paginated } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute } from 'vue-router';
 import { Header } from '../../../components/table/table.interface';
 import AppButton from '../../../components/button/AppButton.vue';
 import PageTitle from '../../../components/PageTitle.vue';
-import AppAlert from '../../../components/AppAlert.vue';
 import AppItemStatus from '../../../components/AppItemStatus.vue';
 import {
   GetCalloutDataWith,
@@ -100,11 +91,9 @@ import {
   faBullhorn,
   faEye,
   faEyeSlash,
-  faMagic,
 } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
-const route = useRoute();
 
 addBreadcrumb(
   computed(() => [
@@ -115,8 +104,6 @@ addBreadcrumb(
     },
   ])
 );
-
-const wasJustDeleted = route.query.deleted !== undefined;
 
 const statusItems = [
   {
@@ -164,6 +151,7 @@ const headers: Header[] = [
   {
     value: 'responseCount',
     text: t('calloutsAdmin.data.responses'),
+    align: 'right',
   },
   {
     value: 'starts',

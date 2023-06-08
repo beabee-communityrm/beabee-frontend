@@ -5,6 +5,19 @@
     "deliveryAddress": "Adresse",
     "deliveryOptIn": "Postsendung",
     "loginDetail": "Anmeldedaten",
+    "newsletter": {
+      "cantUpdate": "Um den Newsletter-Status dieses Kontakts zu ändern, wende dich bitte an support{'@'}beabee.io.",
+      "currentStatus": {
+        "cleaned": "Dieser Kontakt wurde aus deiner Newsletter-Liste entfernt, die E-Mail-Adresse hat wahrscheinlich gebounct.",
+        "none": "Dieser Kontakt ist nicht für deine Newsletterliste angemeldet.",
+        "pending": "Dieser Kontakt hat ein Opt-in für Ihre Newsletter-Liste erhalten, das er akzeptieren muss, um sich anzumelden.",
+        "subscribed": "Dieser Kontakt ist für deine Newsletterliste angemeldet.",
+        "unsubscribed": "Dieser Kontakt ist nicht für deine Newsletterliste angemeldet."
+      },
+      "subscribe": "Für den Newsletter anmelden",
+      "title": "Newsletter",
+      "unsubscribe": "Vom Newsletter abmelden"
+    },
     "savedPassword": "Das neue Passwort wurde gespeichert.",
     "subTitle": "Alle benötigten Felder sind mit * markiert. Alle Informationen werden vertraulich behandelt.",
     "title": "Account"
@@ -162,6 +175,7 @@
     "addRule": "Filter hinzufügen",
     "button": "Filter",
     "createFilters": "Filter für die Suche erstellen",
+    "createdSegment": "Erstelltes Segment \"{segment}\"",
     "matchAfter": "der folgenden Filter enthalten",
     "matchBefore": "Ergebnisse sollen",
     "matchType": {
@@ -180,6 +194,10 @@
         "is_not_empty": "ist nicht leer"
       },
       "array": {
+        "contains": "enthält",
+        "not_contains": "enthält nicht"
+      },
+      "blob": {
         "contains": "enthält",
         "not_contains": "enthält nicht"
       },
@@ -233,7 +251,8 @@
       "title": "Segment speichern",
       "updateSegment": "Segment aktualisieren"
     },
-    "selectFilter": "Filter auswählen"
+    "selectFilter": "Filter auswählen",
+    "updatedSegment": "Aktualisiertes Segment \"{segment}\""
   },
   "callout": {
     "contactDetails": "Kontaktdaten",
@@ -301,6 +320,7 @@
   },
   "calloutResponse": {
     "data": {
+      "answers": "Anworten",
       "assignee": "Zugewiesen an",
       "bucket": "Ordner",
       "callout": "Callout",
@@ -334,11 +354,20 @@
   "calloutResponsePage": {
     "actions": {
       "assignTo": "Zuweisen",
+      "editResponse": "Antwort bearbeiten",
       "moveBucket": "Antwort verschieben",
       "toggleTag": "Tag hinzufügen / entfernen"
     },
+    "editMode": "Vorsicht, du befindest dich im Bearbeitungsmodus!",
     "manageTags": "Tags bearbeiten",
-    "responseOf": "Antwort {no} von {total}",
+    "notifications": {
+      "addedAssignee": "\"{assignee}\" zugewiesen",
+      "addedTag": "Tag \"{tag}\" hinzugefügt",
+      "movedToBucket": "Verschoben in {bucket}",
+      "removedAssignee": "Nicht mehr \"{assignee}\" zugewiesen",
+      "removedTag": "Tag \"{tag}\" entfernt"
+    },
+    "responseOf": "Antwort {no} von {total} in {bucket}",
     "selectedCount": "{n} Antwort ausgewählt | {n} Antworten ausgewählt"
   },
   "calloutResponsesPage": {
@@ -435,8 +464,15 @@
     "yes": "Ja"
   },
   "contactContribution": {
-    "confirmCancel": {},
-    "editNotice": "Der Beitrag kann aktuell nur bei manuell zahlenden Mitgliedern geändert werden."
+    "confirmCancel": {
+      "confirm": "Ja, Mitgliedschaft kündigen",
+      "text": "Bist du sicher, dass du die Mitgliedschaft dieses Kontakts kündigen willst? Das kann nicht rückgängig gemacht werden. ",
+      "title": "Mitgliedschaft kündigen?"
+    },
+    "updateNotice": {
+      "text": "Du kannst den Beitrag eines Kontakts derzeit nicht aktualisieren. Wende dich an support{'@'}beabee.io, um Unterstützung zu erhalten.",
+      "title": "Derzeit nicht verfügbar"
+    }
   },
   "contactOverview": {
     "about": "Über",
@@ -445,6 +481,7 @@
       "copy": "<p>Alle hier eingegebenen Information sind <strong>nur für Administratoren sichtbar</strong>.\nNutzer bekommen das nicht angezeigt.</p>\n"
     },
     "callouts": "Callouts",
+    "cancellationDate": "Gekündigt am",
     "contribution": "Beitrag",
     "contributionType": "Zahlungsart",
     "information": "Information",
@@ -508,6 +545,7 @@
     "showingOf": "{start} to {end} von {total} Kontakten werden angezeigt."
   },
   "contribution": {
+    "adminCancelDescription": "Wenn du die Mitgliedschaft des Kontakts kündigst, endet sie am Ende des aktuellen Zahlungszyklus am {date}.",
     "bankAccount": "Bankverbindung",
     "billing": "Zahlungsart",
     "cancelContribution": "Mitgliedschaft kündigen",
@@ -618,6 +656,53 @@
         "description": "Mailchimp-Synchronisation einrichten",
         "title": "Mailchimp-Synchronisation"
       },
+      "settings": {
+        "description": "Entscheide unter anderem, wer deinen Callout sehen kann.",
+        "inputs": {
+          "anonymous": {
+            "help": "<p>Wenn du <strong>anonyme Antworten</strong> erlaubst, werden Teilenehmer nicht nach ihren Kontaktdaten gefragt.</p>\n",
+            "label": "Sollen Gastteilnehmer nach Kontaktdaten gefragt werden?",
+            "opts": {
+              "all": "Alle Antworten sollen anonym sein, auch bei eingeloggten Teilnehmern.",
+              "guests": "Nein, Gastteilnehmer können sollen anonym antworten können.",
+              "none": "Ja, nach Kontaktdaten fragen."
+            }
+          },
+          "editable": {
+            "help": "<p>Wenn ja, können Teilnehmende <strong>ihre abgeschickten Antworten bearbeiten</strong>, solange der Callout aktiv ist.</p>\n",
+            "label": "Sollen Teilnehmende ihre Antworten bearbeiten können, solange der Callout aktiv ist?",
+            "opts": {
+              "no": "Nein, Antworten sind final",
+              "yes": "Ja"
+            }
+          },
+          "multiple": {
+            "help": "<p>Wenn ja, können eingeloggte Nutzer <strong>mehrfach</strong> am Callout teilnehmen.</p>\n",
+            "label": "Sollen Nutzer mehrfach teilnehmen können?",
+            "opts": {
+              "no": "Nein, nur eine Teilnahme",
+              "yes": "Ja"
+            }
+          },
+          "visible": {
+            "help": "<p>Du kannst den Callout <strong>nicht anzeigen</strong> lassen. Dann ist er nur über den Link erreichbar.</p>\n",
+            "label": "Soll der Callout deinen Mitgliedern im Dashboard angezeigt werden?",
+            "opts": {
+              "no": "Nein, Callout nicht im Dashboard anzeigen.",
+              "yes": "Ja, Callout im Dashboard anzeigen."
+            }
+          },
+          "who": {
+            "help": "<p>Callouts können für <strong>Alle</strong> oder nur für <strong>Mitglieder</strong> zugänglich sein.</p>\n",
+            "label": "Wer kann teilnehmen?",
+            "opts": {
+              "everyone": "Alle",
+              "members": "Nur Mitglieder"
+            }
+          }
+        },
+        "title": "Einstellungen"
+      },
       "titleAndImage": {
         "description": "Gib deinem Callout einen Titel, eine Beschreibung und ein Bild.",
         "inputs": {
@@ -663,44 +748,6 @@
         },
         "title": "Titel und Bild",
         "urlWillBe": "Der Permalink wird so aussehen"
-      },
-      "visibility": {
-        "description": "Entscheide, wer den Callout sehen und wer daran teilnehmen kann.",
-        "inputs": {
-          "anonymous": {
-            "help": "<p>Wenn du <strong>anonyme Antworten</strong> erlaubst, werden Nicht-Mitglieder nicht nach ihren Kontaktdaten gefragt.</p>\n",
-            "label": "Sollen Nicht-Mitglieder anonym antworten können?",
-            "opts": {
-              "no": "Nein, alle müssen ihre Kontaktinformationen eingeben.",
-              "yes": "Ja, niemand muss seine Kontaktdaten eingeben."
-            }
-          },
-          "editable": {
-            "help": "<p>Wenn ja, können Teilnehmende <strong>ihre abgeschickten Antworten bearbeiten</strong>, solange der Callout aktiv ist.</p>\n",
-            "label": "Sollen Teilnehmende ihre Antworten bearbeiten können, solange der Callout aktiv ist?",
-            "opts": {
-              "no": "Nein, Antworten sind final",
-              "yes": "Ja"
-            }
-          },
-          "visible": {
-            "help": "<p>Du kannst den Callout <strong>nicht anzeigen</strong> lassen. Dann ist er nur über den Link erreichbar.</p>\n",
-            "label": "Soll der Callout deinen Mitgliedern im Dashboard angezeigt werden?",
-            "opts": {
-              "no": "Nein, Callout nicht im Dashboard anzeigen.",
-              "yes": "Ja, Callout im Dashboard anzeigen."
-            }
-          },
-          "who": {
-            "help": "<p>Callouts können für <strong>Alle</strong> oder nur für <strong>Mitglieder</strong> zugänglich sein.</p>\n",
-            "label": "Wer kann teilnehmen?",
-            "opts": {
-              "everyone": "Alle",
-              "members": "Nur Mitglieder"
-            }
-          }
-        },
-        "title": "Sichtbarkeitseinstellungen"
       }
     },
     "title": "Callout anlegen",
@@ -827,7 +874,6 @@
     "manageYourContribution": "Beitrag ändern",
     "newCallout": "Neuer Callout!",
     "openCallouts": "Aktuelle Callouts",
-    "passwordReset": "Ihr Passwort wurde aktualisiert.",
     "quickActions": "Schnellaktionen",
     "title": "Home",
     "viewAllCallouts": "Alle Callouts anzeigen",
@@ -982,8 +1028,7 @@
     "showingOf": "Hinweise {start} bis {end} von {total} werden angezeigt."
   },
   "notification": {
-    "error": "Da ist etwas schiefgelaufen!",
-    "success": "Sehr gut! Das hat funktioniert."
+    "error": "Da ist etwas schiefgelaufen!"
   },
   "pageTitle": {
     "confirmEmail": "E-Mail-Adresse bestätigen",
@@ -1022,10 +1067,12 @@
     "changePassword": "Passwort ändern",
     "confirmPassword": "Passwort bestätigen",
     "description": "Neues Passwort eingeben, um fortzufahren.",
-    "error": "Das Zurücksetzen des Passworts ist schiefgelaufen. Der Link scheint abgelaufen zu sein. Sie können {newLink}.",
     "errorLink": "einen neuen Link anfordern",
+    "errorText": "Der Link scheint abgelaufen zu sein. Sie können {newLink}.",
+    "errorTitle": "Das Zurücksetzen des Passworts ist schiefgelaufen",
     "login": "Einloggen",
     "newPassword": "Neues Passwort",
+    "success": "Ihr Passwort wurde aktualisiert.",
     "title": "Passwort aktualisieren?"
   },
   "roleEditor": {

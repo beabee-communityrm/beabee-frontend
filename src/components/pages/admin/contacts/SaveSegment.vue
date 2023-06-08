@@ -37,9 +37,9 @@
       </div>
       <AppButton
         class="w-full"
+        type="submit"
         :disabled="validation.$invalid"
         :loading="isSaving"
-        @click="handleSubmit"
       >
         {{
           shouldUpdate
@@ -66,6 +66,7 @@ import AppModal from '../../../AppModal.vue';
 import AppButton from '../../../button/AppButton.vue';
 import AppInput from '../../../forms/AppInput.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
+import { addNotification } from '../../../../store/notifications';
 
 const emit = defineEmits(['saved']);
 const props = defineProps<{
@@ -98,10 +99,18 @@ async function handleSubmit() {
     segment = await updateSegment(props.segment.id, {
       ruleGroup: props.rules,
     });
+    addNotification({
+      variant: 'success',
+      title: t('advancedSearch.updatedSegment', { segment: segment.name }),
+    });
   } else {
     segment = await createSegment({
       name: newSegmentName.value,
       ruleGroup: props.rules,
+    });
+    addNotification({
+      variant: 'success',
+      title: t('advancedSearch.createdSegment', { segment: segment.name }),
     });
   }
 
