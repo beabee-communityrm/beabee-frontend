@@ -409,13 +409,10 @@ export interface CreateApiKeyData {
 }
 
 export interface GetApiKeyData {
-  description: string;
-  joined: Date;
   id: string;
-}
-
-export interface GetTokenData {
-  token: string;
+  description: string;
+  creator: GetContactData;
+  createdAt: Date;
 }
 
 export type GetApiKeysQuery = PaginatedQuery; // TODO: contrain fields
