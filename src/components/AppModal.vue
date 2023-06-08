@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <div
-      class="fixed inset-0 z-50 flex h-full items-center justify-center bg-black bg-opacity-50 p-4"
+      class="fixed inset-0 z-40 flex h-full items-center justify-center bg-black bg-opacity-50 p-4"
       :class="{ hidden: !open }"
     >
       <div
