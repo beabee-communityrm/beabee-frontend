@@ -96,20 +96,14 @@
   "adminSettings": {
     "apikey": {
       "confirmCreate": {
-        "text": "Bitte speichern Sie den folgenden Token. Er kann später NICHT wieder angezeigt werden:",
+        "text": "Bitte speichern Sie den folgenden Token. Er kann später NICHT wieder angezeigt werden.",
         "title": "API Key erfolgreich erstellt"
       },
       "confirmDelete": {
-        "text": "Sind Sie sicher, dass Sie diesen API Key löschen wollen?",
         "title": "API Key löschen?"
       },
-      "createdAt": "Erstellt",
-      "description": "Beschreibung",
-      "generate": "API Key generieren",
-      "id": "ID",
       "label": "API Keys",
-      "showingOf": "API Keys {start} bis {end} von {total} werden angezeigt.",
-      "token": "Token"
+      "showingOf": "API Keys {start} bis {end} von {total} werden angezeigt."
     },
     "email": {
       "fromEmail": "E-Mail-Adresse",
@@ -253,6 +247,13 @@
     },
     "selectFilter": "Filter auswählen",
     "updatedSegment": "Aktualisiertes Segment \"{segment}\""
+  },
+  "apiKey": {
+    "data": {
+      "createdAt": "Erstellt",
+      "description": "Beschreibung",
+      "token": "Token"
+    }
   },
   "callout": {
     "contactDetails": "Kontaktdaten",
