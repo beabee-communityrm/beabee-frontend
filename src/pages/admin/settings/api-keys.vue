@@ -71,7 +71,9 @@ meta:
 
   <div class="grid md:grid-cols-2 md:gap-12 lg:grid-cols-3">
     <div>
-      <AppHeading>{{ t('adminSettings.apikey.create') }}</AppHeading>
+      <AppHeading class="mb-2">
+        {{ t('adminSettings.apikey.create') }}
+      </AppHeading>
       <AppForm :button-text="t('actions.create')" @submit="generateApiKey">
         <div class="mb-4">
           <AppInput
