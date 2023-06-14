@@ -7,6 +7,8 @@ import router from './lib/router';
 
 import './lib/theme';
 
+import 'iframe-resizer/js/iframeResizer.contentWindow';
+
 import './index.css';
 
 // fontawesome icons imports
