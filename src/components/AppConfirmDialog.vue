@@ -10,7 +10,12 @@
     </div>
 
     <footer class="text-center">
-      <AppButton class="mr-4" variant="primaryOutlined" @click="$emit('close')">
+      <AppButton
+        v-if="cancel"
+        class="mr-4"
+        variant="primaryOutlined"
+        @click="$emit('close')"
+      >
         {{ cancel }}
       </AppButton>
       <AppButton
@@ -33,7 +38,7 @@ const props = defineProps<{
   open: boolean;
   variant?: 'danger';
   confirm: string;
-  cancel: string;
+  cancel?: string | undefined;
   title: string;
   onConfirm?: () => Promise<void> | void;
 }>();
