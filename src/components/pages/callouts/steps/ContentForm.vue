@@ -38,45 +38,13 @@
         @change="handleChange"
       />
       <div class="flex gap-8">
-        <section class="z-10 mb-6 max-w-2xl flex-1 bg-white p-4 pb-0 shadow-md">
-          <div class="mb-4 flex gap-4">
-            <div class="flex-1">
-              <div v-if="!isFirstPage">
-                <AppCheckbox
-                  v-model="currentPageNavigation.showPrev"
-                  label="Show prev button"
-                  class="mb-2"
-                />
-                <AppInput
-                  v-if="currentPageNavigation.showPrev"
-                  v-model="currentPageNavigation.prevText"
-                  required
-                />
-              </div>
-            </div>
-            <div class="flex-1">
-              <div v-if="isLastPage">
-                <AppInput
-                  v-model="currentPageNavigation.submitText"
-                  label="Submit button text"
-                  required
-                />
-              </div>
-              <div v-else>
-                <AppCheckbox
-                  v-model="currentPageNavigation.showNext"
-                  label="Show next button"
-                  class="mb-2"
-                />
-                <AppInput
-                  v-if="currentPageNavigation.showNext"
-                  v-model="currentPageNavigation.nextText"
-                  required
-                />
-              </div>
-            </div>
-          </div>
-        </section>
+        <div class="z-10 max-w-2xl flex-1 bg-white p-4 pb-0 shadow-md">
+          <ContentFormNavigation
+            v-model="currentPageNavigation"
+            :is-first="isFirstPage"
+            :is-last="isLastPage"
+          />
+        </div>
         <div class="flex-initial basis-48"></div>
       </div>
     </div>
@@ -92,11 +60,10 @@ import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import AppButton from '../../../button/AppButton.vue';
-import AppCheckbox from '../../../forms/AppCheckbox.vue';
-import AppInput from '../../../forms/AppInput.vue';
 import AppHeading from '../../../AppHeading.vue';
 import ContentFormBuilder from './ContentFormBuilder.vue';
 import { getPageNavigationSchema } from '../../../../utils/callouts';
+import ContentFormNavigation from './ContentFormNavigation.vue';
 
 const props = defineProps<{ modelValue: CalloutFormSchema }>();
 
