@@ -96,20 +96,17 @@
   "adminSettings": {
     "apikey": {
       "confirmCreate": {
-        "text": "Bitte speichere den folgenden Token. Er kann später NICHT wieder angezeigt werden:",
+        "text": "Bitte speichere den folgenden Token. Er kann später NICHT wieder angezeigt werden.",
         "title": "API Key erfolgreich erstellt"
       },
       "confirmDelete": {
-        "text": "Bist du sicher, dass du diesen API Key löschen willst`",
+        "text": "Das kann nicht rückgängig gemacht werden. Alles, was diesen API Key verwendet, wird nicht mehr funktionieren.",
         "title": "API Key löschen?"
       },
-      "createdAt": "Erstellt",
-      "description": "Beschreibung",
-      "generate": "API Key generieren",
-      "id": "ID",
+      "copied": "API Key in die Zwischenablage kopiert",
+      "create": "Neuen API Key erstellen",
       "label": "API Keys",
-      "showingOf": "API Keys {start} bis {end} von {total} werden angezeigt.",
-      "token": "Token"
+      "showingOf": "API Keys {start} bis {end} von {total} werden angezeigt."
     },
     "email": {
       "fromEmail": "E-Mail-Adresse",
@@ -254,6 +251,13 @@
     "selectFilter": "Filter auswählen",
     "updatedSegment": "Aktualisiertes Segment \"{segment}\""
   },
+  "apiKey": {
+    "data": {
+      "createdAt": "Erstellt",
+      "description": "Beschreibung",
+      "token": "Token"
+    }
+  },
   "callout": {
     "contactDetails": "Kontaktdaten",
     "form": {
@@ -276,6 +280,7 @@
   },
   "calloutAdmin": {
     "deleted": "Callout gelöscht",
+    "ended": "Dieser Callout ist beendet. Du kannst ihn wieder öffnen, indem du ihn bearbeiten.",
     "overview": "Überblick",
     "responses": "Antworten"
   },
