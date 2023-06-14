@@ -1,4 +1,4 @@
-FROM node:16.18-alpine as builder
+FROM node:16.20-alpine as builder
 
 WORKDIR /opt/beabee-frontend
 

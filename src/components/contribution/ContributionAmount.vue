@@ -1,10 +1,12 @@
 <template>
-  <div class="grid grid-cols-12 gap-x-2 font-bold">
+  <div class="flex flex-wrap gap-x-2 gap-y-4">
     <label
-      class="col-span-12 flex items-center overflow-hidden rounded border border-primary-40 text-sm md:col-span-8"
+      class="flex flex-grow basis-[250px] items-center overflow-hidden rounded border border-primary-40 text-sm"
       :class="hasError ? 'border-danger bg-danger-10' : 'bg-white'"
     >
-      <div class="flex flex-1 items-baseline overflow-hidden px-6 py-3">
+      <div
+        class="flex flex-1 items-baseline overflow-hidden px-6 py-3 font-bold"
+      >
         <span class="text-body-60">{{ generalContent.currencySymbol }}</span>
         <div class="relative mx-1 overflow-hidden">
           <div class="text-6xl font-semibold">
@@ -25,7 +27,7 @@
         <div class="whitespace-nowrap text-body-60">/ {{ period }}</div>
       </div>
 
-      <div class="flex h-full flex-none flex-col text-sm">
+      <div class="flex h-full flex-none flex-col">
         <button
           class="amount-button border-l border-b"
           type="button"
@@ -46,17 +48,17 @@
     </label>
 
     <div
-      class="col-span-12 my-6 grid grid-cols-3 overflow-hidden md:col-span-4 md:my-0 md:grid-cols-1"
+      class="flex flex-grow basis-[120px] flex-wrap overflow-hidden rounded p-[1px]"
     >
       <button
         v-for="(definedAmount, index) in definedAmounts"
         :key="index"
         type="button"
-        class="border-box flex items-center justify-center border border-primary-40 bg-white p-3 text-sm font-semibold first:rounded-l first:border-r-0 last:rounded-r last:rounded-l-none last:border-l-0 last:border-t md:p-2 md:first:rounded-t md:first:rounded-bl-none md:first:border-r md:first:border-b-0 md:last:rounded-b md:last:rounded-tr-none md:last:border-t-0 md:last:border-l"
+        class="flex-grow basis-[90px] bg-white p-2 text-sm font-semibold outline outline-1 outline-primary-40"
         :class="
           definedAmount === amount
-            ? '!border-link-110 bg-link font-bold !text-white'
-            : 'hover:border-link hover:bg-link-10'
+            ? 'z-20 bg-link font-bold text-white !outline-link-110'
+            : 'hover:z-10 hover:bg-link-10 hover:outline-link'
         "
         @click="changeAmount(definedAmount)"
       >
