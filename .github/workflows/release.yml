@@ -22,6 +22,8 @@ jobs:
       - id: meta
         uses: docker/metadata-action@v4
         with:
+          flavor: |
+            latest=false
           images: ${{ secrets.DOCKER_ORGANISATION }}/frontend
           tags: |
             type=ref,event=tag
@@ -41,7 +43,7 @@ jobs:
           build-args: |
             REVISION=${{ github.sha }}
 
-  deploy:
+  release:
     runs-on: ubuntu-latest
     needs: [push]
     steps:
