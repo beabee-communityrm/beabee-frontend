@@ -63,10 +63,6 @@
 .callout-form,
 .callout-form-builder .formarea,
 .formio-dialog {
-  .formio-form {
-    @apply bg-white p-4 shadow-md;
-  }
-
   /* Input styling */
   .form-control {
     @apply w-full rounded border border-primary-40 bg-white p-2 focus:shadow-input focus:outline-none;
@@ -145,6 +141,9 @@
 .callout-form,
 .callout-form-builder .formarea,
 .formio-dialog .preview-panel {
+  .formio-form {
+    @apply bg-white p-4 shadow-md;
+  }
   /* Hide hidden controls */
   .formio-hidden {
     @apply hidden !important;

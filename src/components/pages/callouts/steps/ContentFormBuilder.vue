@@ -214,10 +214,10 @@ onBeforeMount(() => {
 }
 
 .formio-dialog {
-  @apply font-body text-sm text-body !important;
+  @apply flex items-center justify-center font-body text-sm text-body !important;
 
   .formio-dialog-content {
-    @apply bg-white !important;
+    @apply max-w-[70rem] bg-white !important;
   }
 
   .nav {
@@ -293,6 +293,10 @@ onBeforeMount(() => {
     @apply bg-white;
   }
 
+  .component-edit-container {
+    @apply overflow-auto;
+  }
+
   /* Hide first row (contains a header and link to help) */
   .component-edit-container > .row:first-child {
     @apply hidden;
@@ -345,6 +349,7 @@ onBeforeMount(() => {
   .formio-component-encrypted,
   .formio-component-clearOnHide,
   .formio-component-shortcutButtons,
+  .formio-component-dataType,
   .formio-component-validateOn {
     @apply hidden;
   }
