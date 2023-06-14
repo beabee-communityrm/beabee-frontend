@@ -50,8 +50,13 @@ import {
   faSquareMinus,
   faDownload,
 } from '@fortawesome/free-solid-svg-icons';
-import { dom, library } from '@fortawesome/fontawesome-svg-core';
-import { onBeforeMount, ref } from 'vue';
+import {
+  config,
+  dom,
+  library,
+  noAuto,
+} from '@fortawesome/fontawesome-svg-core';
+import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
 import {
   CalloutComponentSchema,
   CalloutFormSchema,
@@ -81,7 +86,7 @@ const props = defineProps<{
   form: CalloutFormSchema;
 }>();
 
-const formBuilderRef = ref<FormBuilderRef>();
+const formBuilderRef = ref<FormBuilderRef | null>(null);
 
 function handleChange() {
   if (!formBuilderRef.value) return; // Can't change without being loaded
@@ -149,7 +154,12 @@ onBeforeMount(() => {
     { ...faSquareMinus, iconName: 'minus-square-o' as IconName }
   );
   // This will automatically replace all <i> tags with the icons above
+  config.autoReplaceSvg = 'nest';
   dom.watch();
+});
+
+onBeforeUnmount(() => {
+  noAuto();
 });
 </script>
 
