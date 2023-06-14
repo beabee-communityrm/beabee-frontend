@@ -31,7 +31,13 @@
               required
             />
           </div>
-          <div><AppButton variant="dangerOutlined" :icon="faTrash" /></div>
+          <div>
+            <AppButton
+              variant="dangerOutlined"
+              :icon="faTrash"
+              @click="handleDeletePage"
+            />
+          </div>
         </div>
       </div>
       <div class="flex-initial basis-48" />
@@ -119,5 +125,14 @@ function handleAddPage() {
   // eslint-disable-next-line vue/no-mutating-props
   props.modelValue.navigation.push(getPageNavigationSchema());
   currentPageNo.value = props.modelValue.navigation.length - 1;
+}
+
+function handleDeletePage() {
+  // eslint-disable-next-line vue/no-mutating-props
+  props.modelValue.navigation.splice(currentPageNo.value, 1);
+
+  // eslint-disable-next-line vue/no-mutating-props
+  props.modelValue.components.splice(currentPageNo.value, 1);
+  handleChange(props.modelValue.components); // Check current page number
 }
 </script>
