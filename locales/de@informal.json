@@ -100,8 +100,11 @@
         "title": "API Key erfolgreich erstellt"
       },
       "confirmDelete": {
+        "text": "Das kann nicht rückgängig gemacht werden. Alles, was diesen API Key verwendet, wird nicht mehr funktionieren.",
         "title": "API Key löschen?"
       },
+      "copied": "API Key in die Zwischenablage kopiert",
+      "create": "Neuen API Key erstellen",
       "label": "API Keys",
       "showingOf": "API Keys {start} bis {end} von {total} werden angezeigt."
     },
