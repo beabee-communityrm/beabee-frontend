@@ -29,10 +29,10 @@ export function getPageNavigationSchema() {
   return {
     showNext: true,
     showPrev: true,
-    nextText: 'Next',
-    prevText: 'Prev',
+    nextText: t('actions.next'),
+    prevText: t('actions.back'),
     nextSlideId: '',
-    submitText: 'Submit',
+    submitText: t('actions.submit'),
   };
 }
 

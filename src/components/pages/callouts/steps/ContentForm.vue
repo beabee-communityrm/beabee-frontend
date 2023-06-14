@@ -23,8 +23,14 @@
           </li>
         </ul>
 
-        <div class="flex items-center justify-between bg-white p-4 shadow-md">
-          <AppHeading>{{ currentPageComponent.title }}</AppHeading>
+        <div class="flex items-start justify-between bg-white p-4 shadow-md">
+          <div>
+            <AppInput
+              v-model="currentPageComponent.title"
+              :label="t('calloutBuilder.internalTitle')"
+              required
+            />
+          </div>
           <div><AppButton variant="dangerOutlined" :icon="faTrash" /></div>
         </div>
       </div>
@@ -43,6 +49,7 @@
             v-model="currentPageNavigation"
             :is-first="isFirstPage"
             :is-last="isLastPage"
+            :page-items="otherPageItems"
           />
         </div>
         <div class="flex-initial basis-48"></div>
@@ -60,10 +67,10 @@ import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import AppButton from '../../../button/AppButton.vue';
-import AppHeading from '../../../AppHeading.vue';
 import ContentFormBuilder from './ContentFormBuilder.vue';
 import { getPageNavigationSchema } from '../../../../utils/callouts';
 import ContentFormNavigation from './ContentFormNavigation.vue';
+import AppInput from '../../../forms/AppInput.vue';
 
 const props = defineProps<{ modelValue: CalloutFormSchema }>();
 
@@ -72,6 +79,12 @@ const { t } = useI18n();
 const currentPageNo = ref(0);
 const formBuilderRef = ref<InstanceType<typeof ContentFormBuilder> | null>(
   null
+);
+
+const otherPageItems = computed(() =>
+  props.modelValue.components
+    .filter((c) => c.id !== currentPageComponent.value.id)
+    .map((c) => ({ id: c.id, label: c.title }))
 );
 
 const currentPageComponent = computed(
