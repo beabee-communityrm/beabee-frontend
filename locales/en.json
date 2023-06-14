@@ -5,6 +5,19 @@
     "deliveryAddress": "Delivery address",
     "deliveryOptIn": "Delivery opt-in",
     "loginDetail": "Login details",
+    "newsletter": {
+      "cantUpdate": "To change this contact's newsletter status, please contact support{'@'}beabee.io.",
+      "currentStatus": {
+        "cleaned": "This contact has been cleaned from your newsletter list, their email address is probably bouncing.",
+        "none": "This contact isn't subscribed to your newsletter list.",
+        "pending": "This contact has been sent an opt-in for your newsletter list, they must accept it to become subscribed.",
+        "subscribed": "This contact is subscribed to your newsletter list.",
+        "unsubscribed": "This contact isn't subscribed to your newsletter list."
+      },
+      "subscribe": "Subscribe them to the newsletter",
+      "title": "Newsletter",
+      "unsubscribe": "Unsubscribe them from the newsletter"
+    },
     "savedPassword": "New password saved",
     "subTitle": "Required fields are marked with an asterisk. All information submitted here is private.",
     "title": "Account"
@@ -15,13 +28,17 @@
     "cancel": "Cancel",
     "chooseFile": "Choose file",
     "continue": "Continue",
+    "create": "Create",
     "delete": "Delete",
     "edit": "Edit",
+    "endnow": "End now",
     "export": "Export",
+    "next": "Next",
     "noBack": "No, go back",
     "participate": "Participate",
     "preview": "Preview",
     "publish": "Publish",
+    "reopen": "Reopen",
     "replicate": "Replicate",
     "reset": "Reset",
     "revertToDraft": "Revert to draft",
@@ -83,20 +100,17 @@
   "adminSettings": {
     "apikey": {
       "confirmCreate": {
-        "text": "Please save the following token. It CAN NOT be retrieved later:",
-        "title": "API Key successfully created"
+        "text": "Please save the following token. It CAN NOT be retrieved later.",
+        "title": "API key created"
       },
       "confirmDelete": {
-        "text": "Are you sure you want to delete this API Key?",
-        "title": "Delete API Key?"
+        "text": "This is irreversible. Anything using this API key will stop working.",
+        "title": "Delete API key?"
       },
-      "createdAt": "Created",
-      "description": "Description",
-      "generate": "Generate API Key",
-      "id": "ID",
-      "label": "API Keys",
-      "showingOf": "Showing {start} to {end} API Keys out of {total}",
-      "token": "Token"
+      "copied": "API key copied to clipboard",
+      "create": "Create a new API key",
+      "label": "API keys",
+      "showingOf": "Showing {start} to {end} API keys out of {total}"
     },
     "email": {
       "fromEmail": "From email",
@@ -241,6 +255,13 @@
     "selectFilter": "Select a filter",
     "updatedSegment": "Updated segment \"{segment}\""
   },
+  "apiKey": {
+    "data": {
+      "createdAt": "Created",
+      "description": "Description",
+      "token": "Token"
+    }
+  },
   "callout": {
     "contactDetails": "Contact details",
     "form": {
@@ -263,7 +284,9 @@
   },
   "calloutAdmin": {
     "deleted": "Callout deleted.",
+    "ended": "Callout ended. You can reopen it by editing it.",
     "overview": "Overview",
+    "reopened": "Callout reopened. Edit the callout if you need to set another end date.",
     "responses": "Responses"
   },
   "calloutAdminOverview": {
@@ -309,7 +332,19 @@
     "actions": {
       "addSlide": "Add slide"
     },
-    "pageNo": "Slide {pageNo}"
+    "internalTitle": "Internal title",
+    "nextButton": {
+      "nextSlide": "Next slide",
+      "nextSlideDefault": "-- Default --",
+      "showLabel": "Show next button"
+    },
+    "pageNo": "Slide {pageNo}",
+    "prevButton": {
+      "showLabel": "Show back button"
+    },
+    "submitButton": {
+      "label": "Submit button text"
+    }
   },
   "calloutResponse": {
     "data": {
