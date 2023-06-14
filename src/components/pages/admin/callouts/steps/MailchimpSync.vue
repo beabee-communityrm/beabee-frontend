@@ -52,9 +52,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
+import AppRadioGroup from '../../../../forms/AppRadioGroup.vue';
 import { MailchimpSyncStepProps } from '../callouts.interface';
-import AppSelect from '../../../forms/AppSelect.vue';
+import AppSelect from '../../../../forms/AppSelect.vue';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 
 const emit = defineEmits(['update:validated']);

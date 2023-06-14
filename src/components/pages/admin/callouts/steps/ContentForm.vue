@@ -67,11 +67,11 @@ import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import AppButton from '../../../button/AppButton.vue';
+import AppButton from '../../../../button/AppButton.vue';
 import ContentFormBuilder from './ContentFormBuilder.vue';
-import { getPageNavigationSchema } from '../../../../utils/callouts';
+import { getPageNavigationSchema } from '../../../../../utils/callouts';
 import ContentFormNavigation from './ContentFormNavigation.vue';
-import AppInput from '../../../forms/AppInput.vue';
+import AppInput from '../../../../forms/AppInput.vue';
 
 const props = defineProps<{ modelValue: CalloutFormSchema }>();
 

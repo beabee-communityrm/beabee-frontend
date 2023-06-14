@@ -58,7 +58,7 @@ import {
 } from '@fortawesome/fontawesome-svg-core';
 import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
 import { CalloutPageSchema, CalloutFormSchema } from '@beabee/beabee-common';
-import { getPageSchema } from '../../../../utils/callouts';
+import { getPageSchema } from '../../../../../utils/callouts';
 
 import 'formiojs/dist/formio.builder.css';
 import { FormBuilder } from 'vue-formio';

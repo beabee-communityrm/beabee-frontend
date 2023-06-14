@@ -4,7 +4,7 @@ import {
   CalloutPageSchema,
 } from '@beabee/beabee-common';
 import { format } from 'date-fns';
-import { CalloutStepsProps } from '../components/pages/callouts/callouts.interface';
+import { CalloutStepsProps } from '../components/pages/admin/callouts/callouts.interface';
 import { FilterItem, FilterItems } from '../components/search/search.interface';
 import { CreateCalloutData, GetCalloutDataWith } from './api/api.interface';
 

@@ -51,10 +51,10 @@
 </template>
 <script lang="ts" setup>
 import { CalloutNavigationSchema } from '@beabee/beabee-common';
-import AppInput from '../../../forms/AppInput.vue';
-import AppCheckbox from '../../../forms/AppCheckbox.vue';
 import { useI18n } from 'vue-i18n';
-import AppSelect from '../../../forms/AppSelect.vue';
+import AppInput from '../../../../forms/AppInput.vue';
+import AppCheckbox from '../../../../forms/AppCheckbox.vue';
+import AppSelect from '../../../../forms/AppSelect.vue';
 
 defineProps<{
   modelValue: CalloutNavigationSchema;

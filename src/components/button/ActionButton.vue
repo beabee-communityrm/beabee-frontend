@@ -5,6 +5,6 @@
 </template>
 <script lang="ts" setup>
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
-import AppButton from '../../button/AppButton.vue';
+import AppButton from './AppButton.vue';
 defineProps<{ icon: IconDefinition }>();
 </script>

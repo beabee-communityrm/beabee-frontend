@@ -103,7 +103,7 @@ import { deleteCallout } from '../../../../../utils/api/callout';
 import AppHeading from '../../../../../components/AppHeading.vue';
 import AppInfoList from '../../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../../components/AppInfoListItem.vue';
-import ActionButton from '../../../../../components/pages/callouts/ActionButton.vue';
+import ActionButton from '../../../../../components/button/ActionButton.vue';
 import CalloutSummary from '../../../../../components/callout/CalloutSummary.vue';
 import { createCallout } from '../../../../../utils/api/callout';
 import AppConfirmDialog from '../../../../../components/AppConfirmDialog.vue';

@@ -53,7 +53,7 @@ import AppConfirmDialog from '../../../../components/AppConfirmDialog.vue';
 import AppHeading from '../../../../components/AppHeading.vue';
 import AppNotice from '../../../../components/AppNotice.vue';
 import PageTitle from '../../../../components/PageTitle.vue';
-import ActionButton from '../../../../components/pages/callouts/ActionButton.vue';
+import ActionButton from '../../../../components/button/ActionButton.vue';
 import { GetNoticeData } from '../../../../utils/api/api.interface';
 import { deleteNotice, fetchNotice } from '../../../../utils/api/notice';
 import ItemStatus from '../../../../components/item/ItemStatusText.vue';
