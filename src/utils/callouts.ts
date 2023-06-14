@@ -1,7 +1,7 @@
 import {
   CalloutComponentSchema,
   ItemStatus,
-  NestableCalloutComponentSchema,
+  CalloutPageSchema,
 } from '@beabee/beabee-common';
 import { format } from 'date-fns';
 import { CalloutStepsProps } from '../components/pages/callouts/callouts.interface';
@@ -12,7 +12,7 @@ import i18n from '../lib/i18n';
 
 const { t, n } = i18n.global;
 
-export function getPageSchema(pageNo: number): NestableCalloutComponentSchema {
+export function getPageSchema(pageNo: number): CalloutPageSchema {
   const title = t('calloutBuilder.pageNo', { pageNo: n(pageNo) });
   return {
     id: '',

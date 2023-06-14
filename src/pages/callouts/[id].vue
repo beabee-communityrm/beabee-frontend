@@ -118,7 +118,7 @@ meta:
 </template>
 <script lang="ts" setup>
 import { Paginated, ItemStatus } from '@beabee/beabee-common';
-import { computed, onBeforeMount, ref, watch } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { Form } from 'vue-formio';
 import { useI18n } from 'vue-i18n';
 import {
@@ -193,9 +193,6 @@ const isPreview = computed(
 const callout = ref<GetCalloutDataWith<'form'>>();
 const currentUserResponses =
   ref<Paginated<GetCalloutResponseDataWith<'answers'>>>();
-const currentPageNo = ref(0);
-
-watch();
 
 const guestName = ref('');
 const guestEmail = ref('');

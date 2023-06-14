@@ -16,11 +16,9 @@
           >
             {{ page.title }}
           </li>
-          <li>
-            <AppButton variant="primary" @click="handleAddPage">
-              {{ t('calloutBuilder.actions.addSlide') }}
-            </AppButton>
-          </li>
+          <AppButton variant="primary" :icon="faPlus" @click="handleAddPage">
+            {{ t('calloutBuilder.actions.addSlide') }}
+          </AppButton>
         </ul>
 
         <div class="flex items-start justify-between bg-white p-4 shadow-md">
@@ -64,11 +62,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {
-  CalloutComponentSchema,
-  CalloutFormSchema,
-} from '@beabee/beabee-common';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { CalloutPageSchema, CalloutFormSchema } from '@beabee/beabee-common';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
@@ -105,7 +100,7 @@ const isLastPage = computed(
   () => currentPageNo.value === props.modelValue.components.length - 1
 );
 
-function handleChange(components: CalloutComponentSchema[]) {
+function handleChange(components: CalloutPageSchema[]) {
   // eslint-disable-next-line vue/no-mutating-props
   props.modelValue.components = components;
 

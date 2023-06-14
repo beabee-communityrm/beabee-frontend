@@ -57,10 +57,7 @@ import {
   noAuto,
 } from '@fortawesome/fontawesome-svg-core';
 import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
-import {
-  CalloutComponentSchema,
-  CalloutFormSchema,
-} from '@beabee/beabee-common';
+import { CalloutPageSchema, CalloutFormSchema } from '@beabee/beabee-common';
 import { getPageSchema } from '../../../../utils/callouts';
 
 import 'formiojs/dist/formio.builder.css';
@@ -70,7 +67,7 @@ interface FormBuilderRef {
   form: CalloutFormSchema;
   builder: {
     instance: {
-      addPage(page: { schema: CalloutComponentSchema }): void;
+      addPage(page: { schema: CalloutPageSchema }): void;
       removePage(page: number): void;
       setPage(page: number): void;
     };
@@ -80,7 +77,7 @@ interface FormBuilderRef {
 const formOpts = { builder: { data: false, resource: false, premium: false } };
 
 const emit = defineEmits<{
-  (e: 'change', components: CalloutComponentSchema[]): void;
+  (e: 'change', components: CalloutPageSchema[]): void;
 }>();
 const props = defineProps<{
   form: CalloutFormSchema;
