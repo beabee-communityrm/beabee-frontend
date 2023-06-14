@@ -22,6 +22,7 @@
             </AppButton>
           </li>
         </ul>
+
         <div class="flex items-center justify-between bg-white p-4 shadow-md">
           <AppHeading>{{ currentPageComponent.title }}</AppHeading>
           <div><AppButton variant="dangerOutlined" :icon="faTrash" /></div>

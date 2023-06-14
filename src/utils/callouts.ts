@@ -15,6 +15,7 @@ const { t, n } = i18n.global;
 export function getPageSchema(pageNo: number): NestableCalloutComponentSchema {
   const title = t('calloutBuilder.pageNo', { pageNo: n(pageNo) });
   return {
+    id: '',
     type: 'panel',
     title,
     label: title,
@@ -30,6 +31,7 @@ export function getPageNavigationSchema() {
     showPrev: true,
     nextText: 'Next',
     prevText: 'Prev',
+    nextSlideId: '',
     submitText: 'Submit',
   };
 }
