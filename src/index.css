@@ -140,10 +140,9 @@
 /* Force FormIO to fit in! Styles for renderer (including preview) */
 .callout-form,
 .callout-form-builder .formarea,
-.formio-dialog .preview-panel {
-  .formio-form {
-    @apply bg-white p-4 shadow-md;
-  }
+.formio-dialog .component-preview {
+  @apply bg-white p-6 shadow-md;
+
   /* Hide hidden controls */
   .formio-hidden {
     @apply hidden !important;
