@@ -35,9 +35,9 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { ContentStepProps } from '../callouts.interface';
-import RichTextEditor from '../../../rte/RichTextEditor.vue';
-import AppFormSection from '../../../forms/AppFormSection.vue';
-import AppNotification from '../../../AppNotification.vue';
+import RichTextEditor from '../../../../rte/RichTextEditor.vue';
+import AppFormSection from '../../../../forms/AppFormSection.vue';
+import AppNotification from '../../../../AppNotification.vue';
 import CalloutFormBuilder from './CalloutFormBuilder.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
