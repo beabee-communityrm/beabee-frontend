@@ -151,13 +151,7 @@ async function confirmDeleteCallout() {
 }
 
 async function endThisCallout() {
-  const now = new Date();
-  const calloutData = {
-    ...props.callout,
-    status: undefined,
-    expires: now,
-  };
-  await updateCallout(props.callout.slug, calloutData);
+  await updateCallout(props.callout.slug, { expires: new Date() });
   addNotification({
     title: t('calloutAdmin.ended'),
     variant: 'success',
@@ -166,14 +160,7 @@ async function endThisCallout() {
 }
 
 async function reopenThisCallout() {
-  const now = new Date();
-  const calloutData = {
-    ...props.callout,
-    status: undefined,
-    starts: now,
-    expires: null,
-  };
-  await updateCallout(props.callout.slug, calloutData);
+  await updateCallout(props.callout.slug, { expires: null });
   addNotification({
     title: t('calloutAdmin.reopened'),
     variant: 'success',

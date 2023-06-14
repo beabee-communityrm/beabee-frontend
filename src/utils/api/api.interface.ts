@@ -320,6 +320,7 @@ export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
   ('form' extends With ? CalloutFormData : Noop);
 
 export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
+export type UpdateCalloutData = Partial<CreateCalloutData>;
 
 export type GetCalloutsQuery = PaginatedQuery; // TODO: constrain fields
 export type GetCalloutResponsesQuery = PaginatedQuery; // TODO: constrain fields
