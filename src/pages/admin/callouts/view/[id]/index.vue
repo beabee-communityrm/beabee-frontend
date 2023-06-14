@@ -83,6 +83,13 @@ meta:
       >
         {{ t('actions.endnow') }}
       </ActionButton>
+      <ActionButton
+        v-if="callout.status === ItemStatus.Ended"
+        :icon="faHourglassStart"
+        @click="reopenThisCallout()"
+      >
+        {{ t('actions.reopen') }}
+      </ActionButton>
       <ActionButton :icon="faTrash" @click="showDeleteModal = true">
         {{ t('actions.delete') }}
       </ActionButton>
@@ -121,6 +128,7 @@ import {
   faPencilAlt,
   faReply,
   faTrash,
+  faHourglassStart,
   faHourglassEnd,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -152,6 +160,22 @@ async function endThisCallout() {
   await updateCallout(props.callout.slug, calloutData);
   addNotification({
     title: t('calloutAdmin.ended'),
+    variant: 'success',
+  });
+  router.push({ path: '/admin/callouts' });
+}
+
+async function reopenThisCallout() {
+  const now = new Date();
+  const calloutData = {
+    ...props.callout,
+    status: undefined,
+    starts: now,
+    expires: null,
+  };
+  await updateCallout(props.callout.slug, calloutData);
+  addNotification({
+    title: t('calloutAdmin.reopened'),
     variant: 'success',
   });
   router.push({ path: '/admin/callouts' });
