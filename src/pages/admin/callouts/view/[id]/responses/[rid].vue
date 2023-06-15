@@ -184,6 +184,10 @@ const { t, n } = useI18n();
 addBreadcrumb(
   computed(() => [
     {
+      title: t('calloutAdmin.responses'),
+      to: `/admin/callouts/view/${props.callout.slug}/responses`,
+    },
+    {
       title: t('calloutResponsesPage.responseNo', {
         no: response.value?.number ? n(response.value?.number) : '?',
       }),
