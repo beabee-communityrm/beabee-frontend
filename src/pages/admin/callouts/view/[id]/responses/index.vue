@@ -247,7 +247,6 @@ import {
 } from '../../../../../../utils/pagination';
 import AppCheckbox from '../../../../../../components/forms/AppCheckbox.vue';
 import {
-  faBullhorn,
   faComment,
   faDownload,
   faTag,
