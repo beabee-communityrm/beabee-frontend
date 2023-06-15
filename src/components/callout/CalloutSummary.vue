@@ -23,7 +23,9 @@
           class="relative z-10"
         >
           <AppButton class="text-sm font-semibold">
-            {{ t('adminDashboard.seeAllResponses') }}
+            {{ t('adminDashboard.seeAllResponses') }} ({{
+              callout.responseCount
+            }})
           </AppButton>
         </router-link>
       </div>
@@ -39,10 +41,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
-import {
-  GetCalloutData,
-  GetCalloutDataWith,
-} from '../../utils/api/api.interface';
+import { GetCalloutDataWith } from '../../utils/api/api.interface';
 
 import env from './../../env';
 import ItemStatusText from '../item/ItemStatusText.vue';
@@ -54,7 +53,7 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 const { t } = useI18n();
 
 const props = defineProps<{
-  callout: GetCalloutData | GetCalloutDataWith<'responseCount'>;
+  callout: GetCalloutDataWith<'responseCount'>;
 }>();
 
 const calloutLink = computed(() => `/callouts/${props.callout.slug}`);
