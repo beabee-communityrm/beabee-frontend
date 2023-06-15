@@ -7,5 +7,6 @@ declare module 'vue-router' {
     layout?: 'Auth' | 'Dashboard' | 'Loading';
     noAuth?: boolean;
     role?: RoleType;
+    embeddable?: boolean;
   }
 }
