@@ -56,7 +56,6 @@ import CalloutStepper from '../../../components/pages/admin/callouts/CalloutStep
 import {
   convertCalloutToSteps,
   convertStepsToCallout,
-  getPageNavigationSchema,
   getPageSchema,
 } from '../../../utils/callouts';
 import PageTitle from '../../../components/PageTitle.vue';
@@ -198,7 +197,6 @@ async function reset() {
   status.value = callout?.status;
 
   if (!steps.value.content.formSchema.components.length) {
-    steps.value.content.formSchema.navigation.push(getPageNavigationSchema());
     steps.value.content.formSchema.components.push(getPageSchema(1));
   }
 }

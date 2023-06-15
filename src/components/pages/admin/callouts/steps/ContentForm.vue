@@ -50,7 +50,7 @@
       <div class="flex gap-8">
         <div class="z-10 max-w-2xl flex-1 bg-white p-4 pb-0 shadow-md">
           <ContentFormNavigation
-            v-model="currentPageNavigation"
+            v-model="currentPageComponent.navigation"
             :is-first="isFirstPage"
             :is-last="isLastPage"
             :page-items="otherPageItems"
@@ -69,7 +69,6 @@ import { useI18n } from 'vue-i18n';
 
 import AppButton from '../../../../button/AppButton.vue';
 import ContentFormBuilder from './ContentFormBuilder.vue';
-import { getPageNavigationSchema } from '../../../../../utils/callouts';
 import ContentFormNavigation from './ContentFormNavigation.vue';
 import AppInput from '../../../../forms/AppInput.vue';
 
@@ -84,15 +83,12 @@ const formBuilderRef = ref<InstanceType<typeof ContentFormBuilder> | null>(
 
 const otherPageItems = computed(() =>
   props.modelValue.components
-    .filter((c) => c.id !== currentPageComponent.value.id)
-    .map((c) => ({ id: c.id, label: c.title }))
+    .filter((c) => c.key !== currentPageComponent.value.key)
+    .map((c) => ({ id: c.key, label: c.title }))
 );
 
 const currentPageComponent = computed(
   () => props.modelValue.components[currentPageNo.value]
-);
-const currentPageNavigation = computed(
-  () => props.modelValue.navigation[currentPageNo.value]
 );
 
 const isFirstPage = computed(() => currentPageNo.value === 0);
@@ -115,17 +111,14 @@ watch(currentPageNo, (newPageNo) => {
 });
 
 function handleAddPage() {
-  formBuilderRef.value?.addPage();
+  if (!formBuilderRef.value) return; // Can't add page without builder being loaded
 
+  formBuilderRef.value.addPage();
   // eslint-disable-next-line vue/no-mutating-props
-  props.modelValue.navigation.push(getPageNavigationSchema());
-  currentPageNo.value = props.modelValue.navigation.length - 1;
+  currentPageNo.value = props.modelValue.components.length - 1;
 }
 
 function handleDeletePage() {
-  // eslint-disable-next-line vue/no-mutating-props
-  props.modelValue.navigation.splice(currentPageNo.value, 1);
-
   // eslint-disable-next-line vue/no-mutating-props
   props.modelValue.components.splice(currentPageNo.value, 1);
   handleChange(props.modelValue.components); // Check current page number

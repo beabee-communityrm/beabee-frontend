@@ -8,58 +8,73 @@
     />
 
     <form @submit.prevent>
-      <CalloutGuestFields
-        v-if="showGuestFields"
-        v-model:name="guestName"
-        v-model:email="guestEmail"
-      />
       <div class="callout-form mt-4">
         <Form
           ref="formRef"
           :form="callout.formSchema"
           :submission="response"
           :options="formOpts"
-          @submit="handleSubmit"
         />
-        <AppNotification
-          v-if="formError"
-          class="mb-4"
-          variant="error"
-          :title="formError"
-        />
-        <div class="flex justify-between">
-          <div>
-            <AppButton
-              v-if="currentPageNavigation.showPrev && !isFirstPage"
-              :disabled="changingPage"
-              @click="handlePrevPage"
-            >
-              {{ currentPageNavigation.prevText }}
-            </AppButton>
+
+        <template v-if="isLastPage">
+          <CalloutGuestFields
+            v-if="showGuestFields"
+            v-model:name="guestName"
+            v-model:email="guestEmail"
+          />
+
+          <AppNotification
+            v-if="formError"
+            class="mb-4"
+            variant="error"
+            :title="formError"
+          />
+        </template>
+
+        <template v-if="currentPage">
+          <AppButton
+            v-if="isLastPage"
+            type="submit"
+            class="mb-4 w-full"
+            @click="handleSubmit"
+          >
+            {{ currentPage.navigation.submitText }}
+          </AppButton>
+
+          <div class="flex justify-between">
+            <div>
+              <AppButton
+                v-if="currentPage.navigation.showPrev && !isFirstPage"
+                variant="linkOutlined"
+                :disabled="changingPage"
+                @click="handlePrevPage"
+              >
+                {{ currentPage.navigation.prevText }}
+              </AppButton>
+            </div>
+            <div>
+              <AppButton
+                v-if="!isLastPage && currentPage.navigation.showNext"
+                :disabled="changingPage"
+                @click="handleNextPage"
+              >
+                {{ currentPage.navigation.nextText }}
+              </AppButton>
+            </div>
           </div>
-          <div>
-            <AppButton v-if="isLastPage" type="submit">
-              {{ currentPageNavigation.submitText }}
-            </AppButton>
-            <AppButton
-              v-else-if="currentPageNavigation.showNext"
-              :disabled="changingPage"
-              @click="handleNextPage"
-            >
-              {{ currentPageNavigation.nextText }}
-            </AppButton>
-          </div>
-        </div>
-        {{ currentPageNavigation }}
+        </template>
       </div>
     </form>
   </div>
 </template>
 <script lang="ts" setup>
-import { CalloutResponseAnswers } from '@beabee/beabee-common';
+import {
+  CalloutPageSchema,
+  CalloutResponseAnswers,
+} from '@beabee/beabee-common';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
-import { computed, onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Form } from 'vue-formio';
 import {
@@ -75,23 +90,34 @@ import AppNotification from '../../AppNotification.vue';
 import 'formiojs/dist/formio.form.css';
 import AppButton from '../../button/AppButton.vue';
 
-interface FormRef {
-  formio: {
-    setPage(n: number): Promise<unknown>;
-    nextPage(): Promise<unknown>;
-    prevPage(): Promise<unknown>;
-    page: number;
-  };
-}
-
 interface FormSubmission {
   data: CalloutResponseAnswers;
+}
+
+interface FormRef {
+  formio: {
+    getPageIndexByKey(key: string): number;
+    setPage(n: number): Promise<void>;
+    nextPage(): Promise<void>;
+    prevPage(): Promise<void>;
+    checkValidity(
+      data: CalloutResponseAnswers,
+      dirty: boolean,
+      row: CalloutResponseAnswers,
+      currentPageOnly: boolean
+    ): boolean;
+    submit(): Promise<FormSubmission>;
+
+    components: CalloutPageSchema[];
+    currentPage: CalloutPageSchema;
+    localData: CalloutResponseAnswers;
+  };
 }
 
 const emit = defineEmits<{ (e: 'submitted'): void }>();
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
-  response: GetCalloutResponseDataWith<'answers'>;
+  response: GetCalloutResponseDataWith<'answers'> | undefined;
   preview: boolean;
   readonly: boolean;
 }>();
@@ -103,18 +129,26 @@ const formRef = ref<FormRef | null>(null);
 const guestName = ref('');
 const guestEmail = ref('');
 const formError = ref('');
-const currentPageNo = ref(0);
 const changingPage = ref(false);
 
-const prevPageNos: number[] = [];
+const pageKeys = reactive<string[]>([
+  props.callout.formSchema.components[0].key,
+]);
 
-const currentPageNavigation = computed(
-  () => props.callout.formSchema.navigation[currentPageNo.value]
+const currentPageKey = computed(() => pageKeys[pageKeys.length - 1]);
+
+const currentPage = computed(() =>
+  props.callout.formSchema.components.find(
+    (c) => c.key === currentPageKey.value
+  )
 );
-const isFirstPage = computed(() => currentPageNo.value === 0);
-const isLastPage = computed(
-  () => currentPageNo.value === props.callout.formSchema.navigation.length - 1
+const isFirstPage = computed(
+  () => currentPageKey.value === props.callout.formSchema.components[0].key
 );
+const isLastPage = computed(() => {
+  const components = props.callout.formSchema.components;
+  return currentPageKey.value === components[components.length - 1].key;
+});
 
 const showGuestFields = computed(
   () => props.callout.access === 'guest' && !currentUser.value
@@ -124,17 +158,22 @@ const formOpts = computed(() => ({
   readOnly: props.readonly,
   noAlerts: true,
   hooks: {
-    beforeSubmit: (submission: FormSubmission, next: () => void) => {
+    beforeSubmit: (_: FormSubmission, next: () => void) => {
+      // Can't submit in preview mode
       if (props.preview) {
-        return;
+        formError.value = t('callout.form.previewMode');
       }
 
+      // If guest fields are required check they are filled in
       if (!showGuestFields.value || (guestName.value && guestEmail.value)) {
         next();
       } else {
         formError.value = t('callout.form.guestFieldsMissing');
       }
     },
+  },
+  breadcrumbSettings: {
+    clickable: false,
   },
 }));
 
@@ -144,21 +183,30 @@ async function handleNextPage() {
   changingPage.value = true;
 
   try {
-    if (currentPageNavigation.value.nextSlideId) {
-      const nextPageNo = props.callout.formSchema.components.findIndex(
-        (c) => c.id === currentPageNavigation.value.nextSlideId
-      );
-      await formRef.value.formio.setPage(nextPageNo);
+    const formio = formRef.value.formio;
+
+    const nextPageKey = currentPage.value?.navigation.nextSlideId;
+    if (nextPageKey) {
+      // setPage doesn't validate the input, so we need to do it ourselves
+      // Copied from formiojs nextPage() method
+      if (
+        formio.checkValidity(formio.localData, true, formio.localData, true)
+      ) {
+        await formio.setPage(formio.getPageIndexByKey(nextPageKey));
+      } else {
+        throw new Error('Invalid form');
+      }
     } else {
-      await formRef.value.formio.nextPage();
+      await formio.nextPage();
     }
+
+    pageKeys.push(formio.currentPage.key);
+
+    // Invalid forms throw an exception
     // eslint-disable-next-line no-empty
   } catch (err) {}
 
   changingPage.value = false;
-
-  prevPageNos.push(currentPageNo.value);
-  currentPageNo.value = formRef.value.formio.page;
 }
 
 async function handlePrevPage() {
@@ -166,17 +214,29 @@ async function handlePrevPage() {
 
   changingPage.value = true;
 
-  const prevPageNo = prevPageNos[prevPageNos.length - 1];
-  await formRef.value.formio.setPage(prevPageNo || 0);
+  const formio = formRef.value.formio;
+
+  const prevPageKey = pageKeys[pageKeys.length - 2];
+  await formRef.value.formio.setPage(formio.getPageIndexByKey(prevPageKey));
 
   changingPage.value = false;
-
-  prevPageNos.pop();
-  currentPageNo.value = formRef.value.formio.page;
+  pageKeys.pop();
 }
 
-async function handleSubmit(submission: FormSubmission) {
+async function handleSubmit() {
+  if (!formRef.value) return; // Can't submit without the form
+
   formError.value = '';
+
+  const formio = formRef.value.formio;
+
+  // Hide the pages that weren't part of the journey, this disables their validation
+  for (const component of formio.components) {
+    component.visible = pageKeys.includes(component.key);
+  }
+
+  const submission = await formio.submit();
+
   try {
     await createResponse(props.callout.slug, {
       ...(!currentUser.value &&

@@ -14,25 +14,24 @@ const { t, n } = i18n.global;
 
 export function getPageSchema(pageNo: number): CalloutPageSchema {
   const title = t('calloutBuilder.pageNo', { pageNo: n(pageNo) });
+
   return {
-    id: '',
+    // Taken from formio.js
+    id: `e${Math.random().toString(36).substring(7)}`,
     type: 'panel',
     title,
     label: title,
     key: 'slide' + pageNo,
     input: false,
     components: [],
-  };
-}
-
-export function getPageNavigationSchema() {
-  return {
-    showNext: true,
-    showPrev: true,
-    nextText: t('actions.next'),
-    prevText: t('actions.back'),
-    nextSlideId: '',
-    submitText: t('actions.submit'),
+    navigation: {
+      showNext: true,
+      showPrev: true,
+      nextText: t('actions.next'),
+      prevText: t('actions.back'),
+      nextSlideId: '',
+      submitText: t('actions.submit'),
+    },
   };
 }
 
@@ -45,7 +44,6 @@ export function convertCalloutToSteps(
       formSchema: callout?.formSchema || {
         display: 'wizard',
         components: [],
-        navigation: [],
       },
     },
     titleAndImage: {
