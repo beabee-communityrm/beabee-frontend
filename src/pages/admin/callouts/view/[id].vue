@@ -35,11 +35,9 @@ addBreadcrumb(
   ])
 );
 
-const callout = ref<GetCalloutDataWith<'form'>>();
-const responseCount = ref(-1);
+const callout = ref<GetCalloutDataWith<'form' | 'responseCount'>>();
 
 onBeforeMount(async () => {
-  callout.value = await fetchCallout(props.id, ['form']);
-  responseCount.value = (await fetchResponses(props.id, { limit: 1 })).total;
+  callout.value = await fetchCallout(props.id, ['form', 'responseCount']);
 });
 </script>
