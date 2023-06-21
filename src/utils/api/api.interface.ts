@@ -405,6 +405,19 @@ export interface GetCalloutResponseCommentData
 
 export type CreateCalloutResponseCommentData = CalloutResponseCommentData;
 
+export interface CreateApiKeyData {
+  description: string;
+}
+
+export interface GetApiKeyData {
+  id: string;
+  description: string;
+  creator: GetContactData;
+  createdAt: Date;
+}
+
+export type GetApiKeysQuery = PaginatedQuery; // TODO: contrain fields
+
 export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 
 interface NoticeData {

@@ -133,7 +133,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps<{
-  callout: GetCalloutDataWith<'form'>;
+  callout: GetCalloutDataWith<'form' | 'responseCount'>;
 }>();
 const { t } = useI18n();
 
