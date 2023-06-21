@@ -121,6 +121,7 @@ import {
   faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
 import CalloutForm from '../../components/pages/callouts/CalloutForm.vue';
+import { addNotification } from '../../store/notifications';
 
 const props = defineProps<{ id: string }>();
 
@@ -214,6 +215,10 @@ async function refreshResponses() {
 
 async function handleSubmitResponse() {
   document.getElementById('top')?.scrollIntoView();
+  addNotification({
+    title: t('callout.responseSubmitted'),
+    variant: 'success',
+  });
   await refreshResponses();
 }
 
