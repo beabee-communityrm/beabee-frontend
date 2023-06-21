@@ -196,18 +196,20 @@ async function refreshResponses() {
   // This is a hack to force the form to re-render
   responses.value = undefined;
 
-  responses.value = await fetchResponses(
-    props.id,
-    {
-      rules: {
-        condition: 'AND',
-        rules: [{ field: 'contact', operator: 'equal', value: ['me'] }],
-      },
-      sort: 'createdAt',
-      order: 'DESC',
-    },
-    ['answers']
-  );
+  responses.value = currentUser.value
+    ? await fetchResponses(
+        props.id,
+        {
+          rules: {
+            condition: 'AND',
+            rules: [{ field: 'contact', operator: 'equal', value: ['me'] }],
+          },
+          sort: 'createdAt',
+          order: 'DESC',
+        },
+        ['answers']
+      )
+    : { items: [], total: 0, offset: 0, count: 0 };
 }
 
 async function handleSubmitResponse() {
