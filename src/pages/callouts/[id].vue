@@ -13,7 +13,10 @@ meta:
         <div>
           <ItemStatusText :item="callout" />
         </div>
-        <div v-if="hasResponded" class="border-body-40 ml-3 w-32 border-l pl-3">
+        <div
+          v-if="latestResponse"
+          class="border-body-40 ml-3 w-32 border-l pl-3"
+        >
           {{ t('callout.youResponded') }}
         </div>
       </div>
@@ -31,7 +34,7 @@ meta:
     </transition-group>
 
     <div
-      v-show="hasResponded"
+      v-show="latestResponse"
       class="mb-6 flex rounded bg-white p-6 text-lg text-success"
     >
       <div class="flex-0 mr-4 text-2xl">
@@ -89,9 +92,8 @@ meta:
       "
       class="mt-10 border-t border-primary-40 pt-10 text-lg"
       :callout="callout"
-      :response="callout.allowMultiple ? undefined : latestResponse"
+      :response="latestResponse"
       :preview="isPreview"
-      :readonly="isFormReadOnly"
       @submitted="handleSubmitResponse"
     />
   </div>
@@ -157,17 +159,12 @@ const callout = ref<GetCalloutDataWith<'form'>>();
 const responses = ref<Paginated<GetCalloutResponseDataWith<'answers'>>>();
 
 const showSharingPanel = ref(false);
-const hasSubmittedResponse = ref(false);
 
 const isPreview = computed(
   () => route.query.preview === null && canAdmin.value
 );
 
 const latestResponse = computed(() => responses.value?.items?.[0]);
-
-const hasResponded = computed(
-  () => latestResponse.value || hasSubmittedResponse.value
-);
 
 // Callout is open and available to all or current user is a member
 const canRespond = computed(
@@ -192,40 +189,35 @@ const showMemberOnlyPrompt = computed(
 
 // Either we are previewing, or user can respond, or has already responded
 const showResponseForm = computed(
-  () => isPreview.value || canRespond.value || hasResponded.value
+  () => isPreview.value || canRespond.value || latestResponse.value
 );
 
-const isFormReadOnly = computed(
-  () =>
-    hasSubmittedResponse.value ||
-    (hasResponded.value &&
-      !callout.value?.allowUpdate &&
-      !callout.value?.allowMultiple)
-);
+async function refreshResponses() {
+  // This is a hack to force the form to re-render
+  responses.value = undefined;
+
+  responses.value = await fetchResponses(
+    props.id,
+    {
+      rules: {
+        condition: 'AND',
+        rules: [{ field: 'contact', operator: 'equal', value: ['me'] }],
+      },
+      sort: 'createdAt',
+      order: 'DESC',
+    },
+    ['answers']
+  );
+}
 
 async function handleSubmitResponse() {
-  hasSubmittedResponse.value = true;
   document.getElementById('top')?.scrollIntoView();
+  await refreshResponses();
 }
 
 onBeforeMount(async () => {
   callout.value = await fetchCallout(props.id, ['form']);
-
-  responses.value =
-    currentUser.value && !isPreview.value
-      ? await fetchResponses(
-          props.id,
-          {
-            rules: {
-              condition: 'AND',
-              rules: [{ field: 'contact', operator: 'equal', value: ['me'] }],
-            },
-            sort: 'createdAt',
-            order: 'DESC',
-          },
-          ['answers']
-        )
-      : { total: 0, count: 0, offset: 0, items: [] };
+  await refreshResponses();
 });
 </script>
 

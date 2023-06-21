@@ -9,59 +9,72 @@
 
     <form @submit.prevent>
       <div class="callout-form mt-4">
+        <CalloutGuestFields
+          v-if="!isWizard && showGuestFields"
+          v-model:name="guestName"
+          v-model:email="guestEmail"
+        />
+
         <Form
           ref="formRef"
           :form="callout.formSchema"
-          :submission="response"
+          :submission="
+            response && !callout.allowMultiple
+              ? { data: response.answers }
+              : undefined
+          "
           :options="formOpts"
+          @submit="handleSubmission"
         />
 
-        <template v-if="isLastPage">
-          <CalloutGuestFields
-            v-if="showGuestFields"
-            v-model:name="guestName"
-            v-model:email="guestEmail"
-          />
+        <template v-if="isWizard">
+          <template v-if="isLastPage">
+            <CalloutGuestFields
+              v-if="showGuestFields"
+              v-model:name="guestName"
+              v-model:email="guestEmail"
+            />
 
-          <AppNotification
-            v-if="formError"
-            class="mb-4"
-            variant="error"
-            :title="formError"
-          />
-        </template>
+            <AppNotification
+              v-if="formError"
+              class="mb-4"
+              variant="error"
+              :title="formError"
+            />
+          </template>
 
-        <template v-if="currentPage">
-          <AppButton
-            v-if="isLastPage"
-            type="submit"
-            class="mb-4 w-full"
-            @click="handleSubmit"
-          >
-            {{ currentPage.navigation.submitText }}
-          </AppButton>
+          <template v-if="currentPage">
+            <AppButton
+              v-if="isLastPage"
+              type="submit"
+              class="mb-4 w-full"
+              @click="handleSubmit"
+            >
+              {{ currentPage.navigation.submitText }}
+            </AppButton>
 
-          <div class="flex justify-between">
-            <div>
-              <AppButton
-                v-if="currentPage.navigation.showPrev && !isFirstPage"
-                variant="linkOutlined"
-                :disabled="changingPage"
-                @click="handlePrevPage"
-              >
-                {{ currentPage.navigation.prevText }}
-              </AppButton>
+            <div class="flex justify-between">
+              <div>
+                <AppButton
+                  v-if="currentPage.navigation.showPrev && !isFirstPage"
+                  variant="linkOutlined"
+                  :disabled="changingPage"
+                  @click="handlePrevPage"
+                >
+                  {{ currentPage.navigation.prevText }}
+                </AppButton>
+              </div>
+              <div>
+                <AppButton
+                  v-if="!isLastPage && currentPage.navigation.showNext"
+                  :disabled="changingPage"
+                  @click="handleNextPage"
+                >
+                  {{ currentPage.navigation.nextText }}
+                </AppButton>
+              </div>
             </div>
-            <div>
-              <AppButton
-                v-if="!isLastPage && currentPage.navigation.showNext"
-                :disabled="changingPage"
-                @click="handleNextPage"
-              >
-                {{ currentPage.navigation.nextText }}
-              </AppButton>
-            </div>
-          </div>
+          </template>
         </template>
       </div>
     </form>
@@ -119,7 +132,6 @@ const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
   response: GetCalloutResponseDataWith<'answers'> | undefined;
   preview: boolean;
-  readonly: boolean;
 }>();
 
 const { t } = useI18n();
@@ -135,12 +147,16 @@ const pageKeys = reactive<string[]>([
   props.callout.formSchema.components[0].key,
 ]);
 
+const isWizard = computed(() => props.callout.formSchema.display === 'wizard');
+
 const currentPageKey = computed(() => pageKeys[pageKeys.length - 1]);
 
 const currentPage = computed(() =>
-  props.callout.formSchema.components.find(
-    (c) => c.key === currentPageKey.value
-  )
+  isWizard.value
+    ? props.callout.formSchema.components.find(
+        (c) => c.key === currentPageKey.value
+      )
+    : undefined
 );
 const isFirstPage = computed(
   () => currentPageKey.value === props.callout.formSchema.components[0].key
@@ -155,7 +171,9 @@ const showGuestFields = computed(
 );
 
 const formOpts = computed(() => ({
-  readOnly: props.readonly,
+  readOnly:
+    props.response &&
+    !(props.callout.allowUpdate || props.callout.allowMultiple),
   noAlerts: true,
   hooks: {
     beforeSubmit: (_: FormSubmission, next: () => void) => {
@@ -226,16 +244,18 @@ async function handlePrevPage() {
 async function handleSubmit() {
   if (!formRef.value) return; // Can't submit without the form
 
-  formError.value = '';
-
-  const formio = formRef.value.formio;
-
-  // Hide the pages that weren't part of the journey, this disables their validation
-  for (const component of formio.components) {
-    component.visible = pageKeys.includes(component.key);
+  if (isWizard.value) {
+    // Hide the pages that weren't part of the journey, this disables their validation
+    for (const component of formRef.value.formio.components) {
+      component.visible = pageKeys.includes(component.key);
+    }
   }
 
-  const submission = await formio.submit();
+  await formRef.value.formio.submit();
+}
+
+async function handleSubmission(submission: FormSubmission) {
+  formError.value = '';
 
   try {
     await createResponse(props.callout.slug, {
