@@ -37,6 +37,7 @@
     "participate": "Participate",
     "preview": "Preview",
     "publish": "Publish",
+    "reopen": "Reopen",
     "replicate": "Replicate",
     "reset": "Reset",
     "revertToDraft": "Revert to draft",
@@ -284,6 +285,7 @@
     "deleted": "Callout deleted.",
     "ended": "Callout ended. You can reopen it by editing it.",
     "overview": "Overview",
+    "reopened": "Callout reopened. Edit the callout if you need to set another end date.",
     "responses": "Responses"
   },
   "calloutAdminOverview": {
