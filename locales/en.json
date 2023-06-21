@@ -268,6 +268,8 @@
       "email": "Your email",
       "guestFieldsMissing": "Please tell us your contact details",
       "name": "Your name",
+      "responded": "You replied to this callout on {date}, you can see your response below.",
+      "respondedCanUpdate": "You replied to this callout on {date}, you can update your answer below.",
       "submittingResponseError": "There was a problem submitting your response, please try again"
     },
     "joinNow": "Join now",

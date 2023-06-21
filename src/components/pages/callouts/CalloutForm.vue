@@ -7,6 +7,13 @@
       class="mb-4"
     />
 
+    <AppNotification
+      v-if="responseNotice"
+      class="mb-4"
+      :title="responseNotice"
+      variant="success"
+    />
+
     <form @submit.prevent>
       <div class="callout-form mt-4">
         <CalloutGuestFields
@@ -84,6 +91,7 @@
 import {
   CalloutPageSchema,
   CalloutResponseAnswers,
+  ItemStatus,
 } from '@beabee/beabee-common';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
@@ -102,6 +110,7 @@ import AppNotification from '../../AppNotification.vue';
 
 import 'formiojs/dist/formio.form.css';
 import AppButton from '../../button/AppButton.vue';
+import { formatLocale } from '../../../utils/dates';
 
 interface FormSubmission {
   data: CalloutResponseAnswers;
@@ -194,6 +203,17 @@ const formOpts = computed(() => ({
     clickable: false,
   },
 }));
+
+const responseNotice = computed(() => {
+  if (!props.response || props.callout.allowMultiple) return;
+
+  const key =
+    props.callout.allowUpdate && props.callout.status === ItemStatus.Open
+      ? 'callout.form.respondedCanUpdate'
+      : 'callout.form.responded';
+
+  return t(key, { date: formatLocale(props.response.createdAt, 'PPP') });
+});
 
 async function handleNextPage() {
   if (!formRef.value) return; // Can't change page without the form
