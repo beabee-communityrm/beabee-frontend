@@ -253,6 +253,7 @@ import {
   faUserPen,
 } from '@fortawesome/free-solid-svg-icons';
 import { addNotification } from '../../../../../../store/notifications';
+import { addBreadcrumb } from '../../../../../../store/breadcrumb';
 
 const props = defineProps<{ callout: GetCalloutDataWith<'form'> }>();
 
@@ -382,6 +383,15 @@ onBeforeMount(async () => {
     label: admin.displayName,
   }));
 });
+
+addBreadcrumb(
+  computed(() => [
+    {
+      title: t('calloutAdmin.responses'),
+      to: `/admin/callouts/view/${props.callout.slug}/responses`,
+    },
+  ])
+);
 
 function getSearchRules(): RuleGroup {
   const bucketRule: Rule = currentBucket.value
