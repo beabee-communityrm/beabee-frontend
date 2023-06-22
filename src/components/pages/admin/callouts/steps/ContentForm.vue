@@ -6,7 +6,7 @@
           <li
             v-for="(page, pageNo) in modelValue.components"
             :key="page.key"
-            class="rounded p-4"
+            class="flex gap-2 rounded p-4"
             :class="
               currentPageNo === pageNo
                 ? 'bg-white'
@@ -14,24 +14,32 @@
             "
             @click="currentPageNo = pageNo"
           >
-            <p>{{ page.title }}</p>
-            <p v-if="page.navigation.nextSlideId" class="mt-2 pl-2 text-xs">
-              ↳
-              {{
-                modelValue.components.find(
-                  (p) => p.key === page.navigation.nextSlideId
-                )?.title ?? '???'
-              }}
-            </p>
-            <p
-              v-else-if="
-                page.navigation.showNext &&
-                pageNo !== modelValue.components.length - 1
-              "
-              class="mt-2 pl-2 text-xs"
-            >
-              ↳ {{ modelValue.components[pageNo + 1].title }}
-            </p>
+            <div>
+              <font-awesome-icon
+                :icon="faGripVertical"
+                class="cursor-grab text-body-60 hover:text-body"
+              />
+            </div>
+            <div class="flex-1">
+              <p class="font-semibold">{{ page.title }}</p>
+              <p v-if="page.navigation.nextSlideId" class="mt-1 text-xs">
+                ↳
+                {{
+                  modelValue.components.find(
+                    (p) => p.key === page.navigation.nextSlideId
+                  )?.title ?? '???'
+                }}
+              </p>
+              <p
+                v-else-if="
+                  page.navigation.showNext &&
+                  pageNo !== modelValue.components.length - 1
+                "
+                class="mt-1 text-xs"
+              >
+                ↳ {{ modelValue.components[pageNo + 1].title }}
+              </p>
+            </div>
           </li>
 
           <AppButton variant="primary" :icon="faPlus" @click="handleAddPage">
@@ -81,7 +89,11 @@
 
 <script lang="ts" setup>
 import { CalloutPageSchema, CalloutFormSchema } from '@beabee/beabee-common';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {
+  faGripVertical,
+  faPlus,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
