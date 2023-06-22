@@ -34,7 +34,8 @@ meta:
     </transition-group>
 
     <div
-      v-show="latestResponse"
+      v-show="latestResponse || showOnlyThankYou"
+      id="thanks"
       class="mb-6 flex rounded bg-white p-6 text-lg text-success"
     >
       <div class="flex-0 mr-4 text-2xl">
@@ -71,7 +72,7 @@ meta:
       </div>
     </div>
 
-    <div v-if="showMemberOnlyPrompt && !isPreview" class="my-12 text-center">
+    <div v-if="showMemberOnlyPrompt" class="my-12 text-center">
       <p>
         {{ t('callout.membersOnly') }}
         <b>{{ t('callout.updateContribution') }}</b>
@@ -85,19 +86,36 @@ meta:
       </AppButton>
     </div>
 
-    <CalloutForm
-      v-if="
-        showResponseForm &&
-        responses /* Form.IO doesn't handle reactivity so wait for responses to load */
-      "
-      class="mt-10 border-t border-primary-40 pt-10 text-lg"
-      :callout="callout"
-      :response="latestResponse"
-      :preview="isPreview"
-      @submitted="handleSubmitResponse"
-    />
+    <template v-if="!showOnlyThankYou">
+      <hr class="mt-10 border-t border-primary-40 pt-10" />
+
+      <AppNotification
+        v-if="isPreview"
+        variant="warning"
+        :title="t('callout.showingPreview')"
+        class="mb-4"
+      />
+      <AppNotification
+        v-else-if="!isOpen"
+        variant="info"
+        :title="t('callout.closed')"
+        class="mb-4"
+      />
+
+      <CalloutForm
+        v-if="
+          showResponseForm &&
+          responses /* Form.IO doesn't handle reactivity so wait for responses to load */
+        "
+        :callout="callout"
+        :response="latestResponse"
+        :preview="isPreview"
+        @submitted="handleSubmitResponse"
+      />
+    </template>
   </div>
 </template>
+
 <script lang="ts" setup>
 import { Paginated, ItemStatus } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref } from 'vue';
@@ -122,6 +140,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import CalloutForm from '../../components/pages/callouts/CalloutForm.vue';
 import { addNotification } from '../../store/notifications';
+import AppNotification from '../../components/AppNotification.vue';
 
 const props = defineProps<{ id: string }>();
 
@@ -160,42 +179,55 @@ const callout = ref<GetCalloutDataWith<'form'>>();
 const responses = ref<Paginated<GetCalloutResponseDataWith<'answers'>>>();
 
 const showSharingPanel = ref(false);
+const showOnlyThankYou = ref(false);
 
 const isPreview = computed(
   () => route.query.preview === null && canAdmin.value
 );
+const isOpen = computed(() => callout.value?.status === ItemStatus.Open);
 
-const latestResponse = computed(() => responses.value?.items?.[0]);
-
-// Callout is open and available to all or current user is a member
-const canRespond = computed(
-  () =>
-    callout.value?.status === ItemStatus.Open &&
-    (callout.value?.access !== 'member' ||
-      currentUser.value?.activeRoles.includes('member'))
+const latestResponse = computed(() =>
+  callout.value?.allowMultiple || isPreview.value
+    ? undefined
+    : responses.value?.items?.[0]
 );
 
 // Callout is only for members and current user isn't logged in
 const showLoginPrompt = computed(
-  () => callout.value?.access === 'member' && !currentUser.value
+  () => isOpen.value && callout.value?.access === 'member' && !currentUser.value
 );
 
 // Callout is only for members and current user is not a member
 const showMemberOnlyPrompt = computed(
   () =>
+    isOpen.value &&
+    !isPreview.value &&
     callout.value?.access === 'member' &&
     currentUser.value &&
     !currentUser.value.activeRoles.includes('member')
 );
 
-// Either we are previewing, or user can respond, or has already responded
 const showResponseForm = computed(
-  () => isPreview.value || canRespond.value || latestResponse.value
+  () =>
+    // Preview mode
+    isPreview.value ||
+    // Callout is open and current user has access
+    (isOpen.value && !showLoginPrompt.value && !showMemberOnlyPrompt.value) ||
+    // Current user has previously responded
+    latestResponse.value
 );
 
-async function refreshResponses() {
-  // This is a hack to force the form to re-render
-  responses.value = undefined;
+async function handleSubmitResponse() {
+  document.getElementById('thanks')?.scrollIntoView();
+  showOnlyThankYou.value = true;
+  addNotification({
+    title: t('callout.responseSubmitted'),
+    variant: 'success',
+  });
+}
+
+onBeforeMount(async () => {
+  callout.value = await fetchCallout(props.id, ['form']);
 
   responses.value = currentUser.value
     ? await fetchResponses(
@@ -207,24 +239,12 @@ async function refreshResponses() {
           },
           sort: 'createdAt',
           order: 'DESC',
+          // Current only supports showing single response
+          limit: 1,
         },
         ['answers']
       )
     : { items: [], total: 0, offset: 0, count: 0 };
-}
-
-async function handleSubmitResponse() {
-  document.getElementById('top')?.scrollIntoView();
-  addNotification({
-    title: t('callout.responseSubmitted'),
-    variant: 'success',
-  });
-  await refreshResponses();
-}
-
-onBeforeMount(async () => {
-  callout.value = await fetchCallout(props.id, ['form']);
-  await refreshResponses();
 });
 </script>
 

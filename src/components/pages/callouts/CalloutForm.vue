@@ -1,97 +1,76 @@
 <template>
-  <div>
-    <AppNotification
-      v-if="preview"
-      variant="warning"
-      :title="t('callout.showingPreview')"
-      class="mb-4"
+  <form class="callout-form text-lg" @submit.prevent>
+    <CalloutGuestFields
+      v-if="!isWizard && showGuestFields"
+      v-model:name="guestName"
+      v-model:email="guestEmail"
     />
 
-    <AppNotification
-      v-if="responseNotice"
-      class="mb-4"
-      :title="responseNotice"
-      variant="success"
+    <Form
+      ref="formRef"
+      :form="callout.formSchema"
+      :submission="response && { data: response.answers }"
+      :options="formOpts"
+      @submit="handleSubmission"
     />
 
-    <form @submit.prevent>
-      <div class="callout-form mt-4">
+    <template v-if="isWizard">
+      <template v-if="isLastPage">
         <CalloutGuestFields
-          v-if="!isWizard && showGuestFields"
+          v-if="showGuestFields"
           v-model:name="guestName"
           v-model:email="guestEmail"
         />
 
-        <Form
-          ref="formRef"
-          :form="callout.formSchema"
-          :submission="
-            response && !callout.allowMultiple
-              ? { data: response.answers }
-              : undefined
-          "
-          :options="formOpts"
-          @submit="handleSubmission"
+        <AppNotification
+          v-if="formError"
+          class="mb-4"
+          variant="error"
+          :title="formError"
         />
+      </template>
 
-        <template v-if="isWizard">
-          <template v-if="isLastPage">
-            <CalloutGuestFields
-              v-if="showGuestFields"
-              v-model:name="guestName"
-              v-model:email="guestEmail"
-            />
+      <template v-if="currentPage">
+        <AppButton
+          v-if="isLastPage"
+          type="submit"
+          class="mb-4 w-full"
+          :disabled="!canSubmit"
+          @click="handleSubmit"
+        >
+          {{ currentPage.navigation.submitText }}
+        </AppButton>
 
-            <AppNotification
-              v-if="formError"
-              class="mb-4"
-              variant="error"
-              :title="formError"
-            />
-          </template>
-
-          <template v-if="currentPage">
+        <div class="flex justify-between">
+          <div>
             <AppButton
-              v-if="isLastPage"
-              type="submit"
-              class="mb-4 w-full"
-              @click="handleSubmit"
+              v-if="currentPage.navigation.showPrev && !isFirstPage"
+              variant="linkOutlined"
+              :disabled="changingPage"
+              @click="handlePrevPage"
             >
-              {{ currentPage.navigation.submitText }}
+              {{ currentPage.navigation.prevText }}
             </AppButton>
-
-            <div class="flex justify-between">
-              <div>
-                <AppButton
-                  v-if="currentPage.navigation.showPrev && !isFirstPage"
-                  variant="linkOutlined"
-                  :disabled="changingPage"
-                  @click="handlePrevPage"
-                >
-                  {{ currentPage.navigation.prevText }}
-                </AppButton>
-              </div>
-              <div>
-                <AppButton
-                  v-if="!isLastPage && currentPage.navigation.showNext"
-                  :disabled="changingPage"
-                  @click="handleNextPage"
-                >
-                  {{ currentPage.navigation.nextText }}
-                </AppButton>
-              </div>
-            </div>
-          </template>
-        </template>
-      </div>
-    </form>
-  </div>
+          </div>
+          <div>
+            <AppButton
+              v-if="!isLastPage && currentPage.navigation.showNext"
+              :disabled="changingPage"
+              @click="handleNextPage"
+            >
+              {{ currentPage.navigation.nextText }}
+            </AppButton>
+          </div>
+        </div>
+      </template>
+    </template>
+    <AppNotification v-else-if="formError" :title="formError" variant="error" />
+  </form>
 </template>
 <script lang="ts" setup>
 import {
   CalloutPageSchema,
   CalloutResponseAnswers,
-  ItemStatus,
 } from '@beabee/beabee-common';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
@@ -110,7 +89,6 @@ import AppNotification from '../../AppNotification.vue';
 
 import 'formiojs/dist/formio.form.css';
 import AppButton from '../../button/AppButton.vue';
-import { formatLocale } from '../../../utils/dates';
 
 interface FormSubmission {
   data: CalloutResponseAnswers;
@@ -179,23 +157,24 @@ const showGuestFields = computed(
   () => props.callout.access === 'guest' && !currentUser.value
 );
 
+const canSubmit = computed(() => !props.response || props.callout.allowUpdate);
+
 const formOpts = computed(() => ({
-  readOnly:
-    props.response &&
-    !(props.callout.allowUpdate || props.callout.allowMultiple),
+  readOnly: !canSubmit.value,
   noAlerts: true,
   hooks: {
     beforeSubmit: (_: FormSubmission, next: () => void) => {
       // Can't submit in preview mode
       if (props.preview) {
-        formError.value = t('callout.form.previewMode');
-      }
-
-      // If guest fields are required check they are filled in
-      if (!showGuestFields.value || (guestName.value && guestEmail.value)) {
-        next();
-      } else {
+        formError.value = t('callout.showingPreview');
+        // If guest fields are required check they are filled in
+      } else if (
+        showGuestFields.value &&
+        !(guestName.value && guestEmail.value)
+      ) {
         formError.value = t('callout.form.guestFieldsMissing');
+      } else {
+        next();
       }
     },
   },
@@ -203,17 +182,6 @@ const formOpts = computed(() => ({
     clickable: false,
   },
 }));
-
-const responseNotice = computed(() => {
-  if (!props.response || props.callout.allowMultiple) return;
-
-  const key =
-    props.callout.allowUpdate && props.callout.status === ItemStatus.Open
-      ? 'callout.form.respondedCanUpdate'
-      : 'callout.form.responded';
-
-  return t(key, { date: formatLocale(props.response.createdAt, 'PPP') });
-});
 
 async function handleNextPage() {
   if (!formRef.value) return; // Can't change page without the form
