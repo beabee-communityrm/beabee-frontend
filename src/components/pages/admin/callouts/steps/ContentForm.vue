@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex gap-8">
+    <div v-if="isWizard" class="flex gap-8">
       <div class="max-w-2xl flex-1">
         <ul class="mb-4 flex flex-wrap gap-4">
           <li
@@ -21,8 +21,8 @@
           </AppButton>
         </ul>
 
-        <div class="flex items-start justify-between bg-white p-4 shadow-md">
-          <div>
+        <div class="flex items-end gap-4 bg-white p-4 shadow-md">
+          <div class="flex-1">
             <AppInput
               v-model="currentPageComponent.title"
               :label="t('calloutBuilder.internalTitle')"
@@ -47,13 +47,12 @@
         :form="modelValue"
         @change="handleChange"
       />
-      <div class="flex gap-8">
+
+      <div v-if="isWizard" class="flex gap-8">
         <div class="z-10 max-w-2xl flex-1 bg-white p-4 pb-0 shadow-md">
           <ContentFormNavigation
-            v-model="currentPageComponent.navigation"
-            :is-first="isFirstPage"
-            :is-last="isLastPage"
-            :page-items="otherPageItems"
+            :pages="modelValue.components"
+            :current-page-no="currentPageNo"
           />
         </div>
         <div class="flex-initial basis-48"></div>
@@ -61,6 +60,7 @@
     </div>
   </div>
 </template>
+
 <script lang="ts" setup>
 import { CalloutPageSchema, CalloutFormSchema } from '@beabee/beabee-common';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -81,19 +81,10 @@ const formBuilderRef = ref<InstanceType<typeof ContentFormBuilder> | null>(
   null
 );
 
-const otherPageItems = computed(() =>
-  props.modelValue.components
-    .filter((c) => c.key !== currentPageComponent.value.key)
-    .map((c) => ({ id: c.key, label: c.title }))
-);
+const isWizard = computed(() => props.modelValue.display === 'wizard');
 
 const currentPageComponent = computed(
   () => props.modelValue.components[currentPageNo.value]
-);
-
-const isFirstPage = computed(() => currentPageNo.value === 0);
-const isLastPage = computed(
-  () => currentPageNo.value === props.modelValue.components.length - 1
 );
 
 function handleChange(components: CalloutPageSchema[]) {
