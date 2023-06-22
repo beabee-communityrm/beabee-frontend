@@ -14,8 +14,26 @@
             "
             @click="currentPageNo = pageNo"
           >
-            {{ page.title }}
+            <p>{{ page.title }}</p>
+            <p v-if="page.navigation.nextSlideId" class="mt-2 pl-2 text-xs">
+              ↳
+              {{
+                modelValue.components.find(
+                  (p) => p.key === page.navigation.nextSlideId
+                )?.title ?? '???'
+              }}
+            </p>
+            <p
+              v-else-if="
+                page.navigation.showNext &&
+                pageNo !== modelValue.components.length - 1
+              "
+              class="mt-2 pl-2 text-xs"
+            >
+              ↳ {{ modelValue.components[pageNo + 1].title }}
+            </p>
           </li>
+
           <AppButton variant="primary" :icon="faPlus" @click="handleAddPage">
             {{ t('calloutBuilder.actions.addSlide') }}
           </AppButton>
