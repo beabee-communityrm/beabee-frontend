@@ -52,8 +52,13 @@ meta:
           :to="`/admin/contacts/${response.contact.id}`"
           class="text-link"
         >
-          {{ response.contact.displayName }}
+          <font-awesome-icon :icon="faUser" class="mr-2" />{{
+            response.contact.displayName
+          }}
         </router-link>
+        <span v-else-if="response.guestName">
+          {{ response.guestName }} ({{ response.guestEmail }})
+        </span>
       </AppInfoListItem>
       <AppInfoListItem
         :name="t('calloutResponse.data.createdAt')"
