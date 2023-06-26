@@ -45,7 +45,9 @@ meta:
         />
         <AppInfoListItem
           :name="t('contactOverview.newsletter')"
-          :value="contact.profile.newsletterStatus"
+          :value="
+            t('common.newsletterStatus.' + contact.profile.newsletterStatus)
+          "
         />
         <AppInfoListItem
           :name="t('contacts.data.groups')"

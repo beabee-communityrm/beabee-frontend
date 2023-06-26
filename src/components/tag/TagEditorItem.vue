@@ -6,18 +6,17 @@
       </strong>
       <AppButtonGroup class="ml-auto">
         <AppButton
-          :icon="faPencil"
           size="sm"
-          variant="primaryOutlined"
+          variant="text"
           @click="formVisible = !formVisible"
-          >{{
-        }}</AppButton>
+          >{{ t('actions.edit') }}</AppButton
+        >
         <AppButton
-          variant="danger"
           size="sm"
-          :icon="faTrash"
+          variant="dangerText"
           @click="showDeleteModal = true"
         >
+          {{ t('actions.delete') }}
         </AppButton>
       </AppButtonGroup>
     </div>
@@ -43,7 +42,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { faPencil, faTag, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import {

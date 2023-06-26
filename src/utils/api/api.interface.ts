@@ -320,6 +320,7 @@ export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
   ('form' extends With ? CalloutFormData : Noop);
 
 export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
+export type UpdateCalloutData = Partial<CreateCalloutData>;
 
 export type GetCalloutsQuery = PaginatedQuery; // TODO: constrain fields
 export type GetCalloutResponsesQuery = PaginatedQuery; // TODO: constrain fields
@@ -403,6 +404,19 @@ export interface GetCalloutResponseCommentData
 }
 
 export type CreateCalloutResponseCommentData = CalloutResponseCommentData;
+
+export interface CreateApiKeyData {
+  description: string;
+}
+
+export interface GetApiKeyData {
+  id: string;
+  description: string;
+  creator: GetContactData;
+  createdAt: Date;
+}
+
+export type GetApiKeysQuery = PaginatedQuery; // TODO: contrain fields
 
 export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 
