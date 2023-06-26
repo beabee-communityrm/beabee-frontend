@@ -125,5 +125,6 @@ watch(
   },
   {
     deep: true,
+    immediate: true, // Initialise default theme on page load
   }
 );
