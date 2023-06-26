@@ -396,6 +396,11 @@ addBreadcrumb(
       title: t('calloutAdmin.responses'),
       to: `/admin/callouts/view/${props.callout.slug}/responses`,
     },
+    {
+      title:
+        bucketItems.value.find((b) => b.id === currentBucket.value)?.label ||
+        '',
+    },
   ])
 );
 

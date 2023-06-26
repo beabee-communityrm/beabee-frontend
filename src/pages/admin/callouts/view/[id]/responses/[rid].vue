@@ -193,6 +193,10 @@ addBreadcrumb(
       to: `/admin/callouts/view/${props.callout.slug}/responses`,
     },
     {
+      title: bucketName.value,
+      to: `/admin/callouts/view/${props.callout.slug}/responses?bucket=${response.value?.bucket}`,
+    },
+    {
       title: t('calloutResponsesPage.responseNo', {
         no: response.value?.number ? n(response.value?.number) : '?',
       }),
