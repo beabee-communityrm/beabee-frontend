@@ -45,6 +45,11 @@ meta:
     <AppHeading class="mb-4">
       {{ t('calloutResponsesPage.responseNo', { no: n(response.number) }) }}
     </AppHeading>
+    <p v-if="response.tags.length > 0" class="mb-4">
+      <font-awesome-icon :icon="faTag" class="mr-2" />
+      <AppTag v-for="tag in response.tags" :key="tag.id" :tag="tag.name" />
+    </p>
+
     <AppInfoList class="mb-4">
       <AppInfoListItem :name="t('calloutResponse.data.contact')">
         <router-link
@@ -64,13 +69,6 @@ meta:
         :name="t('calloutResponse.data.createdAt')"
         :value="formatLocale(response.createdAt, 'Pp')"
       />
-      <AppInfoListItem
-        :name="t('calloutResponse.data.bucket')"
-        :value="bucketName"
-      />
-      <AppInfoListItem :name="t('calloutResponse.data.tags')">
-        <AppTag v-for="tag in response.tags" :key="tag.id" :tag="tag.name" />
-      </AppInfoListItem>
       <AppInfoListItem :name="t('calloutResponse.data.assignee')">
         <router-link
           v-if="response.assignee"
@@ -175,6 +173,8 @@ import {
   faCaretLeft,
   faCaretRight,
   faPen,
+  faTag,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { addNotification } from '../../../../../../store/notifications';
 import AppNotification from '../../../../../../components/AppNotification.vue';
