@@ -353,6 +353,8 @@ export interface GetCalloutResponseData {
   createdAt: Date;
   updatedAt: Date;
   bucket: string;
+  guestName: string | null;
+  guestEmail: string | null;
 }
 
 export interface CreateCalloutResponseData {

@@ -135,14 +135,19 @@ meta:
           </router-link>
           <span v-else>-</span>
         </template>
-        <template #value-contact="{ value }">
+        <template #value-contact="{ value, item }">
           <router-link
             v-if="value"
             :to="`/admin/contacts/${value.id}`"
             class="text-link"
           >
-            {{ value.displayName }}
+            <font-awesome-icon :icon="faUser" class="mr-2" />{{
+              value.displayName
+            }}
           </router-link>
+          <span v-else-if="item.guestName">
+            {{ item.guestName }} ({{ item.guestEmail }})
+          </span>
           <span v-else>-</span>
         </template>
         <template #value-createdAt="{ value }">
@@ -250,6 +255,7 @@ import {
   faComment,
   faDownload,
   faTag,
+  faUser,
   faUserPen,
 } from '@fortawesome/free-solid-svg-icons';
 import { addNotification } from '../../../../../../store/notifications';
@@ -389,6 +395,11 @@ addBreadcrumb(
     {
       title: t('calloutAdmin.responses'),
       to: `/admin/callouts/view/${props.callout.slug}/responses`,
+    },
+    {
+      title:
+        bucketItems.value.find((b) => b.id === currentBucket.value)?.label ||
+        '',
     },
   ])
 );
