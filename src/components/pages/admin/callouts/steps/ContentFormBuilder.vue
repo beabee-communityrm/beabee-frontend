@@ -49,6 +49,7 @@ import {
   faSquarePlus,
   faSquareMinus,
   faDownload,
+  faRefresh,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   config,
@@ -74,7 +75,140 @@ interface FormBuilderRef {
   };
 }
 
-const formOpts = { builder: { data: false, resource: false, premium: false } };
+const formOpts = {
+  builder: {
+    basic: false,
+    advanced: false,
+    data: false,
+    resource: false,
+    premium: false,
+    layout: false,
+    custom: {
+      title: 'Basic',
+      default: true,
+      components: {
+        textfield: {
+          title: 'Text Field',
+          icon: 'terminal',
+          schema: {
+            type: 'textfield',
+          },
+        },
+        textarea: {
+          title: 'Text Area',
+          icon: 'font',
+          schema: {
+            type: 'textarea',
+          },
+        },
+        number: {
+          title: 'Number',
+          icon: 'hashtag',
+          schema: {
+            type: 'number',
+          },
+        },
+        email: {
+          title: 'Email',
+          icon: 'at',
+          schema: {
+            type: 'email',
+          },
+        },
+        url: {
+          title: 'Url',
+          icon: 'link',
+          schema: {
+            type: 'url',
+          },
+        },
+        checkbox: {
+          title: 'Checkbox',
+          icon: 'check-square',
+          schema: {
+            type: 'checkbox',
+          },
+        },
+        select: {
+          title: 'Dropdown',
+          icon: 'th-list',
+          schema: {
+            type: 'select',
+          },
+        },
+        selectboxes: {
+          title: 'Select Boxes',
+          group: 'basic',
+          icon: 'plus-square',
+          schema: {
+            type: 'selectboxes',
+          },
+        },
+        radio: {
+          title: 'Radio',
+          icon: 'dot-circle-o',
+          schema: {
+            type: 'radio',
+          },
+        },
+      },
+    },
+    custom2: {
+      title: 'Advanced',
+      components: {
+        address: {
+          title: 'Address',
+          icon: 'home',
+          schema: {
+            type: 'address',
+          },
+        },
+        phoneNumber: {
+          title: 'Phone Number',
+          icon: 'phone-square',
+          schema: {
+            type: 'phoneNumber',
+          },
+        },
+        currency: {
+          title: 'Currency',
+          icon: 'usd',
+          schema: {
+            type: 'currency',
+          },
+        },
+        datetime: {
+          title: 'Date / Time',
+          icon: 'calendar',
+          schema: {
+            type: 'datetime',
+          },
+        },
+        time: {
+          title: 'Time',
+          icon: 'clock-o',
+          schema: {
+            type: 'time',
+          },
+        },
+        signature: {
+          title: 'Signature',
+          icon: 'pencil',
+          schema: {
+            type: 'signature',
+          },
+        },
+        content: {
+          title: 'Content',
+          icon: 'html5',
+          schema: {
+            type: 'content',
+          },
+        },
+      },
+    },
+  },
+};
 
 const emit = defineEmits<{
   (e: 'change', components: CalloutPageSchema[]): void;
@@ -137,6 +271,7 @@ onBeforeMount(() => {
     faList,
     faPencil,
     faDownload,
+    faRefresh,
 
     // Use different icon names so they match
     { ...faClock, iconName: 'clock-o' as IconName },
@@ -210,7 +345,8 @@ onBeforeUnmount(() => {
     @apply hidden;
   }
 
-  #group-container-basic,
+  #group-container-custom,
+  #group-container-custom2,
   #group-container-layout {
     @apply flex w-full flex-col gap-1 border border-primary-10 p-2;
   }
@@ -257,7 +393,7 @@ onBeforeUnmount(() => {
   }
 
   .row {
-    @apply grid grid-cols-2 gap-8;
+    @apply grid auto-cols-fr  grid-flow-col;
   }
 
   .form-group {
