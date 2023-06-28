@@ -216,7 +216,7 @@ onBeforeUnmount(() => {
   }
 
   .component-settings-button {
-    @apply bg-white text-center;
+    @apply h-auto w-8 bg-white text-center text-base;
   }
 }
 
