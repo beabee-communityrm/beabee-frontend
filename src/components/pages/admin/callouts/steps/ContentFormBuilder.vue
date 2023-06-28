@@ -231,7 +231,7 @@ onBeforeUnmount(() => {
 }
 
 .formio-dialog {
-  @apply flex items-center justify-center font-body text-sm text-body !important;
+  @apply flex items-center justify-center font-body text-base text-body !important;
 
   .formio-dialog-content {
     @apply max-w-[70rem] bg-white !important;
@@ -257,11 +257,7 @@ onBeforeUnmount(() => {
   }
 
   .row {
-    @apply flex gap-8;
-  }
-
-  .col {
-    @apply flex-1;
+    @apply grid grid-cols-2 gap-8;
   }
 
   .form-group {
@@ -318,6 +314,11 @@ onBeforeUnmount(() => {
   .component-edit-container > .row:first-child {
     @apply hidden;
   }
+
+  /* Hide empty shortcut column */
+  .formio-component-values .table tr :nth-child(4) {
+    @apply hidden;
+  }
 }
 
 body:not(.show-advanced-options) {
@@ -369,7 +370,13 @@ body:not(.show-advanced-options) {
   .formio-component-clearOnHide,
   .formio-component-shortcutButtons,
   .formio-component-dataType,
-  .formio-component-validateOn {
+  .formio-component-validateOn,
+  .formio-component-custom-validation-js,
+  .formio-component-json-validation-json,
+  .formio-component-errors,
+  .formio-component-customConditionalPanel,
+  .formio-component-properties,
+  .formio-component-tags {
     @apply hidden;
   }
 
