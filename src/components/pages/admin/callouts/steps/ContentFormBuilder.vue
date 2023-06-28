@@ -308,7 +308,9 @@ onBeforeUnmount(() => {
   .component-edit-container > .row:first-child {
     @apply hidden;
   }
+}
 
+body:not(.show-advanced-options) {
   /* Hide lots of options */
   .formio-component-labelPosition,
   .formio-component-tooltip,
@@ -359,6 +361,12 @@ onBeforeUnmount(() => {
   .formio-component-dataType,
   .formio-component-validateOn {
     @apply hidden;
+  }
+
+  .callout-form-builder {
+    .component-settings-button-edit-json {
+      @apply hidden;
+    }
   }
 }
 </style>

@@ -346,6 +346,7 @@
     "prevButton": {
       "showLabel": "Show back button"
     },
+    "showAdvancedOptions": "Show advanced builder",
     "submitButton": {
       "label": "Submit button text"
     }

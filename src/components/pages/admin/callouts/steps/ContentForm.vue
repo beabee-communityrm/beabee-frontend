@@ -1,5 +1,10 @@
 <template>
-  <div>
+  <div :class="isWizard && 'is-wizard'">
+    <AppCheckbox
+      v-model="showAdvancedOptions"
+      class="mb-4"
+      :label="t('calloutBuilder.showAdvancedOptions')"
+    />
     <div v-if="isWizard" class="flex gap-8">
       <div class="max-w-2xl flex-1">
         <ul class="mb-4 flex flex-wrap gap-4">
@@ -94,13 +99,14 @@ import {
   faPlus,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
-import { computed, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import AppButton from '../../../../button/AppButton.vue';
 import ContentFormBuilder from './ContentFormBuilder.vue';
 import ContentFormNavigation from './ContentFormNavigation.vue';
 import AppInput from '../../../../forms/AppInput.vue';
+import AppCheckbox from '../../../../forms/AppCheckbox.vue';
 
 const props = defineProps<{ modelValue: CalloutFormSchema }>();
 
@@ -110,6 +116,7 @@ const currentPageNo = ref(0);
 const formBuilderRef = ref<InstanceType<typeof ContentFormBuilder> | null>(
   null
 );
+const showAdvancedOptions = ref(false);
 
 const isWizard = computed(() => props.modelValue.display === 'wizard');
 
@@ -129,6 +136,14 @@ function handleChange(components: CalloutPageSchema[]) {
 
 watch(currentPageNo, (newPageNo) => {
   formBuilderRef.value?.setPage(newPageNo);
+});
+
+watch(showAdvancedOptions, (show) => {
+  document.body.classList.toggle('show-advanced-options', show);
+});
+
+onBeforeUnmount(() => {
+  document.body.classList.remove('show-advanced-options');
 });
 
 function handleAddPage() {
