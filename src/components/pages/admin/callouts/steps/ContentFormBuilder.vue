@@ -220,6 +220,16 @@ onBeforeUnmount(() => {
   }
 }
 
+.is-wizard .callout-form-builder {
+  /* Hide panel component settings */
+  .formio-form
+    > .builder-components
+    > .builder-component
+    > .component-btn-group {
+    @apply hidden;
+  }
+}
+
 .formio-dialog {
   @apply flex items-center justify-center font-body text-sm text-body !important;
 
