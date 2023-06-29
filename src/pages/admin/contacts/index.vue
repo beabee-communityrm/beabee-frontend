@@ -114,7 +114,7 @@ import {
 } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import PageTitle from '../../../components/PageTitle.vue';
 import {
   GetContactDataWith,
@@ -136,14 +136,17 @@ import {
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import SaveSegment from '../../../components/pages/admin/contacts/SaveSegment.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
-import { definePaginatedQuery, defineParam } from '../../../utils/pagination';
+import {
+  definePaginatedQuery,
+  defineParam,
+  defineRulesParam,
+} from '../../../utils/pagination';
 import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
 import { faDownload, faTag, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 const { t, n } = useI18n();
 
 const route = useRoute();
-const router = useRouter();
 
 addBreadcrumb(
   computed(() => [
@@ -152,18 +155,10 @@ addBreadcrumb(
 );
 
 const currentPaginatedQuery = definePaginatedQuery('joined');
-
 const currentSearch = defineParam('s', (v) => v || '');
-
-const currentRules = computed({
-  get: () =>
-    route.query.r
-      ? (JSON.parse(route.query.r as string) as RuleGroup)
-      : currentSegment.value?.ruleGroup,
-  set: (r) =>
-    router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
-});
-
+const currentRules = defineRulesParam(
+  computed(() => currentSegment.value?.ruleGroup)
+);
 const currentSegmentId = defineParam('segment', (v) => v || '', 'replace');
 
 const currentSegment = computed(() =>

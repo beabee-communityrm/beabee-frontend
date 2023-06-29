@@ -1081,6 +1081,9 @@
       "chargeDate": "Charge date",
       "contact": "Contact",
       "status": "Status"
+    },
+    "dataGroup": {
+      "payment": "Payment"
     }
   },
   "paymentsAdmin": {

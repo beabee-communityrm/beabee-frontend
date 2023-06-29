@@ -1,4 +1,4 @@
-import { computed, reactive, WritableComputedRef } from 'vue';
+import { computed, reactive, Ref, WritableComputedRef } from 'vue';
 import {
   LocationQueryValue,
   LocationQueryValueRaw,
@@ -6,6 +6,7 @@ import {
   useRouter,
 } from 'vue-router';
 import { SortType } from '../components/table/table.interface';
+import { RuleGroup } from '@beabee/beabee-common';
 
 export function defineParam<T extends LocationQueryValueRaw>(
   param: string,
@@ -62,5 +63,19 @@ export function definePaginatedQuery(defaultSortBy: string) {
         order: sort.value.type,
       }),
     })),
+  });
+}
+
+export function defineRulesParam(defaultRules?: Ref<RuleGroup | undefined>) {
+  const route = useRoute();
+  const router = useRouter();
+
+  return computed({
+    get: () =>
+      route.query.r
+        ? (JSON.parse(route.query.r as string) as RuleGroup)
+        : defaultRules?.value,
+    set: (r) =>
+      router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
   });
 }

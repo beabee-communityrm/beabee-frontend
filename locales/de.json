@@ -1074,7 +1074,8 @@
     }
   },
   "payments": {
-    "data": {}
+    "data": {},
+    "dataGroup": {}
   },
   "paymentsAdmin": {
     "filter": {}

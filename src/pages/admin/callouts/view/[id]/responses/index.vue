@@ -218,7 +218,7 @@ import {
 } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import AppButton from '../../../../../../components/button/AppButton.vue';
 import AppSelect from '../../../../../../components/forms/AppSelect.vue';
 import AppVTabs from '../../../../../../components/tabs/AppVTabs.vue';
@@ -249,6 +249,7 @@ import AppPaginatedTable from '../../../../../../components/table/AppPaginatedTa
 import {
   definePaginatedQuery,
   defineParam,
+  defineRulesParam,
 } from '../../../../../../utils/pagination';
 import AppCheckbox from '../../../../../../components/forms/AppCheckbox.vue';
 import {
@@ -265,7 +266,6 @@ const props = defineProps<{ callout: GetCalloutDataWith<'form'> }>();
 
 const { t, n } = useI18n();
 const route = useRoute();
-const router = useRouter();
 
 const responses = ref<
   Paginated<
@@ -359,17 +359,8 @@ const filterItemsWithExtras = computed(() => {
 const currentAssignee = defineParam('assignee', (v) => v || '');
 const currentTag = defineParam('tag', (v) => v || '');
 const currentBucket = defineParam('bucket', (v) => v || '', 'replace');
-
 const currentPaginatedQuery = definePaginatedQuery('createdAt');
-
-const currentRules = computed({
-  get: () =>
-    route.query.r
-      ? (JSON.parse(route.query.r as string) as RuleGroup)
-      : undefined,
-  set: (r) =>
-    router.push({ query: { ...route.query, r: r && JSON.stringify(r) } }),
-});
+const currentRules = defineRulesParam();
 
 onBeforeMount(async () => {
   const tags = await fetchTags(props.callout.slug);

@@ -17,6 +17,12 @@ meta:
       <AppVTabs v-model="currentStatus" :items="statusItems" />
     </div>
     <div class="flex-auto">
+      <AppSearch
+        v-model="currentRules"
+        :filter-groups="filterGroups"
+        :filter-items="filterItems"
+        @reset="currentRules = undefined"
+      />
       <AppPaginatedTable
         v-model:query="currentPaginatedQuery"
         keypath="paymentsAdmin.showingOf"
@@ -52,8 +58,11 @@ import { computed, ref, watchEffect } from 'vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
 import PageTitle from '../../../components/PageTitle.vue';
 import { faEuro } from '@fortawesome/free-solid-svg-icons';
-import { Header } from '../../../components/table/table.interface';
-import { definePaginatedQuery, defineParam } from '../../../utils/pagination';
+import {
+  definePaginatedQuery,
+  defineParam,
+  defineRulesParam,
+} from '../../../utils/pagination';
 import {
   GetPaymentDataWith,
   GetPaymentsQuery,
@@ -64,76 +73,37 @@ import { formatLocale } from '../../../utils/dates';
 import PaymentStatus from '../../../components/payment/PaymentStatus.vue';
 import AppVTabs from '../../../components/tabs/AppVTabs.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
+import AppSearch from '../../../components/search/AppSearch.vue';
+import {
+  headers,
+  statusItems,
+  filterGroups,
+  filterItems,
+} from '../../../components/pages/admin/payments.interface';
 
 const { t, n } = useI18n();
 
 addBreadcrumb(computed(() => [{ title: t('menu.payments'), icon: faEuro }]));
 
-const statusItems = [
-  { id: '', label: t('paymentsAdmin.filter.all'), to: '/admin/payments' },
-  {
-    id: 'successful',
-    label: t('paymentsAdmin.filter.successful'),
-    to: '/admin/payments?status=successful',
-  },
-  {
-    id: 'pending',
-    label: t('paymentsAdmin.filter.pending'),
-    to: '/admin/payments?status=pending',
-  },
-  {
-    id: 'failed',
-    label: t('paymentsAdmin.filter.failed'),
-    to: '/admin/payments?status=failed',
-  },
-  {
-    id: 'cancelled',
-    label: t('paymentsAdmin.filter.cancelled'),
-    to: '/admin/payments?status=cancelled',
-  },
-];
-
-const headers: Header[] = [
-  {
-    value: 'status',
-    text: t('payments.data.status'),
-  },
-  {
-    value: 'contact',
-    text: t('payments.data.contact'),
-    width: '100%',
-  },
-  {
-    value: 'chargeDate',
-    text: t('payments.data.chargeDate'),
-    align: 'right',
-    sortable: true,
-  },
-  {
-    value: 'amount',
-    text: t('payments.data.amount'),
-    align: 'right',
-    sortable: true,
-  },
-];
-
-const currentStatus = defineParam('status', (v) => v || '');
+const currentStatus = defineParam('status', (v) => v || '', 'replace');
+const currentRules = defineRulesParam();
 const currentPaginatedQuery = definePaginatedQuery('chargeDate');
 const paymentsTable = ref<Paginated<GetPaymentDataWith<'contact'>>>();
 
 watchEffect(async () => {
-  const rules: GetPaymentsQuery['rules'] | undefined = currentStatus.value
-    ? {
-        condition: 'AND',
-        rules: [
-          {
-            field: 'status',
-            operator: 'equal' as const,
-            value: [currentStatus.value],
-          },
-        ],
-      }
-    : undefined;
+  const rules: GetPaymentsQuery['rules'] = { condition: 'AND', rules: [] };
+
+  if (currentStatus.value) {
+    rules.rules.push({
+      field: 'status',
+      operator: 'equal' as const,
+      value: [currentStatus.value],
+    });
+  }
+
+  if (currentRules.value) {
+    rules.rules.push(currentRules.value);
+  }
 
   paymentsTable.value = await fetchPayments(
     {
