@@ -453,6 +453,12 @@
     "no": "No",
     "noResults": "No results found",
     "pageCount": "Page {pageNumber} out of {pageTotal}",
+    "paymentStatus": {
+      "cancelled": "Cancelled",
+      "failed": "Failed",
+      "pending": "Pending",
+      "successful": "Successful"
+    },
     "role": {
       "admin": "Admin",
       "member": "Member",
@@ -575,11 +581,6 @@
     "nextAmountChanging": "Your contribution will change to {nextAmount} on {renewalDate}.",
     "paymentHistory": {
       "empty": "Past payments and their invoices will show up here.",
-      "status": {
-        "cancelled": "Cancelled",
-        "failed": "Failed",
-        "pending": "Pending"
-      },
       "title": "Payment history"
     },
     "paymentMethod": "Payment method",
@@ -1011,6 +1012,7 @@
     "logout": "Log out",
     "membershipBuilder": "Membership builder",
     "notices": "Notices",
+    "payments": "Payments",
     "settings": "Settings",
     "yourProfile": "Your profile"
   },
@@ -1073,6 +1075,27 @@
       "label": "Direct debit",
       "setLabel": "Your direct debit details"
     }
+  },
+  "payments": {
+    "data": {
+      "amount": "Amount",
+      "chargeDate": "Charge date",
+      "contact": "Contact",
+      "status": "Status"
+    },
+    "dataGroup": {
+      "payment": "Payment"
+    }
+  },
+  "paymentsAdmin": {
+    "filter": {
+      "all": "All payments",
+      "cancelled": "Cancelled payments",
+      "failed": "Failed payments",
+      "pending": "Pending payments",
+      "successful": "Successful payments"
+    },
+    "showingOf": "Showing {start} to {end} payments out of {total}"
   },
   "resetPassword": {
     "changePassword": "Change password",

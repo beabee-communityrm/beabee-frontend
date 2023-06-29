@@ -191,6 +191,11 @@ export interface GetPaymentData {
   status: PaymentStatus;
 }
 
+export type GetPaymentWith = 'contact' | void;
+
+export type GetPaymentDataWith<With extends GetPaymentWith> = GetPaymentData &
+  ('contact' extends With ? { contact: GetContactData | null } : Noop);
+
 export type GetPaymentsQuery = PaginatedQuery; // TODO: constrain fields
 
 export interface LoginData {

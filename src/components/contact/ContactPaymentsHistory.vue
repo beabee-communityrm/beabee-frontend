@@ -89,11 +89,11 @@ function getRowClass(item: GetPaymentData) {
 function getStatusText(item: GetPaymentData) {
   switch (item.status) {
     case PaymentStatus.Cancelled:
-      return t('contribution.paymentHistory.status.cancelled');
+      return t('common.paymentStatus.cancelled');
     case PaymentStatus.Failed:
-      return t('contribution.paymentHistory.status.failed');
+      return t('common.paymentStatus.failed');
     case PaymentStatus.Pending:
-      return t('contribution.paymentHistory.status.pending');
+      return t('common.paymentStatus.pending');
   }
 }
 
