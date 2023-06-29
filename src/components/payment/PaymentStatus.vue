@@ -1,7 +1,9 @@
 <template>
-  <span class="text-sm font-bold uppercase" :class="color[status]">{{
-    t('common.paymentStatus.' + status)
-  }}</span>
+  <span
+    class="whitespace-nowrap text-sm font-bold uppercase"
+    :class="color[status]"
+    >{{ t('common.paymentStatus.' + status) }}</span
+  >
 </template>
 <script lang="ts" setup>
 import { PaymentStatus } from '@beabee/beabee-common';
