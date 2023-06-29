@@ -451,6 +451,12 @@
     "no": "Nein",
     "noResults": "Keine Ergebnisse gefunden",
     "pageCount": "Seite {pageNumber} von {pageTotal}",
+    "paymentStatus": {
+      "cancelled": "Gekündigt",
+      "failed": "Fehlgeschlagen",
+      "pending": "In Bearbeitung",
+      "successful": "Erfolgreich"
+    },
     "role": {
       "admin": "Admin",
       "member": "Mitglied",
@@ -573,11 +579,6 @@
     "nextAmountChanging": "Ab dem {renewalDate} zahlen Sie {nextAmount}.",
     "paymentHistory": {
       "empty": "Ältere Zahlungen und Rechnungen finden Sie hier.",
-      "status": {
-        "cancelled": "Gekündigt",
-        "failed": "Fehlgeschlagen",
-        "pending": "In Bearbeitung"
-      },
       "title": "Bisher gezahlte Beiträge"
     },
     "paymentMethod": "Zahlungsart",
@@ -1009,6 +1010,7 @@
     "logout": "Log out",
     "membershipBuilder": "Membership Builder",
     "notices": "Hinweise",
+    "payments": "Zahlungen",
     "settings": "Einstellungen",
     "yourProfile": "Ihr Profil"
   },
@@ -1071,6 +1073,27 @@
       "label": "Lastschrift",
       "setLabel": "Ihre Laschriftdaten"
     }
+  },
+  "payments": {
+    "data": {
+      "amount": "Betrag",
+      "chargeDate": "Abbuchungsdatum",
+      "contact": "Kontakt",
+      "status": "Status"
+    },
+    "dataGroup": {
+      "payment": "Zahlung"
+    }
+  },
+  "paymentsAdmin": {
+    "filter": {
+      "all": "Alle Zahlungen",
+      "cancelled": "Stonierte Zahlungen",
+      "failed": "Gescheiterte Zahlungen",
+      "pending": "Ausstehende Zahlungen",
+      "successful": "Erfolgreiche Zahlungen"
+    },
+    "showingOf": "Zahlungen {start} bis {end} von {total}"
   },
   "resetPassword": {
     "changePassword": "Passwort ändern",
