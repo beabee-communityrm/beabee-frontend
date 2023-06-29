@@ -579,7 +579,6 @@
     "nextAmountChanging": "Your contribution will change to {nextAmount} on {renewalDate}.",
     "paymentHistory": {
       "empty": "Past payments and their invoices will show up here.",
-      "status": {},
       "title": "Payment history"
     },
     "paymentMethod": "Payment method",
