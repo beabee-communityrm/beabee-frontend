@@ -27,7 +27,7 @@ export function defineParam<T extends LocationQueryValueRaw>(
   });
 }
 
-export function definePaginatedQuery(sortBy: string) {
+export function definePaginatedQuery(defaultSortBy: string) {
   const route = useRoute();
   const router = useRouter();
 
@@ -36,7 +36,7 @@ export function definePaginatedQuery(sortBy: string) {
 
   const sort = computed({
     get: () => ({
-      by: (route.query.sortBy as string) || sortBy,
+      by: (route.query.sortBy as string) || defaultSortBy,
       type: (route.query.sortType as SortType) || SortType.Desc,
     }),
     set: ({ by, type }) => {

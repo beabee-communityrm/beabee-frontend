@@ -451,6 +451,11 @@
     "no": "Nein",
     "noResults": "Keine Ergebnisse gefunden",
     "pageCount": "Seite {pageNumber} von {pageTotal}",
+    "paymentStatus": {
+      "cancelled": "Gekündigt",
+      "failed": "Fehlgeschlagen",
+      "pending": "In Bearbeitung"
+    },
     "role": {
       "admin": "Admin",
       "member": "Mitglied",
@@ -573,11 +578,7 @@
     "nextAmountChanging": "Ab dem {renewalDate} zahlst Du {nextAmount}.",
     "paymentHistory": {
       "empty": "Ältere Zahlungen und Rechnungen finden Sie hier.",
-      "status": {
-        "cancelled": "Gekündigt",
-        "failed": "Fehlgeschlagen",
-        "pending": "In Bearbeitung"
-      },
+      "status": {},
       "title": "Bisher gezahlte Beiträge"
     },
     "paymentMethod": "Zahlungsart",
@@ -1071,6 +1072,12 @@
       "label": "Lastschrift",
       "setLabel": "Deine Laschriftdaten"
     }
+  },
+  "payments": {
+    "data": {}
+  },
+  "paymentsAdmin": {
+    "filter": {}
   },
   "resetPassword": {
     "changePassword": "Passwort ändern",
