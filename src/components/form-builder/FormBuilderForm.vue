@@ -333,6 +333,9 @@ onBeforeUnmount(() => {
     &.gu-transit {
       @apply mb-4 text-base !important;
     }
+    & > i {
+      @apply inline-block w-4;
+    }
   }
 
   .form-builder-panel {
