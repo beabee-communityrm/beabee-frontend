@@ -104,7 +104,6 @@ addBreadcrumb(
 
 const steps = ref<CalloutStepsProps>();
 const status = ref<ItemStatus>();
-const lastSaved = ref<Date>();
 
 const now = ref(new Date());
 
@@ -159,7 +158,6 @@ async function saveCallout(asDraft = false) {
     ? await updateCallout(props.id, dataWithDefaults)
     : await createCallout(dataWithDefaults);
 
-  lastSaved.value = new Date();
   return callout;
 }
 
