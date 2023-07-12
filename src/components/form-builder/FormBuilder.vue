@@ -78,7 +78,7 @@
     </div>
 
     <div class="min-h-[32rem]">
-      <ContentFormBuilder
+      <FormBuilderForm
         ref="formBuilderRef"
         :form="modelValue"
         @change="handleChange"
@@ -86,7 +86,7 @@
 
       <div v-if="isWizard" class="flex gap-8">
         <div class="z-10 max-w-2xl flex-1 bg-white p-4 pb-0 shadow-md">
-          <ContentFormNavigation
+          <FormBuilderNavigation
             :pages="modelValue.components"
             :current-page-no="currentPageNo"
           />
@@ -107,21 +107,19 @@ import {
 import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import AppButton from '../../../../button/AppButton.vue';
-import ContentFormBuilder from './ContentFormBuilder.vue';
-import ContentFormNavigation from './ContentFormNavigation.vue';
-import AppInput from '../../../../forms/AppInput.vue';
-import AppCheckbox from '../../../../forms/AppCheckbox.vue';
-import AppLabel from '../../../../forms/AppLabel.vue';
+import AppButton from '../button/AppButton.vue';
+import FormBuilderForm from './FormBuilderForm.vue';
+import FormBuilderNavigation from './FormBuilderNavigation.vue';
+import AppInput from '../forms/AppInput.vue';
+import AppCheckbox from '../forms/AppCheckbox.vue';
+import AppLabel from '../forms/AppLabel.vue';
 
 const props = defineProps<{ modelValue: CalloutFormSchema }>();
 
 const { t } = useI18n();
 
 const currentPageNo = ref(0);
-const formBuilderRef = ref<InstanceType<typeof ContentFormBuilder> | null>(
-  null
-);
+const formBuilderRef = ref<InstanceType<typeof FormBuilderForm> | null>(null);
 const showAdvancedOptions = ref(false);
 
 const isWizard = computed(() => props.modelValue.display === 'wizard');

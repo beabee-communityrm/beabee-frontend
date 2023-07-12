@@ -22,7 +22,7 @@
       />
     </AppFormSection>
 
-    <ContentForm v-model="data.formSchema" class="mt-8" />
+    <FormBuilder v-model="data.formSchema" class="mt-8" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -37,7 +37,7 @@ import RichTextEditor from '../../../../rte/RichTextEditor.vue';
 import AppFormSection from '../../../../forms/AppFormSection.vue';
 
 import AppNotification from '../../../../AppNotification.vue';
-import ContentForm from './ContentForm.vue';
+import FormBuilder from '../../../../form-builder/FormBuilder.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{

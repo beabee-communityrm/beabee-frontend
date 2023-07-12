@@ -58,11 +58,11 @@ import {
   noAuto,
 } from '@fortawesome/fontawesome-svg-core';
 import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
+import { FormBuilder } from 'vue-formio';
 import { CalloutPageSchema, CalloutFormSchema } from '@beabee/beabee-common';
-import { getPageSchema } from '../../../../../utils/callouts';
+import { getPageSchema } from '../../utils/callouts';
 
 import 'formiojs/dist/formio.builder.css';
-import { FormBuilder } from 'vue-formio';
 
 interface FormBuilderRef {
   form: CalloutFormSchema;

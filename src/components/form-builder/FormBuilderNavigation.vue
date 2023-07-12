@@ -51,9 +51,9 @@
 <script lang="ts" setup>
 import { CalloutPageSchema } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
-import AppInput from '../../../../forms/AppInput.vue';
-import AppCheckbox from '../../../../forms/AppCheckbox.vue';
-import AppSelect from '../../../../forms/AppSelect.vue';
+import AppInput from '../forms/AppInput.vue';
+import AppCheckbox from '../forms/AppCheckbox.vue';
+import AppSelect from '../forms/AppSelect.vue';
 import { computed } from 'vue';
 
 const props = defineProps<{
