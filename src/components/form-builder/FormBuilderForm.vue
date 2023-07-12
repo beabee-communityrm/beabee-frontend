@@ -50,6 +50,7 @@ import {
   faSquareMinus,
   faDownload,
   faRefresh,
+  faCodeBranch,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   config,
@@ -61,6 +62,8 @@ import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
 import { FormBuilder } from 'vue-formio';
 import { CalloutPageSchema, CalloutFormSchema } from '@beabee/beabee-common';
 import { getPageSchema } from '../../utils/callouts';
+
+import './components/Decision';
 
 import 'formiojs/dist/formio.builder.css';
 
@@ -156,6 +159,13 @@ const formOpts = {
     custom2: {
       title: 'Advanced',
       components: {
+        decision: {
+          title: 'Decision',
+          icon: 'code-branch',
+          schema: {
+            type: 'decision',
+          },
+        },
         address: {
           title: 'Address',
           icon: 'home',
@@ -272,6 +282,7 @@ onBeforeMount(() => {
     faPencil,
     faDownload,
     faRefresh,
+    faCodeBranch,
 
     // Use different icon names so they match
     { ...faClock, iconName: 'clock-o' as IconName },
