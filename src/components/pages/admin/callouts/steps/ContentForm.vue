@@ -64,6 +64,7 @@
             <AppButton
               variant="dangerOutlined"
               :icon="faTrash"
+              :disabled="modelValue.components.length === 1"
               @click="handleDeletePage"
             />
           </div>
