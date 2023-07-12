@@ -107,7 +107,7 @@ const lastSaved = ref<Date>();
 
 const now = ref(new Date());
 
-const isPublish = computed(
+const canStartNow = computed(
   () =>
     steps.value &&
     (steps.value.dates.startNow ||
@@ -124,10 +124,16 @@ const isNewOrDraft = computed(
   () => !status.value || status.value === ItemStatus.Draft
 );
 
+const isUpdateAction = computed(
+  () =>
+    isLive.value ||
+    (status.value === ItemStatus.Scheduled && !canStartNow.value)
+);
+
 const updateAction = computed(() =>
-  isLive.value || (status.value === ItemStatus.Scheduled && !isPublish.value)
+  isUpdateAction.value
     ? t('actions.update')
-    : isPublish.value
+    : canStartNow.value
     ? t('actions.publish')
     : t('actions.schedule')
 );
@@ -164,6 +170,9 @@ async function handleUpdate() {
       : t('calloutAdminOverview.added'),
     variant: 'success',
   });
+  if (!isUpdateAction.value) {
+    router.push({ path: '/admin/callouts/view/' + props.id });
+  }
 }
 
 async function handleSaveDraft() {
