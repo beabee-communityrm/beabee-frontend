@@ -1,6 +1,6 @@
 <template>
-  <div class="sticky top-4">
-    <div
+  <ul class="mb-4 flex gap-4">
+    <li
       v-for="(step, stepIndex) in steps"
       :key="stepIndex"
       class="flex flex-col"
@@ -36,8 +36,8 @@
         </h4>
         <p class="mt-1 text-sm text-grey">{{ step.description }}</p>
       </div>
-    </div>
-  </div>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts" setup>

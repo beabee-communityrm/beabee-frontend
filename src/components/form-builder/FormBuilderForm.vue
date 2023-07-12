@@ -464,7 +464,7 @@ onBeforeUnmount(() => {
 
   /* Hide empty shortcut column */
   .formio-component-values .table tr :nth-child(4) {
-    @apply hidden;
+    /* @apply hidden; */
   }
 }
 

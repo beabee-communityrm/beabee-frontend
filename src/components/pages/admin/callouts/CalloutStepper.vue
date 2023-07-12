@@ -1,23 +1,17 @@
 <template>
-  <div class="flex gap-8">
-    <div class="flex-0 basis-menu">
-      <AppStepper v-model="selectedStepIndex" :steps="stepsInOrder" />
-    </div>
-    <div class="flex-1">
-      <AppHeading class="mb-5">{{ selectedStep.name }}</AppHeading>
-      <component
-        :is="step.component"
-        v-for="step in stepsInOrder"
-        v-show="selectedStep === step"
-        :key="step.name"
-        v-model:data="step.data"
-        v-model:validated="step.validated"
-        v-model:error="step.error"
-        :is-active="selectedStep === step"
-        :status="status"
-      />
-    </div>
-  </div>
+  <AppStepper v-model="selectedStepIndex" :steps="stepsInOrder" />
+  <AppHeading class="mb-5">{{ selectedStep.name }}</AppHeading>
+  <component
+    :is="step.component"
+    v-for="step in stepsInOrder"
+    v-show="selectedStep === step"
+    :key="step.name"
+    v-model:data="step.data"
+    v-model:validated="step.validated"
+    v-model:error="step.error"
+    :is-active="selectedStep === step"
+    :status="status"
+  />
 </template>
 
 <script lang="ts" setup>

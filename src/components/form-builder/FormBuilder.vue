@@ -5,93 +5,93 @@
       class="mb-4"
       :label="t('calloutBuilder.showAdvancedOptions')"
     />
-    <div v-if="isWizard" class="flex gap-8">
-      <div class="max-w-2xl flex-1">
-        <ul class="mb-4 flex flex-wrap gap-4">
-          <li
-            v-for="(page, pageNo) in modelValue.components"
-            :key="page.key"
-            class="flex gap-2 rounded p-4"
-            :class="
-              currentPageNo === pageNo
-                ? 'bg-white'
-                : 'cursor-pointer bg-primary-10 hover:bg-white'
-            "
-            @click="currentPageNo = pageNo"
-          >
-            <div>
-              <font-awesome-icon
-                :icon="faGripVertical"
-                class="cursor-grab text-body-60 hover:text-body"
+    <div class="flex gap-8">
+      <ul class="flex-0 basis-menu">
+        <li
+          v-for="(page, pageNo) in modelValue.components"
+          :key="page.key"
+          class="mb-4 flex gap-2 rounded p-4"
+          :class="
+            currentPageNo === pageNo
+              ? 'bg-white'
+              : 'cursor-pointer bg-primary-10 hover:bg-white'
+          "
+          @click="currentPageNo = pageNo"
+        >
+          <div>
+            <font-awesome-icon
+              :icon="faGripVertical"
+              class="cursor-grab text-body-60 hover:text-body"
+            />
+          </div>
+          <div class="flex-1">
+            <p class="font-semibold">{{ page.title }}</p>
+            <p v-if="page.navigation.nextSlideId" class="mt-1 text-xs">
+              ↳
+              {{
+                modelValue.components.find(
+                  (p) => p.key === page.navigation.nextSlideId
+                )?.title ?? '???'
+              }}
+            </p>
+          </div>
+        </li>
+
+        <AppButton
+          variant="primary"
+          :icon="faPlus"
+          class="w-full"
+          @click="handleAddPage"
+        >
+          {{ t('calloutBuilder.actions.addSlide') }}
+        </AppButton>
+      </ul>
+
+      <div class="flex-1">
+        <div v-if="isWizard" class="flex gap-8">
+          <div class="max-w-2xl flex-1">
+            <div class="flex items-start gap-4 bg-white p-4 shadow-md">
+              <div class="flex-1">
+                <AppInput
+                  v-model="currentPageComponent.title"
+                  :label="t('calloutBuilder.internalTitle')"
+                  :info-message="t('calloutBuilder.internalTitleHelp')"
+                  maxlength="30"
+                  required
+                />
+              </div>
+              <div>
+                <AppLabel label="&nbsp" />
+                <!-- Align button with input -->
+                <AppButton
+                  variant="dangerOutlined"
+                  :icon="faTrash"
+                  :disabled="modelValue.components.length === 1"
+                  @click="handleDeletePage"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="flex-initial basis-48" />
+        </div>
+
+        <div class="min-h-[32rem]">
+          <FormBuilderForm
+            ref="formBuilderRef"
+            :form="modelValue"
+            @change="handleChange"
+          />
+
+          <div v-if="isWizard" class="flex gap-8">
+            <div class="z-10 max-w-2xl flex-1 bg-white p-4 pb-0 shadow-md">
+              <FormBuilderNavigation
+                :pages="modelValue.components"
+                :current-page-no="currentPageNo"
               />
             </div>
-            <div class="flex-1">
-              <p class="font-semibold">{{ page.title }}</p>
-              <p v-if="page.navigation.nextSlideId" class="mt-1 text-xs">
-                ↳
-                {{
-                  modelValue.components.find(
-                    (p) => p.key === page.navigation.nextSlideId
-                  )?.title ?? '???'
-                }}
-              </p>
-              <p
-                v-else-if="
-                  page.navigation.showNext &&
-                  pageNo !== modelValue.components.length - 1
-                "
-                class="mt-1 text-xs"
-              >
-                ↳ {{ modelValue.components[pageNo + 1].title }}
-              </p>
-            </div>
-          </li>
-
-          <AppButton variant="primary" :icon="faPlus" @click="handleAddPage">
-            {{ t('calloutBuilder.actions.addSlide') }}
-          </AppButton>
-        </ul>
-
-        <div class="flex items-start gap-4 bg-white p-4 shadow-md">
-          <div class="flex-1">
-            <AppInput
-              v-model="currentPageComponent.title"
-              :label="t('calloutBuilder.internalTitle')"
-              :info-message="t('calloutBuilder.internalTitleHelp')"
-              maxlength="30"
-              required
-            />
-          </div>
-          <div>
-            <AppLabel label="&nbsp" />
-            <!-- Align button with input -->
-            <AppButton
-              variant="dangerOutlined"
-              :icon="faTrash"
-              :disabled="modelValue.components.length === 1"
-              @click="handleDeletePage"
-            />
+            <div class="flex-initial basis-48"></div>
           </div>
         </div>
-      </div>
-      <div class="flex-initial basis-48" />
-    </div>
-
-    <div class="min-h-[32rem]">
-      <FormBuilderForm
-        ref="formBuilderRef"
-        :form="modelValue"
-        @change="handleChange"
-      />
-
-      <div v-if="isWizard" class="flex gap-8">
-        <div class="z-10 max-w-2xl flex-1 bg-white p-4 pb-0 shadow-md">
-          <FormBuilderNavigation
-            :pages="modelValue.components"
-            :current-page-no="currentPageNo"
-          />
-        </div>
-        <div class="flex-initial basis-48"></div>
       </div>
     </div>
   </div>
