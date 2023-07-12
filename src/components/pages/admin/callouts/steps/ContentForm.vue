@@ -52,15 +52,19 @@
           </AppButton>
         </ul>
 
-        <div class="flex items-end gap-4 bg-white p-4 shadow-md">
+        <div class="flex items-start gap-4 bg-white p-4 shadow-md">
           <div class="flex-1">
             <AppInput
               v-model="currentPageComponent.title"
               :label="t('calloutBuilder.internalTitle')"
+              :info-message="t('calloutBuilder.internalTitleHelp')"
+              maxlength="30"
               required
             />
           </div>
           <div>
+            <AppLabel label="&nbsp" />
+            <!-- Align button with input -->
             <AppButton
               variant="dangerOutlined"
               :icon="faTrash"
@@ -108,6 +112,7 @@ import ContentFormBuilder from './ContentFormBuilder.vue';
 import ContentFormNavigation from './ContentFormNavigation.vue';
 import AppInput from '../../../../forms/AppInput.vue';
 import AppCheckbox from '../../../../forms/AppCheckbox.vue';
+import AppLabel from '../../../../forms/AppLabel.vue';
 
 const props = defineProps<{ modelValue: CalloutFormSchema }>();
 

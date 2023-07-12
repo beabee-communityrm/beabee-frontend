@@ -336,7 +336,8 @@
     "actions": {
       "addSlide": "Add slide"
     },
-    "internalTitle": "Internal title",
+    "internalTitle": "Slide title",
+    "internalTitleHelp": "This is only visible internally",
     "nextButton": {
       "nextSlide": "Next slide",
       "nextSlideDefault": "-- Default --",
