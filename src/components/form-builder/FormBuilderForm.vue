@@ -66,6 +66,7 @@ import { getPageSchema } from '../../utils/callouts';
 import './components/Decision';
 
 import 'formiojs/dist/formio.builder.css';
+import './form.css';
 
 interface FormBuilderRef {
   form: CalloutFormSchema;

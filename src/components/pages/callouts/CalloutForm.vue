@@ -86,9 +86,10 @@ import CalloutGuestFields from './CalloutGuestFields.vue';
 import { createResponse } from '../../../utils/api/callout';
 import { isRequestError } from '../../../utils/api';
 import AppNotification from '../../AppNotification.vue';
-
-import 'formiojs/dist/formio.form.css';
 import AppButton from '../../button/AppButton.vue';
+
+import 'formiojs/dist/formio.builder.css';
+import '../../form-builder/form.css';
 
 interface FormSubmission {
   data: CalloutResponseAnswers;

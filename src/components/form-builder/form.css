@@ -1,0 +1,174 @@
+/* Force FormIO to fit in! Styles for renderer, builder and popup dialog */
+.callout-form,
+.callout-form-builder .formarea,
+.formio-dialog {
+  /* Input styling */
+  .form-control {
+    @apply w-full rounded border border-primary-40 bg-white p-2 focus:shadow-input focus:outline-none;
+
+    &.is-invalid {
+      @apply border-danger-70 bg-danger-10;
+    }
+  }
+
+  .row {
+    @apply flex gap-4;
+  }
+
+  .col {
+    @apply flex-1;
+  }
+
+  /* Button styling */
+  .btn:not(.component-settings-button):not(.formcomponent) {
+    @apply relative inline-flex h-10 cursor-pointer items-center justify-center whitespace-nowrap rounded bg-link px-2 text-center font-bold text-white;
+
+    &[disabled] {
+      @apply cursor-not-allowed opacity-50;
+    }
+
+    &:not([disabled]):hover {
+      @apply bg-link-110;
+    }
+
+    &.btn-success {
+      @apply bg-success;
+      &:not([disabled]):hover {
+        @apply bg-success-110;
+      }
+    }
+    &.btn-danger {
+      @apply bg-danger;
+      &:not([disabled]):hover {
+        @apply bg-danger-110;
+      }
+    }
+    &.btn-secondary {
+      @apply border border-link bg-white text-link;
+      &:not([disabled]):hover {
+        @apply bg-danger-10;
+      }
+    }
+
+    &.btn-block {
+      @apply w-full;
+    }
+
+    /* Align font-awesome icons */
+    &.svg-inline--fa {
+      @apply box-content align-top;
+    }
+  }
+
+  /* Choice select widget styling */
+  .choices__list {
+    @apply align-middle;
+  }
+  .formio-choices.form-group {
+    @apply mb-0;
+  }
+
+  .input-group {
+    @apply flex items-center;
+  }
+  .input-group-append {
+    @apply ml-2;
+  }
+}
+
+/* Force FormIO to fit in! Styles for renderer (including preview) */
+.callout-form,
+.callout-form-builder .formarea,
+.formio-dialog .component-preview {
+  @apply bg-white p-6 shadow-md;
+
+  /* Hide hidden controls */
+  .formio-hidden {
+    @apply hidden !important;
+  }
+
+  /* Hide wizard pagination */
+  .pagination,
+  .formio-wizard-nav-container {
+    @apply hidden;
+  }
+
+  /* Standard spacing for questions and flex to manipulate order */
+  .formio-component-content,
+  .form-group {
+    @apply mb-8 flex flex-col;
+
+    &.formio-component-button {
+      @apply block;
+    }
+  }
+
+  /* Label always goes at the top, styled like .content-message h3 */
+  .col-form-label {
+    @apply -order-2 mb-2 block font-title text-xl font-semibold;
+  }
+  /* Description goes next */
+  .form-text {
+    @apply -order-1 mb-2 text-body-80;
+  }
+
+  /* Subtle style for check boxes */
+  .formio-editor-read-only-content,
+  .form-check-input {
+    @apply accent-link;
+  }
+
+  /* Inline checkboxes */
+  .form-check-inline {
+    @apply mr-4 inline-block;
+  }
+
+  /* Block checkboxes */
+  .form-check-label {
+    @apply flex items-baseline;
+
+    .form-check-input {
+      @apply mr-2 flex-none;
+    }
+  }
+
+  .formio-select-autocomplete-input {
+    @apply absolute -z-10 opacity-0;
+  }
+
+  /* Equal columns for column component */
+  .formio-component-columns > [class^='col'] {
+    @apply flex-1;
+  }
+
+  .formio-component-panel > .card {
+    @apply mb-0 border-0;
+
+    & > .card-header {
+      @apply hidden;
+    }
+  }
+
+  /* Styling for input errors */
+  .formio-errors {
+    @apply text-sm font-semibold;
+
+    .form-text {
+      @apply mb-0 text-danger;
+    }
+  }
+
+  /* Add required asterisk */
+  .field-required::after {
+    @apply text-danger;
+    content: '*';
+  }
+}
+
+/* Match header margin to form labels */
+.formio-component-content,
+.formio-dialog .formio-component-html .ck-content {
+  h3 {
+    @apply mb-2;
+  }
+}
