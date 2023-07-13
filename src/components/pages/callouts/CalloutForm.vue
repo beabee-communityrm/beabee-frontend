@@ -68,10 +68,6 @@
   </form>
 </template>
 <script lang="ts" setup>
-import {
-  CalloutPageSchema,
-  CalloutResponseAnswers,
-} from '@beabee/beabee-common';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { computed, onBeforeMount, reactive, ref } from 'vue';
@@ -87,33 +83,13 @@ import { createResponse } from '../../../utils/api/callout';
 import { isRequestError } from '../../../utils/api';
 import AppNotification from '../../AppNotification.vue';
 import AppButton from '../../button/AppButton.vue';
+import {
+  FormRef,
+  FormSubmission,
+} from '../../form-builder/form-builder.interface';
 
 import 'formiojs/dist/formio.builder.css';
 import '../../form-builder/form.css';
-
-interface FormSubmission {
-  data: CalloutResponseAnswers;
-}
-
-interface FormRef {
-  formio: {
-    getPageIndexByKey(key: string): number;
-    setPage(n: number): Promise<void>;
-    nextPage(): Promise<void>;
-    prevPage(): Promise<void>;
-    checkValidity(
-      data: CalloutResponseAnswers,
-      dirty: boolean,
-      row: CalloutResponseAnswers,
-      currentPageOnly: boolean
-    ): boolean;
-    submit(): Promise<FormSubmission>;
-
-    components: CalloutPageSchema[];
-    currentPage: CalloutPageSchema;
-    localData: CalloutResponseAnswers;
-  };
-}
 
 const emit = defineEmits<{ (e: 'submitted'): void }>();
 const props = defineProps<{
