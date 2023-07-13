@@ -147,8 +147,8 @@ export const formOpts = {
 };
 
 export interface FormBuilderRef {
-  form: CalloutFormSchema;
   builder: {
+    form: CalloutFormSchema;
     instance: {
       addPage(page: { schema: CalloutPageSchema }): void;
       removePage(page: number): void;

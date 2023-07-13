@@ -72,7 +72,7 @@ import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { computed, onBeforeMount, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { Form } from 'vue-formio';
+import { Form } from '@formio/vue';
 import {
   GetCalloutDataWith,
   GetCalloutResponseDataWith,

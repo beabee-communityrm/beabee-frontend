@@ -59,7 +59,7 @@ import {
   noAuto,
 } from '@fortawesome/fontawesome-svg-core';
 import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
-import { FormBuilder } from 'vue-formio';
+import { FormBuilder } from '@formio/vue';
 import { CalloutPageSchema, CalloutFormSchema } from '@beabee/beabee-common';
 import { getPageSchema } from '../../utils/callouts';
 
@@ -79,7 +79,7 @@ const formBuilderRef = ref<FormBuilderRef | null>(null);
 
 function handleChange() {
   if (!formBuilderRef.value) return; // Can't change without being loaded
-  emit('change', formBuilderRef.value.form.components);
+  emit('change', formBuilderRef.value.builder.form.components);
 }
 
 function addPage() {
