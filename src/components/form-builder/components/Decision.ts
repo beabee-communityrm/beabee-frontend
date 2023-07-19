@@ -23,8 +23,21 @@ export class Decision extends Radio {
   }
 }
 
+const oldEditForm = Radio.editForm.bind(Radio);
+
+Radio.editForm = (...args) => {
+  const editForm = oldEditForm(...args);
+
+  // // Remove shortcut
+  console.log(editForm.components[0].components[1]);
+  editForm.components[0].components[1].components[1].components.splice(2, 1);
+  return editForm;
+};
+
 Decision.editForm = (...args) => {
-  const editForm = Radio.editForm(...args);
+  const editForm = oldEditForm(...args);
+
+  // Replace shortcut with next slide
   const valuesGrid = editForm.components[0].components[1].components[1];
   valuesGrid.defaultValue = [{ label: '', value: '', nextPageKey: '' }];
 
