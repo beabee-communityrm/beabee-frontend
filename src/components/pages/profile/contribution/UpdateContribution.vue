@@ -1,9 +1,7 @@
 <template>
   <div>
     <form @submit.prevent="handleSubmit">
-      <AppHeading class="mb-2">
-        {{ t('contribution.updateContribution') }}
-      </AppHeading>
+      <AppHeading class="mb-2">{{ buttonText }}</AppHeading>
 
       <p v-if="isManualActiveMember" class="mb-4">
         {{
@@ -63,17 +61,10 @@
         class="mb-4 w-full"
         :loading="loading"
       >
-        {{
-          isManualActiveMember
-            ? t('contribution.updatePaymentType')
-            : isActiveMember
-            ? t('contribution.updateContribution')
-            : isExpiringMember
-            ? t('contribution.restartContribution')
-            : t('contribution.startContribution')
-        }}
+        {{ buttonText }}
       </AppButton>
     </form>
+
     <AppModal
       v-if="stripeClientSecret"
       :open="stripePaymentLoaded"
@@ -180,6 +171,16 @@ const canSubmit = computed(
     !isAutoActiveMember.value ||
     props.modelValue.amount != newContribution.amount ||
     props.modelValue.payFee != newContribution.payFee
+);
+
+const buttonText = computed(() =>
+  isManualActiveMember.value
+    ? t('contribution.updatePaymentType')
+    : isActiveMember.value
+    ? t('contribution.updateContribution')
+    : isExpiringMember.value
+    ? t('contribution.restartContribution')
+    : t('contribution.startContribution')
 );
 
 async function handleCreate() {
