@@ -6,7 +6,14 @@
       </AppHeading>
 
       <p v-if="isManualActiveMember" class="mb-4">
-        {{ t('contribution.manualPayment') }}
+        {{
+          t('contribution.manualPayment', {
+            source:
+              (modelValue.paymentSource?.method === null &&
+                modelValue.paymentSource.source) ||
+              t('contribution.manualPaymentSource'),
+          })
+        }}
       </p>
 
       <AppNotification

@@ -575,7 +575,7 @@
     "expired": "Deine Mitgliedschaft ist ausgelaufen.",
     "expiredText": "Möchtest Du deine Mitgliedschaft verlängern? Selbst kleinste Beträge helfen uns und unserer Arbeit. Danke!",
     "hasPendingPayment": "Deine Zahlung wird gerade verarbeitet.",
-    "manualPayment": "Du leistest deinen Beitrag aktuell manuell via Banküberweisung. Richte hier jetzt eine automatische Abbuchung via Lastschrift ein. Dann wird es für dich leichter, deine Beiträge zu verwalten. Und wir bekommen einen besseren Überblick, auf welche Beiträge wir uns monatlich verlassen können.",
+    "manualPayment": "Du leistest deinen Beitrag aktuell manuell via Banküberweisung, einen Drittanbieter o.ä.. Richte hier jetzt eine automatische Abbuchung via Lastschrift oder Kreditkarte ein. Dann wird es für dich leichter, deine Beiträge zu verwalten. Und wir bekommen einen besseren Überblick, auf welche Beiträge wir uns monatlich verlassen können.",
     "nextAmountChanging": "Ab dem {renewalDate} zahlst Du {nextAmount}.",
     "paymentHistory": {
       "empty": "Ältere Zahlungen und Rechnungen finden Sie hier.",
@@ -593,7 +593,7 @@
     "startContribution": "Mitgliedschaft beginnen",
     "startedContribution": "Deine Mitgliedschaft hat begonnen.",
     "updateContribution": "Beitrag aktualisieren",
-    "updatePaymentType": "Neuen Zahlungsweg einrichten",
+    "updatePaymentType": "Neue Zahlungsmethode einrichten",
     "updatedContribution": "Dein Beitrag wurde geändert.",
     "updatedPaymentSource": "Deine Zahlungsart wurde aktualisiert. ",
     "willExpire": "Deine Mitgliedschaft läuft in {expires} ab.",
