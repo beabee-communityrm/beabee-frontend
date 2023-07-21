@@ -153,7 +153,7 @@ meta:
         <AppButton type="submit" variant="primaryOutlined" class="mt-4">{{
           t('contactOverview.security.loginOverride')
         }}</AppButton>
-        <AppButton type="submit" variant="primaryOutlined" class="mt-2 ml-6">{{
+        <AppButton type="submit" variant="primaryOutlined" class="ml-6 mt-2">{{
           t('contactOverview.security.resetPassword')
         }}</AppButton>
       </form>

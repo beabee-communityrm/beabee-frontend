@@ -17,7 +17,7 @@
     >
       <p class="align-middle">
         <font-awesome-icon
-          class="mr-2 ml-2 inline-block cursor-pointer"
+          class="ml-2 mr-2 inline-block cursor-pointer"
           :icon="faCaretDown"
         />
         {{ t('contactOverview.pickTag') }}
@@ -30,7 +30,7 @@
           @click="handleAddTag(tag)"
         >
           <font-awesome-icon
-            class="mr-2 ml-2 inline-block cursor-pointer"
+            class="ml-2 mr-2 inline-block cursor-pointer"
             :icon="faTag"
           />
           {{ tag }}

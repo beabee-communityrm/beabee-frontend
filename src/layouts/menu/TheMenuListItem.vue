@@ -7,7 +7,7 @@
 
     <span class="ml-2 md:hidden xl:inline-block">{{ title }}</span>
     <span
-      class="absolute left-full hidden whitespace-nowrap rounded bg-black py-1 px-2 text-sm text-white md:max-xl:group-hover:block"
+      class="absolute left-full hidden whitespace-nowrap rounded bg-black px-2 py-1 text-sm text-white md:max-xl:group-hover:block"
     >
       <span
         class="absolute right-full top-1/2 h-0 w-0 -translate-y-1/2 border-y-4 border-r-4 border-y-white/0 border-r-black"

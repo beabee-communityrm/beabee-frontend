@@ -20,7 +20,7 @@
     <div class="clear-left" />
 
     <font-awesome-icon
-      class="absolute top-4 right-4 cursor-pointer text-2xl"
+      class="absolute right-4 top-4 cursor-pointer text-2xl"
       :icon="faTimes"
       @click="$emit('close')"
     />
