@@ -110,6 +110,8 @@ const editor = useEditor({
     }),
     Typeography,
   ],
+  enableInputRules: false,
+  enablePasteRules: false,
   onUpdate: () => {
     if (editor.value) {
       emit(
