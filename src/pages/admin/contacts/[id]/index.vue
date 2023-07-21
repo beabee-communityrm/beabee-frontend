@@ -200,6 +200,8 @@ const props = defineProps<{
   contact: GetContactData;
 }>();
 
+// TODO: remove this when we rework how the contact is passed to child pages
+// eslint-disable-next-line vue/no-dupe-keys
 const contact = ref<GetContactDataWith<
   'profile' | 'contribution' | 'roles'
 > | null>(null);
