@@ -6,7 +6,7 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . ./
-RUN NODE_ENV=production npx vite build
+RUN NODE_ENV=production npx vite build && npx vite build -c vite.config.public.ts
 
 FROM nginx:1.24-alpine
 

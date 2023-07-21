@@ -20,6 +20,7 @@ export default ({ command, mode }) => {
     pages(),
   ];
 
+  // Use environment variables when developing locally
   if (command === 'serve') {
     plugins.push(
       replace({
@@ -42,6 +43,7 @@ export default ({ command, mode }) => {
     plugins,
     server: {
       port: 3000,
+      // Proxy API requests to the backend
       proxy: {
         '^/(api|login|upload|uploads|favicon.png)': {
           target: env.API_PROXY_URL,
@@ -52,6 +54,7 @@ export default ({ command, mode }) => {
         },
       },
     },
+    // Useful for linking beabee-common locally
     ...(command === 'serve' && {
       optimizeDeps: {
         exclude: ['@beabee/beabee-common'],
