@@ -106,7 +106,7 @@ meta:
             required
           />
         </div>
-        <h4 class="mt-6 mb-2 font-title text-lg font-bold text-body-60">
+        <h4 class="mb-2 mt-6 font-title text-lg font-bold text-body-60">
           {{ t('adminSettings.general.footer.dataPrivacy.title') }}
         </h4>
         <div class="mb-4">
@@ -131,7 +131,7 @@ meta:
             type="url"
           />
         </div>
-        <h4 class="mt-6 mb-2 font-title text-lg font-bold text-body-60">
+        <h4 class="mb-2 mt-6 font-title text-lg font-bold text-body-60">
           {{ t('adminSettings.general.footer.otherLinks.title') }}
         </h4>
         <div

@@ -47,7 +47,13 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
-import { email, helpers, requiredIf, sameAs, url } from '@vuelidate/validators';
+import {
+  email,
+  helpers,
+  requiredIf,
+  sameAs as sameAsValidator,
+  url,
+} from '@vuelidate/validators';
 import AppInputHelp from './AppInputHelp.vue';
 import AppLabel from './AppLabel.vue';
 
@@ -119,7 +125,10 @@ const rules = computed(() => ({
       ),
     }),
     ...(props.sameAs !== undefined && {
-      sameAs: helpers.withMessage(errorT('sameAs'), sameAs(props.sameAs)),
+      sameAs: helpers.withMessage(
+        errorT('sameAs'),
+        sameAsValidator(props.sameAs)
+      ),
     }),
     ...(props.pattern !== undefined && {
       pattern: helpers.withMessage(

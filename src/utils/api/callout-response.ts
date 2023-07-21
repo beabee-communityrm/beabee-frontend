@@ -30,7 +30,7 @@ export function deserializeCalloutResponse(response: any): any {
 }
 
 export async function fetchCalloutResponses<
-  With extends GetCalloutResponseWith = void
+  With extends GetCalloutResponseWith = void,
 >(
   query?: GetCalloutResponsesQuery,
   _with?: readonly With[]
@@ -59,7 +59,7 @@ export async function updateCalloutResponses(
 }
 
 export async function fetchCalloutResponse<
-  With extends GetCalloutResponseWith = void
+  With extends GetCalloutResponseWith = void,
 >(
   id: string,
   _with?: readonly With[]

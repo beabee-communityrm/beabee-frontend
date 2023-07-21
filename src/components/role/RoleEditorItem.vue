@@ -13,7 +13,7 @@
             : t('roleEditor.today')
         }}
       </span>
-      <div class="ml-auto -mr-3">
+      <div class="-mr-3 ml-auto">
         <AppButton variant="text" size="sm" @click="formVisible = true">{{
           t('actions.edit')
         }}</AppButton>

@@ -4,7 +4,7 @@
     :success-text="t('form.saved')"
     @submit="handleSubmit"
   >
-    <AppHeading class="mt-6 mb-2">
+    <AppHeading class="mb-2 mt-6">
       {{ t('accountPage.contactInformation') }}
     </AppHeading>
 
@@ -16,7 +16,7 @@
     />
 
     <template v-if="accountContent.showNewsletterOptIn && isAdmin">
-      <AppHeading class="mt-6 mb-2">
+      <AppHeading class="mb-2 mt-6">
         {{ t('accountPage.newsletter.title') }}
       </AppHeading>
 
@@ -47,7 +47,7 @@
       />
     </template>
 
-    <AppHeading class="mt-6 mb-2">
+    <AppHeading class="mb-2 mt-6">
       {{ t('accountPage.deliveryAddress') }}
     </AppHeading>
 

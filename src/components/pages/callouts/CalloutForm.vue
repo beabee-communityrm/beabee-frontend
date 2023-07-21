@@ -6,7 +6,7 @@
     <div class="flex-1">
       <AppHeading class="mb-5">{{ selectedStep.name }}</AppHeading>
       <component
-        :is="step.component"
+        :is="step.component as any /* TODO: how to type this? */"
         v-for="step in stepsInOrder"
         v-show="selectedStep === step"
         :key="step.name"

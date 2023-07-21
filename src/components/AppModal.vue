@@ -11,7 +11,7 @@
         @click.stop
       >
         <button
-          class="absolute top-0 right-0 h-8 w-8 hover:text-primary"
+          class="absolute right-0 top-0 h-8 w-8 hover:text-primary"
           type="button"
           @click="$emit('close')"
         >

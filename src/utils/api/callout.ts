@@ -81,7 +81,7 @@ export async function deleteCallout(slug: string): Promise<void> {
 }
 
 export async function fetchResponses<
-  With extends GetCalloutResponseWith = void
+  With extends GetCalloutResponseWith = void,
 >(
   slug: string,
   query?: GetCalloutResponsesQuery,
