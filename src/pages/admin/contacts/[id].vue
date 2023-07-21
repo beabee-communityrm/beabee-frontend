@@ -11,7 +11,7 @@ meta:
 
     <AppTabs
       :items="tabs"
-      :selected="route.name ? route.name as string : null"
+      :selected="route.name ? (route.name as string) : null"
     />
 
     <router-view :contact="contact"></router-view>
