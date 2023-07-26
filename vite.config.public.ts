@@ -13,7 +13,7 @@ export default () => {
           entryFileNames: '[name].js',
         },
       },
-      emptyOutDir: true,
+      emptyOutDir: false,
     },
     plugins,
   });
