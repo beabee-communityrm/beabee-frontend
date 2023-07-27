@@ -365,7 +365,8 @@ type CalloutResponseAnswer =
   | number
   | null
   | undefined
-  | Record<string, boolean>;
+  | Record<string, boolean>
+  | { geometry: { location: { lat: number; lng: number } } };
 export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
 
 export interface GetCalloutResponseData {
