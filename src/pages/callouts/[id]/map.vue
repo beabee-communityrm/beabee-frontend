@@ -107,9 +107,10 @@ const zoom = ref(3);
 
 const selectedResponse = computed(
   () =>
-    responsesSource.value.features[+route.hash.slice(hashPrefix.length)] as
+    route.hash.startsWith(hashPrefix) &&
+    (responsesSource.value.features[+route.hash.slice(hashPrefix.length)] as
       | GeoJSON.Feature<GeoJSON.Point>
-      | undefined
+      | undefined)
 );
 
 const responsesSource = computed<GeoJSON.FeatureCollection>(() => ({
