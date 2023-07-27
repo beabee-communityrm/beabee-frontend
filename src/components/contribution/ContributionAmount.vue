@@ -54,11 +54,11 @@
         v-for="(definedAmount, index) in definedAmounts"
         :key="index"
         type="button"
-        class="flex-grow basis-[90px] bg-white p-2 text-sm font-semibold outline outline-1 outline-primary-40"
+        class="flex-grow basis-[90px] p-2 text-sm font-semibold outline outline-1"
         :class="
           definedAmount === amount
-            ? 'z-20 bg-link font-bold text-white !outline-link-110'
-            : 'hover:z-10 hover:bg-link-10 hover:outline-link'
+            ? 'z-20 bg-link font-bold text-white outline-link-110'
+            : 'bg-white outline-primary-40 hover:z-10 hover:bg-link-10 hover:outline-link'
         "
         @click="changeAmount(definedAmount)"
       >
