@@ -131,7 +131,11 @@ meta:
         :key="response.id + editMode /* Form doesn't respect reactivity */"
         :form="callout.formSchema"
         :submission="{ data: response.answers }"
-        :options="{ readOnly: !editMode, noAlerts: true }"
+        :options="{
+          readOnly: !editMode,
+          noAlerts: true,
+          renderMode: editMode ? 'form' : 'html',
+        }"
         @submit="handleEditResponse"
       />
     </div>
