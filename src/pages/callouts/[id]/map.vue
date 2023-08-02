@@ -18,7 +18,12 @@ meta:
         @map:click="handleClick"
         @map:mousemove="handleMouseOver"
       >
-        <MglGeoJsonSource source-id="responses" :data="responsesSource" cluster>
+        <MglGeoJsonSource
+          source-id="responses"
+          :data="responsesSource"
+          cluster
+          :cluster-max-zoom="12"
+        >
           <MglCircleLayer
             layer-id="clusters"
             :filter="['has', 'point_count']"
