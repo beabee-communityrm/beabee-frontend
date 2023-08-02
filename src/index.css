@@ -231,14 +231,18 @@
     content: '*';
   }
 
+  /* Except if the form is in read only model */
+  .formio-read-only .field-required::after {
+    @apply hidden;
+  }
+
+  /* Styles for file upload component */
   .list-group {
     @apply border border-primary-20 rounded mb-4;
   }
-
   .list-group-header {
     @apply p-2 bg-primary-10 rounded-t;
   }
-
   .list-group-item {
     @apply p-2 border-b border-primary-20;
     &:last-child {
