@@ -77,6 +77,13 @@ meta:
       v-if="selectedResponse"
       class="absolute left-0 inset-y-0 bg-white p-8 w-full max-w-lg overflow-scroll shadow-lg"
     >
+      <button
+        class="absolute right-2 top-2 h-10 w-10 hover:text-primary text-2xl"
+        type="button"
+        @click="router.push({ hash: '' })"
+      >
+        <font-awesome-icon :icon="faTimes" />
+      </button>
       <div
         v-if="selectedPhotos.length > 0"
         class="relative overflow-hidden mb-4 -mx-4"
@@ -162,6 +169,7 @@ import 'vue-maplibre-gl/dist/vue-maplibre-gl.css';
 import {
   faChevronLeft,
   faChevronRight,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps<{ id: string }>();
@@ -247,9 +255,13 @@ function handleClick(e: { event: MapMouseEvent; map: Map }) {
       const pointFeatures = e.map.queryRenderedFeatures(e.event.point, {
         layers: ['unclustered-points'],
       });
-      if (pointFeatures.length > 0) {
-        router.push({ hash: hashPrefix + pointFeatures[0].properties?.id });
-      }
+
+      router.push({
+        hash:
+          pointFeatures.length > 0
+            ? hashPrefix + pointFeatures[0].properties?.id
+            : '',
+      });
     }
   } catch (err) {
     // Map probably isn't loaded loaded yet
