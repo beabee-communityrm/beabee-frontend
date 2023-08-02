@@ -11,6 +11,7 @@ export const validFonts = {
   'roboto-slab': ['Roboto Slab', 'serif'],
   rubik: ['Rubik', 'sans-serif'],
   ubuntu: ['Ubuntu', 'sans-serif'],
+  'work-sans': ['Work Sans', 'sans-serif'],
 };
 
 type FontId = keyof typeof validFonts;
