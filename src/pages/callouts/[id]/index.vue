@@ -142,6 +142,9 @@ import {
   faShare,
   faThumbsUp,
   faCalendar,
+  faCross,
+  faCloudUpload,
+  faRemove,
 } from '@fortawesome/free-solid-svg-icons';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import AppNotification from '../../../components/AppNotification.vue';
@@ -288,7 +291,7 @@ async function handleSubmitResponse(submission: FormSubmission) {
 }
 
 onBeforeMount(async () => {
-  library.add(faCalendar);
+  library.add(faCalendar, faCross, faCloudUpload, faRemove);
   dom.watch();
 
   formError.value = '';
