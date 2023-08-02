@@ -89,8 +89,10 @@ async function uploadFile(file: File) {
     },
   });
 
-  const newUrl = `${env.appUrl}/uploads/${props.width}x${props.height}/${resp.data.hash}`;
-  emit('update:modelValue', newUrl);
+  emit(
+    'update:modelValue',
+    `${resp.data.url}?w=${props.width}&h=${props.height}`
+  );
 
   uploading.value = false;
 }
