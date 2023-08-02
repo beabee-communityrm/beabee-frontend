@@ -41,8 +41,7 @@ meta:
             :paint="{ 'text-color': 'white' }"
             :layout="{
               'text-field': '{point_count_abbreviated}',
-              'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-              'text-size': 12,
+              'text-size': 16,
             }"
           />
           <MglCircleLayer
@@ -72,16 +71,17 @@ meta:
       </MglMap>
     </div>
     <PageTitle :title="callout.title" class="absolute top-8 left-8" />
-    <div
+    <!-- Side panel width reference to offset map center -->
+    <div ref="sidePanelRef" class="absolute left-0 max-w-lg w-[40%]" />
+    <aside
       v-if="selectedResponse"
-      class="absolute left-0 top-0 bottom-0 bg-white p-8 max-w-lg w-[40%] overflow-scroll shadow-lg"
+      class="absolute left-0 inset-y-0 bg-white p-8 max-w-lg w-[40%] overflow-scroll shadow-lg"
     >
       <div class="callout-form-map">
         <div
           v-if="selectedPhotos.length > 0"
           class="relative overflow-hidden mb-4"
         >
-          {{ currentPhotoIndex }}
           <ul
             class="flex items-center transition-transform"
             :style="{ transform: `translateX(${currentPhotoIndex * -100}%)` }"
@@ -129,7 +129,7 @@ meta:
           :options="{ readOnly: true, noAlerts: true, renderMode: 'html' }"
         />
       </div>
-    </div>
+    </aside>
   </div>
 </template>
 
@@ -178,6 +178,7 @@ const hashPrefix = '#response-' as const;
 const titleProp = '';
 const photosProp = 'file';
 
+const sidePanelRef = ref<HTMLElement>();
 const callout = ref<GetCalloutDataWith<'form' | 'mapSchema'>>();
 const responses = ref<GetCalloutResponseMapData[]>([]);
 const center = ref<LngLatLike>([0, 0]);
@@ -225,50 +226,54 @@ watch(selectedPhotos, () => {
 
 // Zoom to a cluster or open a response
 function handleClick(e: { event: MapMouseEvent; map: Map }) {
-  if (!e.map.loaded()) return;
+  try {
+    const clusterPoints = e.map.queryRenderedFeatures(e.event.point, {
+      layers: ['clusters'],
+    }) as GeoJSON.Feature<GeoJSON.Point>[];
 
-  const clusterFeatures = e.map.queryRenderedFeatures(e.event.point, {
-    layers: ['clusters'],
-  });
+    if (clusterPoints.length > 0) {
+      const firstPoint = clusterPoints[0] as GeoJSON.Feature<GeoJSON.Point>;
+      const source = e.map.getSource('responses') as GeoJSONSource;
 
-  if (clusterFeatures.length > 0) {
-    const point = clusterFeatures[0] as GeoJSON.Feature<GeoJSON.Point>;
-    const source = e.map.getSource('responses') as GeoJSONSource;
+      source.getClusterExpansionZoom(
+        firstPoint.properties?.cluster_id,
+        (err, zoom) => {
+          if (err || zoom == null) return;
 
-    source.getClusterExpansionZoom(
-      point.properties?.cluster_id,
-      (err, zoom) => {
-        if (err || zoom == null) return;
-
-        e.map.easeTo({
-          center: point.geometry.coordinates as LngLatLike,
-          zoom: zoom,
-        });
+          e.map.easeTo({
+            center: firstPoint.geometry.coordinates as LngLatLike,
+            zoom: zoom + 1.5,
+          });
+        }
+      );
+    } else {
+      const pointFeatures = e.map.queryRenderedFeatures(e.event.point, {
+        layers: ['unclustered-points'],
+      });
+      if (pointFeatures.length > 0) {
+        router.push({ hash: hashPrefix + pointFeatures[0].properties?.id });
       }
-    );
-  } else {
-    const pointFeatures = e.map.queryRenderedFeatures(e.event.point, {
-      layers: ['unclustered-points'],
-    });
-    if (pointFeatures.length > 0) {
-      router.push({ hash: hashPrefix + pointFeatures[0].properties?.id });
     }
+  } catch (err) {
+    // Map probably isn't loaded loaded yet
   }
 }
 
 // Add a cursor when hovering over a cluster or a point
 function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
-  if (!e.map.loaded()) return;
+  try {
+    const features = e.map.queryRenderedFeatures(e.event.point, {
+      layers: ['clusters', 'unclustered-points'],
+    });
 
-  const features = e.map.queryRenderedFeatures(e.event.point, {
-    layers: ['clusters', 'unclustered-points'],
-  });
-
-  // TODO: debounce or check for change?
-  if (features.length > 0) {
-    e.map.getCanvas().style.cursor = 'pointer';
-  } else {
-    e.map.getCanvas().style.cursor = '';
+    // TODO: debounce or check for change?
+    if (features.length > 0) {
+      e.map.getCanvas().style.cursor = 'pointer';
+    } else {
+      e.map.getCanvas().style.cursor = '';
+    }
+  } catch (err) {
+    // Map probably isn't loaded loaded yet
   }
 }
 
@@ -277,7 +282,7 @@ watch(selectedResponse, (newResponse) => {
 
   map.map.easeTo({
     center: newResponse.geometry.coordinates as LngLatLike,
-    zoom: callout.value?.mapSchema.maxZoom,
+    padding: { left: sidePanelRef.value?.offsetWidth || 0 },
   });
 });
 
