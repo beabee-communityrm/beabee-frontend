@@ -70,66 +70,63 @@ meta:
         </MglGeoJsonSource>
       </MglMap>
     </div>
+
     <PageTitle :title="callout.title" class="absolute top-8 left-8" />
-    <!-- Side panel width reference to offset map center -->
-    <div ref="sidePanelRef" class="absolute left-0 max-w-lg w-[40%]" />
+
     <aside
       v-if="selectedResponse"
-      class="absolute left-0 inset-y-0 bg-white p-8 max-w-lg w-[40%] overflow-scroll shadow-lg"
+      class="absolute left-0 inset-y-0 bg-white p-8 w-full max-w-lg overflow-scroll shadow-lg"
     >
-      <div class="callout-form-map">
-        <div
-          v-if="selectedPhotos.length > 0"
-          class="relative overflow-hidden mb-4"
+      <div
+        v-if="selectedPhotos.length > 0"
+        class="relative overflow-hidden mb-4 -mx-4"
+      >
+        <ul
+          class="flex items-center transition-transform"
+          :style="{ transform: `translateX(${currentPhotoIndex * -100}%)` }"
         >
-          <ul
-            class="flex items-center transition-transform"
-            :style="{ transform: `translateX(${currentPhotoIndex * -100}%)` }"
+          <li
+            v-for="photo in selectedPhotos"
+            :key="photo.url"
+            class="w-full flex-none p-4"
           >
-            <li
-              v-for="photo in selectedPhotos"
-              :key="photo.url"
-              class="w-full flex-none p-4"
+            <img class="w-full" :src="photo.url + '?w=600&h=600'" />
+          </li>
+        </ul>
+        <div
+          v-if="selectedPhotos.length > 1"
+          class="absolute top-1/2 inset-x-0 flex justify-between text-2xl font-bold transform -translate-y-1/2"
+        >
+          <div>
+            <button
+              v-show="currentPhotoIndex > 0"
+              class="bg-primary text-white w-10 h-10 rounded-full"
+              @click="currentPhotoIndex--"
             >
-              <img class="w-full" :src="photo.url + '?w=600&h=600'" />
-            </li>
-          </ul>
-          <div
-            v-if="selectedPhotos.length > 1"
-            class="absolute top-1/2 inset-x-0 flex justify-between text-4xl font-bold transform -translate-y-1/2"
-          >
-            <div>
-              <button
-                class="bg-primary text-white w-12 h-12 rounded-full"
-                :class="currentPhotoIndex === 0 ? 'hidden' : ''"
-                @click="currentPhotoIndex--"
-              >
-                <font-awesome-icon :icon="faChevronLeft" />
-              </button>
-            </div>
-            <div>
-              <button
-                class="bg-primary text-white w-12 h-12 rounded-full"
-                :class="
-                  currentPhotoIndex === selectedPhotos.length - 1
-                    ? 'hidden'
-                    : ''
-                "
-                @click="currentPhotoIndex++"
-              >
-                <font-awesome-icon :icon="faChevronRight" />
-              </button>
-            </div>
+              <font-awesome-icon :icon="faChevronLeft" />
+            </button>
+          </div>
+          <div>
+            <button
+              v-show="currentPhotoIndex < selectedPhotos.length - 1"
+              class="bg-primary text-white w-10 h-10 rounded-full"
+              @click="currentPhotoIndex++"
+            >
+              <font-awesome-icon :icon="faChevronRight" />
+            </button>
           </div>
         </div>
-        <Form
-          :key="selectedResponse.properties?.id"
-          :form="callout.formSchema"
-          :submission="{ data: selectedResponse.properties }"
-          :options="{ readOnly: true, noAlerts: true, renderMode: 'html' }"
-        />
       </div>
+      <Form
+        :key="selectedResponse.properties?.id"
+        class="callout-form-simple"
+        :form="callout.formSchema"
+        :submission="{ data: selectedResponse.properties }"
+        :options="{ readOnly: true, noAlerts: true, renderMode: 'html' }"
+      />
     </aside>
+    <!-- Side panel width reference to offset map center -->
+    <div ref="sidePanelRef" class="absolute left-0 w-full max-w-lg" />
   </div>
 </template>
 
@@ -297,7 +294,7 @@ onBeforeMount(async () => {
 </script>
 
 <style>
-.callout-form-map {
+.callout-form-simple {
   .form-group {
     @apply mb-1;
   }
