@@ -1,42 +1,12 @@
-<!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div>
-    <AppNotification
-      v-if="wasJustReplicated"
-      variant="success"
-      class="mb-4"
-      :title="t('editCallout.replicated')"
-    />
-    <AppNotification
-      v-if="warnAboutEditing"
-      variant="warning"
-      class="mb-4"
-      :title="t('editCallout.warning')"
-    />
-
-    <AppFormSection :help="inputT('intro.help')">
-      <RichTextEditor
-        v-model="data.introText"
-        :label="inputT('intro.label')"
-        required
-      />
-    </AppFormSection>
-    <div class="callout-form-builder mt-8">
-      <FormBuilderVue
-        ref="formBuilderRef"
-        :form="data.formSchema"
-        :options="formOpts"
-        @change="handleFormChange"
-      />
-    </div>
-  </div>
+  <FormBuilderVue
+    ref="formBuilderRef"
+    :form="form"
+    :options="formOpts"
+    @change="handleChange"
+  />
 </template>
 <script lang="ts" setup>
-import { ItemStatus } from '@beabee/beabee-common';
-import useVuelidate from '@vuelidate/core';
-import { onBeforeMount, ref, watch } from 'vue';
-import { FormBuilder as FormBuilderVue } from 'vue-formio';
-import { FormBuilder } from 'formiojs';
 import {
   faQuestionCircle,
   faTerminal,
@@ -75,61 +45,176 @@ import {
   faUsd,
   faList,
   faPencil,
+  faRefresh,
 } from '@fortawesome/free-solid-svg-icons';
-import { dom, library } from '@fortawesome/fontawesome-svg-core';
+import {
+  config,
+  dom,
+  library,
+  noAuto,
+} from '@fortawesome/fontawesome-svg-core';
+import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
 
-import { computed } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { useRoute } from 'vue-router';
-import { ContentStepProps } from '../callouts.interface';
-import RichTextEditor from '../../../rte/RichTextEditor.vue';
-import AppFormSection from '../../../forms/AppFormSection.vue';
+import { FormBuilder as FormBuilderVue } from 'vue-formio';
+import {
+  CalloutComponentSchema,
+  CalloutFormSchema,
+} from '@beabee/beabee-common';
 
 import 'formiojs/dist/formio.builder.css';
-import AppNotification from '../../../AppNotification.vue';
 
-const emit = defineEmits(['update:error', 'update:validated']);
-const props = defineProps<{
-  data: ContentStepProps;
-  status: ItemStatus | undefined;
-}>();
-
-const { t } = useI18n();
-const route = useRoute();
-const inputT = (key: string) => t('createCallout.steps.content.inputs.' + key);
-
-const warnAboutEditing = computed(
-  () => props.status === ItemStatus.Open || props.status === ItemStatus.Ended
-);
-
-const wasJustReplicated = route.query.replicated !== undefined;
-
-const validation = useVuelidate();
-
-watch(
-  [validation, props.data.formSchema],
-  () => {
-    emit('update:error', validation.value.$errors.length > 0);
-    emit(
-      'update:validated',
-      !validation.value.$invalid && props.data.formSchema.components.length > 1
-    );
-  },
-  { immediate: true }
-);
+interface FormBuilderRef {
+  form: CalloutFormSchema;
+}
 
 const formOpts = {
   builder: {
+    basic: false,
+    advanced: false,
     data: false,
     resource: false,
     premium: false,
+    layout: false,
+    custom: {
+      title: 'Basic',
+      default: true,
+      components: {
+        textfield: {
+          title: 'Text Field',
+          icon: 'terminal',
+          schema: {
+            type: 'textfield',
+          },
+        },
+        textarea: {
+          title: 'Text Area',
+          icon: 'font',
+          schema: {
+            type: 'textarea',
+          },
+        },
+        number: {
+          title: 'Number',
+          icon: 'hashtag',
+          schema: {
+            type: 'number',
+          },
+        },
+        email: {
+          title: 'Email',
+          icon: 'at',
+          schema: {
+            type: 'email',
+          },
+        },
+        url: {
+          title: 'Url',
+          icon: 'link',
+          schema: {
+            type: 'url',
+          },
+        },
+        checkbox: {
+          title: 'Checkbox',
+          icon: 'check-square',
+          schema: {
+            type: 'checkbox',
+          },
+        },
+        select: {
+          title: 'Dropdown',
+          icon: 'th-list',
+          schema: {
+            type: 'select',
+          },
+        },
+        selectboxes: {
+          title: 'Select Boxes',
+          group: 'basic',
+          icon: 'plus-square',
+          schema: {
+            type: 'selectboxes',
+          },
+        },
+        radio: {
+          title: 'Radio',
+          icon: 'dot-circle-o',
+          schema: {
+            type: 'radio',
+          },
+        },
+      },
+    },
+    custom2: {
+      title: 'Advanced',
+      components: {
+        address: {
+          title: 'Address',
+          icon: 'home',
+          schema: {
+            type: 'address',
+          },
+        },
+        phoneNumber: {
+          title: 'Phone Number',
+          icon: 'phone-square',
+          schema: {
+            type: 'phoneNumber',
+          },
+        },
+        currency: {
+          title: 'Currency',
+          icon: 'usd',
+          schema: {
+            type: 'currency',
+          },
+        },
+        datetime: {
+          title: 'Date / Time',
+          icon: 'calendar',
+          schema: {
+            type: 'datetime',
+          },
+        },
+        time: {
+          title: 'Time',
+          icon: 'clock-o',
+          schema: {
+            type: 'time',
+          },
+        },
+        signature: {
+          title: 'Signature',
+          icon: 'pencil',
+          schema: {
+            type: 'signature',
+          },
+        },
+        content: {
+          title: 'Content',
+          icon: 'html5',
+          schema: {
+            type: 'content',
+          },
+        },
+      },
+    },
   },
 };
-const formBuilderRef = ref<FormBuilder>();
 
-function handleFormChange() {
-  // eslint-disable-next-line vue/no-mutating-props
-  props.data.formSchema = formBuilderRef.value?.form;
+const emit = defineEmits<{
+  (e: 'change', components: CalloutComponentSchema[]): void;
+}>();
+
+defineProps<{
+  form: CalloutFormSchema;
+}>();
+
+const formBuilderRef = ref<FormBuilderRef>();
+
+function handleChange() {
+  if (!formBuilderRef.value) return;
+  emit('change', formBuilderRef.value.form.components);
 }
 
 onBeforeMount(() => {
@@ -162,6 +247,7 @@ onBeforeMount(() => {
     faUsd,
     faList,
     faPencil,
+    faRefresh,
 
     // Use different icon names so they match
     { ...faClock, iconName: 'clock-o' as IconName },
@@ -174,7 +260,12 @@ onBeforeMount(() => {
     { ...faTimes, iconName: 'remove' as IconName }
   );
   // This will automatically replace all <i> tags with the icons above
+  config.autoReplaceSvg = 'nest';
   dom.watch();
+});
+
+onBeforeUnmount(() => {
+  noAuto();
 });
 </script>
 <style lang="postcss">
@@ -218,18 +309,19 @@ onBeforeMount(() => {
     @apply hidden;
   }
 
-  #group-container-basic,
+  #group-container-custom,
+  #group-container-custom2,
   #group-container-layout {
     @apply flex w-full flex-col gap-1 border border-primary-10 p-2;
   }
 
   .component-settings-button {
-    @apply bg-white text-center;
+    @apply h-auto w-8 bg-white text-center text-base;
   }
 }
 
 .formio-dialog {
-  @apply font-body text-sm text-body !important;
+  @apply font-body text-base text-body !important;
 
   .formio-dialog-content {
     @apply bg-white !important;
@@ -352,7 +444,13 @@ onBeforeMount(() => {
   .formio-component-encrypted,
   .formio-component-clearOnHide,
   .formio-component-shortcutButtons,
-  .formio-component-validateOn {
+  .formio-component-validateOn,
+  .formio-component-custom-validation-js,
+  .formio-component-json-validation-json,
+  .formio-component-errors,
+  .formio-component-customConditionalPanel,
+  .formio-component-properties,
+  .formio-component-tags {
     @apply hidden;
   }
 }

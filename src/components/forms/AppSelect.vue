@@ -31,14 +31,7 @@
         />
       </template>
     </select>
-
-    <div
-      v-if="hasError"
-      class="mt-1.5 text-xs font-semibold text-danger"
-      role="alert"
-    >
-      {{ validation.$errors[0].$message }}
-    </div>
+    <AppInputError v-if="hasError" :message="validation.$errors[0].$message" />
   </div>
 </template>
 
@@ -49,6 +42,7 @@ import { computed } from 'vue';
 import AppLabel from './AppLabel.vue';
 import { SelectGroup, SelectItem } from './form.interface';
 import AppSelectItem from './AppSelectItem.vue';
+import AppInputError from './AppInputError.vue';
 
 function isGroup(item: SelectItem | SelectGroup): item is SelectGroup {
   return 'items' in item;

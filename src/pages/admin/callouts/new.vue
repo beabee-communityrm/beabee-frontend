@@ -37,7 +37,7 @@ meta:
         </AppAsyncButton>
       </div>
     </PageTitle>
-    <CalloutForm :steps-props="steps" :status="status" />
+    <CalloutStepper :steps-props="steps" :status="status" />
   </div>
 </template>
 
@@ -51,8 +51,8 @@ import {
   fetchCallout,
   updateCallout,
 } from '../../../utils/api/callout';
-import { CalloutStepsProps } from '../../../components/pages/callouts/callouts.interface';
-import CalloutForm from '../../../components/pages/callouts/CalloutForm.vue';
+import { CalloutStepsProps } from '../../../components/pages/admin/callouts/callouts.interface';
+import CalloutStepper from '../../../components/pages/admin/callouts/CalloutStepper.vue';
 import {
   convertCalloutToSteps,
   convertStepsToCallout,
@@ -107,7 +107,7 @@ const lastSaved = ref<Date>();
 
 const now = ref(new Date());
 
-const isPublish = computed(
+const canStartNow = computed(
   () =>
     steps.value &&
     (steps.value.dates.startNow ||
@@ -124,10 +124,16 @@ const isNewOrDraft = computed(
   () => !status.value || status.value === ItemStatus.Draft
 );
 
+const isUpdateAction = computed(
+  () =>
+    isLive.value ||
+    (status.value === ItemStatus.Scheduled && !canStartNow.value)
+);
+
 const updateAction = computed(() =>
-  isLive.value || (status.value === ItemStatus.Scheduled && !isPublish.value)
+  isUpdateAction.value
     ? t('actions.update')
-    : isPublish.value
+    : canStartNow.value
     ? t('actions.publish')
     : t('actions.schedule')
 );
@@ -164,6 +170,9 @@ async function handleUpdate() {
       : t('calloutAdminOverview.added'),
     variant: 'success',
   });
+  if (!isUpdateAction.value) {
+    router.push({ path: '/admin/callouts/view/' + props.id });
+  }
 }
 
 async function handleSaveDraft() {
