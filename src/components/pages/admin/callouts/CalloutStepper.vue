@@ -1,22 +1,17 @@
 <template>
-  <div class="flex gap-8">
-    <div class="flex-0 basis-menu">
-      <AppStepper v-model="selectedStepIndex" :steps="stepsInOrder" />
-    </div>
-    <div class="flex-1">
-      <AppHeading class="mb-5">{{ selectedStep.name }}</AppHeading>
-      <component
-        :is="step.component as any /* TODO: how to type this? */"
-        v-for="step in stepsInOrder"
-        v-show="selectedStep === step"
-        :key="step.name"
-        v-model:data="step.data"
-        v-model:validated="step.validated"
-        v-model:error="step.error"
-        :is-active="selectedStep === step"
-        :status="status"
-      />
-    </div>
+  <div>
+    <AppStepper v-model="selectedStepIndex" :steps="stepsInOrder" />
+    <component
+      :is="step.component as any /* TODO: how to type this? */"
+      v-for="step in stepsInOrder"
+      v-show="selectedStep === step"
+      :key="step.name"
+      v-model:data="step.data"
+      v-model:validated="step.validated"
+      v-model:error="step.error"
+      :is-active="selectedStep === step"
+      :status="status"
+    />
   </div>
 </template>
 
@@ -24,7 +19,6 @@
 import { ItemStatus } from '@beabee/beabee-common';
 import { ref, computed, markRaw, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppHeading from '../../../AppHeading.vue';
 import AppStepper from '../../../stepper/AppStepper.vue';
 import { CalloutStepsProps } from './callouts.interface';
 
@@ -45,7 +39,6 @@ const { t } = useI18n();
 const steps = reactive({
   content: {
     name: t('createCallout.steps.content.title'),
-    description: t('createCallout.steps.content.description'),
     validated: false,
     error: false,
     component: markRaw(StepContent),
@@ -53,7 +46,6 @@ const steps = reactive({
   },
   titleAndImage: {
     name: t('createCallout.steps.titleAndImage.title'),
-    description: t('createCallout.steps.titleAndImage.description'),
     validated: false,
     error: false,
     component: markRaw(StepTitleAndImage),
@@ -61,7 +53,6 @@ const steps = reactive({
   },
   settings: {
     name: t('createCallout.steps.settings.title'),
-    description: t('createCallout.steps.settings.description'),
     validated: false,
     error: false,
     component: markRaw(StepSettings),
@@ -69,7 +60,6 @@ const steps = reactive({
   },
   endMessage: {
     name: t('createCallout.steps.endMessage.title'),
-    description: t('createCallout.steps.endMessage.description'),
     validated: false,
     error: false,
     component: markRaw(StepEndMessage),
@@ -77,14 +67,12 @@ const steps = reactive({
   },
   /*mailchimp: {
     name: t('createCallout.steps.mailchimp.title'),
-    description: t('createCallout.steps.mailchimp.description'),
     validated: !props.status,
     error: false,
     component: markRaw(StepMailchimpSync),
   },*/
   dates: {
     name: t('createCallout.steps.dates.title'),
-    description: t('createCallout.steps.dates.description'),
     validated: false,
     error: false,
     component: markRaw(StepDatesAndDuration),

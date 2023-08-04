@@ -1,43 +1,33 @@
 <template>
-  <div class="sticky top-4">
-    <div
+  <ul class="flex mb-8 gap-4">
+    <li
       v-for="(step, stepIndex) in steps"
       :key="stepIndex"
-      class="flex flex-col"
+      class="relative group flex-1 max-w-[200px] my-1 rounded p-4 text-center"
+      :class="[
+        stepIndex === modelValue
+          ? 'bg-white text-link'
+          : 'cursor-pointer text-primary-60 bg-primary-5',
+        step.error ? '!text-danger' : '',
+      ]"
+      @click="emit('update:modelValue', stepIndex)"
     >
-      <div
+      <span
+        class="absolute mt-2 -inset-x-2 border-t-2 border-grey group-first:left-1/2 group-last:right-1/2"
+      />
+      <span
+        class="relative mr-2 mt-px inline-block h-4 w-4 rounded-full border-2"
         :class="
-          stepIndex === modelValue
-            ? 'bg-white'
-            : 'cursor-pointer bg-primary-5 hover:bg-primary-10'
+          step.validated
+            ? 'bg-link border-link'
+            : stepIndex === modelValue
+            ? 'bg-white border-link'
+            : 'bg-primary-5 border-grey'
         "
-        class="my-1 rounded p-4"
-        @click="emit('update:modelValue', stepIndex)"
-      >
-        <h4
-          class="flex items-center font-semibold"
-          :class="
-            step.error
-              ? 'text-danger'
-              : stepIndex === modelValue
-              ? 'text-link'
-              : ''
-          "
-        >
-          <span
-            class="mr-2 inline-block h-4 w-4 rounded-full border-2 align-middle"
-            :class="{
-              'bg-link': step.validated,
-              'border-link': step.validated || stepIndex === modelValue,
-              'border-danger': step.error,
-            }"
-          />
-          {{ step.name }}
-        </h4>
-        <p class="mt-1 text-sm text-grey">{{ step.description }}</p>
-      </div>
-    </div>
-  </div>
+      />
+      <h4 class="font-semibold">{{ step.name }}</h4>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts" setup>
