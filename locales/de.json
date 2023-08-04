@@ -611,7 +611,8 @@
             "help": "<p>Die <strong>Einleitung</strong> erscheint vor den Fragen. Erkläre darin, warum du den Callout machst, also was das Ziel ist und wie die Antworten helfen. Gib so viel Kontext wie möglich, um den Teilnehmenden die Beantwortung zu erleichtern.</p>\n",
             "label": "Einleitung"
           }
-        }
+        },
+        "title": "Inhalt"
       },
       "dates": {
         "inputs": {
@@ -629,7 +630,8 @@
               "schedule": "Ein Startdatum festlegen"
             }
           }
-        }
+        },
+        "title": "Zeitplan"
       },
       "endMessage": {
         "inputs": {
