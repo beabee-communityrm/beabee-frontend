@@ -606,17 +606,15 @@
     "lastSavedNow": "Last saved just now",
     "steps": {
       "content": {
-        "description": "Build your callout with questions and prompts",
         "inputs": {
           "intro": {
             "help": "<p>The <strong>Introduction text</strong> appears alongside the callout. It should explain why you are doing this callout and give any context the user might need before answering.</p>\n",
             "label": "Introduction text"
           }
         },
-        "title": "Callout content"
+        "title": "Content"
       },
       "dates": {
-        "description": "Schedule when your callout will go live and for how long",
         "inputs": {
           "expires": {
             "label": "When should this callout end?",
@@ -633,10 +631,9 @@
             }
           }
         },
-        "title": "Dates and duration"
+        "title": "Schedule"
       },
       "endMessage": {
-        "description": "Set a final thank you message or page to redirect to",
         "inputs": {
           "action": {
             "label": "When the user finishes answering the callout",
@@ -664,11 +661,9 @@
         "title": "End message"
       },
       "mailchimp": {
-        "description": "Set up Mailchimp integration",
         "title": "Mailchimp sync"
       },
       "settings": {
-        "description": "Choose who will see your callout and more",
         "inputs": {
           "anonymous": {
             "help": "<p>If you allow <strong>anonymous responses</strong>, users will not be asked for their contact information.</p>\n",
@@ -715,7 +710,6 @@
         "title": "Settings"
       },
       "titleAndImage": {
-        "description": "Set a title, description and image for the callout",
         "inputs": {
           "description": {
             "help": "<p>The <strong>Short description</strong> expands on the title to explain what the callout is about. It is meant to inform people what is inside in a few words.</p>\n",

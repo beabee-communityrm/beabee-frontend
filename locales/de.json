@@ -606,17 +606,14 @@
     "lastSavedNow": "Zuletzt vor wenigen Augenblicken gespeichert.",
     "steps": {
       "content": {
-        "description": "Entwirf deinen Callout, indem Du deine Fragen formulierst.",
         "inputs": {
           "intro": {
             "help": "<p>Die <strong>Einleitung</strong> erscheint vor den Fragen. Erkläre darin, warum du den Callout machst, also was das Ziel ist und wie die Antworten helfen. Gib so viel Kontext wie möglich, um den Teilnehmenden die Beantwortung zu erleichtern.</p>\n",
             "label": "Einleitung"
           }
-        },
-        "title": "Callout-Inhalt"
+        }
       },
       "dates": {
-        "description": "Plane, wann dein Callout veröffentlicht werden und wie lange er aktiv bleiben soll.",
         "inputs": {
           "expires": {
             "label": "Wann soll der Callout enden?",
@@ -632,11 +629,9 @@
               "schedule": "Ein Startdatum festlegen"
             }
           }
-        },
-        "title": "Startdatum und Dauer"
+        }
       },
       "endMessage": {
-        "description": "Danke Nutzern für die Teilnahme oder leite sie auf eine andere Webseite weiter.",
         "inputs": {
           "action": {
             "label": "Wenn die Teilnehmenden ihre Antworten abgeschickt haben",
@@ -664,11 +659,9 @@
         "title": "Nachricht am Ende"
       },
       "mailchimp": {
-        "description": "Mailchimp-Synchronisation einrichten",
         "title": "Mailchimp-Synchronisation"
       },
       "settings": {
-        "description": "Entscheide unter anderem, wer deinen Callout sehen kann.",
         "inputs": {
           "anonymous": {
             "help": "<p>Wenn du <strong>anonyme Antworten</strong> erlaubst, werden Teilenehmer nicht nach ihren Kontaktdaten gefragt.</p>\n",
@@ -715,7 +708,6 @@
         "title": "Einstellungen"
       },
       "titleAndImage": {
-        "description": "Gib deinem Callout einen Titel, eine Beschreibung und ein Bild.",
         "inputs": {
           "description": {
             "help": "<p>Die <strong>Kurzbeschreibung</strong> ergänzt den Titel und sollte in wenigen Worten erklären, worum es bei dem Callout geht.</p>\n",
