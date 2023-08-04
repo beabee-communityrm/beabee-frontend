@@ -46,6 +46,7 @@ import {
   faList,
   faPencil,
   faRefresh,
+  faCloudUpload,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   config,
@@ -190,6 +191,13 @@ const formOpts = {
             type: 'signature',
           },
         },
+        file: {
+          title: 'File',
+          icon: 'cloud-upload',
+          schema: {
+            type: 'file',
+          },
+        },
         content: {
           title: 'Content',
           icon: 'html5',
@@ -248,6 +256,7 @@ onBeforeMount(() => {
     faList,
     faPencil,
     faRefresh,
+    faCloudUpload,
 
     // Use different icon names so they match
     { ...faClock, iconName: 'clock-o' as IconName },

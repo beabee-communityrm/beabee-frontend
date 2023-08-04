@@ -31,13 +31,14 @@ import { useI18n } from 'vue-i18n';
 import { currentUser } from '../../../store';
 import { createResponse } from '../../../utils/api/callout';
 import { isRequestError } from '../../../utils/api';
-import { dom, library } from '@fortawesome/fontawesome-svg-core';
+import { config, dom, library } from '@fortawesome/fontawesome-svg-core';
 import { Form } from 'vue-formio';
 import {
   faCalendar,
   faCross,
   faCloudUpload,
   faRemove,
+  faRefresh,
 } from '@fortawesome/free-solid-svg-icons';
 import GuestFields from './GuestFields.vue';
 import AppNotification from '../../AppNotification.vue';
@@ -110,7 +111,8 @@ async function handleSubmission(submission: FormSubmission) {
 }
 
 onBeforeMount(() => {
-  library.add(faCalendar, faCross, faCloudUpload, faRemove);
+  library.add(faCalendar, faCross, faCloudUpload, faRemove, faRefresh);
+  config.autoReplaceSvg = 'nest';
   dom.watch();
 });
 </script>
