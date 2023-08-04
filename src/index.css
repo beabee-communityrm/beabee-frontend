@@ -13,6 +13,7 @@
 .content-message,
 /* Apply standard styles to FormIO content component */
 .formio-component-content,
+/* Apply standard styles to FormIO HTML editor */
 .formio-dialog .formio-component-html .ck-content {
   p,
   ul,
@@ -58,24 +59,35 @@
 
 /* Match header margin to form labels */
 .formio-component-content,
+/* Apply to FormIO HTML editor */
 .formio-dialog .formio-component-html .ck-content {
   h3 {
     @apply mb-2;
   }
 }
 
-/* Form labels same styling as .content-message h3 */
+/* Apply to form renderer */
 .callout-form,
+/* Apply to form builder form area */
 .callout-form-builder .formarea,
+/* Apply to preview panel only on popup dialog */
 .formio-dialog .preview-panel {
+  /* Give callouts a white background */
+  .formio-form {
+    @apply bg-white p-4 shadow-md;
+  }
+
+  /* Form labels same styling as .content-message h3 */
   .col-form-label {
     @apply font-title text-xl font-semibold mb-2;
   }
 }
 
-/* Force FormIO to fit in! Styles for renderer, builder and popup dialog */
+/* Apply to form renderer */
 .callout-form,
+/* Apply to form builder form area */
 .callout-form-builder .formarea,
+/* Apply to popup dialog */
 .formio-dialog {
   /* Input styling */
   .form-control {
