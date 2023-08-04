@@ -33,6 +33,7 @@ meta:
       <SharingPanel v-if="showSharingPanel" :slug="callout.slug" />
     </transition-group>
 
+    <a id="thanks" />
     <div
       v-show="latestResponse || showOnlyThankYou"
       class="mb-6 flex rounded bg-white p-6 text-lg text-success"
