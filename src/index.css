@@ -11,11 +11,8 @@
 
 /* Apply standard styles to v-html content */
 .content-message,
-/* Apply standard styles to FormIO rendered forms */
-.callout-form,
-.callout-form-builder .formarea,
-/* Apply standard styles to FormIO popup preview */
-.formio-dialog .preview-panel,
+/* Apply standard styles to FormIO content component */
+.formio-component-content,
 .formio-dialog .formio-component-html .ck-content {
   p,
   ul,
@@ -59,6 +56,23 @@
   }
 }
 
+/* Match header margin to form labels */
+.formio-component-content,
+.formio-dialog .formio-component-html .ck-content {
+  h3 {
+    @apply mb-2;
+  }
+}
+
+/* Form labels same styling as .content-message h3 */
+.callout-form,
+.callout-form-builder .formarea,
+.formio-dialog .preview-panel {
+  .col-form-label {
+    @apply font-title text-xl font-semibold mb-2;
+  }
+}
+
 /* Force FormIO to fit in! Styles for renderer, builder and popup dialog */
 .callout-form,
 .callout-form-builder .formarea,
@@ -72,12 +86,24 @@
     }
   }
 
+  /* Grid styles */
   .row {
-    @apply flex gap-4;
+    @apply flex gap-0;
+    & > [class^='col'] {
+      @apply px-2;
+    }
   }
-
   .col {
     @apply flex-1;
+  }
+  .col-md-1 {
+    @apply flex-none basis-1/12;
+  }
+  .col-md-2 {
+    @apply flex-none basis-2/12;
+  }
+  .col-md-9 {
+    @apply flex-none basis-9/12;
   }
 
   /* Button styling */
@@ -129,18 +155,14 @@
     @apply mb-0;
   }
 
+  /* Input group styling */
   .input-group {
     @apply flex items-center;
   }
   .input-group-append {
     @apply ml-2;
   }
-}
 
-/* Force FormIO to fit in! Styles for renderer (including preview) */
-.callout-form,
-.callout-form-builder .formarea,
-.formio-dialog .preview-panel {
   /* Hide hidden controls */
   .formio-hidden {
     @apply hidden !important;
@@ -158,7 +180,7 @@
 
   /* Label always goes at the top, styled like .content-message h3 */
   .col-form-label {
-    @apply -order-2 mb-2 block font-title text-xl font-semibold;
+    @apply -order-2 block;
   }
   /* Description goes next */
   .form-text {
@@ -189,6 +211,7 @@
     @apply absolute -z-10 opacity-0;
   }
 
+  /* Equal width columns for column component */
   .formio-component-columns > [class^='col'] {
     @apply flex-1;
   }
@@ -207,12 +230,23 @@
     @apply text-danger;
     content: '*';
   }
-}
 
-/* Match header margin to form labels */
-.formio-component-content,
-.formio-dialog .formio-component-html .ck-content {
-  h3 {
-    @apply mb-2;
+  /* Except if the form is in read only model */
+  .formio-read-only .field-required::after {
+    @apply hidden;
+  }
+
+  /* Styles for file upload component */
+  .list-group {
+    @apply border border-primary-20 rounded mb-4;
+  }
+  .list-group-header {
+    @apply p-2 bg-primary-10 rounded-t;
+  }
+  .list-group-item {
+    @apply p-2 border-b border-primary-20;
+    &:last-child {
+      @apply border-b-0;
+    }
   }
 }

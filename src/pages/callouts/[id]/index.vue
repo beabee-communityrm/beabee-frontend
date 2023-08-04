@@ -119,32 +119,35 @@ import {
   CalloutResponseAnswers,
   GetCalloutDataWith,
   GetCalloutResponseDataWith,
-} from '../../utils/api/api.interface';
+} from '../../../utils/api/api.interface';
 import {
   createResponse,
   fetchCallout,
   fetchResponses,
-} from '../../utils/api/callout';
-import AppButton from '../../components/button/AppButton.vue';
-import { currentUser, canAdmin } from '../../store';
-import GuestFields from '../../components/pages/callouts/GuestFields.vue';
-import SharingPanel from '../../components/pages/callouts/CalloutSharingPanel.vue';
-import axios from '../../lib/axios';
-import AppInputHelp from '../../components/forms/AppInputHelp.vue';
+} from '../../../utils/api/callout';
+import AppButton from '../../../components/button/AppButton.vue';
+import { currentUser, canAdmin } from '../../../store';
+import GuestFields from '../../../components/pages/callouts/GuestFields.vue';
+import SharingPanel from '../../../components/pages/callouts/CalloutSharingPanel.vue';
+import axios from '../../../lib/axios';
+import AppInputHelp from '../../../components/forms/AppInputHelp.vue';
 
 import 'formiojs/dist/formio.form.css';
 import { useRoute } from 'vue-router';
-import ItemStatusText from '../../components/item/ItemStatusText.vue';
-import { addBreadcrumb } from '../../store/breadcrumb';
+import ItemStatusText from '../../../components/item/ItemStatusText.vue';
+import { addBreadcrumb } from '../../../store/breadcrumb';
 import {
   faBullhorn,
   faCaretDown,
   faShare,
   faThumbsUp,
   faCalendar,
+  faCross,
+  faCloudUpload,
+  faRemove,
 } from '@fortawesome/free-solid-svg-icons';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
-import AppNotification from '../../components/AppNotification.vue';
+import AppNotification from '../../../components/AppNotification.vue';
 
 type FormSubmission = { data: CalloutResponseAnswers };
 
@@ -288,7 +291,7 @@ async function handleSubmitResponse(submission: FormSubmission) {
 }
 
 onBeforeMount(async () => {
-  library.add(faCalendar);
+  library.add(faCalendar, faCross, faCloudUpload, faRemove);
   dom.watch();
 
   formError.value = '';

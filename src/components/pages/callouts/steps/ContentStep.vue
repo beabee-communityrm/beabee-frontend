@@ -254,14 +254,6 @@ onBeforeMount(() => {
     @apply p-0 !important;
   }
 
-  .row {
-    @apply flex gap-8;
-  }
-
-  .col {
-    @apply flex-1;
-  }
-
   .form-group {
     @apply mb-3;
   }
@@ -357,7 +349,6 @@ onBeforeMount(() => {
   .formio-component-customDefaultValuePanel,
   .formio-component-calculateValuePanel,
   .formio-component-protected,
-  .formio-component-multiple,
   .formio-component-encrypted,
   .formio-component-clearOnHide,
   .formio-component-shortcutButtons,

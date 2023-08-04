@@ -312,16 +312,32 @@ interface CalloutFormData {
   shareDescription?: string;
 }
 
+export interface CalloutMapSchema {
+  bounds: [[number, number], [number, number]];
+  center: [number, number];
+  minZoom: number;
+  maxZoom: number;
+  initialZoom: number;
+  style: string;
+  answerKey: string;
+}
+
 export interface GetCalloutData extends CalloutData {
   slug: string;
   status: ItemStatus;
 }
 
-export type GetCalloutWith = 'form' | 'responseCount' | 'hasAnswered' | void;
+export type GetCalloutWith =
+  | 'form'
+  | 'mapSchema'
+  | 'responseCount'
+  | 'hasAnswered'
+  | void;
 
 export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
   ('responseCount' extends With ? { responseCount: number } : Noop) &
   ('hasAnswered' extends With ? { hasAnswered: boolean } : Noop) &
+  ('mapSchema' extends With ? { mapSchema: CalloutMapSchema } : Noop) &
   ('form' extends With ? CalloutFormData : Noop);
 
 export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
@@ -349,7 +365,8 @@ type CalloutResponseAnswer =
   | number
   | null
   | undefined
-  | Record<string, boolean>;
+  | Record<string, boolean>
+  | { geometry: { location: { lat: number; lng: number } } };
 export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
 
 export interface GetCalloutResponseData {
@@ -360,6 +377,10 @@ export interface GetCalloutResponseData {
   bucket: string;
   guestName: string | null;
   guestEmail: string | null;
+}
+
+export interface GetCalloutResponseMapData {
+  answers: CalloutResponseAnswers;
 }
 
 export interface CreateCalloutResponseData {
