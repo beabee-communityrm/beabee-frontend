@@ -96,14 +96,17 @@
   .col {
     @apply flex-1;
   }
+  .col-sm-6 {
+    @apply flex-none basis-1/2 max-w-[50%];
+  }
   .col-md-1 {
-    @apply flex-none basis-1/12;
+    @apply flex-none basis-1/12 max-w-[8.333333%];
   }
   .col-md-2 {
-    @apply flex-none basis-2/12;
+    @apply flex-none basis-2/12 max-w-[16.666667%];
   }
   .col-md-9 {
-    @apply flex-none basis-9/12;
+    @apply flex-none basis-9/12 max-w-[75%];
   }
 
   /* Button styling */

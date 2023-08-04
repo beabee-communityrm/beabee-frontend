@@ -185,7 +185,7 @@ onBeforeUnmount(() => {
 }
 
 .formio-dialog {
-  @apply font-body text-sm text-body !important;
+  @apply font-body text-base text-body !important;
 
   .formio-dialog-content {
     @apply bg-white !important;
@@ -308,7 +308,13 @@ onBeforeUnmount(() => {
   .formio-component-encrypted,
   .formio-component-clearOnHide,
   .formio-component-shortcutButtons,
-  .formio-component-validateOn {
+  .formio-component-validateOn,
+  .formio-component-custom-validation-js,
+  .formio-component-json-validation-json,
+  .formio-component-errors,
+  .formio-component-customConditionalPanel,
+  .formio-component-properties,
+  .formio-component-tags {
     @apply hidden;
   }
 }
