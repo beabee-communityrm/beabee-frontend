@@ -262,6 +262,7 @@
     }
   },
   "callout": {
+    "closed": "This callout is closed",
     "contactDetails": "Contact details",
     "form": {
       "email": "Your email",
