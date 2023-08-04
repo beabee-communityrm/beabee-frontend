@@ -108,8 +108,14 @@
   .col {
     @apply flex-1;
   }
+  .col-sm-2 {
+    @apply flex-none basis-1/6 max-w-[16.666667%];
+  }
   .col-sm-6 {
     @apply flex-none basis-1/2 max-w-[50%];
+  }
+  .col-sm-10 {
+    @apply flex-none basis-5/6 max-w-[83.333333%];
   }
   .col-md-1 {
     @apply flex-none basis-1/12 max-w-[8.333333%];
@@ -145,6 +151,7 @@
         @apply bg-danger-110;
       }
     }
+    &.btn-light,
     &.btn-secondary {
       @apply border border-link bg-white text-link;
       &:not([disabled]):hover {
@@ -263,5 +270,13 @@
     &:last-child {
       @apply border-b-0;
     }
+  }
+  .fileSelector {
+    @apply mb-4;
+  }
+
+  /* Styles for signature component */
+  .signature-pad-refresh {
+    @apply mb-2;
   }
 }
