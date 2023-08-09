@@ -821,6 +821,10 @@
         "email": "Invalid email address",
         "required": "Email is required"
       },
+      "file": {
+        "rateLimited": "Upload failed: you have uploaded too many files recently, please wait a few minutes before trying again",
+        "tooBig": "Upload failed: file is too large"
+      },
       "firstName": {
         "required": "First name is required"
       },
@@ -872,7 +876,6 @@
     "saved": "Saved!",
     "unsavedChanges": "Unsaved changes",
     "updated": "Updated",
-    "uploading": "Uploading...",
     "warning": "You should get the user's consent before making updates to this page. All changes you make here will also be visible to the user."
   },
   "homePage": {

@@ -819,6 +819,7 @@
         "email": "Ungültige E-Mail-Adresse",
         "required": "E-Mail-Adresse benötigt"
       },
+      "file": {},
       "firstName": {
         "required": "Vorname benötigt"
       },
@@ -870,7 +871,6 @@
     "saved": "Gespeichert!",
     "unsavedChanges": "Ungespeicherte Änderungen",
     "updated": "Aktualisiert",
-    "uploading": "Es wird hochgeladen",
     "warning": "Ändere hier nur etwas, wenn du das Einverständnis hast. Änderungen werden auch den Nutzern angezeigt."
   },
   "homePage": {
