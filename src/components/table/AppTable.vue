@@ -48,7 +48,7 @@
       <template v-for="(item, i) in items" :key="i">
         <tr
           class="border-t border-primary-20 align-top"
-          :class="rowClass(item)"
+          :class="rowClasses(item)"
         >
           <td v-if="selectable" class="p-2">
             <AppCheckbox v-model="item.selected" />
@@ -70,7 +70,7 @@
         </tr>
         <tr
           v-if="hasSlotContent($slots.after, { item })"
-          :class="rowClass(item)"
+          :class="rowClasses(item)"
         >
           <td v-if="selectable" />
           <td class="p-2 pt-0" :colspan="headers.length">
@@ -136,7 +136,7 @@ const allSelected = computed({
   },
 });
 
-function rowClass(item: Item): string {
+function rowClasses(item: Item): string {
   return (
     (props.rowClass ? props.rowClass(item) : '') +
     (props.selectable && item.selected ? ' bg-primary-10' : '')

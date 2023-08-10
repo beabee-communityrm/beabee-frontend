@@ -1,7 +1,7 @@
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import vueI18n from '@intlify/vite-plugin-vue-i18n';
+import vueI18n from '@intlify/unplugin-vue-i18n/vite';
 import pages from 'vite-plugin-pages';
 import replace from '@rollup/plugin-replace';
 
@@ -14,6 +14,7 @@ export default ({ command, mode }) => {
     vue(),
     vueI18n({
       include: path.resolve(__dirname, './locales/*'),
+      strictMessage: false,
     }),
     theme(),
     pages(),

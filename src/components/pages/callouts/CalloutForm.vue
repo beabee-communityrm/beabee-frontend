@@ -1,105 +1,121 @@
 <template>
-  <div class="flex gap-8">
-    <div class="flex-0 basis-menu">
-      <AppStepper v-model="selectedStepIndex" :steps="stepsInOrder" />
-    </div>
-    <div class="flex-1">
-      <AppHeading class="mb-5">{{ selectedStep.name }}</AppHeading>
-      <component
-        :is="step.component"
-        v-for="step in stepsInOrder"
-        v-show="selectedStep === step"
-        :key="step.name"
-        v-model:data="step.data"
-        v-model:validated="step.validated"
-        v-model:error="step.error"
-        :is-active="selectedStep === step"
-        :status="status"
-      />
-    </div>
-  </div>
+  <form class="text-lg" @submit.prevent>
+    <GuestFields
+      v-if="showGuestFields"
+      v-model:name="guestName"
+      v-model:email="guestEmail"
+    />
+    <Form
+      class="callout-form-renderer"
+      :form="callout.formSchema"
+      :submission="response && { data: response }"
+      :options="formOpts"
+      @submit="handleSubmission"
+    />
+    <AppNotification
+      v-if="formError"
+      class="mt-4"
+      variant="error"
+      :title="formError"
+    />
+  </form>
 </template>
-
 <script lang="ts" setup>
-import { ItemStatus } from '@beabee/beabee-common';
-import { ref, computed, markRaw, reactive } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
+import {
+  GetCalloutDataWith,
+  GetCalloutResponseDataWith,
+  CalloutResponseAnswers,
+} from '../../../utils/api/api.interface';
 import { useI18n } from 'vue-i18n';
-import AppHeading from '../../AppHeading.vue';
-import AppStepper from '../../stepper/AppStepper.vue';
-import { CalloutStepsProps } from './callouts.interface';
+import { currentUser } from '../../../store';
+import { createResponse } from '../../../utils/api/callout';
+import { isRequestError } from '../../../utils/api';
+import { config, dom, library } from '@fortawesome/fontawesome-svg-core';
+import { Form } from '../../../lib/formio';
+import {
+  faCalendar,
+  faCross,
+  faCloudUpload,
+  faRemove,
+  faRefresh,
+} from '@fortawesome/free-solid-svg-icons';
+import GuestFields from './GuestFields.vue';
+import AppNotification from '../../AppNotification.vue';
 
-import StepSettings from './steps/SettingsStep.vue';
-import StepTitleAndImage from './steps/TitleAndImage.vue';
-import StepEndMessage from './steps/EndMessage.vue';
-// import StepMailchimpSync from './steps/MailchimpSync.vue';
-import StepDatesAndDuration from './steps/DatesAndDuration.vue';
-import StepContent from './steps/ContentStep.vue';
-
-const props = defineProps<{
-  stepsProps: CalloutStepsProps;
-  status: ItemStatus | undefined;
-}>();
+interface FormSubmission {
+  data: CalloutResponseAnswers;
+}
 
 const { t } = useI18n();
 
-const steps = reactive({
-  content: {
-    name: t('createCallout.steps.content.title'),
-    description: t('createCallout.steps.content.description'),
-    validated: false,
-    error: false,
-    component: markRaw(StepContent),
-    data: props.stepsProps.content,
-  },
-  titleAndImage: {
-    name: t('createCallout.steps.titleAndImage.title'),
-    description: t('createCallout.steps.titleAndImage.description'),
-    validated: false,
-    error: false,
-    component: markRaw(StepTitleAndImage),
-    data: props.stepsProps.titleAndImage,
-  },
-  settings: {
-    name: t('createCallout.steps.settings.title'),
-    description: t('createCallout.steps.settings.description'),
-    validated: false,
-    error: false,
-    component: markRaw(StepSettings),
-    data: props.stepsProps.settings,
-  },
-  endMessage: {
-    name: t('createCallout.steps.endMessage.title'),
-    description: t('createCallout.steps.endMessage.description'),
-    validated: false,
-    error: false,
-    component: markRaw(StepEndMessage),
-    data: props.stepsProps.endMessage,
-  },
-  /*mailchimp: {
-    name: t('createCallout.steps.mailchimp.title'),
-    description: t('createCallout.steps.mailchimp.description'),
-    validated: !props.status,
-    error: false,
-    component: markRaw(StepMailchimpSync),
-  },*/
-  dates: {
-    name: t('createCallout.steps.dates.title'),
-    description: t('createCallout.steps.dates.description'),
-    validated: false,
-    error: false,
-    component: markRaw(StepDatesAndDuration),
-    data: props.stepsProps.dates,
-  },
-});
+const emit = defineEmits<{ (e: 'submitted'): void }>();
+const props = defineProps<{
+  callout: GetCalloutDataWith<'form'>;
+  response: GetCalloutResponseDataWith<'answers'> | undefined;
+  preview: boolean;
+}>();
 
-const stepsInOrder = [
-  steps.content,
-  steps.titleAndImage,
-  steps.endMessage,
-  steps.settings,
-  //steps.mailchimp,
-  steps.dates,
-];
-const selectedStepIndex = ref(0);
-const selectedStep = computed(() => stepsInOrder[selectedStepIndex.value]);
+const guestName = ref('');
+const guestEmail = ref('');
+const formError = ref('');
+
+const showGuestFields = computed(
+  () => props.callout.access === 'guest' && !currentUser.value
+);
+
+const canSubmit = computed(() => !props.response || props.callout.allowUpdate);
+
+const formOpts = computed(() => ({
+  readOnly: !canSubmit.value,
+  noAlerts: true,
+  hooks: {
+    beforeSubmit: (_: FormSubmission, next: () => void) => {
+      // Can't submit in preview mode
+      if (props.preview) {
+        formError.value = t('callout.showingPreview');
+        // If guest fields are required check they are filled in
+      } else if (
+        showGuestFields.value &&
+        !(guestName.value && guestEmail.value)
+      ) {
+        formError.value = t('callout.form.guestFieldsMissing');
+      } else {
+        next();
+      }
+    },
+  },
+}));
+
+async function handleSubmission(submission: FormSubmission) {
+  formError.value = '';
+  try {
+    await createResponse(props.callout.slug, {
+      ...(!currentUser.value &&
+        props.callout?.access === 'guest' && {
+          guestName: guestName.value,
+          guestEmail: guestEmail.value,
+        }),
+      answers: submission.data,
+    });
+    emit('submitted');
+  } catch (err) {
+    if (isRequestError(err)) {
+      formError.value = t('callout.form.submittingResponseError');
+    } else {
+      throw err;
+    }
+  }
+}
+
+onBeforeMount(() => {
+  library.add(faCalendar, faCross, faCloudUpload, faRemove, faRefresh);
+  config.autoReplaceSvg = 'nest';
+  dom.watch();
+});
 </script>
+
+<style>
+@import '../../../lib/formio/formio.form.css';
+@import '../../form-renderer/form-renderer.css';
+</style>

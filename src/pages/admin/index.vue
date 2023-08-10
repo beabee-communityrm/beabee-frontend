@@ -13,7 +13,7 @@ meta:
   <div class="flex flex-col gap-8 lg:flex-row">
     <div class="flex-1 basis-5/12">
       <AppHeading>{{ t('adminDashboard.numbers.title') }}</AppHeading>
-      <div v-if="stats" class="mt-4 mb-8 flex gap-4">
+      <div v-if="stats" class="mb-8 mt-4 flex gap-4">
         <KeyStat
           :label="t('adminDashboard.numbers.revenue')"
           :stat="
@@ -36,7 +36,7 @@ meta:
         />
       </div>
       <AppHeading>{{ t('adminDashboard.mostRecentMembers.title') }}</AppHeading>
-      <div class="mt-1 mb-5">
+      <div class="mb-5 mt-1">
         <div
           v-for="member in recentMembers"
           :key="member.id"
@@ -57,7 +57,7 @@ meta:
     </div>
     <div class="flex-1 basis-7/12">
       <AppHeading>{{ t('adminDashboard.latestCallout.title') }}</AppHeading>
-      <div class="relative mt-4 mb-8 block rounded bg-white p-4">
+      <div class="relative mb-8 mt-4 block rounded bg-white p-4">
         <div v-if="latestCallout">
           <CalloutSummary :callout="latestCallout" />
           <router-link

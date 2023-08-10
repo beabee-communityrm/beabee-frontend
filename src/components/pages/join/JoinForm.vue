@@ -41,7 +41,7 @@
     />
   </AppForm>
 
-  <p class="mt-6 mb-2 text-center text-xs">
+  <p class="mb-2 mt-6 text-center text-xs">
     {{ t('join.notice') }}
     <a
       class="text-link underline hover:text-primary"

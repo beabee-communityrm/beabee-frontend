@@ -3,7 +3,7 @@
   <div class="flex justify-between px-6 py-3 md:hidden md:py-2">
     <!-- menu background overlay -->
     <div
-      class="fixed top-0 bottom-0 right-0 left-menu z-30 h-full w-full cursor-pointer bg-black opacity-30"
+      class="fixed bottom-0 left-menu right-0 top-0 z-30 h-full w-full cursor-pointer bg-black opacity-30"
       :class="isMenuVisible ? 'block' : 'hidden'"
       @click="isMenuVisible = false"
     />
