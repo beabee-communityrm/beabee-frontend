@@ -66,8 +66,8 @@ import beabeeStorage from './providers/storage/beabee';
 
 import 'formiojs/dist/formio.builder.css';
 
-// console.log(Formio.Providers.storage);
-Formio.Providers.addProvider('storage', 'beabee', beabeeStorage);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(Formio as any).Providers.addProvider('storage', 'beabee', beabeeStorage);
 
 const emit = defineEmits<{
   (e: 'change', components: CalloutComponentSchema[]): void;
