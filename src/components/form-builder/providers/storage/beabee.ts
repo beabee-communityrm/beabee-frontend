@@ -2,6 +2,9 @@
 import axios from 'axios';
 import { createUploadFlow } from '../../../../utils/api/upload';
 import env from '../../../../env';
+import i18n from '../../../../lib/i18n';
+
+const { t } = i18n.global;
 
 interface BeabeeFile {
   storage: 'beabee';
@@ -28,7 +31,7 @@ export default class BeabeeStorage {
     abortCallback: any
   ): Promise<BeabeeFile> {
     if (file.size >= 20 * 1024 * 1024) {
-      throw new Error('File too big');
+      throw new Error(t('form.errors.file.tooBig'));
     }
 
     const uploadFlow = await createUploadFlow();
@@ -61,9 +64,9 @@ export default class BeabeeStorage {
       };
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.status === 429) {
-        throw new Error('Too many uploads');
+        throw new Error(t('form.errors.file.rateLimited'));
       } else {
-        throw new Error('Unknown error');
+        throw new Error(t('form.errorMessages.generic'));
       }
     }
   }
