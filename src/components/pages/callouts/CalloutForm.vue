@@ -32,7 +32,7 @@ import { currentUser } from '../../../store';
 import { createResponse } from '../../../utils/api/callout';
 import { isRequestError } from '../../../utils/api';
 import { config, dom, library } from '@fortawesome/fontawesome-svg-core';
-import { Form } from '@formio/vue';
+import { Form } from '../../../lib/formio';
 import {
   faCalendar,
   faCross,

@@ -1,41 +1,47 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 import { createUploadFlow } from '../../../../utils/api/upload';
-// import { Formio } from '@formio/vue';
 import env from '../../../../env';
 
 interface BeabeeFile {
   storage: 'beabee';
   name: string;
   url: string;
+  size: number;
 }
 
-const beabee = () => {
-  return {
-    title: 'beabee',
-    name: 'beabee',
-    async uploadFile(
-      file: File,
-      name: string,
-      dir: string,
-      progressCallback: any,
-      url: any,
-      options: any,
-      fileKey: any,
-      groupPermssions: any,
-      groupId: any,
-      abortCallback: any
-    ): Promise<BeabeeFile> {
-      const uploadFlow = await createUploadFlow();
+export default class BeabeeStorage {
+  static get title() {
+    return 'beabee';
+  }
 
-      const data = new FormData();
-      data.append('file', file);
+  async uploadFile(
+    file: File,
+    name: string,
+    dir: string,
+    progressCallback: any,
+    url: any,
+    options: any,
+    fileKey: any,
+    groupPermssions: any,
+    groupId: any,
+    abortCallback: any
+  ): Promise<BeabeeFile> {
+    if (file.size >= 20 * 1024 * 1024) {
+      throw new Error('File too big');
+    }
 
-      const controller = new AbortController();
-      if (typeof abortCallback === 'function') {
-        abortCallback(() => controller.abort());
-      }
+    const uploadFlow = await createUploadFlow();
 
+    const data = new FormData();
+    data.append('file', file);
+
+    const controller = new AbortController();
+    if (typeof abortCallback === 'function') {
+      abortCallback(() => controller.abort());
+    }
+
+    try {
       const resp = await axios.post('/upload/', data, {
         baseURL: env.appUrl,
         headers: {
@@ -51,16 +57,22 @@ const beabee = () => {
         storage: 'beabee',
         name,
         url: resp.data.url,
+        size: file.size,
       };
-    },
-    async deleteFile() {
-      throw new Error('Not implemented');
-    },
-    async downloadFile(file: BeabeeFile) {
-      return file;
-    },
-  };
-};
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response?.status === 429) {
+        throw new Error('Too many uploads');
+      } else {
+        throw new Error('Unknown error');
+      }
+    }
+  }
 
-beabee.title = 'beabee';
-export default beabee;
+  async deleteFile() {
+    throw new Error('Not implemented');
+  }
+
+  async downloadFile(file: BeabeeFile) {
+    return file;
+  }
+}

@@ -167,7 +167,7 @@ import {
 } from '../../../utils/api/api.interface';
 import { fetchCallout, fetchResponsesForMap } from '../../../utils/api/callout';
 import PageTitle from '../../../components/PageTitle.vue';
-import { Form } from '@formio/vue';
+import { Form } from '../../../lib/formio';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
 import 'vue-maplibre-gl/dist/vue-maplibre-gl.css';

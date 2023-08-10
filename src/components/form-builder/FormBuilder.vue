@@ -56,18 +56,14 @@ import {
 } from '@fortawesome/fontawesome-svg-core';
 import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
 
-import { FormBuilder, Formio } from '@formio/vue';
+import { FormBuilder } from '../../lib/formio';
 import {
   CalloutComponentSchema,
   CalloutFormSchema,
 } from '@beabee/beabee-common';
 import { formOpts, FormBuilderRef } from './form-builder.interface';
-import beabeeStorage from './providers/storage/beabee';
 
 import 'formiojs/dist/formio.builder.css';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-(Formio as any).Providers.addProvider('storage', 'beabee', beabeeStorage);
 
 const emit = defineEmits<{
   (e: 'change', components: CalloutComponentSchema[]): void;
