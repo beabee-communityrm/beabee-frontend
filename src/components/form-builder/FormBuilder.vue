@@ -1,5 +1,5 @@
 <template>
-  <FormBuilderVue
+  <FormBuilder
     ref="formBuilderRef"
     :form="form"
     :options="formOpts"
@@ -56,14 +56,18 @@ import {
 } from '@fortawesome/fontawesome-svg-core';
 import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
 
-import { FormBuilder as FormBuilderVue } from '@formio/vue';
+import { FormBuilder, Formio } from '@formio/vue';
 import {
   CalloutComponentSchema,
   CalloutFormSchema,
 } from '@beabee/beabee-common';
 import { formOpts, FormBuilderRef } from './form-builder.interface';
+import beabeeStorage from './providers/storage/beabee';
 
 import 'formiojs/dist/formio.builder.css';
+
+// console.log(Formio.Providers.storage);
+Formio.Providers.addProvider('storage', 'beabee', beabeeStorage);
 
 const emit = defineEmits<{
   (e: 'change', components: CalloutComponentSchema[]): void;
@@ -77,7 +81,7 @@ const formBuilderRef = ref<FormBuilderRef>();
 
 function handleChange() {
   if (!formBuilderRef.value) return;
-  emit('change', formBuilderRef.value.builder.form.components);
+  emit('change', formBuilderRef.value.form.components);
 }
 
 onBeforeMount(() => {
