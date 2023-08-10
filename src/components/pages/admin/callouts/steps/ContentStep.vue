@@ -38,7 +38,7 @@ import { ContentStepProps } from '../callouts.interface';
 import RichTextEditor from '../../../../rte/RichTextEditor.vue';
 import AppFormSection from '../../../../forms/AppFormSection.vue';
 import AppNotification from '../../../../AppNotification.vue';
-import FormBuilder from '../../../../form-builder/FormBuilder';
+import FormBuilder from '../../../../form-builder/FormBuilder.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
