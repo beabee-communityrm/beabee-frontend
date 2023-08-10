@@ -120,7 +120,9 @@ meta:
         {{ t('calloutResponsePage.actions.editResponse') }}
       </AppButton>
     </div>
-    <div class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg">
+    <div
+      class="callout-form-renderer mt-10 border-t border-primary-40 pt-10 text-lg"
+    >
       <AppNotification
         v-if="editMode"
         variant="warning"
@@ -154,7 +156,7 @@ import {
   UpdateCalloutResponseData,
 } from '../../../../../../utils/api/api.interface';
 import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
-import { Form } from 'vue-formio';
+import { Form } from '../../../../../../lib/formio';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../../../components/AppHeading.vue';
 import AppInfoList from '../../../../../../components/AppInfoList.vue';
@@ -309,3 +311,7 @@ async function refreshResponse() {
 
 watchEffect(refreshResponse);
 </script>
+<style>
+@import '../../../../../../lib/formio/formio.form.css';
+@import '../../../../../../components/form-renderer/form-renderer.css';
+</style>

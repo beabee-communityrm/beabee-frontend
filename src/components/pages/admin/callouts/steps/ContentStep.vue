@@ -23,7 +23,7 @@
     </AppFormSection>
 
     <div class="callout-form-builder mt-8">
-      <CalloutFormBuilder :form="data.formSchema" @change="handleFormChange" />
+      <FormBuilder :form="data.formSchema" @change="handleFormChange" />
     </div>
   </div>
 </template>
@@ -38,7 +38,7 @@ import { ContentStepProps } from '../callouts.interface';
 import RichTextEditor from '../../../../rte/RichTextEditor.vue';
 import AppFormSection from '../../../../forms/AppFormSection.vue';
 import AppNotification from '../../../../AppNotification.vue';
-import CalloutFormBuilder from './CalloutFormBuilder.vue';
+import FormBuilder from '../../../../form-builder/FormBuilder.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
