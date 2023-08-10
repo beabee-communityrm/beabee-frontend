@@ -120,7 +120,9 @@ meta:
         {{ t('calloutResponsePage.actions.editResponse') }}
       </AppButton>
     </div>
-    <div class="callout-form mt-10 border-t border-primary-40 pt-10 text-lg">
+    <div
+      class="callout-form-renderer mt-10 border-t border-primary-40 pt-10 text-lg"
+    >
       <AppNotification
         v-if="editMode"
         variant="warning"
@@ -309,3 +311,7 @@ async function refreshResponse() {
 
 watchEffect(refreshResponse);
 </script>
+<style>
+@import 'formiojs/dist/formio.form.min.css';
+@import '../../../../../../components/form-renderer/form-renderer.css';
+</style>

@@ -6,7 +6,7 @@
       v-model:email="guestEmail"
     />
     <Form
-      class="callout-form"
+      class="callout-form-renderer"
       :form="callout.formSchema"
       :submission="response && { data: response }"
       :options="formOpts"
@@ -42,8 +42,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import GuestFields from './GuestFields.vue';
 import AppNotification from '../../AppNotification.vue';
-
-import 'formiojs/dist/formio.form.css';
 
 interface FormSubmission {
   data: CalloutResponseAnswers;
@@ -116,3 +114,8 @@ onBeforeMount(() => {
   dom.watch();
 });
 </script>
+
+<style>
+@import 'formiojs/dist/formio.form.min.css';
+@import '../../form-renderer/form-renderer.css';
+</style>
