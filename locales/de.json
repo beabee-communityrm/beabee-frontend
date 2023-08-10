@@ -262,6 +262,7 @@
     }
   },
   "callout": {
+    "closed": "Dieser Callout ist beendet.",
     "contactDetails": "Kontaktdaten",
     "form": {
       "email": "Ihre E-Mail-Adresse",
@@ -276,7 +277,7 @@
       "address": "Diesen Callout per Link teilen:",
       "services": "Diesen Callout auf einer der folgenden Plattformen teilen: "
     },
-    "showingPreview": "Antworten sind im Vorschaumodus deaktiviert",
+    "showingPreview": "Im Vorschaumodus sind Antworten deaktiviert.",
     "toContributionPage": "Meinen Beitrag ändern",
     "updateContribution": "Bitte ändern Sie ihren Beitrag.",
     "youResponded": "Sie haben geantwortet ♥"
@@ -326,6 +327,9 @@
     },
     "summary": "Zusammenfassung",
     "updated": "Änderungen gespeichert!"
+  },
+  "calloutBuilder": {
+    "showAdvancedOptions": "Erweiterte Optionen anzeigen"
   },
   "calloutResponse": {
     "data": {

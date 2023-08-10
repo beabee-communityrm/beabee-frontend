@@ -278,7 +278,7 @@
       "address": "Share this callout with the following address:",
       "services": "Or quickly share using one of these services:"
     },
-    "showingPreview": "Response submission is disabled in preview mode",
+    "showingPreview": "You can't submit a response in preview mode",
     "toContributionPage": "Edit my contribution",
     "updateContribution": "please update your contribution",
     "youResponded": "You replied to this callout ♥"
@@ -328,6 +328,9 @@
     },
     "summary": "Summary",
     "updated": "Your callout was successfully updated."
+  },
+  "calloutBuilder": {
+    "showAdvancedOptions": "Show advanced form options"
   },
   "calloutResponse": {
     "data": {
