@@ -273,6 +273,7 @@
     "joinNow": "Mitglied werden",
     "loginToYourAccount": "Einloggen",
     "membersOnly": "An diesem Callout können nur zahlende Mitglieder teilnehmen. Um teilzunehmen",
+    "responseSubmitted": "Antwort eingereicht",
     "share": {
       "address": "Diesen Callout per Link teilen:",
       "services": "Diesen Callout auf einer der folgenden Plattformen teilen: "
@@ -823,7 +824,10 @@
         "email": "Ungültige E-Mail-Adresse",
         "required": "E-Mail-Adresse benötigt"
       },
-      "file": {},
+      "file": {
+        "rateLimited": "Hochladen fehlgeschlagen: Du hast in zu kurzer Zeit zu viele Dateien hochgeladen. Bitte warte ein paar Minuten, bevor du es erneut versuchst.",
+        "tooBig": "Hochladen fehlgeschlagen: Die Dateigröße darf max. 20 MB betragen."
+      },
       "firstName": {
         "required": "Vorname benötigt"
       },
