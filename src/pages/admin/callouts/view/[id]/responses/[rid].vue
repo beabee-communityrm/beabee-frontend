@@ -154,7 +154,7 @@ import {
   UpdateCalloutResponseData,
 } from '../../../../../../utils/api/api.interface';
 import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
-import { Form } from 'vue-formio';
+import { Form } from '@formio/vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../../../components/AppHeading.vue';
 import AppInfoList from '../../../../../../components/AppInfoList.vue';
