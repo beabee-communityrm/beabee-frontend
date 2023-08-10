@@ -53,13 +53,7 @@
       />
     </div>
     <EditorContent :editor="editor" class="content-message" />
-    <div
-      v-if="hasError"
-      class="mt-1.5 text-xs font-semibold text-danger"
-      role="alert"
-    >
-      {{ validation.$errors[0].$message }}
-    </div>
+    <AppInputError v-if="hasError" :message="validation.$errors[0].$message" />
   </div>
 </template>
 
@@ -85,6 +79,7 @@ import {
   faStrikethrough,
   faUnderline,
 } from '@fortawesome/free-solid-svg-icons';
+import AppInputError from '../forms/AppInputError.vue';
 
 const { t } = useI18n();
 
@@ -110,6 +105,8 @@ const editor = useEditor({
     }),
     Typeography,
   ],
+  enableInputRules: false,
+  enablePasteRules: false,
   onUpdate: () => {
     if (editor.value) {
       emit(

@@ -7,7 +7,10 @@ meta:
 
 <template>
   <PageTitle :title="t('membershipBuilder.title')" />
-  <AppTabs :items="tabs" :selected="route.name ? route.name as string : null" />
+  <AppTabs
+    :items="tabs"
+    :selected="route.name ? (route.name as string) : null"
+  />
   <router-view ref="mbRouterView"></router-view>
 </template>
 <script lang="ts" setup>

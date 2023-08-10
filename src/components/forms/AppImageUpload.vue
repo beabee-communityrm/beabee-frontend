@@ -3,7 +3,7 @@
     <AppLabel v-if="label" :label="label" :required="required" />
     <div class="flex items-start gap-4">
       <div
-        class="flex-0 basis-28 overflow-hidden rounded border border-primary-40 bg-primary-20"
+        class="flex-none basis-28 overflow-hidden rounded border border-primary-40 bg-primary-20 relative"
       >
         <img
           :src="imageUrl"
@@ -12,6 +12,12 @@
           class="h-auto w-full bg-white"
           :class="!imageUrl && 'invisible'"
         />
+        <span
+          v-if="uploading"
+          class="absolute inset-0 bg-black/50 text-white flex items-center justify-center text-xl"
+        >
+          <font-awesome-icon :icon="faCircleNotch" spin />
+        </span>
       </div>
       <div>
         <AppButton is="label" class="mr-2">
@@ -24,24 +30,23 @@
           />
           {{ t('actions.chooseFile') }}
         </AppButton>
-        <span v-if="uploading">
-          <font-awesome-icon :icon="faCircleNotch" spin />
-          {{ t('form.uploading') }}
-        </span>
+        <AppInputError v-if="formError" :message="formError" />
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { sameAs } from '@vuelidate/validators';
-import { ref, toRef, watch } from 'vue';
+import { helpers, requiredIf, sameAs } from '@vuelidate/validators';
+import { computed, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import axios from '../../lib/axios';
 import env from '../../env';
 import AppButton from '../button/AppButton.vue';
 import AppLabel from './AppLabel.vue';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { createUploadFlow } from '../../utils/api/upload';
+import AppInputError from './AppInputError.vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
@@ -56,10 +61,20 @@ const { t } = useI18n();
 
 const inputRef = ref<HTMLInputElement>();
 const uploading = ref(false);
-
 const imageUrl = ref(props.modelValue as string);
+const formError = ref('');
 
-useVuelidate({ uploading: { equal: sameAs(false) } }, { uploading });
+const rules = computed(() => ({
+  v: {
+    required: helpers.withMessage(
+      t('form.errors.unknown.required'),
+      requiredIf(!!props.required)
+    ),
+  },
+  uploading: { equal: sameAs(false) },
+}));
+
+useVuelidate(rules, { v: imageUrl, uploading });
 
 watch(toRef(props, 'modelValue'), (newModelValue) => {
   imageUrl.value = newModelValue as string;
@@ -68,29 +83,49 @@ watch(toRef(props, 'modelValue'), (newModelValue) => {
   }
 });
 
-function handleChange() {
+async function handleChange() {
   const file = inputRef.value?.files?.item(0);
-  if (file) {
-    imageUrl.value = URL.createObjectURL(file);
-    uploadFile(file);
-  }
-}
 
-async function uploadFile(file: File) {
+  if (!file) {
+    return;
+  }
+
+  if (file.size > 20 * 1024 * 1024) {
+    formError.value = t('form.errors.file.tooBig');
+    return;
+  }
+
   const data = new FormData();
   data.append('file', file);
 
   uploading.value = true;
+  formError.value = '';
 
-  const resp = await axios.post('/upload/', data, {
-    baseURL: env.appUrl,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  try {
+    const uploadFlow = await createUploadFlow();
 
-  const newUrl = `${env.appUrl}/uploads/${props.width}x${props.height}/${resp.data.hash}`;
-  emit('update:modelValue', newUrl);
+    const resp = await axios.post('/upload/', data, {
+      baseURL: env.appUrl,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      params: {
+        token: uploadFlow.id,
+      },
+    });
+
+    imageUrl.value = URL.createObjectURL(file);
+
+    emit(
+      'update:modelValue',
+      `${resp.data.url}?w=${props.width}&h=${props.height}`
+    );
+  } catch (err) {
+    formError.value =
+      axios.isAxiosError(err) && err.response?.status === 429
+        ? t('form.errors.file.rateLimited')
+        : t('form.errorMessages.generic');
+  }
 
   uploading.value = false;
 }

@@ -76,8 +76,8 @@ import { ItemStatus } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
-import AppFormSection from '../../../forms/AppFormSection.vue';
+import AppRadioGroup from '../../../../forms/AppRadioGroup.vue';
+import AppFormSection from '../../../../forms/AppFormSection.vue';
 import { SettingsStepProps } from '../callouts.interface';
 import { sameAs } from '@vuelidate/validators';
 

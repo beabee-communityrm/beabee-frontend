@@ -153,7 +153,7 @@ meta:
         <AppButton type="submit" variant="primaryOutlined" class="mt-4">{{
           t('contactOverview.security.loginOverride')
         }}</AppButton>
-        <AppButton type="submit" variant="primaryOutlined" class="mt-2 ml-6">{{
+        <AppButton type="submit" variant="primaryOutlined" class="ml-6 mt-2">{{
           t('contactOverview.security.resetPassword')
         }}</AppButton>
       </form>
@@ -200,6 +200,8 @@ const props = defineProps<{
   contact: GetContactData;
 }>();
 
+// TODO: remove this when we rework how the contact is passed to child pages
+// eslint-disable-next-line vue/no-dupe-keys
 const contact = ref<GetContactDataWith<
   'profile' | 'contribution' | 'roles'
 > | null>(null);

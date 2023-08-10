@@ -264,6 +264,7 @@
     }
   },
   "callout": {
+    "closed": "This callout is closed",
     "contactDetails": "Contact details",
     "form": {
       "email": "Your email",
@@ -274,11 +275,12 @@
     "joinNow": "Join now",
     "loginToYourAccount": "Login to your account",
     "membersOnly": "This callout is open to members only. To participate",
+    "responseSubmitted": "Response submitted",
     "share": {
       "address": "Share this callout with the following address:",
       "services": "Or quickly share using one of these services:"
     },
-    "showingPreview": "Response submission is disabled in preview mode",
+    "showingPreview": "You can't submit a response in preview mode",
     "toContributionPage": "Edit my contribution",
     "updateContribution": "please update your contribution",
     "youResponded": "You replied to this callout ♥"
@@ -328,6 +330,9 @@
     },
     "summary": "Summary",
     "updated": "Your callout was successfully updated."
+  },
+  "calloutBuilder": {
+    "showAdvancedOptions": "Show advanced form options"
   },
   "calloutResponse": {
     "data": {
@@ -535,7 +540,7 @@
       "joined": "Joined",
       "lastSeen": "Last seen",
       "lastname": "Last name",
-      "manualPaymentSource": "Manuelles Zahlungsquelle",
+      "manualPaymentSource": "Manual payment source",
       "membershipExpires": "Member until",
       "membershipStarts": "Member since",
       "name": "Name",
@@ -577,7 +582,8 @@
     "expired": "Your contribution expired.",
     "expiredText": "Please consider renewing, even if at the lowest amount it would help us immensely. Thank you!",
     "hasPendingPayment": "Your payment is currently being processed.",
-    "manualPayment": "You are paying manually through bank transfer right now. To make it easier for you to manage your contribution and easier for us to know on how much money from our members we can rely on month on month, please update to paying automatically via direct debit.",
+    "manualPayment": "You are currently paying your membership contribution via {source}. By paying through our membership system you'll help us to know how much money from our members we can rely on month on month and it'll be easier for you to manage your contribution.",
+    "manualPaymentSource": "a third party tool",
     "nextAmountChanging": "Your contribution will change to {nextAmount} on {renewalDate}.",
     "paymentHistory": {
       "empty": "Past payments and their invoices will show up here.",
@@ -595,7 +601,7 @@
     "startContribution": "Start contribution",
     "startedContribution": "Your contribution has started.",
     "updateContribution": "Update contribution",
-    "updatePaymentType": "Update payment type",
+    "updatePaymentType": "Update payment method",
     "updatedContribution": "Your contribution has been updated.",
     "updatedPaymentSource": "Your payment method has been updated.",
     "willExpire": "Your contribution will expire in {expires}.",
@@ -607,17 +613,15 @@
     "lastSavedNow": "Last saved just now",
     "steps": {
       "content": {
-        "description": "Build your callout with questions and prompts",
         "inputs": {
           "intro": {
             "help": "<p>The <strong>Introduction text</strong> appears alongside the callout. It should explain why you are doing this callout and give any context the user might need before answering.</p>\n",
             "label": "Introduction text"
           }
         },
-        "title": "Callout content"
+        "title": "Content"
       },
       "dates": {
-        "description": "Schedule when your callout will go live and for how long",
         "inputs": {
           "expires": {
             "label": "When should this callout end?",
@@ -634,10 +638,9 @@
             }
           }
         },
-        "title": "Dates and duration"
+        "title": "Schedule"
       },
       "endMessage": {
-        "description": "Set a final thank you message or page to redirect to",
         "inputs": {
           "action": {
             "label": "When the user finishes answering the callout",
@@ -665,11 +668,9 @@
         "title": "End message"
       },
       "mailchimp": {
-        "description": "Set up Mailchimp integration",
         "title": "Mailchimp sync"
       },
       "settings": {
-        "description": "Choose who will see your callout and more",
         "inputs": {
           "anonymous": {
             "help": "<p>If you allow <strong>anonymous responses</strong>, users will not be asked for their contact information.</p>\n",
@@ -716,7 +717,6 @@
         "title": "Settings"
       },
       "titleAndImage": {
-        "description": "Set a title, description and image for the callout",
         "inputs": {
           "description": {
             "help": "<p>The <strong>Short description</strong> expands on the title to explain what the callout is about. It is meant to inform people what is inside in a few words.</p>\n",
@@ -826,6 +826,10 @@
         "email": "Invalid email address",
         "required": "Email is required"
       },
+      "file": {
+        "rateLimited": "Upload failed: you have uploaded too many files recently, please wait a few minutes before trying again",
+        "tooBig": "Upload failed: the file size must be under 20Mb"
+      },
       "firstName": {
         "required": "First name is required"
       },
@@ -877,7 +881,6 @@
     "saved": "Saved!",
     "unsavedChanges": "Unsaved changes",
     "updated": "Updated",
-    "uploading": "Uploading...",
     "warning": "You should get the user's consent before making updates to this page. All changes you make here will also be visible to the user."
   },
   "homePage": {

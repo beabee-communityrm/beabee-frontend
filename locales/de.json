@@ -262,6 +262,7 @@
     }
   },
   "callout": {
+    "closed": "Dieser Callout ist beendet.",
     "contactDetails": "Kontaktdaten",
     "form": {
       "email": "Ihre E-Mail-Adresse",
@@ -272,11 +273,12 @@
     "joinNow": "Mitglied werden",
     "loginToYourAccount": "Einloggen",
     "membersOnly": "An diesem Callout können nur zahlende Mitglieder teilnehmen. Um teilzunehmen",
+    "responseSubmitted": "Antwort eingereicht",
     "share": {
       "address": "Diesen Callout per Link teilen:",
       "services": "Diesen Callout auf einer der folgenden Plattformen teilen: "
     },
-    "showingPreview": "Antworten sind im Vorschaumodus deaktiviert",
+    "showingPreview": "Im Vorschaumodus sind Antworten deaktiviert.",
     "toContributionPage": "Meinen Beitrag ändern",
     "updateContribution": "Bitte ändern Sie ihren Beitrag.",
     "youResponded": "Sie haben geantwortet ♥"
@@ -326,6 +328,9 @@
     },
     "summary": "Zusammenfassung",
     "updated": "Änderungen gespeichert!"
+  },
+  "calloutBuilder": {
+    "showAdvancedOptions": "Erweiterte Optionen anzeigen"
   },
   "calloutResponse": {
     "data": {
@@ -533,7 +538,7 @@
       "joined": "Kontakt seit",
       "lastSeen": "Zuletzt angemeldet",
       "lastname": "Nachname",
-      "manualPaymentSource": "Manuelles Zahlungsquelle",
+      "manualPaymentSource": "Manuelle Zahlungsquelle",
       "membershipExpires": "Mitglied bis",
       "membershipStarts": "Mitglied seit",
       "name": "Name",
@@ -575,7 +580,8 @@
     "expired": "Ihre Mitgliedschaft ist ausgelaufen.",
     "expiredText": "Möchten Sie Ihre Mitgliedschaft verlängern? Selbst kleinste Beträge helfen uns und unserer Arbeit. Danke!",
     "hasPendingPayment": "Ihre Zahlung wird gerade verarbeitet.",
-    "manualPayment": "Sie leisten Ihren Beitrag aktuell manuell via Banküberweisung. Richten Sie hier jetzt eine automatische Abbuchung via Lastschrift ein. Dann wird es für Sie leichter, Ihre Beiträge zu verwalten. Und wir bekommen einen besseren Überblick, auf welche Beiträge wir uns monatlich verlassen können.",
+    "manualPayment": "Sie zahlen Ihren Beitrag aktuell via {source}. Indem Sie über unser Mitgliedersystem bezahlen, bekommen wir einen besseren Überblick, auf welche Beiträge wir uns monatlich verlassen können. Für Sie wird es außerdem einfacher, Ihren Beitrag jederzeit zu ändern.",
+    "manualPaymentSource": "einem Drittanbieter",
     "nextAmountChanging": "Ab dem {renewalDate} zahlen Sie {nextAmount}.",
     "paymentHistory": {
       "empty": "Ältere Zahlungen und Rechnungen finden Sie hier.",
@@ -593,7 +599,7 @@
     "startContribution": "Mitgliedschaft beginnen",
     "startedContribution": "Ihre Mitgliedschaft hat begonnen.",
     "updateContribution": "Beitrag aktualisieren",
-    "updatePaymentType": "Neuen Zahlungsweg einrichten",
+    "updatePaymentType": "Neue Zahlungsmethode einrichten",
     "updatedContribution": "Ihr Beitrag wurde geändert.",
     "updatedPaymentSource": "Ihre Zahlungsart wurde aktualisiert.",
     "willExpire": "Ihre Mitgliedschaft läuft in {expires} ab.",
@@ -605,17 +611,15 @@
     "lastSavedNow": "Zuletzt vor wenigen Augenblicken gespeichert.",
     "steps": {
       "content": {
-        "description": "Entwirf deinen Callout, indem Du deine Fragen formulierst.",
         "inputs": {
           "intro": {
             "help": "<p>Die <strong>Einleitung</strong> erscheint vor den Fragen. Erkläre darin, warum du den Callout machst, also was das Ziel ist und wie die Antworten helfen. Gib so viel Kontext wie möglich, um den Teilnehmenden die Beantwortung zu erleichtern.</p>\n",
             "label": "Einleitung"
           }
         },
-        "title": "Callout-Inhalt"
+        "title": "Inhalt"
       },
       "dates": {
-        "description": "Plane, wann dein Callout veröffentlicht werden und wie lange er aktiv bleiben soll.",
         "inputs": {
           "expires": {
             "label": "Wann soll der Callout enden?",
@@ -632,10 +636,9 @@
             }
           }
         },
-        "title": "Startdatum und Dauer"
+        "title": "Zeitplan"
       },
       "endMessage": {
-        "description": "Danke Nutzern für die Teilnahme oder leite sie auf eine andere Webseite weiter.",
         "inputs": {
           "action": {
             "label": "Wenn die Teilnehmenden ihre Antworten abgeschickt haben",
@@ -663,11 +666,9 @@
         "title": "Nachricht am Ende"
       },
       "mailchimp": {
-        "description": "Mailchimp-Synchronisation einrichten",
         "title": "Mailchimp-Synchronisation"
       },
       "settings": {
-        "description": "Entscheide unter anderem, wer deinen Callout sehen kann.",
         "inputs": {
           "anonymous": {
             "help": "<p>Wenn du <strong>anonyme Antworten</strong> erlaubst, werden Teilenehmer nicht nach ihren Kontaktdaten gefragt.</p>\n",
@@ -714,7 +715,6 @@
         "title": "Einstellungen"
       },
       "titleAndImage": {
-        "description": "Gib deinem Callout einen Titel, eine Beschreibung und ein Bild.",
         "inputs": {
           "description": {
             "help": "<p>Die <strong>Kurzbeschreibung</strong> ergänzt den Titel und sollte in wenigen Worten erklären, worum es bei dem Callout geht.</p>\n",
@@ -824,6 +824,10 @@
         "email": "Ungültige E-Mail-Adresse",
         "required": "E-Mail-Adresse benötigt"
       },
+      "file": {
+        "rateLimited": "Hochladen fehlgeschlagen: Sie haben in zu kurzer Zeit zu viele Dateien hochgeladen. Bitte warten Sie ein paar Minuten, bevor Sie es erneut versuchen.",
+        "tooBig": "Hochladen fehlgeschlagen: Die Dateigröße darf max. 20 MB betragen."
+      },
       "firstName": {
         "required": "Vorname benötigt"
       },
@@ -875,7 +879,6 @@
     "saved": "Gespeichert!",
     "unsavedChanges": "Ungespeicherte Änderungen",
     "updated": "Aktualisiert",
-    "uploading": "Es wird hochgeladen",
     "warning": "Ändere hier nur etwas, wenn du das Einverständnis hast. Änderungen werden auch den Nutzern angezeigt."
   },
   "homePage": {

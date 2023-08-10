@@ -30,26 +30,27 @@
     <div v-if="$slots.after" class="flex-0 ml-2"><slot name="after" /></div>
   </div>
 
-  <div
+  <AppInputError
     v-if="hasError && !hideErrorMessage"
-    class="mt-1.5 text-xs font-semibold text-danger"
-    role="alert"
-  >
-    {{ validation.$errors[0].$message }}
-  </div>
-
-  <div v-if="infoMessage" class="mt-1.5 text-xs">
-    <AppInputHelp :message="infoMessage" />
-  </div>
+    :message="validation.$errors[0].$message"
+  />
+  <AppInputHelp v-if="infoMessage" :message="infoMessage" />
 </template>
 
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
-import { email, helpers, requiredIf, sameAs, url } from '@vuelidate/validators';
+import {
+  email,
+  helpers,
+  requiredIf,
+  sameAs as sameAsValidator,
+  url,
+} from '@vuelidate/validators';
 import AppInputHelp from './AppInputHelp.vue';
 import AppLabel from './AppLabel.vue';
+import AppInputError from './AppInputError.vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = withDefaults(
@@ -119,7 +120,10 @@ const rules = computed(() => ({
       ),
     }),
     ...(props.sameAs !== undefined && {
-      sameAs: helpers.withMessage(errorT('sameAs'), sameAs(props.sameAs)),
+      sameAs: helpers.withMessage(
+        errorT('sameAs'),
+        sameAsValidator(props.sameAs)
+      ),
     }),
     ...(props.pattern !== undefined && {
       pattern: helpers.withMessage(

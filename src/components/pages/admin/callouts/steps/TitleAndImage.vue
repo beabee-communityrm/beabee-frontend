@@ -83,16 +83,16 @@
 import { ItemStatus } from '@beabee/beabee-common';
 import { computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppInput from '../../../forms/AppInput.vue';
-import AppImageUpload from '../../../forms/AppImageUpload.vue';
-import AppTextArea from '../../../forms/AppTextArea.vue';
+import AppInput from '../../../../forms/AppInput.vue';
+import AppImageUpload from '../../../../forms/AppImageUpload.vue';
+import AppTextArea from '../../../../forms/AppTextArea.vue';
 import useVuelidate from '@vuelidate/core';
 import { TitleAndImageStepProps } from '../callouts.interface';
-import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
-import AppLabel from '../../../forms/AppLabel.vue';
-import env from '../../../../env';
+import AppRadioGroup from '../../../../forms/AppRadioGroup.vue';
+import AppLabel from '../../../../forms/AppLabel.vue';
+import env from '../../../../../env';
 import slugify from 'slugify';
-import AppFormSection from '../../../forms/AppFormSection.vue';
+import AppFormSection from '../../../../forms/AppFormSection.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{

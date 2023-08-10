@@ -29,7 +29,7 @@
 
       <div class="flex h-full flex-none flex-col">
         <button
-          class="amount-button border-l border-b"
+          class="amount-button border-b border-l"
           type="button"
           @click="changeAmount(amount + 1)"
         >
@@ -54,11 +54,11 @@
         v-for="(definedAmount, index) in definedAmounts"
         :key="index"
         type="button"
-        class="flex-grow basis-[90px] bg-white p-2 text-sm font-semibold outline outline-1 outline-primary-40"
+        class="flex-grow basis-[90px] p-2 text-sm font-semibold outline outline-1"
         :class="
           definedAmount === amount
-            ? 'z-20 bg-link font-bold text-white !outline-link-110'
-            : 'hover:z-10 hover:bg-link-10 hover:outline-link'
+            ? 'z-20 bg-link font-bold text-white outline-link-110'
+            : 'bg-white outline-primary-40 hover:z-10 hover:bg-link-10 hover:outline-link'
         "
         @click="changeAmount(definedAmount)"
       >
@@ -129,7 +129,7 @@ const period = computed(() => {
 
 <style lang="postcss" scoped>
 .amount-button {
-  @apply h-1/2 border-primary-40 bg-white py-2 px-4 text-primary-70 hover:bg-primary-5 hover:text-primary;
+  @apply h-1/2 border-primary-40 bg-white px-4 py-2 text-primary-70 hover:bg-primary-5 hover:text-primary;
   &.is-invalid {
     @apply cursor-not-allowed text-grey;
   }
