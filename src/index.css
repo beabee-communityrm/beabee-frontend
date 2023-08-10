@@ -100,8 +100,8 @@
 
   /* Grid styles */
   .row {
-    @apply flex gap-0;
-    & > [class^='col'] {
+    @apply flex gap-0 -mx-2;
+    & > [class*='col'] {
       @apply px-2;
     }
   }
@@ -116,6 +116,9 @@
   }
   .col-sm-10 {
     @apply flex-none basis-5/6 max-w-[83.333333%];
+  }
+  .col-sm-12 {
+    @apply flex-none basis-full max-w-full;
   }
   .col-md-1 {
     @apply flex-none basis-1/12 max-w-[8.333333%];
@@ -271,8 +274,17 @@
       @apply border-b-0;
     }
   }
-  .fileSelector {
-    @apply mb-4;
+  .fileSelector,
+  .file {
+    @apply mb-4 border border-2 border-dashed border-grey p-2;
+  }
+  .file {
+    .col-form-label {
+      @apply text-lg mb-0;
+    }
+    .alert-danger {
+      @apply text-danger;
+    }
   }
 
   /* Styles for signature component */
