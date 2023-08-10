@@ -116,6 +116,6 @@ onBeforeMount(() => {
 </script>
 
 <style>
-@import 'formiojs/dist/formio.form.min.css';
+@import '../../../lib/formio/formio.form.css';
 @import '../../form-renderer/form-renderer.css';
 </style>

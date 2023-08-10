@@ -131,8 +131,8 @@ onBeforeUnmount(() => {
 });
 </script>
 <style lang="postcss">
-@import 'formiojs/dist/formio.builder.css';
-@import './../form-renderer/form-renderer.css';
+@import '../../lib/formio/formio.builder.css';
+@import '../form-renderer/form-renderer.css';
 
 .callout-form-builder {
   .drag-and-drop-alert {

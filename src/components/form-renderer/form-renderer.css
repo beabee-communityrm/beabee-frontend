@@ -215,7 +215,7 @@
       @apply text-lg mb-0;
     }
     .alert-danger {
-      @apply text-danger;
+      @apply text-danger text-sm font-semibold;
     }
   }
 

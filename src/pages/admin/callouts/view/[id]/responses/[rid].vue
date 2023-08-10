@@ -312,6 +312,6 @@ async function refreshResponse() {
 watchEffect(refreshResponse);
 </script>
 <style>
-@import 'formiojs/dist/formio.form.min.css';
+@import '../../../../../../lib/formio/formio.form.css';
 @import '../../../../../../components/form-renderer/form-renderer.css';
 </style>
