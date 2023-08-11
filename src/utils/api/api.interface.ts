@@ -523,5 +523,4 @@ export type UpdateEmailData = GetEmailData;
 
 export interface GetUploadFlowData {
   id: string;
-  ipAddress: string;
 }
