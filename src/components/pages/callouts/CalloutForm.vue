@@ -21,11 +21,11 @@
   </form>
 </template>
 <script lang="ts" setup>
+import { CalloutResponseAnswers } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref } from 'vue';
 import {
   GetCalloutDataWith,
   GetCalloutResponseDataWith,
-  CalloutResponseAnswers,
 } from '../../../utils/api/api.interface';
 import { useI18n } from 'vue-i18n';
 import { currentUser } from '../../../store';

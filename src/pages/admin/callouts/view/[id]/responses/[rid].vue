@@ -149,7 +149,6 @@ meta:
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import {
-  CalloutResponseAnswers,
   GetCalloutDataWith,
   GetCalloutResponseData,
   GetCalloutResponseDataWith,
@@ -184,6 +183,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { addNotification } from '../../../../../../store/notifications';
 import AppNotification from '../../../../../../components/AppNotification.vue';
+import { CalloutResponseAnswers } from '@beabee/beabee-common';
 
 const props = defineProps<{
   rid: string;
