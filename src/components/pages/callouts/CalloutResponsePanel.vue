@@ -9,13 +9,16 @@
     >
       <font-awesome-icon :icon="faTimes" />
     </button>
-    <div v-if="photos.length > 0" class="relative overflow-hidden mb-4 -mx-4">
+    <div
+      v-if="response.photos.length > 0"
+      class="relative overflow-hidden mb-4 -mx-4"
+    >
       <ul
         class="flex items-center transition-transform"
         :style="{ transform: `translateX(${currentPhotoIndex * -100}%)` }"
       >
         <li
-          v-for="photo in photos"
+          v-for="photo in response.photos"
           :key="photo.url"
           class="w-full flex-none p-4"
         >
@@ -23,7 +26,7 @@
         </li>
       </ul>
       <div
-        v-if="photos.length > 1"
+        v-if="response.photos.length > 1"
         class="absolute top-1/2 inset-x-0 flex justify-between text-2xl font-bold transform -translate-y-1/2"
       >
         <div>
@@ -37,7 +40,7 @@
         </div>
         <div>
           <button
-            v-show="currentPhotoIndex < photos.length - 1"
+            v-show="currentPhotoIndex < response.photos.length - 1"
             class="bg-primary text-white w-10 h-10 rounded-full"
             @click="currentPhotoIndex++"
           >
@@ -62,16 +65,12 @@ import {
   faChevronRight,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
-import { computed, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import {
   GetCalloutDataWith,
   GetCalloutResponseMapData,
 } from '../../../utils/api/api.interface';
 import { Form } from '../../../lib/formio';
-import { CalloutResponseAnswerFileUpload } from '@beabee/beabee-common';
-
-const photosProp = 'file';
-const titleProp = 'title'; // TODO
 
 defineEmits<(e: 'close') => void>();
 const props = defineProps<{
@@ -81,17 +80,12 @@ const props = defineProps<{
 
 const currentPhotoIndex = ref(0);
 
-const photos = computed<CalloutResponseAnswerFileUpload[]>(() => {
-  const photos = props.response.answers[photosProp] as
-    | CalloutResponseAnswerFileUpload
-    | CalloutResponseAnswerFileUpload[]
-    | undefined;
-  return photos ? (Array.isArray(photos) ? photos : [photos]) : [];
-});
-
-watch(photos, () => {
-  currentPhotoIndex.value = 0;
-});
+watch(
+  () => props.response,
+  () => {
+    currentPhotoIndex.value = 0;
+  }
+);
 </script>
 
 <style>
