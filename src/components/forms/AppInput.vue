@@ -21,6 +21,7 @@
           :name="name"
           :required="required"
           :min="min"
+          :max="max"
           :pattern="pattern"
           v-bind="$attrs"
           @blur="validation.$touch"
