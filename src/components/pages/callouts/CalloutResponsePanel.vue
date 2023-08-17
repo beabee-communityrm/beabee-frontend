@@ -9,6 +9,7 @@
     >
       <font-awesome-icon :icon="faTimes" />
     </button>
+    <h2 class="text-2xl font-bold font-title mb-4">{{ response.title }}</h2>
     <div
       v-if="response.photos.length > 0"
       class="relative overflow-hidden mb-4 -mx-4"
