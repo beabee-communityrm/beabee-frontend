@@ -20,7 +20,7 @@ meta:
       >
         <MglGeoJsonSource
           source-id="responses"
-          :data="responsesSource"
+          :data="responsesCollecton"
           cluster
           :cluster-max-zoom="12"
         >
@@ -59,9 +59,9 @@ meta:
           />
         </MglGeoJsonSource>
         <MglGeoJsonSource
-          v-if="selectedResponse"
+          v-if="selectedResponseFeature"
           source-id="selected-response"
-          :data="selectedResponse"
+          :data="selectedResponseFeature"
         >
           <MglCircleLayer
             layer-id="selected-response"
@@ -79,9 +79,9 @@ meta:
     <PageTitle :title="callout.title" class="absolute top-8 left-8" />
 
     <CalloutResponsePanel
-      v-if="selectedResponse"
+      v-if="selectedResponseFeature"
       :callout="callout"
-      :response="selectedResponse.properties"
+      :response="selectedResponseFeature.properties"
       @close="router.push({ hash: '' })"
     />
 
@@ -133,7 +133,7 @@ const responses = ref<GetCalloutResponseMapData[]>([]);
 const center = ref<LngLatLike>([0, 0]);
 const zoom = ref(3);
 
-const responsesSource = computed<
+const responsesCollecton = computed<
   GeoJSON.FeatureCollection<GeoJSON.Point, GetCalloutResponseMapData>
 >(() => ({
   type: 'FeatureCollection',
@@ -152,10 +152,10 @@ const responsesSource = computed<
   }),
 }));
 
-const selectedResponse = computed(() => {
+const selectedResponseFeature = computed(() => {
   if (route.hash.startsWith(hashPrefix)) {
-    const responseNumber = +route.hash.slice(hashPrefix.length);
-    return responsesSource.value.features.find(
+    const responseNumber = Number(route.hash.slice(hashPrefix.length));
+    return responsesCollecton.value.features.find(
       (f) => f.properties.number === responseNumber
     );
   } else {
@@ -220,11 +220,11 @@ function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
   }
 }
 
-watch(selectedResponse, (newResponse) => {
-  if (!map.map || !newResponse) return;
+watch(selectedResponseFeature, (newFeature) => {
+  if (!map.map || !newFeature) return;
 
   map.map.easeTo({
-    center: newResponse.geometry.coordinates as LngLatLike,
+    center: newFeature.geometry.coordinates as LngLatLike,
     padding: { left: sidePanelRef.value?.offsetWidth || 0 },
   });
 });
