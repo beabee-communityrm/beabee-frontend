@@ -126,12 +126,14 @@
               <AppInput
                 v-model="mapCenter"
                 :label="inputT('mapSchema.center.label')"
+                required
               />
             </div>
             <div>
               <AppInput
                 v-model="mapBounds"
                 :label="inputT('mapSchema.bounds.label')"
+                required
               />
             </div>
           </div>
@@ -145,6 +147,7 @@
                 :label="inputT('mapSchema.initialZoom.label')"
                 :min="data.mapSchema.minZoom"
                 :max="data.mapSchema.maxZoom"
+                required
               />
             </div>
             <div>
@@ -154,6 +157,7 @@
                 :label="inputT('mapSchema.minZoom.label')"
                 :min="0"
                 :max="data.mapSchema.maxZoom"
+                required
               />
             </div>
             <div>
@@ -163,6 +167,7 @@
                 :label="inputT('mapSchema.maxZoom.label')"
                 :min="data.mapSchema.minZoom"
                 :max="22"
+                required
               />
             </div>
           </div>
@@ -200,8 +205,19 @@ const inputT = (key: string) => t('createCallout.steps.settings.inputs.' + key);
 const hasVisited = ref(!!props.status);
 watch(toRef(props, 'isActive'), (active) => (hasVisited.value ||= active));
 const validation = useVuelidate(
-  { v: { yes: sameAs(true) } },
-  { v: hasVisited }
+  {
+    hasVisited: { yes: sameAs(true) },
+    hasResponseView: { yes: sameAs(true) },
+  },
+  {
+    hasVisited,
+    hasResponseView: computed(
+      () =>
+        !props.data.showResponses ||
+        props.data.showResponseGallery ||
+        props.data.showResponseMap
+    ),
+  }
 );
 
 const mapCenter = computed({
