@@ -687,6 +687,14 @@
               "yes": "Ja"
             }
           },
+          "mapSchema": {
+            "bounds": {},
+            "center": {},
+            "initialZoom": {},
+            "maxZoom": {},
+            "minZoom": {},
+            "style": {}
+          },
           "multiple": {
             "help": "<p>Wenn ja, können eingeloggte Nutzer <strong>mehrfach</strong> am Callout teilnehmen.</p>\n",
             "label": "Sollen Nutzer mehrfach teilnehmen können?",
@@ -695,6 +703,9 @@
               "yes": "Ja"
             }
           },
+          "responseImageProp": {},
+          "responseTitleProp": {},
+          "showResponses": {},
           "visible": {
             "help": "<p>Du kannst den Callout <strong>nicht anzeigen</strong> lassen. Dann ist er nur über den Link erreichbar.</p>\n",
             "label": "Soll der Callout deinen Mitgliedern im Dashboard angezeigt werden?",
@@ -702,6 +713,9 @@
               "no": "Nein, Callout nicht im Dashboard anzeigen.",
               "yes": "Ja, Callout im Dashboard anzeigen."
             }
+          },
+          "whichResponseViews": {
+            "opts": {}
           },
           "who": {
             "help": "<p>Callouts können für <strong>Alle</strong> oder nur für <strong>Mitglieder</strong> zugänglich sein.</p>\n",

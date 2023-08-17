@@ -68,18 +68,123 @@
         required
       />
     </AppFormSection>
+    <AppFormSection>
+      <AppRadioGroup
+        v-model="data.showResponses"
+        name="showResponses"
+        :label="inputT('showResponses.label')"
+        :options="[
+          [true, t('common.yes')],
+          [false, t('common.no')],
+        ]"
+        required
+      />
+    </AppFormSection>
+    <template v-if="data.showResponses">
+      <AppFormSection>
+        <AppInput
+          v-model="data.responseTitleProp"
+          :label="inputT('responseTitleProp.label')"
+          required
+        />
+      </AppFormSection>
+      <AppFormSection>
+        <AppInput
+          v-model="data.responseImageProp"
+          :label="inputT('responseImageProp.label')"
+          required
+        />
+      </AppFormSection>
+      <AppFormSection>
+        <AppLabel :label="inputT('whichResponseViews.label')" required />
+        <div class="flex gap-4">
+          <AppCheckbox
+            v-model="data.showResponseGallery"
+            :icon="faImages"
+            :label="inputT('whichResponseViews.opts.gallery')"
+            class="!font-normal"
+          />
+          <AppCheckbox
+            v-model="data.showResponseMap"
+            :icon="faMap"
+            :label="inputT('whichResponseViews.opts.map')"
+            class="!font-normal"
+          />
+        </div>
+      </AppFormSection>
+      <template v-if="data.showResponseMap">
+        <AppFormSection>
+          <AppInput
+            v-model="data.mapSchema.style"
+            :label="inputT('mapSchema.style.label')"
+            required
+          />
+        </AppFormSection>
+        <AppFormSection>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <AppInput
+                v-model="mapCenter"
+                :label="inputT('mapSchema.center.label')"
+              />
+            </div>
+            <div>
+              <AppInput
+                v-model="mapBounds"
+                :label="inputT('mapSchema.bounds.label')"
+              />
+            </div>
+          </div>
+        </AppFormSection>
+        <AppFormSection>
+          <div class="grid grid-cols-3 gap-4">
+            <div>
+              <AppInput
+                v-model="data.mapSchema.initialZoom"
+                type="number"
+                :label="inputT('mapSchema.initialZoom.label')"
+                :min="data.mapSchema.minZoom"
+                :max="data.mapSchema.maxZoom"
+              />
+            </div>
+            <div>
+              <AppInput
+                v-model="data.mapSchema.minZoom"
+                type="number"
+                :label="inputT('mapSchema.minZoom.label')"
+                :min="0"
+                :max="data.mapSchema.maxZoom"
+              />
+            </div>
+            <div>
+              <AppInput
+                v-model="data.mapSchema.maxZoom"
+                type="number"
+                :label="inputT('mapSchema.maxZoom.label')"
+                :min="data.mapSchema.minZoom"
+                :max="22"
+              />
+            </div>
+          </div>
+        </AppFormSection>
+      </template>
+    </template>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ItemStatus } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
-import { ref, toRef, watch } from 'vue';
+import { computed, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppRadioGroup from '../../../../forms/AppRadioGroup.vue';
 import AppFormSection from '../../../../forms/AppFormSection.vue';
 import { SettingsStepProps } from '../callouts.interface';
 import { sameAs } from '@vuelidate/validators';
+import AppInput from '../../../../forms/AppInput.vue';
+import AppCheckbox from '../../../../forms/AppCheckbox.vue';
+import AppLabel from '../../../../forms/AppLabel.vue';
+import { faImages, faMap } from '@fortawesome/free-solid-svg-icons';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
@@ -98,6 +203,29 @@ const validation = useVuelidate(
   { v: { yes: sameAs(true) } },
   { v: hasVisited }
 );
+
+const mapCenter = computed({
+  get: () => props.data.mapSchema.center.join(', '),
+  set: (newValue) => {
+    const [lng, lat] = newValue.split(',').map((v) => Number(v.trim()));
+    // eslint-disable-next-line vue/no-mutating-props
+    props.data.mapSchema.center = [lng, lat];
+  },
+});
+
+const mapBounds = computed({
+  get: () => props.data.mapSchema.bounds.join(', '),
+  set: (newValue) => {
+    const [lng1, lat1, lng2, lat2] = newValue
+      .split(',')
+      .map((v) => Number(v.trim()));
+    // eslint-disable-next-line vue/no-mutating-props
+    props.data.mapSchema.bounds = [
+      [lng1, lat1],
+      [lng2, lat2],
+    ];
+  },
+});
 
 watch(
   validation,
