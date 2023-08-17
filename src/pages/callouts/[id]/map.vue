@@ -7,14 +7,14 @@ meta:
 </route>
 
 <template>
-  <div v-if="callout">
+  <div v-if="callout?.responseViewSchema?.map">
     <div class="absolute inset-0">
       <MglMap
         :center="center"
         :zoom="zoom"
-        :map-style="callout.mapSchema.style"
-        :max-zoom="callout.mapSchema.maxZoom"
-        :min-zoom="callout.mapSchema.minZoom"
+        :map-style="callout.responseViewSchema.map.style"
+        :max-zoom="callout.responseViewSchema.map.maxZoom"
+        :min-zoom="callout.responseViewSchema.map.minZoom"
         @map:click="handleClick"
         @map:mousemove="handleMouseOver"
       >
@@ -128,7 +128,7 @@ const router = useRouter();
 const hashPrefix = '#response-' as const;
 
 const sidePanelRef = ref<HTMLElement>();
-const callout = ref<GetCalloutDataWith<'form' | 'mapSchema'>>();
+const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();
 const responses = ref<GetCalloutResponseMapData[]>([]);
 const center = ref<LngLatLike>([0, 0]);
 const zoom = ref(3);
@@ -230,9 +230,13 @@ watch(selectedResponseFeature, (newFeature) => {
 });
 
 onBeforeMount(async () => {
-  callout.value = await fetchCallout(props.id, ['form', 'mapSchema']);
-  center.value = callout.value.mapSchema.center;
-  zoom.value = callout.value.mapSchema.initialZoom;
+  callout.value = await fetchCallout(props.id, ['form', 'responseViewSchema']);
+  if (!callout.value.responseViewSchema?.map) {
+    throw new Error('Callout does not have a map schema');
+  }
+
+  center.value = callout.value.responseViewSchema.map.center;
+  zoom.value = callout.value.responseViewSchema.map.initialZoom;
 
   // TODO: pagination
   responses.value = (await fetchResponsesForMap(props.id)).items;
