@@ -20,7 +20,7 @@ meta:
       >
         <MglGeoJsonSource
           source-id="responses"
-          :data="responsesSource"
+          :data="responsesCollecton"
           cluster
           :cluster-max-zoom="12"
         >
@@ -59,9 +59,9 @@ meta:
           />
         </MglGeoJsonSource>
         <MglGeoJsonSource
-          v-if="selectedResponse"
+          v-if="selectedResponseFeature"
           source-id="selected-response"
-          :data="selectedResponse"
+          :data="selectedResponseFeature"
         >
           <MglCircleLayer
             layer-id="selected-response"
@@ -78,65 +78,13 @@ meta:
 
     <PageTitle :title="callout.title" class="absolute top-8 left-8" />
 
-    <aside
-      v-if="selectedResponse"
-      class="absolute left-0 inset-y-0 bg-white p-8 w-full max-w-lg overflow-scroll shadow-lg"
-    >
-      <button
-        class="absolute right-2 top-2 h-10 w-10 hover:text-primary text-2xl"
-        type="button"
-        @click="router.push({ hash: '' })"
-      >
-        <font-awesome-icon :icon="faTimes" />
-      </button>
-      <div
-        v-if="selectedPhotos.length > 0"
-        class="relative overflow-hidden mb-4 -mx-4"
-      >
-        <ul
-          class="flex items-center transition-transform"
-          :style="{ transform: `translateX(${currentPhotoIndex * -100}%)` }"
-        >
-          <li
-            v-for="photo in selectedPhotos"
-            :key="photo.url"
-            class="w-full flex-none p-4"
-          >
-            <img class="w-full" :src="photo.url + '?w=600&h=600'" />
-          </li>
-        </ul>
-        <div
-          v-if="selectedPhotos.length > 1"
-          class="absolute top-1/2 inset-x-0 flex justify-between text-2xl font-bold transform -translate-y-1/2"
-        >
-          <div>
-            <button
-              v-show="currentPhotoIndex > 0"
-              class="bg-primary text-white w-10 h-10 rounded-full"
-              @click="currentPhotoIndex--"
-            >
-              <font-awesome-icon :icon="faChevronLeft" />
-            </button>
-          </div>
-          <div>
-            <button
-              v-show="currentPhotoIndex < selectedPhotos.length - 1"
-              class="bg-primary text-white w-10 h-10 rounded-full"
-              @click="currentPhotoIndex++"
-            >
-              <font-awesome-icon :icon="faChevronRight" />
-            </button>
-          </div>
-        </div>
-      </div>
-      <Form
-        :key="selectedResponse.properties?.id"
-        class="callout-form-simple"
-        :form="callout.formSchema"
-        :submission="{ data: selectedResponse.properties }"
-        :options="{ readOnly: true, noAlerts: true, renderMode: 'html' }"
-      />
-    </aside>
+    <CalloutResponsePanel
+      v-if="selectedResponseFeature"
+      :callout="callout"
+      :response="selectedResponseFeature.properties"
+      @close="router.push({ hash: '' })"
+    />
+
     <!-- Side panel width reference to offset map center -->
     <div ref="sidePanelRef" class="absolute left-0 w-full max-w-lg" />
   </div>
@@ -152,7 +100,6 @@ import {
   MglSymbolLayer,
   useMap,
 } from 'vue-maplibre-gl';
-
 import type {
   GeoJSONSource,
   LngLatLike,
@@ -160,22 +107,17 @@ import type {
   MapMouseEvent,
 } from 'maplibre-gl';
 import type GeoJSON from 'geojson';
-
 import {
   GetCalloutDataWith,
   GetCalloutResponseMapData,
 } from '../../../utils/api/api.interface';
 import { fetchCallout, fetchResponsesForMap } from '../../../utils/api/callout';
 import PageTitle from '../../../components/PageTitle.vue';
-import { Form } from '../../../lib/formio';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
 import 'vue-maplibre-gl/dist/vue-maplibre-gl.css';
-import {
-  faChevronLeft,
-  faChevronRight,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons';
+import CalloutResponsePanel from '../../../components/pages/callouts/CalloutResponsePanel.vue';
+import { CalloutResponseAnswerAddress } from '@beabee/beabee-common';
 
 const props = defineProps<{ id: string }>();
 
@@ -185,23 +127,19 @@ const router = useRouter();
 
 const hashPrefix = '#response-' as const;
 
-const titleProp = '';
-const photosProp = 'file';
-
 const sidePanelRef = ref<HTMLElement>();
 const callout = ref<GetCalloutDataWith<'form' | 'mapSchema'>>();
 const responses = ref<GetCalloutResponseMapData[]>([]);
 const center = ref<LngLatLike>([0, 0]);
 const zoom = ref(3);
 
-const responsesSource = computed<GeoJSON.FeatureCollection>(() => ({
+const responsesCollecton = computed<
+  GeoJSON.FeatureCollection<GeoJSON.Point, GetCalloutResponseMapData>
+>(() => ({
   type: 'FeatureCollection',
-  features: responses.value?.map((response, i) => {
-    const { lat, lng } = (
-      response.answers.address as {
-        geometry: { location: { lat: number; lng: number } };
-      }
-    ).geometry.location;
+  features: responses.value.map((response) => {
+    const address = response.answers.address as CalloutResponseAnswerAddress;
+    const { lat, lng } = address.geometry.location;
 
     return {
       type: 'Feature',
@@ -209,29 +147,20 @@ const responsesSource = computed<GeoJSON.FeatureCollection>(() => ({
         type: 'Point',
         coordinates: [lng, lat],
       },
-      properties: { id: i, ...response.answers },
+      properties: response,
     };
   }),
 }));
 
-const selectedResponse = computed(
-  () =>
-    route.hash.startsWith(hashPrefix) &&
-    (responsesSource.value.features[+route.hash.slice(hashPrefix.length)] as
-      | GeoJSON.Feature<GeoJSON.Point>
-      | undefined)
-);
-
-const selectedPhotos = computed<any[]>(
-  () =>
-    (selectedResponse.value &&
-      selectedResponse.value.properties?.[photosProp]) ||
-    []
-);
-
-const currentPhotoIndex = ref(0);
-watch(selectedPhotos, () => {
-  currentPhotoIndex.value = 0;
+const selectedResponseFeature = computed(() => {
+  if (route.hash.startsWith(hashPrefix)) {
+    const responseNumber = Number(route.hash.slice(hashPrefix.length));
+    return responsesCollecton.value.features.find(
+      (f) => f.properties.number === responseNumber
+    );
+  } else {
+    return undefined;
+  }
 });
 
 // Zoom to a cluster or open a response
@@ -264,7 +193,7 @@ function handleClick(e: { event: MapMouseEvent; map: Map }) {
       router.push({
         hash:
           pointFeatures.length > 0
-            ? hashPrefix + pointFeatures[0].properties?.id
+            ? hashPrefix + pointFeatures[0].properties.number
             : '',
       });
     }
@@ -291,11 +220,11 @@ function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
   }
 }
 
-watch(selectedResponse, (newResponse) => {
-  if (!map.map || !newResponse) return;
+watch(selectedResponseFeature, (newFeature) => {
+  if (!map.map || !newFeature) return;
 
   map.map.easeTo({
-    center: newResponse.geometry.coordinates as LngLatLike,
+    center: newFeature.geometry.coordinates as LngLatLike,
     padding: { left: sidePanelRef.value?.offsetWidth || 0 },
   });
 });
@@ -309,22 +238,3 @@ onBeforeMount(async () => {
   responses.value = (await fetchResponsesForMap(props.id)).items;
 });
 </script>
-
-<style>
-.callout-form-simple {
-  .form-group {
-    @apply mb-1;
-  }
-
-  .formio-component-file {
-    @apply hidden;
-  }
-
-  .col-form-label {
-    @apply float-left flex font-bold mr-2;
-    &::after {
-      content: ': ';
-    }
-  }
-}
-</style>

@@ -1,5 +1,7 @@
 import {
   CalloutFormSchema,
+  CalloutResponseAnswerFileUpload,
+  CalloutResponseAnswers,
   ContributionPeriod,
   ContributionType,
   ItemStatus,
@@ -359,16 +361,6 @@ export interface CreateCalloutTagData {
 
 export type UpdateCalloutTagData = Partial<CreateCalloutTagData>;
 
-type CalloutResponseAnswer =
-  | string
-  | boolean
-  | number
-  | null
-  | undefined
-  | Record<string, boolean>
-  | { geometry: { location: { lat: number; lng: number } } };
-export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
-
 export interface GetCalloutResponseData {
   id: string;
   number: number;
@@ -380,7 +372,10 @@ export interface GetCalloutResponseData {
 }
 
 export interface GetCalloutResponseMapData {
+  number: number;
   answers: CalloutResponseAnswers;
+  title: string;
+  photos: CalloutResponseAnswerFileUpload[];
 }
 
 export interface CreateCalloutResponseData {
