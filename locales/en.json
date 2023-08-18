@@ -281,6 +281,10 @@
     "showingPreview": "You can't submit a response in preview mode",
     "toContributionPage": "Edit my contribution",
     "updateContribution": "please update your contribution",
+    "views": {
+      "gallery": "Gallery",
+      "map": "Map"
+    },
     "youResponded": "You replied to this callout ♥"
   },
   "calloutAdmin": {
