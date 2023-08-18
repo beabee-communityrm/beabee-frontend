@@ -15,6 +15,7 @@ meta:
         :map-style="callout.responseViewSchema.map.style"
         :max-zoom="callout.responseViewSchema.map.maxZoom"
         :min-zoom="callout.responseViewSchema.map.minZoom"
+        :max-bounds="callout.responseViewSchema.map.bounds"
         @map:click="handleClick"
         @map:mousemove="handleMouseOver"
       >
@@ -79,9 +80,8 @@ meta:
     <PageTitle :title="callout.title" class="absolute top-8 left-8" />
 
     <CalloutResponsePanel
-      v-if="selectedResponseFeature"
       :callout="callout"
-      :response="selectedResponseFeature.properties"
+      :response="selectedResponseFeature?.properties"
       @close="router.push({ hash: '' })"
     />
 
