@@ -25,18 +25,20 @@ meta:
       </li>
     </ul>
 
-    <div
-      v-if="selectedResponse"
-      class="fixed inset-0 bg-black/50"
-      @click="router.push({ hash: '' })"
-    >
-      <CalloutResponsePanel
-        :callout="callout"
-        :response="selectedResponse"
-        @close="router.push({ hash: '' })"
-        @click.stop
+    <transition name="response-panel-bg">
+      <div
+        v-if="selectedResponse"
+        class="fixed inset-0 bg-black/50"
+        @click="router.push({ hash: '' })"
       />
-    </div>
+    </transition>
+
+    <CalloutResponsePanel
+      :callout="callout"
+      :response="selectedResponse"
+      @close="router.push({ hash: '' })"
+      @click.stop
+    />
   </div>
 </template>
 <script lang="ts" setup>
@@ -82,3 +84,20 @@ onBeforeMount(async () => {
   );
 });
 </script>
+
+<style scoped>
+.response-panel-bg-enter-active,
+.response-panel-bg-leave-active {
+  @apply transition-opacity;
+}
+
+.response-panel-bg-enter-from,
+.response-panel-bg-leave-to {
+  @apply opacity-0;
+}
+
+.response-panel-bg-enter-to,
+.response-panel-bg-leave-from {
+  @apply opacity-100;
+}
+</style>

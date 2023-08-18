@@ -79,9 +79,8 @@ meta:
     <PageTitle :title="callout.title" class="absolute top-8 left-8" />
 
     <CalloutResponsePanel
-      v-if="selectedResponseFeature"
       :callout="callout"
-      :response="selectedResponseFeature.properties"
+      :response="selectedResponseFeature?.properties"
       @close="router.push({ hash: '' })"
     />
 
