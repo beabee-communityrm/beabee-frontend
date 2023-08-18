@@ -1,6 +1,7 @@
 import { CalloutFormSchema } from '@beabee/beabee-common';
 import { computed } from 'vue';
 import i18n from '../../../../lib/i18n';
+import { CalloutMapSchema } from '../../../../utils/api/api.interface';
 
 const { t } = i18n.global;
 
@@ -39,6 +40,12 @@ export interface SettingsStepProps {
   showOnUserDashboards: boolean;
   multipleResponses: boolean;
   usersCanEditAnswers: boolean;
+  showResponses: boolean;
+  responseTitleProp: string;
+  responseImageProp: string;
+  showResponseGallery: boolean;
+  showResponseMap: boolean;
+  mapSchema: CalloutMapSchema;
 }
 
 export interface EndMessageStepProps {

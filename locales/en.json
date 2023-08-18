@@ -687,6 +687,26 @@
               "yes": "Yes"
             }
           },
+          "mapSchema": {
+            "bounds": {
+              "label": "Maximum map bounds"
+            },
+            "center": {
+              "label": "Initial map center"
+            },
+            "initialZoom": {
+              "label": "Initial zoom level"
+            },
+            "maxZoom": {
+              "label": "Maximum zoom level"
+            },
+            "minZoom": {
+              "label": "Minimum zoom level"
+            },
+            "style": {
+              "label": "Map style URL"
+            }
+          },
           "multiple": {
             "help": "<p>If yes, then logged in users will be able to <strong>respond multiple times</strong> to the callout.</p>\n",
             "label": "Can users answer the callout more than once?",
@@ -695,12 +715,28 @@
               "yes": "Yes"
             }
           },
+          "responseImageProp": {
+            "label": "Which form field should be used for response images?"
+          },
+          "responseTitleProp": {
+            "label": "Which form field should be used as the response title?"
+          },
+          "showResponses": {
+            "label": "Allow users to see verified responses publicly?"
+          },
           "visible": {
             "help": "<p>You can make the callout <strong>not appear</strong> to users if you only want it to be answered by people who you share the link with.</p>\n",
             "label": "Should it be visible in the users' dashboards?",
             "opts": {
               "no": "No, it can only be accessed through its link",
               "yes": "Yes, show it to users"
+            }
+          },
+          "whichResponseViews": {
+            "label": "Which response views should be visible?",
+            "opts": {
+              "gallery": "Gallery view",
+              "map": "Map view"
             }
           },
           "who": {
@@ -847,6 +883,7 @@
       },
       "unknown": {
         "email": "Invalid email address",
+        "max": "This field must be at most {min}",
         "min": "This field must be at least {min}",
         "required": "This field is required",
         "url": "Invalid URL"

@@ -5,7 +5,7 @@ import { FilterItem, FilterItems } from '../components/search/search.interface';
 import { CreateCalloutData, GetCalloutDataWith } from './api/api.interface';
 
 export function convertCalloutToSteps(
-  callout?: GetCalloutDataWith<'form'>
+  callout?: GetCalloutDataWith<'form' | 'mapSchema'>
 ): CalloutStepsProps {
   return {
     content: {
@@ -35,6 +35,23 @@ export function convertCalloutToSteps(
       showOnUserDashboards: !callout?.hidden,
       usersCanEditAnswers: callout?.allowUpdate || false,
       multipleResponses: callout?.allowMultiple || false,
+      showResponses: !!callout?.mapSchema,
+      responseTitleProp: '',
+      responseImageProp: '',
+      showResponseGallery: false,
+      showResponseMap: !!callout?.mapSchema,
+      mapSchema: callout?.mapSchema || {
+        style: '',
+        answerKey: '',
+        bounds: [
+          [-180, -90],
+          [180, 90],
+        ],
+        center: [0, 0],
+        initialZoom: 3,
+        maxZoom: 18,
+        minZoom: 1,
+      },
     },
     endMessage: {
       whenFinished: callout?.thanksRedirect ? 'redirect' : 'message',
