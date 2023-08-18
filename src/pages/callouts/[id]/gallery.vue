@@ -13,9 +13,9 @@ meta:
         <router-link
           v-if="callout.responseViewSchema?.map"
           :to="`/callouts/${callout.slug}/map`"
-          class="text-link font-semibold"
+          class="text-link font-semibold whitespace-nowrap"
         >
-          <font-awesome-icon :icon="faMap" /> Map
+          <font-awesome-icon :icon="faMap" /> {{ t('callout.views.map') }}
         </router-link>
       </PageTitle>
     </div>
@@ -66,11 +66,13 @@ import { useRouter } from 'vue-router';
 import CalloutResponsePanel from '../../../components/pages/callouts/CalloutResponsePanel.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import { faMap } from '@fortawesome/free-solid-svg-icons';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{ id: string }>();
 
 const route = useRoute();
 const router = useRouter();
+const { t } = useI18n();
 
 const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();
 const responses = ref<GetCalloutResponseMapData[]>([]);
@@ -100,7 +102,7 @@ onBeforeMount(async () => {
 });
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .response-panel-bg-enter-active,
 .response-panel-bg-leave-active {
   @apply transition-opacity;

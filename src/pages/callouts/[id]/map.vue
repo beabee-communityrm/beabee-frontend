@@ -16,9 +16,10 @@ meta:
         <router-link
           v-if="callout.responseViewSchema.gallery"
           :to="`/callouts/${callout.slug}/gallery`"
-          class="text-link font-semibold"
+          class="text-link font-semibold whitespace-nowrap"
         >
-          <font-awesome-icon :icon="faImages" /> Gallery
+          <font-awesome-icon :icon="faImages" />
+          {{ t('callout.views.gallery') }}
         </router-link>
       </PageTitle>
     </div>
@@ -131,12 +132,14 @@ import 'vue-maplibre-gl/dist/vue-maplibre-gl.css';
 import CalloutResponsePanel from '../../../components/pages/callouts/CalloutResponsePanel.vue';
 import { CalloutResponseAnswerAddress } from '@beabee/beabee-common';
 import { faImages } from '@fortawesome/free-solid-svg-icons';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{ id: string }>();
 
 const map = useMap();
 const route = useRoute();
 const router = useRouter();
+const { t } = useI18n();
 
 const hashPrefix = '#response-' as const;
 
