@@ -90,6 +90,23 @@ meta:
           />
         </MglGeoJsonSource>
       </MglMap>
+      <transition name="add-notice">
+        <div
+          v-if="isAddMode"
+          class="absolute top-10 md:top-20 inset-x-0 flex justify-center"
+        >
+          <p class="bg-white p-4 font-bold rounded shadow-lg mx-4">
+            <font-awesome-icon :icon="faInfoCircle" />
+            Click on the map where you want to add a point
+          </p>
+        </div>
+      </transition>
+      <button
+        class="absolute bottom-8 right-8 rounded-full bg-primary w-20 h-20 text-white shadow-md"
+        @click="isAddMode = true"
+      >
+        <font-awesome-icon :icon="faPlus" class="text-4xl" />
+      </button>
     </div>
 
     <CalloutResponsePanel
@@ -131,7 +148,11 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import 'vue-maplibre-gl/dist/vue-maplibre-gl.css';
 import CalloutResponsePanel from '../../../components/pages/callouts/CalloutResponsePanel.vue';
 import { CalloutResponseAnswerAddress } from '@beabee/beabee-common';
-import { faImages } from '@fortawesome/free-solid-svg-icons';
+import {
+  faImages,
+  faInfoCircle,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons';
 import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{ id: string }>();
@@ -148,6 +169,7 @@ const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();
 const responses = ref<GetCalloutResponseMapData[]>([]);
 const center = ref<LngLatLike>([0, 0]);
 const zoom = ref(3);
+const isAddMode = ref(false);
 
 const responsesCollecton = computed<
   GeoJSON.FeatureCollection<GeoJSON.Point, GetCalloutResponseMapData>
@@ -258,3 +280,20 @@ onBeforeMount(async () => {
   responses.value = (await fetchResponsesForMap(props.id)).items;
 });
 </script>
+
+<style lang="postcss" scoped>
+.add-notice-enter-active,
+.add-notice-leave-active {
+  @apply transition;
+}
+
+.add-notice-enter-from,
+.add-notice-leave-to {
+  @apply opacity-0 -translate-y-8;
+}
+
+.add-notice-enter-to,
+.add-notice-leave-from {
+  @apply opacity-100 translate-y-0;
+}
+</style>
