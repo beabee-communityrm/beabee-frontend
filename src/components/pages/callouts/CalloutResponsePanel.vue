@@ -92,7 +92,7 @@ watch(
 );
 </script>
 
-<style>
+<style lang="postcss">
 .callout-form-simple {
   .form-group {
     @apply mb-1;
@@ -111,7 +111,7 @@ watch(
 }
 </style>
 
-<style scoped>
+<style lang="postcss" scoped>
 .response-panel-enter-active,
 .response-panel-leave-active {
   @apply transition-transform;

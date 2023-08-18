@@ -7,8 +7,23 @@ meta:
 </route>
 
 <template>
-  <div v-if="callout?.responseViewSchema?.map">
-    <div class="absolute inset-0">
+  <div
+    v-if="callout?.responseViewSchema?.map"
+    class="absolute inset-0 flex flex-col"
+  >
+    <div class="flex-0 p-6 pb-1">
+      <PageTitle :title="callout.title" no-collapse>
+        <router-link
+          v-if="callout.responseViewSchema.gallery"
+          :to="`/callouts/${callout.slug}/gallery`"
+          class="text-link font-semibold whitespace-nowrap"
+        >
+          <font-awesome-icon :icon="faImages" />
+          {{ t('callout.views.gallery') }}
+        </router-link>
+      </PageTitle>
+    </div>
+    <div class="flex-1">
       <MglMap
         :center="center"
         :zoom="zoom"
@@ -77,8 +92,6 @@ meta:
       </MglMap>
     </div>
 
-    <PageTitle :title="callout.title" class="absolute top-8 left-8" />
-
     <CalloutResponsePanel
       :callout="callout"
       :response="selectedResponseFeature?.properties"
@@ -118,12 +131,15 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import 'vue-maplibre-gl/dist/vue-maplibre-gl.css';
 import CalloutResponsePanel from '../../../components/pages/callouts/CalloutResponsePanel.vue';
 import { CalloutResponseAnswerAddress } from '@beabee/beabee-common';
+import { faImages } from '@fortawesome/free-solid-svg-icons';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{ id: string }>();
 
 const map = useMap();
 const route = useRoute();
 const router = useRouter();
+const { t } = useI18n();
 
 const hashPrefix = '#response-' as const;
 
