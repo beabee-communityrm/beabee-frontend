@@ -7,23 +7,36 @@ meta:
 </route>
 
 <template>
-  <div v-if="callout" class="absolute inset-0 overflow-scroll">
-    <ul class="flex flex-wrap m-3">
-      <li
-        v-for="response in responses"
-        :key="response.number"
-        class="flex-1 min-w-[250px] sm:max-w-sm p-3"
-      >
-        <router-link :to="`${hashPrefix}${response.number}`">
-          <img
-            class="w-full mb-2 aspect-video object-cover"
-            loading="lazy"
-            :src="response.photos[0].url + '?w=400&h=400'"
-          />
-          <h2 class="font-title font-bold">{{ response.title }}</h2>
+  <div v-if="callout" class="absolute inset-0 flex flex-col">
+    <div class="flex-0 p-6 pb-1">
+      <PageTitle :title="callout.title" no-collapse>
+        <router-link
+          v-if="callout.responseViewSchema?.map"
+          :to="`/callouts/${callout.slug}/map`"
+          class="text-link font-semibold"
+        >
+          <font-awesome-icon :icon="faMap" /> Map
         </router-link>
-      </li>
-    </ul>
+      </PageTitle>
+    </div>
+    <div class="overflow-scroll">
+      <ul class="flex flex-wrap m-3 -mt-3">
+        <li
+          v-for="response in responses"
+          :key="response.number"
+          class="flex-1 min-w-[250px] sm:max-w-sm p-3"
+        >
+          <router-link :to="`${hashPrefix}${response.number}`">
+            <img
+              class="w-full mb-2 aspect-video object-cover"
+              loading="lazy"
+              :src="response.photos[0].url + '?w=400&h=400'"
+            />
+            <h2 class="font-title font-bold">{{ response.title }}</h2>
+          </router-link>
+        </li>
+      </ul>
+    </div>
 
     <transition name="response-panel-bg">
       <div
@@ -51,6 +64,8 @@ import {
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 import CalloutResponsePanel from '../../../components/pages/callouts/CalloutResponsePanel.vue';
+import PageTitle from '../../../components/PageTitle.vue';
+import { faMap } from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps<{ id: string }>();
 
