@@ -11,7 +11,7 @@ meta:
     v-if="callout?.responseViewSchema?.map"
     class="absolute inset-0 flex flex-col"
   >
-    <div class="flex-0 p-6 pb-1">
+    <div class="flex-0 p-6 pb-1 shadow-lg z-10">
       <PageTitle :title="callout.title" no-collapse>
         <router-link
           v-if="callout.responseViewSchema.gallery"
@@ -23,7 +23,7 @@ meta:
         </router-link>
       </PageTitle>
     </div>
-    <div class="flex-1">
+    <div class="flex-1 relative">
       <MglMap
         :center="center"
         :zoom="zoom"

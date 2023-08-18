@@ -8,7 +8,7 @@ meta:
 
 <template>
   <div v-if="callout" class="absolute inset-0 flex flex-col">
-    <div class="flex-0 p-6 pb-1">
+    <div class="flex-0 p-6 pb-1 z-10 shadow-lg">
       <PageTitle :title="callout.title" no-collapse>
         <router-link
           v-if="callout.responseViewSchema?.map"
@@ -20,7 +20,7 @@ meta:
       </PageTitle>
     </div>
     <div class="overflow-scroll">
-      <ul class="flex flex-wrap m-3 -mt-3">
+      <ul class="flex flex-wrap m-3">
         <li
           v-for="response in responses"
           :key="response.number"

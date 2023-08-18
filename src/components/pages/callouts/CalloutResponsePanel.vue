@@ -2,7 +2,7 @@
   <transition name="response-panel">
     <aside
       v-if="response"
-      class="fixed left-0 inset-y-0 bg-white p-8 w-full max-w-lg overflow-scroll shadow-lg"
+      class="fixed z-20 left-0 inset-y-0 bg-white p-8 w-full max-w-lg overflow-scroll shadow-lg"
     >
       <button
         class="absolute right-2 top-2 h-10 w-10 hover:text-primary text-2xl"
