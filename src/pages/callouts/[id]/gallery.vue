@@ -55,7 +55,7 @@ const props = defineProps<{ id: string }>();
 const route = useRoute();
 const router = useRouter();
 
-const callout = ref<GetCalloutDataWith<'form'>>();
+const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();
 const responses = ref<GetCalloutResponseMapData[]>([]);
 
 const hashPrefix = '#response-' as const;
@@ -70,7 +70,11 @@ const selectedResponse = computed(() => {
 });
 
 onBeforeMount(async () => {
-  callout.value = await fetchCallout(props.id, ['form']);
+  callout.value = await fetchCallout(props.id, ['form', 'responseViewSchema']);
+
+  if (!callout?.value.responseViewSchema?.gallery) {
+    throw new Error('Callout does not have a gallery');
+  }
 
   // TODO: pagination
   responses.value = (await fetchResponsesForMap(props.id)).items.filter(

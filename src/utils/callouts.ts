@@ -5,7 +5,7 @@ import { FilterItem, FilterItems } from '../components/search/search.interface';
 import { CreateCalloutData, GetCalloutDataWith } from './api/api.interface';
 
 export function convertCalloutToSteps(
-  callout?: GetCalloutDataWith<'form' | 'mapSchema'>
+  callout?: GetCalloutDataWith<'form' | 'responseViewSchema'>
 ): CalloutStepsProps {
   return {
     content: {
@@ -35,14 +35,13 @@ export function convertCalloutToSteps(
       showOnUserDashboards: !callout?.hidden,
       usersCanEditAnswers: callout?.allowUpdate || false,
       multipleResponses: callout?.allowMultiple || false,
-      showResponses: !!callout?.mapSchema,
-      responseTitleProp: '',
-      responseImageProp: '',
-      showResponseGallery: false,
-      showResponseMap: !!callout?.mapSchema,
-      mapSchema: callout?.mapSchema || {
+      showResponses: !!callout?.responseViewSchema,
+      responseTitleProp: callout?.responseViewSchema?.titleProp || '',
+      responseImageProp: callout?.responseViewSchema?.imageProp || '',
+      showResponseGallery: !!callout?.responseViewSchema?.gallery,
+      showResponseMap: !!callout?.responseViewSchema?.map,
+      mapSchema: callout?.responseViewSchema?.map || {
         style: '',
-        answerKey: '',
         bounds: [
           [-180, -90],
           [180, 90],
@@ -51,6 +50,7 @@ export function convertCalloutToSteps(
         initialZoom: 3,
         maxZoom: 18,
         minZoom: 1,
+        addressProp: '',
       },
     },
     endMessage: {
@@ -85,6 +85,14 @@ export function convertStepsToCallout(
     image: steps.titleAndImage.coverImageURL,
     intro: steps.content.introText,
     formSchema: steps.content.formSchema,
+    responseViewSchema: steps.settings.showResponses
+      ? {
+          titleProp: steps.settings.responseTitleProp,
+          imageProp: steps.settings.responseImageProp,
+          gallery: steps.settings.showResponseGallery,
+          map: steps.settings.showResponseMap ? steps.settings.mapSchema : null,
+        }
+      : null,
     starts: steps.dates.startNow
       ? new Date()
       : new Date(steps.dates.startDate + 'T' + steps.dates.startTime),

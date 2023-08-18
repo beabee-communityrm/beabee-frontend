@@ -315,13 +315,20 @@ interface CalloutFormData {
 }
 
 export interface CalloutMapSchema {
-  bounds: [[number, number], [number, number]];
+  style: string;
   center: [number, number];
+  bounds: [[number, number], [number, number]];
   minZoom: number;
   maxZoom: number;
   initialZoom: number;
-  style: string;
-  answerKey: string;
+  addressProp: string;
+}
+
+export interface CalloutResponseViewSchema {
+  titleProp: string;
+  imageProp: string;
+  gallery: boolean;
+  map: CalloutMapSchema | null;
 }
 
 export interface GetCalloutData extends CalloutData {
@@ -331,7 +338,7 @@ export interface GetCalloutData extends CalloutData {
 
 export type GetCalloutWith =
   | 'form'
-  | 'mapSchema'
+  | 'responseViewSchema'
   | 'responseCount'
   | 'hasAnswered'
   | void;
@@ -339,10 +346,15 @@ export type GetCalloutWith =
 export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
   ('responseCount' extends With ? { responseCount: number } : Noop) &
   ('hasAnswered' extends With ? { hasAnswered: boolean } : Noop) &
-  ('mapSchema' extends With ? { mapSchema: CalloutMapSchema } : Noop) &
+  ('responseViewSchema' extends With
+    ? { responseViewSchema: CalloutResponseViewSchema | null }
+    : Noop) &
   ('form' extends With ? CalloutFormData : Noop);
 
-export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
+export type CreateCalloutData = AllowNull<
+  CalloutData &
+    CalloutFormData & { responseViewSchema?: CalloutResponseViewSchema | null }
+>;
 export type UpdateCalloutData = Partial<CreateCalloutData>;
 
 export type GetCalloutsQuery = PaginatedQuery; // TODO: constrain fields

@@ -883,7 +883,7 @@
       },
       "unknown": {
         "email": "Invalid email address",
-        "max": "This field must be at most {min}",
+        "max": "This field must be at most {max}",
         "min": "This field must be at least {min}",
         "required": "This field is required",
         "url": "Invalid URL"
