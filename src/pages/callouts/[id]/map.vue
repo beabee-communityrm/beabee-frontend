@@ -15,6 +15,7 @@ meta:
         :map-style="callout.responseViewSchema.map.style"
         :max-zoom="callout.responseViewSchema.map.maxZoom"
         :min-zoom="callout.responseViewSchema.map.minZoom"
+        :max-bounds="callout.responseViewSchema.map.bounds"
         @map:click="handleClick"
         @map:mousemove="handleMouseOver"
       >
