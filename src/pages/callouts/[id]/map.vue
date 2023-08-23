@@ -25,13 +25,13 @@ meta:
     </div>
     <div class="flex-1 relative">
       <MglMap
-        :center="center"
-        :zoom="zoom"
+        :center="callout.responseViewSchema.map.center"
+        :zoom="callout.responseViewSchema.map.initialZoom"
         :map-style="callout.responseViewSchema.map.style"
         :max-zoom="callout.responseViewSchema.map.maxZoom"
         :min-zoom="callout.responseViewSchema.map.minZoom"
         :max-bounds="callout.responseViewSchema.map.bounds"
-        @map:click="handleClick"
+        @map:click="isAddMode ? handleAddClick($event) : handleClick($event)"
         @map:mousemove="handleMouseOver"
       >
         <MglGeoJsonSource
@@ -187,10 +187,10 @@ const { t } = useI18n();
 const hashPrefix = '#response-' as const;
 
 const sidePanelRef = ref<HTMLElement>();
+
 const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();
 const responses = ref<GetCalloutResponseMapData[]>([]);
-const center = ref<LngLatLike>([0, 0]);
-const zoom = ref(3);
+
 const isAddMode = ref(false);
 const newResponseLocation = ref<LngLatLike>();
 
@@ -228,50 +228,44 @@ const { isOpen, showLoginPrompt, showMemberOnlyPrompt } = useCallout(callout);
 
 // Zoom to a cluster or open a response
 function handleClick(e: { event: MapMouseEvent; map: Map }) {
-  if (isAddMode.value) {
-    handleAddResponse(e.event.lngLat);
-    return;
-  }
-
   // Disable clicking when adding a new response
   if (newResponseLocation.value) {
     return;
   }
 
-  try {
-    const clusterPoints = e.map.queryRenderedFeatures(e.event.point, {
-      layers: ['clusters'],
-    }) as GeoJSON.Feature<GeoJSON.Point>[];
+  // Not loaded yet
+  if (!e.map.getLayer('clusters')) return;
 
-    if (clusterPoints.length > 0) {
-      const firstPoint = clusterPoints[0] as GeoJSON.Feature<GeoJSON.Point>;
-      const source = e.map.getSource('responses') as GeoJSONSource;
+  const clusterPoints = e.map.queryRenderedFeatures(e.event.point, {
+    layers: ['clusters'],
+  }) as GeoJSON.Feature<GeoJSON.Point>[];
 
-      source.getClusterExpansionZoom(
-        firstPoint.properties?.cluster_id,
-        (err, zoom) => {
-          if (err || zoom == null) return;
+  if (clusterPoints.length > 0) {
+    const firstPoint = clusterPoints[0] as GeoJSON.Feature<GeoJSON.Point>;
+    const source = e.map.getSource('responses') as GeoJSONSource;
 
-          e.map.easeTo({
-            center: firstPoint.geometry.coordinates as LngLatLike,
-            zoom: zoom + 1.5,
-          });
-        }
-      );
-    } else {
-      const pointFeatures = e.map.queryRenderedFeatures(e.event.point, {
-        layers: ['unclustered-points'],
-      });
+    source.getClusterExpansionZoom(
+      firstPoint.properties?.cluster_id,
+      (err, zoom) => {
+        if (err || zoom == null) return;
 
-      router.push({
-        hash:
-          pointFeatures.length > 0
-            ? hashPrefix + pointFeatures[0].properties.number
-            : '',
-      });
-    }
-  } catch (err) {
-    // Map probably isn't loaded loaded yet
+        e.map.easeTo({
+          center: firstPoint.geometry.coordinates as LngLatLike,
+          zoom: zoom + 1,
+        });
+      }
+    );
+  } else {
+    const pointFeatures = e.map.queryRenderedFeatures(e.event.point, {
+      layers: ['unclustered-points'],
+    });
+
+    router.push({
+      hash:
+        pointFeatures.length > 0
+          ? hashPrefix + pointFeatures[0].properties.number
+          : '',
+    });
   }
 }
 
@@ -279,25 +273,23 @@ function handleClick(e: { event: MapMouseEvent; map: Map }) {
 function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
   if (isAddMode.value || newResponseLocation.value) return;
 
-  try {
-    const features = e.map.queryRenderedFeatures(e.event.point, {
-      layers: ['clusters', 'unclustered-points'],
-    });
+  // Not loaded yet
+  if (!e.map.getLayer('clusters')) return;
 
-    // TODO: debounce or check for change?
-    if (features.length > 0) {
-      e.map.getCanvas().style.cursor = 'pointer';
-    } else {
-      e.map.getCanvas().style.cursor = '';
-    }
-  } catch (err) {
-    // Map probably isn't loaded loaded yet
+  const features = e.map.queryRenderedFeatures(e.event.point, {
+    layers: ['clusters', 'unclustered-points'],
+  });
+
+  // TODO: debounce or check for change?
+  if (features.length > 0) {
+    e.map.getCanvas().style.cursor = 'pointer';
+  } else {
+    e.map.getCanvas().style.cursor = '';
   }
 }
 
 function handleStartAdd() {
   if (!map.map) return;
-
   isAddMode.value = true;
   map.map.getCanvas().style.cursor = 'crosshair';
   router.push({ hash: '' });
@@ -310,14 +302,13 @@ function handleCancelAdd() {
   map.map.getCanvas().style.cursor = '';
 }
 
-function handleAddResponse(coords: LngLatLike) {
-  if (!map.map) return;
-
+async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
+  const coords = e.event.lngLat;
   isAddMode.value = false;
-  map.map.getCanvas().style.cursor = '';
+  e.map.getCanvas().style.cursor = '';
 
   newResponseLocation.value = coords;
-  map.map.easeTo({
+  e.map.easeTo({
     center: coords,
     padding: { left: sidePanelRef.value?.offsetWidth || 0 },
   });
@@ -337,9 +328,6 @@ onBeforeMount(async () => {
   if (!callout.value.responseViewSchema?.map) {
     throw new Error('Callout does not have a map schema');
   }
-
-  center.value = callout.value.responseViewSchema.map.center;
-  zoom.value = callout.value.responseViewSchema.map.initialZoom;
 
   // TODO: pagination
   responses.value = (await fetchResponsesForMap(props.id)).items;
