@@ -95,6 +95,7 @@ watch(
   .col-form-label {
     @apply float-left flex font-bold mr-2;
     &::after {
+      @apply text-body;
       content: ': ';
     }
   }

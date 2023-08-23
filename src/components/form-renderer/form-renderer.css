@@ -144,6 +144,14 @@
     @apply -order-1 mb-2 text-body-80;
   }
 
+  /* Hints on same line as check box */
+  .form-check {
+    @apply flex items-baseline;
+    & > i {
+      @apply flex-none ml-2;
+    }
+  }
+
   /* Subtle style for check boxes */
   .formio-editor-read-only-content,
   .form-check-input {
@@ -157,7 +165,7 @@
 
   /* Block checkboxes */
   .form-check-label {
-    @apply mb-2 flex align-baseline;
+    @apply mb-2 flex items-baseline;
 
     .form-check-input {
       @apply mr-2 flex-none;
@@ -184,7 +192,7 @@
 
   /* Add required asterisk */
   .field-required::after {
-    @apply text-danger;
+    @apply text-body;
     content: '*';
   }
 
