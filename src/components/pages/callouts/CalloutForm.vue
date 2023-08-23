@@ -52,8 +52,8 @@ const { t } = useI18n();
 const emit = defineEmits<{ (e: 'submitted'): void }>();
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
-  response: GetCalloutResponseDataWith<'answers'> | undefined;
-  preview: boolean;
+  response?: GetCalloutResponseDataWith<'answers'> | undefined;
+  preview?: boolean;
 }>();
 
 const guestName = ref('');
