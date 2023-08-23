@@ -1,16 +1,6 @@
 <template>
-  <transition name="response-panel">
-    <aside
-      v-if="response"
-      class="fixed z-20 left-0 inset-y-0 bg-white p-8 w-full max-w-lg overflow-scroll shadow-lg"
-    >
-      <button
-        class="absolute right-2 top-2 h-10 w-10 hover:text-primary text-2xl"
-        type="button"
-        @click="$emit('close')"
-      >
-        <font-awesome-icon :icon="faTimes" />
-      </button>
+  <CalloutSidePanel :show="!!response" @close="$emit('close')">
+    <div v-if="response">
       <h2 class="text-2xl font-bold font-title mb-4">{{ response.title }}</h2>
       <div
         v-if="response.photos.length > 0"
@@ -59,15 +49,14 @@
         :submission="{ data: response.answers }"
         :options="{ readOnly: true, noAlerts: true, renderMode: 'html' }"
       />
-    </aside>
-  </transition>
+    </div>
+  </CalloutSidePanel>
 </template>
 
 <script lang="ts" setup>
 import {
   faChevronLeft,
   faChevronRight,
-  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { ref, watch } from 'vue';
 import {
@@ -75,6 +64,7 @@ import {
   GetCalloutResponseMapData,
 } from '../../../utils/api/api.interface';
 import { Form } from '../../../lib/formio';
+import CalloutSidePanel from './CalloutSidePanel.vue';
 
 defineEmits<(e: 'close') => void>();
 const props = defineProps<{
@@ -108,22 +98,5 @@ watch(
       content: ': ';
     }
   }
-}
-</style>
-
-<style lang="postcss" scoped>
-.response-panel-enter-active,
-.response-panel-leave-active {
-  @apply transition-transform;
-}
-
-.response-panel-enter-from,
-.response-panel-leave-to {
-  @apply transform -translate-x-full;
-}
-
-.response-panel-enter-to,
-.response-panel-leave-from {
-  @apply transform translate-x-0;
 }
 </style>
