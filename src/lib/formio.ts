@@ -5,6 +5,7 @@ import BeabeeStorage from '../components/form-builder/providers/storage/beabee';
 
 // Formio type is broken
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(Formio as any).Providers.addProvider('storage', 'beabee', BeabeeStorage);
+const Formio2: any = Formio;
+Formio2.Providers.providers.storage = { beabee: BeabeeStorage };
 
 export { Form, FormBuilder };
