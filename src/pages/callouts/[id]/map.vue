@@ -89,21 +89,29 @@ meta:
             }"
           />
         </MglGeoJsonSource>
+        <MglMarker
+          v-if="newResponseLocation"
+          :coordinates="newResponseLocation"
+        >
+          <div class="w-8 h-8 bg-primary rounded-full" />
+        </MglMarker>
       </MglMap>
+
       <transition name="add-notice">
         <div
           v-if="isAddMode"
           class="absolute top-10 md:top-20 inset-x-0 flex justify-center"
         >
           <p class="bg-white p-4 font-bold rounded shadow-lg mx-4">
-            <font-awesome-icon :icon="faInfoCircle" />
+            <font-awesome-icon :icon="faInfoCircle" class="mr-1" />
             Click on the map where you want to add a point
           </p>
         </div>
       </transition>
       <button
+        v-if="isOpen"
         class="absolute bottom-8 right-8 rounded-full bg-primary w-20 h-20 text-white shadow-md"
-        @click="isAddMode = true"
+        @click="handleStartAdd"
       >
         <font-awesome-icon :icon="faPlus" class="text-4xl" />
       </button>
@@ -117,6 +125,13 @@ meta:
 
     <!-- Side panel width reference to offset map center -->
     <div ref="sidePanelRef" class="absolute left-0 w-full max-w-lg" />
+
+    <CalloutSidePanel :show="!!newResponseLocation" @close="handleCancelAdd">
+      <AppHeading>Add a new response</AppHeading>
+      <CalloutLoginPrompt v-if="showLoginPrompt" />
+      <CalloutMemberOnlyPrompt v-else-if="showMemberOnlyPrompt" />
+      <CalloutForm v-else :callout="callout" />
+    </CalloutSidePanel>
   </div>
 </template>
 
@@ -129,6 +144,7 @@ import {
   MglCircleLayer,
   MglSymbolLayer,
   useMap,
+  MglMarker,
 } from 'vue-maplibre-gl';
 import type {
   GeoJSONSource,
@@ -154,6 +170,12 @@ import {
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { useI18n } from 'vue-i18n';
+import CalloutForm from '../../../components/pages/callouts/CalloutForm.vue';
+import { useCallout } from '../../../components/pages/callouts/use-callout';
+import CalloutLoginPrompt from '../../../components/pages/callouts/CalloutLoginPrompt.vue';
+import CalloutMemberOnlyPrompt from '../../../components/pages/callouts/CalloutMemberOnlyPrompt.vue';
+import CalloutSidePanel from '../../../components/pages/callouts/CalloutSidePanel.vue';
+import AppHeading from '../../../components/AppHeading.vue';
 
 const props = defineProps<{ id: string }>();
 
@@ -170,6 +192,7 @@ const responses = ref<GetCalloutResponseMapData[]>([]);
 const center = ref<LngLatLike>([0, 0]);
 const zoom = ref(3);
 const isAddMode = ref(false);
+const newResponseLocation = ref<LngLatLike>();
 
 const responsesCollecton = computed<
   GeoJSON.FeatureCollection<GeoJSON.Point, GetCalloutResponseMapData>
@@ -201,8 +224,20 @@ const selectedResponseFeature = computed(() => {
   }
 });
 
+const { isOpen, showLoginPrompt, showMemberOnlyPrompt } = useCallout(callout);
+
 // Zoom to a cluster or open a response
 function handleClick(e: { event: MapMouseEvent; map: Map }) {
+  if (isAddMode.value) {
+    handleAddResponse(e.event.lngLat);
+    return;
+  }
+
+  // Disable clicking when adding a new response
+  if (newResponseLocation.value) {
+    return;
+  }
+
   try {
     const clusterPoints = e.map.queryRenderedFeatures(e.event.point, {
       layers: ['clusters'],
@@ -242,6 +277,8 @@ function handleClick(e: { event: MapMouseEvent; map: Map }) {
 
 // Add a cursor when hovering over a cluster or a point
 function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
+  if (isAddMode.value || newResponseLocation.value) return;
+
   try {
     const features = e.map.queryRenderedFeatures(e.event.point, {
       layers: ['clusters', 'unclustered-points'],
@@ -256,6 +293,34 @@ function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
   } catch (err) {
     // Map probably isn't loaded loaded yet
   }
+}
+
+function handleStartAdd() {
+  if (!map.map) return;
+
+  isAddMode.value = true;
+  map.map.getCanvas().style.cursor = 'crosshair';
+  router.push({ hash: '' });
+}
+
+function handleCancelAdd() {
+  if (!map.map) return;
+  isAddMode.value = false;
+  newResponseLocation.value = undefined;
+  map.map.getCanvas().style.cursor = '';
+}
+
+function handleAddResponse(coords: LngLatLike) {
+  if (!map.map) return;
+
+  isAddMode.value = false;
+  map.map.getCanvas().style.cursor = '';
+
+  newResponseLocation.value = coords;
+  map.map.easeTo({
+    center: coords,
+    padding: { left: sidePanelRef.value?.offsetWidth || 0 },
+  });
 }
 
 watch(selectedResponseFeature, (newFeature) => {
