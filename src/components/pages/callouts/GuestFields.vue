@@ -1,8 +1,8 @@
 <template>
-  <h3 class="mb-2 block text-xl font-semibold">
-    {{ t('callout.contactDetails') }}
-  </h3>
-  <div class="mb-8 rounded bg-primary-10 p-4">
+  <div class="mb-8">
+    <h3 class="mb-2 text-xl font-title font-semibold">
+      {{ t('callout.contactDetails') }}
+    </h3>
     <p class="mb-3 text-sm">
       {{ t('join.memberAlready') }}
       <router-link
