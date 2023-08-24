@@ -31,7 +31,7 @@ meta:
         :max-zoom="callout.responseViewSchema.map.maxZoom"
         :min-zoom="callout.responseViewSchema.map.minZoom"
         :max-bounds="callout.responseViewSchema.map.bounds"
-        @map:click="isAddMode ? handleAddClick($event) : handleClick($event)"
+        @map:click="handleClick"
         @map:mousemove="handleMouseOver"
       >
         <MglGeoJsonSource
@@ -90,8 +90,8 @@ meta:
           />
         </MglGeoJsonSource>
         <MglMarker
-          v-if="newResponseLocation"
-          :coordinates="newResponseLocation"
+          v-if="newResponseAnswers?.address?.geometry"
+          :coordinates="newResponseAnswers.address.geometry.location"
         >
           <div class="w-8 h-8 bg-primary rounded-full" />
         </MglMarker>
@@ -99,7 +99,7 @@ meta:
 
       <transition name="add-notice">
         <div
-          v-if="isAddMode"
+          v-if="isAddMode && !newResponseAnswers"
           class="absolute top-10 md:top-20 inset-x-0 flex justify-center"
         >
           <p class="bg-white p-4 font-bold rounded shadow-lg mx-4">
@@ -109,13 +109,16 @@ meta:
         </div>
       </transition>
       <button
-        v-if="isOpen"
+        v-if="isOpen && !isAddMode"
         class="absolute bottom-8 right-8 rounded-full bg-primary w-20 h-20 text-white shadow-md"
-        @click="handleStartAdd"
+        @click="handleStartAddMode"
       >
         <font-awesome-icon :icon="faPlus" class="text-4xl" />
       </button>
     </div>
+
+    <!-- Side panel width reference to offset map center -->
+    <div ref="sidePanelRef" class="absolute left-0 w-full max-w-lg" />
 
     <CalloutResponsePanel
       :callout="callout"
@@ -123,14 +126,15 @@ meta:
       @close="router.push({ hash: '' })"
     />
 
-    <!-- Side panel width reference to offset map center -->
-    <div ref="sidePanelRef" class="absolute left-0 w-full max-w-lg" />
-
-    <CalloutSidePanel :show="!!newResponseLocation" @close="handleCancelAdd">
-      <AppHeading>Add a new response</AppHeading>
+    <CalloutSidePanel :show="!!newResponseAnswers" @close="handleCancelAddMode">
+      <AppHeading class="mb-4">Add a new response</AppHeading>
       <CalloutLoginPrompt v-if="showLoginPrompt" />
       <CalloutMemberOnlyPrompt v-else-if="showMemberOnlyPrompt" />
-      <CalloutForm v-else :callout="callout" />
+      <CalloutForm
+        v-else
+        v-model:answers="newResponseAnswers"
+        :callout="callout"
+      />
     </CalloutSidePanel>
   </div>
 </template>
@@ -163,7 +167,10 @@ import PageTitle from '../../../components/PageTitle.vue';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import 'vue-maplibre-gl/dist/vue-maplibre-gl.css';
 import CalloutResponsePanel from '../../../components/pages/callouts/CalloutResponsePanel.vue';
-import { CalloutResponseAnswerAddress } from '@beabee/beabee-common';
+import {
+  CalloutResponseAnswerAddress,
+  CalloutResponseAnswers,
+} from '@beabee/beabee-common';
 import {
   faImages,
   faInfoCircle,
@@ -176,6 +183,7 @@ import CalloutLoginPrompt from '../../../components/pages/callouts/CalloutLoginP
 import CalloutMemberOnlyPrompt from '../../../components/pages/callouts/CalloutMemberOnlyPrompt.vue';
 import CalloutSidePanel from '../../../components/pages/callouts/CalloutSidePanel.vue';
 import AppHeading from '../../../components/AppHeading.vue';
+import { reverseGeocode } from '../../../utils/geocode';
 
 const props = defineProps<{ id: string }>();
 
@@ -192,7 +200,11 @@ const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();
 const responses = ref<GetCalloutResponseMapData[]>([]);
 
 const isAddMode = ref(false);
-const newResponseLocation = ref<LngLatLike>();
+const newResponseAnswers = ref<
+  CalloutResponseAnswers & {
+    address?: CalloutResponseAnswerAddress | Record<string, never>;
+  }
+>();
 
 const responsesCollecton = computed<
   GeoJSON.FeatureCollection<GeoJSON.Point, GetCalloutResponseMapData>
@@ -228,8 +240,10 @@ const { isOpen, showLoginPrompt, showMemberOnlyPrompt } = useCallout(callout);
 
 // Zoom to a cluster or open a response
 function handleClick(e: { event: MapMouseEvent; map: Map }) {
-  // Disable clicking when adding a new response
-  if (newResponseLocation.value) {
+  if (isAddMode.value) {
+    if (!newResponseAnswers.value) {
+      handleAddClick(e);
+    }
     return;
   }
 
@@ -271,7 +285,7 @@ function handleClick(e: { event: MapMouseEvent; map: Map }) {
 
 // Add a cursor when hovering over a cluster or a point
 function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
-  if (isAddMode.value || newResponseLocation.value) return;
+  if (isAddMode.value) return;
 
   // Not loaded yet
   if (!e.map.getLayer('clusters')) return;
@@ -288,32 +302,43 @@ function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
   }
 }
 
-function handleStartAdd() {
+// Start add response mode
+function handleStartAddMode() {
   if (!map.map) return;
   isAddMode.value = true;
   map.map.getCanvas().style.cursor = 'crosshair';
   router.push({ hash: '' });
 }
 
-function handleCancelAdd() {
+// Cancel add response mode, clearing any state that is left over
+function handleCancelAddMode() {
   if (!map.map) return;
   isAddMode.value = false;
-  newResponseLocation.value = undefined;
+  newResponseAnswers.value = undefined;
   map.map.getCanvas().style.cursor = '';
 }
 
+// Geolocate where the user has clicked
 async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
   const coords = e.event.lngLat;
-  isAddMode.value = false;
   e.map.getCanvas().style.cursor = '';
 
-  newResponseLocation.value = coords;
-  e.map.easeTo({
-    center: coords,
-    padding: { left: sidePanelRef.value?.offsetWidth || 0 },
-  });
+  newResponseAnswers.value = {
+    address: await reverseGeocode(coords.lat, coords.lng),
+  };
 }
 
+// Centre map on new response location when it changes
+watch(newResponseAnswers, (newAnswers) => {
+  if (!map.map || !newAnswers?.address?.geometry) return;
+
+  map.map.easeTo({
+    center: newAnswers.address.geometry.location,
+    padding: { left: sidePanelRef.value?.offsetWidth || 0 },
+  });
+});
+
+// Centre map on selected feature when it changes
 watch(selectedResponseFeature, (newFeature) => {
   if (!map.map || !newFeature) return;
 
@@ -323,6 +348,7 @@ watch(selectedResponseFeature, (newFeature) => {
   });
 });
 
+// Load callout and responses
 onBeforeMount(async () => {
   callout.value = await fetchCallout(props.id, ['form', 'responseViewSchema']);
   if (!callout.value.responseViewSchema?.map) {

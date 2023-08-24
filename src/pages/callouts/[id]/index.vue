@@ -83,8 +83,9 @@ meta:
           responses /* Form.IO doesn't handle reactivity so wait for responses to load */
         "
         :callout="callout"
-        :response="latestResponse"
+        :answers="latestResponse?.answers"
         :preview="isPreview"
+        :readonly="latestResponse && !callout.allowUpdate"
         @submitted="handleSubmitResponse"
       />
     </template>

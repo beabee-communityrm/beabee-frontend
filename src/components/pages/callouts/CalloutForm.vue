@@ -8,9 +8,10 @@
     <Form
       class="callout-form-renderer"
       :form="callout.formSchema"
-      :submission="response && { data: response }"
+      :submission="answers && { data: answers }"
       :options="formOpts"
       @submit="handleSubmission"
+      @change="handleChange"
     />
     <AppNotification
       v-if="formError"
@@ -23,10 +24,7 @@
 <script lang="ts" setup>
 import { CalloutResponseAnswers } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref } from 'vue';
-import {
-  GetCalloutDataWith,
-  GetCalloutResponseDataWith,
-} from '../../../utils/api/api.interface';
+import { GetCalloutDataWith } from '../../../utils/api/api.interface';
 import { useI18n } from 'vue-i18n';
 import { currentUser } from '../../../store';
 import { createResponse } from '../../../utils/api/callout';
@@ -49,11 +47,15 @@ interface FormSubmission {
 
 const { t } = useI18n();
 
-const emit = defineEmits<{ (e: 'submitted'): void }>();
+const emit = defineEmits<{
+  (e: 'submitted'): void;
+  (e: 'update:answers', answers: CalloutResponseAnswers | undefined): void;
+}>();
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
-  response?: GetCalloutResponseDataWith<'answers'> | undefined;
+  answers?: CalloutResponseAnswers;
   preview?: boolean;
+  readonly?: boolean;
 }>();
 
 const guestName = ref('');
@@ -64,10 +66,8 @@ const showGuestFields = computed(
   () => props.callout.access === 'guest' && !currentUser.value
 );
 
-const canSubmit = computed(() => !props.response || props.callout.allowUpdate);
-
 const formOpts = computed(() => ({
-  readOnly: !canSubmit.value,
+  readOnly: props.readonly,
   noAlerts: true,
   hooks: {
     beforeSubmit: (_: FormSubmission, next: () => void) => {
@@ -106,6 +106,12 @@ async function handleSubmission(submission: FormSubmission) {
       throw err;
     }
   }
+}
+
+function handleChange(submission: FormSubmission) {
+  if (!submission.data) return; // Ignore change events we don't want
+  console.log(submission.data);
+  emit('update:answers', submission.data);
 }
 
 onBeforeMount(() => {
