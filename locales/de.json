@@ -281,7 +281,10 @@
     "showingPreview": "Im Vorschaumodus sind Antworten deaktiviert.",
     "toContributionPage": "Meinen Beitrag ändern",
     "updateContribution": "Bitte ändern Sie ihren Beitrag.",
-    "views": {},
+    "views": {
+      "gallery": "Galerie",
+      "map": "Karten"
+    },
     "youResponded": "Sie haben geantwortet ♥"
   },
   "calloutAdmin": {
@@ -689,12 +692,24 @@
             }
           },
           "mapSchema": {
-            "bounds": {},
-            "center": {},
-            "initialZoom": {},
-            "maxZoom": {},
-            "minZoom": {},
-            "style": {}
+            "bounds": {
+              "label": "Maximale Kartengröße"
+            },
+            "center": {
+              "label": "Karten-Zentrum"
+            },
+            "initialZoom": {
+              "label": "Voreingestellter Zoom"
+            },
+            "maxZoom": {
+              "label": "Maximaler Zoom"
+            },
+            "minZoom": {
+              "label": "Minimaler Zoom"
+            },
+            "style": {
+              "label": "Karten-URL"
+            }
           },
           "multiple": {
             "help": "<p>Wenn ja, können eingeloggte Nutzer <strong>mehrfach</strong> am Callout teilnehmen.</p>\n",
@@ -704,9 +719,15 @@
               "yes": "Ja"
             }
           },
-          "responseImageProp": {},
-          "responseTitleProp": {},
-          "showResponses": {},
+          "responseImageProp": {
+            "label": "Welches Feld soll als Bild für Darstellung der Antwort dienen?"
+          },
+          "responseTitleProp": {
+            "label": "Welches Feld soll als Überschrift dienen?"
+          },
+          "showResponses": {
+            "label": "Sollen Antworten öffentlich sichtbar sein?"
+          },
           "visible": {
             "help": "<p>Du kannst den Callout <strong>nicht anzeigen</strong> lassen. Dann ist er nur über den Link erreichbar.</p>\n",
             "label": "Soll der Callout deinen Mitgliedern im Dashboard angezeigt werden?",
@@ -716,7 +737,11 @@
             }
           },
           "whichResponseViews": {
-            "opts": {}
+            "label": "Wie soll die Antwort dargestellt werden?",
+            "opts": {
+              "gallery": "Galerie-Ansicht",
+              "map": "Karten-Ansicht"
+            }
           },
           "who": {
             "help": "<p>Callouts können für <strong>Alle</strong> oder nur für <strong>Mitglieder</strong> zugänglich sein.</p>\n",
@@ -862,6 +887,7 @@
       },
       "unknown": {
         "email": "Ungültige E-Mail-Adresse",
+        "max": "Dieses Feld darf höchstens {max} sein",
         "min": "Dieses Feld muss mindestens {min}",
         "required": "Dieses Feld wird benötigt",
         "url": "Ungültige URL"
