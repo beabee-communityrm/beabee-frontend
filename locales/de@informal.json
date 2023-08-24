@@ -720,12 +720,15 @@
             }
           },
           "responseImageProp": {
+            "help": "<p>Das Bild wird verwendet, um die Antwort in der Karten- oder Galerieansicht zu visualisieren. Wichtig: Es muss sich um eine Datei-Upload-Komponente handeln.</p>\n",
             "label": "Welches Feld soll als Bild für Darstellung der Antwort dienen?"
           },
           "responseTitleProp": {
+            "help": "<p>Der Titel erscheint als Überschrift auf jeder Antwort in der Karten- oder Galerieansicht.</p>\n",
             "label": "Welches Feld soll als Überschrift dienen?"
           },
           "showResponses": {
+            "help": "<p>Mit dieser Funktion ist es möglich, Callout-Antworten auf einer Karte oder als Galerie darzustellen.</p>\n",
             "label": "Sollen Antworten öffentlich sichtbar sein?"
           },
           "visible": {
@@ -737,6 +740,7 @@
             }
           },
           "whichResponseViews": {
+            "help": "<p>Hier kannst du entscheiden, ob du die Karten- oder die Galerieansicht verwenden möchtest. Es ist auch möglich beides auszuwählen.</p>\n",
             "label": "Wie soll die Antwort dargestellt werden?",
             "opts": {
               "gallery": "Galerie-Ansicht",

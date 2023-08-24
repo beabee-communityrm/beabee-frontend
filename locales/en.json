@@ -720,12 +720,15 @@
             }
           },
           "responseImageProp": {
+            "help": "<p>The image will be used to visualise the answer in map or gallery view. Important: This has to be a file upload component.</p>\n",
             "label": "Which form field should be used for response images?"
           },
           "responseTitleProp": {
+            "help": "<p>The title appears on top of each answer in the map or gallery view.</p>\n",
             "label": "Which form field should be used as the response title?"
           },
           "showResponses": {
+            "help": "<p>If yes, you can set up a map or gallery view to visualise callout answers.</p>\n",
             "label": "Allow users to see verified responses publicly?"
           },
           "visible": {
@@ -737,6 +740,7 @@
             }
           },
           "whichResponseViews": {
+            "help": "<p>Please decide if you want to use the map view or the gallery view or both.</p>\n",
             "label": "Which response views should be visible?",
             "opts": {
               "gallery": "Gallery view",
