@@ -73,9 +73,9 @@
     "title": "Add a notice"
   },
   "adminDashboard": {
-    "hint1": "<p>Did you know callouts can be created without an end date, and just keep running? See our <a href=\"https://beabee.io/en/beabee-full-feature-list/\">feature showcase</a> for more information.</p>\n",
-    "hint2": "<p>Find out more about <a href=\"https://beabee.io/en/beabee-model/\">the beabee vision</a> around community engagement and meaningful relationships with your audience.</p>\n",
-    "hint3": "<p>Our <a href=\"https://beabee.io/en/beabee-faq/\">FAQ</a> addresses common questions about getting started and use cases. If the answer you're looking for isn't there, get in touch.</p>\n",
+    "hint1": "<p>Did you know callouts can be created without an end date, and just keep running? See our <a href=\"https://beabee.io/en/beabee-full-feature-list/\" target=\"_blank\" rel=\"noopener noreferrer\">feature showcase</a> for more information.</p>\n",
+    "hint2": "<p>Find out more about <a href=\"https://beabee.io/en/beabee-model/\" target=\"_blank\" rel=\"noopener noreferrer\">the beabee vision</a> around community engagement and meaningful relationships with your audience.</p>\n",
+    "hint3": "<p>Our <a href=\"https://beabee.io/en/beabee-faq/\" target=\"_blank\" rel=\"noopener noreferrer\">FAQ</a> addresses common questions about getting started and use cases. If the answer you're looking for isn't there, get in touch.</p>\n",
     "joinSlack": "Join the beabee community on Slack!",
     "latestCallout": {
       "createNew": "Create a new one?",
@@ -93,7 +93,7 @@
     },
     "responsesSoFar": "{n} response so far | {n} responses so far",
     "seeAllResponses": "See all responses",
-    "supportInbox": "<p>Need help? Please visit <a href=\"https://wiki.beabee.io/help-center-english/\">the beabee Help Center</a> or use our support inbox: <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
+    "supportInbox": "<p>Need help? Please visit <a href=\"https://wiki.beabee.io/help-center-english/\" target=\"_blank\" rel=\"noopener noreferrer\">the beabee Help Center</a> or use our support inbox: <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
     "welcomeBack": "Welcome back {firstName}!"
   },
   "adminSettings": {
@@ -708,6 +708,7 @@
               "label": "Minimum zoom level"
             },
             "style": {
+              "help": "<p>The map view <strong>requires a third-party map tool</strong> like <a href=\"https://www.maptiler.com\" target=\"_blank\" rel=\"noopener noreferrer\">Maptiler</a> or <a href=\"https://www.mapbox.com\" target=\"_blank\" rel=\"noopener noreferrer\">Mapbox</a>. Those tools provide you with the map style URL you need to paste in here.</p>\n",
               "label": "Map style URL"
             }
           },

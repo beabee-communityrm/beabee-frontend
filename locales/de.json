@@ -73,8 +73,8 @@
     "title": "Hinweis hinzufügen"
   },
   "adminDashboard": {
-    "hint1": "<p>Das beabee-Handbuch für Community-Journalismus „Lust auf Lokal” <a href=\"https://beabee.io/neu-handbuch-community-journalismus/\">ist erschienen</a>. Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
-    "hint2": "<p>Im <a href=\"https://beabee.io/#blog\">Blog</a> auf unserer Website findest du viele Best-Practice-Beispiele anderer Redaktionen, von denen du dich inspierieren lassen kannst.</p>\n",
+    "hint1": "<p>Das beabee-Handbuch für Community-Journalismus „Lust auf Lokal” <a href=\"https://beabee.io/neu-handbuch-community-journalismus/\" target=\"_blank\" rel=\"noopener noreferrer\">ist erschienen</a>. Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
+    "hint2": "<p>Im <a href=\"https://beabee.io/#blog\" target=\"_blank\" rel=\"noopener noreferrer\">Blog</a> auf unserer Website findest du viele Best-Practice-Beispiele anderer Redaktionen, von denen du dich inspierieren lassen kannst.</p>\n",
     "hint3": "<p>Unsere Community-Meetups finden jeden dritten Donnerstag im Monat statt. Du willst dein Best-Practice-Beispiel mit anderen teilen? Schreib eine E-Mail an <a href=\"mailto:tobias.hauswurz{'@'}correctiv.org\">tobias.hauswurz{'@'}correctiv.org</a></p>\n",
     "joinSlack": "Tritt der beabee-Community auf Slack bei!",
     "latestCallout": {
@@ -93,7 +93,7 @@
     },
     "responsesSoFar": "{n} Antwort bisher | {n} Antworten bisher",
     "seeAllResponses": "Alle Antworten anzeigen",
-    "supportInbox": "<p>Benötigst du Hilfe? Besuche unser <a href=\"https://wiki.beabee.io/beabee-help-center/\">beabee Help Center</a> oder schreib' uns eine E-Mail an: <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
+    "supportInbox": "<p>Benötigst du Hilfe? Besuche unser <a href=\"https://wiki.beabee.io/beabee-help-center/\" target=\"_blank\" rel=\"noopener noreferrer\">beabee Help Center</a> oder schreib' uns eine E-Mail an: <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
     "welcomeBack": "Willkommen zurück {firstName}!"
   },
   "adminSettings": {
@@ -708,6 +708,7 @@
               "label": "Minimaler Zoom"
             },
             "style": {
+              "help": "<p>Für die Kartenansicht benötigst du ein externes Kartentool, z. B. <a href=\"https://www.maptiler.com\" target=\"_blank\" rel=\"noopener noreferrer\">Maptiler</a> oder <a href=\"https://www.mapbox.com\" target=\"_blank\" rel=\"noopener noreferrer\">Mapbox</a>. Diese Tools stellen dir die URL für die Kartenansicht zur Verfügung, die du hier einfügen musst.</p>\n",
               "label": "Karten-URL"
             }
           },
