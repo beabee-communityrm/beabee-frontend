@@ -12,7 +12,6 @@
       :submission="answers && { data: answers }"
       :options="formOpts"
       @submit="handleSubmission"
-      @change="handleChange"
     />
     <AppNotification
       v-if="formError"
@@ -50,7 +49,6 @@ const { t } = useI18n();
 
 const emit = defineEmits<{
   (e: 'submitted'): void;
-  (e: 'update:answers', answers: CalloutResponseAnswers | undefined): void;
 }>();
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
@@ -108,12 +106,6 @@ async function handleSubmission(submission: FormSubmission) {
       throw err;
     }
   }
-}
-
-function handleChange(submission: FormSubmission) {
-  if (!submission.data) return; // Ignore change events we don't want
-  console.log(submission.data);
-  emit('update:answers', submission.data);
 }
 
 onBeforeMount(() => {

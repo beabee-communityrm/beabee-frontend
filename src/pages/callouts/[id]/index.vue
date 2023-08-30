@@ -34,23 +34,11 @@ meta:
     </transition-group>
 
     <a id="thanks" />
-    <div
-      v-show="latestResponse || showOnlyThankYou"
-      class="mb-6 flex rounded bg-white p-6 text-lg text-success"
-    >
-      <div class="flex-0 mr-4 text-2xl">
-        <font-awesome-icon :icon="faThumbsUp" />
-      </div>
-      <div>
-        <h3 class="font-semibold">
-          {{ callout.thanksTitle }}
-        </h3>
-        <div
-          class="content-message font-normal text-body-80"
-          v-html="callout.thanksText"
-        />
-      </div>
-    </div>
+    <CalloutThanksBox
+      v-if="latestResponse || showOnlyThankYou"
+      :callout="callout"
+      class="p-6 bg-white"
+    />
 
     <figure class="mb-6">
       <img class="w-full object-cover" :src="callout.image" />
@@ -111,7 +99,6 @@ import {
   faBullhorn,
   faCaretDown,
   faShare,
-  faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
 import AppNotification from '../../../components/AppNotification.vue';
 import CalloutForm from '../../../components/pages/callouts/CalloutForm.vue';
@@ -119,6 +106,7 @@ import { addNotification } from '../../../store/notifications';
 import { useCallout } from '../../../components/pages/callouts/use-callout';
 import CalloutLoginPrompt from '../../../components/pages/callouts/CalloutLoginPrompt.vue';
 import CalloutMemberOnlyPrompt from '../../../components/pages/callouts/CalloutMemberOnlyPrompt.vue';
+import CalloutThanksBox from '../../../components/pages/callouts/CalloutThanksBox.vue';
 
 const props = defineProps<{ id: string }>();
 
