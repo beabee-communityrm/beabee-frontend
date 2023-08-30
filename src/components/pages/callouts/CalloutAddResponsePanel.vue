@@ -1,6 +1,6 @@
 <template>
   <CalloutSidePanel :show="!!answers" @close="$emit('close')">
-    <AppHeading class="mb-4">Add a new response</AppHeading>
+    <AppHeading class="mb-4">{{ t('callout.addResponse') }}</AppHeading>
     <CalloutThanksBox v-if="showOnlyThanks" :callout="callout" />
     <template v-else>
       <CalloutLoginPrompt v-if="showLoginPrompt" />
@@ -27,12 +27,15 @@ import { ref, toRef, watch } from 'vue';
 import CalloutSidePanel from './CalloutSidePanel.vue';
 import AppHeading from '../../AppHeading.vue';
 import CalloutThanksBox from './CalloutThanksBox.vue';
+import { useI18n } from 'vue-i18n';
 
 defineEmits<(e: 'close') => void>();
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
   answers?: CalloutResponseAnswers;
 }>();
+
+const { t } = useI18n();
 
 const showOnlyThanks = ref(false);
 

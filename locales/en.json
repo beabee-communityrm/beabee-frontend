@@ -262,6 +262,7 @@
     }
   },
   "callout": {
+    "addResponse": "Add a new response",
     "closed": "This callout is closed",
     "contactDetails": "Contact details",
     "form": {
