@@ -73,7 +73,7 @@ meta:
         :callout="callout"
         :answers="latestResponse?.answers"
         :preview="isPreview"
-        :readonly="latestResponse && !callout.allowUpdate"
+        :readonly="!canRespond"
         @submitted="handleSubmitResponse"
       />
     </template>
@@ -167,6 +167,14 @@ const showResponseForm = computed(
     (isOpen.value && !showLoginPrompt.value && !showMemberOnlyPrompt.value) ||
     // Current user has previously responded
     latestResponse.value
+);
+
+const canRespond = computed(
+  () =>
+    // Preview mode
+    isPreview.value ||
+    // Callout is open and current user hasn't responded or can update
+    (isOpen.value && (!latestResponse.value || callout.value?.allowUpdate))
 );
 
 function handleSubmitResponse() {

@@ -69,6 +69,7 @@ const showGuestFields = computed(
 const formOpts = computed(() => ({
   readOnly: props.readonly,
   noAlerts: true,
+  renderMode: props.readonly ? 'html' : 'form',
   hooks: {
     beforeSubmit: (_: FormSubmission, next: () => void) => {
       // Can't submit in preview mode
