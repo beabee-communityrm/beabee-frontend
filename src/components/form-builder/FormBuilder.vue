@@ -274,7 +274,6 @@ onBeforeUnmount(() => {
   .formio-component-autocomplete,
   .formio-component-tabindex,
   .formio-component-allowMultipleMasks,
-  .formio-component-hidden,
   .formio-component-hideLabel,
   .formio-component-showWordCount,
   .formio-component-showCharCount,

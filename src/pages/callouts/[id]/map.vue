@@ -120,22 +120,17 @@ meta:
     <!-- Side panel width reference to offset map center -->
     <div ref="sidePanelRef" class="absolute left-0 w-full max-w-lg" />
 
-    <CalloutResponsePanel
+    <CalloutShowResponsePanel
       :callout="callout"
       :response="selectedResponseFeature?.properties"
       @close="router.push({ hash: '' })"
     />
 
-    <CalloutSidePanel :show="!!newResponseAnswers" @close="handleCancelAddMode">
-      <AppHeading class="mb-4">Add a new response</AppHeading>
-      <CalloutLoginPrompt v-if="showLoginPrompt" />
-      <CalloutMemberOnlyPrompt v-else-if="showMemberOnlyPrompt" />
-      <CalloutForm
-        v-else
-        v-model:answers="newResponseAnswers"
-        :callout="callout"
-      />
-    </CalloutSidePanel>
+    <CalloutAddResponsePanel
+      :callout="callout"
+      :answers="newResponseAnswers"
+      @close="handleCancelAddMode"
+    />
   </div>
 </template>
 
@@ -166,7 +161,7 @@ import PageTitle from '../../../components/PageTitle.vue';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
 import 'vue-maplibre-gl/dist/vue-maplibre-gl.css';
-import CalloutResponsePanel from '../../../components/pages/callouts/CalloutResponsePanel.vue';
+import CalloutShowResponsePanel from '../../../components/pages/callouts/CalloutShowResponsePanel.vue';
 import {
   CalloutResponseAnswerAddress,
   CalloutResponseAnswers,
@@ -177,13 +172,12 @@ import {
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { useI18n } from 'vue-i18n';
-import CalloutForm from '../../../components/pages/callouts/CalloutForm.vue';
-import { useCallout } from '../../../components/pages/callouts/use-callout';
-import CalloutLoginPrompt from '../../../components/pages/callouts/CalloutLoginPrompt.vue';
-import CalloutMemberOnlyPrompt from '../../../components/pages/callouts/CalloutMemberOnlyPrompt.vue';
-import CalloutSidePanel from '../../../components/pages/callouts/CalloutSidePanel.vue';
-import AppHeading from '../../../components/AppHeading.vue';
+import {
+  HASH_PREFIX,
+  useCallout,
+} from '../../../components/pages/callouts/use-callout';
 import { reverseGeocode } from '../../../utils/geocode';
+import CalloutAddResponsePanel from '../../../components/pages/callouts/CalloutAddResponsePanel.vue';
 
 const props = defineProps<{ id: string }>();
 
@@ -192,12 +186,12 @@ const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
 
-const hashPrefix = '#response-' as const;
-
 const sidePanelRef = ref<HTMLElement>();
 
 const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();
 const responses = ref<GetCalloutResponseMapData[]>([]);
+
+const { isOpen } = useCallout(callout);
 
 const isAddMode = ref(false);
 const newResponseAnswers = ref<
@@ -206,6 +200,7 @@ const newResponseAnswers = ref<
   }
 >();
 
+// A GeoJSON FeatureCollection of all the responses
 const responsesCollecton = computed<
   GeoJSON.FeatureCollection<GeoJSON.Point, GetCalloutResponseMapData>
 >(() => ({
@@ -225,9 +220,10 @@ const responsesCollecton = computed<
   }),
 }));
 
+// A GeoJSON Feature of the currently selected response
 const selectedResponseFeature = computed(() => {
-  if (route.hash.startsWith(hashPrefix)) {
-    const responseNumber = Number(route.hash.slice(hashPrefix.length));
+  if (route.hash.startsWith(HASH_PREFIX)) {
+    const responseNumber = Number(route.hash.slice(HASH_PREFIX.length));
     return responsesCollecton.value.features.find(
       (f) => f.properties.number === responseNumber
     );
@@ -235,8 +231,6 @@ const selectedResponseFeature = computed(() => {
     return undefined;
   }
 });
-
-const { isOpen, showLoginPrompt, showMemberOnlyPrompt } = useCallout(callout);
 
 // Zoom to a cluster or open a response
 function handleClick(e: { event: MapMouseEvent; map: Map }) {
@@ -277,7 +271,7 @@ function handleClick(e: { event: MapMouseEvent; map: Map }) {
     router.push({
       hash:
         pointFeatures.length > 0
-          ? hashPrefix + pointFeatures[0].properties.number
+          ? HASH_PREFIX + pointFeatures[0].properties.number
           : '',
     });
   }
@@ -323,20 +317,20 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
   const coords = e.event.lngLat;
   e.map.getCanvas().style.cursor = '';
 
-  newResponseAnswers.value = {
-    address: await reverseGeocode(coords.lat, coords.lng),
-  };
-}
-
-// Centre map on new response location when it changes
-watch(newResponseAnswers, (newAnswers) => {
-  if (!map.map || !newAnswers?.address?.geometry) return;
-
-  map.map.easeTo({
-    center: newAnswers.address.geometry.location,
+  e.map.easeTo({
+    center: coords,
     padding: { left: sidePanelRef.value?.offsetWidth || 0 },
   });
-});
+
+  const result = await reverseGeocode(coords.lat, coords.lng);
+  console.log(result);
+
+  newResponseAnswers.value = {
+    // TODO: dynamic address
+    address: result,
+    address1: 'Test address',
+  };
+}
 
 // Centre map on selected feature when it changes
 watch(selectedResponseFeature, (newFeature) => {

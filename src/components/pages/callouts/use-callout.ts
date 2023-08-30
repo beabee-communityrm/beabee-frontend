@@ -3,6 +3,8 @@ import { Ref, computed } from 'vue';
 import { GetCalloutData } from '../../../utils/api/api.interface';
 import { currentUser } from '../../../store';
 
+export const HASH_PREFIX = '#response-' as const;
+
 export function useCallout(callout: Ref<GetCalloutData | undefined>) {
   const isOpen = computed(() => callout.value?.status === ItemStatus.Open);
 

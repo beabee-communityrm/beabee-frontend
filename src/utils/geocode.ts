@@ -15,6 +15,11 @@ interface GeocodeResult {
       lng: number;
     };
   };
+  address_components: {
+    long_name: string;
+    short_name: string;
+    types: string[];
+  }[];
 }
 
 export async function reverseGeocode(
