@@ -3,7 +3,12 @@
     <AppHeading class="mb-4">Add a new response</AppHeading>
     <CalloutLoginPrompt v-if="showLoginPrompt" />
     <CalloutMemberOnlyPrompt v-else-if="showMemberOnlyPrompt" />
-    <CalloutForm v-else-if="answers" :answers="answers" :callout="callout" />
+    <CalloutForm
+      v-else-if="answers"
+      :answers="answers"
+      :callout="callout"
+      no-bg
+    />
   </CalloutSidePanel>
 </template>
 

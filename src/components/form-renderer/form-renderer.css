@@ -5,7 +5,7 @@
 /* Apply to preview panel only on popup dialog */
 .formio-dialog .preview-panel {
   /* Give callouts a white background */
-  .formio-form {
+  &:not(.has-no-bg) .formio-form {
     @apply bg-white p-4 shadow-md;
   }
 

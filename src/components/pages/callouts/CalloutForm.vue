@@ -7,6 +7,7 @@
     />
     <Form
       class="callout-form-renderer"
+      :class="{ 'has-no-bg': noBg }"
       :form="callout.formSchema"
       :submission="answers && { data: answers }"
       :options="formOpts"
@@ -56,6 +57,7 @@ const props = defineProps<{
   answers?: CalloutResponseAnswers;
   preview?: boolean;
   readonly?: boolean;
+  noBg?: boolean;
 }>();
 
 const guestName = ref('');
