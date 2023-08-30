@@ -68,7 +68,7 @@
         required
       />
     </AppFormSection>
-    <AppFormSection>
+    <AppFormSection :help="inputT('showResponses.help')">
       <AppRadioGroup
         v-model="data.showResponses"
         name="showResponses"
@@ -81,21 +81,21 @@
       />
     </AppFormSection>
     <template v-if="data.showResponses">
-      <AppFormSection>
+      <AppFormSection :help="inputT('responseTitleProp.help')">
         <AppInput
           v-model="data.responseTitleProp"
           :label="inputT('responseTitleProp.label')"
           required
         />
       </AppFormSection>
-      <AppFormSection>
+      <AppFormSection :help="inputT('responseImageProp.help')">
         <AppInput
           v-model="data.responseImageProp"
           :label="inputT('responseImageProp.label')"
           required
         />
       </AppFormSection>
-      <AppFormSection>
+      <AppFormSection :help="inputT('whichResponseViews.help')">
         <AppLabel :label="inputT('whichResponseViews.label')" required />
         <div class="flex gap-4">
           <AppCheckbox
@@ -113,7 +113,7 @@
         </div>
       </AppFormSection>
       <template v-if="data.showResponseMap">
-        <AppFormSection>
+        <AppFormSection :help="inputT('mapSchema.style.help')">
           <AppInput
             v-model="data.mapSchema.style"
             :label="inputT('mapSchema.style.label')"
