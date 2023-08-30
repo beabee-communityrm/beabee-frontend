@@ -196,11 +196,6 @@
     content: '*';
   }
 
-  /* Except if the form is in read only model */
-  .formio-read-only .field-required::after {
-    @apply hidden;
-  }
-
   /* Styles for file upload component */
   .list-group {
     @apply border border-primary-20 rounded mb-4;
@@ -239,5 +234,13 @@
 .formio-dialog .formio-component-html .ck-content {
   h3 {
     @apply mb-2;
+  }
+}
+
+/* Apply to form renderer in read only mode */
+.callout-form-renderer .formio-read-only {
+  /* Respect text formatting */
+  div[ref='value'] {
+    @apply whitespace-pre-wrap break-words;
   }
 }
