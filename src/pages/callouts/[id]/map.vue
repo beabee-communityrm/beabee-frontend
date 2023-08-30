@@ -323,12 +323,21 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
   });
 
   const result = await reverseGeocode(coords.lat, coords.lng);
-  console.log(result);
+  const addressPattern = '{street_number} {route}, {locality} {postal_code}';
+
+  const addressText = result
+    ? addressPattern.replace(
+        /{(\w+)}/g,
+        (match, key) =>
+          result.address_components.find((a) => a.types.includes(key))
+            ?.long_name ?? '???'
+      )
+    : '';
 
   newResponseAnswers.value = {
     // TODO: dynamic address
     address: result,
-    address1: 'Test address',
+    address1: addressText,
   };
 }
 

@@ -15,6 +15,8 @@ import CalloutMemberOnlyPrompt from './CalloutMemberOnlyPrompt.vue';
 import CalloutLoginPrompt from './CalloutLoginPrompt.vue';
 import { useCallout } from './use-callout';
 import { toRef } from 'vue';
+import CalloutSidePanel from './CalloutSidePanel.vue';
+import AppHeading from '../../AppHeading.vue';
 
 defineEmits<(e: 'close') => void>();
 const props = defineProps<{
