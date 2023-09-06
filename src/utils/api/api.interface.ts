@@ -327,6 +327,7 @@ export interface CalloutMapSchema {
 export interface CalloutResponseViewSchema {
   titleProp: string;
   imageProp: string;
+  imageFilter: string;
   gallery: boolean;
   map: CalloutMapSchema | null;
 }

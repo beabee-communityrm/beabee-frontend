@@ -30,9 +30,10 @@ meta:
             <img
               class="w-full mb-2 aspect-video object-cover"
               loading="lazy"
+              :style="{ filter: callout.responseViewSchema?.imageFilter }"
               :src="response.photos[0].url + '?w=400&h=400'"
             />
-            <h2 class="font-title font-bold">{{ response.title }}</h2>
+            <h2>{{ response.title }}</h2>
           </router-link>
         </li>
       </ul>

@@ -63,6 +63,7 @@ meta:
             :layout="{
               'text-field': '{point_count_abbreviated}',
               'text-size': 16,
+              'text-font': ['Bold'],
             }"
           />
           <MglCircleLayer
