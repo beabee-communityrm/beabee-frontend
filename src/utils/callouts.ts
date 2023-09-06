@@ -89,6 +89,7 @@ export function convertStepsToCallout(
       ? {
           titleProp: steps.settings.responseTitleProp,
           imageProp: steps.settings.responseImageProp,
+          imageFilter: '', // TODO
           gallery: steps.settings.showResponseGallery,
           map: steps.settings.showResponseMap ? steps.settings.mapSchema : null,
         }
