@@ -15,7 +15,11 @@
             :key="photo.url"
             class="w-full flex-none p-4"
           >
-            <img class="w-full" :src="photo.url + '?w=600&h=600'" />
+            <img
+              class="w-full"
+              :style="{ filter: callout.responseViewSchema?.imageFilter }"
+              :src="photo.url + '?w=600&h=600'"
+            />
           </li>
         </ul>
         <div
@@ -68,7 +72,7 @@ import CalloutSidePanel from './CalloutSidePanel.vue';
 
 defineEmits<(e: 'close') => void>();
 const props = defineProps<{
-  callout: GetCalloutDataWith<'form'>;
+  callout: GetCalloutDataWith<'form' | 'responseViewSchema'>;
   response?: GetCalloutResponseMapData;
 }>();
 
