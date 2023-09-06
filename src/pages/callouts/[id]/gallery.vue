@@ -8,7 +8,7 @@ meta:
 
 <template>
   <div v-if="callout" class="absolute inset-0 flex flex-col">
-    <div class="flex-0 p-6 pb-1">
+    <div class="flex-0 p-6 pb-1 z-10 shadow-lg">
       <PageTitle :title="callout.title" no-collapse>
         <router-link
           v-if="callout.responseViewSchema?.map"
@@ -20,13 +20,13 @@ meta:
       </PageTitle>
     </div>
     <div class="overflow-scroll">
-      <ul class="flex flex-wrap m-3 -mt-3">
+      <ul class="flex flex-wrap m-3">
         <li
           v-for="response in responses"
           :key="response.number"
           class="flex-1 min-w-[250px] sm:max-w-sm p-3"
         >
-          <router-link :to="`${hashPrefix}${response.number}`">
+          <router-link :to="`${HASH_PREFIX}${response.number}`">
             <img
               class="w-full mb-2 aspect-video object-cover"
               loading="lazy"
@@ -46,7 +46,7 @@ meta:
       />
     </transition>
 
-    <CalloutResponsePanel
+    <CalloutShowResponsePanel
       :callout="callout"
       :response="selectedResponse"
       @close="router.push({ hash: '' })"
@@ -63,10 +63,12 @@ import {
 } from '../../../utils/api/api.interface';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
-import CalloutResponsePanel from '../../../components/pages/callouts/CalloutResponsePanel.vue';
+import CalloutShowResponsePanel from '../../../components/pages/callouts/CalloutShowResponsePanel.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import { faMap } from '@fortawesome/free-solid-svg-icons';
 import { useI18n } from 'vue-i18n';
+
+const HASH_PREFIX = '#response-' as const;
 
 const props = defineProps<{ id: string }>();
 
@@ -77,11 +79,9 @@ const { t } = useI18n();
 const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();
 const responses = ref<GetCalloutResponseMapData[]>([]);
 
-const hashPrefix = '#response-' as const;
-
 const selectedResponse = computed(() => {
-  if (route.hash.startsWith(hashPrefix)) {
-    const responseNumber = Number(route.hash.slice(hashPrefix.length));
+  if (route.hash.startsWith(HASH_PREFIX)) {
+    const responseNumber = Number(route.hash.slice(HASH_PREFIX.length));
     return responses.value.find((r) => r.number === responseNumber);
   } else {
     return undefined;

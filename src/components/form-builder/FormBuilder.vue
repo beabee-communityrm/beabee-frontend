@@ -274,7 +274,6 @@ onBeforeUnmount(() => {
   .formio-component-autocomplete,
   .formio-component-tabindex,
   .formio-component-allowMultipleMasks,
-  .formio-component-hidden,
   .formio-component-hideLabel,
   .formio-component-showWordCount,
   .formio-component-showCharCount,
@@ -315,7 +314,13 @@ onBeforeUnmount(() => {
   .formio-component-errors,
   .formio-component-customConditionalPanel,
   .formio-component-properties,
-  .formio-component-tags {
+  .formio-component-tags,
+  /* Form upload component */
+  .formio-component-dir,
+  .formio-component-image,
+  .formio-component-uploadOnly,
+  .formio-component-fileTypes,
+  .formio-component-fileNameTemplate {
     @apply hidden;
   }
 }

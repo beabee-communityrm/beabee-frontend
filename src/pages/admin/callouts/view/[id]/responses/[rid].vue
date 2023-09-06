@@ -129,15 +129,11 @@ meta:
         class="mb-6"
         :title="t('calloutResponsePage.editMode')"
       />
-      <Form
-        :key="response.id + editMode /* Form doesn't respect reactivity */"
+      <FormRenderer
+        :key="response.id + editMode"
         :form="callout.formSchema"
-        :submission="{ data: response.answers }"
-        :options="{
-          readOnly: !editMode,
-          noAlerts: true,
-          renderMode: editMode ? 'form' : 'html',
-        }"
+        :answers="response.answers"
+        :readonly="!editMode"
         @submit="handleEditResponse"
       />
     </div>
@@ -155,7 +151,6 @@ import {
   UpdateCalloutResponseData,
 } from '../../../../../../utils/api/api.interface';
 import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
-import { Form } from '../../../../../../lib/formio';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../../../components/AppHeading.vue';
 import AppInfoList from '../../../../../../components/AppInfoList.vue';
@@ -184,6 +179,7 @@ import {
 import { addNotification } from '../../../../../../store/notifications';
 import AppNotification from '../../../../../../components/AppNotification.vue';
 import { CalloutResponseAnswers } from '@beabee/beabee-common';
+import FormRenderer from '../../../../../../components/form-renderer/FormRenderer.vue';
 
 const props = defineProps<{
   rid: string;
@@ -311,7 +307,3 @@ async function refreshResponse() {
 
 watchEffect(refreshResponse);
 </script>
-<style>
-@import '../../../../../../lib/formio/formio.form.css';
-@import '../../../../../../components/form-renderer/form-renderer.css';
-</style>

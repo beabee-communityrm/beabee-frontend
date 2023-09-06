@@ -5,11 +5,12 @@
       v-model:name="guestName"
       v-model:email="guestEmail"
     />
-    <Form
-      class="callout-form-renderer"
+    <FormRenderer
       :form="callout.formSchema"
-      :submission="response && { data: response }"
-      :options="formOpts"
+      :answers="answers"
+      :readonly="readonly"
+      :no-bg="noBg"
+      :before-submit="beforeSubmit"
       @submit="handleSubmission"
     />
     <AppNotification
@@ -20,40 +21,29 @@
     />
   </form>
 </template>
+
 <script lang="ts" setup>
 import { CalloutResponseAnswers } from '@beabee/beabee-common';
-import { computed, onBeforeMount, ref } from 'vue';
-import {
-  GetCalloutDataWith,
-  GetCalloutResponseDataWith,
-} from '../../../utils/api/api.interface';
+import { computed, ref } from 'vue';
+import { GetCalloutDataWith } from '../../../utils/api/api.interface';
 import { useI18n } from 'vue-i18n';
 import { currentUser } from '../../../store';
 import { createResponse } from '../../../utils/api/callout';
 import { isRequestError } from '../../../utils/api';
-import { config, dom, library } from '@fortawesome/fontawesome-svg-core';
-import { Form } from '../../../lib/formio';
-import {
-  faCalendar,
-  faCross,
-  faCloudUpload,
-  faRemove,
-  faRefresh,
-} from '@fortawesome/free-solid-svg-icons';
 import GuestFields from './GuestFields.vue';
 import AppNotification from '../../AppNotification.vue';
-
-interface FormSubmission {
-  data: CalloutResponseAnswers;
-}
+import FormRenderer from '../../form-renderer/FormRenderer.vue';
+import { FormSubmission } from '../../form-renderer/form-renderer.interface';
 
 const { t } = useI18n();
 
 const emit = defineEmits<{ (e: 'submitted'): void }>();
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
-  response: GetCalloutResponseDataWith<'answers'> | undefined;
-  preview: boolean;
+  answers?: CalloutResponseAnswers;
+  preview?: boolean;
+  readonly?: boolean;
+  noBg?: boolean;
 }>();
 
 const guestName = ref('');
@@ -64,28 +54,17 @@ const showGuestFields = computed(
   () => props.callout.access === 'guest' && !currentUser.value
 );
 
-const canSubmit = computed(() => !props.response || props.callout.allowUpdate);
+function beforeSubmit(): boolean {
+  formError.value = props.preview
+    ? // Can't submit in preview mode
+      t('callout.showingPreview')
+    : showGuestFields.value && !(guestName.value && guestEmail.value)
+    ? // If guest fields are required check they are filled in
+      t('callout.form.guestFieldsMissing')
+    : '';
 
-const formOpts = computed(() => ({
-  readOnly: !canSubmit.value,
-  noAlerts: true,
-  hooks: {
-    beforeSubmit: (_: FormSubmission, next: () => void) => {
-      // Can't submit in preview mode
-      if (props.preview) {
-        formError.value = t('callout.showingPreview');
-        // If guest fields are required check they are filled in
-      } else if (
-        showGuestFields.value &&
-        !(guestName.value && guestEmail.value)
-      ) {
-        formError.value = t('callout.form.guestFieldsMissing');
-      } else {
-        next();
-      }
-    },
-  },
-}));
+  return !formError.value;
+}
 
 async function handleSubmission(submission: FormSubmission) {
   formError.value = '';
@@ -107,15 +86,4 @@ async function handleSubmission(submission: FormSubmission) {
     }
   }
 }
-
-onBeforeMount(() => {
-  library.add(faCalendar, faCross, faCloudUpload, faRemove, faRefresh);
-  config.autoReplaceSvg = 'nest';
-  dom.watch();
-});
 </script>
-
-<style>
-@import '../../../lib/formio/formio.form.css';
-@import '../../form-renderer/form-renderer.css';
-</style>

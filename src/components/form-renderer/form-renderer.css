@@ -5,8 +5,8 @@
 /* Apply to preview panel only on popup dialog */
 .formio-dialog .preview-panel {
   /* Give callouts a white background */
-  .formio-form {
-    @apply bg-white p-4 shadow-md;
+  &:not(.has-no-bg) .formio-form {
+    @apply bg-white p-6 shadow-md;
   }
 
   /* Form labels same styling as .content-message h3 */
@@ -144,6 +144,14 @@
     @apply -order-1 mb-2 text-body-80;
   }
 
+  /* Hints on same line as check box */
+  .form-check {
+    @apply flex items-baseline;
+    & > i {
+      @apply flex-none ml-2;
+    }
+  }
+
   /* Subtle style for check boxes */
   .formio-editor-read-only-content,
   .form-check-input {
@@ -157,7 +165,7 @@
 
   /* Block checkboxes */
   .form-check-label {
-    @apply mb-2 flex align-baseline;
+    @apply mb-2 flex items-baseline;
 
     .form-check-input {
       @apply mr-2 flex-none;
@@ -184,13 +192,8 @@
 
   /* Add required asterisk */
   .field-required::after {
-    @apply text-danger;
+    @apply text-body;
     content: '*';
-  }
-
-  /* Except if the form is in read only model */
-  .formio-read-only .field-required::after {
-    @apply hidden;
   }
 
   /* Styles for file upload component */
@@ -231,5 +234,13 @@
 .formio-dialog .formio-component-html .ck-content {
   h3 {
     @apply mb-2;
+  }
+}
+
+/* Apply to form renderer in read only mode */
+.callout-form-renderer .formio-read-only {
+  /* Respect text formatting */
+  div[ref='value'] {
+    @apply whitespace-pre-wrap break-words;
   }
 }
