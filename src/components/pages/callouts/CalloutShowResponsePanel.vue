@@ -93,11 +93,16 @@ watch(
   }
 
   .col-form-label {
-    @apply float-left flex font-bold mr-2;
+    @apply inline-flex font-bold font-title;
     &::after {
       @apply text-body;
       content: ': ';
     }
+  }
+
+  div[ref='element'],
+  div[ref='value'] {
+    @apply inline;
   }
 }
 </style>
