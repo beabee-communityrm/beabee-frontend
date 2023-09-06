@@ -1,10 +1,10 @@
 <template>
-  <a :href="canAdmin ? '/admin' : '/profile'">
+  <router-link to="/">
     <img
       :src="generalContent.logoUrl || defaultLogo"
       :alt="generalContent.organisationName"
     />
-  </a>
+  </router-link>
 </template>
 <script lang="ts" setup>
 import { canAdmin, generalContent } from '../store';
