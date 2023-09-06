@@ -16,7 +16,8 @@ export const validFonts = {
 
 const allFonts = {
   ...validFonts,
-  queue: ['queue', 'sans-serif'],
+  'helvetica-neue-lt': ['Helvetica Neue LT', 'sans-serif'],
+  queue: ['Queue', 'sans-serif'],
 };
 
 type FontId = keyof typeof allFonts;
