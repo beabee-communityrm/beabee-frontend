@@ -262,6 +262,7 @@
     }
   },
   "callout": {
+    "addResponse": "Neue Antwort hinzufügen",
     "closed": "Dieser Callout ist beendet.",
     "contactDetails": "Kontaktdaten",
     "form": {
