@@ -180,6 +180,10 @@ import {
 import { reverseGeocode, formatGeocodeResult } from '../../../utils/geocode';
 import CalloutAddResponsePanel from '../../../components/pages/callouts/CalloutAddResponsePanel.vue';
 
+type GetCalloutResponseMapDataWithAddress = GetCalloutResponseMapData & {
+  address: CalloutResponseAnswerAddress;
+};
+
 const props = defineProps<{ id: string }>();
 
 const map = useMap();
@@ -190,7 +194,7 @@ const { t } = useI18n();
 const sidePanelRef = ref<HTMLElement>();
 
 const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();
-const responses = ref<GetCalloutResponseMapData[]>([]);
+const responses = ref<GetCalloutResponseMapDataWithAddress[]>([]);
 
 const { isOpen } = useCallout(callout);
 
@@ -206,11 +210,7 @@ const responsesCollecton = computed<
     type: 'FeatureCollection',
     features: mapSchema
       ? responses.value.map((response) => {
-          const address = response.answers[
-            mapSchema.addressProp
-          ] as CalloutResponseAnswerAddress;
-
-          const { lat, lng } = address.geometry.location;
+          const { lat, lng } = response.address.geometry.location;
 
           return {
             type: 'Feature',
@@ -363,7 +363,9 @@ onBeforeMount(async () => {
   }
 
   // TODO: pagination
-  responses.value = (await fetchResponsesForMap(props.id)).items;
+  responses.value = (await fetchResponsesForMap(props.id)).items.filter(
+    (r): r is GetCalloutResponseMapDataWithAddress => !!r.address
+  );
 });
 </script>
 

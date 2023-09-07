@@ -1,5 +1,6 @@
 import {
   CalloutFormSchema,
+  CalloutResponseAnswerAddress,
   CalloutResponseAnswerFileUpload,
   CalloutResponseAnswers,
   ContributionPeriod,
@@ -391,6 +392,7 @@ export interface GetCalloutResponseMapData {
   answers: CalloutResponseAnswers;
   title: string;
   photos: CalloutResponseAnswerFileUpload[];
+  address?: CalloutResponseAnswerAddress;
 }
 
 export interface CreateCalloutResponseData {
