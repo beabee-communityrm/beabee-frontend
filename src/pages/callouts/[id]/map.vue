@@ -91,8 +91,8 @@ meta:
           />
         </MglGeoJsonSource>
         <MglMarker
-          v-if="newResponseAnswers?.address?.geometry"
-          :coordinates="newResponseAnswers.address.geometry.location"
+          v-if="newResponseAddress"
+          :coordinates="newResponseAddress.geometry.location"
         >
           <div class="w-8 h-8 bg-primary rounded-full" />
         </MglMarker>
@@ -200,6 +200,15 @@ const { isOpen } = useCallout(callout);
 
 const isAddMode = ref(false);
 const newResponseAnswers = ref<CalloutResponseAnswers>();
+
+// Use the address from the new response to show a marker on the map
+const newResponseAddress = computed(() =>
+  callout.value?.responseViewSchema?.map && newResponseAnswers.value
+    ? (newResponseAnswers.value[
+        callout.value.responseViewSchema.map.addressProp
+      ] as CalloutResponseAnswerAddress)
+    : undefined
+);
 
 // A GeoJSON FeatureCollection of all the responses
 const responsesCollecton = computed<
