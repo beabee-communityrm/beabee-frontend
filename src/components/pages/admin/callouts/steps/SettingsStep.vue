@@ -190,6 +190,23 @@
             </div>
           </div>
         </AppFormSection>
+        <AppFormSection>
+          <AppSelect
+            v-model="data.mapSchema.addressPatternProp"
+            :label="inputT('mapSchema.addressPatternProp.label')"
+            :items="[
+              { id: '', label: inputT('mapSchema.addressPatternProp.none') },
+              ...textComponentItems,
+            ]"
+          />
+        </AppFormSection>
+        <AppFormSection v-if="!!data.mapSchema.addressPatternProp">
+          <AppInput
+            v-model="data.mapSchema.addressPattern"
+            :label="inputT('mapSchema.addressPattern.label')"
+            required
+          />
+        </AppFormSection>
       </template>
     </template>
   </div>
@@ -242,6 +259,12 @@ const fileComponentItems = computed(() =>
 
 const addressComponentItems = computed(() =>
   formComponentItems.value.filter((c) => c.type === 'address')
+);
+
+const textComponentItems = computed(() =>
+  formComponentItems.value.filter(
+    (c) => c.type === 'textfield' || c.type === 'textarea'
+  )
 );
 
 const validation = useVuelidate(

@@ -52,6 +52,8 @@ export function convertCalloutToSteps(
         maxZoom: 18,
         minZoom: 1,
         addressProp: '',
+        addressPattern: '',
+        addressPatternProp: '',
       },
     },
     endMessage: {
@@ -92,7 +94,14 @@ export function convertStepsToCallout(
           imageProp: steps.settings.responseImageProp,
           imageFilter: steps.settings.responseImageFilter,
           gallery: steps.settings.showResponseGallery,
-          map: steps.settings.showResponseMap ? steps.settings.mapSchema : null,
+          map: steps.settings.showResponseMap
+            ? {
+                ...steps.settings.mapSchema,
+                addressPattern: steps.settings.mapSchema.addressPatternProp
+                  ? steps.settings.mapSchema.addressPattern
+                  : '',
+              }
+            : null,
         }
       : null,
     starts: steps.dates.startNow

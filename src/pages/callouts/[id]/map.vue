@@ -177,7 +177,7 @@ import {
   HASH_PREFIX,
   useCallout,
 } from '../../../components/pages/callouts/use-callout';
-import { reverseGeocode } from '../../../utils/geocode';
+import { reverseGeocode, formatGeocodeResult } from '../../../utils/geocode';
 import CalloutAddResponsePanel from '../../../components/pages/callouts/CalloutAddResponsePanel.vue';
 
 const props = defineProps<{ id: string }>();
@@ -315,6 +315,9 @@ function handleCancelAddMode() {
 
 // Geolocate where the user has clicked
 async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
+  const mapSchema = callout.value?.responseViewSchema?.map;
+  if (!mapSchema) return;
+
   const coords = e.event.lngLat;
   e.map.getCanvas().style.cursor = '';
 
@@ -324,22 +327,18 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
   });
 
   const result = await reverseGeocode(coords.lat, coords.lng);
-  const addressPattern = '{street_number} {route}, {locality} {postal_code}';
 
-  const addressText = result
-    ? addressPattern.replace(
-        /{(\w+)}/g,
-        (match, key) =>
-          result.address_components.find((a) => a.types.includes(key))
-            ?.long_name ?? '???'
-      )
-    : '';
-
-  newResponseAnswers.value = {
-    // TODO: dynamic address
-    address: result,
-    address1: addressText,
-  };
+  newResponseAnswers.value = result
+    ? {
+        [mapSchema.addressProp]: result,
+        ...(mapSchema.addressPatternProp && {
+          [mapSchema.addressPatternProp]: formatGeocodeResult(
+            result,
+            mapSchema.addressPattern
+          ),
+        }),
+      }
+    : {};
 }
 
 // Centre map on selected feature when it changes

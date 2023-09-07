@@ -693,6 +693,9 @@
             }
           },
           "mapSchema": {
+            "addressPattern": {},
+            "addressPatternProp": {},
+            "addressProp": {},
             "bounds": {
               "label": "Maximale Kartengröße"
             },
@@ -721,6 +724,7 @@
               "yes": "Ja"
             }
           },
+          "responseImageFilter": {},
           "responseImageProp": {
             "help": "<p>Das Bild wird verwendet, um die Antwort in der Karten- oder Galerieansicht zu visualisieren. Wichtig: Es muss sich um eine Datei-Upload-Komponente handeln.</p>\n",
             "label": "Welches Feld soll als Bild für Darstellung der Antwort dienen?"
