@@ -81,20 +81,6 @@
       />
     </AppFormSection>
     <template v-if="data.showResponses">
-      <AppFormSection :help="inputT('responseTitleProp.help')">
-        <AppInput
-          v-model="data.responseTitleProp"
-          :label="inputT('responseTitleProp.label')"
-          required
-        />
-      </AppFormSection>
-      <AppFormSection :help="inputT('responseImageProp.help')">
-        <AppInput
-          v-model="data.responseImageProp"
-          :label="inputT('responseImageProp.label')"
-          required
-        />
-      </AppFormSection>
       <AppFormSection :help="inputT('whichResponseViews.help')">
         <AppLabel :label="inputT('whichResponseViews.label')" required />
         <div class="flex gap-4">
@@ -111,6 +97,22 @@
             class="!font-normal"
           />
         </div>
+      </AppFormSection>
+      <AppFormSection :help="inputT('responseTitleProp.help')">
+        <AppSelect
+          v-model="data.responseTitleProp"
+          :label="inputT('responseTitleProp.label')"
+          :items="titleComponentItems"
+          required
+        />
+      </AppFormSection>
+      <AppFormSection :help="inputT('responseImageProp.help')">
+        <AppSelect
+          v-model="data.responseImageProp"
+          :label="inputT('responseImageProp.label')"
+          :items="fileComponentItems"
+          :required="data.showResponseGallery"
+        />
       </AppFormSection>
       <AppFormSection>
         <AppInput
@@ -184,24 +186,26 @@
 </template>
 
 <script lang="ts" setup>
-import { ItemStatus } from '@beabee/beabee-common';
+import { ItemStatus, flattenComponents } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { computed, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppRadioGroup from '../../../../forms/AppRadioGroup.vue';
 import AppFormSection from '../../../../forms/AppFormSection.vue';
-import { SettingsStepProps } from '../callouts.interface';
+import { CalloutSteps, SettingsStepProps } from '../callouts.interface';
 import { sameAs } from '@vuelidate/validators';
 import AppInput from '../../../../forms/AppInput.vue';
 import AppCheckbox from '../../../../forms/AppCheckbox.vue';
 import AppLabel from '../../../../forms/AppLabel.vue';
 import { faImages, faMap } from '@fortawesome/free-solid-svg-icons';
+import AppSelect from '../../../../forms/AppSelect.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   data: SettingsStepProps;
   status: ItemStatus | undefined;
   isActive: boolean;
+  steps: CalloutSteps;
 }>();
 
 const { t } = useI18n();
@@ -210,6 +214,28 @@ const inputT = (key: string) => t('createCallout.steps.settings.inputs.' + key);
 // Force step to stay unvalidated until it is visited for new callouts
 const hasVisited = ref(!!props.status);
 watch(toRef(props, 'isActive'), (active) => (hasVisited.value ||= active));
+
+const formComponents = computed(() =>
+  flattenComponents(props.steps.content.data.formSchema.components).filter(
+    (c) => c.input
+  )
+);
+
+const titleComponentItems = computed(() =>
+  formComponents.value.map((c) => ({
+    id: c.key,
+    label: c.label || c.key,
+  }))
+);
+
+const fileComponentItems = computed(() =>
+  formComponents.value
+    .filter((c) => c.type === 'file')
+    .map((c) => ({
+      id: c.key,
+      label: c.label || c.key,
+    }))
+);
 
 const validation = useVuelidate(
   {
