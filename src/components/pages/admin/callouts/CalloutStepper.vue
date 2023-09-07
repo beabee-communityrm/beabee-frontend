@@ -11,6 +11,7 @@
       v-model:error="step.error"
       :is-active="selectedStep === step"
       :status="status"
+      :steps="steps"
     />
   </div>
 </template>

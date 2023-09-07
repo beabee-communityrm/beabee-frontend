@@ -81,20 +81,6 @@
       />
     </AppFormSection>
     <template v-if="data.showResponses">
-      <AppFormSection :help="inputT('responseTitleProp.help')">
-        <AppInput
-          v-model="data.responseTitleProp"
-          :label="inputT('responseTitleProp.label')"
-          required
-        />
-      </AppFormSection>
-      <AppFormSection :help="inputT('responseImageProp.help')">
-        <AppInput
-          v-model="data.responseImageProp"
-          :label="inputT('responseImageProp.label')"
-          required
-        />
-      </AppFormSection>
       <AppFormSection :help="inputT('whichResponseViews.help')">
         <AppLabel :label="inputT('whichResponseViews.label')" required />
         <div class="flex gap-4">
@@ -112,7 +98,39 @@
           />
         </div>
       </AppFormSection>
+      <AppFormSection :help="inputT('responseTitleProp.help')">
+        <AppSelect
+          v-model="data.responseTitleProp"
+          :label="inputT('responseTitleProp.label')"
+          :items="formComponentItems"
+          required
+        />
+      </AppFormSection>
+      <AppFormSection :help="inputT('responseImageProp.help')">
+        <AppSelect
+          v-model="data.responseImageProp"
+          :label="inputT('responseImageProp.label')"
+          :items="fileComponentItems"
+          :required="data.showResponseGallery"
+        />
+      </AppFormSection>
+      <AppFormSection>
+        <AppInput
+          v-model="data.responseImageFilter"
+          :label="inputT('responseImageFilter.label')"
+        />
+      </AppFormSection>
       <template v-if="data.showResponseMap">
+        <AppFormSection>
+          <AppSubHeading>{{ inputT('mapSchema.title') }}</AppSubHeading>
+
+          <AppSelect
+            v-model="data.mapSchema.addressProp"
+            :label="inputT('mapSchema.addressProp.label')"
+            :items="addressComponentItems"
+            required
+          />
+        </AppFormSection>
         <AppFormSection :help="inputT('mapSchema.style.help')">
           <AppInput
             v-model="data.mapSchema.style"
@@ -172,30 +190,50 @@
             </div>
           </div>
         </AppFormSection>
+        <AppFormSection>
+          <AppSelect
+            v-model="data.mapSchema.addressPatternProp"
+            :label="inputT('mapSchema.addressPatternProp.label')"
+            :items="[
+              { id: '', label: inputT('mapSchema.addressPatternProp.none') },
+              ...textComponentItems,
+            ]"
+          />
+        </AppFormSection>
+        <AppFormSection v-if="!!data.mapSchema.addressPatternProp">
+          <AppInput
+            v-model="data.mapSchema.addressPattern"
+            :label="inputT('mapSchema.addressPattern.label')"
+            required
+          />
+        </AppFormSection>
       </template>
     </template>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ItemStatus } from '@beabee/beabee-common';
+import { ItemStatus, flattenComponents } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { computed, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppRadioGroup from '../../../../forms/AppRadioGroup.vue';
 import AppFormSection from '../../../../forms/AppFormSection.vue';
-import { SettingsStepProps } from '../callouts.interface';
+import { CalloutSteps, SettingsStepProps } from '../callouts.interface';
 import { sameAs } from '@vuelidate/validators';
 import AppInput from '../../../../forms/AppInput.vue';
 import AppCheckbox from '../../../../forms/AppCheckbox.vue';
 import AppLabel from '../../../../forms/AppLabel.vue';
 import { faImages, faMap } from '@fortawesome/free-solid-svg-icons';
+import AppSelect from '../../../../forms/AppSelect.vue';
+import AppSubHeading from '../../../../AppSubHeading.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   data: SettingsStepProps;
   status: ItemStatus | undefined;
   isActive: boolean;
+  steps: CalloutSteps;
 }>();
 
 const { t } = useI18n();
@@ -204,6 +242,30 @@ const inputT = (key: string) => t('createCallout.steps.settings.inputs.' + key);
 // Force step to stay unvalidated until it is visited for new callouts
 const hasVisited = ref(!!props.status);
 watch(toRef(props, 'isActive'), (active) => (hasVisited.value ||= active));
+
+const formComponentItems = computed(() =>
+  flattenComponents(props.steps.content.data.formSchema.components)
+    .filter((c) => c.input)
+    .map((c) => ({
+      id: c.key,
+      label: c.label || c.key,
+      type: c.type,
+    }))
+);
+
+const fileComponentItems = computed(() =>
+  formComponentItems.value.filter((c) => c.type === 'file')
+);
+
+const addressComponentItems = computed(() =>
+  formComponentItems.value.filter((c) => c.type === 'address')
+);
+
+const textComponentItems = computed(() =>
+  formComponentItems.value.filter(
+    (c) => c.type === 'textfield' || c.type === 'textarea'
+  )
+);
 
 const validation = useVuelidate(
   {

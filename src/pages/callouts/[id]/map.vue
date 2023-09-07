@@ -91,8 +91,8 @@ meta:
           />
         </MglGeoJsonSource>
         <MglMarker
-          v-if="newResponseAnswers?.address?.geometry"
-          :coordinates="newResponseAnswers.address.geometry.location"
+          v-if="newResponseAddress"
+          :coordinates="newResponseAddress.geometry.location"
         >
           <div class="w-8 h-8 bg-primary rounded-full" />
         </MglMarker>
@@ -177,8 +177,12 @@ import {
   HASH_PREFIX,
   useCallout,
 } from '../../../components/pages/callouts/use-callout';
-import { reverseGeocode } from '../../../utils/geocode';
+import { reverseGeocode, formatGeocodeResult } from '../../../utils/geocode';
 import CalloutAddResponsePanel from '../../../components/pages/callouts/CalloutAddResponsePanel.vue';
+
+type GetCalloutResponseMapDataWithAddress = GetCalloutResponseMapData & {
+  address: CalloutResponseAnswerAddress;
+};
 
 const props = defineProps<{ id: string }>();
 
@@ -190,36 +194,45 @@ const { t } = useI18n();
 const sidePanelRef = ref<HTMLElement>();
 
 const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();
-const responses = ref<GetCalloutResponseMapData[]>([]);
+const responses = ref<GetCalloutResponseMapDataWithAddress[]>([]);
 
 const { isOpen } = useCallout(callout);
 
 const isAddMode = ref(false);
-const newResponseAnswers = ref<
-  CalloutResponseAnswers & {
-    address?: CalloutResponseAnswerAddress | Record<string, never>;
-  }
->();
+const newResponseAnswers = ref<CalloutResponseAnswers>();
+
+// Use the address from the new response to show a marker on the map
+const newResponseAddress = computed(() =>
+  callout.value?.responseViewSchema?.map && newResponseAnswers.value
+    ? (newResponseAnswers.value[
+        callout.value.responseViewSchema.map.addressProp
+      ] as CalloutResponseAnswerAddress)
+    : undefined
+);
 
 // A GeoJSON FeatureCollection of all the responses
 const responsesCollecton = computed<
   GeoJSON.FeatureCollection<GeoJSON.Point, GetCalloutResponseMapData>
->(() => ({
-  type: 'FeatureCollection',
-  features: responses.value.map((response) => {
-    const address = response.answers.address as CalloutResponseAnswerAddress;
-    const { lat, lng } = address.geometry.location;
+>(() => {
+  const mapSchema = callout.value?.responseViewSchema?.map;
+  return {
+    type: 'FeatureCollection',
+    features: mapSchema
+      ? responses.value.map((response) => {
+          const { lat, lng } = response.address.geometry.location;
 
-    return {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [lng, lat],
-      },
-      properties: response,
-    };
-  }),
-}));
+          return {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [lng, lat],
+            },
+            properties: response,
+          };
+        })
+      : [],
+  };
+});
 
 // A GeoJSON Feature of the currently selected response
 const selectedResponseFeature = computed(() => {
@@ -315,6 +328,9 @@ function handleCancelAddMode() {
 
 // Geolocate where the user has clicked
 async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
+  const mapSchema = callout.value?.responseViewSchema?.map;
+  if (!mapSchema) return;
+
   const coords = e.event.lngLat;
   e.map.getCanvas().style.cursor = '';
 
@@ -324,22 +340,18 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
   });
 
   const result = await reverseGeocode(coords.lat, coords.lng);
-  const addressPattern = '{street_number} {route}, {locality} {postal_code}';
 
-  const addressText = result
-    ? addressPattern.replace(
-        /{(\w+)}/g,
-        (match, key) =>
-          result.address_components.find((a) => a.types.includes(key))
-            ?.long_name ?? '???'
-      )
-    : '';
-
-  newResponseAnswers.value = {
-    // TODO: dynamic address
-    address: result,
-    address1: addressText,
-  };
+  newResponseAnswers.value = result
+    ? {
+        [mapSchema.addressProp]: result,
+        ...(mapSchema.addressPatternProp && {
+          [mapSchema.addressPatternProp]: formatGeocodeResult(
+            result,
+            mapSchema.addressPattern
+          ),
+        }),
+      }
+    : {};
 }
 
 // Centre map on selected feature when it changes
@@ -360,7 +372,9 @@ onBeforeMount(async () => {
   }
 
   // TODO: pagination
-  responses.value = (await fetchResponsesForMap(props.id)).items;
+  responses.value = (await fetchResponsesForMap(props.id)).items.filter(
+    (r): r is GetCalloutResponseMapDataWithAddress => !!r.address
+  );
 });
 </script>
 

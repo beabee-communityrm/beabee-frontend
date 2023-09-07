@@ -33,3 +33,15 @@ export async function reverseGeocode(
 
   return data.results[0];
 }
+
+export function formatGeocodeResult(
+  result: GeocodeResult,
+  pattern: string
+): string {
+  return pattern.replace(
+    /{(\w+)}/g,
+    (match, key) =>
+      result.address_components.find((a) => a.types.includes(key))?.long_name ??
+      '???'
+  );
+}

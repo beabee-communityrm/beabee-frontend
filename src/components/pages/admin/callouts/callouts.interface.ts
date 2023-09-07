@@ -43,6 +43,7 @@ export interface SettingsStepProps {
   showResponses: boolean;
   responseTitleProp: string;
   responseImageProp: string;
+  responseImageFilter: string;
   showResponseGallery: boolean;
   showResponseMap: boolean;
   mapSchema: CalloutMapSchema;
@@ -75,3 +76,12 @@ export interface CalloutStepsProps {
   //mailchimp: MailchimpSyncStepProps;
   dates: DateAndDurationStepProps;
 }
+
+export type CalloutSteps = {
+  [P in keyof CalloutStepsProps]: {
+    title: string;
+    validated: boolean;
+    error: boolean;
+    data: CalloutStepsProps[P];
+  };
+};
