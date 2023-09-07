@@ -7,6 +7,6 @@
   </router-link>
 </template>
 <script lang="ts" setup>
-import { canAdmin, generalContent } from '../store';
+import { generalContent } from '../store';
 import defaultLogo from '../assets/images/logo.png';
 </script>
