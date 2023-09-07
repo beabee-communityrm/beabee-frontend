@@ -87,7 +87,7 @@ meta:
             <ToggleTagButton
               :tag-items="tagItems"
               :selected-tags="selectedTags"
-              :manage-url="`${route.path}/tags`"
+              :manage-url="`${route.path}/settings`"
               :loading="doingAction"
               :disabled="selectedCount === 0"
               @toggle="

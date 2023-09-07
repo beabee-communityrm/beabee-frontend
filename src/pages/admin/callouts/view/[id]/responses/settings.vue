@@ -1,5 +1,5 @@
 <route lang="yaml">
-name: adminCalloutViewResponsesTags
+name: adminCalloutViewResponsesSettings
 meta:
   pageTitle: menu.callouts
   role: admin
@@ -9,6 +9,39 @@ meta:
   <div class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
     <div>
       <AppHeading class="mb-4">
+        <font-awesome-icon :icon="faFolder" class="mr-2" />
+        {{ t('calloutResponsePage.manageFolders') }}
+      </AppHeading>
+
+      <TagEditorItem
+        v-for="tag in tags"
+        :key="tag.id"
+        :tag="tag"
+        @update="(data) => handleUpdateTag(tag.id, data)"
+        @delete="handleDeleteTag"
+      />
+
+      <div
+        v-if="formVisible"
+        class="rounded rounded-t-none border border-primary-20 bg-primary-10 p-4"
+      >
+        <AppSubHeading class="mb-4">
+          {{ t('folderEditor.addNewFolder') }}
+        </AppSubHeading>
+        <TagEditorForm @cancel="formVisible = false" @save="handleNewTag" />
+      </div>
+      <AppButton
+        v-else
+        class="w-full"
+        variant="primaryOutlined"
+        @click="formVisible = true"
+      >
+        {{ t('folderEditor.add') }}
+      </AppButton>
+    </div>
+    <div>
+      <AppHeading class="mb-4">
+        <font-awesome-icon :icon="faTag" class="mr-2" />
         {{ t('calloutResponsePage.manageTags') }}
       </AppHeading>
 
@@ -38,6 +71,38 @@ meta:
         {{ t('tagEditor.add') }}
       </AppButton>
     </div>
+    <div>
+      <AppHeading class="mb-4">
+        <font-awesome-icon :icon="faUser" class="mr-2" />
+        {{ t('calloutResponsePage.manageReviewers') }}
+      </AppHeading>
+
+      <TagEditorItem
+        v-for="tag in tags"
+        :key="tag.id"
+        :tag="tag"
+        @update="(data) => handleUpdateTag(tag.id, data)"
+        @delete="handleDeleteTag"
+      />
+
+      <div
+        v-if="formVisible"
+        class="rounded rounded-t-none border border-primary-20 bg-primary-10 p-4"
+      >
+        <AppSubHeading class="mb-4">
+          {{ t('tagEditor.addNewReviewer') }}
+        </AppSubHeading>
+        <TagEditorForm @cancel="formVisible = false" @save="handleNewTag" />
+      </div>
+      <AppButton
+        v-else
+        class="w-full"
+        variant="primaryOutlined"
+        @click="formVisible = true"
+      >
+        {{ t('reviewerEditor.add') }}
+      </AppButton>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -49,6 +114,7 @@ import AppButton from '../../../../../../components/button/AppButton.vue';
 import TagEditorForm from '../../../../../../components/tag/TagEditorForm.vue';
 import TagEditorItem from '../../../../../../components/tag/TagEditorItem.vue';
 import { addBreadcrumb } from '../../../../../../store/breadcrumb';
+import { faTag, faFolder, faUser } from '@fortawesome/free-solid-svg-icons';
 import {
   CreateCalloutTagData,
   GetCalloutDataWith,
