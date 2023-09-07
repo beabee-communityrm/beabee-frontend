@@ -262,6 +262,7 @@
     }
   },
   "callout": {
+    "addResponse": "Neue Antwort hinzufügen",
     "closed": "Dieser Callout ist beendet.",
     "contactDetails": "Kontaktdaten",
     "form": {
@@ -816,6 +817,15 @@
   "editNotice": {
     "title": "Bearbeiten: {title}"
   },
+  "folderEditor": {
+    "add": "Tag hinzufügen",
+    "addNewFolder": "Tag hinzufügen",
+    "confirmDelete": {
+      "text": "Bist du sicher, dass du diesen Tag entfernen willst? Die damit getaggten Antworten werden nicht gelöscht.",
+      "title": "Tag entfernen"
+    },
+    "name": "Name"
+  },
   "footer": {
     "contactUs": "Kontaktiere uns unter",
     "contacts": "Kontakte",
@@ -1155,6 +1165,15 @@
     "newPassword": "Neues Passwort",
     "success": "Dein Passwort wurde aktualisiert.",
     "title": "Passwort aktualisieren?"
+  },
+  "reviewerEditor": {
+    "add": "Tag hinzufügen",
+    "addNewReviewer": "Tag hinzufügen",
+    "confirmDelete": {
+      "text": "Bist du sicher, dass du diesen Tag entfernen willst? Die damit getaggten Antworten werden nicht gelöscht.",
+      "title": "Tag entfernen"
+    },
+    "name": "Name"
   },
   "roleEditor": {
     "add": "Rolle hinzufügen",
