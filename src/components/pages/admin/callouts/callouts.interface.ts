@@ -43,6 +43,7 @@ export interface SettingsStepProps {
   showResponses: boolean;
   responseTitleProp: string;
   responseImageProp: string;
+  responseImageFilter: string;
   showResponseGallery: boolean;
   showResponseMap: boolean;
   mapSchema: CalloutMapSchema;

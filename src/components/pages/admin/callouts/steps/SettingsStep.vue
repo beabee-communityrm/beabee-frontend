@@ -112,6 +112,12 @@
           />
         </div>
       </AppFormSection>
+      <AppFormSection>
+        <AppInput
+          v-model="data.responseImageFilter"
+          :label="inputT('responseImageFilter.label')"
+        />
+      </AppFormSection>
       <template v-if="data.showResponseMap">
         <AppFormSection :help="inputT('mapSchema.style.help')">
           <AppInput

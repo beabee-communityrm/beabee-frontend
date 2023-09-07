@@ -38,6 +38,7 @@ export function convertCalloutToSteps(
       showResponses: !!callout?.responseViewSchema,
       responseTitleProp: callout?.responseViewSchema?.titleProp || '',
       responseImageProp: callout?.responseViewSchema?.imageProp || '',
+      responseImageFilter: callout?.responseViewSchema?.imageFilter || '',
       showResponseGallery: !!callout?.responseViewSchema?.gallery,
       showResponseMap: !!callout?.responseViewSchema?.map,
       mapSchema: callout?.responseViewSchema?.map || {
@@ -89,7 +90,7 @@ export function convertStepsToCallout(
       ? {
           titleProp: steps.settings.responseTitleProp,
           imageProp: steps.settings.responseImageProp,
-          imageFilter: '', // TODO
+          imageFilter: steps.settings.responseImageFilter,
           gallery: steps.settings.showResponseGallery,
           map: steps.settings.showResponseMap ? steps.settings.mapSchema : null,
         }
