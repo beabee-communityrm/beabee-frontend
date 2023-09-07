@@ -102,7 +102,7 @@
         <AppSelect
           v-model="data.responseTitleProp"
           :label="inputT('responseTitleProp.label')"
-          :items="titleComponentItems"
+          :items="formComponentItems"
           required
         />
       </AppFormSection>
@@ -121,6 +121,16 @@
         />
       </AppFormSection>
       <template v-if="data.showResponseMap">
+        <AppFormSection>
+          <AppSubHeading>{{ inputT('mapSchema.title') }}</AppSubHeading>
+
+          <AppSelect
+            v-model="data.mapSchema.addressProp"
+            :label="inputT('mapSchema.addressProp.label')"
+            :items="addressComponentItems"
+            required
+          />
+        </AppFormSection>
         <AppFormSection :help="inputT('mapSchema.style.help')">
           <AppInput
             v-model="data.mapSchema.style"
@@ -199,6 +209,7 @@ import AppCheckbox from '../../../../forms/AppCheckbox.vue';
 import AppLabel from '../../../../forms/AppLabel.vue';
 import { faImages, faMap } from '@fortawesome/free-solid-svg-icons';
 import AppSelect from '../../../../forms/AppSelect.vue';
+import AppSubHeading from '../../../../AppSubHeading.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
@@ -215,26 +226,22 @@ const inputT = (key: string) => t('createCallout.steps.settings.inputs.' + key);
 const hasVisited = ref(!!props.status);
 watch(toRef(props, 'isActive'), (active) => (hasVisited.value ||= active));
 
-const formComponents = computed(() =>
-  flattenComponents(props.steps.content.data.formSchema.components).filter(
-    (c) => c.input
-  )
-);
-
-const titleComponentItems = computed(() =>
-  formComponents.value.map((c) => ({
-    id: c.key,
-    label: c.label || c.key,
-  }))
-);
-
-const fileComponentItems = computed(() =>
-  formComponents.value
-    .filter((c) => c.type === 'file')
+const formComponentItems = computed(() =>
+  flattenComponents(props.steps.content.data.formSchema.components)
+    .filter((c) => c.input)
     .map((c) => ({
       id: c.key,
       label: c.label || c.key,
+      type: c.type,
     }))
+);
+
+const fileComponentItems = computed(() =>
+  formComponentItems.value.filter((c) => c.type === 'file')
+);
+
+const addressComponentItems = computed(() =>
+  formComponentItems.value.filter((c) => c.type === 'address')
 );
 
 const validation = useVuelidate(
