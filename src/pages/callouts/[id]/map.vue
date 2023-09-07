@@ -195,31 +195,35 @@ const responses = ref<GetCalloutResponseMapData[]>([]);
 const { isOpen } = useCallout(callout);
 
 const isAddMode = ref(false);
-const newResponseAnswers = ref<
-  CalloutResponseAnswers & {
-    address?: CalloutResponseAnswerAddress | Record<string, never>;
-  }
->();
+const newResponseAnswers = ref<CalloutResponseAnswers>();
 
 // A GeoJSON FeatureCollection of all the responses
 const responsesCollecton = computed<
   GeoJSON.FeatureCollection<GeoJSON.Point, GetCalloutResponseMapData>
->(() => ({
-  type: 'FeatureCollection',
-  features: responses.value.map((response) => {
-    const address = response.answers.address as CalloutResponseAnswerAddress;
-    const { lat, lng } = address.geometry.location;
+>(() => {
+  const mapSchema = callout.value?.responseViewSchema?.map;
+  return {
+    type: 'FeatureCollection',
+    features: mapSchema
+      ? responses.value.map((response) => {
+          const address = response.answers[
+            mapSchema.addressProp
+          ] as CalloutResponseAnswerAddress;
 
-    return {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [lng, lat],
-      },
-      properties: response,
-    };
-  }),
-}));
+          const { lat, lng } = address.geometry.location;
+
+          return {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [lng, lat],
+            },
+            properties: response,
+          };
+        })
+      : [],
+  };
+});
 
 // A GeoJSON Feature of the currently selected response
 const selectedResponseFeature = computed(() => {
