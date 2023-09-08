@@ -120,26 +120,26 @@ meta:
         {{ t('calloutResponsePage.actions.editResponse') }}
       </AppButton>
     </div>
-    <div
-      class="callout-form-renderer mt-10 border-t border-primary-40 pt-10 text-lg"
-    >
-      <AppNotification
-        v-if="editMode"
-        variant="warning"
-        class="mb-6"
-        :title="t('calloutResponsePage.editMode')"
-      />
-      <FormRenderer
-        :key="response.id + editMode"
-        :form="callout.formSchema"
-        :answers="response.answers"
-        :readonly="!editMode"
-        @submit="handleEditResponse"
-      />
-    </div>
-    <div>
-      <CalloutResponseComments :response-id="response.id" />
-    </div>
+
+    <hr class="my-10 border-t border-primary-40" />
+
+    <AppNotification
+      v-if="editMode"
+      variant="warning"
+      class="mb-6"
+      :title="t('calloutResponsePage.editMode')"
+    />
+    <FormRenderer
+      :key="response.id + editMode"
+      :form="callout.formSchema"
+      :answers="response.answers"
+      :readonly="!editMode"
+      @submit="handleEditResponse"
+    />
+
+    <hr class="my-10 border-t border-primary-40" />
+
+    <CalloutResponseComments :response-id="response.id" />
   </div>
 </template>
 <script lang="ts" setup>
