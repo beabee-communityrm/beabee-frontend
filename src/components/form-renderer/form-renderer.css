@@ -4,6 +4,8 @@
 .callout-form-builder .formarea,
 /* Apply to preview panel only on popup dialog */
 .formio-dialog .preview-panel {
+  @apply text-lg;
+
   /* Give callouts a white background */
   &:not(.has-no-bg) .formio-form {
     @apply bg-white p-6 shadow-md;
