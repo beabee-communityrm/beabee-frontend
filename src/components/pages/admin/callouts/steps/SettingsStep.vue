@@ -1,212 +1,216 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div>
-    <AppFormSection :help="inputT('who.help')">
-      <AppRadioGroup
-        v-model="data.whoCanTakePart"
-        name="whoCanTakePart"
-        :label="inputT('who.label')"
-        :options="[
-          ['members', inputT('who.opts.members')],
-          ['everyone', inputT('who.opts.everyone')],
-        ]"
-        required
-      />
-    </AppFormSection>
-    <AppFormSection
-      v-if="data.whoCanTakePart === 'everyone'"
-      :help="inputT('anonymous.help')"
-    >
-      <AppRadioGroup
-        v-model="data.allowAnonymousResponses"
-        name="allowAnonymousResponses"
-        :label="inputT('anonymous.label')"
-        :options="[
-          ['none', inputT('anonymous.opts.none')],
-          ['guests', inputT('anonymous.opts.guests')],
-          ['all', inputT('anonymous.opts.all')],
-        ]"
-        required
-      />
-    </AppFormSection>
-    <AppFormSection :help="inputT('visible.help')">
-      <AppRadioGroup
-        v-model="data.showOnUserDashboards"
-        name="showOnUserDashboards"
-        :label="inputT('visible.label')"
-        :options="[
-          [true, inputT('visible.opts.yes')],
-          [false, inputT('visible.opts.no')],
-        ]"
-        required
-      />
-    </AppFormSection>
-    <AppFormSection :help="inputT('multiple.help')">
-      <AppRadioGroup
-        v-model="data.multipleResponses"
-        name="multipleResponses"
-        :label="inputT('multiple.label')"
-        :options="[
-          [true, inputT('multiple.opts.yes')],
-          [false, inputT('multiple.opts.no')],
-        ]"
-        required
-      />
-    </AppFormSection>
-    <AppFormSection
-      v-if="!data.multipleResponses"
-      :help="inputT('editable.help')"
-    >
-      <AppRadioGroup
-        v-model="data.usersCanEditAnswers"
-        name="usersCanEditAnswers"
-        :label="inputT('editable.label')"
-        :options="[
-          [true, inputT('editable.opts.yes')],
-          [false, inputT('editable.opts.no')],
-        ]"
-        required
-      />
-    </AppFormSection>
-    <AppFormSection :help="inputT('showResponses.help')">
-      <AppRadioGroup
-        v-model="data.showResponses"
-        name="showResponses"
-        :label="inputT('showResponses.label')"
-        :options="[
-          [true, t('common.yes')],
-          [false, t('common.no')],
-        ]"
-        required
-      />
-    </AppFormSection>
-    <template v-if="data.showResponses">
-      <AppFormSection :help="inputT('whichResponseViews.help')">
-        <AppLabel :label="inputT('whichResponseViews.label')" required />
-        <div class="flex gap-4">
-          <AppCheckbox
-            v-model="data.showResponseGallery"
-            :icon="faImages"
-            :label="inputT('whichResponseViews.opts.gallery')"
-            class="!font-normal"
-          />
-          <AppCheckbox
-            v-model="data.showResponseMap"
-            :icon="faMap"
-            :label="inputT('whichResponseViews.opts.map')"
-            class="!font-normal"
-          />
-        </div>
-      </AppFormSection>
-      <AppFormSection :help="inputT('responseTitleProp.help')">
-        <AppSelect
-          v-model="data.responseTitleProp"
-          :label="inputT('responseTitleProp.label')"
-          :items="formComponentItems"
+    <template v-if="!env.cnrMode">
+      <AppFormSection :help="inputT('who.help')">
+        <AppRadioGroup
+          v-model="data.whoCanTakePart"
+          name="whoCanTakePart"
+          :label="inputT('who.label')"
+          :options="[
+            ['members', inputT('who.opts.members')],
+            ['everyone', inputT('who.opts.everyone')],
+          ]"
           required
         />
       </AppFormSection>
-      <AppFormSection :help="inputT('responseImageProp.help')">
-        <AppSelect
-          v-model="data.responseImageProp"
-          :label="inputT('responseImageProp.label')"
-          :items="fileComponentItems"
-          :required="data.showResponseGallery"
+      <AppFormSection
+        v-if="data.whoCanTakePart === 'everyone'"
+        :help="inputT('anonymous.help')"
+      >
+        <AppRadioGroup
+          v-model="data.allowAnonymousResponses"
+          name="allowAnonymousResponses"
+          :label="inputT('anonymous.label')"
+          :options="[
+            ['none', inputT('anonymous.opts.none')],
+            ['guests', inputT('anonymous.opts.guests')],
+            ['all', inputT('anonymous.opts.all')],
+          ]"
+          required
         />
       </AppFormSection>
-      <AppFormSection>
-        <AppInput
-          v-model="data.responseImageFilter"
-          :label="inputT('responseImageFilter.label')"
+      <AppFormSection :help="inputT('visible.help')">
+        <AppRadioGroup
+          v-model="data.showOnUserDashboards"
+          name="showOnUserDashboards"
+          :label="inputT('visible.label')"
+          :options="[
+            [true, inputT('visible.opts.yes')],
+            [false, inputT('visible.opts.no')],
+          ]"
+          required
         />
       </AppFormSection>
-      <template v-if="data.showResponseMap">
+      <AppFormSection :help="inputT('multiple.help')">
+        <AppRadioGroup
+          v-model="data.multipleResponses"
+          name="multipleResponses"
+          :label="inputT('multiple.label')"
+          :options="[
+            [true, inputT('multiple.opts.yes')],
+            [false, inputT('multiple.opts.no')],
+          ]"
+          required
+        />
+      </AppFormSection>
+      <AppFormSection
+        v-if="!data.multipleResponses"
+        :help="inputT('editable.help')"
+      >
+        <AppRadioGroup
+          v-model="data.usersCanEditAnswers"
+          name="usersCanEditAnswers"
+          :label="inputT('editable.label')"
+          :options="[
+            [true, inputT('editable.opts.yes')],
+            [false, inputT('editable.opts.no')],
+          ]"
+          required
+        />
+      </AppFormSection>
+    </template>
+    <template v-else>
+      <AppFormSection :help="inputT('showResponses.help')">
+        <AppRadioGroup
+          v-model="data.showResponses"
+          name="showResponses"
+          :label="inputT('showResponses.label')"
+          :options="[
+            [true, t('common.yes')],
+            [false, t('common.no')],
+          ]"
+          required
+        />
+      </AppFormSection>
+      <template v-if="data.showResponses">
+        <AppFormSection :help="inputT('whichResponseViews.help')">
+          <AppLabel :label="inputT('whichResponseViews.label')" required />
+          <div class="flex gap-4">
+            <AppCheckbox
+              v-model="data.showResponseGallery"
+              :icon="faImages"
+              :label="inputT('whichResponseViews.opts.gallery')"
+              class="!font-normal"
+            />
+            <AppCheckbox
+              v-model="data.showResponseMap"
+              :icon="faMap"
+              :label="inputT('whichResponseViews.opts.map')"
+              class="!font-normal"
+            />
+          </div>
+        </AppFormSection>
+        <AppFormSection :help="inputT('responseTitleProp.help')">
+          <AppSelect
+            v-model="data.responseTitleProp"
+            :label="inputT('responseTitleProp.label')"
+            :items="formComponentItems"
+            required
+          />
+        </AppFormSection>
+        <AppFormSection :help="inputT('responseImageProp.help')">
+          <AppSelect
+            v-model="data.responseImageProp"
+            :label="inputT('responseImageProp.label')"
+            :items="fileComponentItems"
+            :required="data.showResponseGallery"
+          />
+        </AppFormSection>
         <AppFormSection>
-          <AppSubHeading>{{ inputT('mapSchema.title') }}</AppSubHeading>
+          <AppInput
+            v-model="data.responseImageFilter"
+            :label="inputT('responseImageFilter.label')"
+          />
+        </AppFormSection>
+        <template v-if="data.showResponseMap">
+          <AppFormSection>
+            <AppSubHeading>{{ inputT('mapSchema.title') }}</AppSubHeading>
 
-          <AppSelect
-            v-model="data.mapSchema.addressProp"
-            :label="inputT('mapSchema.addressProp.label')"
-            :items="addressComponentItems"
-            required
-          />
-        </AppFormSection>
-        <AppFormSection :help="inputT('mapSchema.style.help')">
-          <AppInput
-            v-model="data.mapSchema.style"
-            :label="inputT('mapSchema.style.label')"
-            required
-          />
-        </AppFormSection>
-        <AppFormSection>
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <AppInput
-                v-model="mapCenter"
-                :label="inputT('mapSchema.center.label')"
-                required
-              />
+            <AppSelect
+              v-model="data.mapSchema.addressProp"
+              :label="inputT('mapSchema.addressProp.label')"
+              :items="addressComponentItems"
+              required
+            />
+          </AppFormSection>
+          <AppFormSection :help="inputT('mapSchema.style.help')">
+            <AppInput
+              v-model="data.mapSchema.style"
+              :label="inputT('mapSchema.style.label')"
+              required
+            />
+          </AppFormSection>
+          <AppFormSection>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <AppInput
+                  v-model="mapCenter"
+                  :label="inputT('mapSchema.center.label')"
+                  required
+                />
+              </div>
+              <div>
+                <AppInput
+                  v-model="mapBounds"
+                  :label="inputT('mapSchema.bounds.label')"
+                  required
+                />
+              </div>
             </div>
-            <div>
-              <AppInput
-                v-model="mapBounds"
-                :label="inputT('mapSchema.bounds.label')"
-                required
-              />
+          </AppFormSection>
+          <AppFormSection>
+            <div class="grid grid-cols-3 gap-4">
+              <div>
+                <AppInput
+                  v-model="data.mapSchema.initialZoom"
+                  type="number"
+                  :label="inputT('mapSchema.initialZoom.label')"
+                  :min="data.mapSchema.minZoom"
+                  :max="data.mapSchema.maxZoom"
+                  required
+                />
+              </div>
+              <div>
+                <AppInput
+                  v-model="data.mapSchema.minZoom"
+                  type="number"
+                  :label="inputT('mapSchema.minZoom.label')"
+                  :min="0"
+                  :max="data.mapSchema.maxZoom"
+                  required
+                />
+              </div>
+              <div>
+                <AppInput
+                  v-model="data.mapSchema.maxZoom"
+                  type="number"
+                  :label="inputT('mapSchema.maxZoom.label')"
+                  :min="data.mapSchema.minZoom"
+                  :max="22"
+                  required
+                />
+              </div>
             </div>
-          </div>
-        </AppFormSection>
-        <AppFormSection>
-          <div class="grid grid-cols-3 gap-4">
-            <div>
-              <AppInput
-                v-model="data.mapSchema.initialZoom"
-                type="number"
-                :label="inputT('mapSchema.initialZoom.label')"
-                :min="data.mapSchema.minZoom"
-                :max="data.mapSchema.maxZoom"
-                required
-              />
-            </div>
-            <div>
-              <AppInput
-                v-model="data.mapSchema.minZoom"
-                type="number"
-                :label="inputT('mapSchema.minZoom.label')"
-                :min="0"
-                :max="data.mapSchema.maxZoom"
-                required
-              />
-            </div>
-            <div>
-              <AppInput
-                v-model="data.mapSchema.maxZoom"
-                type="number"
-                :label="inputT('mapSchema.maxZoom.label')"
-                :min="data.mapSchema.minZoom"
-                :max="22"
-                required
-              />
-            </div>
-          </div>
-        </AppFormSection>
-        <AppFormSection>
-          <AppSelect
-            v-model="data.mapSchema.addressPatternProp"
-            :label="inputT('mapSchema.addressPatternProp.label')"
-            :items="[
-              { id: '', label: inputT('mapSchema.addressPatternProp.none') },
-              ...textComponentItems,
-            ]"
-          />
-        </AppFormSection>
-        <AppFormSection v-if="!!data.mapSchema.addressPatternProp">
-          <AppInput
-            v-model="data.mapSchema.addressPattern"
-            :label="inputT('mapSchema.addressPattern.label')"
-            required
-          />
-        </AppFormSection>
+          </AppFormSection>
+          <AppFormSection>
+            <AppSelect
+              v-model="data.mapSchema.addressPatternProp"
+              :label="inputT('mapSchema.addressPatternProp.label')"
+              :items="[
+                { id: '', label: inputT('mapSchema.addressPatternProp.none') },
+                ...textComponentItems,
+              ]"
+            />
+          </AppFormSection>
+          <AppFormSection v-if="!!data.mapSchema.addressPatternProp">
+            <AppInput
+              v-model="data.mapSchema.addressPattern"
+              :label="inputT('mapSchema.addressPattern.label')"
+              required
+            />
+          </AppFormSection>
+        </template>
       </template>
     </template>
   </div>
@@ -227,6 +231,7 @@ import AppLabel from '../../../../forms/AppLabel.vue';
 import { faImages, faMap } from '@fortawesome/free-solid-svg-icons';
 import AppSelect from '../../../../forms/AppSelect.vue';
 import AppSubHeading from '../../../../AppSubHeading.vue';
+import env from '../../../../../env';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{

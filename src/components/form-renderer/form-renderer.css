@@ -4,6 +4,8 @@
 .callout-form-builder .formarea,
 /* Apply to preview panel only on popup dialog */
 .formio-dialog .preview-panel {
+  @apply text-lg;
+
   /* Give callouts a white background */
   &:not(.has-no-bg) .formio-form {
     @apply bg-white p-6 shadow-md;
@@ -197,28 +199,58 @@
   }
 
   /* Styles for file upload component */
-  .list-group {
-    @apply border border-primary-20 rounded mb-4;
-  }
-  .list-group-header {
-    @apply p-2 bg-primary-10 rounded-t;
-  }
-  .list-group-item {
-    @apply p-2 border-b border-primary-20;
-    &:last-child {
-      @apply border-b-0;
+  .formio-component-file {
+    /* Style the image carousel */
+    & > div:not([class]) {
+      @apply flex flex-wrap gap-2;
+
+      & > div {
+        @apply flex-1 min-w-[120px];
+        & > span {
+          @apply flex items-start;
+        }
+      }
+
+      img {
+        width: 100% !important;
+      }
+
+      i[ref='removeLink'] {
+        @apply align-top ml-1;
+      }
     }
-  }
-  .fileSelector,
-  .file {
-    @apply mb-4 border border-2 border-dashed border-grey p-2;
-  }
-  .file {
-    .col-form-label {
-      @apply text-lg mb-0;
+
+    .video-container video {
+      @apply block w-full;
     }
-    .alert-danger {
-      @apply text-danger text-sm font-semibold;
+
+    .btn {
+      @apply mt-2;
+    }
+
+    .list-group {
+      @apply border border-primary-20 rounded;
+    }
+    .list-group-header {
+      @apply p-2 bg-primary-10 rounded-t;
+    }
+    .list-group-item {
+      @apply p-2 border-b border-primary-20;
+      &:last-child {
+        @apply border-b-0;
+      }
+    }
+    .fileSelector,
+    .file {
+      @apply mt-4 border border-2 border-dashed border-grey p-2;
+    }
+    .file {
+      .col-form-label {
+        @apply text-lg mb-0;
+      }
+      .alert-danger {
+        @apply text-danger text-sm font-semibold;
+      }
     }
   }
 

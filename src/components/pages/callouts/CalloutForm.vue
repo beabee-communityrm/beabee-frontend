@@ -1,5 +1,5 @@
 <template>
-  <form class="text-lg" @submit.prevent>
+  <form @submit.prevent>
     <GuestFields
       v-if="showGuestFields"
       v-model:name="guestName"

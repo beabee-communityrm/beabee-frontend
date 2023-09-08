@@ -373,7 +373,6 @@
   "calloutResponsePage": {
     "actions": {
       "assignTo": "Zuweisen",
-      "editResponse": "Antwort bearbeiten",
       "moveBucket": "Antwort verschieben",
       "toggleTag": "Tag hinzufügen / entfernen"
     },
