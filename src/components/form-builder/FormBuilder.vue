@@ -47,6 +47,7 @@ import {
   faPencil,
   faRefresh,
   faCloudUpload,
+  faCamera,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   config,
@@ -110,6 +111,7 @@ onBeforeMount(() => {
     faPencil,
     faRefresh,
     faCloudUpload,
+    faCamera,
 
     // Use different icon names so they match
     { ...faClock, iconName: 'clock-o' as IconName },

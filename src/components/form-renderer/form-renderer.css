@@ -200,8 +200,24 @@
 
   /* Styles for file upload component */
   .formio-component-file {
-    img {
-      @apply inline;
+    /* Style the image carousel */
+    & > div:not([class]) {
+      @apply flex flex-wrap gap-2;
+
+      & > div {
+        @apply flex-1 min-w-[120px];
+        & > span {
+          @apply flex items-start;
+        }
+      }
+
+      img {
+        width: 100% !important;
+      }
+
+      i[ref='removeLink'] {
+        @apply align-top ml-1;
+      }
     }
 
     .video-container video {
