@@ -40,9 +40,7 @@ meta:
         :error-message="validation.backgroundUrl.$errors[0]?.$message"
       />
 
-      <h4 class="mb-4 text-lg font-semibold">
-        {{ stepT('suggestedAmounts') }} *
-      </h4>
+      <AppSubHeading>{{ stepT('suggestedAmounts') }} *</AppSubHeading>
       <div class="mb-4 flex gap-4">
         <PeriodAmounts
           v-for="(period, periodI) in joinContent.periods"
@@ -110,6 +108,7 @@ import { generalContent } from '../../../store';
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import PeriodAmounts from '../../../components/pages/admin/membership-builder/PeriodAmounts.vue';
+import AppSubHeading from '../../../components/AppSubHeading.vue';
 
 const joinContent = ref<JoinContent>();
 const backgroundUrl = ref('');
