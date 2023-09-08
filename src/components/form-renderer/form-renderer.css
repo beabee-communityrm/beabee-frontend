@@ -199,28 +199,42 @@
   }
 
   /* Styles for file upload component */
-  .list-group {
-    @apply border border-primary-20 rounded mb-4;
-  }
-  .list-group-header {
-    @apply p-2 bg-primary-10 rounded-t;
-  }
-  .list-group-item {
-    @apply p-2 border-b border-primary-20;
-    &:last-child {
-      @apply border-b-0;
+  .formio-component-file {
+    img {
+      @apply inline;
     }
-  }
-  .fileSelector,
-  .file {
-    @apply mb-4 border border-2 border-dashed border-grey p-2;
-  }
-  .file {
-    .col-form-label {
-      @apply text-lg mb-0;
+
+    .video-container video {
+      @apply block w-full;
     }
-    .alert-danger {
-      @apply text-danger text-sm font-semibold;
+
+    .btn {
+      @apply mt-2;
+    }
+
+    .list-group {
+      @apply border border-primary-20 rounded;
+    }
+    .list-group-header {
+      @apply p-2 bg-primary-10 rounded-t;
+    }
+    .list-group-item {
+      @apply p-2 border-b border-primary-20;
+      &:last-child {
+        @apply border-b-0;
+      }
+    }
+    .fileSelector,
+    .file {
+      @apply mt-4 border border-2 border-dashed border-grey p-2;
+    }
+    .file {
+      .col-form-label {
+        @apply text-lg mb-0;
+      }
+      .alert-danger {
+        @apply text-danger text-sm font-semibold;
+      }
     }
   }
 

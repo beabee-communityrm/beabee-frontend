@@ -23,6 +23,7 @@ import {
   faCross,
   faRefresh,
   faRemove,
+  faCamera,
 } from '@fortawesome/free-solid-svg-icons';
 
 defineEmits<{
@@ -52,7 +53,14 @@ const formOpts = computed(() => ({
 }));
 
 onBeforeMount(() => {
-  library.add(faCalendar, faCross, faCloudUpload, faRemove, faRefresh);
+  library.add(
+    faCalendar,
+    faCamera,
+    faCross,
+    faCloudUpload,
+    faRemove,
+    faRefresh
+  );
   config.autoReplaceSvg = 'nest';
   dom.watch();
 });

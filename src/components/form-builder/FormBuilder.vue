@@ -317,7 +317,7 @@ onBeforeUnmount(() => {
   .formio-component-tags,
   /* Form upload component */
   .formio-component-dir,
-  .formio-component-image,
+  /* .formio-component-image, */
   .formio-component-uploadOnly,
   .formio-component-fileTypes,
   .formio-component-fileNameTemplate {
