@@ -1,12 +1,38 @@
 import { CalloutComponentSchema, ItemStatus } from '@beabee/beabee-common';
 import { format } from 'date-fns';
-import { CalloutStepsProps } from '../components/pages/admin/callouts/callouts.interface';
+import {
+  CalloutStepsProps,
+  SettingsStepProps,
+} from '../components/pages/admin/callouts/callouts.interface';
 import { FilterItem, FilterItems } from '../components/search/search.interface';
 import { CreateCalloutData, GetCalloutDataWith } from './api/api.interface';
+import env from '../env';
 
 export function convertCalloutToSteps(
   callout?: GetCalloutDataWith<'form' | 'responseViewSchema'>
 ): CalloutStepsProps {
+  const settings = env.cnrMode
+    ? ({
+        whoCanTakePart: 'everyone',
+        allowAnonymousResponses: 'none',
+        showOnUserDashboards: false,
+        usersCanEditAnswers: false,
+        multipleResponses: false,
+      } as const)
+    : ({
+        whoCanTakePart:
+          !callout || callout.access === 'member' ? 'members' : 'everyone',
+        allowAnonymousResponses:
+          callout?.access === 'anonymous'
+            ? 'guests'
+            : callout?.access === 'only-anonymous'
+            ? 'all'
+            : 'none',
+        showOnUserDashboards: !callout?.hidden,
+        usersCanEditAnswers: callout?.allowUpdate || false,
+        multipleResponses: callout?.allowMultiple || false,
+      } as const);
+
   return {
     content: {
       introText: callout?.intro || '',
@@ -24,17 +50,7 @@ export function convertCalloutToSteps(
       shareDescription: callout?.shareDescription || '',
     },
     settings: {
-      whoCanTakePart:
-        !callout || callout.access === 'member' ? 'members' : 'everyone',
-      allowAnonymousResponses:
-        callout?.access === 'anonymous'
-          ? 'guests'
-          : callout?.access === 'only-anonymous'
-          ? 'all'
-          : 'none',
-      showOnUserDashboards: !callout?.hidden,
-      usersCanEditAnswers: callout?.allowUpdate || false,
-      multipleResponses: callout?.allowMultiple || false,
+      ...settings,
       showResponses: !!callout?.responseViewSchema,
       responseTitleProp: callout?.responseViewSchema?.titleProp || '',
       responseImageProp: callout?.responseViewSchema?.imageProp || '',
