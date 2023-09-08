@@ -110,18 +110,30 @@ meta:
           (assigneeId, successText) => handleUpdate({ assigneeId }, successText)
         "
       />
+    </div>
+
+    <hr class="my-10 border-t border-primary-40" />
+
+    <div class="flex gap-2 mb-4">
+      <AppButton
+        v-if="callout.responseViewSchema?.map"
+        :to="`/callouts/${callout.slug}/map#response-${response.number}`"
+        :icon="faMap"
+        size="sm"
+      >
+        {{ t('calloutResponsePage.actions.viewOnMap') }}
+      </AppButton>
       <AppButton
         type="button"
         :icon="faPen"
         size="sm"
         variant="primaryOutlined"
+        class="ml-auto"
         @click="editMode = !editMode"
       >
-        {{ t('calloutResponsePage.actions.editResponse') }}
+        {{ t('actions.edit') }}
       </AppButton>
     </div>
-
-    <hr class="my-10 border-t border-primary-40" />
 
     <AppNotification
       v-if="editMode"
@@ -172,6 +184,7 @@ import SetAssigneeButton from '../../../../../../components/pages/admin/callouts
 import {
   faCaretLeft,
   faCaretRight,
+  faMap,
   faPen,
   faTag,
   faUser,
@@ -183,7 +196,7 @@ import FormRenderer from '../../../../../../components/form-renderer/FormRendere
 
 const props = defineProps<{
   rid: string;
-  callout: GetCalloutDataWith<'form'>;
+  callout: GetCalloutDataWith<'form' | 'responseViewSchema'>;
 }>();
 
 const { t, n } = useI18n();
