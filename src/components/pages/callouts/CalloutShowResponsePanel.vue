@@ -97,7 +97,7 @@ watch(
   }
 
   .col-form-label {
-    @apply inline-flex font-bold font-title;
+    @apply font-bold font-title;
     &::after {
       @apply text-body;
       content: ': ';
