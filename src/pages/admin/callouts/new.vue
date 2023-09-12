@@ -200,7 +200,9 @@ async function handlePreview() {
 }
 
 async function reset() {
-  const callout = props.id ? await fetchCallout(props.id, ['form']) : undefined;
+  const callout = props.id
+    ? await fetchCallout(props.id, ['form', 'responseViewSchema'])
+    : undefined;
   steps.value = convertCalloutToSteps(callout);
   status.value = callout?.status;
 

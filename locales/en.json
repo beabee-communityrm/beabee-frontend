@@ -75,9 +75,9 @@
     "title": "Add a notice"
   },
   "adminDashboard": {
-    "hint1": "<p>Did you know callouts can be created without an end date, and just keep running? See our <a href=\"https://beabee.io/en/beabee-full-feature-list/\">feature showcase</a> for more information.</p>\n",
-    "hint2": "<p>Find out more about <a href=\"https://beabee.io/en/beabee-model/\">the beabee vision</a> around community engagement and meaningful relationships with your audience.</p>\n",
-    "hint3": "<p>Our <a href=\"https://beabee.io/en/beabee-faq/\">FAQ</a> addresses common questions about getting started and use cases. If the answer you're looking for isn't there, get in touch.</p>\n",
+    "hint1": "<p>Did you know callouts can be created without an end date, and just keep running? See our <a href=\"https://beabee.io/en/beabee-full-feature-list/\" target=\"_blank\" rel=\"noopener noreferrer\">feature showcase</a> for more information.</p>\n",
+    "hint2": "<p>Find out more about <a href=\"https://beabee.io/en/beabee-model/\" target=\"_blank\" rel=\"noopener noreferrer\">the beabee vision</a> around community engagement and meaningful relationships with your audience.</p>\n",
+    "hint3": "<p>Our <a href=\"https://beabee.io/en/beabee-faq/\" target=\"_blank\" rel=\"noopener noreferrer\">FAQ</a> addresses common questions about getting started and use cases. If the answer you're looking for isn't there, get in touch.</p>\n",
     "joinSlack": "Join the beabee community on Slack!",
     "latestCallout": {
       "createNew": "Create a new one?",
@@ -95,7 +95,7 @@
     },
     "responsesSoFar": "{n} response so far | {n} responses so far",
     "seeAllResponses": "See all responses",
-    "supportInbox": "<p>Need help? Please visit <a href=\"https://wiki.beabee.io/help-center-english/\">the beabee Help Center</a> or use our support inbox: <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
+    "supportInbox": "<p>Need help? Please visit <a href=\"https://wiki.beabee.io/help-center-english/\" target=\"_blank\" rel=\"noopener noreferrer\">the beabee Help Center</a> or use our support inbox: <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
     "welcomeBack": "Welcome back {firstName}!"
   },
   "adminSettings": {
@@ -264,6 +264,7 @@
     }
   },
   "callout": {
+    "addResponse": "Add a new response",
     "closed": "This callout is closed",
     "contactDetails": "Contact details",
     "form": {
@@ -283,6 +284,10 @@
     "showingPreview": "You can't submit a response in preview mode",
     "toContributionPage": "Edit my contribution",
     "updateContribution": "please update your contribution",
+    "views": {
+      "gallery": "Gallery",
+      "map": "Map"
+    },
     "youResponded": "You replied to this callout ♥"
   },
   "calloutAdmin": {
@@ -370,9 +375,9 @@
   "calloutResponsePage": {
     "actions": {
       "assignTo": "Assign to",
-      "editResponse": "Edit response",
       "moveBucket": "Move bucket",
-      "toggleTag": "Toggle tag"
+      "toggleTag": "Toggle tag",
+      "viewOnMap": "View on map"
     },
     "editMode": "You are in edit mode, be careful!",
     "manageTags": "Manage tags",
@@ -689,6 +694,38 @@
               "yes": "Yes"
             }
           },
+          "mapSchema": {
+            "addressPattern": {
+              "label": "What format would you like to use?"
+            },
+            "addressPatternProp": {
+              "label": "Do you want to populate a field with the address?",
+              "none": "-- Don't populate a field --"
+            },
+            "addressProp": {
+              "label": "What form field should be used to plot responses on the map?"
+            },
+            "bounds": {
+              "label": "Maximum map bounds"
+            },
+            "center": {
+              "label": "Initial map center"
+            },
+            "initialZoom": {
+              "label": "Initial zoom level"
+            },
+            "maxZoom": {
+              "label": "Maximum zoom level"
+            },
+            "minZoom": {
+              "label": "Minimum zoom level"
+            },
+            "style": {
+              "help": "<p>The map view <strong>requires a third-party map tool</strong> like <a href=\"https://www.maptiler.com\" target=\"_blank\" rel=\"noopener noreferrer\">Maptiler</a> or <a href=\"https://www.mapbox.com\" target=\"_blank\" rel=\"noopener noreferrer\">Mapbox</a>. Those tools provide you with the map style URL you need to paste in here.</p>\n",
+              "label": "Map style URL"
+            },
+            "title": "Map settings"
+          },
           "multiple": {
             "help": "<p>If yes, then logged in users will be able to <strong>respond multiple times</strong> to the callout.</p>\n",
             "label": "Can users answer the callout more than once?",
@@ -697,12 +734,35 @@
               "yes": "Yes"
             }
           },
+          "responseImageFilter": {
+            "label": "Do you want to apply a filter to images?"
+          },
+          "responseImageProp": {
+            "help": "<p>The image will be used to visualise the answer in map or gallery view. Important: This has to be a file upload component.</p>\n",
+            "label": "Which form field should be used for response images?"
+          },
+          "responseTitleProp": {
+            "help": "<p>The title appears on top of each answer in the map or gallery view.</p>\n",
+            "label": "Which form field should be used as the response title?"
+          },
+          "showResponses": {
+            "help": "<p>If yes, you can set up a map or gallery view to visualise callout answers.</p>\n",
+            "label": "Allow users to see verified responses publicly?"
+          },
           "visible": {
             "help": "<p>You can make the callout <strong>not appear</strong> to users if you only want it to be answered by people who you share the link with.</p>\n",
             "label": "Should it be visible in the users' dashboards?",
             "opts": {
               "no": "No, it can only be accessed through its link",
               "yes": "Yes, show it to users"
+            }
+          },
+          "whichResponseViews": {
+            "help": "<p>Please decide if you want to use the map view or the gallery view or both.</p>\n",
+            "label": "Which response views should be visible?",
+            "opts": {
+              "gallery": "Gallery view",
+              "map": "Map view"
             }
           },
           "who": {
@@ -849,6 +909,7 @@
       },
       "unknown": {
         "email": "Invalid email address",
+        "max": "This field must be at most {max}",
         "min": "This field must be at least {min}",
         "required": "This field is required",
         "url": "Invalid URL"

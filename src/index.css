@@ -5,7 +5,7 @@
 /* Apply link styles to i18n markdown text */
 .content-i18n {
   a {
-    @apply text-link underline;
+    @apply underline;
   }
 }
 

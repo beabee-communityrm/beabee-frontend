@@ -1,5 +1,8 @@
 import {
   CalloutFormSchema,
+  CalloutResponseAnswerAddress,
+  CalloutResponseAnswerFileUpload,
+  CalloutResponseAnswers,
   ContributionPeriod,
   ContributionType,
   ItemStatus,
@@ -313,13 +316,23 @@ interface CalloutFormData {
 }
 
 export interface CalloutMapSchema {
-  bounds: [[number, number], [number, number]];
+  style: string;
   center: [number, number];
+  bounds: [[number, number], [number, number]];
   minZoom: number;
   maxZoom: number;
   initialZoom: number;
-  style: string;
-  answerKey: string;
+  addressProp: string;
+  addressPattern: string;
+  addressPatternProp: string;
+}
+
+export interface CalloutResponseViewSchema {
+  titleProp: string;
+  imageProp: string;
+  imageFilter: string;
+  gallery: boolean;
+  map: CalloutMapSchema | null;
 }
 
 export interface GetCalloutData extends CalloutData {
@@ -329,7 +342,7 @@ export interface GetCalloutData extends CalloutData {
 
 export type GetCalloutWith =
   | 'form'
-  | 'mapSchema'
+  | 'responseViewSchema'
   | 'responseCount'
   | 'hasAnswered'
   | void;
@@ -337,10 +350,15 @@ export type GetCalloutWith =
 export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
   ('responseCount' extends With ? { responseCount: number } : Noop) &
   ('hasAnswered' extends With ? { hasAnswered: boolean } : Noop) &
-  ('mapSchema' extends With ? { mapSchema: CalloutMapSchema } : Noop) &
+  ('responseViewSchema' extends With
+    ? { responseViewSchema: CalloutResponseViewSchema | null }
+    : Noop) &
   ('form' extends With ? CalloutFormData : Noop);
 
-export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
+export type CreateCalloutData = AllowNull<
+  CalloutData &
+    CalloutFormData & { responseViewSchema?: CalloutResponseViewSchema | null }
+>;
 export type UpdateCalloutData = Partial<CreateCalloutData>;
 
 export type GetCalloutsQuery = PaginatedQuery; // TODO: constrain fields
@@ -359,16 +377,6 @@ export interface CreateCalloutTagData {
 
 export type UpdateCalloutTagData = Partial<CreateCalloutTagData>;
 
-type CalloutResponseAnswer =
-  | string
-  | boolean
-  | number
-  | null
-  | undefined
-  | Record<string, boolean>
-  | { geometry: { location: { lat: number; lng: number } } };
-export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
-
 export interface GetCalloutResponseData {
   id: string;
   number: number;
@@ -380,7 +388,11 @@ export interface GetCalloutResponseData {
 }
 
 export interface GetCalloutResponseMapData {
+  number: number;
   answers: CalloutResponseAnswers;
+  title: string;
+  photos: CalloutResponseAnswerFileUpload[];
+  address?: CalloutResponseAnswerAddress;
 }
 
 export interface CreateCalloutResponseData {
@@ -523,5 +535,4 @@ export type UpdateEmailData = GetEmailData;
 
 export interface GetUploadFlowData {
   id: string;
-  ipAddress: string;
 }

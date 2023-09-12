@@ -21,6 +21,7 @@
           :name="name"
           :required="required"
           :min="min"
+          :max="max"
           :pattern="pattern"
           v-bind="$attrs"
           @blur="validation.$touch"
@@ -62,6 +63,7 @@ const props = withDefaults(
     infoMessage?: string;
     required?: boolean;
     min?: number | string;
+    max?: number | string;
     sameAs?: number | string;
     pattern?: string;
     hideErrorMessage?: boolean;
@@ -74,6 +76,7 @@ const props = withDefaults(
     label: undefined,
     infoMessage: undefined,
     min: undefined,
+    max: undefined,
     sameAs: undefined,
     pattern: undefined,
     prefix: undefined,
@@ -117,6 +120,13 @@ const rules = computed(() => ({
         () => errorT('min', { min: props.min }),
         (value: number | string) =>
           props.min === undefined || value >= props.min
+      ),
+    }),
+    ...(props.max !== undefined && {
+      max: helpers.withMessage(
+        () => errorT('max', { max: props.max }),
+        (value: number | string) =>
+          props.max === undefined || value <= props.max
       ),
     }),
     ...(props.sameAs !== undefined && {

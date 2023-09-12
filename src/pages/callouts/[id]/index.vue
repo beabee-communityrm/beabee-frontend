@@ -34,23 +34,11 @@ meta:
     </transition-group>
 
     <a id="thanks" />
-    <div
-      v-show="latestResponse || showOnlyThankYou"
-      class="mb-6 flex rounded bg-white p-6 text-lg text-success"
-    >
-      <div class="flex-0 mr-4 text-2xl">
-        <font-awesome-icon :icon="faThumbsUp" />
-      </div>
-      <div>
-        <h3 class="font-semibold">
-          {{ callout.thanksTitle }}
-        </h3>
-        <div
-          class="content-message font-normal text-body-80"
-          v-html="callout.thanksText"
-        />
-      </div>
-    </div>
+    <CalloutThanksBox
+      v-if="latestResponse || showOnlyThankYou"
+      :callout="callout"
+      class="p-6 bg-white"
+    />
 
     <figure class="mb-6">
       <img class="w-full object-cover" :src="callout.image" />
@@ -58,35 +46,10 @@ meta:
 
     <div class="content-message mb-6 text-lg" v-html="callout.intro" />
 
-    <div v-if="showLoginPrompt" class="my-12">
-      <p class="text-center">
-        {{ t('callout.membersOnly') }}
-      </p>
-      <div class="mt-6 flex flex-col gap-4 sm:flex-row">
-        <AppButton class="w-full" variant="link" to="/join">
-          {{ t('callout.joinNow') }}
-        </AppButton>
-        <AppButton class="w-full" variant="linkOutlined" to="/auth/login">
-          {{ t('callout.loginToYourAccount') }}
-        </AppButton>
-      </div>
-    </div>
+    <CalloutLoginPrompt v-if="showLoginPrompt" />
+    <CalloutMemberOnlyPrompt v-else-if="showMemberOnlyPrompt && !isPreview" />
 
-    <div v-if="showMemberOnlyPrompt" class="my-12 text-center">
-      <p>
-        {{ t('callout.membersOnly') }}
-        <b>{{ t('callout.updateContribution') }}</b>
-      </p>
-      <AppButton
-        class="mt-4 w-full sm:w-1/2"
-        variant="link"
-        to="/profile/contribution"
-      >
-        {{ t('callout.toContributionPage') }}
-      </AppButton>
-    </div>
-
-    <template v-if="!showOnlyThankYou">
+    <template v-else-if="!showOnlyThankYou">
       <hr class="mt-10 border-t border-primary-40 pt-10" />
 
       <AppNotification
@@ -108,8 +71,9 @@ meta:
           responses /* Form.IO doesn't handle reactivity so wait for responses to load */
         "
         :callout="callout"
-        :response="latestResponse"
+        :answers="latestResponse?.answers"
         :preview="isPreview"
+        :readonly="!canRespond"
         @submitted="handleSubmitResponse"
       />
     </template>
@@ -135,11 +99,14 @@ import {
   faBullhorn,
   faCaretDown,
   faShare,
-  faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
 import AppNotification from '../../../components/AppNotification.vue';
 import CalloutForm from '../../../components/pages/callouts/CalloutForm.vue';
 import { addNotification } from '../../../store/notifications';
+import { useCallout } from '../../../components/pages/callouts/use-callout';
+import CalloutLoginPrompt from '../../../components/pages/callouts/CalloutLoginPrompt.vue';
+import CalloutMemberOnlyPrompt from '../../../components/pages/callouts/CalloutMemberOnlyPrompt.vue';
+import CalloutThanksBox from '../../../components/pages/callouts/CalloutThanksBox.vue';
 
 const props = defineProps<{ id: string }>();
 
@@ -183,27 +150,13 @@ const showOnlyThankYou = ref(false);
 const isPreview = computed(
   () => route.query.preview === null && canAdmin.value
 );
-const isOpen = computed(() => callout.value?.status === ItemStatus.Open);
+
+const { isOpen, showLoginPrompt, showMemberOnlyPrompt } = useCallout(callout);
 
 const latestResponse = computed(() =>
   callout.value?.allowMultiple || isPreview.value
     ? undefined
     : responses.value?.items?.[0]
-);
-
-// Callout is only for members and current user isn't logged in
-const showLoginPrompt = computed(
-  () => isOpen.value && callout.value?.access === 'member' && !currentUser.value
-);
-
-// Callout is only for members and current user is not a member
-const showMemberOnlyPrompt = computed(
-  () =>
-    isOpen.value &&
-    !isPreview.value &&
-    callout.value?.access === 'member' &&
-    currentUser.value &&
-    !currentUser.value.activeRoles.includes('member')
 );
 
 const showResponseForm = computed(
@@ -214,6 +167,14 @@ const showResponseForm = computed(
     (isOpen.value && !showLoginPrompt.value && !showMemberOnlyPrompt.value) ||
     // Current user has previously responded
     latestResponse.value
+);
+
+const canRespond = computed(
+  () =>
+    // Preview mode
+    isPreview.value ||
+    // Callout is open and current user hasn't responded or can update
+    (isOpen.value && (!latestResponse.value || callout.value?.allowUpdate))
 );
 
 function handleSubmitResponse() {

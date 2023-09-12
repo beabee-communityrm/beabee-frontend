@@ -15,6 +15,19 @@ const MarkdownIt = require('markdown-it');
 
 const simpleMd = new MarkdownIt('zero').enable(['emphasis', 'link']);
 
+simpleMd.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+  const token = tokens[idx];
+  const hrefIndex = token.attrIndex('href');
+  if (hrefIndex >= 0) {
+    const href = token.attrs[hrefIndex][1];
+    if (href.startsWith('http')) {
+      token.attrPush(['target', '_blank']);
+      token.attrPush(['rel', 'noopener noreferrer']);
+    }
+  }
+  return self.renderToken(tokens, idx, options);
+};
+
 const optHandlers = {
   md: (data) => simpleMd.render(data),
 };

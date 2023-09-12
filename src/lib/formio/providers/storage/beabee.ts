@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { createUploadFlow } from '../../../../utils/api/upload';
 import env from '../../../../env';
-import i18n from '../../../../lib/i18n';
+import i18n from '../../../i18n';
 
 const { t } = i18n.global;
 

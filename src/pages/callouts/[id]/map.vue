@@ -7,20 +7,36 @@ meta:
 </route>
 
 <template>
-  <div v-if="callout">
-    <div class="absolute inset-0">
+  <div
+    v-if="callout?.responseViewSchema?.map"
+    class="absolute inset-0 flex flex-col"
+  >
+    <div class="flex-0 p-6 pb-1 shadow-lg z-10">
+      <PageTitle :title="callout.title" no-collapse>
+        <router-link
+          v-if="callout.responseViewSchema.gallery"
+          :to="`/callouts/${callout.slug}/gallery`"
+          class="text-link font-semibold whitespace-nowrap"
+        >
+          <font-awesome-icon :icon="faImages" />
+          {{ t('callout.views.gallery') }}
+        </router-link>
+      </PageTitle>
+    </div>
+    <div class="flex-1 relative">
       <MglMap
-        :center="center"
-        :zoom="zoom"
-        :map-style="callout.mapSchema.style"
-        :max-zoom="callout.mapSchema.maxZoom"
-        :min-zoom="callout.mapSchema.minZoom"
+        :center="callout.responseViewSchema.map.center"
+        :zoom="callout.responseViewSchema.map.initialZoom"
+        :map-style="callout.responseViewSchema.map.style"
+        :max-zoom="callout.responseViewSchema.map.maxZoom"
+        :min-zoom="callout.responseViewSchema.map.minZoom"
+        :max-bounds="callout.responseViewSchema.map.bounds"
         @map:click="handleClick"
         @map:mousemove="handleMouseOver"
       >
         <MglGeoJsonSource
           source-id="responses"
-          :data="responsesSource"
+          :data="responsesCollecton"
           cluster
           :cluster-max-zoom="12"
         >
@@ -47,6 +63,7 @@ meta:
             :layout="{
               'text-field': '{point_count_abbreviated}',
               'text-size': 16,
+              'text-font': ['Bold'],
             }"
           />
           <MglCircleLayer
@@ -59,9 +76,9 @@ meta:
           />
         </MglGeoJsonSource>
         <MglGeoJsonSource
-          v-if="selectedResponse"
+          v-if="selectedResponseFeature"
           source-id="selected-response"
-          :data="selectedResponse"
+          :data="selectedResponseFeature"
         >
           <MglCircleLayer
             layer-id="selected-response"
@@ -73,72 +90,48 @@ meta:
             }"
           />
         </MglGeoJsonSource>
+        <MglMarker
+          v-if="newResponseAddress"
+          :coordinates="newResponseAddress.geometry.location"
+        >
+          <div class="w-8 h-8 bg-primary rounded-full" />
+        </MglMarker>
       </MglMap>
+
+      <transition name="add-notice">
+        <div
+          v-if="isAddMode && !newResponseAnswers"
+          class="absolute top-10 md:top-20 inset-x-0 flex justify-center"
+        >
+          <p class="bg-white p-4 font-bold rounded shadow-lg mx-4">
+            <font-awesome-icon :icon="faInfoCircle" class="mr-1" />
+            Click on the map where you want to add a point
+          </p>
+        </div>
+      </transition>
+      <button
+        v-if="isOpen && !isAddMode"
+        class="absolute bottom-8 right-8 rounded-full bg-primary w-20 h-20 text-white shadow-md"
+        @click="handleStartAddMode"
+      >
+        <font-awesome-icon :icon="faPlus" class="text-4xl" />
+      </button>
     </div>
 
-    <PageTitle :title="callout.title" class="absolute top-8 left-8" />
-
-    <aside
-      v-if="selectedResponse"
-      class="absolute left-0 inset-y-0 bg-white p-8 w-full max-w-lg overflow-scroll shadow-lg"
-    >
-      <button
-        class="absolute right-2 top-2 h-10 w-10 hover:text-primary text-2xl"
-        type="button"
-        @click="router.push({ hash: '' })"
-      >
-        <font-awesome-icon :icon="faTimes" />
-      </button>
-      <div
-        v-if="selectedPhotos.length > 0"
-        class="relative overflow-hidden mb-4 -mx-4"
-      >
-        <ul
-          class="flex items-center transition-transform"
-          :style="{ transform: `translateX(${currentPhotoIndex * -100}%)` }"
-        >
-          <li
-            v-for="photo in selectedPhotos"
-            :key="photo.url"
-            class="w-full flex-none p-4"
-          >
-            <img class="w-full" :src="photo.url + '?w=600&h=600'" />
-          </li>
-        </ul>
-        <div
-          v-if="selectedPhotos.length > 1"
-          class="absolute top-1/2 inset-x-0 flex justify-between text-2xl font-bold transform -translate-y-1/2"
-        >
-          <div>
-            <button
-              v-show="currentPhotoIndex > 0"
-              class="bg-primary text-white w-10 h-10 rounded-full"
-              @click="currentPhotoIndex--"
-            >
-              <font-awesome-icon :icon="faChevronLeft" />
-            </button>
-          </div>
-          <div>
-            <button
-              v-show="currentPhotoIndex < selectedPhotos.length - 1"
-              class="bg-primary text-white w-10 h-10 rounded-full"
-              @click="currentPhotoIndex++"
-            >
-              <font-awesome-icon :icon="faChevronRight" />
-            </button>
-          </div>
-        </div>
-      </div>
-      <Form
-        :key="selectedResponse.properties?.id"
-        class="callout-form-simple"
-        :form="callout.formSchema"
-        :submission="{ data: selectedResponse.properties }"
-        :options="{ readOnly: true, noAlerts: true, renderMode: 'html' }"
-      />
-    </aside>
     <!-- Side panel width reference to offset map center -->
     <div ref="sidePanelRef" class="absolute left-0 w-full max-w-lg" />
+
+    <CalloutShowResponsePanel
+      :callout="callout"
+      :response="selectedResponseFeature?.properties"
+      @close="router.push({ hash: '' })"
+    />
+
+    <CalloutAddResponsePanel
+      :callout="callout"
+      :answers="newResponseAnswers"
+      @close="handleCancelAddMode"
+    />
   </div>
 </template>
 
@@ -151,8 +144,8 @@ import {
   MglCircleLayer,
   MglSymbolLayer,
   useMap,
+  MglMarker,
 } from 'vue-maplibre-gl';
-
 import type {
   GeoJSONSource,
   LngLatLike,
@@ -160,171 +153,244 @@ import type {
   MapMouseEvent,
 } from 'maplibre-gl';
 import type GeoJSON from 'geojson';
-
 import {
   GetCalloutDataWith,
   GetCalloutResponseMapData,
 } from '../../../utils/api/api.interface';
 import { fetchCallout, fetchResponsesForMap } from '../../../utils/api/callout';
 import PageTitle from '../../../components/PageTitle.vue';
-import { Form } from '../../../lib/formio';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
 import 'vue-maplibre-gl/dist/vue-maplibre-gl.css';
+import CalloutShowResponsePanel from '../../../components/pages/callouts/CalloutShowResponsePanel.vue';
 import {
-  faChevronLeft,
-  faChevronRight,
-  faTimes,
+  CalloutResponseAnswerAddress,
+  CalloutResponseAnswers,
+} from '@beabee/beabee-common';
+import {
+  faImages,
+  faInfoCircle,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
+import { useI18n } from 'vue-i18n';
+import {
+  HASH_PREFIX,
+  useCallout,
+} from '../../../components/pages/callouts/use-callout';
+import { reverseGeocode, formatGeocodeResult } from '../../../utils/geocode';
+import CalloutAddResponsePanel from '../../../components/pages/callouts/CalloutAddResponsePanel.vue';
+
+type GetCalloutResponseMapDataWithAddress = GetCalloutResponseMapData & {
+  address: CalloutResponseAnswerAddress;
+};
 
 const props = defineProps<{ id: string }>();
 
 const map = useMap();
 const route = useRoute();
 const router = useRouter();
-
-const hashPrefix = '#response-' as const;
-
-const titleProp = '';
-const photosProp = 'file';
+const { t } = useI18n();
 
 const sidePanelRef = ref<HTMLElement>();
-const callout = ref<GetCalloutDataWith<'form' | 'mapSchema'>>();
-const responses = ref<GetCalloutResponseMapData[]>([]);
-const center = ref<LngLatLike>([0, 0]);
-const zoom = ref(3);
 
-const responsesSource = computed<GeoJSON.FeatureCollection>(() => ({
-  type: 'FeatureCollection',
-  features: responses.value?.map((response, i) => {
-    const { lat, lng } = (
-      response.answers.address as {
-        geometry: { location: { lat: number; lng: number } };
-      }
-    ).geometry.location;
+const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();
+const responses = ref<GetCalloutResponseMapDataWithAddress[]>([]);
 
-    return {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [lng, lat],
-      },
-      properties: { id: i, ...response.answers },
-    };
-  }),
-}));
+const { isOpen } = useCallout(callout);
 
-const selectedResponse = computed(
-  () =>
-    route.hash.startsWith(hashPrefix) &&
-    (responsesSource.value.features[+route.hash.slice(hashPrefix.length)] as
-      | GeoJSON.Feature<GeoJSON.Point>
-      | undefined)
+const isAddMode = ref(false);
+const newResponseAnswers = ref<CalloutResponseAnswers>();
+
+// Use the address from the new response to show a marker on the map
+const newResponseAddress = computed(() =>
+  callout.value?.responseViewSchema?.map && newResponseAnswers.value
+    ? (newResponseAnswers.value[
+        callout.value.responseViewSchema.map.addressProp
+      ] as CalloutResponseAnswerAddress)
+    : undefined
 );
 
-const selectedPhotos = computed<any[]>(
-  () =>
-    (selectedResponse.value &&
-      selectedResponse.value.properties?.[photosProp]) ||
-    []
-);
+// A GeoJSON FeatureCollection of all the responses
+const responsesCollecton = computed<
+  GeoJSON.FeatureCollection<GeoJSON.Point, GetCalloutResponseMapData>
+>(() => {
+  const mapSchema = callout.value?.responseViewSchema?.map;
+  return {
+    type: 'FeatureCollection',
+    features: mapSchema
+      ? responses.value.map((response) => {
+          const { lat, lng } = response.address.geometry.location;
 
-const currentPhotoIndex = ref(0);
-watch(selectedPhotos, () => {
-  currentPhotoIndex.value = 0;
+          return {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [lng, lat],
+            },
+            properties: response,
+          };
+        })
+      : [],
+  };
+});
+
+// A GeoJSON Feature of the currently selected response
+const selectedResponseFeature = computed(() => {
+  if (route.hash.startsWith(HASH_PREFIX)) {
+    const responseNumber = Number(route.hash.slice(HASH_PREFIX.length));
+    return responsesCollecton.value.features.find(
+      (f) => f.properties.number === responseNumber
+    );
+  } else {
+    return undefined;
+  }
 });
 
 // Zoom to a cluster or open a response
 function handleClick(e: { event: MapMouseEvent; map: Map }) {
-  try {
-    const clusterPoints = e.map.queryRenderedFeatures(e.event.point, {
-      layers: ['clusters'],
-    }) as GeoJSON.Feature<GeoJSON.Point>[];
-
-    if (clusterPoints.length > 0) {
-      const firstPoint = clusterPoints[0] as GeoJSON.Feature<GeoJSON.Point>;
-      const source = e.map.getSource('responses') as GeoJSONSource;
-
-      source.getClusterExpansionZoom(
-        firstPoint.properties?.cluster_id,
-        (err, zoom) => {
-          if (err || zoom == null) return;
-
-          e.map.easeTo({
-            center: firstPoint.geometry.coordinates as LngLatLike,
-            zoom: zoom + 1.5,
-          });
-        }
-      );
-    } else {
-      const pointFeatures = e.map.queryRenderedFeatures(e.event.point, {
-        layers: ['unclustered-points'],
-      });
-
-      router.push({
-        hash:
-          pointFeatures.length > 0
-            ? hashPrefix + pointFeatures[0].properties?.id
-            : '',
-      });
+  if (isAddMode.value) {
+    if (!newResponseAnswers.value) {
+      handleAddClick(e);
     }
-  } catch (err) {
-    // Map probably isn't loaded loaded yet
+    return;
+  }
+
+  // Not loaded yet
+  if (!e.map.getLayer('clusters')) return;
+
+  const clusterPoints = e.map.queryRenderedFeatures(e.event.point, {
+    layers: ['clusters'],
+  }) as GeoJSON.Feature<GeoJSON.Point>[];
+
+  if (clusterPoints.length > 0) {
+    const firstPoint = clusterPoints[0] as GeoJSON.Feature<GeoJSON.Point>;
+    const source = e.map.getSource('responses') as GeoJSONSource;
+
+    source.getClusterExpansionZoom(
+      firstPoint.properties?.cluster_id,
+      (err, zoom) => {
+        if (err || zoom == null) return;
+
+        e.map.easeTo({
+          center: firstPoint.geometry.coordinates as LngLatLike,
+          zoom: zoom + 1,
+        });
+      }
+    );
+  } else {
+    const pointFeatures = e.map.queryRenderedFeatures(e.event.point, {
+      layers: ['unclustered-points'],
+    });
+
+    router.push({
+      hash:
+        pointFeatures.length > 0
+          ? HASH_PREFIX + pointFeatures[0].properties.number
+          : '',
+    });
   }
 }
 
 // Add a cursor when hovering over a cluster or a point
 function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
-  try {
-    const features = e.map.queryRenderedFeatures(e.event.point, {
-      layers: ['clusters', 'unclustered-points'],
-    });
+  if (isAddMode.value) return;
 
-    // TODO: debounce or check for change?
-    if (features.length > 0) {
-      e.map.getCanvas().style.cursor = 'pointer';
-    } else {
-      e.map.getCanvas().style.cursor = '';
-    }
-  } catch (err) {
-    // Map probably isn't loaded loaded yet
+  // Not loaded yet
+  if (!e.map.getLayer('clusters')) return;
+
+  const features = e.map.queryRenderedFeatures(e.event.point, {
+    layers: ['clusters', 'unclustered-points'],
+  });
+
+  // TODO: debounce or check for change?
+  if (features.length > 0) {
+    e.map.getCanvas().style.cursor = 'pointer';
+  } else {
+    e.map.getCanvas().style.cursor = '';
   }
 }
 
-watch(selectedResponse, (newResponse) => {
-  if (!map.map || !newResponse) return;
+// Start add response mode
+function handleStartAddMode() {
+  if (!map.map) return;
+  isAddMode.value = true;
+  map.map.getCanvas().style.cursor = 'crosshair';
+  router.push({ hash: '' });
+}
+
+// Cancel add response mode, clearing any state that is left over
+function handleCancelAddMode() {
+  if (!map.map) return;
+  isAddMode.value = false;
+  newResponseAnswers.value = undefined;
+  map.map.getCanvas().style.cursor = '';
+}
+
+// Geolocate where the user has clicked
+async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
+  const mapSchema = callout.value?.responseViewSchema?.map;
+  if (!mapSchema) return;
+
+  const coords = e.event.lngLat;
+  e.map.getCanvas().style.cursor = '';
+
+  e.map.easeTo({
+    center: coords,
+    padding: { left: sidePanelRef.value?.offsetWidth || 0 },
+  });
+
+  const result = await reverseGeocode(coords.lat, coords.lng);
+
+  newResponseAnswers.value = result
+    ? {
+        [mapSchema.addressProp]: result,
+        ...(mapSchema.addressPatternProp && {
+          [mapSchema.addressPatternProp]: formatGeocodeResult(
+            result,
+            mapSchema.addressPattern
+          ),
+        }),
+      }
+    : {};
+}
+
+// Centre map on selected feature when it changes
+watch(selectedResponseFeature, (newFeature) => {
+  if (!map.map || !newFeature) return;
 
   map.map.easeTo({
-    center: newResponse.geometry.coordinates as LngLatLike,
+    center: newFeature.geometry.coordinates as LngLatLike,
     padding: { left: sidePanelRef.value?.offsetWidth || 0 },
   });
 });
 
+// Load callout and responses
 onBeforeMount(async () => {
-  callout.value = await fetchCallout(props.id, ['form', 'mapSchema']);
-  center.value = callout.value.mapSchema.center;
-  zoom.value = callout.value.mapSchema.initialZoom;
+  callout.value = await fetchCallout(props.id, ['form', 'responseViewSchema']);
+  if (!callout.value.responseViewSchema?.map) {
+    throw new Error('Callout does not have a map schema');
+  }
 
   // TODO: pagination
-  responses.value = (await fetchResponsesForMap(props.id)).items;
+  responses.value = (await fetchResponsesForMap(props.id)).items.filter(
+    (r): r is GetCalloutResponseMapDataWithAddress => !!r.address
+  );
 });
 </script>
 
-<style>
-.callout-form-simple {
-  .form-group {
-    @apply mb-1;
-  }
+<style lang="postcss" scoped>
+.add-notice-enter-active,
+.add-notice-leave-active {
+  @apply transition;
+}
 
-  .formio-component-file {
-    @apply hidden;
-  }
+.add-notice-enter-from,
+.add-notice-leave-to {
+  @apply opacity-0 -translate-y-8;
+}
 
-  .col-form-label {
-    @apply float-left flex font-bold mr-2;
-    &::after {
-      content: ': ';
-    }
-  }
+.add-notice-enter-to,
+.add-notice-leave-from {
+  @apply opacity-100 translate-y-0;
 }
 </style>
