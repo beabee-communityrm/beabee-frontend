@@ -733,8 +733,7 @@
             "label": "Welches Feld soll als Überschrift dienen?"
           },
           "showResponses": {
-            "help": "<p>Mit dieser Funktion ist es möglich, Callout-Antworten auf einer Karte oder als Galerie darzustellen.</p>\n",
-            "label": "Sollen Antworten öffentlich sichtbar sein?"
+            "help": "<p>Mit dieser Funktion ist es möglich, Callout-Antworten auf einer Karte oder als Galerie darzustellen.</p>\n"
           },
           "visible": {
             "help": "<p>Du kannst den Callout <strong>nicht anzeigen</strong> lassen. Dann ist er nur über den Link erreichbar.</p>\n",
@@ -744,6 +743,7 @@
               "yes": "Ja, Callout im Dashboard anzeigen."
             }
           },
+          "whichResponseBuckets": {},
           "whichResponseViews": {
             "help": "<p>Hier kannst du entscheiden, ob du die Karten- oder die Galerieansicht verwenden möchtest. Es ist auch möglich beides auszuwählen.</p>\n",
             "label": "Wie soll die Antwort dargestellt werden?",

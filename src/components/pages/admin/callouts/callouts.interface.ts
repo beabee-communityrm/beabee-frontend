@@ -41,11 +41,11 @@ export interface SettingsStepProps {
   multipleResponses: boolean;
   usersCanEditAnswers: boolean;
   showResponses: boolean;
+  responseViews: ('map' | 'gallery')[];
+  responseBuckets: string[];
   responseTitleProp: string;
   responseImageProp: string;
   responseImageFilter: string;
-  showResponseGallery: boolean;
-  showResponseMap: boolean;
   mapSchema: CalloutMapSchema;
 }
 

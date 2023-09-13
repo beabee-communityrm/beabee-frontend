@@ -49,11 +49,14 @@ export function convertCalloutToSteps(
     settings: {
       ...settings,
       showResponses: !!callout?.responseViewSchema,
+      responseViews: [
+        ...(callout?.responseViewSchema?.gallery ? ['gallery' as const] : []),
+        ...(callout?.responseViewSchema?.map ? ['map' as const] : []),
+      ],
+      responseBuckets: callout?.responseViewSchema?.buckets || [],
       responseTitleProp: callout?.responseViewSchema?.titleProp || '',
       responseImageProp: callout?.responseViewSchema?.imageProp || '',
       responseImageFilter: callout?.responseViewSchema?.imageFilter || '',
-      showResponseGallery: !!callout?.responseViewSchema?.gallery,
-      showResponseMap: !!callout?.responseViewSchema?.map,
       mapSchema: callout?.responseViewSchema?.map || {
         style: '',
         bounds: [
@@ -103,11 +106,12 @@ export function convertStepsToCallout(
     formSchema: steps.content.formSchema,
     responseViewSchema: steps.settings.showResponses
       ? {
+          buckets: steps.settings.responseBuckets,
           titleProp: steps.settings.responseTitleProp,
           imageProp: steps.settings.responseImageProp,
           imageFilter: steps.settings.responseImageFilter,
-          gallery: steps.settings.showResponseGallery,
-          map: steps.settings.showResponseMap
+          gallery: steps.settings.responseViews.includes('gallery'),
+          map: steps.settings.responseViews.includes('map')
             ? {
                 ...steps.settings.mapSchema,
                 addressPattern: steps.settings.mapSchema.addressPatternProp
