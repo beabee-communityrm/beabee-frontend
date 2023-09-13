@@ -28,6 +28,7 @@ export default ({ command, mode }) => {
           __apiUrl__: env.API_BASE_URL,
           __revision__: '',
           __appsignalKey__: env.APPSIGNAL_KEY || '',
+          __maptilerKey__: env.MAPTILER_KEY || '',
           __cnrMode__: env.CNR_MODE || '',
         },
         preventAssignment: true,

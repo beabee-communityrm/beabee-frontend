@@ -9,6 +9,7 @@ if [ ! -f /.installed ]; then
       -e s#__apiUrl__#$API_BASE_URL#g \
       -e s#__revision__#$APP_REVISION#g \
       -e s#__appsignalKey__#$APPSIGNAL_KEY#g \
+      -e s#__maptilerKey#$MAPTILER_KEY#g \
       -e s#__cnrMode__#$CNR_MODE#g \
     {} +
 fi
