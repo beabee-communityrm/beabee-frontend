@@ -745,7 +745,7 @@
           },
           "showResponses": {
             "help": "<p>If yes, you can set up a map or gallery view to visualise callout answers.</p>\n",
-            "label": "Allow users to see verified responses publicly?"
+            "label": "Allow users to see responses publicly?"
           },
           "visible": {
             "help": "<p>You can make the callout <strong>not appear</strong> to users if you only want it to be answered by people who you share the link with.</p>\n",
@@ -754,6 +754,9 @@
               "no": "No, it can only be accessed through its link",
               "yes": "Yes, show it to users"
             }
+          },
+          "whichResponseBuckets": {
+            "label": "Which response buckets should be shown publicly?"
           },
           "whichResponseViews": {
             "help": "<p>Please decide if you want to use the map view or the gallery view or both.</p>\n",

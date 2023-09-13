@@ -53,6 +53,7 @@ export function convertCalloutToSteps(
         ...(callout?.responseViewSchema?.gallery ? ['gallery' as const] : []),
         ...(callout?.responseViewSchema?.map ? ['map' as const] : []),
       ],
+      responseBuckets: callout?.responseViewSchema?.buckets || [],
       responseTitleProp: callout?.responseViewSchema?.titleProp || '',
       responseImageProp: callout?.responseViewSchema?.imageProp || '',
       responseImageFilter: callout?.responseViewSchema?.imageFilter || '',
@@ -105,6 +106,7 @@ export function convertStepsToCallout(
     formSchema: steps.content.formSchema,
     responseViewSchema: steps.settings.showResponses
       ? {
+          buckets: steps.settings.responseBuckets,
           titleProp: steps.settings.responseTitleProp,
           imageProp: steps.settings.responseImageProp,
           imageFilter: steps.settings.responseImageFilter,

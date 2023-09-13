@@ -42,6 +42,7 @@ export interface SettingsStepProps {
   usersCanEditAnswers: boolean;
   showResponses: boolean;
   responseViews: ('map' | 'gallery')[];
+  responseBuckets: string[];
   responseTitleProp: string;
   responseImageProp: string;
   responseImageFilter: string;

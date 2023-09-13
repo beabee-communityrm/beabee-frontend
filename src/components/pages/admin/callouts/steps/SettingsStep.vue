@@ -84,6 +84,16 @@
         />
       </AppFormSection>
       <template v-if="data.showResponses">
+        <AppFormSection>
+          <AppCheckboxGroup
+            v-model="data.responseBuckets"
+            :label="inputT('whichResponseBuckets.label')"
+            :options="
+              buckets.map((bucket) => [bucket.id, bucket.label || bucket.id])
+            "
+            required
+          />
+        </AppFormSection>
         <AppFormSection :help="inputT('whichResponseViews.help')">
           <AppCheckboxGroup
             v-model="data.responseViews"
@@ -217,7 +227,11 @@ import { computed, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppRadioGroup from '../../../../forms/AppRadioGroup.vue';
 import AppFormSection from '../../../../forms/AppFormSection.vue';
-import { CalloutSteps, SettingsStepProps } from '../callouts.interface';
+import {
+  CalloutSteps,
+  SettingsStepProps,
+  buckets,
+} from '../callouts.interface';
 import { sameAs } from '@vuelidate/validators';
 import AppInput from '../../../../forms/AppInput.vue';
 import AppSelect from '../../../../forms/AppSelect.vue';
