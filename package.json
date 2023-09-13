@@ -29,6 +29,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
+    "@maptiler/client": "^1.6.0",
     "@stripe/stripe-js": "^1.54.1",
     "@tiptap/extension-link": "^2.0.4",
     "@tiptap/extension-typography": "^2.0.4",
