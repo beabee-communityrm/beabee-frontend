@@ -48,7 +48,7 @@ meta:
         :success-text="t('form.saved')"
         @submit="handleSaveShare"
       >
-        <AppHeading class="mb-4 md:mb-2">
+        <AppHeading>
           {{ t('adminSettings.general.socialSharing.title') }}
         </AppHeading>
         <p class="mb-4 text-sm text-body-80">
@@ -92,7 +92,7 @@ meta:
         :success-text="t('form.saved')"
         @submit="handleSaveFooter"
       >
-        <AppHeading class="mb-4 md:mb-2">
+        <AppHeading>
           {{ t('adminSettings.general.footer.title') }}
         </AppHeading>
         <p class="mb-4 text-sm text-body-80">
@@ -106,9 +106,9 @@ meta:
             required
           />
         </div>
-        <h4 class="mb-2 mt-6 font-title text-lg font-bold text-body-60">
+        <AppSubHeading class="mb-2">
           {{ t('adminSettings.general.footer.dataPrivacy.title') }}
-        </h4>
+        </AppSubHeading>
         <div class="mb-4">
           <AppInput
             v-model="footerData.privacyLink"
@@ -131,9 +131,9 @@ meta:
             type="url"
           />
         </div>
-        <h4 class="mb-2 mt-6 font-title text-lg font-bold text-body-60">
+        <AppSubHeading class="mb-2">
           {{ t('adminSettings.general.footer.otherLinks.title') }}
-        </h4>
+        </AppSubHeading>
         <div
           v-for="(link, i) in footerData.footerLinks"
           :key="i"
@@ -195,6 +195,7 @@ import AppHeading from '../../../components/AppHeading.vue';
 import axios from '../../../lib/axios';
 import AppForm from '../../../components/forms/AppForm.vue';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import AppSubHeading from '../../../components/AppSubHeading.vue';
 
 const { t } = useI18n();
 

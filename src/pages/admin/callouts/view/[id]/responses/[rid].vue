@@ -110,40 +110,48 @@ meta:
           (assigneeId, successText) => handleUpdate({ assigneeId }, successText)
         "
       />
+    </div>
+
+    <hr class="my-10 border-t border-primary-40" />
+
+    <div class="flex gap-2 mb-4">
+      <AppButton
+        v-if="callout.responseViewSchema?.map"
+        :to="`/callouts/${callout.slug}/map#response-${response.number}`"
+        :icon="faMap"
+        size="sm"
+      >
+        {{ t('calloutResponsePage.actions.viewOnMap') }}
+      </AppButton>
       <AppButton
         type="button"
         :icon="faPen"
         size="sm"
         variant="primaryOutlined"
+        class="ml-auto"
         @click="editMode = !editMode"
       >
-        {{ t('calloutResponsePage.actions.editResponse') }}
+        {{ t('actions.edit') }}
       </AppButton>
     </div>
-    <div
-      class="callout-form-renderer mt-10 border-t border-primary-40 pt-10 text-lg"
-    >
-      <AppNotification
-        v-if="editMode"
-        variant="warning"
-        class="mb-6"
-        :title="t('calloutResponsePage.editMode')"
-      />
-      <Form
-        :key="response.id + editMode /* Form doesn't respect reactivity */"
-        :form="callout.formSchema"
-        :submission="{ data: response.answers }"
-        :options="{
-          readOnly: !editMode,
-          noAlerts: true,
-          renderMode: editMode ? 'form' : 'html',
-        }"
-        @submit="handleEditResponse"
-      />
-    </div>
-    <div>
-      <CalloutResponseComments :response-id="response.id" />
-    </div>
+
+    <AppNotification
+      v-if="editMode"
+      variant="warning"
+      class="mb-6"
+      :title="t('calloutResponsePage.editMode')"
+    />
+    <FormRenderer
+      :key="response.id + editMode"
+      :form="callout.formSchema"
+      :answers="response.answers"
+      :readonly="!editMode"
+      @submit="handleEditResponse"
+    />
+
+    <hr class="my-10 border-t border-primary-40" />
+
+    <CalloutResponseComments :response-id="response.id" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -155,7 +163,6 @@ import {
   UpdateCalloutResponseData,
 } from '../../../../../../utils/api/api.interface';
 import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
-import { Form } from '../../../../../../lib/formio';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../../../components/AppHeading.vue';
 import AppInfoList from '../../../../../../components/AppInfoList.vue';
@@ -177,6 +184,7 @@ import SetAssigneeButton from '../../../../../../components/pages/admin/callouts
 import {
   faCaretLeft,
   faCaretRight,
+  faMap,
   faPen,
   faTag,
   faUser,
@@ -184,10 +192,11 @@ import {
 import { addNotification } from '../../../../../../store/notifications';
 import AppNotification from '../../../../../../components/AppNotification.vue';
 import { CalloutResponseAnswers } from '@beabee/beabee-common';
+import FormRenderer from '../../../../../../components/form-renderer/FormRenderer.vue';
 
 const props = defineProps<{
   rid: string;
-  callout: GetCalloutDataWith<'form'>;
+  callout: GetCalloutDataWith<'form' | 'responseViewSchema'>;
 }>();
 
 const { t, n } = useI18n();
@@ -311,7 +320,3 @@ async function refreshResponse() {
 
 watchEffect(refreshResponse);
 </script>
-<style>
-@import '../../../../../../lib/formio/formio.form.css';
-@import '../../../../../../components/form-renderer/form-renderer.css';
-</style>

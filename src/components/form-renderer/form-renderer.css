@@ -4,9 +4,11 @@
 .callout-form-builder .formarea,
 /* Apply to preview panel only on popup dialog */
 .formio-dialog .preview-panel {
+  @apply text-lg;
+
   /* Give callouts a white background */
-  .formio-form {
-    @apply bg-white p-4 shadow-md;
+  &:not(.has-no-bg) .formio-form {
+    @apply bg-white p-6 shadow-md;
   }
 
   /* Form labels same styling as .content-message h3 */
@@ -144,6 +146,14 @@
     @apply -order-1 mb-2 text-body-80;
   }
 
+  /* Hints on same line as check box */
+  .form-check {
+    @apply flex items-baseline;
+    & > i {
+      @apply flex-none ml-2;
+    }
+  }
+
   /* Subtle style for check boxes */
   .formio-editor-read-only-content,
   .form-check-input {
@@ -157,7 +167,7 @@
 
   /* Block checkboxes */
   .form-check-label {
-    @apply mb-2 flex align-baseline;
+    @apply mb-2 flex items-baseline;
 
     .form-check-input {
       @apply mr-2 flex-none;
@@ -184,38 +194,63 @@
 
   /* Add required asterisk */
   .field-required::after {
-    @apply text-danger;
+    @apply text-body;
     content: '*';
   }
 
-  /* Except if the form is in read only model */
-  .formio-read-only .field-required::after {
-    @apply hidden;
-  }
-
   /* Styles for file upload component */
-  .list-group {
-    @apply border border-primary-20 rounded mb-4;
-  }
-  .list-group-header {
-    @apply p-2 bg-primary-10 rounded-t;
-  }
-  .list-group-item {
-    @apply p-2 border-b border-primary-20;
-    &:last-child {
-      @apply border-b-0;
+  .formio-component-file {
+    /* Style the image carousel */
+    & > div:not([class]) {
+      @apply flex flex-wrap gap-2;
+
+      & > div {
+        @apply flex-1 min-w-[120px];
+        & > span {
+          @apply flex items-start;
+        }
+      }
+
+      img {
+        width: 100% !important;
+      }
+
+      i[ref='removeLink'] {
+        @apply align-top ml-1;
+      }
     }
-  }
-  .fileSelector,
-  .file {
-    @apply mb-4 border border-2 border-dashed border-grey p-2;
-  }
-  .file {
-    .col-form-label {
-      @apply text-lg mb-0;
+
+    .video-container video {
+      @apply block w-full;
     }
-    .alert-danger {
-      @apply text-danger text-sm font-semibold;
+
+    .btn {
+      @apply mt-2;
+    }
+
+    .list-group {
+      @apply border border-primary-20 rounded;
+    }
+    .list-group-header {
+      @apply p-2 bg-primary-10 rounded-t;
+    }
+    .list-group-item {
+      @apply p-2 border-b border-primary-20;
+      &:last-child {
+        @apply border-b-0;
+      }
+    }
+    .fileSelector,
+    .file {
+      @apply mt-4 border border-2 border-dashed border-grey p-2;
+    }
+    .file {
+      .col-form-label {
+        @apply text-lg mb-0;
+      }
+      .alert-danger {
+        @apply text-danger text-sm font-semibold;
+      }
     }
   }
 
@@ -231,5 +266,13 @@
 .formio-dialog .formio-component-html .ck-content {
   h3 {
     @apply mb-2;
+  }
+}
+
+/* Apply to form renderer in read only mode */
+.callout-form-renderer .formio-read-only {
+  /* Respect text formatting */
+  div[ref='value'] {
+    @apply whitespace-pre-wrap break-words;
   }
 }

@@ -373,9 +373,9 @@
   "calloutResponsePage": {
     "actions": {
       "assignTo": "Assign to",
-      "editResponse": "Edit response",
       "moveBucket": "Move bucket",
-      "toggleTag": "Toggle tag"
+      "toggleTag": "Toggle tag",
+      "viewOnMap": "View on map"
     },
     "editMode": "You are in edit mode, be careful!",
     "manageFolders": "Manage folders",
@@ -695,6 +695,16 @@
             }
           },
           "mapSchema": {
+            "addressPattern": {
+              "label": "What format would you like to use?"
+            },
+            "addressPatternProp": {
+              "label": "Do you want to populate a field with the address?",
+              "none": "-- Don't populate a field --"
+            },
+            "addressProp": {
+              "label": "What form field should be used to plot responses on the map?"
+            },
             "bounds": {
               "label": "Maximum map bounds"
             },
@@ -713,7 +723,8 @@
             "style": {
               "help": "<p>The map view <strong>requires a third-party map tool</strong> like <a href=\"https://www.maptiler.com\" target=\"_blank\" rel=\"noopener noreferrer\">Maptiler</a> or <a href=\"https://www.mapbox.com\" target=\"_blank\" rel=\"noopener noreferrer\">Mapbox</a>. Those tools provide you with the map style URL you need to paste in here.</p>\n",
               "label": "Map style URL"
-            }
+            },
+            "title": "Map settings"
           },
           "multiple": {
             "help": "<p>If yes, then logged in users will be able to <strong>respond multiple times</strong> to the callout.</p>\n",
@@ -722,6 +733,9 @@
               "no": "No, only one response",
               "yes": "Yes"
             }
+          },
+          "responseImageFilter": {
+            "label": "Do you want to apply a filter to images?"
           },
           "responseImageProp": {
             "help": "<p>The image will be used to visualise the answer in map or gallery view. Important: This has to be a file upload component.</p>\n",

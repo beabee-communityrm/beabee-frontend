@@ -3,10 +3,33 @@ import { format } from 'date-fns';
 import { CalloutStepsProps } from '../components/pages/admin/callouts/callouts.interface';
 import { FilterItem, FilterItems } from '../components/search/search.interface';
 import { CreateCalloutData, GetCalloutDataWith } from './api/api.interface';
+import env from '../env';
 
 export function convertCalloutToSteps(
   callout?: GetCalloutDataWith<'form' | 'responseViewSchema'>
 ): CalloutStepsProps {
+  const settings = env.cnrMode
+    ? ({
+        whoCanTakePart: 'everyone',
+        allowAnonymousResponses: 'none',
+        showOnUserDashboards: false,
+        usersCanEditAnswers: false,
+        multipleResponses: false,
+      } as const)
+    : ({
+        whoCanTakePart:
+          !callout || callout.access === 'member' ? 'members' : 'everyone',
+        allowAnonymousResponses:
+          callout?.access === 'anonymous'
+            ? 'guests'
+            : callout?.access === 'only-anonymous'
+            ? 'all'
+            : 'none',
+        showOnUserDashboards: !callout?.hidden,
+        usersCanEditAnswers: callout?.allowUpdate || false,
+        multipleResponses: callout?.allowMultiple || false,
+      } as const);
+
   return {
     content: {
       introText: callout?.intro || '',
@@ -24,20 +47,11 @@ export function convertCalloutToSteps(
       shareDescription: callout?.shareDescription || '',
     },
     settings: {
-      whoCanTakePart:
-        !callout || callout.access === 'member' ? 'members' : 'everyone',
-      allowAnonymousResponses:
-        callout?.access === 'anonymous'
-          ? 'guests'
-          : callout?.access === 'only-anonymous'
-          ? 'all'
-          : 'none',
-      showOnUserDashboards: !callout?.hidden,
-      usersCanEditAnswers: callout?.allowUpdate || false,
-      multipleResponses: callout?.allowMultiple || false,
+      ...settings,
       showResponses: !!callout?.responseViewSchema,
       responseTitleProp: callout?.responseViewSchema?.titleProp || '',
       responseImageProp: callout?.responseViewSchema?.imageProp || '',
+      responseImageFilter: callout?.responseViewSchema?.imageFilter || '',
       showResponseGallery: !!callout?.responseViewSchema?.gallery,
       showResponseMap: !!callout?.responseViewSchema?.map,
       mapSchema: callout?.responseViewSchema?.map || {
@@ -51,6 +65,8 @@ export function convertCalloutToSteps(
         maxZoom: 18,
         minZoom: 1,
         addressProp: '',
+        addressPattern: '',
+        addressPatternProp: '',
       },
     },
     endMessage: {
@@ -89,8 +105,16 @@ export function convertStepsToCallout(
       ? {
           titleProp: steps.settings.responseTitleProp,
           imageProp: steps.settings.responseImageProp,
+          imageFilter: steps.settings.responseImageFilter,
           gallery: steps.settings.showResponseGallery,
-          map: steps.settings.showResponseMap ? steps.settings.mapSchema : null,
+          map: steps.settings.showResponseMap
+            ? {
+                ...steps.settings.mapSchema,
+                addressPattern: steps.settings.mapSchema.addressPatternProp
+                  ? steps.settings.mapSchema.addressPattern
+                  : '',
+              }
+            : null,
         }
       : null,
     starts: steps.dates.startNow
