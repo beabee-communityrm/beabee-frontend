@@ -11,7 +11,7 @@ export function convertCalloutToSteps(
   const settings = env.cnrMode
     ? ({
         whoCanTakePart: 'everyone',
-        allowAnonymousResponses: 'none',
+        allowAnonymousResponses: 'guests',
         showOnUserDashboards: false,
         usersCanEditAnswers: false,
         multipleResponses: false,
