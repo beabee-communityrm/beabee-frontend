@@ -85,21 +85,15 @@
       </AppFormSection>
       <template v-if="data.showResponses">
         <AppFormSection :help="inputT('whichResponseViews.help')">
-          <AppLabel :label="inputT('whichResponseViews.label')" required />
-          <div class="flex gap-4">
-            <AppCheckbox
-              v-model="data.showResponseGallery"
-              :icon="faImages"
-              :label="inputT('whichResponseViews.opts.gallery')"
-              class="!font-normal"
-            />
-            <AppCheckbox
-              v-model="data.showResponseMap"
-              :icon="faMap"
-              :label="inputT('whichResponseViews.opts.map')"
-              class="!font-normal"
-            />
-          </div>
+          <AppCheckboxGroup
+            v-model="data.responseViews"
+            :label="inputT('whichResponseViews.label')"
+            :options="[
+              ['gallery', inputT('whichResponseViews.opts.gallery')],
+              ['map', inputT('whichResponseViews.opts.map')],
+            ]"
+            required
+          />
         </AppFormSection>
         <AppFormSection :help="inputT('responseTitleProp.help')">
           <AppSelect
@@ -114,7 +108,7 @@
             v-model="data.responseImageProp"
             :label="inputT('responseImageProp.label')"
             :items="fileComponentItems"
-            :required="data.showResponseGallery"
+            :required="data.responseViews.includes('gallery')"
           />
         </AppFormSection>
         <AppFormSection>
@@ -123,7 +117,7 @@
             :label="inputT('responseImageFilter.label')"
           />
         </AppFormSection>
-        <template v-if="data.showResponseMap">
+        <template v-if="data.responseViews.includes('map')">
           <AppFormSection>
             <AppSubHeading>{{ inputT('mapSchema.title') }}</AppSubHeading>
 
@@ -226,12 +220,10 @@ import AppFormSection from '../../../../forms/AppFormSection.vue';
 import { CalloutSteps, SettingsStepProps } from '../callouts.interface';
 import { sameAs } from '@vuelidate/validators';
 import AppInput from '../../../../forms/AppInput.vue';
-import AppCheckbox from '../../../../forms/AppCheckbox.vue';
-import AppLabel from '../../../../forms/AppLabel.vue';
-import { faImages, faMap } from '@fortawesome/free-solid-svg-icons';
 import AppSelect from '../../../../forms/AppSelect.vue';
 import AppSubHeading from '../../../../AppSubHeading.vue';
 import env from '../../../../../env';
+import AppCheckboxGroup from '../../../../forms/AppCheckboxGroup.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
@@ -273,19 +265,8 @@ const textComponentItems = computed(() =>
 );
 
 const validation = useVuelidate(
-  {
-    hasVisited: { yes: sameAs(true) },
-    hasResponseView: { yes: sameAs(true) },
-  },
-  {
-    hasVisited,
-    hasResponseView: computed(
-      () =>
-        !props.data.showResponses ||
-        props.data.showResponseGallery ||
-        props.data.showResponseMap
-    ),
-  }
+  { hasVisited: { yes: sameAs(true) } },
+  { hasVisited }
 );
 
 const mapCenter = computed({
