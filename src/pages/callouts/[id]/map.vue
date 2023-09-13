@@ -31,9 +31,13 @@ meta:
         :max-zoom="callout.responseViewSchema.map.maxZoom"
         :min-zoom="callout.responseViewSchema.map.minZoom"
         :max-bounds="callout.responseViewSchema.map.bounds"
+        @map:load="handleLoad"
         @map:click="handleClick"
         @map:mousemove="handleMouseOver"
       >
+        <MglNavigationControl />
+        <MglScaleControl />
+
         <MglGeoJsonSource
           source-id="responses"
           :data="responsesCollecton"
@@ -93,9 +97,12 @@ meta:
         <MglMarker
           v-if="newResponseAddress"
           :coordinates="newResponseAddress.geometry.location"
-        >
-          <div class="w-8 h-8 bg-primary rounded-full" />
-        </MglMarker>
+          color="black"
+        />
+        <MglMarker
+          v-if="geocodeAddress"
+          :coordinates="geocodeAddress.geometry.location"
+        />
       </MglMap>
 
       <transition name="add-notice">
@@ -145,6 +152,8 @@ import {
   MglSymbolLayer,
   useMap,
   MglMarker,
+  MglNavigationControl,
+  MglScaleControl,
 } from 'vue-maplibre-gl';
 import type {
   GeoJSONSource,
@@ -173,12 +182,21 @@ import {
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { useI18n } from 'vue-i18n';
+import { GeocodingControl } from '@maptiler/geocoding-control/maplibregl';
 import {
   HASH_PREFIX,
   useCallout,
 } from '../../../components/pages/callouts/use-callout';
-import { reverseGeocode, formatGeocodeResult } from '../../../utils/geocode';
+import {
+  featureToAddress,
+  reverseGeocode,
+  formatGeocodeResult,
+} from '../../../utils/geocode';
 import CalloutAddResponsePanel from '../../../components/pages/callouts/CalloutAddResponsePanel.vue';
+import env from '../../../env';
+
+import '@maptiler/geocoding-control/style.css';
+import { GeocodingFeature } from '@maptiler/client';
 
 type GetCalloutResponseMapDataWithAddress = GetCalloutResponseMapData & {
   address: CalloutResponseAnswerAddress;
@@ -200,6 +218,7 @@ const { isOpen } = useCallout(callout);
 
 const isAddMode = ref(false);
 const newResponseAnswers = ref<CalloutResponseAnswers>();
+const geocodeAddress = ref<CalloutResponseAnswerAddress>();
 
 // Use the address from the new response to show a marker on the map
 const newResponseAddress = computed(() =>
@@ -376,6 +395,25 @@ onBeforeMount(async () => {
     (r): r is GetCalloutResponseMapDataWithAddress => !!r.address
   );
 });
+
+interface GeocodePickEvent extends Event {
+  detail: GeocodingFeature | null;
+}
+
+function handleLoad(e: { map: Map }) {
+  const geocodeControl = new GeocodingControl({
+    apiKey: env.maptilerKey,
+  });
+
+  geocodeControl.addEventListener('pick', (e: Event) => {
+    const event = e as GeocodePickEvent;
+    geocodeAddress.value = event.detail
+      ? featureToAddress(event.detail)
+      : undefined;
+  });
+
+  e.map.addControl(geocodeControl, 'top-left');
+}
 </script>
 
 <style lang="postcss" scoped>

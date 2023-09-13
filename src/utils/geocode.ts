@@ -1,3 +1,5 @@
+import { CalloutResponseAnswerAddress } from '@beabee/beabee-common';
+import { GeocodingFeature } from '@maptiler/client';
 import { geocoding } from '../lib/maptiler';
 import { generalContent } from '../store';
 
@@ -15,6 +17,17 @@ interface GeocodeResult {
   }[];
 }
 
+export function featureToAddress(
+  feature: GeocodingFeature
+): CalloutResponseAnswerAddress {
+  return {
+    formatted_address: feature.place_name,
+    geometry: {
+      location: { lat: feature.center[1], lng: feature.center[0] },
+    },
+  };
+}
+
 export async function reverseGeocode(
   lat: number,
   lng: number
@@ -28,16 +41,8 @@ export async function reverseGeocode(
     return undefined;
   }
 
-  const mainFeature = data.features[0];
-
   const result: GeocodeResult = {
-    formatted_address: mainFeature.place_name,
-    geometry: {
-      location: {
-        lat: mainFeature.center[1],
-        lng: mainFeature.center[0],
-      },
-    },
+    ...featureToAddress(data.features[0]),
     features: data.features.map((feature) => ({
       text: feature.text,
       types: feature.place_type,
