@@ -1,10 +1,8 @@
 <template>
-  <router-link to="/">
-    <img
-      :src="generalContent.logoUrl || defaultLogo"
-      :alt="generalContent.organisationName"
-    />
-  </router-link>
+  <img
+    :src="generalContent.logoUrl || defaultLogo"
+    :alt="generalContent.organisationName"
+  />
 </template>
 <script lang="ts" setup>
 import { generalContent } from '../store';
