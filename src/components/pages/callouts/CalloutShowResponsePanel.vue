@@ -49,7 +49,7 @@
       <Form
         :key="response.number"
         class="callout-form-simple"
-        :form="callout.formSchema"
+        :form="viewOnlyFormSchema"
         :submission="{ data: response.answers }"
         :options="{ readOnly: true, noAlerts: true, renderMode: 'html' }"
       />
@@ -58,11 +58,12 @@
 </template>
 
 <script lang="ts" setup>
+import { filterComponents } from '@beabee/beabee-common';
 import {
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import {
   GetCalloutDataWith,
   GetCalloutResponseMapData,
@@ -77,6 +78,14 @@ const props = defineProps<{
 }>();
 
 const currentPhotoIndex = ref(0);
+
+// Don't show admin-only fields (they would always be empty as the API doesn't return their answers)
+const viewOnlyFormSchema = computed(() => ({
+  components: filterComponents(
+    props.callout.formSchema.components,
+    (c) => !c.adminOnly
+  ),
+}));
 
 watch(
   () => props.response,
