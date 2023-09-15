@@ -113,7 +113,7 @@ meta:
         >
           <p class="bg-white p-4 font-bold rounded shadow-lg mx-4">
             <font-awesome-icon :icon="faInfoCircle" class="mr-1" />
-            Click on the map where you want to add a point
+            {{ t('callout.addAPoint') }}
           </p>
         </div>
       </transition>

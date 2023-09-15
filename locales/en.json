@@ -262,7 +262,8 @@
     }
   },
   "callout": {
-    "addResponse": "Add a new response",
+    "addAPoint": "Click on the map where you want to add a point",
+    "addLocation": "Add a new location",
     "closed": "This callout is closed",
     "contactDetails": "Contact details",
     "form": {
@@ -944,6 +945,18 @@
     "unsavedChanges": "Unsaved changes",
     "updated": "Updated",
     "warning": "You should get the user's consent before making updates to this page. All changes you make here will also be visible to the user."
+  },
+  "formRenderer": {
+    "components": {
+      "file": {
+        "browse": "upload from device",
+        "dropFiles": "Drop files to attach,",
+        "or": "or",
+        "switchToFileUpload": "Switch to file upload",
+        "takePicture": "Take Picture",
+        "useCamera": "use camera"
+      }
+    }
   },
   "homePage": {
     "editProfile": "Edit your community profile",
