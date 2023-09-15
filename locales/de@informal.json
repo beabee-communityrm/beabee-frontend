@@ -262,7 +262,8 @@
     }
   },
   "callout": {
-    "addResponse": "Neue Antwort hinzufügen",
+    "addAPoint": "Klicken Sie dort auf die Karte, wo Sie einen Ort ergänzen möchten",
+    "addLocation": "Neuen Ort eingeben",
     "closed": "Dieser Callout ist beendet.",
     "contactDetails": "Kontaktdaten",
     "form": {
@@ -930,6 +931,18 @@
     "unsavedChanges": "Ungespeicherte Änderungen",
     "updated": "Aktualisiert",
     "warning": "Ändere hier nur etwas, wenn du das Einverständnis hast. Änderungen werden auch den Nutzern angezeigt."
+  },
+  "formRenderer": {
+    "components": {
+      "file": {
+        "browse": "Upload vom Gerät",
+        "dropFiles": "Files hierher ziehen,",
+        "or": "oder",
+        "switchToFileUpload": "Zum Upload wechseln",
+        "takePicture": "Foto aufnehmen",
+        "useCamera": "Kamera benutzen"
+      }
+    }
   },
   "homePage": {
     "editProfile": "Profil bearbeiten",
