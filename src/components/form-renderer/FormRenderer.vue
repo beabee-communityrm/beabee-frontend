@@ -16,7 +16,7 @@ import {
 import { computed, onBeforeMount } from 'vue';
 import { Form } from '../../lib/formio';
 import { FormSubmission } from './form-renderer.interface';
-import { config, dom, library } from '@fortawesome/fontawesome-svg-core';
+import { dom, library } from '../../lib/fontawesome';
 import {
   faCalendar,
   faCloudUpload,
@@ -78,7 +78,6 @@ onBeforeMount(() => {
     faRemove,
     faRefresh
   );
-  config.autoReplaceSvg = 'nest';
   dom.watch();
 });
 </script>
