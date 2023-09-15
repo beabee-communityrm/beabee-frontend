@@ -37,6 +37,7 @@ meta:
       >
         <MglNavigationControl />
         <MglScaleControl />
+        <MglGeolocationControl />
 
         <MglGeoJsonSource
           source-id="responses"
@@ -154,6 +155,7 @@ import {
   MglMarker,
   MglNavigationControl,
   MglScaleControl,
+  MglGeolocationControl,
 } from 'vue-maplibre-gl';
 import type {
   GeoJSONSource,
