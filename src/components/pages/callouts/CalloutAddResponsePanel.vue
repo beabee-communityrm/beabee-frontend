@@ -1,6 +1,6 @@
 <template>
   <CalloutSidePanel :show="!!answers" @close="$emit('close')">
-    <AppHeading class="mb-4">{{ t('callout.addResponse') }}</AppHeading>
+    <AppHeading class="mb-4">{{ t('callout.addLocation') }}</AppHeading>
     <CalloutThanksBox v-if="showOnlyThanks" :callout="callout" />
     <template v-else>
       <CalloutLoginPrompt v-if="showLoginPrompt" />
