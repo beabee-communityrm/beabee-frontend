@@ -375,9 +375,11 @@
     "actions": {
       "assignTo": "Zuweisen",
       "moveBucket": "Antwort verschieben",
-      "toggleTag": "Tag hinzufügen / entfernen"
+      "toggleTag": "Tag hinzufügen / entfernen",
+      "viewOnMap": "Auf Karte anzeigen"
     },
     "editMode": "Vorsicht, du befindest dich im Bearbeitungsmodus!",
+    "manageFolders": "Ordner bearbeiten",
     "manageTags": "Tags bearbeiten",
     "notifications": {
       "addedAssignee": "\"{assignee}\" zugewiesen",
@@ -693,9 +695,16 @@
             }
           },
           "mapSchema": {
-            "addressPattern": {},
-            "addressPatternProp": {},
-            "addressProp": {},
+            "addressPattern": {
+              "label": "Welches Format möchtest du benutzen?"
+            },
+            "addressPatternProp": {
+              "label": "Soll ein Feld mit der Adresse gefüllt werden?",
+              "none": "-- Kein Feld mit der Adresse füllen --"
+            },
+            "addressProp": {
+              "label": "Welches Feld soll für die Darstellung der Antworten auf der Karte verwendet werden?"
+            },
             "bounds": {
               "label": "Maximale Kartengröße"
             },
@@ -714,7 +723,8 @@
             "style": {
               "help": "<p>Für die Kartenansicht benötigst du ein externes Kartentool, z. B. <a href=\"https://www.maptiler.com\" target=\"_blank\" rel=\"noopener noreferrer\">Maptiler</a> oder <a href=\"https://www.mapbox.com\" target=\"_blank\" rel=\"noopener noreferrer\">Mapbox</a>. Diese Tools stellen dir die URL für die Kartenansicht zur Verfügung, die du hier einfügen musst.</p>\n",
               "label": "Karten-URL"
-            }
+            },
+            "title": "Karteneinstellungen"
           },
           "multiple": {
             "help": "<p>Wenn ja, können eingeloggte Nutzer <strong>mehrfach</strong> am Callout teilnehmen.</p>\n",
@@ -724,7 +734,9 @@
               "yes": "Ja"
             }
           },
-          "responseImageFilter": {},
+          "responseImageFilter": {
+            "label": "Möchtest du einen Filter auf die Bilder legen?"
+          },
           "responseImageProp": {
             "help": "<p>Das Bild wird verwendet, um die Antwort in der Karten- oder Galerieansicht zu visualisieren. Wichtig: Es muss sich um eine Datei-Upload-Komponente handeln.</p>\n",
             "label": "Welches Feld soll als Bild für Darstellung der Antwort dienen?"
@@ -734,7 +746,8 @@
             "label": "Welches Feld soll als Überschrift dienen?"
           },
           "showResponses": {
-            "help": "<p>Mit dieser Funktion ist es möglich, Callout-Antworten auf einer Karte oder als Galerie darzustellen.</p>\n"
+            "help": "<p>Mit dieser Funktion ist es möglich, Callout-Antworten auf einer Karte oder als Galerie darzustellen.</p>\n",
+            "label": "Sollen Antworten öffentlich angezeigt werden?"
           },
           "visible": {
             "help": "<p>Du kannst den Callout <strong>nicht anzeigen</strong> lassen. Dann ist er nur über den Link erreichbar.</p>\n",
@@ -744,7 +757,9 @@
               "yes": "Ja, Callout im Dashboard anzeigen."
             }
           },
-          "whichResponseBuckets": {},
+          "whichResponseBuckets": {
+            "label": "Welche Antwortbereiche sollen öffentlich angezeigt werden?"
+          },
           "whichResponseViews": {
             "help": "<p>Hier kannst du entscheiden, ob du die Karten- oder die Galerieansicht verwenden möchtest. Es ist auch möglich beides auszuwählen.</p>\n",
             "label": "Wie soll die Antwort dargestellt werden?",
@@ -820,6 +835,15 @@
   },
   "editNotice": {
     "title": "Bearbeiten: {title}"
+  },
+  "folderEditor": {
+    "add": "Tag hinzufügen",
+    "addNewFolder": "Tag hinzufügen",
+    "confirmDelete": {
+      "text": "Bist du sicher, dass du diesen Tag entfernen willst? Die damit getaggten Antworten werden nicht gelöscht.",
+      "title": "Tag entfernen"
+    },
+    "name": "Name"
   },
   "footer": {
     "contactUs": "Kontaktiere uns unter",
@@ -1172,6 +1196,9 @@
     "newPassword": "Neues Passwort",
     "success": "Dein Passwort wurde aktualisiert.",
     "title": "Passwort aktualisieren?"
+  },
+  "reviewerEditor": {
+    "confirmDelete": {}
   },
   "roleEditor": {
     "add": "Rolle hinzufügen",

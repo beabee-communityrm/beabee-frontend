@@ -379,6 +379,8 @@
       "viewOnMap": "View on map"
     },
     "editMode": "You are in edit mode, be careful!",
+    "manageFolders": "Manage folders",
+    "manageReviewers": "Manage reviewers",
     "manageTags": "Manage tags",
     "notifications": {
       "addedAssignee": "Assigned to \"{assignee}\"",
@@ -835,6 +837,15 @@
   "editNotice": {
     "title": "Edit: {title}"
   },
+  "folderEditor": {
+    "add": "Add folder",
+    "addNewFolder": "Add a folder",
+    "confirmDelete": {
+      "text": "Are you sure you want to remove this folder? This will only affect this callout.",
+      "title": "Remove folder"
+    },
+    "name": "Name"
+  },
   "footer": {
     "contactUs": "Contact us at",
     "contacts": "Contacts",
@@ -1186,6 +1197,15 @@
     "newPassword": "New password",
     "success": "Your password has been reset.",
     "title": "Reset your password?"
+  },
+  "reviewerEditor": {
+    "add": "Add reviewer",
+    "addNewReviewer": "Add a reviewer",
+    "confirmDelete": {
+      "text": "Are you sure you want to remove this reviewer from this callout?",
+      "title": "Remove reviewer"
+    },
+    "name": "Name"
   },
   "roleEditor": {
     "add": "Add role",
