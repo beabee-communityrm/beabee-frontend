@@ -73,8 +73,8 @@
     "title": "Hinweis hinzufügen"
   },
   "adminDashboard": {
-    "hint1": "<p>Das beabee-Handbuch für Community-Journalismus <a href=\"https://beabee.io/neu-handbuch-community-journalismus/\">„Lust auf Lokal” ist erschienen</a>. Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
-    "hint2": "<p>Im <a href=\"https://beabee.io/#blog\">Blog</a> auf unserer Website findest du viele Best-Practice-Beispiele anderer Redaktionen, von denen du dich inspierieren lassen kannst.</p>\n",
+    "hint1": "<p>Das beabee-Handbuch für Community-Journalismus <a href=\"https://beabee.io/neu-handbuch-community-journalismus/\" target=\"_blank\" rel=\"noopener noreferrer\">„Lust auf Lokal” ist erschienen</a>. Es enthält nicht nur unser gesammeltes Wissen zum Aufbau unabhängiger Lokalredaktionen, sondern auch viele Beispiele aus der Praxis.</p>\n",
+    "hint2": "<p>Im <a href=\"https://beabee.io/#blog\" target=\"_blank\" rel=\"noopener noreferrer\">Blog</a> auf unserer Website findest du viele Best-Practice-Beispiele anderer Redaktionen, von denen du dich inspierieren lassen kannst.</p>\n",
     "hint3": "<p>Unsere Community-Meetups finden jeden dritten Donnerstag im Monat statt. Du willst dein Best-Practice-Beispiel mit anderen teilen? Schreib eine E-Mail an <a href=\"mailto:tobias.hauswurz{'@'}correctiv.org\">tobias.hauswurz{'@'}correctiv.org</a></p>\n",
     "joinSlack": "Tritt der beabee-Community auf Slack bei!",
     "latestCallout": {
@@ -93,7 +93,7 @@
     },
     "responsesSoFar": "{n} Antworten bisher",
     "seeAllResponses": "Alle Antworten anzeigen",
-    "supportInbox": "<p>Benötigst du Hilfe? Besuche unser <a href=\"https://wiki.beabee.io/beabee-help-center/\">beabee Help Center</a> oder schreib' uns eine E-Mail an:  <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
+    "supportInbox": "<p>Benötigst du Hilfe? Besuche unser <a href=\"https://wiki.beabee.io/beabee-help-center/\" target=\"_blank\" rel=\"noopener noreferrer\">beabee Help Center</a> oder schreib' uns eine E-Mail an:  <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
     "welcomeBack": "Willkommen zurück {firstName}!"
   },
   "adminSettings": {
@@ -262,6 +262,9 @@
     }
   },
   "callout": {
+    "addAPoint": "Klicken Sie dort auf die Karte, wo Sie einen Ort ergänzen möchten",
+    "addLocation": "Neuen Ort eingeben",
+    "closed": "Dieser Callout ist beendet.",
     "contactDetails": "Kontaktdaten",
     "form": {
       "email": "Deine E-Mail-Adresse",
@@ -272,13 +275,18 @@
     "joinNow": "Mitglied werden",
     "loginToYourAccount": "Einloggen",
     "membersOnly": "An diesem Callout können nur zahlende Mitglieder teilnehmen. Um teilzunehmen",
+    "responseSubmitted": "Antwort eingereicht",
     "share": {
       "address": "Diesen Callout per Link teilen:",
       "services": "Diesen Callout auf einer der folgenden Plattformen teilen: "
     },
-    "showingPreview": "Antworten sind im Vorschaumodus deaktiviert",
+    "showingPreview": "Im Vorschaumodus sind Antworten deaktiviert.",
     "toContributionPage": "Meinen Beitrag ändern",
     "updateContribution": "Bitte ändere deinen Beitrag. ",
+    "views": {
+      "gallery": "Galerie",
+      "map": "Karten"
+    },
     "youResponded": "Du hast geantwortet ♥"
   },
   "calloutAdmin": {
@@ -327,6 +335,9 @@
     "summary": "Zusammenfassung",
     "updated": "Änderungen gespeichert!"
   },
+  "calloutBuilder": {
+    "showAdvancedOptions": "Erweiterte Optionen anzeigen"
+  },
   "calloutResponse": {
     "data": {
       "answers": "Antworten",
@@ -363,11 +374,12 @@
   "calloutResponsePage": {
     "actions": {
       "assignTo": "Zuweisen",
-      "editResponse": "Antwort bearbeiten",
       "moveBucket": "Antwort verschieben",
-      "toggleTag": "Tag hinzufügen / entfernen"
+      "toggleTag": "Tag hinzufügen / entfernen",
+      "viewOnMap": "Auf Karte anzeigen"
     },
     "editMode": "Vorsicht, du befindest dich im Bearbeitungsmodus!",
+    "manageFolders": "Ordner bearbeiten",
     "manageTags": "Tags bearbeiten",
     "notifications": {
       "addedAssignee": "\"{assignee}\" zugewiesen",
@@ -606,17 +618,15 @@
     "lastSavedNow": "Zuletzt vor wenigen Augenblicken gespeichert.",
     "steps": {
       "content": {
-        "description": "Entwirf deinen Callout, indem Du deine Fragen formulierst.",
         "inputs": {
           "intro": {
             "help": "<p>Die <strong>Einleitung</strong> erscheint vor den Fragen. Erkläre darin, warum du den Callout machst, also was das Ziel ist und wie die Antworten helfen. Gib so viel Kontext wie möglich, um den Teilnehmenden die Beantwortung zu erleichtern.</p>\n",
             "label": "Einleitung"
           }
         },
-        "title": "Callout-Inhalt"
+        "title": "Inhalt"
       },
       "dates": {
-        "description": "Plane, wann dein Callout veröffentlicht werden und wie lange er aktiv bleiben soll.",
         "inputs": {
           "expires": {
             "label": "Wann soll der Callout enden?",
@@ -633,10 +643,9 @@
             }
           }
         },
-        "title": "Startdatum und Dauer"
+        "title": "Zeitplan"
       },
       "endMessage": {
-        "description": "Danke Nutzern für die Teilnahme oder leite sie auf eine andere Seite weiter.",
         "inputs": {
           "action": {
             "label": "Wenn die Teilnehmenden ihre Antworten abgeschickt haben",
@@ -664,11 +673,9 @@
         "title": "Nachricht am Ende"
       },
       "mailchimp": {
-        "description": "Mailchimp-Synchronisation einrichten",
         "title": "Mailchimp-Synchronisation"
       },
       "settings": {
-        "description": "Entscheide unter anderem, wer deinen Callout sehen kann.",
         "inputs": {
           "anonymous": {
             "help": "<p>Wenn du <strong>anonyme Antworten</strong> erlaubst, werden Teilenehmer nicht nach ihren Kontaktdaten gefragt.</p>\n",
@@ -687,6 +694,38 @@
               "yes": "Ja"
             }
           },
+          "mapSchema": {
+            "addressPattern": {
+              "label": "Welches Format möchtest du benutzen?"
+            },
+            "addressPatternProp": {
+              "label": "Soll ein Feld mit der Adresse gefüllt werden?",
+              "none": "-- Kein Feld mit der Adresse füllen --"
+            },
+            "addressProp": {
+              "label": "Welches Feld soll für die Darstellung der Antworten auf der Karte verwendet werden?"
+            },
+            "bounds": {
+              "label": "Maximale Kartengröße"
+            },
+            "center": {
+              "label": "Karten-Zentrum"
+            },
+            "initialZoom": {
+              "label": "Voreingestellter Zoom"
+            },
+            "maxZoom": {
+              "label": "Maximaler Zoom"
+            },
+            "minZoom": {
+              "label": "Minimaler Zoom"
+            },
+            "style": {
+              "help": "<p>Für die Kartenansicht benötigst du ein externes Kartentool, z. B. <a href=\"https://www.maptiler.com\" target=\"_blank\" rel=\"noopener noreferrer\">Maptiler</a> oder <a href=\"https://www.mapbox.com\" target=\"_blank\" rel=\"noopener noreferrer\">Mapbox</a>. Diese Tools stellen dir die URL für die Kartenansicht zur Verfügung, die du hier einfügen musst.</p>\n",
+              "label": "Karten-URL"
+            },
+            "title": "Karteneinstellungen"
+          },
           "multiple": {
             "help": "<p>Wenn ja, können eingeloggte Nutzer <strong>mehrfach</strong> am Callout teilnehmen.</p>\n",
             "label": "Sollen Nutzer mehrfach teilnehmen können?",
@@ -695,12 +734,38 @@
               "yes": "Ja"
             }
           },
+          "responseImageFilter": {
+            "label": "Möchtest du einen Filter auf die Bilder legen?"
+          },
+          "responseImageProp": {
+            "help": "<p>Das Bild wird verwendet, um die Antwort in der Karten- oder Galerieansicht zu visualisieren. Wichtig: Es muss sich um eine Datei-Upload-Komponente handeln.</p>\n",
+            "label": "Welches Feld soll als Bild für Darstellung der Antwort dienen?"
+          },
+          "responseTitleProp": {
+            "help": "<p>Der Titel erscheint als Überschrift auf jeder Antwort in der Karten- oder Galerieansicht.</p>\n",
+            "label": "Welches Feld soll als Überschrift dienen?"
+          },
+          "showResponses": {
+            "help": "<p>Mit dieser Funktion ist es möglich, Callout-Antworten auf einer Karte oder als Galerie darzustellen.</p>\n",
+            "label": "Sollen Antworten öffentlich angezeigt werden?"
+          },
           "visible": {
             "help": "<p>Du kannst den Callout <strong>nicht anzeigen</strong> lassen. Dann ist er nur über den Link erreichbar.</p>\n",
             "label": "Soll der Callout deinen Mitgliedern im Dashboard angezeigt werden?",
             "opts": {
               "no": "Nein, Callout nicht im Dashboard anzeigen.",
               "yes": "Ja, Callout im Dashboard anzeigen."
+            }
+          },
+          "whichResponseBuckets": {
+            "label": "Welche Antwortbereiche sollen öffentlich angezeigt werden?"
+          },
+          "whichResponseViews": {
+            "help": "<p>Hier kannst du entscheiden, ob du die Karten- oder die Galerieansicht verwenden möchtest. Es ist auch möglich beides auszuwählen.</p>\n",
+            "label": "Wie soll die Antwort dargestellt werden?",
+            "opts": {
+              "gallery": "Galerie-Ansicht",
+              "map": "Karten-Ansicht"
             }
           },
           "who": {
@@ -715,7 +780,6 @@
         "title": "Einstellungen"
       },
       "titleAndImage": {
-        "description": "Gib deinem Callout einen Titel, eine Beschreibung und ein Bild.",
         "inputs": {
           "description": {
             "help": "<p>Die <strong>Kurzbeschreibung</strong> ergänzt den Titel und sollte in wenigen Worten erklären, worum es bei dem Callout geht.</p>\n",
@@ -772,6 +836,15 @@
   "editNotice": {
     "title": "Bearbeiten: {title}"
   },
+  "folderEditor": {
+    "add": "Tag hinzufügen",
+    "addNewFolder": "Tag hinzufügen",
+    "confirmDelete": {
+      "text": "Bist du sicher, dass du diesen Tag entfernen willst? Die damit getaggten Antworten werden nicht gelöscht.",
+      "title": "Tag entfernen"
+    },
+    "name": "Name"
+  },
   "footer": {
     "contactUs": "Kontaktiere uns unter",
     "contacts": "Kontakte",
@@ -825,6 +898,10 @@
         "email": "Ungültige E-Mail-Adresse",
         "required": "E-Mail-Adresse benötigt"
       },
+      "file": {
+        "rateLimited": "Hochladen fehlgeschlagen: Du hast in zu kurzer Zeit zu viele Dateien hochgeladen. Bitte warte ein paar Minuten, bevor du es erneut versuchst.",
+        "tooBig": "Hochladen fehlgeschlagen: Die Dateigröße darf max. 20 MB betragen."
+      },
       "firstName": {
         "required": "Vorname benötigt"
       },
@@ -844,6 +921,7 @@
       },
       "unknown": {
         "email": "Ungültige E-Mail-Adresse",
+        "max": "Dieses Feld darf höchstens {max} sein",
         "min": "Dieses Feld muss mindestens {min}",
         "required": "Dieses Feld wird benötigt",
         "url": "Ungültige URL"
@@ -876,8 +954,19 @@
     "saved": "Gespeichert!",
     "unsavedChanges": "Ungespeicherte Änderungen",
     "updated": "Aktualisiert",
-    "uploading": "Es wird hochgeladen",
     "warning": "Ändere hier nur etwas, wenn du das Einverständnis hast. Änderungen werden auch den Nutzern angezeigt."
+  },
+  "formRenderer": {
+    "components": {
+      "file": {
+        "browse": "Upload vom Gerät",
+        "dropFiles": "Files hierher ziehen,",
+        "or": "oder",
+        "switchToFileUpload": "Zum Upload wechseln",
+        "takePicture": "Foto aufnehmen",
+        "useCamera": "Kamera benutzen"
+      }
+    }
   },
   "homePage": {
     "editProfile": "Profil bearbeiten",
@@ -1107,6 +1196,9 @@
     "newPassword": "Neues Passwort",
     "success": "Dein Passwort wurde aktualisiert.",
     "title": "Passwort aktualisieren?"
+  },
+  "reviewerEditor": {
+    "confirmDelete": {}
   },
   "roleEditor": {
     "add": "Rolle hinzufügen",

@@ -15,6 +15,7 @@ import {
   GetCalloutTagData,
   CreateCalloutTagData,
   UpdateCalloutTagData,
+  GetCalloutResponseMapData,
 } from './api.interface';
 import { deserializeDate } from '.';
 import { deserializeCalloutResponse } from './callout-response';
@@ -94,6 +95,16 @@ export async function fetchResponses<
     ...data,
     items: data.items.map(deserializeCalloutResponse),
   };
+}
+
+export async function fetchResponsesForMap(
+  slug: string,
+  query?: GetCalloutResponsesQuery
+): Promise<Paginated<GetCalloutResponseMapData>> {
+  const { data } = await axios.get<
+    Paginated<Serial<GetCalloutResponseMapData>>
+  >(`/callout/${slug}/responses/map`, { params: query });
+  return data;
 }
 
 export async function createResponse(

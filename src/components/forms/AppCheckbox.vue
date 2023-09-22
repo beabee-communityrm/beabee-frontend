@@ -1,5 +1,5 @@
 <template>
-  <label class="flex flex-row items-start">
+  <label class="flex flex-row items-start font-semibold">
     <input
       v-model="modelValueProxy"
       type="checkbox"
@@ -7,7 +7,7 @@
       :value="true"
       class="mt-1"
     />
-    <p v-if="label || icon" class="ml-2 font-semibold">
+    <p v-if="label || icon" class="ml-2">
       <font-awesome-icon v-if="icon" :icon="icon" />
       {{ label }}
     </p>

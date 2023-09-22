@@ -70,6 +70,11 @@ export const adminMenu: MenuSection[] = env.cnrMode
         title: 'menu.admin',
         items: [
           {
+            title: 'menu.dashboard',
+            href: '/admin',
+            icon: faChartLine,
+          },
+          {
             title: 'menu.contacts',
             href: '/admin/contacts',
             icon: faUsers,

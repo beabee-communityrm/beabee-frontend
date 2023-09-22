@@ -1,9 +1,7 @@
 <template>
-  <div class="mt-10 border-t border-primary-40 pt-10 text-lg">
-    <AppHeading class="mb-4">
-      {{ t('calloutResponseComments.comments') }}
-    </AppHeading>
-  </div>
+  <AppHeading class="mb-4">
+    {{ t('calloutResponseComments.comments') }}
+  </AppHeading>
 
   <CalloutResponseComment
     v-for="comment in comments.items"

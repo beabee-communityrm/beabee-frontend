@@ -1,5 +1,8 @@
 import {
   CalloutFormSchema,
+  CalloutResponseAnswerAddress,
+  CalloutResponseAnswerFileUpload,
+  CalloutResponseAnswers,
   ContributionPeriod,
   ContributionType,
   ItemStatus,
@@ -312,19 +315,51 @@ interface CalloutFormData {
   shareDescription?: string;
 }
 
+export interface CalloutMapSchema {
+  style: string;
+  center: [number, number];
+  bounds: [[number, number], [number, number]];
+  minZoom: number;
+  maxZoom: number;
+  initialZoom: number;
+  addressProp: string;
+  addressPattern: string;
+  addressPatternProp: string;
+}
+
+export interface CalloutResponseViewSchema {
+  buckets: string[];
+  titleProp: string;
+  imageProp: string;
+  imageFilter: string;
+  gallery: boolean;
+  map: CalloutMapSchema | null;
+}
+
 export interface GetCalloutData extends CalloutData {
   slug: string;
   status: ItemStatus;
 }
 
-export type GetCalloutWith = 'form' | 'responseCount' | 'hasAnswered' | void;
+export type GetCalloutWith =
+  | 'form'
+  | 'responseViewSchema'
+  | 'responseCount'
+  | 'hasAnswered'
+  | void;
 
 export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
   ('responseCount' extends With ? { responseCount: number } : Noop) &
   ('hasAnswered' extends With ? { hasAnswered: boolean } : Noop) &
+  ('responseViewSchema' extends With
+    ? { responseViewSchema: CalloutResponseViewSchema | null }
+    : Noop) &
   ('form' extends With ? CalloutFormData : Noop);
 
-export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
+export type CreateCalloutData = AllowNull<
+  CalloutData &
+    CalloutFormData & { responseViewSchema?: CalloutResponseViewSchema | null }
+>;
 export type UpdateCalloutData = Partial<CreateCalloutData>;
 
 export type GetCalloutsQuery = PaginatedQuery; // TODO: constrain fields
@@ -343,15 +378,6 @@ export interface CreateCalloutTagData {
 
 export type UpdateCalloutTagData = Partial<CreateCalloutTagData>;
 
-type CalloutResponseAnswer =
-  | string
-  | boolean
-  | number
-  | null
-  | undefined
-  | Record<string, boolean>;
-export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
-
 export interface GetCalloutResponseData {
   id: string;
   number: number;
@@ -360,6 +386,14 @@ export interface GetCalloutResponseData {
   bucket: string;
   guestName: string | null;
   guestEmail: string | null;
+}
+
+export interface GetCalloutResponseMapData {
+  number: number;
+  answers: CalloutResponseAnswers;
+  title: string;
+  photos: CalloutResponseAnswerFileUpload[];
+  address?: CalloutResponseAnswerAddress;
 }
 
 export interface CreateCalloutResponseData {
@@ -499,3 +533,7 @@ export interface GetEmailData {
 }
 
 export type UpdateEmailData = GetEmailData;
+
+export interface GetUploadFlowData {
+  id: string;
+}

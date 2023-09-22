@@ -1,0 +1,278 @@
+/* Apply to form renderer */
+.callout-form-renderer,
+/* Apply to form builder form area */
+.callout-form-builder .formarea,
+/* Apply to preview panel only on popup dialog */
+.formio-dialog .preview-panel {
+  @apply text-lg;
+
+  /* Give callouts a white background */
+  &:not(.has-no-bg) .formio-form {
+    @apply bg-white p-6 shadow-md;
+  }
+
+  /* Form labels same styling as .content-message h3 */
+  .col-form-label {
+    @apply font-title text-xl font-semibold mb-2;
+  }
+}
+
+/* Apply to form renderer */
+.callout-form-renderer,
+/* Apply to form builder form area */
+.callout-form-builder .formarea,
+/* Apply to popup dialog */
+.formio-dialog {
+  /* Input styling */
+  .form-control {
+    @apply w-full rounded border border-primary-40 bg-white p-2 focus:shadow-input focus:outline-none;
+
+    &.is-invalid {
+      @apply border-danger-70 bg-danger-10;
+    }
+  }
+
+  /* Grid styles */
+  .row {
+    @apply flex gap-0 -mx-2;
+    & > [class*='col'] {
+      @apply px-2;
+    }
+  }
+  .col {
+    @apply flex-1;
+  }
+  .col-sm-2 {
+    @apply flex-none basis-1/6 max-w-[16.666667%];
+  }
+  .col-sm-6 {
+    @apply flex-none basis-1/2 max-w-[50%];
+  }
+  .col-sm-10 {
+    @apply flex-none basis-5/6 max-w-[83.333333%];
+  }
+  .col-sm-12 {
+    @apply flex-none basis-full max-w-full;
+  }
+  .col-md-1 {
+    @apply flex-none basis-1/12 max-w-[8.333333%];
+  }
+  .col-md-2 {
+    @apply flex-none basis-2/12 max-w-[16.666667%];
+  }
+  .col-md-9 {
+    @apply flex-none basis-9/12 max-w-[75%];
+  }
+
+  /* Button styling */
+  .btn:not(.component-settings-button):not(.formcomponent) {
+    @apply relative inline-flex h-10 cursor-pointer items-center justify-center whitespace-nowrap rounded bg-link px-2 text-center font-bold text-white;
+
+    &[disabled] {
+      @apply cursor-not-allowed opacity-50;
+    }
+
+    &:not([disabled]):hover {
+      @apply bg-link-110;
+    }
+
+    &.btn-success {
+      @apply bg-success;
+      &:not([disabled]):hover {
+        @apply bg-success-110;
+      }
+    }
+    &.btn-danger {
+      @apply bg-danger;
+      &:not([disabled]):hover {
+        @apply bg-danger-110;
+      }
+    }
+    &.btn-light,
+    &.btn-secondary {
+      @apply border border-link bg-white text-link;
+      &:not([disabled]):hover {
+        @apply bg-danger-10;
+      }
+    }
+
+    &.btn-block {
+      @apply w-full;
+    }
+
+    /* Align font-awesome icons */
+    &.svg-inline--fa {
+      @apply box-content align-top;
+    }
+  }
+
+  /* Choice select widget styling */
+  .choices__list {
+    @apply align-middle;
+  }
+  .formio-choices.form-group {
+    @apply mb-0;
+  }
+
+  /* Input group styling */
+  .input-group {
+    @apply flex items-center;
+  }
+  .input-group-append {
+    @apply ml-2;
+  }
+
+  /* Hide hidden controls */
+  .formio-hidden {
+    @apply hidden !important;
+  }
+
+  /* Standard spacing for questions and flex to manipulate order */
+  .formio-component-content,
+  .form-group {
+    @apply mb-8 flex flex-col;
+
+    &.formio-component-button {
+      @apply block;
+    }
+  }
+
+  /* Label always goes at the top, styled like .content-message h3 */
+  .col-form-label {
+    @apply -order-2 block;
+  }
+  /* Description goes next */
+  .form-text {
+    @apply -order-1 mb-2 text-body-80;
+  }
+
+  /* Hints on same line as check box */
+  .form-check {
+    @apply flex items-baseline;
+    & > i {
+      @apply flex-none ml-2;
+    }
+  }
+
+  /* Subtle style for check boxes */
+  .formio-editor-read-only-content,
+  .form-check-input {
+    @apply accent-link;
+  }
+
+  /* Inline checkboxes */
+  .form-check-inline {
+    @apply mr-4 inline-block;
+  }
+
+  /* Block checkboxes */
+  .form-check-label {
+    @apply mb-2 flex items-baseline;
+
+    .form-check-input {
+      @apply mr-2 flex-none;
+    }
+  }
+
+  .formio-select-autocomplete-input {
+    @apply absolute -z-10 opacity-0;
+  }
+
+  /* Equal width columns for column component */
+  .formio-component-columns > [class^='col'] {
+    @apply flex-1;
+  }
+
+  /* Styling for input errors */
+  .formio-errors {
+    @apply mt-1.5 text-sm font-semibold;
+
+    .form-text {
+      @apply text-danger;
+    }
+  }
+
+  /* Add required asterisk */
+  .field-required::after {
+    @apply text-body;
+    content: '*';
+  }
+
+  /* Styles for file upload component */
+  .formio-component-file {
+    /* Style the image carousel */
+    & > div:not([class]) {
+      @apply flex flex-wrap gap-2;
+
+      & > div {
+        @apply flex-1 min-w-[120px];
+        & > span {
+          @apply flex items-start;
+        }
+      }
+
+      img {
+        width: 100% !important;
+      }
+
+      i[ref='removeLink'] {
+        @apply align-top ml-1;
+      }
+    }
+
+    .video-container video {
+      @apply block w-full;
+    }
+
+    .btn {
+      @apply mt-2;
+    }
+
+    .list-group {
+      @apply border border-primary-20 rounded;
+    }
+    .list-group-header {
+      @apply p-2 bg-primary-10 rounded-t;
+    }
+    .list-group-item {
+      @apply p-2 border-b border-primary-20;
+      &:last-child {
+        @apply border-b-0;
+      }
+    }
+    .fileSelector,
+    .file {
+      @apply mt-4 border border-2 border-dashed border-grey p-2;
+    }
+    .file {
+      .col-form-label {
+        @apply text-lg mb-0;
+      }
+      .alert-danger {
+        @apply text-danger text-sm font-semibold;
+      }
+    }
+  }
+
+  /* Styles for signature component */
+  .signature-pad-refresh {
+    @apply mb-2;
+  }
+}
+
+/* Match header margin to form labels */
+.formio-component-content,
+/* Apply to FormIO HTML editor */
+.formio-dialog .formio-component-html .ck-content {
+  h3 {
+    @apply mb-2;
+  }
+}
+
+/* Apply to form renderer in read only mode */
+.callout-form-renderer .formio-read-only {
+  /* Respect text formatting */
+  div[ref='value'] {
+    @apply whitespace-pre-wrap break-words;
+  }
+}

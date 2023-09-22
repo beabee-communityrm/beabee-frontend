@@ -20,7 +20,9 @@
     </div>
 
     <!-- logo on small screens -->
-    <AppLogo class="w-11" />
+    <router-link to="/">
+      <AppLogo class="w-11" />
+    </router-link>
   </div>
 
   <div
@@ -29,7 +31,10 @@
   >
     <div class="my-10 hidden text-center md:block">
       <!-- logo on bigger screens -->
-      <AppLogo class="w-12 md:inline-block xl:w-20" />
+
+      <router-link to="/">
+        <AppLogo class="w-12 mx-auto xl:w-20" />
+      </router-link>
     </div>
 
     <TheMenuList v-if="currentUser" />

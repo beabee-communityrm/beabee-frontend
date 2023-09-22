@@ -11,7 +11,7 @@ meta:
     {{ t('adminDashboard.welcomeBack', { firstName: currentUser?.firstname }) }}
   </p>
   <div class="flex flex-col gap-8 lg:flex-row">
-    <div class="flex-1 basis-5/12">
+    <div v-if="!env.cnrMode" class="flex-1 basis-5/12">
       <AppHeading>{{ t('adminDashboard.numbers.title') }}</AppHeading>
       <div v-if="stats" class="mb-8 mt-4 flex gap-4">
         <KeyStat
@@ -114,6 +114,7 @@ import { fetchStats } from '../../utils/api/stats';
 import { subDays } from 'date-fns';
 import { addBreadcrumb } from '../../store/breadcrumb';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
+import env from '../../env';
 
 const { n, t } = useI18n();
 

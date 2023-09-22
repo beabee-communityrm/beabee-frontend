@@ -21,6 +21,7 @@
           :name="name"
           :required="required"
           :min="min"
+          :max="max"
           :pattern="pattern"
           v-bind="$attrs"
           @blur="validation.$touch"
@@ -30,17 +31,11 @@
     <div v-if="$slots.after" class="flex-0 ml-2"><slot name="after" /></div>
   </div>
 
-  <div
+  <AppInputError
     v-if="hasError && !hideErrorMessage"
-    class="mt-1.5 text-xs font-semibold text-danger"
-    role="alert"
-  >
-    {{ validation.$errors[0].$message }}
-  </div>
-
-  <div v-if="infoMessage" class="mt-1.5 text-xs">
-    <AppInputHelp :message="infoMessage" />
-  </div>
+    :message="validation.$errors[0].$message"
+  />
+  <AppInputHelp v-if="infoMessage" :message="infoMessage" />
 </template>
 
 <script lang="ts" setup>
@@ -56,6 +51,7 @@ import {
 } from '@vuelidate/validators';
 import AppInputHelp from './AppInputHelp.vue';
 import AppLabel from './AppLabel.vue';
+import AppInputError from './AppInputError.vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = withDefaults(
@@ -67,6 +63,7 @@ const props = withDefaults(
     infoMessage?: string;
     required?: boolean;
     min?: number | string;
+    max?: number | string;
     sameAs?: number | string;
     pattern?: string;
     hideErrorMessage?: boolean;
@@ -79,6 +76,7 @@ const props = withDefaults(
     label: undefined,
     infoMessage: undefined,
     min: undefined,
+    max: undefined,
     sameAs: undefined,
     pattern: undefined,
     prefix: undefined,
@@ -122,6 +120,13 @@ const rules = computed(() => ({
         () => errorT('min', { min: props.min }),
         (value: number | string) =>
           props.min === undefined || value >= props.min
+      ),
+    }),
+    ...(props.max !== undefined && {
+      max: helpers.withMessage(
+        () => errorT('max', { max: props.max }),
+        (value: number | string) =>
+          props.max === undefined || value <= props.max
       ),
     }),
     ...(props.sameAs !== undefined && {
