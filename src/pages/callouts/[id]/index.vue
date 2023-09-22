@@ -53,7 +53,7 @@ meta:
     <CalloutMemberOnlyPrompt v-else-if="showMemberOnlyPrompt && !isPreview" />
 
     <template v-else-if="!showOnlyThankYou">
-      <hr class="mt-10 border-t border-primary-40 pt-10" />
+      <hr v-if="!isEmbed" class="mt-10 border-t border-primary-40 pt-10" />
 
       <AppNotification
         v-if="isPreview"
