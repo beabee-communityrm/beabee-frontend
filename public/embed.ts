@@ -3,7 +3,6 @@ import iframeResizer from 'iframe-resizer/js/iframeResizer';
 if (document.currentScript?.parentNode) {
   const id = 'beabee-embed-' + Math.random().toString(36).substring(7);
   const url = document.currentScript.getAttribute('data-url');
-  console.log(url);
 
   const iframe = document.createElement('iframe');
   iframe.setAttribute('src', '__appUrl__/' + url);
