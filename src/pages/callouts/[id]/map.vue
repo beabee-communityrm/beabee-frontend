@@ -4,6 +4,7 @@ meta:
   pageTitle: menu.callouts
   noAuth: true
   layout: Fullscreen
+  embeddable: true
 </route>
 
 <template>
@@ -11,7 +12,7 @@ meta:
     v-if="callout?.responseViewSchema?.map"
     class="absolute inset-0 flex flex-col"
   >
-    <div class="flex-0 p-6 pb-1 shadow-lg z-10">
+    <div v-if="!isEmbed" class="flex-0 p-6 pb-1 shadow-lg z-10">
       <PageTitle :title="callout.title" no-collapse>
         <router-link
           v-if="callout.responseViewSchema.gallery"
@@ -199,6 +200,7 @@ import env from '../../../env';
 
 import '@maptiler/geocoding-control/style.css';
 import { GeocodingFeature } from '@maptiler/client';
+import { isEmbed } from '../../../store';
 
 type GetCalloutResponseMapDataWithAddress = GetCalloutResponseMapData & {
   address: CalloutResponseAnswerAddress;

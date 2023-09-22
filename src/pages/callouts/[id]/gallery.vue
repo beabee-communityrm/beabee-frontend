@@ -4,11 +4,12 @@ meta:
   pageTitle: menu.callouts
   noAuth: true
   layout: Fullscreen
+  embeddable: true
 </route>
 
 <template>
   <div v-if="callout" class="absolute inset-0 flex flex-col">
-    <div class="flex-0 p-6 pb-1 z-10 shadow-lg">
+    <div v-if="!isEmbed" class="flex-0 p-6 pb-1 z-10 shadow-lg">
       <PageTitle :title="callout.title" no-collapse>
         <router-link
           v-if="callout.responseViewSchema?.map"
@@ -68,6 +69,7 @@ import CalloutShowResponsePanel from '../../../components/pages/callouts/Callout
 import PageTitle from '../../../components/PageTitle.vue';
 import { faMap } from '@fortawesome/free-solid-svg-icons';
 import { useI18n } from 'vue-i18n';
+import { isEmbed } from '../../../store';
 
 const HASH_PREFIX = '#response-' as const;
 
