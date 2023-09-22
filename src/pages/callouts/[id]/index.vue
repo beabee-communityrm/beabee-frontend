@@ -3,54 +3,57 @@ name: callout
 meta:
   pageTitle: menu.callouts
   noAuth: true
+  embeddable: true
 </route>
 
 <template>
   <div v-if="callout" class="md:max-w-2xl">
-    <h1 class="mb-6 font-title text-4xl font-bold">{{ callout.title }}</h1>
-    <div class="mb-6 flex items-center justify-between">
-      <div class="flex items-center text-sm font-semibold text-body-60">
-        <div>
-          <ItemStatusText :item="callout" />
+    <template v-if="!isEmbed">
+      <h1 class="mb-6 font-title text-4xl font-bold">{{ callout.title }}</h1>
+      <div class="mb-6 flex items-center justify-between">
+        <div class="flex items-center text-sm font-semibold text-body-60">
+          <div>
+            <ItemStatusText :item="callout" />
+          </div>
+          <div
+            v-if="latestResponse"
+            class="border-body-40 ml-3 w-32 border-l pl-3"
+          >
+            {{ t('callout.youResponded') }}
+          </div>
         </div>
-        <div
-          v-if="latestResponse"
-          class="border-body-40 ml-3 w-32 border-l pl-3"
+        <AppButton
+          v-if="callout.status === ItemStatus.Open"
+          :icon="showSharingPanel ? faCaretDown : faShare"
+          variant="primaryOutlined"
+          @click="showSharingPanel = !showSharingPanel"
+          >{{ t('common.share') }}</AppButton
         >
-          {{ t('callout.youResponded') }}
-        </div>
       </div>
-      <AppButton
-        v-if="callout.status === ItemStatus.Open"
-        :icon="showSharingPanel ? faCaretDown : faShare"
-        variant="primaryOutlined"
-        @click="showSharingPanel = !showSharingPanel"
-        >{{ t('common.share') }}</AppButton
-      >
-    </div>
 
-    <transition-group name="slide">
-      <SharingPanel v-if="showSharingPanel" :slug="callout.slug" />
-    </transition-group>
+      <transition-group name="slide">
+        <SharingPanel v-if="showSharingPanel" :slug="callout.slug" />
+      </transition-group>
 
-    <a id="thanks" />
-    <CalloutThanksBox
-      v-if="latestResponse || showOnlyThankYou"
-      :callout="callout"
-      class="p-6 bg-white"
-    />
+      <a id="thanks" />
+      <CalloutThanksBox
+        v-if="latestResponse || showOnlyThankYou"
+        :callout="callout"
+        class="p-6 bg-white"
+      />
 
-    <figure class="mb-6">
-      <img class="w-full object-cover" :src="callout.image" />
-    </figure>
+      <figure class="mb-6">
+        <img class="w-full object-cover" :src="callout.image" />
+      </figure>
 
-    <div class="content-message mb-6 text-lg" v-html="callout.intro" />
+      <div class="content-message mb-6 text-lg" v-html="callout.intro" />
+    </template>
 
     <CalloutLoginPrompt v-if="showLoginPrompt" />
     <CalloutMemberOnlyPrompt v-else-if="showMemberOnlyPrompt && !isPreview" />
 
     <template v-else-if="!showOnlyThankYou">
-      <hr class="mt-10 border-t border-primary-40 pt-10" />
+      <hr v-if="!isEmbed" class="mt-10 border-t border-primary-40 pt-10" />
 
       <AppNotification
         v-if="isPreview"
@@ -74,6 +77,7 @@ meta:
         :answers="latestResponse?.answers"
         :preview="isPreview"
         :readonly="!canRespond"
+        :no-bg="isEmbed"
         @submitted="handleSubmitResponse"
       />
     </template>
@@ -89,7 +93,7 @@ import {
 } from '../../../utils/api/api.interface';
 import { fetchCallout, fetchResponses } from '../../../utils/api/callout';
 import AppButton from '../../../components/button/AppButton.vue';
-import { currentUser, canAdmin } from '../../../store';
+import { currentUser, canAdmin, isEmbed } from '../../../store';
 import SharingPanel from '../../../components/pages/callouts/CalloutSharingPanel.vue';
 
 import { useRoute } from 'vue-router';
