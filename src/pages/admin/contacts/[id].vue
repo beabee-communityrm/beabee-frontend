@@ -28,6 +28,7 @@ import AppTabs from '../../../components/tabs/AppTabs.vue';
 import { useI18n } from 'vue-i18n';
 import { addBreadcrumb } from '../../../store/breadcrumb';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import env from '../../../env';
 
 const props = defineProps<{ id: string }>();
 
@@ -47,10 +48,14 @@ const tabs = computed(() =>
       id: 'adminContactsViewAccount',
       label: t('contactOverview.account'),
     },
-    {
-      id: 'adminContactsViewContribution',
-      label: t('contactOverview.contribution'),
-    },
+    ...(env.cnrMode
+      ? []
+      : [
+          {
+            id: 'adminContactsViewContribution',
+            label: t('contactOverview.contribution'),
+          },
+        ]),
     {
       id: 'adminContactsViewCallouts',
       label: t('contactOverview.callouts'),

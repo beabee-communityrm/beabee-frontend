@@ -56,7 +56,7 @@ meta:
       </AppInfoList>
     </div>
 
-    <div>
+    <div v-if="!env.cnrMode">
       <AppHeading>{{ t('contactOverview.contribution') }}</AppHeading>
       <AppInfoList>
         <AppInfoListItem
@@ -95,6 +95,7 @@ meta:
         />
       </AppInfoList>
     </div>
+
     <div class="row-span-3 max-w-xl">
       <AppHeading>{{ t('contactOverview.about') }}</AppHeading>
       <div
@@ -193,6 +194,7 @@ import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 import AppForm from '../../../../components/forms/AppForm.vue';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import PaymentMethod from '../../../../components/payment-method/PaymentMethod.vue';
+import env from '../../../../env';
 
 const { t, n } = useI18n();
 
