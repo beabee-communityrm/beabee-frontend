@@ -34,7 +34,7 @@ export async function reverseGeocode(
 ): Promise<GeocodeResult | undefined> {
   const data = await geocoding.reverse([lng, lat], {
     language: generalContent.value.locale,
-    types: ['address', 'postal_code', 'municipality', 'county'],
+    types: ['address', 'postal_code', 'municipality', 'county', 'region'],
   });
 
   if (!data.features.length) {

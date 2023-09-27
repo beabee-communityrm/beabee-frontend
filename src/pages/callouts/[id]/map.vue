@@ -407,6 +407,7 @@ interface GeocodePickEvent extends Event {
 function handleLoad(e: { map: Map }) {
   const geocodeControl = new GeocodingControl({
     apiKey: env.maptilerKey,
+    language: generalContent.value.locale,
     country: generalContent.value.locale,
   });
 
