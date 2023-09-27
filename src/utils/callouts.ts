@@ -111,6 +111,7 @@ export function convertStepsToCallout(
           imageProp: steps.settings.responseImageProp,
           imageFilter: steps.settings.responseImageFilter,
           gallery: steps.settings.responseViews.includes('gallery'),
+          links: [], // TODO
           map: steps.settings.responseViews.includes('map')
             ? {
                 ...steps.settings.mapSchema,
