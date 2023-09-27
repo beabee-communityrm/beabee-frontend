@@ -14,7 +14,7 @@ export function convertCalloutToSteps(
         allowAnonymousResponses: 'guests',
         showOnUserDashboards: false,
         usersCanEditAnswers: false,
-        multipleResponses: false,
+        multipleResponses: true,
       } as const)
     : ({
         whoCanTakePart:
