@@ -46,6 +46,7 @@ export interface SettingsStepProps {
   responseTitleProp: string;
   responseImageProp: string;
   responseImageFilter: string;
+  responseLinks: { text: string; url: string }[];
   mapSchema: CalloutMapSchema;
 }
 

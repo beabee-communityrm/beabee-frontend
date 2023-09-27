@@ -57,6 +57,7 @@ export function convertCalloutToSteps(
       responseTitleProp: callout?.responseViewSchema?.titleProp || '',
       responseImageProp: callout?.responseViewSchema?.imageProp || '',
       responseImageFilter: callout?.responseViewSchema?.imageFilter || '',
+      responseLinks: callout?.responseViewSchema?.links || [],
       mapSchema: callout?.responseViewSchema?.map || {
         style: '',
         bounds: [
@@ -111,7 +112,7 @@ export function convertStepsToCallout(
           imageProp: steps.settings.responseImageProp,
           imageFilter: steps.settings.responseImageFilter,
           gallery: steps.settings.responseViews.includes('gallery'),
-          links: [], // TODO
+          links: steps.settings.responseLinks,
           map: steps.settings.responseViews.includes('map')
             ? {
                 ...steps.settings.mapSchema,
