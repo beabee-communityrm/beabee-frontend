@@ -200,7 +200,7 @@ import env from '../../../env';
 
 import '@maptiler/geocoding-control/style.css';
 import { GeocodingFeature } from '@maptiler/client';
-import { isEmbed } from '../../../store';
+import { generalContent, isEmbed } from '../../../store';
 
 type GetCalloutResponseMapDataWithAddress = GetCalloutResponseMapData & {
   address: CalloutResponseAnswerAddress;
@@ -407,6 +407,7 @@ interface GeocodePickEvent extends Event {
 function handleLoad(e: { map: Map }) {
   const geocodeControl = new GeocodingControl({
     apiKey: env.maptilerKey,
+    country: generalContent.value.locale,
   });
 
   geocodeControl.addEventListener('pick', (e: Event) => {
