@@ -3,7 +3,7 @@ import { GeocodingFeature } from '@maptiler/client';
 import { geocoding } from '../lib/maptiler';
 import { generalContent } from '../store';
 
-interface GeocodeResult {
+export interface GeocodeResult {
   formatted_address: string;
   geometry: {
     location: {
@@ -34,7 +34,7 @@ export async function reverseGeocode(
 ): Promise<GeocodeResult | undefined> {
   const data = await geocoding.reverse([lng, lat], {
     language: generalContent.value.locale,
-    types: ['address', 'postal_code', 'municipality', 'county'],
+    types: ['address', 'postal_code', 'municipality', 'county', 'region'],
   });
 
   if (!data.features.length) {

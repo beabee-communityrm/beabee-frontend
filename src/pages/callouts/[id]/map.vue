@@ -191,6 +191,7 @@ import {
   useCallout,
 } from '../../../components/pages/callouts/use-callout';
 import {
+  GeocodeResult,
   featureToAddress,
   reverseGeocode,
   formatGeocodeResult,
@@ -200,7 +201,7 @@ import env from '../../../env';
 
 import '@maptiler/geocoding-control/style.css';
 import { GeocodingFeature } from '@maptiler/client';
-import { isEmbed } from '../../../store';
+import { generalContent, isEmbed } from '../../../store';
 
 type GetCalloutResponseMapDataWithAddress = GetCalloutResponseMapData & {
   address: CalloutResponseAnswerAddress;
@@ -363,18 +364,28 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
   });
 
   const result = await reverseGeocode(coords.lat, coords.lng);
+  if (result) {
+    // Use click location rather than geocode result
+    const address: GeocodeResult = {
+      formatted_address: result.formatted_address,
+      features: result.features,
+      geometry: {
+        location: coords,
+      },
+    };
 
-  newResponseAnswers.value = result
-    ? {
-        [mapSchema.addressProp]: result,
-        ...(mapSchema.addressPatternProp && {
-          [mapSchema.addressPatternProp]: formatGeocodeResult(
-            result,
-            mapSchema.addressPattern
-          ),
-        }),
-      }
-    : {};
+    newResponseAnswers.value = {
+      [mapSchema.addressProp]: address,
+      ...(mapSchema.addressPatternProp && {
+        [mapSchema.addressPatternProp]: formatGeocodeResult(
+          result,
+          mapSchema.addressPattern
+        ),
+      }),
+    };
+  } else {
+    newResponseAnswers.value = {};
+  }
 }
 
 // Centre map on selected feature when it changes
@@ -407,6 +418,8 @@ interface GeocodePickEvent extends Event {
 function handleLoad(e: { map: Map }) {
   const geocodeControl = new GeocodingControl({
     apiKey: env.maptilerKey,
+    language: generalContent.value.locale,
+    country: generalContent.value.locale,
   });
 
   geocodeControl.addEventListener('pick', (e: Event) => {
