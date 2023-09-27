@@ -134,47 +134,7 @@ meta:
         <AppSubHeading class="mb-2">
           {{ t('adminSettings.general.footer.otherLinks.title') }}
         </AppSubHeading>
-        <div
-          v-for="(link, i) in footerData.footerLinks"
-          :key="i"
-          class="mb-4 flex gap-4"
-        >
-          <div class="flex-1">
-            <AppInput
-              v-model="footerData.footerLinks[i].text"
-              :label="t('adminSettings.general.footer.otherLinks.linkText')"
-              required
-            />
-          </div>
-          <div class="flex-1">
-            <AppInput
-              v-model="footerData.footerLinks[i].url"
-              :label="t('adminSettings.general.footer.otherLinks.url')"
-              type="url"
-              required
-            />
-          </div>
-          <div class="flex-0 self-end">
-            <button
-              class="-ml-2 p-2 leading-tight text-primary-80 hover:text-primary"
-              type="button"
-              @click="removeLink(i)"
-            >
-              <font-awesome-icon :icon="faTimes" />
-            </button>
-          </div>
-        </div>
-
-        <div class="mb-4">
-          <AppButton
-            variant="primaryOutlined"
-            size="sm"
-            :icon="faPlus"
-            @click="addLink"
-          >
-            {{ t('adminSettings.general.footer.otherLinks.add') }}
-          </AppButton>
-        </div>
+        <AppLinkList v-model="footerData.footerLinks" class="mb-4" />
       </AppForm>
     </div>
   </div>
@@ -187,15 +147,14 @@ import AppImageUpload from '../../../components/forms/AppImageUpload.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
-import AppButton from '../../../components/button/AppButton.vue';
 import { ShareContent } from '../../../utils/api/api.interface';
 import { fetchContent, updateContent } from '../../../utils/api/content';
 import { generalContent as storeGeneralContent } from '../../../store';
 import AppHeading from '../../../components/AppHeading.vue';
 import axios from '../../../lib/axios';
 import AppForm from '../../../components/forms/AppForm.vue';
-import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import AppSubHeading from '../../../components/AppSubHeading.vue';
+import AppLinkList from '../../../components/forms/AppLinkList.vue';
 
 const { t } = useI18n();
 

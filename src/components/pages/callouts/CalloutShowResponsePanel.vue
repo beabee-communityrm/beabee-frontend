@@ -1,6 +1,6 @@
 <template>
   <CalloutSidePanel :show="!!response" @close="$emit('close')">
-    <div v-if="response">
+    <div v-if="response && callout.responseViewSchema">
       <h2 class="text-2xl font-bold font-title mb-4">{{ response.title }}</h2>
       <div
         v-if="response.photos.length > 0"
@@ -17,7 +17,7 @@
           >
             <img
               class="w-full"
-              :style="{ filter: callout.responseViewSchema?.imageFilter }"
+              :style="{ filter: callout.responseViewSchema.imageFilter }"
               :src="photo.url + '?w=600&h=600'"
             />
           </li>
@@ -53,6 +53,20 @@
         :submission="{ data: response.answers }"
         :options="{ readOnly: true, noAlerts: true, renderMode: 'html' }"
       />
+      <ul
+        v-if="callout.responseViewSchema.links.length > 0"
+        class="columns-2 break-inside-avoid gap-4 border-t border-t-primary mt-8 pt-8"
+      >
+        <li v-for="link in callout.responseViewSchema.links" :key="link.url">
+          <a
+            class="block text-link font-title underline font-bold"
+            :href="link.url"
+            target="_blank"
+          >
+            {{ link.text }}
+          </a>
+        </li>
+      </ul>
     </div>
   </CalloutSidePanel>
 </template>

@@ -122,6 +122,10 @@
           />
         </AppFormSection>
         <AppFormSection>
+          <AppLabel :label="inputT('responseLinks.label')" />
+          <AppLinkList v-model="data.responseLinks" />
+        </AppFormSection>
+        <AppFormSection>
           <AppInput
             v-model="data.responseImageFilter"
             :label="inputT('responseImageFilter.label')"
@@ -238,6 +242,8 @@ import AppSelect from '../../../../forms/AppSelect.vue';
 import AppSubHeading from '../../../../AppSubHeading.vue';
 import env from '../../../../../env';
 import AppCheckboxGroup from '../../../../forms/AppCheckboxGroup.vue';
+import AppLinkList from '../../../../forms/AppLinkList.vue';
+import AppLabel from '../../../../forms/AppLabel.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
