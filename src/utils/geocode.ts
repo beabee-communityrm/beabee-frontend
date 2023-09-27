@@ -3,7 +3,7 @@ import { GeocodingFeature } from '@maptiler/client';
 import { geocoding } from '../lib/maptiler';
 import { generalContent } from '../store';
 
-interface GeocodeResult {
+export interface GeocodeResult {
   formatted_address: string;
   geometry: {
     location: {

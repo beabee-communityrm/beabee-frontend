@@ -191,6 +191,7 @@ import {
   useCallout,
 } from '../../../components/pages/callouts/use-callout';
 import {
+  GeocodeResult,
   featureToAddress,
   reverseGeocode,
   formatGeocodeResult,
@@ -363,18 +364,28 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
   });
 
   const result = await reverseGeocode(coords.lat, coords.lng);
+  if (result) {
+    // Use click location rather than geocode result
+    const address: GeocodeResult = {
+      formatted_address: result.formatted_address,
+      features: result.features,
+      geometry: {
+        location: coords,
+      },
+    };
 
-  newResponseAnswers.value = result
-    ? {
-        [mapSchema.addressProp]: result,
-        ...(mapSchema.addressPatternProp && {
-          [mapSchema.addressPatternProp]: formatGeocodeResult(
-            result,
-            mapSchema.addressPattern
-          ),
-        }),
-      }
-    : {};
+    newResponseAnswers.value = {
+      [mapSchema.addressProp]: address,
+      ...(mapSchema.addressPatternProp && {
+        [mapSchema.addressPatternProp]: formatGeocodeResult(
+          result,
+          mapSchema.addressPattern
+        ),
+      }),
+    };
+  } else {
+    newResponseAnswers.value = {};
+  }
 }
 
 // Centre map on selected feature when it changes
