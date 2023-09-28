@@ -55,9 +55,13 @@
       />
       <ul
         v-if="callout.responseViewSchema.links.length > 0"
-        class="columns-2 break-inside-avoid gap-4 border-t border-t-primary mt-8 pt-8"
+        class="columns-2 gap-4 border-t border-t-primary mt-8 pt-8"
       >
-        <li v-for="link in callout.responseViewSchema.links" :key="link.url">
+        <li
+          v-for="link in callout.responseViewSchema.links"
+          :key="link.url"
+          class="break-inside-avoid"
+        >
           <a
             class="block text-link font-title underline font-bold"
             :href="link.url"
