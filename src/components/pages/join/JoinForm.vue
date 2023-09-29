@@ -60,18 +60,16 @@
 import { computed, toRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
-import { generalContent, isEmbed } from '../../../store';
+import { generalContent } from '../../../store';
 import { useJoin } from './use-join';
 import AccountSection from './AccountSection.vue';
 import Contribution from '../../contribution/Contribution.vue';
 import AppSubHeading from '../../AppSubHeading.vue';
 import { JoinContent } from '../../../utils/api/api.interface';
-import JoinHeader from './JoinHeader.vue';
 import AppCheckbox from '../../forms/AppCheckbox.vue';
 import AppForm from '../../forms/AppForm.vue';
 import beabeeLogo from '../../../assets/images/beabee-logo.png';
 import AuthBox from '../../AuthBox.vue';
-import AppTitle from '../../AppTitle.vue';
 
 const props = defineProps<{
   joinContent: JoinContent;

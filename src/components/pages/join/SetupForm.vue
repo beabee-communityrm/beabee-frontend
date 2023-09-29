@@ -65,7 +65,6 @@ import { SetupContactData } from './join.interface';
 import AppOptIn from '../../AppOptIn.vue';
 import AppForm from '../../forms/AppForm.vue';
 import AuthBox from '../../AuthBox.vue';
-import AppTitle from '../../AppTitle.vue';
 
 const props = defineProps<{
   setupContent: JoinSetupContent;

@@ -66,7 +66,6 @@ import { JoinContent } from '../../utils/api/api.interface';
 import { faHandSparkles } from '@fortawesome/free-solid-svg-icons';
 import AppNotification from '../../components/AppNotification.vue';
 import AuthBox from '../../components/AuthBox.vue';
-import AppTitle from '../../components/AppTitle.vue';
 
 const { t } = useI18n();
 
