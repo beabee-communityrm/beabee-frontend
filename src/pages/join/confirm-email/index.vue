@@ -7,23 +7,22 @@ meta:
 </route>
 
 <template>
-  <JoinNotice>
-    <template #header>{{ t('join.errors.confirmEmail.title') }}</template>
-
-    <template #content>
+  <AuthBox>
+    <AppTitle big class="mb-4">
+      {{ t('join.errors.confirmEmail.title') }}
+    </AppTitle>
+    <div class="md:text-lg">
       <p class="mb-3">
         {{ t('join.errors.confirmEmail.message') }}
       </p>
-    </template>
-
-    <template #footer>
       <p class="font-bold">{{ t('join.errors.confirmEmail.proceed') }}</p>
-    </template>
-  </JoinNotice>
+    </div>
+  </AuthBox>
 </template>
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
-import JoinNotice from '../../../components/pages/join/JoinNotice.vue';
+import AppTitle from '../../../components/AppTitle.vue';
+import AuthBox from '../../../components/AuthBox.vue';
 const { t } = useI18n();
 </script>

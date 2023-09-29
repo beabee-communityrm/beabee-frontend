@@ -7,13 +7,11 @@ meta:
 
 <template>
   <Suspense>
-    <AuthBox>
-      <SetupForm
-        :setup-content="setupContent"
-        :loading="saving"
-        @submit="completeSetup"
-      />
-    </AuthBox>
+    <SetupForm
+      :setup-content="setupContent"
+      :loading="saving"
+      @submit="completeSetup"
+    />
   </Suspense>
 </template>
 
@@ -21,7 +19,6 @@ meta:
 import { NewsletterStatus } from '@beabee/beabee-common';
 import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import AuthBox from '../../components/AuthBox.vue';
 import { updateContact } from '../../utils/api/contact';
 import {
   JoinSetupContent,

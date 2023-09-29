@@ -7,80 +7,82 @@ meta:
 </route>
 
 <template>
-  <form @submit.prevent>
-    <h1 class="mb-6 text-2.5xl">
-      {{ mode === 'set' ? t('setPassword.title') : t('resetPassword.title') }}
-    </h1>
+  <AuthBox>
+    <form @submit.prevent>
+      <AppTitle class="mb-2">
+        {{ mode === 'set' ? t('setPassword.title') : t('resetPassword.title') }}
+      </AppTitle>
 
-    <div class="mb-5">
-      <p class="font-semibold">
-        {{
-          mode === 'set'
-            ? t('setPassword.description')
-            : t('resetPassword.description')
-        }}
-      </p>
-    </div>
+      <div class="mb-5">
+        <p class="font-semibold">
+          {{
+            mode === 'set'
+              ? t('setPassword.description')
+              : t('resetPassword.description')
+          }}
+        </p>
+      </div>
 
-    <div class="mb-5">
-      <AppInput
-        v-model="data.password"
-        :label="t('resetPassword.newPassword')"
-        :info-message="t('form.passwordInfo')"
-        type="password"
-        name="password"
-        required
-      />
-    </div>
+      <div class="mb-5">
+        <AppInput
+          v-model="data.password"
+          :label="t('resetPassword.newPassword')"
+          :info-message="t('form.passwordInfo')"
+          type="password"
+          name="password"
+          required
+        />
+      </div>
 
-    <div class="mb-6">
-      <AppInput
-        v-model="data.repeatPassword"
-        :label="t('resetPassword.confirmPassword')"
-        type="password"
-        name="confirmPassword"
-        :same-as="data.password"
-        required
-      />
-    </div>
+      <div class="mb-6">
+        <AppInput
+          v-model="data.repeatPassword"
+          :label="t('resetPassword.confirmPassword')"
+          type="password"
+          name="confirmPassword"
+          :same-as="data.password"
+          required
+        />
+      </div>
 
-    <AppNotification
-      v-if="hasError"
-      variant="error"
-      class="mb-4"
-      :title="t('resetPassword.errorTitle')"
-    >
-      <p>
-        <i18n-t keypath="resetPassword.errorText">
-          <template #newLink>
-            <router-link to="/auth/forgot-password" class="underline">{{
-              t('resetPassword.errorLink')
-            }}</router-link>
-          </template>
-        </i18n-t>
-      </p>
-    </AppNotification>
-
-    <AppButton
-      variant="link"
-      :disabled="validation.$invalid || loading"
-      class="mb-4 w-full"
-      type="submit"
-      @click="handleSubmit"
-      >{{
-        mode === 'set' ? t('common.login') : t('resetPassword.changePassword')
-      }}</AppButton
-    >
-
-    <div v-if="mode === 'reset'" class="text-center">
-      <router-link
-        variant="link"
-        to="/auth/login"
-        class="font-semibold text-link underline"
-        >{{ t('resetPassword.login') }}</router-link
+      <AppNotification
+        v-if="hasError"
+        variant="error"
+        class="mb-4"
+        :title="t('resetPassword.errorTitle')"
       >
-    </div>
-  </form>
+        <p>
+          <i18n-t keypath="resetPassword.errorText">
+            <template #newLink>
+              <router-link to="/auth/forgot-password" class="underline">{{
+                t('resetPassword.errorLink')
+              }}</router-link>
+            </template>
+          </i18n-t>
+        </p>
+      </AppNotification>
+
+      <AppButton
+        variant="link"
+        :disabled="validation.$invalid || loading"
+        class="mb-4 w-full"
+        type="submit"
+        @click="handleSubmit"
+        >{{
+          mode === 'set' ? t('common.login') : t('resetPassword.changePassword')
+        }}</AppButton
+      >
+
+      <div v-if="mode === 'reset'" class="text-center">
+        <router-link
+          variant="link"
+          to="/auth/login"
+          class="font-semibold text-link underline"
+          >{{ t('resetPassword.login') }}</router-link
+        >
+      </div>
+    </form>
+  </AuthBox>
 </template>
 
 <script lang="ts" setup>
@@ -95,6 +97,8 @@ import { updateCurrentUser } from '../../../store';
 import { isInternalUrl } from '../../../utils';
 import AppNotification from '../../../components/AppNotification.vue';
 import { addNotification } from '../../../store/notifications';
+import AppTitle from '../../../components/AppTitle.vue';
+import AuthBox from '../../../components/AuthBox.vue';
 
 const props = withDefaults(
   defineProps<{
