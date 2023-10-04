@@ -7,49 +7,53 @@ meta:
 </route>
 
 <template>
-  <AppForm :button-text="t('login.login')" full-button @submit="submitLogin">
-    <h1 class="mb-2 font-title text-2.5xl">{{ t('login.title') }}</h1>
+  <AuthBox>
+    <AppForm :button-text="t('login.login')" full-button @submit="submitLogin">
+      <AppTitle class="mb-2">{{ t('login.title') }}</AppTitle>
 
-    <div class="mb-5">
-      <span>{{ t('login.notMember') }}</span>
-      <router-link to="/join" class="ml-1 font-semibold text-link underline">{{
-        t('login.joinNow')
-      }}</router-link>
-    </div>
+      <div class="mb-5">
+        <span>{{ t('login.notMember') }}</span>
+        <router-link
+          to="/join"
+          class="ml-1 font-semibold text-link underline"
+          >{{ t('login.joinNow') }}</router-link
+        >
+      </div>
 
-    <div class="mb-5">
-      <AppInput
-        v-model="data.email"
-        type="email"
-        name="email"
-        required
-        :label="t('form.email')"
+      <div class="mb-5">
+        <AppInput
+          v-model="data.email"
+          type="email"
+          name="email"
+          required
+          :label="t('form.email')"
+        />
+      </div>
+
+      <div class="mb-3">
+        <AppInput
+          v-model="data.password"
+          type="password"
+          name="password"
+          required
+          :label="t('form.password')"
+        />
+      </div>
+
+      <div class="mb-4">
+        <router-link class="text-sm underline" to="/auth/forgot-password">
+          {{ t('login.forgotPassword') }}
+        </router-link>
+      </div>
+
+      <AppNotification
+        v-if="hasCredentialError"
+        class="mb-4"
+        variant="error"
+        :title="t('login.wrongCredentials')"
       />
-    </div>
-
-    <div class="mb-3">
-      <AppInput
-        v-model="data.password"
-        type="password"
-        name="password"
-        required
-        :label="t('form.password')"
-      />
-    </div>
-
-    <div class="mb-8">
-      <router-link class="text-xs underline" to="/auth/forgot-password">
-        {{ t('login.forgotPassword') }}
-      </router-link>
-    </div>
-
-    <AppNotification
-      v-if="hasCredentialError"
-      class="mb-4"
-      variant="error"
-      :title="t('login.wrongCredentials')"
-    />
-  </AppForm>
+    </AppForm>
+  </AuthBox>
 </template>
 
 <script lang="ts" setup>
@@ -63,6 +67,8 @@ import { LoginData } from '../../utils/api/api.interface';
 import { login } from '../../utils/api/auth';
 import AppForm from '../../components/forms/AppForm.vue';
 import AppNotification from '../../components/AppNotification.vue';
+import AppTitle from '../../components/AppTitle.vue';
+import AuthBox from '../../components/AuthBox.vue';
 
 const { t } = useI18n();
 

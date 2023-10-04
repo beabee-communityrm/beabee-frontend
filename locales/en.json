@@ -860,6 +860,7 @@
     "terms": "Terms and Conditions"
   },
   "forgotPassword": {
+    "backToLogin": "Back to login page",
     "checkInbox": "Please check your inbox and follow the instructions in the email. Check your spam folder if it doesn't appear.",
     "description": "Please enter your email address and we’ll send you password reset instructions.",
     "message": "If there is an account associated with {email}, you will receive an email shortly.",

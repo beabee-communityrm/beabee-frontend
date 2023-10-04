@@ -85,9 +85,7 @@ meta:
       class="bg-cover bg-center p-4 pt-8"
       :style="`background-image: url(${backgroundUrl})`"
     >
-      <AuthBox>
-        <JoinForm :join-content="joinContent" />
-      </AuthBox>
+      <JoinForm :join-content="joinContent" />
     </div>
   </div>
 </template>
@@ -104,7 +102,6 @@ import AppSelect from '../../../components/forms/AppSelect.vue';
 import { ContributionPeriod } from '@beabee/beabee-common';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import JoinForm from '../../../components/pages/join/JoinForm.vue';
-import AuthBox from '../../../components/AuthBox.vue';
 import AppImageUpload from '../../../components/forms/AppImageUpload.vue';
 import { generalContent } from '../../../store';
 import useVuelidate from '@vuelidate/core';

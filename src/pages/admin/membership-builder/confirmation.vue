@@ -86,9 +86,7 @@ meta:
     </AppForm>
     <div class="bg-cover bg-center p-4 pt-8">
       <Suspense>
-        <AuthBox>
-          <SetupForm :setup-content="setupContent" />
-        </AuthBox>
+        <SetupForm :setup-content="setupContent" />
       </Suspense>
     </div>
   </div>
@@ -102,7 +100,6 @@ import AppInput from '../../../components/forms/AppInput.vue';
 import { useI18n } from 'vue-i18n';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import SetupForm from '../../../components/pages/join/SetupForm.vue';
-import AuthBox from '../../../components/AuthBox.vue';
 import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
 
 const setupContent = ref<JoinSetupContent>();

@@ -7,25 +7,23 @@ meta:
 </route>
 
 <template>
-  <JoinNotice show-pattern>
-    <template #header>{{ t('join.errors.failed.title') }}</template>
+  <AuthBox>
+    <AppTitle big class="mb-4">
+      {{ t('join.errors.failed.title') }}
+    </AppTitle>
+    <p class="mb-5 md:text-lg">{{ t('join.errors.failed.message') }}</p>
 
-    <template #content>
-      <p class="mb-5">{{ t('join.errors.failed.message') }}</p>
-    </template>
-
-    <template #footer>
-      <AppButton to="/join" class="w-full">
-        {{ t('join.errors.failed.backToJoin') }}
-      </AppButton>
-    </template>
-  </JoinNotice>
+    <AppButton to="/join" class="w-full">
+      {{ t('join.errors.failed.backToJoin') }}
+    </AppButton>
+  </AuthBox>
 </template>
 
 <script lang="ts" setup>
-import JoinNotice from '../../components/pages/join/JoinNotice.vue';
 import AppButton from '../../components/button/AppButton.vue';
 import { useI18n } from 'vue-i18n';
+import AppTitle from '../../components/AppTitle.vue';
+import AuthBox from '../../components/AuthBox.vue';
 
 const { t } = useI18n();
 </script>

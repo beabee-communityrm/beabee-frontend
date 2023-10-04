@@ -7,50 +7,57 @@ meta:
 </route>
 
 <template>
-  <form @submit.prevent>
-    <h1 class="mb-6 text-2.5xl">{{ t('forgotPassword.title') }}</h1>
+  <AuthBox>
+    <form @submit.prevent>
+      <AppTitle class="mb-2">{{ t('forgotPassword.title') }}</AppTitle>
 
-    <template v-if="!isRequestSuccessful">
-      <div class="mb-2">
-        <p class="font-semibold">{{ t('forgotPassword.description') }}</p>
-      </div>
+      <template v-if="!isRequestSuccessful">
+        <p class="mb-4">{{ t('forgotPassword.description') }}</p>
 
-      <div class="mb-5">
-        <AppInput
-          v-model="forgotPasswordData.email"
-          type="email"
-          name="email"
-          required
-        />
-      </div>
+        <div class="mb-4">
+          <AppInput
+            v-model="forgotPasswordData.email"
+            type="email"
+            name="email"
+            :label="t('form.email')"
+            required
+          />
+        </div>
 
-      <AppButton
-        variant="link"
-        :disabled="validation.$invalid || loading"
-        type="submit"
-        class="w-full"
-        @click="submitForgotPassword"
-        >{{ t('forgotPassword.resetPassword') }}</AppButton
-      >
-    </template>
+        <AppButton
+          variant="link"
+          :disabled="validation.$invalid || loading"
+          type="submit"
+          class="w-full mb-2"
+          @click="submitForgotPassword"
+        >
+          {{ t('forgotPassword.resetPassword') }}
+        </AppButton>
 
-    <template v-else>
-      <!-- TODO: fix by adding appropriate formatting -->
-      <p class="mb-5 rounded bg-primary-10 p-4">
-        <i18n-t keypath="forgotPassword.message">
-          <template #email>
-            <b>{{ forgotPasswordData.email }}</b>
-          </template>
-        </i18n-t>
-        <br />
-        {{ t('forgotPassword.checkInbox') }}
-      </p>
+        <div class="text-center">
+          <AppButton to="/auth/login" variant="text" size="sm">
+            {{ t('forgotPassword.backToLogin') }}
+          </AppButton>
+        </div>
+      </template>
 
-      <AppButton class="w-full" variant="link" to="/auth/login">{{
-        t('login.login')
-      }}</AppButton>
-    </template>
-  </form>
+      <template v-else>
+        <p class="mb-5 rounded bg-primary-10 p-4">
+          <i18n-t keypath="forgotPassword.message">
+            <template #email>
+              <b>{{ forgotPasswordData.email }}</b>
+            </template>
+          </i18n-t>
+          <br />
+          {{ t('forgotPassword.checkInbox') }}
+        </p>
+
+        <AppButton class="w-full" variant="link" to="/auth/login">{{
+          t('login.login')
+        }}</AppButton>
+      </template>
+    </form>
+  </AuthBox>
 </template>
 
 <script lang="ts" setup>
@@ -60,6 +67,8 @@ import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import { reactive, ref } from 'vue';
 import { forgotPassword } from '../../utils/api/auth';
+import AppTitle from '../../components/AppTitle.vue';
+import AuthBox from '../../components/AuthBox.vue';
 
 const { t } = useI18n();
 

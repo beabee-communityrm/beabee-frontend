@@ -188,14 +188,6 @@ const footerData = reactive({
 
 const shareContent = ref<ShareContent>();
 
-function addLink() {
-  footerData.footerLinks.push({ text: '', url: 'https://' });
-}
-
-function removeLink(i: number) {
-  footerData.footerLinks.splice(i, 1);
-}
-
 async function handleSaveGeneral() {
   storeGeneralContent.value = await updateContent('general', generalData);
 
