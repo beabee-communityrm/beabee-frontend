@@ -107,9 +107,9 @@ onBeforeMount(async () => {
 
   joinContent.value = await fetchContent('join');
 
-  signUpData.amount = route.query.amount
-    ? Number(route.query.amount)
-    : joinContent.value.initialAmount;
+  signUpData.amount =
+    (route.query.amount && Number(route.query.amount)) ||
+    joinContent.value.initialAmount;
 
   const period = route.query.period as ContributionPeriod;
   signUpData.period = Object.values(ContributionPeriod).includes(period)
