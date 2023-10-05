@@ -7,10 +7,22 @@ meta:
 
 <template>
   <Suspense>
+    <AuthBox v-if="setupContent.survey && showSurvey">
+      <template #header>
+        <div class="content-message" v-html="setupContent.welcome" />
+      </template>
+
+      <CalloutForm
+        :callout="setupContent.survey"
+        :style="'sm'"
+        @submitted="handleSubmitSurvey"
+      />
+    </AuthBox>
     <SetupForm
+      v-else
       :setup-content="setupContent"
-      :loading="saving"
-      @submit="completeSetup"
+      :loading="isSaving"
+      @submit="handleSubmitSetup"
     />
   </Suspense>
 </template>
@@ -27,6 +39,8 @@ import {
 import { fetchContent } from '../../utils/api/content';
 import SetupForm from '../../components/pages/join/SetupForm.vue';
 import { SetupContactData } from '../../components/pages/join/join.interface';
+import AuthBox from '../../components/AuthBox.vue';
+import CalloutForm from '../../components/pages/callouts/CalloutForm.vue';
 
 const router = useRouter();
 
@@ -42,10 +56,11 @@ const setupContent = ref<JoinSetupContent>({
   mailOptIn: '',
 });
 
-const saving = ref(false);
+const isSaving = ref(false);
+const showSurvey = ref(false);
 
-async function completeSetup(data: SetupContactData) {
-  saving.value = true;
+async function handleSubmitSetup(data: SetupContactData) {
+  isSaving.value = true;
 
   const updateContactData: UpdateContactData = {
     email: data.email,
@@ -72,10 +87,19 @@ async function completeSetup(data: SetupContactData) {
 
   try {
     await updateContact('me', updateContactData);
-    router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
+
+    if (setupContent.value.survey) {
+      showSurvey.value = true;
+    } else {
+      router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
+    }
   } catch (err) {
-    saving.value = false;
+    isSaving.value = false;
   }
+}
+
+function handleSubmitSurvey() {
+  router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
 }
 
 onBeforeMount(async () => {
