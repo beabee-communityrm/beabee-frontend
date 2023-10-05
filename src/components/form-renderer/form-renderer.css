@@ -288,6 +288,6 @@
   }
 
   .col-form-label {
-    @apply text-base;
+    @apply text-base font-body;
   }
 }
