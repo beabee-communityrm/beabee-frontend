@@ -8,7 +8,7 @@ meta:
 <template>
   <Suspense>
     <AuthBox
-      v-if="setupContent.survey && showSurvey"
+      v-if="joinSurvey"
       :title="
         t('joinSetup.welcome', {
           firstName: updatedContact?.firstname,
@@ -21,9 +21,9 @@ meta:
       </template>
 
       <CalloutForm
-        :callout="setupContent.survey"
+        :callout="joinSurvey"
         :style="'sm'"
-        @submitted="handleSubmitSurvey"
+        @submitted="goToProfile"
       />
     </AuthBox>
     <SetupForm
@@ -41,6 +41,7 @@ import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { updateContact } from '../../utils/api/contact';
 import {
+  GetCalloutDataWith,
   GetContactData,
   JoinSetupContent,
   UpdateContactData,
@@ -51,6 +52,7 @@ import { SetupContactData } from '../../components/pages/join/join.interface';
 import AuthBox from '../../components/AuthBox.vue';
 import CalloutForm from '../../components/pages/callouts/CalloutForm.vue';
 import { useI18n } from 'vue-i18n';
+import { fetchCallout } from '../../utils/api/callout';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -69,9 +71,19 @@ const setupContent = ref<JoinSetupContent>({
 });
 
 const isSaving = ref(false);
-const showSurvey = ref(false);
+const joinSurvey = ref<GetCalloutDataWith<'form'>>();
 
 const updatedContact = ref<GetContactData>();
+
+async function fetchJoinSurvey() {
+  if (setupContent.value.surveySlug) {
+    try {
+      return await fetchCallout(setupContent.value.surveySlug, ['form']);
+    } catch (e) {
+      // Fail silently as a failing join survey shouldn't stop the user completing the join flow
+    }
+  }
+}
 
 async function handleSubmitSetup(data: SetupContactData) {
   isSaving.value = true;
@@ -99,20 +111,15 @@ async function handleSubmitSetup(data: SetupContactData) {
     };
   }
 
-  try {
-    updatedContact.value = await updateContact('me', updateContactData);
+  updatedContact.value = await updateContact('me', updateContactData);
 
-    if (setupContent.value.survey) {
-      showSurvey.value = true;
-    } else {
-      router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
-    }
-  } catch (err) {
-    isSaving.value = false;
+  joinSurvey.value = await fetchJoinSurvey();
+  if (!joinSurvey.value) {
+    goToProfile();
   }
 }
 
-function handleSubmitSurvey() {
+function goToProfile() {
   router.push({ path: '/profile', query: { welcomeMessage: 'true' } });
 }
 

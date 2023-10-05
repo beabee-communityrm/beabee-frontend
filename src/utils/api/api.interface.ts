@@ -274,7 +274,6 @@ export interface JoinSetupContent {
   mailText: string;
   mailOptIn: string;
   surveySlug: string;
-  survey?: GetCalloutDataWith<'form'>;
 }
 
 export interface ProfileContent {
