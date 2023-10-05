@@ -279,6 +279,7 @@
   }
 }
 
+/* Apply to form renderer in small mode */
 .callout-form.is-sm .callout-form-renderer {
   @apply text-base;
 

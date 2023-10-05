@@ -7,9 +7,17 @@ meta:
 
 <template>
   <Suspense>
-    <AuthBox v-if="setupContent.survey && showSurvey">
+    <AuthBox
+      v-if="setupContent.survey && showSurvey"
+      :title="
+        t('joinSetup.welcome', {
+          firstName: updatedContact?.firstname,
+          lastName: updatedContact?.lastname,
+        })
+      "
+    >
       <template #header>
-        <div class="content-message" v-html="setupContent.welcome" />
+        <div class="content-message" v-html="t('joinSetup.confirmDetails')" />
       </template>
 
       <CalloutForm
@@ -33,6 +41,7 @@ import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { updateContact } from '../../utils/api/contact';
 import {
+  GetContactData,
   JoinSetupContent,
   UpdateContactData,
 } from '../../utils/api/api.interface';
@@ -41,7 +50,9 @@ import SetupForm from '../../components/pages/join/SetupForm.vue';
 import { SetupContactData } from '../../components/pages/join/join.interface';
 import AuthBox from '../../components/AuthBox.vue';
 import CalloutForm from '../../components/pages/callouts/CalloutForm.vue';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const router = useRouter();
 
 const setupContent = ref<JoinSetupContent>({
@@ -58,6 +69,8 @@ const setupContent = ref<JoinSetupContent>({
 
 const isSaving = ref(false);
 const showSurvey = ref(false);
+
+const updatedContact = ref<GetContactData>();
 
 async function handleSubmitSetup(data: SetupContactData) {
   isSaving.value = true;
@@ -86,7 +99,7 @@ async function handleSubmitSetup(data: SetupContactData) {
   }
 
   try {
-    await updateContact('me', updateContactData);
+    updatedContact.value = await updateContact('me', updateContactData);
 
     if (setupContent.value.survey) {
       showSurvey.value = true;
