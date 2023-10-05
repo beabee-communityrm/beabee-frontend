@@ -83,6 +83,21 @@ meta:
           />
         </div>
       </template>
+
+      <div class="mb-4">
+        <AppSelect
+          v-model="setupContent.surveySlug"
+          :label="stepT('surveySlug')"
+          :items="[
+            { id: '', label: t('common.selectNone') },
+            ...openCallouts.map((callout) => ({
+              id: callout.slug,
+              label: callout.title,
+            })),
+          ]"
+        />
+        <AppInputHelp :message="stepT('surveySlugHelp')" />
+      </div>
     </AppForm>
     <div class="bg-cover bg-center p-4 pt-8">
       <Suspense>
@@ -93,7 +108,10 @@ meta:
 </template>
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue';
-import { JoinSetupContent } from '../../../utils/api/api.interface';
+import {
+  GetCalloutData,
+  JoinSetupContent,
+} from '../../../utils/api/api.interface';
 import { fetchContent, updateContent } from '../../../utils/api/content';
 import AppForm from '../../../components/forms/AppForm.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
@@ -101,8 +119,13 @@ import { useI18n } from 'vue-i18n';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import SetupForm from '../../../components/pages/join/SetupForm.vue';
 import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
+import AppSelect from '../../../components/forms/AppSelect.vue';
+import AppInputHelp from '../../../components/forms/AppInputHelp.vue';
+import { fetchCallouts } from '../../../utils/api/callout';
+import { ItemStatus } from '@beabee/beabee-common';
 
 const setupContent = ref<JoinSetupContent>();
+const openCallouts = ref<GetCalloutData[]>([]);
 
 const { t } = useI18n();
 
@@ -117,5 +140,18 @@ async function handleUpdate() {
 
 onBeforeMount(async () => {
   setupContent.value = await fetchContent('join/setup');
+
+  openCallouts.value = (
+    await fetchCallouts({
+      limit: 100,
+      rules: {
+        condition: 'AND',
+        rules: [
+          { field: 'status', operator: 'equal', value: [ItemStatus.Open] },
+        ],
+      },
+      sort: 'title',
+    })
+  ).items;
 });
 </script>

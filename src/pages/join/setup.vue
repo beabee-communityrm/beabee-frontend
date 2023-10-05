@@ -65,6 +65,7 @@ const setupContent = ref<JoinSetupContent>({
   mailTitle: '',
   mailText: '',
   mailOptIn: '',
+  surveySlug: '',
 });
 
 const isSaving = ref(false);

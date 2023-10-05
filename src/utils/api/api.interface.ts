@@ -273,6 +273,7 @@ export interface JoinSetupContent {
   mailTitle: string;
   mailText: string;
   mailOptIn: string;
+  surveySlug: string;
   survey?: GetCalloutDataWith<'form'>;
 }
 
