@@ -5,7 +5,7 @@
   >
     <div v-if="!isEmbed" class="flex-initial basis-72 mb-4 md:mb-0">
       <div
-        class="flex gap-4 md:flex-col items-center"
+        class="flex gap-4 md:flex-col items-center md:items-start"
         :class="$slots.header && 'mb-4'"
       >
         <AppLogo class="w-20 md:w-full" />
