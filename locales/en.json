@@ -1059,7 +1059,7 @@
         "showMailOptIn": "Ask for postal address",
         "showNewsletterOptIn": "Ask to subscribe to newsletter",
         "surveySlug": "Join survey",
-        "surveySlugHelp": "You can ask your new users to complete a callout as part of the join flow. You can use any open callout.",
+        "surveySlugHelp": "You can ask your new users to complete a callout as part of the join flow. You can use any open callout that doesn't have an expiry date.",
         "text": "After joining, users will be asked to confirm their registration. Here you can set the details of the confirmation screen.",
         "title": "Account confirmation",
         "welcomeMessage": "Welcome message"

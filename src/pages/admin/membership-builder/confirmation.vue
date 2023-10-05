@@ -148,6 +148,7 @@ onBeforeMount(async () => {
         condition: 'AND',
         rules: [
           { field: 'status', operator: 'equal', value: [ItemStatus.Open] },
+          { field: 'expires', operator: 'is_empty', value: [] },
         ],
       },
       sort: 'title',
