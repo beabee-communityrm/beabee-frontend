@@ -380,6 +380,7 @@
     },
     "editMode": "Vorsicht, du befindest dich im Bearbeitungsmodus!",
     "manageFolders": "Ordner bearbeiten",
+    "manageReviewers": "Auswerter bearbeiten",
     "manageTags": "Tags bearbeiten",
     "notifications": {
       "addedAssignee": "\"{assignee}\" zugewiesen",
@@ -741,9 +742,7 @@
             "help": "<p>Das Bild wird verwendet, um die Antwort in der Karten- oder Galerieansicht zu visualisieren. Wichtig: Es muss sich um eine Datei-Upload-Komponente handeln.</p>\n",
             "label": "Welches Feld soll als Bild für Darstellung der Antwort dienen?"
           },
-          "responseLinks": {
-            "label": "Add links to the bottom of responses?"
-          },
+          "responseLinks": {},
           "responseTitleProp": {
             "help": "<p>Der Titel erscheint als Überschrift auf jeder Antwort in der Karten- oder Galerieansicht.</p>\n",
             "label": "Welches Feld soll als Überschrift dienen?"
