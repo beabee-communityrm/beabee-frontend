@@ -1,7 +1,7 @@
 <template>
   <CalloutSidePanel :show="true" @close="$emit('close')">
     <AppHeading class="mb-4">{{ $props.callout.title }}</AppHeading>
-    <p>{{ $props.callout.excerpt }}</p>
+    <div v-html="$props.callout.intro"></div>
     <AppButton @click="$emit('close')">
       {{ t('callout.getStarted') }}
     </AppButton>
