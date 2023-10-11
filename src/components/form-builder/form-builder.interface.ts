@@ -5,6 +5,7 @@ export interface FormBuilderRef {
 }
 
 export const formOpts = {
+  noDefaultSubmitButton: true,
   builder: {
     basic: false,
     advanced: false,
