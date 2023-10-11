@@ -264,6 +264,7 @@
   "callout": {
     "addAPoint": "Klicken Sie dort auf die Karte, wo Sie einen Ort ergänzen möchten",
     "addLocation": "Neuen Ort eingeben",
+    "closed": "Dieser Callout ist beendet.",
     "contactDetails": "Kontaktdaten",
     "form": {
       "email": "Deine E-Mail-Adresse",
@@ -274,10 +275,12 @@
     "joinNow": "Mitglied werden",
     "loginToYourAccount": "Einloggen",
     "membersOnly": "An diesem Callout können nur zahlende Mitglieder teilnehmen. Um teilzunehmen",
+    "responseSubmitted": "Antwort eingereicht",
     "share": {
       "address": "Diesen Callout per Link teilen:",
       "services": "Diesen Callout auf einer der folgenden Plattformen teilen: "
     },
+    "showingPreview": "Im Vorschaumodus sind Antworten deaktiviert.",
     "toContributionPage": "Meinen Beitrag ändern",
     "updateContribution": "Bitte ändere deinen Beitrag. ",
     "views": {
@@ -336,7 +339,6 @@
     "actions": {},
     "nextButton": {},
     "prevButton": {},
-    "showAdvancedOptions": "Erweiterte Optionen anzeigen",
     "submitButton": {}
   },
   "calloutResponse": {
