@@ -3,39 +3,35 @@
   <div class="mb-4 flex gap-8">
     <div class="flex-1">
       <div v-if="!isFirst">
-        <!-- <AppCheckbox
-          v-model="modelValue.showPrev"
-          :label="t('calloutBuilder.prevButton.showLabel')"
-          class="mb-0.5"
-        /> -->
-        <AppInput v-model="modelValue.prevText" required />
+        <AppInput
+          v-model="modelValue.prevText"
+          :label="t('calloutBuilder.prevButton')"
+        />
       </div>
     </div>
     <div class="flex-1">
       <div v-if="isLast">
         <AppInput
           v-model="modelValue.submitText"
-          :label="t('calloutBuilder.submitButton.label')"
+          :label="t('calloutBuilder.submitButton')"
           required
         />
       </div>
       <div v-else>
-        <!-- <AppCheckbox
-          v-model="currentPage.navigation.showNext"
-          :label="t('calloutBuilder.nextButton.showLabel')"
-          class="mb-0.5"
-        /> -->
-        <!-- <template v-if="currentPage.navigation.showNext"> -->
         <div class="mb-4">
-          <AppInput v-model="modelValue.nextText" required />
+          <AppInput
+            v-model="modelValue.nextText"
+            :label="t('calloutBuilder.nextButton')"
+            required
+          />
         </div>
         <AppSelect
           v-model="modelValue.nextSlideId"
-          :label="t('calloutBuilder.nextButton.nextSlide')"
+          :label="t('calloutBuilder.nextSlide.label')"
           :items="[
             {
               id: '',
-              label: t('calloutBuilder.nextButton.nextSlideDefault'),
+              label: t('calloutBuilder.nextSlide.default'),
             },
             ...slideItems,
           ]"

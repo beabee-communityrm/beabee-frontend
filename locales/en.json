@@ -343,19 +343,15 @@
       "removeSlide": "Remove slide"
     },
     "internalTitle": "Internal title",
-    "nextButton": {
-      "nextSlide": "Next slide",
-      "nextSlideDefault": "-- Default --",
-      "showLabel": "Show next button"
+    "nextButton": "Next button text",
+    "nextSlide": {
+      "default": "-- Default --",
+      "label": "Next slide"
     },
     "pageNo": "Slide {pageNo}",
-    "prevButton": {
-      "showLabel": "Show back button"
-    },
+    "prevButton": "Back button text",
     "showAdvancedOptions": "Show advanced options",
-    "submitButton": {
-      "label": "Submit button text"
-    }
+    "submitButton": "Submit button text"
   },
   "calloutResponse": {
     "data": {

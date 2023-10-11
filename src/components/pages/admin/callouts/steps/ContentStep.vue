@@ -188,6 +188,7 @@ const validation = useVuelidate();
 function handleAddSlide() {
   // eslint-disable-next-line vue/no-mutating-props
   props.data.formSchema.slides.push(getSlideSchema());
+  currentSlideNo.value = props.data.formSchema.slides.length - 1;
 }
 
 function handleRemoveSlide() {

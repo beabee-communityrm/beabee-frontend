@@ -337,9 +337,7 @@
   },
   "calloutBuilder": {
     "actions": {},
-    "nextButton": {},
-    "prevButton": {},
-    "submitButton": {}
+    "nextSlide": {}
   },
   "calloutResponse": {
     "data": {
