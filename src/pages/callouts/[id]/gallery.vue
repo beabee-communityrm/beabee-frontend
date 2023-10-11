@@ -54,6 +54,11 @@ meta:
       @close="router.push({ hash: '' })"
       @click.stop
     />
+    <CalloutIntroPanel
+      :callout="callout"
+      :show="!!introOpen"
+      @close="handleCloseIntro"
+    />
   </div>
 </template>
 <script lang="ts" setup>
@@ -66,6 +71,7 @@ import {
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 import CalloutShowResponsePanel from '../../../components/pages/callouts/CalloutShowResponsePanel.vue';
+import CalloutIntroPanel from '../../../components/pages/callouts/CalloutIntroPanel.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import { faMap } from '@fortawesome/free-solid-svg-icons';
 import { useI18n } from 'vue-i18n';
@@ -82,6 +88,8 @@ const { t } = useI18n();
 const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();
 const responses = ref<GetCalloutResponseMapData[]>([]);
 
+const introOpen = ref(false);
+
 const selectedResponse = computed(() => {
   if (route.hash.startsWith(HASH_PREFIX)) {
     const responseNumber = Number(route.hash.slice(HASH_PREFIX.length));
@@ -90,6 +98,10 @@ const selectedResponse = computed(() => {
     return undefined;
   }
 });
+
+function handleCloseIntro() {
+  introOpen.value = false;
+}
 
 onBeforeMount(async () => {
   callout.value = await fetchCallout(props.id, ['form', 'responseViewSchema']);
