@@ -33,6 +33,7 @@
     "edit": "Edit",
     "endnow": "End now",
     "export": "Export",
+    "next": "Next",
     "noBack": "No, go back",
     "participate": "Participate",
     "preview": "Preview",
@@ -275,6 +276,7 @@
     "joinNow": "Join now",
     "loginToYourAccount": "Login to your account",
     "membersOnly": "This callout is open to members only. To participate",
+    "responseIsUpdateable": "You can update your response",
     "responseSubmitted": "Response submitted",
     "share": {
       "address": "Share this callout with the following address:",
@@ -287,7 +289,8 @@
       "gallery": "Gallery",
       "map": "Map"
     },
-    "youResponded": "You replied to this callout ♥"
+    "youResponded": "You replied to this callout ♥",
+    "yourResponse": "Your response"
   },
   "calloutAdmin": {
     "deleted": "Callout deleted.",
@@ -336,7 +339,23 @@
     "updated": "Your callout was successfully updated."
   },
   "calloutBuilder": {
-    "showAdvancedOptions": "Show advanced form options"
+    "actions": {
+      "addSlide": "Add slide"
+    },
+    "internalTitle": "Internal title",
+    "nextButton": {
+      "nextSlide": "Next slide",
+      "nextSlideDefault": "-- Default --",
+      "showLabel": "Show next button"
+    },
+    "pageNo": "Slide {pageNo}",
+    "prevButton": {
+      "showLabel": "Show back button"
+    },
+    "showAdvancedOptions": "Show advanced form options",
+    "submitButton": {
+      "label": "Submit button text"
+    }
   },
   "calloutResponse": {
     "data": {

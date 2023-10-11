@@ -1,7 +1,8 @@
 <template>
   <FormBuilder
     ref="formBuilderRef"
-    :form="form"
+    class="callout-form-builder"
+    :form="{ components }"
     :options="formOpts"
     @change="handleChange"
   />
@@ -58,10 +59,7 @@ import {
 import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
 
 import { FormBuilder } from '../../lib/formio';
-import {
-  CalloutComponentSchema,
-  CalloutFormSchema,
-} from '@beabee/beabee-common';
+import { CalloutComponentSchema } from '@beabee/beabee-common';
 import { formOpts, FormBuilderRef } from './form-builder.interface';
 
 const emit = defineEmits<{
@@ -69,7 +67,7 @@ const emit = defineEmits<{
 }>();
 
 defineProps<{
-  form: CalloutFormSchema;
+  components: CalloutComponentSchema[];
 }>();
 
 const formBuilderRef = ref<FormBuilderRef>();

@@ -264,7 +264,6 @@
   "callout": {
     "addAPoint": "Klicken Sie dort auf die Karte, wo Sie einen Ort ergänzen möchten",
     "addLocation": "Neuen Ort eingeben",
-    "closed": "Dieser Callout ist beendet.",
     "contactDetails": "Kontaktdaten",
     "form": {
       "email": "Deine E-Mail-Adresse",
@@ -275,12 +274,10 @@
     "joinNow": "Mitglied werden",
     "loginToYourAccount": "Einloggen",
     "membersOnly": "An diesem Callout können nur zahlende Mitglieder teilnehmen. Um teilzunehmen",
-    "responseSubmitted": "Antwort eingereicht",
     "share": {
       "address": "Diesen Callout per Link teilen:",
       "services": "Diesen Callout auf einer der folgenden Plattformen teilen: "
     },
-    "showingPreview": "Im Vorschaumodus sind Antworten deaktiviert.",
     "toContributionPage": "Meinen Beitrag ändern",
     "updateContribution": "Bitte ändere deinen Beitrag. ",
     "views": {
@@ -336,7 +333,11 @@
     "updated": "Änderungen gespeichert!"
   },
   "calloutBuilder": {
-    "showAdvancedOptions": "Erweiterte Optionen anzeigen"
+    "actions": {},
+    "nextButton": {},
+    "prevButton": {},
+    "showAdvancedOptions": "Erweiterte Optionen anzeigen",
+    "submitButton": {}
   },
   "calloutResponse": {
     "data": {
@@ -380,6 +381,7 @@
     },
     "editMode": "Vorsicht, du befindest dich im Bearbeitungsmodus!",
     "manageFolders": "Ordner bearbeiten",
+    "manageReviewers": "Auswerter bearbeiten",
     "manageTags": "Tags bearbeiten",
     "notifications": {
       "addedAssignee": "\"{assignee}\" zugewiesen",
@@ -741,9 +743,7 @@
             "help": "<p>Das Bild wird verwendet, um die Antwort in der Karten- oder Galerieansicht zu visualisieren. Wichtig: Es muss sich um eine Datei-Upload-Komponente handeln.</p>\n",
             "label": "Welches Feld soll als Bild für Darstellung der Antwort dienen?"
           },
-          "responseLinks": {
-            "label": "Add links to the bottom of responses?"
-          },
+          "responseLinks": {},
           "responseTitleProp": {
             "help": "<p>Der Titel erscheint als Überschrift auf jeder Antwort in der Karten- oder Galerieansicht.</p>\n",
             "label": "Welches Feld soll als Überschrift dienen?"

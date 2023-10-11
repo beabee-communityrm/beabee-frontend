@@ -225,7 +225,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ItemStatus, flattenComponents } from '@beabee/beabee-common';
+import { ItemStatus, getCalloutComponents } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { computed, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -261,7 +261,7 @@ const hasVisited = ref(!!props.status);
 watch(toRef(props, 'isActive'), (active) => (hasVisited.value ||= active));
 
 const formComponentItems = computed(() =>
-  flattenComponents(props.steps.content.data.formSchema.components)
+  getCalloutComponents(props.steps.content.data.formSchema)
     .filter((c) => c.input)
     .map((c) => ({
       id: c.key,

@@ -76,7 +76,6 @@
 </template>
 
 <script lang="ts" setup>
-import { filterComponents } from '@beabee/beabee-common';
 import {
   faChevronLeft,
   faChevronRight,
@@ -98,12 +97,13 @@ const props = defineProps<{
 const currentPhotoIndex = ref(0);
 
 // Don't show admin-only fields (they would always be empty as the API doesn't return their answers)
-const viewOnlyFormSchema = computed(() => ({
-  components: filterComponents(
-    props.callout.formSchema.components,
-    (c) => !c.adminOnly
-  ),
-}));
+// const viewOnlyFormSchema = computed(() => ({
+//   components: filterComponents(
+//     props.callout.formSchema.components,
+//     (c) => !c.adminOnly
+//   ),
+// }));
+const viewOnlyFormSchema = computed(() => props.callout.formSchema); // TODO
 
 watch(
   () => props.response,

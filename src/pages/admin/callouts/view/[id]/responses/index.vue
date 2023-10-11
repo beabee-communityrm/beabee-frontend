@@ -210,10 +210,10 @@ meta:
 </template>
 <script lang="ts" setup>
 import {
-  flattenComponents,
   Paginated,
   Rule,
   RuleGroup,
+  getCalloutComponents,
   stringifyAnswer,
 } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
@@ -328,7 +328,7 @@ const bucketItems = computed(() =>
 );
 
 const formComponents = computed(() =>
-  flattenComponents(props.callout.formSchema.components).filter(
+  getCalloutComponents(props.callout.formSchema).filter(
     (c) => !!c.input && c.type !== 'button'
   )
 );

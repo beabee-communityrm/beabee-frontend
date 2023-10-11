@@ -1,9 +1,28 @@
-import { CalloutComponentSchema, ItemStatus } from '@beabee/beabee-common';
+import {
+  CalloutComponentSchema,
+  CalloutSlideSchema,
+  ItemStatus,
+} from '@beabee/beabee-common';
 import { format } from 'date-fns';
 import { CalloutStepsProps } from '../components/pages/admin/callouts/callouts.interface';
 import { FilterItem, FilterItems } from '../components/search/search.interface';
 import { CreateCalloutData, GetCalloutDataWith } from './api/api.interface';
 import env from '../env';
+
+export function getSlideSchema(): CalloutSlideSchema {
+  const id = 'slide' + Math.random().toString(36).substring(2, 8);
+  return {
+    id,
+    title: 'New slide',
+    components: [],
+    navigation: {
+      nextText: 'Next',
+      prevText: 'Prev',
+      nextSlideId: '',
+      submitText: 'Submit',
+    },
+  };
+}
 
 export function convertCalloutToSteps(
   callout?: GetCalloutDataWith<'form' | 'responseViewSchema'>
@@ -33,7 +52,9 @@ export function convertCalloutToSteps(
   return {
     content: {
       introText: callout?.intro || '',
-      formSchema: callout?.formSchema || { components: [] },
+      formSchema: callout?.formSchema || {
+        slides: [getSlideSchema()],
+      },
     },
     titleAndImage: {
       title: callout?.title || '',
