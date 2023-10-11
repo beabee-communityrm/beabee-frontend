@@ -77,12 +77,12 @@ meta:
         {{ t('calloutResponsePage.manageReviewers') }}
       </AppHeading>
 
-      <TagEditorItem
-        v-for="tag in tags"
-        :key="tag.id"
-        :tag="tag"
-        @update="(data) => handleUpdateTag(tag.id, data)"
-        @delete="handleDeleteTag"
+      <ReviewerEditorItem
+        v-for="reviewer in reviewers"
+        :key="reviewer.reviewer"
+        :reviewer="reviewer"
+        @update="(data: any) => handleUpdateReviewer(reviewer.reviewer, data)"
+        @delete="handleDeleteReviewer"
       />
 
       <div
@@ -92,7 +92,10 @@ meta:
         <AppSubHeading class="mb-4">
           {{ t('tagEditor.addNewReviewer') }}
         </AppSubHeading>
-        <TagEditorForm @cancel="formVisible = false" @save="handleNewTag" />
+        <ReviewerEditorForm
+          @cancel="formVisible = false"
+          @save="handleNewReviewer"
+        />
       </div>
       <AppButton
         v-else
@@ -113,19 +116,28 @@ import AppSubHeading from '../../../../../../components/AppSubHeading.vue';
 import AppButton from '../../../../../../components/button/AppButton.vue';
 import TagEditorForm from '../../../../../../components/tag/TagEditorForm.vue';
 import TagEditorItem from '../../../../../../components/tag/TagEditorItem.vue';
+import ReviewerEditorForm from '../../../../../../components/reviewer/ReviewerEditorForm.vue';
+import ReviewerEditorItem from '../../../../../../components/reviewer/ReviewerEditorItem.vue';
 import { addBreadcrumb } from '../../../../../../store/breadcrumb';
 import { faTag, faFolder, faUser } from '@fortawesome/free-solid-svg-icons';
 import {
+  CreateCalloutReviewerData,
   CreateCalloutTagData,
   GetCalloutDataWith,
+  GetCalloutReviewerData,
   GetCalloutTagData,
+  UpdateCalloutReviewerData,
   UpdateCalloutTagData,
 } from '../../../../../../utils/api/api.interface';
 
 import {
+  createReviewer,
   createTag,
+  deleteReviewer,
   deleteTag,
+  fetchReviewers,
   fetchTags,
+  updateReviewer,
   updateTag,
 } from '../../../../../../utils/api/callout';
 
@@ -136,6 +148,7 @@ const props = defineProps<{
 const { t } = useI18n();
 
 const tags = ref<GetCalloutTagData[]>();
+const reviewers = ref<GetCalloutReviewerData[]>();
 const formVisible = ref(false);
 
 addBreadcrumb(computed(() => [{ title: t('calloutResponsePage.manageTags') }]));
@@ -156,7 +169,40 @@ async function handleNewTag(data: CreateCalloutTagData) {
   formVisible.value = false;
 }
 
+async function handleUpdateReviewer(
+  reviewerId: string,
+  data: UpdateCalloutReviewerData
+) {
+  const updatedReviewer = await updateReviewer(
+    props.callout.slug,
+    reviewerId,
+    data
+  );
+  reviewers.value = reviewers.value?.map((reviewer) =>
+    reviewer.reviewer === reviewerId ? updatedReviewer : reviewer
+  );
+}
+
+async function handleDeleteReviewer(reviewerId: string) {
+  await deleteReviewer(props.callout.slug, reviewerId);
+  reviewers.value = reviewers.value?.filter(
+    (reviewer) => reviewer.reviewer !== reviewerId
+  );
+}
+
+async function handleNewReviewer(data: CreateCalloutReviewerData) {
+  const reviewer = await createReviewer(props.callout.slug, data);
+  reviewers.value?.push(reviewer);
+  formVisible.value = false;
+}
+
 onBeforeMount(async () => {
   tags.value = await fetchTags(props.callout.slug);
+  reviewers.value = await fetchReviewers(props.callout.slug);
+});
+
+onBeforeMount(async () => {
+  tags.value = await fetchTags(props.callout.slug);
+  reviewers.value = await fetchReviewers(props.callout.slug);
 });
 </script>

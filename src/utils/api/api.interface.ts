@@ -377,6 +377,18 @@ export interface CreateCalloutTagData {
 
 export type UpdateCalloutTagData = Partial<CreateCalloutTagData>;
 
+export interface GetCalloutReviewerData {
+  callout: string;
+  reviewer: string;
+}
+
+export interface CreateCalloutReviewerData {
+  callout: string;
+  reviewer: string;
+}
+
+export type UpdateCalloutReviewerData = Partial<CreateCalloutReviewerData>;
+
 export interface GetCalloutResponseData {
   id: string;
   number: number;

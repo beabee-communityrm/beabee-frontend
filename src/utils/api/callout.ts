@@ -16,6 +16,9 @@ import {
   CreateCalloutTagData,
   UpdateCalloutTagData,
   GetCalloutResponseMapData,
+  UpdateCalloutReviewerData,
+  GetCalloutReviewerData,
+  CreateCalloutReviewerData,
 } from './api.interface';
 import { deserializeDate } from '.';
 import { deserializeCalloutResponse } from './callout-response';
@@ -159,4 +162,50 @@ export async function updateTag(
 
 export async function deleteTag(slug: string, tagId: string): Promise<void> {
   await axios.delete(`/callout/${slug}/tags/${tagId}`);
+}
+
+export async function fetchReviewers(
+  slug: string
+): Promise<GetCalloutReviewerData[]> {
+  const { data } = await axios.get<Serial<GetCalloutReviewerData>[]>(
+    `/callout/${slug}/reviewers`
+  );
+
+  return data;
+}
+
+export async function createReviewer(
+  slug: string,
+  dataIn: CreateCalloutReviewerData
+): Promise<GetCalloutReviewerData> {
+  const { data } = await axios.post<Serial<GetCalloutReviewerData>>(
+    `/callout/${slug}/reviewers`,
+    {
+      reviewer: dataIn.reviewer,
+    }
+  );
+
+  return data;
+}
+
+export async function updateReviewer(
+  slug: string,
+  reviewerId: string,
+  dataIn: UpdateCalloutReviewerData
+): Promise<GetCalloutReviewerData> {
+  const { data } = await axios.patch<Serial<GetCalloutReviewerData>>(
+    `/callout/${slug}/reviewers/${reviewerId}`,
+    {
+      reviewer: dataIn.reviewer,
+    }
+  );
+
+  return data;
+}
+
+export async function deleteReviewer(
+  slug: string,
+  reviewerId: string
+): Promise<void> {
+  await axios.delete(`/callout/${slug}/reviewers/${reviewerId}`);
 }
