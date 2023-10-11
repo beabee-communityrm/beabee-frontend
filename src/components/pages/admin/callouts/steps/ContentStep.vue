@@ -58,7 +58,7 @@
           variant="primary"
           :icon="faPlus"
           class="w-full"
-          @click="handleAddPage"
+          @click="handleAddSlide"
         >
           {{ t('calloutBuilder.actions.addSlide') }}
         </AppButton>
@@ -92,8 +92,20 @@
           :components="data.formSchema.slides[currentSlideNo].components"
           @change="handleFormChange"
         />
-        <div class="bg-white p-6 pt-0 shadow-md max-w-2xl relative -mt-6">
-          here
+        <div class="max-w-2xl">
+          <div class="bg-white p-6 pt-0 shadow-md relative -mt-6 mb-4">
+            here
+          </div>
+          <div class="text-right">
+            <AppButton
+              variant="dangerOutlined"
+              :icon="faTrash"
+              :disabled="data.formSchema.slides.length === 1"
+              @click="handleRemoveSlide"
+            >
+              {{ t('calloutBuilder.actions.removeSlide') }}
+            </AppButton>
+          </div>
         </div>
       </div>
     </div>
@@ -116,6 +128,7 @@ import {
   faChevronRight,
   faGripVertical,
   faPlus,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { getSlideSchema } from '../../../../../utils/callouts';
 import AppButton from '../../../../button/AppButton.vue';
@@ -142,9 +155,15 @@ const wasJustReplicated = route.query.replicated !== undefined;
 
 const validation = useVuelidate();
 
-function handleAddPage() {
+function handleAddSlide() {
   // eslint-disable-next-line vue/no-mutating-props
   props.data.formSchema.slides.push(getSlideSchema());
+}
+
+function handleRemoveSlide() {
+  // eslint-disable-next-line vue/no-mutating-props
+  props.data.formSchema.slides.splice(currentSlideNo.value, 1);
+  currentSlideNo.value = Math.max(0, currentSlideNo.value - 1);
 }
 
 function handleFormChange(components: CalloutComponentSchema[]) {
@@ -170,7 +189,7 @@ watch(
 <style>
 /* Allows the navigation to appear seamlessly part of the form area */
 .callout-slide-builder {
-  @apply min-h-[30rem];
+  @apply min-h-[35rem];
 
   .callout-form-builder .formcomponents {
     @apply h-0;

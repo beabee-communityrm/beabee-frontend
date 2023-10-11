@@ -340,7 +340,8 @@
   },
   "calloutBuilder": {
     "actions": {
-      "addSlide": "Add slide"
+      "addSlide": "Add slide",
+      "removeSlide": "Remove slide"
     },
     "internalTitle": "Internal title",
     "nextButton": {
