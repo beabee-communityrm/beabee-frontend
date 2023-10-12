@@ -138,8 +138,8 @@ meta:
 
     <CalloutIntroPanel
       :callout="callout"
-      :show="!!introOpen"
-      @close="handleCloseIntro"
+      :show="introOpen"
+      @close="introOpen = false"
     />
 
     <CalloutAddResponsePanel
@@ -229,7 +229,7 @@ const responses = ref<GetCalloutResponseMapDataWithAddress[]>([]);
 const { isOpen } = useCallout(callout);
 
 const isAddMode = ref(false);
-const introOpen = ref(false);
+const introOpen = ref(true);
 const newResponseAnswers = ref<CalloutResponseAnswers>();
 const geocodeAddress = ref<CalloutResponseAnswerAddress>();
 
@@ -358,10 +358,6 @@ function handleCancelAddMode() {
   map.map.getCanvas().style.cursor = '';
 }
 
-function handleCloseIntro() {
-  introOpen.value = false;
-}
-
 // Geolocate where the user has clicked
 async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
   const mapSchema = callout.value?.responseViewSchema?.map;
@@ -421,8 +417,6 @@ onBeforeMount(async () => {
   responses.value = (await fetchResponsesForMap(props.id)).items.filter(
     (r): r is GetCalloutResponseMapDataWithAddress => !!r.address
   );
-
-  introOpen.value = true;
 });
 
 interface GeocodePickEvent extends Event {
