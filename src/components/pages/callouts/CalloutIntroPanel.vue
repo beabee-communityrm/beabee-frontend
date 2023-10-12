@@ -1,9 +1,12 @@
 <template>
   <CalloutSidePanel :show="true" @close="$emit('close')">
     <div class="lg:flex lg:flex-col lg:justify-center lg:items-start h-full">
-      <AppTitle class="pt-8 mb-4">{{ $props.callout.title }}</AppTitle>
-      <div class="mb-6 text-lg" v-html="$props.callout.intro"></div>
-      <AppButton @click="$emit('close')" variant="primary" class="px-6">
+      <AppTitle class="pt-8 mb-4">{{ callout.title }}</AppTitle>
+      <figure class="mb-6">
+        <img class="w-full object-cover" :src="callout.image" />
+      </figure>
+      <div class="mb-6 text-lg" v-html="callout.intro"></div>
+      <AppButton variant="primary" class="px-6" @click="$emit('close')">
         {{ t('callout.getStarted') }}
       </AppButton>
     </div>
