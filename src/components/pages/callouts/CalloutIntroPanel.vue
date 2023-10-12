@@ -1,5 +1,5 @@
 <template>
-  <CalloutSidePanel :show="true" @close="$emit('close')">
+  <CalloutSidePanel :show="show" @close="$emit('close')">
     <div class="lg:flex lg:flex-col lg:justify-center lg:items-start h-full">
       <AppTitle class="pt-8 mb-4">{{ callout.title }}</AppTitle>
       <figure class="mb-6">
@@ -21,7 +21,7 @@ import AppButton from '../../button/AppButton.vue';
 import { useI18n } from 'vue-i18n';
 
 defineEmits<{ (e: 'close'): void }>();
-defineProps<{ callout: GetCalloutDataWith<'form'> }>();
+defineProps<{ callout: GetCalloutDataWith<'form'>; show: boolean }>();
 
 const { t } = useI18n();
 </script>
