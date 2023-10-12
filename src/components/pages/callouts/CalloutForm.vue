@@ -6,12 +6,11 @@
       v-model:email="guestEmail"
     />
     <FormRenderer
-      :components="callout.formSchema.slides[0].components"
-      :answers="answers?.[callout.formSchema.slides[0].id]"
+      :key="currentSlide.id"
+      v-model="answersProxy[currentSlide.id]"
+      :components="currentSlide.components"
       :readonly="readonly"
       :no-bg="noBg"
-      :before-submit="beforeSubmit"
-      @submit="handleSubmission"
     />
     <AppNotification
       v-if="formError"
@@ -19,6 +18,39 @@
       variant="error"
       :title="formError"
     />
+    <div class="flex gap-4 justify-between">
+      <div>
+        <AppButton
+          v-if="currentSlideNo > 0 && currentSlide.navigation.prevText"
+          type="button"
+          variant="primaryOutlined"
+          @click="currentSlideNo--"
+        >
+          {{ currentSlide.navigation.prevText }}
+        </AppButton>
+      </div>
+      <div>
+        <AppButton
+          v-if="currentSlideNo < props.callout.formSchema.slides.length - 1"
+          type="button"
+          variant="primaryOutlined"
+          :disabled="validation.$invalid"
+          @click="currentSlideNo++"
+        >
+          {{ currentSlide.navigation.nextText }}
+        </AppButton>
+        <AppButton
+          v-else-if="!readonly"
+          type="submit"
+          variant="primary"
+          :disabled="validation.$invalid"
+          :loading="isLoading"
+          @click="handleSubmit"
+        >
+          {{ currentSlide.navigation.submitText }}
+        </AppButton>
+      </div>
+    </div>
   </form>
 </template>
 
@@ -33,7 +65,9 @@ import { isRequestError } from '../../../utils/api';
 import GuestFields from './GuestFields.vue';
 import AppNotification from '../../AppNotification.vue';
 import FormRenderer from '../../form-renderer/FormRenderer.vue';
-import { FormSubmission } from '../../form-renderer/form-renderer.interface';
+import AppButton from '../../button/AppButton.vue';
+import useVuelidate from '@vuelidate/core';
+import { sameAs } from '@vuelidate/validators';
 
 const { t } = useI18n();
 
@@ -46,28 +80,37 @@ const props = defineProps<{
   noBg?: boolean;
 }>();
 
+const validation = useVuelidate(
+  { preview: { no: sameAs(false) } },
+  { preview: props.preview }
+);
+
 const guestName = ref('');
 const guestEmail = ref('');
 const formError = ref('');
+const isLoading = ref(false);
+
+const initialAnswers = Object.fromEntries(
+  props.callout.formSchema.slides.map((slide) => [
+    slide.id,
+    props.answers?.[slide.id] || {},
+  ])
+);
+
+const answersProxy = ref<CalloutResponseAnswers>(initialAnswers);
+
+const currentSlideNo = ref(0);
+const currentSlide = computed(
+  () => props.callout.formSchema.slides[currentSlideNo.value]
+);
 
 const showGuestFields = computed(
   () => props.callout.access === 'guest' && !currentUser.value
 );
 
-function beforeSubmit(): boolean {
-  formError.value = props.preview
-    ? // Can't submit in preview mode
-      t('callout.showingPreview')
-    : showGuestFields.value && !(guestName.value && guestEmail.value)
-    ? // If guest fields are required check they are filled in
-      t('callout.form.guestFieldsMissing')
-    : '';
-
-  return !formError.value;
-}
-
-async function handleSubmission(submission: FormSubmission) {
+async function handleSubmit() {
   formError.value = '';
+  isLoading.value = true;
   try {
     await createResponse(props.callout.slug, {
       ...(!currentUser.value &&
@@ -75,15 +118,14 @@ async function handleSubmission(submission: FormSubmission) {
           guestName: guestName.value,
           guestEmail: guestEmail.value,
         }),
-      answers: submission.data,
+      answers: answersProxy.value,
     });
     emit('submitted');
   } catch (err) {
-    if (isRequestError(err)) {
-      formError.value = t('callout.form.submittingResponseError');
-    } else {
-      throw err;
-    }
+    formError.value = t('callout.form.submittingResponseError');
+    if (!isRequestError(err)) throw err;
+  } finally {
+    isLoading.value = false;
   }
 }
 </script>
