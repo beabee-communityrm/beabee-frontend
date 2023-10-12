@@ -1,13 +1,13 @@
 <template>
   <form @submit.prevent>
     <GuestFields
-      v-if="showGuestFields"
+      v-if="showGuestFields && !readonly"
       v-model:name="guestName"
       v-model:email="guestEmail"
     />
     <FormRenderer
-      :form="callout.formSchema"
-      :answers="answers"
+      :components="callout.formSchema.slides[0].components"
+      :answers="answers?.[callout.formSchema.slides[0].id]"
       :readonly="readonly"
       :no-bg="noBg"
       :before-submit="beforeSubmit"

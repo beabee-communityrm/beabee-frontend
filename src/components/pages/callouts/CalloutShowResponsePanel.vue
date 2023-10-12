@@ -46,13 +46,20 @@
           </div>
         </div>
       </div>
-      <Form
+      <CalloutForm
+        :key="response.number"
+        :callout="callout"
+        :response="response"
+        readonly
+        no-bg
+      />
+      <!-- <Form
         :key="response.number"
         class="callout-form-simple"
         :form="viewOnlyFormSchema"
         :submission="{ data: response.answers }"
         :options="{ readOnly: true, noAlerts: true, renderMode: 'html' }"
-      />
+      /> -->
       <ul
         v-if="callout.responseViewSchema.links.length > 0"
         class="columns-2 gap-4 border-t border-t-primary mt-8 pt-8"
@@ -87,6 +94,7 @@ import {
 } from '../../../utils/api/api.interface';
 import { Form } from '../../../lib/formio';
 import CalloutSidePanel from './CalloutSidePanel.vue';
+import CalloutForm from './CalloutForm.vue';
 
 defineEmits<(e: 'close') => void>();
 const props = defineProps<{

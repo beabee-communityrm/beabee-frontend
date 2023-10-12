@@ -226,13 +226,16 @@ const newResponseAnswers = ref<CalloutResponseAnswers>();
 const geocodeAddress = ref<CalloutResponseAnswerAddress>();
 
 // Use the address from the new response to show a marker on the map
-const newResponseAddress = computed(() =>
-  callout.value?.responseViewSchema?.map && newResponseAnswers.value
-    ? (newResponseAnswers.value[
-        callout.value.responseViewSchema.map.addressProp
-      ] as CalloutResponseAnswerAddress)
-    : undefined
-);
+const newResponseAddress = computed(() => {
+  const addressProp = callout.value?.responseViewSchema?.map?.addressProp;
+  if (addressProp && newResponseAnswers.value) {
+    const [slideId, answerKey] = addressProp.split('.');
+    const addressAnswer = newResponseAnswers.value[slideId][answerKey];
+    return addressAnswer as CalloutResponseAnswerAddress;
+  } else {
+    return undefined;
+  }
+});
 
 // A GeoJSON FeatureCollection of all the responses
 const responsesCollecton = computed<
@@ -374,15 +377,16 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
       },
     };
 
+    const [slideId, answerKey] = mapSchema.addressProp.split('.');
     newResponseAnswers.value = {
-      [mapSchema.addressProp]: address,
-      ...(mapSchema.addressPatternProp && {
-        [mapSchema.addressPatternProp]: formatGeocodeResult(
-          result,
-          mapSchema.addressPattern
-        ),
-      }),
+      [slideId]: { [answerKey]: address },
     };
+    if (mapSchema.addressPatternProp) {
+      const [slideId, answerKey] = mapSchema.addressPatternProp.split('.');
+      newResponseAnswers.value[slideId] = {
+        [answerKey]: formatGeocodeResult(result, mapSchema.addressPattern),
+      };
+    }
   } else {
     newResponseAnswers.value = {};
   }

@@ -2,7 +2,7 @@
   <Form
     class="callout-form-renderer"
     :class="{ 'has-no-bg': noBg }"
-    :form="form"
+    :form="{ components }"
     :submission="answers && { data: answers }"
     :options="formOpts"
     @submit="$emit('submit', $event)"
@@ -10,7 +10,7 @@
 </template>
 <script lang="ts" setup>
 import {
-  CalloutFormSchema,
+  CalloutComponentSchema,
   CalloutResponseAnswers,
 } from '@beabee/beabee-common';
 import { computed, onBeforeMount } from 'vue';
@@ -32,8 +32,8 @@ defineEmits<{
   (e: 'submit', submission: FormSubmission): void;
 }>();
 const props = defineProps<{
-  form: CalloutFormSchema;
-  answers?: CalloutResponseAnswers;
+  components: CalloutComponentSchema[];
+  answers?: CalloutResponseAnswers[string];
   readonly?: boolean;
   noBg?: boolean;
   beforeSubmit?: (submission: FormSubmission) => boolean;

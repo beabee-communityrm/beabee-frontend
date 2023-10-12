@@ -143,8 +143,8 @@ meta:
     />
     <FormRenderer
       :key="response.id + editMode"
-      :form="callout.formSchema"
-      :answers="response.answers"
+      :components="callout.formSchema.slides[0].components"
+      :answers="response.answers[callout.formSchema.slides[0].id]"
       :readonly="!editMode"
       @submit="handleEditResponse"
     />
