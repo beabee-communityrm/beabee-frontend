@@ -189,10 +189,10 @@ function convertValuesToOptions(
 }
 
 function convertComponentToFilter(
-  component: CalloutComponentSchema
+  component: CalloutComponentSchema & { fullKey: string }
 ): FilterItem {
   const baseItem = {
-    label: component.label || component.key,
+    label: component.label || component.fullKey,
     nullable: true,
   };
 
@@ -227,10 +227,10 @@ function convertComponentToFilter(
 }
 
 export function convertComponentsToFilters(
-  components: CalloutComponentSchema[]
+  components: (CalloutComponentSchema & { fullKey: string })[]
 ): FilterItems {
   const items = components.map((c) => {
-    return [`answers.${c.key}`, convertComponentToFilter(c)] as const;
+    return [`answers.${c.fullKey}`, convertComponentToFilter(c)] as const;
   });
 
   return Object.fromEntries(items);

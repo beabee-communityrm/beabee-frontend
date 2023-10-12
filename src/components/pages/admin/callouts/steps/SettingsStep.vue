@@ -264,8 +264,8 @@ const formComponentItems = computed(() =>
   getCalloutComponents(props.steps.content.data.formSchema)
     .filter((c) => c.input)
     .map((c) => ({
-      id: c.key,
-      label: c.label || c.key,
+      id: c.fullKey,
+      label: c.label || c.fullKey,
       type: c.type,
     }))
 );

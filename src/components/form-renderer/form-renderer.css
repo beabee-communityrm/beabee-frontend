@@ -12,12 +12,10 @@
   }
 }
 
-.callout-form-renderer .formio-form,
+.callout-form-renderer:not(.has-no-bg) .formio-form,
 .callout-form-builder .formarea {
   /* Give callouts a white background */
-  &:not(.has-no-bg) {
-    @apply bg-white p-6 shadow-md;
-  }
+  @apply bg-white p-6 shadow-md;
 }
 
 /* Apply to form renderer */

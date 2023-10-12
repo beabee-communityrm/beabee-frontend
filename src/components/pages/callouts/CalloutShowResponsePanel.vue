@@ -92,7 +92,6 @@ import {
   GetCalloutDataWith,
   GetCalloutResponseMapData,
 } from '../../../utils/api/api.interface';
-import { Form } from '../../../lib/formio';
 import CalloutSidePanel from './CalloutSidePanel.vue';
 import CalloutForm from './CalloutForm.vue';
 

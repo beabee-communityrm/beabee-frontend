@@ -178,7 +178,9 @@ meta:
                 {{
                   stringifyAnswer(
                     currentInlineComponent,
-                    item.answers[currentInlineComponent.key]
+                    item.answers[currentInlineComponent.slideId][
+                      currentInlineComponent.key
+                    ]
                   )
                 }}
               </span>
@@ -284,7 +286,7 @@ const currentInlineAnswer = ref('');
 const currentInlineComponent = computed(
   () =>
     showInlineAnswer.value &&
-    formComponents.value.find((c) => c.key === currentInlineAnswer.value)
+    formComponents.value.find((c) => c.fullKey === currentInlineAnswer.value)
 );
 
 const selectedResponseItems = computed(
@@ -333,8 +335,8 @@ const formComponents = computed(() =>
   )
 );
 
-const formFilterItems = computed(() =>
-  convertComponentsToFilters(formComponents.value)
+const formFilterItems = computed(
+  () => convertComponentsToFilters(formComponents.value) // TODO: Use @beabee/beabee-common method
 );
 
 const filterGroupsWithQuestions = computed(() => [
