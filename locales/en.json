@@ -1095,6 +1095,7 @@
     "account": "Account",
     "admin": "Administration",
     "adminSettings": "Settings",
+    "uiToolkit": "UI Toolkit",
     "callouts": "Callouts",
     "community": "Community",
     "contacts": "Contacts",
@@ -1248,5 +1249,11 @@
       "title": "Remove tag"
     },
     "name": "Name"
-  }
+  },
+  "uiToolkit": {
+    "typography": {
+      "title": "Typography",
+    },
+    "title": "UI Toolkit"
+  },
 }
