@@ -5,4 +5,5 @@ export default {
   appsignalKey: '__appsignalKey__',
   maptilerKey: '__maptilerKey__',
   cnrMode: '__cnrMode__',
+  experimentalFeatures: '__experimentalFeatures__',
 };

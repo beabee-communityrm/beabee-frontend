@@ -31,6 +31,7 @@ export default ({ command, mode }) => {
           __appsignalKey__: env.APPSIGNAL_KEY || '',
           __maptilerKey__: env.MAPTILER_KEY || '',
           __cnrMode__: env.CNR_MODE || '',
+          __experimentalFeatures__: env.EXPERIMENTAL_FEATURES || '',
         },
         preventAssignment: true,
       })

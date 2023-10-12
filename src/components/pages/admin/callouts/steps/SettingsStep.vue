@@ -70,7 +70,7 @@
         />
       </AppFormSection>
     </template>
-    <template v-else>
+    <template v-if="env.experimentalFeatures">
       <AppFormSection :help="inputT('showResponses.help')">
         <AppRadioGroup
           v-model="data.showResponses"

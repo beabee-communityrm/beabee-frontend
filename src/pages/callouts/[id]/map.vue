@@ -420,20 +420,22 @@ interface GeocodePickEvent extends Event {
 }
 
 function handleLoad(e: { map: Map }) {
-  const geocodeControl = new GeocodingControl({
-    apiKey: env.maptilerKey,
-    language: generalContent.value.locale,
-    country: generalContent.value.locale,
-  });
+  if (env.maptilerKey) {
+    const geocodeControl = new GeocodingControl({
+      apiKey: env.maptilerKey,
+      language: generalContent.value.locale,
+      country: generalContent.value.locale,
+    });
 
-  geocodeControl.addEventListener('pick', (e: Event) => {
-    const event = e as GeocodePickEvent;
-    geocodeAddress.value = event.detail
-      ? featureToAddress(event.detail)
-      : undefined;
-  });
+    geocodeControl.addEventListener('pick', (e: Event) => {
+      const event = e as GeocodePickEvent;
+      geocodeAddress.value = event.detail
+        ? featureToAddress(event.detail)
+        : undefined;
+    });
 
-  e.map.addControl(geocodeControl, 'top-left');
+    e.map.addControl(geocodeControl, 'top-left');
+  }
 }
 </script>
 
