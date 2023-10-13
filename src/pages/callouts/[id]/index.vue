@@ -77,7 +77,7 @@ meta:
         :answers="latestResponse?.answers"
         :preview="isPreview"
         :readonly="!canRespond"
-        :no-bg="isEmbed"
+        :style="isEmbed ? 'no-bg' : undefined"
         @submitted="handleSubmitResponse"
       />
     </template>

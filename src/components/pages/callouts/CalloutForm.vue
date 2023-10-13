@@ -5,10 +5,10 @@
       v-model="answersProxy[currentSlide.id]"
       :components="currentSlide.components"
       :readonly="readonly"
-      :no-bg="noBg"
+      :no-bg="!!style"
     />
     <!-- TODO: Duplicate styles with form background, fix this -->
-    <div :class="!noBg && 'bg-white p-6 pt-0 -mt-6 shadow-md'">
+    <div :class="!!style && 'bg-white p-6 pt-0 -mt-6 shadow-md'">
       <template v-if="isLastSlide && !readonly && !preview">
         <GuestFields
           v-if="showGuestFields"
@@ -86,7 +86,7 @@ const props = defineProps<{
   answers?: CalloutResponseAnswers;
   preview?: boolean;
   readonly?: boolean;
-  noBg?: boolean;
+  style?: 'simple' | 'no-bg';
   onSubmit?(answers: CalloutResponseAnswers): void;
 }>();
 

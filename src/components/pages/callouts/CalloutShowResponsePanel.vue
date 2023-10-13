@@ -51,15 +51,8 @@
         :callout="callout"
         :response="response"
         readonly
-        no-bg
+        :style="'simple'"
       />
-      <!-- <Form
-        :key="response.number"
-        class="callout-form-simple"
-        :form="viewOnlyFormSchema"
-        :submission="{ data: response.answers }"
-        :options="{ readOnly: true, noAlerts: true, renderMode: 'html' }"
-      /> -->
       <ul
         v-if="callout.responseViewSchema.links.length > 0"
         class="columns-2 gap-4 border-t border-t-primary mt-8 pt-8"
