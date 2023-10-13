@@ -46,6 +46,7 @@
     "saveDraft": "Entwurf speichern",
     "schedule": "Planen",
     "search": "Suchen",
+    "skip": "Überspringen",
     "submit": "Abschicken",
     "unpublish": "Veröffentlichung aufheben",
     "update": "Änderungen speichern",
@@ -475,6 +476,7 @@
       "member": "Mitglied",
       "superadmin": "Überadmin"
     },
+    "selectNone": "-- Keine --",
     "selectOne": "Auswählen",
     "share": "Teilen",
     "show": "Anzeigen",
@@ -1050,7 +1052,14 @@
     "steps": {
       "accountConfirmation": {
         "description": "Stelle ein, welche persönlichen Informationen Du über deine Mitglieder sammeln willst.",
-        "joinSurvey": {},
+        "joinSurvey": {
+          "required": "Die Mitglieder müssen den Fragebogen ausfüllen, ehe sie fortfahren können.",
+          "slug": "Callout",
+          "slugHelp": "Du kannst jeden Callout verwenden, der Enddatum hat.",
+          "text": "Als Teil des Anmeldeprozesses kannst du deine Mitglieder einen kurzen Fragebogen ausfüllen lassen. Du kannst zum Beispiel zusätzliche Informationen abfragen oder in Erfahrung bringen, warum sie Mitglied geworden sind.",
+          "textIntro": "Erkläre deinen Mitgliedern kurz, warum du weitere Informationen von ihnen haben möchtest.",
+          "title": "Anmelde-Fragebogen"
+        },
         "optInLabel": "Beschriftung Kontrollkästchen ",
         "optInText": "Text",
         "optInTitle": "Überschrift",
