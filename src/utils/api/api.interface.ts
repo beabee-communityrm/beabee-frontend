@@ -274,6 +274,7 @@ export interface JoinSetupContent {
   mailText: string;
   mailOptIn: string;
   surveySlug: string;
+  surveyRequired: boolean;
 }
 
 export interface ProfileContent {

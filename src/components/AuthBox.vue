@@ -1,9 +1,9 @@
 <template>
   <div
-    class="max-w-lg gap-6"
+    class="max-w-lg"
     :class="{
       'rounded-md bg-white p-6 shadow-auth-box md:p-8': !isEmbed,
-      'mx-auto md:flex md:max-w-3xl': !preview,
+      'mx-auto gap-8 md:flex md:max-w-3xl': !preview,
     }"
   >
     <div

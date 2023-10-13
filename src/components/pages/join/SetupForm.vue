@@ -9,10 +9,8 @@
     :preview="preview"
   >
     <template #header>
-      <p class="mb-4">
-        {{ setupContent.welcome }}
-      </p>
-      <div class="content-message" v-html="t('joinSetup.confirmDetails')" />
+      <p class="mb-4">{{ setupContent.welcome }}</p>
+      <p>{{ t('joinSetup.confirmDetails') }}</p>
     </template>
 
     <AppForm

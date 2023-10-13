@@ -84,10 +84,14 @@ meta:
         </div>
       </template>
 
+      <AppSubHeading class="mb-2">
+        {{ stepT('joinSurvey.title') }}
+      </AppSubHeading>
+      <p class="mb-4">{{ stepT('joinSurvey.text') }}</p>
       <div class="mb-4">
         <AppSelect
           v-model="setupContent.surveySlug"
-          :label="stepT('surveySlug')"
+          :label="stepT('joinSurvey.slug')"
           :items="[
             { id: '', label: t('common.selectNone') },
             ...openCallouts.map((callout) => ({
@@ -96,8 +100,15 @@ meta:
             })),
           ]"
         />
-        <AppInputHelp :message="stepT('surveySlugHelp')" />
+        <AppInputHelp :message="stepT('joinSurvey.slugHelp')" />
       </div>
+      <template v-if="setupContent.surveySlug">
+        <AppCheckbox
+          v-model="setupContent.surveyRequired"
+          :label="stepT('joinSurvey.required')"
+          class="mb-4 font-semibold"
+        />
+      </template>
     </AppForm>
     <div>
       <Suspense>
@@ -123,6 +134,7 @@ import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppInputHelp from '../../../components/forms/AppInputHelp.vue';
 import { fetchCallouts } from '../../../utils/api/callout';
 import { ItemStatus } from '@beabee/beabee-common';
+import AppSubHeading from '../../../components/AppSubHeading.vue';
 
 const setupContent = ref<JoinSetupContent>();
 const openCallouts = ref<GetCalloutData[]>([]);
