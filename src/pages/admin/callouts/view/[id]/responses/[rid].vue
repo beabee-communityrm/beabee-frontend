@@ -146,6 +146,7 @@ meta:
       :callout="callout"
       :answers="response.answers"
       :readonly="!editMode"
+      :all-slides="!editMode"
       @submit="handleEditResponse"
     />
 

@@ -1,6 +1,16 @@
 <template>
   <form class="callout-form" :class="formStyle" @submit.prevent>
+    <template v-if="allSlides">
+      <FormRenderer
+        v-for="slide in slides"
+        :key="slide.id"
+        v-model="answersProxy[slide.id]"
+        :components="slide.components"
+        :readonly="readonly"
+      />
+    </template>
     <FormRenderer
+      v-else
       :key="currentSlide.id"
       v-model="answersProxy[currentSlide.id]"
       :components="currentSlide.components"
@@ -83,6 +93,7 @@ const props = defineProps<{
   preview?: boolean;
   readonly?: boolean;
   style?: 'simple' | 'no-bg' | 'small';
+  allSlides?: boolean;
   onSubmit?(answers: CalloutResponseAnswers): void;
 }>();
 
@@ -121,7 +132,7 @@ const currentSlide = computed(
 
 const currentSlideNo = computed(() => slides.value.indexOf(currentSlide.value));
 
-const totalSlides = computed(() => slides.value.length);
+const totalSlides = computed(() => (props.allSlides ? 1 : slides.value.length));
 const isLastSlide = computed(
   () => currentSlideNo.value === totalSlides.value - 1
 );

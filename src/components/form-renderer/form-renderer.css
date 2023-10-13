@@ -291,3 +291,33 @@
     @apply text-base font-body;
   }
 }
+
+/* Apply to form renderer in simple mode */
+.callout-form.is-simple .callout-form-renderer {
+  @apply text-base;
+
+  .formio-form {
+    @apply min-h-0;
+  }
+
+  .form-group {
+    @apply mb-1 block;
+  }
+
+  .formio-component-file {
+    @apply hidden;
+  }
+
+  .col-form-label {
+    @apply font-bold text-base mb-0 inline;
+    &::after {
+      @apply text-body;
+      content: ': ';
+    }
+  }
+
+  div[ref='element'],
+  div[ref='value'] {
+    @apply inline;
+  }
+}
