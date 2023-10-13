@@ -12,43 +12,47 @@
       :readonly="readonly"
       :no-bg="noBg"
     />
-    <AppNotification
-      v-if="formError"
-      class="mt-4"
-      variant="error"
-      :title="formError"
-    />
-    <div class="flex gap-4 justify-between">
-      <div>
-        <AppButton
-          v-if="currentSlideNo > 0 && currentSlide.navigation.prevText"
-          type="button"
-          variant="primaryOutlined"
-          @click="currentSlideNo--"
-        >
-          {{ currentSlide.navigation.prevText }}
-        </AppButton>
-      </div>
-      <div>
-        <AppButton
-          v-if="currentSlideNo < props.callout.formSchema.slides.length - 1"
-          type="button"
-          variant="primaryOutlined"
-          :disabled="validation.$invalid"
-          @click="currentSlideNo++"
-        >
-          {{ currentSlide.navigation.nextText }}
-        </AppButton>
-        <AppButton
-          v-else-if="!readonly"
-          type="submit"
-          variant="primary"
-          :disabled="validation.$invalid"
-          :loading="isLoading"
-          @click="handleSubmit"
-        >
-          {{ currentSlide.navigation.submitText }}
-        </AppButton>
+    <div :class="!noBg && 'bg-white p-6 pt-0 -mt-6 shadow-md'">
+      <AppNotification
+        v-if="formError"
+        class="mt-4"
+        variant="error"
+        :title="formError"
+      />
+      <AppButton
+        v-if="currentSlideNo === totalSlides - 1 && !readonly"
+        type="submit"
+        class="w-full mb-4"
+        variant="primary"
+        :disabled="validation.$invalid"
+        :loading="isLoading"
+        @click="handleSubmit"
+      >
+        {{ currentSlide.navigation.submitText }}
+      </AppButton>
+      <div v-if="totalSlides > 1" class="flex gap-4 justify-between">
+        <div>
+          <AppButton
+            v-if="currentSlide.navigation.prevText"
+            type="button"
+            variant="primaryOutlined"
+            :disabled="currentSlideNo === 0"
+            @click="currentSlideNo--"
+          >
+            {{ currentSlide.navigation.prevText }}
+          </AppButton>
+        </div>
+        <div>
+          <AppButton
+            v-if="currentSlideNo < totalSlides - 1"
+            type="button"
+            variant="primary"
+            :disabled="validation.$invalid"
+            @click="currentSlideNo++"
+          >
+            {{ currentSlide.navigation.nextText }}
+          </AppButton>
+        </div>
       </div>
     </div>
   </form>
@@ -103,6 +107,7 @@ const currentSlideNo = ref(0);
 const currentSlide = computed(
   () => props.callout.formSchema.slides[currentSlideNo.value]
 );
+const totalSlides = computed(() => props.callout.formSchema.slides.length);
 
 const showGuestFields = computed(
   () => props.callout.access === 'guest' && !currentUser.value
