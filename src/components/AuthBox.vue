@@ -8,7 +8,7 @@
   >
     <div
       v-if="!isEmbed"
-      class="flex-initial basis-72 mb-4"
+      class="flex-initial basis-64 mb-4"
       :class="{ 'md:mb-0': !preview }"
     >
       <div
