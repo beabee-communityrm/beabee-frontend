@@ -99,9 +99,9 @@ meta:
         <AppInputHelp :message="stepT('surveySlugHelp')" />
       </div>
     </AppForm>
-    <div class="bg-cover bg-center p-4 pt-8">
+    <div>
       <Suspense>
-        <SetupForm :setup-content="setupContent" />
+        <SetupForm :setup-content="setupContent" preview />
       </Suspense>
     </div>
   </div>

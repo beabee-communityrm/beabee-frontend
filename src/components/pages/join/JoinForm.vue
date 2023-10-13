@@ -1,5 +1,5 @@
 <template>
-  <AuthBox :title="joinContent.title">
+  <AuthBox :title="joinContent.title" :preview="preview">
     <template #header>
       <div class="content-message" v-html="joinContent.subtitle" />
     </template>
@@ -73,6 +73,7 @@ import AuthBox from '../../AuthBox.vue';
 
 const props = defineProps<{
   joinContent: JoinContent;
+  preview?: boolean;
   onSubmit?: () => Promise<void>;
 }>();
 

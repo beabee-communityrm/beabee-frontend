@@ -6,6 +6,7 @@
         lastName: data.lastName,
       })
     "
+    :preview="preview"
   >
     <template #header>
       <p class="mb-4">
@@ -69,6 +70,7 @@ import AuthBox from '../../AuthBox.vue';
 const props = defineProps<{
   setupContent: JoinSetupContent;
   onSubmit?: (data: SetupContactData) => Promise<unknown> | unknown;
+  preview?: boolean;
 }>();
 
 const { t } = useI18n();
