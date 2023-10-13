@@ -348,9 +348,9 @@
       "default": "-- Default --",
       "label": "Next slide"
     },
-    "pageNo": "Slide {pageNo}",
     "prevButton": "Back button text",
     "showAdvancedOptions": "Show advanced options",
+    "slideNo": "Slide {no}",
     "submitButton": "Submit button text"
   },
   "calloutResponse": {

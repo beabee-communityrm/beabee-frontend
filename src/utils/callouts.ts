@@ -8,18 +8,21 @@ import { CalloutStepsProps } from '../components/pages/admin/callouts/callouts.i
 import { FilterItem, FilterItems } from '../components/search/search.interface';
 import { CreateCalloutData, GetCalloutDataWith } from './api/api.interface';
 import env from '../env';
+import i18n from '../lib/i18n';
 
-export function getSlideSchema(): CalloutSlideSchema {
+const { t } = i18n.global;
+
+export function getSlideSchema(no: number): CalloutSlideSchema {
   const id = 'slide' + Math.random().toString(36).substring(2, 8);
   return {
     id,
-    title: 'New slide',
+    title: t('calloutBuilder.slideNo', { no }),
     components: [],
     navigation: {
-      nextText: 'Next',
-      prevText: 'Prev',
+      nextText: t('actions.next'),
+      prevText: t('actions.back'),
       nextSlideId: '',
-      submitText: 'Submit',
+      submitText: t('actions.submit'),
     },
   };
 }
@@ -53,7 +56,7 @@ export function convertCalloutToSteps(
     content: {
       introText: callout?.intro || '',
       formSchema: callout?.formSchema || {
-        slides: [getSlideSchema()],
+        slides: [getSlideSchema(1)],
       },
     },
     titleAndImage: {

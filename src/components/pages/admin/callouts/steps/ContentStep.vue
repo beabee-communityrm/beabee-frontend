@@ -42,14 +42,10 @@
             />
           </div>
           <div class="flex-1">
-            <p class="font-semibold">{{ slide.title }}</p>
+            <p class="font-semibold">{{ slideNo + 1 }}: {{ slide.title }}</p>
             <p v-if="slide.navigation.nextSlideId" class="mt-1 text-xs">
               ↳
-              {{
-                data.formSchema.slides.find(
-                  (s) => s.id === slide.navigation.nextSlideId
-                )?.title ?? '???'
-              }}
+              {{ getNextSlideLabel(slide.navigation.nextSlideId) }}
             </p>
           </div>
         </li>
@@ -120,7 +116,7 @@
               <AppButton
                 variant="dangerOutlined"
                 :icon="faTrash"
-                :disabled="data.formSchema.slides.length === 1"
+                :disabled="totalSlides === 1"
                 @click="handleRemoveSlide"
               >
                 {{ t('calloutBuilder.actions.removeSlide') }}
@@ -134,7 +130,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ItemStatus } from '@beabee/beabee-common';
+import { CalloutSlideSchema, ItemStatus } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { ref, watch } from 'vue';
 import { computed } from 'vue';
@@ -172,9 +168,10 @@ const inputT = (key: string) => t('createCallout.steps.content.inputs.' + key);
 const currentSlideNo = ref(0);
 const showAdvancedOptions = ref(false);
 
+const totalSlides = computed(() => props.data.formSchema.slides.length);
 const isFirstSlide = computed(() => currentSlideNo.value === 0);
 const isLastSlide = computed(
-  () => currentSlideNo.value === props.data.formSchema.slides.length - 1
+  () => currentSlideNo.value === totalSlides.value - 1
 );
 
 const warnAboutEditing = computed(
@@ -185,9 +182,19 @@ const wasJustReplicated = route.query.replicated !== undefined;
 
 const validation = useVuelidate();
 
+function getNextSlideLabel(nextSlideId: string) {
+  const nextSlideNo = props.data.formSchema.slides.findIndex(
+    (s) => s.id === nextSlideId
+  );
+  const nextSlide = props.data.formSchema.slides[nextSlideNo];
+
+  return nextSlide ? `${nextSlideNo + 1}: ${nextSlide.title}` : '???';
+}
+
 function handleAddSlide() {
   // eslint-disable-next-line vue/no-mutating-props
-  props.data.formSchema.slides.push(getSlideSchema());
+  props.data.formSchema.slides.push(getSlideSchema(totalSlides.value + 1));
+  // Can't use totalSlides here, not updated yet
   currentSlideNo.value = props.data.formSchema.slides.length - 1;
 }
 
