@@ -42,7 +42,7 @@
     <div v-if="totalSlides > 1" class="flex gap-4 justify-between">
       <div>
         <AppButton
-          v-if="currentSlide.navigation.prevText && currentSlideNo > 0"
+          v-if="currentSlide.navigation.prevText && slideIds.length > 1"
           type="button"
           variant="primaryOutlined"
           @click="handlePrevSlide"
@@ -67,8 +67,11 @@
 
 <script lang="ts" setup>
 import {
+  CalloutComponentSchema,
   CalloutResponseAnswers,
   CalloutSlideSchema,
+  RadioCalloutComponentSchema,
+  flattenComponents,
 } from '@beabee/beabee-common';
 import { computed, ref } from 'vue';
 import { GetCalloutDataWith } from '../../../utils/api/api.interface';
@@ -165,7 +168,32 @@ async function handleSubmit() {
   }
 }
 
+function isDecisionComponent(
+  component: CalloutComponentSchema
+): component is RadioCalloutComponentSchema {
+  return (
+    component.type === 'radio' && component.values.some((v) => v.nextSlideId)
+  );
+}
+
 function handleNextSlide() {
+  const decisionComponent = flattenComponents(
+    currentSlide.value.components
+  ).filter(isDecisionComponent)[0];
+
+  if (decisionComponent) {
+    const value =
+      answersProxy.value[currentSlide.value.id]?.[decisionComponent.key];
+
+    const nextId = decisionComponent.values.find((v) => v.value === value)
+      ?.nextSlideId;
+
+    if (nextId) {
+      slideIds.value.unshift(nextId);
+      return;
+    }
+  }
+
   const nextId =
     currentSlide.value.navigation.nextSlideId ||
     slides.value[currentSlideNo.value + 1].id;
