@@ -230,8 +230,8 @@ const newResponseAddress = computed(() => {
   const addressProp = callout.value?.responseViewSchema?.map?.addressProp;
   if (addressProp && newResponseAnswers.value) {
     const [slideId, answerKey] = addressProp.split('.');
-    const addressAnswer = newResponseAnswers.value[slideId][answerKey];
-    return addressAnswer as CalloutResponseAnswerAddress;
+    const addressAnswer = newResponseAnswers.value[slideId]?.[answerKey];
+    return addressAnswer as CalloutResponseAnswerAddress | undefined;
   } else {
     return undefined;
   }
