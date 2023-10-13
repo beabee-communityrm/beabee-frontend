@@ -130,7 +130,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { CalloutSlideSchema, ItemStatus } from '@beabee/beabee-common';
+import { ItemStatus } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { ref, watch } from 'vue';
 import { computed } from 'vue';
