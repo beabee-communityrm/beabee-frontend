@@ -337,8 +337,20 @@
     "updated": "Änderungen gespeichert!"
   },
   "calloutBuilder": {
-    "actions": {},
-    "nextSlide": {}
+    "actions": {
+      "addSlide": "Slide hinzufügen",
+      "removeSlide": "Slide entfernen"
+    },
+    "internalTitle": "Interner Titel",
+    "nextButton": "Text für den Weiter-Button",
+    "nextSlide": {
+      "default": "-- Standard --",
+      "label": "Nächster Slide"
+    },
+    "prevButton": "Text für den Zurück-Button",
+    "showAdvancedOptions": "Erweiterte Optionen anzeigen",
+    "slideNo": "Slide {no}",
+    "submitButton": "Text für den Submit-Button"
   },
   "calloutResponse": {
     "data": {
