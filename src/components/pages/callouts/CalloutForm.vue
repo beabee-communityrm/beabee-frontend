@@ -7,6 +7,7 @@
       :readonly="readonly"
       :no-bg="noBg"
     />
+    <!-- TODO: Duplicate styles with form background, fix this -->
     <div :class="!noBg && 'bg-white p-6 pt-0 -mt-6 shadow-md'">
       <template v-if="isLastSlide && !readonly && !preview">
         <GuestFields
@@ -16,7 +17,7 @@
         />
         <AppNotification
           v-if="formError"
-          class="mt-4"
+          class="mb-4"
           variant="error"
           :title="formError"
         />
@@ -86,6 +87,7 @@ const props = defineProps<{
   preview?: boolean;
   readonly?: boolean;
   noBg?: boolean;
+  onSubmit?(answers: CalloutResponseAnswers): void;
 }>();
 
 const guestName = ref('');
@@ -120,6 +122,10 @@ const showGuestFields = computed(
 );
 
 async function handleSubmit() {
+  if (props.onSubmit) {
+    return props.onSubmit(answersProxy.value);
+  }
+
   formError.value = '';
   isLoading.value = true;
   try {

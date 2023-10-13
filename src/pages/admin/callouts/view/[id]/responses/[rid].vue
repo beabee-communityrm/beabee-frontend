@@ -141,10 +141,10 @@ meta:
       class="mb-6"
       :title="t('calloutResponsePage.editMode')"
     />
-    <FormRenderer
+    <CalloutForm
       :key="response.id + editMode"
-      :components="callout.formSchema.slides[0].components"
-      :answers="response.answers[callout.formSchema.slides[0].id]"
+      :callout="callout"
+      :answers="response.answers"
       :readonly="!editMode"
       @submit="handleEditResponse"
     />
@@ -192,7 +192,7 @@ import {
 import { addNotification } from '../../../../../../store/notifications';
 import AppNotification from '../../../../../../components/AppNotification.vue';
 import { CalloutResponseAnswers } from '@beabee/beabee-common';
-import FormRenderer from '../../../../../../components/form-renderer/FormRenderer.vue';
+import CalloutForm from '../../../../../../components/pages/callouts/CalloutForm.vue';
 
 const props = defineProps<{
   rid: string;
@@ -255,10 +255,8 @@ async function handleUpdate(
   doingAction.value = false;
 }
 
-async function handleEditResponse(submission: {
-  data: CalloutResponseAnswers;
-}) {
-  await handleUpdate({ answers: submission.data }, t('form.saved'));
+async function handleEditResponse(answers: CalloutResponseAnswers) {
+  await handleUpdate({ answers }, t('form.saved'));
   editMode.value = false;
 }
 
