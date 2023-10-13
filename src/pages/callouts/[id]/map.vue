@@ -367,28 +367,26 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
   });
 
   const result = await reverseGeocode(coords.lat, coords.lng);
-  if (result) {
-    // Use click location rather than geocode result
-    const address: GeocodeResult = {
-      formatted_address: result.formatted_address,
-      features: result.features,
-      geometry: {
-        location: coords,
-      },
-    };
 
-    const [slideId, answerKey] = mapSchema.addressProp.split('.');
-    newResponseAnswers.value = {
-      [slideId]: { [answerKey]: address },
+  const address: GeocodeResult = {
+    formatted_address: result?.formatted_address || '???',
+    features: result?.features || [],
+    geometry: {
+      // Use click location rather than geocode result
+      location: coords,
+    },
+  };
+
+  const [slideId, answerKey] = mapSchema.addressProp.split('.');
+  newResponseAnswers.value = {
+    [slideId]: { [answerKey]: address },
+  };
+
+  if (mapSchema.addressPatternProp && result) {
+    const [slideId, answerKey] = mapSchema.addressPatternProp.split('.');
+    newResponseAnswers.value[slideId] = {
+      [answerKey]: formatGeocodeResult(result, mapSchema.addressPattern),
     };
-    if (mapSchema.addressPatternProp) {
-      const [slideId, answerKey] = mapSchema.addressPatternProp.split('.');
-      newResponseAnswers.value[slideId] = {
-        [answerKey]: formatGeocodeResult(result, mapSchema.addressPattern),
-      };
-    }
-  } else {
-    newResponseAnswers.value = {};
   }
 }
 
