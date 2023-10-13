@@ -1,7 +1,6 @@
 <template>
   <Form
     class="callout-form-renderer"
-    :class="{ 'has-no-bg': noBg }"
     :form="{ components }"
     :submission="modelValue && { data: modelValue }"
     :options="formOpts"
@@ -37,7 +36,6 @@ const props = defineProps<{
   components: CalloutComponentSchema[];
   modelValue?: CalloutResponseAnswers[string];
   readonly?: boolean;
-  noBg?: boolean;
 }>();
 
 const { t } = useI18n();

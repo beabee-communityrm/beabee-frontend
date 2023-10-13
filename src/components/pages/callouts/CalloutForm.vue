@@ -1,60 +1,56 @@
 <template>
-  <form @submit.prevent>
+  <form class="callout-form" :class="formStyle" @submit.prevent>
     <FormRenderer
       :key="currentSlide.id"
       v-model="answersProxy[currentSlide.id]"
       :components="currentSlide.components"
       :readonly="readonly"
-      :no-bg="!!style"
     />
-    <!-- TODO: Duplicate styles with form background, fix this -->
-    <div :class="!!style && 'bg-white p-6 pt-0 -mt-6 shadow-md'">
-      <template v-if="isLastSlide && !readonly && !preview">
-        <GuestFields
-          v-if="showGuestFields"
-          v-model:name="guestName"
-          v-model:email="guestEmail"
-        />
-        <AppNotification
-          v-if="formError"
-          class="mb-4"
-          variant="error"
-          :title="formError"
-        />
+    <template v-if="isLastSlide && !readonly && !preview">
+      <GuestFields
+        v-if="showGuestFields"
+        v-model:name="guestName"
+        v-model:email="guestEmail"
+      />
+      <AppNotification
+        v-if="formError"
+        class="mb-4"
+        variant="error"
+        :title="formError"
+      />
+      <AppButton
+        type="submit"
+        class="w-full mb-4"
+        variant="primary"
+        :disabled="validation.$invalid"
+        :loading="isLoading"
+        @click="handleSubmit"
+      >
+        {{ currentSlide.navigation.submitText }}
+      </AppButton>
+    </template>
+    <div v-if="totalSlides > 1" class="flex gap-4 justify-between">
+      <div>
         <AppButton
-          type="submit"
-          class="w-full mb-4"
+          v-if="currentSlide.navigation.prevText"
+          type="button"
+          variant="primaryOutlined"
+          :disabled="currentSlideNo === 0"
+          @click="handlePrevSlide"
+        >
+          {{ currentSlide.navigation.prevText }}
+        </AppButton>
+      </div>
+      <div>
+        <AppButton
+          v-if="currentSlideNo < totalSlides - 1"
+          type="button"
           variant="primary"
           :disabled="validation.$invalid"
-          :loading="isLoading"
-          @click="handleSubmit"
+          @click="handleNextSlide"
         >
-          {{ currentSlide.navigation.submitText }}
+          {{ currentSlide.navigation.nextText }}
         </AppButton>
-      </template>
-      <div v-if="totalSlides > 1" class="flex gap-4 justify-between">
-        <div>
-          <AppButton
-            v-if="currentSlide.navigation.prevText"
-            type="button"
-            variant="primaryOutlined"
-            :disabled="currentSlideNo === 0"
-            @click="handlePrevSlide"
-          >
-            {{ currentSlide.navigation.prevText }}
-          </AppButton>
-        </div>
-        <div>
-          <AppButton
-            v-if="currentSlideNo < totalSlides - 1"
-            type="button"
-            variant="primary"
-            :disabled="validation.$invalid"
-            @click="handleNextSlide"
-          >
-            {{ currentSlide.navigation.nextText }}
-          </AppButton>
-        </div>
       </div>
     </div>
   </form>
@@ -86,7 +82,7 @@ const props = defineProps<{
   answers?: CalloutResponseAnswers;
   preview?: boolean;
   readonly?: boolean;
-  style?: 'simple' | 'no-bg';
+  style?: 'simple' | 'no-bg' | 'small';
   onSubmit?(answers: CalloutResponseAnswers): void;
 }>();
 
@@ -94,6 +90,19 @@ const guestName = ref('');
 const guestEmail = ref('');
 const formError = ref('');
 const isLoading = ref(false);
+
+const formStyle = computed(() => {
+  switch (props.style) {
+    case 'small':
+      return 'is-small';
+    case 'simple':
+      return 'is-simple';
+    case 'no-bg':
+      return '';
+    default:
+      return 'has-bg';
+  }
+});
 
 const slides = computed(() => props.callout.formSchema.slides);
 

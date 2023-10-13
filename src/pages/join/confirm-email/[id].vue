@@ -19,7 +19,7 @@ const router = useRouter();
 
 onBeforeMount(() => {
   confirmEmail(props.id)
-    .then(updateCurrentUser)
+    .then(() => updateCurrentUser())
     .then(() => router.replace('/join/setup'))
     .catch(() => {
       router.replace('/join/failed');

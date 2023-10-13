@@ -81,11 +81,8 @@ meta:
         />
       </div>
     </AppForm>
-    <div
-      class="bg-cover bg-center p-4 pt-8"
-      :style="`background-image: url(${backgroundUrl})`"
-    >
-      <JoinForm :join-content="joinContent" />
+    <div>
+      <JoinForm :join-content="joinContent" preview />
     </div>
   </div>
 </template>

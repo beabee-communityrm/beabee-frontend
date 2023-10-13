@@ -1,15 +1,27 @@
 <template>
   <div
-    class="mx-auto max-w-lg md:max-w-3xl md:flex gap-6"
-    :class="!isEmbed && 'rounded-md bg-white p-6 shadow-auth-box md:p-8'"
+    class="max-w-lg"
+    :class="{
+      'rounded-md bg-white p-6 shadow-auth-box md:p-8': !isEmbed,
+      'mx-auto gap-8 md:flex md:max-w-3xl': !preview,
+    }"
   >
-    <div v-if="!isEmbed" class="flex-initial basis-72 mb-4 md:mb-0">
+    <div
+      v-if="!isEmbed"
+      class="flex-initial basis-64 mb-4"
+      :class="{ 'md:mb-0': !preview }"
+    >
       <div
-        class="flex gap-4 md:flex-col items-center"
-        :class="$slots.header && 'mb-4'"
+        class="flex gap-4 items-center justify-center"
+        :class="{
+          'mb-4': !!$slots.header,
+          'md:flex-col md:items-start': !preview,
+        }"
       >
-        <AppLogo class="w-20 md:w-full" />
-        <AppTitle v-if="title">{{ title }}</AppTitle>
+        <AppLogo
+          :class="{ [title ? 'w-20' : 'w-40']: true, 'md:w-full': !preview }"
+        />
+        <AppTitle v-if="title" class="flex-1">{{ title }}</AppTitle>
       </div>
       <slot name="header" />
     </div>
@@ -23,5 +35,5 @@ import { isEmbed } from '../store';
 import AppLogo from './AppLogo.vue';
 import AppTitle from './AppTitle.vue';
 
-defineProps<{ title?: string }>();
+defineProps<{ title?: string; preview?: boolean }>();
 </script>

@@ -12,9 +12,10 @@
   }
 }
 
-.callout-form-renderer:not(.has-no-bg),
+/* Apply to form renderer */
+.callout-form.has-bg,
+/* Apply to form builder form area */
 .callout-form-builder .formarea {
-  /* Give callouts a white background */
   @apply bg-white p-6 shadow-md;
 }
 
@@ -275,5 +276,18 @@
   /* Respect text formatting */
   div[ref='value'] {
     @apply whitespace-pre-wrap break-words;
+  }
+}
+
+/* Apply to form renderer in small mode */
+.callout-form.is-small .callout-form-renderer {
+  @apply text-base;
+
+  .form-group {
+    @apply mb-4;
+  }
+
+  .col-form-label {
+    @apply text-base font-body;
   }
 }

@@ -47,6 +47,7 @@
     "saveDraft": "Save draft",
     "schedule": "Schedule",
     "search": "Search",
+    "skip": "Skip",
     "submit": "Submit",
     "unpublish": "Unpublish",
     "update": "Update",
@@ -490,6 +491,7 @@
       "member": "Member",
       "superadmin": "Super Admin"
     },
+    "selectNone": "-- None --",
     "selectOne": "Select one...",
     "share": "Share",
     "show": "Show",
@@ -1067,6 +1069,14 @@
     "steps": {
       "accountConfirmation": {
         "description": "Compose your confirmation screen",
+        "joinSurvey": {
+          "required": "Users must complete the survey before proceeding",
+          "slug": "Callout",
+          "slugHelp": "You can use any open callout that doesn't have an expiry date.",
+          "text": "You can ask your new users to complete a callout as part of the join flow. This is a great way to ask them why they joined or maybe you want some additional information off them to help them fit into the community.",
+          "textIntro": "Tell your users a bit about why you are asking for this information",
+          "title": "Join survey"
+        },
         "optInLabel": "Checkbox label",
         "optInText": "Text",
         "optInTitle": "Heading",
