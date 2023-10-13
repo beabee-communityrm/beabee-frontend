@@ -178,7 +178,7 @@ meta:
                 {{
                   stringifyAnswer(
                     currentInlineComponent,
-                    item.answers[currentInlineComponent.slideId][
+                    item.answers[currentInlineComponent.slideId]?.[
                       currentInlineComponent.key
                     ]
                   )
