@@ -292,7 +292,6 @@ onBeforeUnmount(() => {
   .formio-component-shortcut,
   .formio-component-action,
   .formio-component-saveOnEnter,
-  .formio-component-block,
   .formio-component-editor,
   .formio-component-inputType,
   .formio-component-labelMargin,

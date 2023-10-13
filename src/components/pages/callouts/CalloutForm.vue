@@ -1,5 +1,9 @@
 <template>
-  <form @submit.prevent>
+  <form
+    class="callout-form"
+    :class="style === 'sm' ? 'is-sm' : style === 'no-bg' ? '' : 'has-bg'"
+    @submit.prevent
+  >
     <GuestFields
       v-if="showGuestFields"
       v-model:name="guestName"
@@ -9,7 +13,6 @@
       :form="callout.formSchema"
       :answers="answers"
       :readonly="readonly"
-      :no-bg="noBg"
       :before-submit="beforeSubmit"
       @submit="handleSubmission"
     />
@@ -43,7 +46,7 @@ const props = defineProps<{
   answers?: CalloutResponseAnswers;
   preview?: boolean;
   readonly?: boolean;
-  noBg?: boolean;
+  style?: 'no-bg' | 'sm';
 }>();
 
 const guestName = ref('');
