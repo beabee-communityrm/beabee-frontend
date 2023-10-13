@@ -1,10 +1,5 @@
 <template>
   <form @submit.prevent>
-    <GuestFields
-      v-if="showGuestFields && !readonly"
-      v-model:name="guestName"
-      v-model:email="guestEmail"
-    />
     <FormRenderer
       :key="currentSlide.id"
       v-model="answersProxy[currentSlide.id]"
@@ -13,23 +8,29 @@
       :no-bg="noBg"
     />
     <div :class="!noBg && 'bg-white p-6 pt-0 -mt-6 shadow-md'">
-      <AppNotification
-        v-if="formError"
-        class="mt-4"
-        variant="error"
-        :title="formError"
-      />
-      <AppButton
-        v-if="currentSlideNo === totalSlides - 1 && !readonly"
-        type="submit"
-        class="w-full mb-4"
-        variant="primary"
-        :disabled="validation.$invalid"
-        :loading="isLoading"
-        @click="handleSubmit"
-      >
-        {{ currentSlide.navigation.submitText }}
-      </AppButton>
+      <template v-if="isLastSlide && !readonly && !preview">
+        <GuestFields
+          v-if="showGuestFields"
+          v-model:name="guestName"
+          v-model:email="guestEmail"
+        />
+        <AppNotification
+          v-if="formError"
+          class="mt-4"
+          variant="error"
+          :title="formError"
+        />
+        <AppButton
+          type="submit"
+          class="w-full mb-4"
+          variant="primary"
+          :disabled="validation.$invalid"
+          :loading="isLoading"
+          @click="handleSubmit"
+        >
+          {{ currentSlide.navigation.submitText }}
+        </AppButton>
+      </template>
       <div v-if="totalSlides > 1" class="flex gap-4 justify-between">
         <div>
           <AppButton
@@ -37,7 +38,7 @@
             type="button"
             variant="primaryOutlined"
             :disabled="currentSlideNo === 0"
-            @click="currentSlideNo--"
+            @click="handlePrevSlide"
           >
             {{ currentSlide.navigation.prevText }}
           </AppButton>
@@ -48,7 +49,7 @@
             type="button"
             variant="primary"
             :disabled="validation.$invalid"
-            @click="currentSlideNo++"
+            @click="handleNextSlide"
           >
             {{ currentSlide.navigation.nextText }}
           </AppButton>
@@ -59,7 +60,10 @@
 </template>
 
 <script lang="ts" setup>
-import { CalloutResponseAnswers } from '@beabee/beabee-common';
+import {
+  CalloutResponseAnswers,
+  CalloutSlideSchema,
+} from '@beabee/beabee-common';
 import { computed, ref } from 'vue';
 import { GetCalloutDataWith } from '../../../utils/api/api.interface';
 import { useI18n } from 'vue-i18n';
@@ -71,9 +75,9 @@ import AppNotification from '../../AppNotification.vue';
 import FormRenderer from '../../form-renderer/FormRenderer.vue';
 import AppButton from '../../button/AppButton.vue';
 import useVuelidate from '@vuelidate/core';
-import { sameAs } from '@vuelidate/validators';
 
 const { t } = useI18n();
+const validation = useVuelidate();
 
 const emit = defineEmits<{ (e: 'submitted'): void }>();
 const props = defineProps<{
@@ -84,30 +88,32 @@ const props = defineProps<{
   noBg?: boolean;
 }>();
 
-const validation = useVuelidate(
-  { preview: { no: sameAs(false) } },
-  { preview: props.preview }
-);
-
 const guestName = ref('');
 const guestEmail = ref('');
 const formError = ref('');
 const isLoading = ref(false);
 
+const slides = computed(() => props.callout.formSchema.slides);
+
 const initialAnswers = Object.fromEntries(
-  props.callout.formSchema.slides.map((slide) => [
-    slide.id,
-    props.answers?.[slide.id] || {},
-  ])
+  slides.value.map((slide) => [slide.id, props.answers?.[slide.id] || {}])
 );
 
 const answersProxy = ref<CalloutResponseAnswers>(initialAnswers);
 
-const currentSlideNo = ref(0);
+const slideIds = ref<string[]>([slides.value[0].id]);
+
 const currentSlide = computed(
-  () => props.callout.formSchema.slides[currentSlideNo.value]
+  () =>
+    slides.value.find((s) => s.id === slideIds.value[0]) as CalloutSlideSchema // Should always be defined
 );
-const totalSlides = computed(() => props.callout.formSchema.slides.length);
+
+const currentSlideNo = computed(() => slides.value.indexOf(currentSlide.value));
+
+const totalSlides = computed(() => slides.value.length);
+const isLastSlide = computed(
+  () => currentSlideNo.value === totalSlides.value - 1
+);
 
 const showGuestFields = computed(
   () => props.callout.access === 'guest' && !currentUser.value
@@ -132,5 +138,17 @@ async function handleSubmit() {
   } finally {
     isLoading.value = false;
   }
+}
+
+function handleNextSlide() {
+  const nextId =
+    currentSlide.value.navigation.nextSlideId ||
+    slides.value[currentSlideNo.value + 1].id;
+
+  slideIds.value.unshift(nextId);
+}
+
+function handlePrevSlide() {
+  slideIds.value.shift();
 }
 </script>
