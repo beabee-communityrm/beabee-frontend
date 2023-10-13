@@ -43,6 +43,7 @@ const setupContent = ref<JoinSetupContent>({
   mailOptIn: '',
   surveySlug: '',
   surveyRequired: false,
+  surveyText: '',
 });
 
 const isSaving = ref(false);

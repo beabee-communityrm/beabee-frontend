@@ -15,7 +15,7 @@ meta:
     "
   >
     <template #header>
-      <p class="content-message" v-html="t('joinSurvey.confirmDetails')" />
+      <p class="content-message" v-html="setupContent.surveyText" />
     </template>
     <CalloutForm
       v-if="joinSurvey"
@@ -23,6 +23,11 @@ meta:
       :style="'sm'"
       @submitted="goToProfile"
     />
+    <div v-if="!setupContent.surveyRequired" class="text-center">
+      <AppButton variant="text" @click="goToProfile">
+        {{ t('actions.skip') }}
+      </AppButton>
+    </div>
   </AuthBox>
 </template>
 <script lang="ts" setup>
@@ -38,6 +43,7 @@ import {
 import { fetchCallout } from '../../utils/api/callout';
 import { currentUser } from '../../store';
 import { useRouter } from 'vue-router';
+import AppButton from '../../components/button/AppButton.vue';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -56,6 +62,7 @@ const setupContent = ref<JoinSetupContent>({
   mailOptIn: '',
   surveySlug: '',
   surveyRequired: false,
+  surveyText: '',
 });
 
 function goToProfile() {

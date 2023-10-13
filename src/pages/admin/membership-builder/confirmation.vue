@@ -103,6 +103,12 @@ meta:
         <AppInputHelp :message="stepT('joinSurvey.slugHelp')" />
       </div>
       <template v-if="setupContent.surveySlug">
+        <RichTextEditor
+          v-model="setupContent.surveyText"
+          :label="stepT('joinSurvey.textIntro')"
+          class="mb-4"
+        />
+
         <AppCheckbox
           v-model="setupContent.surveyRequired"
           :label="stepT('joinSurvey.required')"

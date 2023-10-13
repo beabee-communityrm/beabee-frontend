@@ -380,6 +380,7 @@
     },
     "editMode": "Vorsicht, du befindest dich im Bearbeitungsmodus!",
     "manageFolders": "Ordner bearbeiten",
+    "manageReviewers": "Auswerter bearbeiten",
     "manageTags": "Tags bearbeiten",
     "notifications": {
       "addedAssignee": "\"{assignee}\" zugewiesen",
@@ -741,9 +742,7 @@
             "help": "<p>Das Bild wird verwendet, um die Antwort in der Karten- oder Galerieansicht zu visualisieren. Wichtig: Es muss sich um eine Datei-Upload-Komponente handeln.</p>\n",
             "label": "Welches Feld soll als Bild für Darstellung der Antwort dienen?"
           },
-          "responseLinks": {
-            "label": "Add links to the bottom of responses?"
-          },
+          "responseLinks": {},
           "responseTitleProp": {
             "help": "<p>Der Titel erscheint als Überschrift auf jeder Antwort in der Karten- oder Galerieansicht.</p>\n",
             "label": "Welches Feld soll als Überschrift dienen?"
@@ -859,6 +858,7 @@
     "terms": "Allgemeine Geschäftsbedingungen"
   },
   "forgotPassword": {
+    "backToLogin": "",
     "checkInbox": "Bitte schaue in deinen Posteingang und befolge die Anleitung in der E-Mail. Sollte die E-mail nicht auftauchen, checke deinen Spamordner. ",
     "description": "Bitte gib deine E-Mail-Adresse ein. Wir schicken dir dann die Anleitung zum Zurücksetzen deines Passworts.",
     "message": "Gibt es einen Account mit der E-mail-Adresse {email}, bekommst du in Kürze eine Nachricht.",
@@ -1050,6 +1050,7 @@
     "steps": {
       "accountConfirmation": {
         "description": "Stelle ein, welche persönlichen Informationen Du über deine Mitglieder sammeln willst.",
+        "joinSurvey": {},
         "optInLabel": "Beschriftung Kontrollkästchen ",
         "optInText": "Text",
         "optInTitle": "Überschrift",
