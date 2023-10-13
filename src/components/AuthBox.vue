@@ -12,14 +12,16 @@
       :class="{ 'md:mb-0': !preview }"
     >
       <div
-        class="flex gap-4 items-center"
+        class="flex gap-4 items-center justify-center"
         :class="{
           'mb-4': !!$slots.header,
           'md:flex-col md:items-start': !preview,
         }"
       >
-        <AppLogo class="w-20" :class="{ 'md:w-full': !preview }" />
-        <AppTitle v-if="title">{{ title }}</AppTitle>
+        <AppLogo
+          :class="{ [title ? 'w-20' : 'w-40']: true, 'md:w-full': !preview }"
+        />
+        <AppTitle v-if="title" class="flex-1">{{ title }}</AppTitle>
       </div>
       <slot name="header" />
     </div>
