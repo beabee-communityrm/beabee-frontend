@@ -6,5 +6,6 @@ import BeabeeStorage from './formio/providers/storage/beabee';
 
 // Formio2.Providers.providers.address = { beabee: BeabeeAddress };
 Formio.Providers.providers.storage = { beabee: BeabeeStorage };
+Formio.Utils.Evaluator.noeval = true;
 
 export { Form, FormBuilder };

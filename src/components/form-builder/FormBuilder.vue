@@ -49,13 +49,8 @@ import {
   faCloudUpload,
   faCamera,
 } from '@fortawesome/free-solid-svg-icons';
-import {
-  config,
-  dom,
-  library,
-  noAuto,
-} from '@fortawesome/fontawesome-svg-core';
-import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
+import { dom, library } from '../../lib/fontawesome';
+import { onBeforeMount, ref } from 'vue';
 
 import { FormBuilder } from '../../lib/formio';
 import {
@@ -124,12 +119,7 @@ onBeforeMount(() => {
     { ...faTimes, iconName: 'remove' as IconName }
   );
   // This will automatically replace all <i> tags with the icons above
-  config.autoReplaceSvg = 'nest';
   dom.watch();
-});
-
-onBeforeUnmount(() => {
-  noAuto();
 });
 </script>
 <style lang="postcss">
