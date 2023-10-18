@@ -4,9 +4,11 @@ import axios from '../lib/axios';
 import { fetchContact } from '../utils/api/contact';
 import { GetContactData } from '../utils/api/api.interface';
 
-export async function updateCurrentUser(): Promise<void> {
+export async function updateCurrentUser(
+  contact?: GetContactData
+): Promise<void> {
   try {
-    currentUser.value = await fetchContact('me');
+    currentUser.value = contact || (await fetchContact('me'));
   } catch (err) {
     currentUser.value = null;
   }

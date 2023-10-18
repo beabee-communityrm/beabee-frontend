@@ -372,28 +372,27 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
   });
 
   const result = await reverseGeocode(coords.lat, coords.lng);
-  if (result) {
-    // Use click location rather than geocode result
-    const address: GeocodeResult = {
-      formatted_address: result.formatted_address,
-      features: result.features,
-      geometry: {
-        location: coords,
-      },
-    };
 
-    newResponseAnswers.value = {
-      [mapSchema.addressProp]: address,
-      ...(mapSchema.addressPatternProp && {
-        [mapSchema.addressPatternProp]: formatGeocodeResult(
-          result,
-          mapSchema.addressPattern
-        ),
-      }),
-    };
-  } else {
-    newResponseAnswers.value = {};
-  }
+  const address: GeocodeResult = {
+    formatted_address: result?.formatted_address || '???',
+    features: result?.features || [],
+    geometry: {
+      // Use click location rather than geocode result
+      location: coords,
+    },
+  };
+
+  const addressPattern =
+    mapSchema.addressPatternProp && result
+      ? formatGeocodeResult(result, mapSchema.addressPattern)
+      : undefined;
+
+  newResponseAnswers.value = {
+    [mapSchema.addressProp]: address,
+    ...(addressPattern && {
+      [mapSchema.addressPatternProp]: addressPattern,
+    }),
+  };
 }
 
 // Centre map on selected feature when it changes
@@ -424,20 +423,22 @@ interface GeocodePickEvent extends Event {
 }
 
 function handleLoad(e: { map: Map }) {
-  const geocodeControl = new GeocodingControl({
-    apiKey: env.maptilerKey,
-    language: generalContent.value.locale,
-    country: generalContent.value.locale,
-  });
+  if (env.maptilerKey) {
+    const geocodeControl = new GeocodingControl({
+      apiKey: env.maptilerKey,
+      language: generalContent.value.locale,
+      country: generalContent.value.locale,
+    });
 
-  geocodeControl.addEventListener('pick', (e: Event) => {
-    const event = e as GeocodePickEvent;
-    geocodeAddress.value = event.detail
-      ? featureToAddress(event.detail)
-      : undefined;
-  });
+    geocodeControl.addEventListener('pick', (e: Event) => {
+      const event = e as GeocodePickEvent;
+      geocodeAddress.value = event.detail
+        ? featureToAddress(event.detail)
+        : undefined;
+    });
 
-  e.map.addControl(geocodeControl, 'top-left');
+    e.map.addControl(geocodeControl, 'top-left');
+  }
 }
 </script>
 
