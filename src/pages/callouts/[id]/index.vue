@@ -7,84 +7,87 @@ meta:
 </route>
 
 <template>
-  <div v-if="callout" class="md:max-w-2xl">
-    <template v-if="!isEmbed">
-      <h1 class="mb-6 font-title text-4xl font-bold">{{ callout.title }}</h1>
-      <div class="mb-6 flex items-center justify-between">
-        <div class="flex items-center text-sm font-semibold text-body-60">
-          <div>
-            <ItemStatusText :item="callout" />
-          </div>
-          <div
-            v-if="latestResponse"
-            class="border-body-40 ml-3 w-32 border-l pl-3"
-          >
-            {{ t('callout.youResponded') }}
-          </div>
-        </div>
-        <AppButton
-          v-if="callout.status === ItemStatus.Open"
-          :icon="showSharingPanel ? faCaretDown : faShare"
-          variant="primaryOutlined"
-          @click="showSharingPanel = !showSharingPanel"
-          >{{ t('common.share') }}</AppButton
+  <div v-if="callout">
+    <h1 v-if="!isEmbed" class="mb-6 font-title text-4xl font-bold">
+      {{ callout.title }}
+    </h1>
+
+    <CalloutThanksBox v-if="latestResponse" id="thanks" :callout="callout" />
+
+    <AppBoxout
+      v-else-if="!isOpen && callout.expires"
+      :title="
+        t('callout.ended', { date: formatLocale(callout.expires, 'PPP') })
+      "
+      :icon="faInfoCircle"
+      class="mb-6"
+      variant="info"
+    />
+
+    <div class="md:max-w-2xl">
+      <template v-if="!isEmbed">
+        <div
+          v-if="isOpen || latestResponse"
+          class="mb-6 flex items-center justify-between"
         >
-      </div>
+          <div class="flex items-center text-sm font-semibold text-body-60">
+            <div>
+              <ItemStatusText :item="callout" />
+            </div>
+            <div
+              v-if="latestResponse"
+              class="border-body-40 ml-3 w-32 border-l pl-3"
+            >
+              {{ t('callout.youResponded') }}
+            </div>
+          </div>
+          <AppButton
+            v-if="isOpen"
+            :icon="showSharingPanel ? faCaretDown : faShare"
+            variant="primaryOutlined"
+            @click="showSharingPanel = !showSharingPanel"
+            >{{ t('common.share') }}</AppButton
+          >
+        </div>
 
-      <transition-group name="slide">
-        <SharingPanel v-if="showSharingPanel" :slug="callout.slug" />
-      </transition-group>
+        <transition name="slide">
+          <SharingPanel v-if="showSharingPanel" :slug="callout.slug" />
+        </transition>
 
-      <a id="thanks" />
-      <CalloutThanksBox
-        v-if="latestResponse || showOnlyThankYou"
-        :callout="callout"
-        class="p-6 bg-white"
-      />
+        <figure class="mb-6">
+          <img class="w-full object-cover" :src="callout.image" />
+        </figure>
 
-      <figure class="mb-6">
-        <img class="w-full object-cover" :src="callout.image" />
-      </figure>
+        <div class="content-message mb-6 text-lg" v-html="callout.intro" />
+      </template>
 
-      <div class="content-message mb-6 text-lg" v-html="callout.intro" />
-    </template>
+      <CalloutLoginPrompt v-if="showLoginPrompt" />
+      <CalloutMemberOnlyPrompt v-else-if="showMemberOnlyPrompt && !isPreview" />
+      <template v-else-if="showResponseForm">
+        <AppNotification
+          v-if="isPreview"
+          variant="warning"
+          :title="t('callout.showingPreview')"
+          class="mb-4"
+        />
 
-    <CalloutLoginPrompt v-if="showLoginPrompt" />
-    <CalloutMemberOnlyPrompt v-else-if="showMemberOnlyPrompt && !isPreview" />
-
-    <template v-else-if="!showOnlyThankYou">
-      <hr v-if="!isEmbed" class="mt-10 border-t border-primary-40 pt-10" />
-
-      <AppNotification
-        v-if="isPreview"
-        variant="warning"
-        :title="t('callout.showingPreview')"
-        class="mb-4"
-      />
-      <AppNotification
-        v-else-if="!isOpen"
-        variant="info"
-        :title="t('callout.closed')"
-        class="mb-4"
-      />
-
-      <CalloutForm
-        v-if="
-          showResponseForm &&
-          responses /* Form.IO doesn't handle reactivity so wait for responses to load */
-        "
-        :callout="callout"
-        :answers="latestResponse?.answers"
-        :preview="isPreview"
-        :readonly="!canRespond"
-        :style="isEmbed ? 'no-bg' : undefined"
-        @submitted="handleSubmitResponse"
-      />
-    </template>
+        <CalloutForm
+          v-if="
+            responses /* Form.IO doesn't handle reactivity so wait for responses to load */
+          "
+          :callout="callout"
+          :answers="latestResponse?.answers"
+          :preview="isPreview"
+          :readonly="!canRespond"
+          :style="isEmbed ? 'no-bg' : undefined"
+          @submitted="handleSubmitResponse"
+        />
+      </template>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { Paginated, ItemStatus } from '@beabee/beabee-common';
+import { Paginated } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import {
@@ -102,6 +105,7 @@ import { addBreadcrumb } from '../../../store/breadcrumb';
 import {
   faBullhorn,
   faCaretDown,
+  faInfoCircle,
   faShare,
 } from '@fortawesome/free-solid-svg-icons';
 import AppNotification from '../../../components/AppNotification.vue';
@@ -111,6 +115,8 @@ import { useCallout } from '../../../components/pages/callouts/use-callout';
 import CalloutLoginPrompt from '../../../components/pages/callouts/CalloutLoginPrompt.vue';
 import CalloutMemberOnlyPrompt from '../../../components/pages/callouts/CalloutMemberOnlyPrompt.vue';
 import CalloutThanksBox from '../../../components/pages/callouts/CalloutThanksBox.vue';
+import AppBoxout from '../../../components/AppBoxout.vue';
+import { formatLocale } from '../../../utils/dates';
 
 const props = defineProps<{ id: string }>();
 
@@ -149,7 +155,6 @@ const callout = ref<GetCalloutDataWith<'form'>>();
 const responses = ref<Paginated<GetCalloutResponseDataWith<'answers'>>>();
 
 const showSharingPanel = ref(false);
-const showOnlyThankYou = ref(false);
 
 const isPreview = computed(
   () => route.query.preview === null && canAdmin.value
@@ -183,7 +188,6 @@ const canRespond = computed(
 
 function handleSubmitResponse() {
   document.getElementById('thanks')?.scrollIntoView();
-  showOnlyThankYou.value = true;
   addNotification({
     title: t('callout.responseSubmitted'),
     variant: 'success',
