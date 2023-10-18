@@ -10,7 +10,7 @@
 
     <div class="flex gap-8 mt-8">
       <div class="flex-0 basis-menu">
-        <Draggable v-model="data.formSchema.slides" item-key="id">
+        <Draggable v-model="slides" item-key="id">
           <template #item="{ element, index }">
             <div
               class="mb-4 flex gap-2 rounded p-4"
@@ -56,7 +56,7 @@
           <div class="flex-1 max-w-2xl flex gap-4 justify-between items-end">
             <div>
               <AppInput
-                v-model="data.formSchema.slides[currentSlideNo].title"
+                v-model="slides[currentSlideNo].title"
                 :label="t('calloutBuilder.internalTitle')"
                 required
               />
@@ -87,7 +87,7 @@
 
         <FormBuilder
           :key="currentSlideNo /* FormBuilder isn't reactive */"
-          v-model="data.formSchema.slides[currentSlideNo].components"
+          v-model="slides[currentSlideNo].components"
           :advanced="showAdvancedOptions"
         />
 
@@ -96,8 +96,8 @@
           <div class="flex-1 max-w-2xl">
             <div class="bg-white p-6 pt-0 shadow-md relative -mt-6 mb-4">
               <FormBuilderNavigation
-                v-model="data.formSchema.slides[currentSlideNo].navigation"
-                :slides="data.formSchema.slides"
+                v-model="slides[currentSlideNo].navigation"
+                :slides="slides"
                 :current-slide-no="currentSlideNo"
                 :is-first="isFirstSlide"
                 :is-last="isLastSlide"
@@ -126,10 +126,7 @@ import useVuelidate from '@vuelidate/core';
 import { ref, watch } from 'vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute } from 'vue-router';
 import { ContentStepProps } from '../callouts.interface';
-import RichTextEditor from '../../../../rte/RichTextEditor.vue';
-import AppFormSection from '../../../../forms/AppFormSection.vue';
 import AppNotification from '../../../../AppNotification.vue';
 import FormBuilder from '../../../../form-builder/FormBuilder.vue';
 import {
@@ -155,13 +152,13 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
-const route = useRoute();
-const inputT = (key: string) => t('createCallout.steps.content.inputs.' + key);
 
 const currentSlideNo = ref(0);
 const showAdvancedOptions = ref(false);
 
-const totalSlides = computed(() => props.data.formSchema.slides.length);
+const slides = computed(() => props.data.formSchema.slides);
+
+const totalSlides = computed(() => slides.value.length);
 const isFirstSlide = computed(() => currentSlideNo.value === 0);
 const isLastSlide = computed(
   () => currentSlideNo.value === totalSlides.value - 1
@@ -171,41 +168,39 @@ const warnAboutEditing = computed(
   () => props.status === ItemStatus.Open || props.status === ItemStatus.Ended
 );
 
-const wasJustReplicated = route.query.replicated !== undefined;
-
 const validation = useVuelidate();
 
 function getNextSlideLabel(nextSlideId: string) {
-  const nextSlideNo = props.data.formSchema.slides.findIndex(
-    (s) => s.id === nextSlideId
-  );
-  const nextSlide = props.data.formSchema.slides[nextSlideNo];
+  const nextSlideNo = slides.value.findIndex((s) => s.id === nextSlideId);
+  const nextSlide = slides.value[nextSlideNo];
 
   return nextSlide ? `${nextSlideNo + 1}: ${nextSlide.title}` : '???';
 }
 
 function handleAddSlide() {
-  // eslint-disable-next-line vue/no-mutating-props
-  props.data.formSchema.slides.push(getSlideSchema(totalSlides.value + 1));
-  // Can't use totalSlides here, not updated yet
-  currentSlideNo.value = props.data.formSchema.slides.length - 1;
+  slides.value.push(getSlideSchema(totalSlides.value + 1));
+  currentSlideNo.value = slides.value.length - 1;
 }
 
 function handleRemoveSlide() {
-  // eslint-disable-next-line vue/no-mutating-props
-  props.data.formSchema.slides.splice(currentSlideNo.value, 1);
+  slides.value.splice(currentSlideNo.value, 1);
   currentSlideNo.value = Math.max(0, currentSlideNo.value - 1);
 }
 
 watch(
-  [validation, props.data.formSchema],
+  [validation, slides],
   () => {
     emit('update:error', validation.value.$errors.length > 0);
     emit(
       'update:validated',
       !validation.value.$invalid &&
-        props.data.formSchema.slides.every(
-          (s) => s.title && s.components.length > 1
+        slides.value.every(
+          (s, i) =>
+            s.title &&
+            s.components.length > 0 &&
+            (i < totalSlides.value - 1
+              ? s.navigation.nextText
+              : s.navigation.submitText)
         )
     );
   },
