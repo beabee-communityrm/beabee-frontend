@@ -1,6 +1,12 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div>
+    <AppNotification
+      v-if="wasJustReplicated"
+      variant="success"
+      class="mb-4"
+      :title="t('editCallout.replicated')"
+    />
     <AppFormSection :help="inputT('title.help')">
       <AppInput
         v-model="data.title"
@@ -23,6 +29,13 @@
         :label="inputT('image.label')"
         :width="1440"
         :height="900"
+        required
+      />
+    </AppFormSection>
+    <AppFormSection :help="inputT('intro.help')">
+      <RichTextEditor
+        v-model="data.introText"
+        :label="inputT('intro.label')"
         required
       />
     </AppFormSection>
@@ -93,6 +106,9 @@ import AppLabel from '../../../../forms/AppLabel.vue';
 import env from '../../../../../env';
 import slugify from 'slugify';
 import AppFormSection from '../../../../forms/AppFormSection.vue';
+import RichTextEditor from '../../../../rte/RichTextEditor.vue';
+import { useRoute } from 'vue-router';
+import AppNotification from '../../../../AppNotification.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
@@ -101,8 +117,11 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
+const route = useRoute();
 const inputT = (key: string) =>
   t('createCallout.steps.titleAndImage.inputs.' + key);
+
+const wasJustReplicated = route.query.replicated !== undefined;
 
 const slug = computed(() =>
   props.data.useCustomSlug ? props.data.slug : props.data.autoSlug

@@ -2,25 +2,11 @@
 <template>
   <div>
     <AppNotification
-      v-if="wasJustReplicated"
-      variant="success"
-      class="mb-4"
-      :title="t('editCallout.replicated')"
-    />
-    <AppNotification
       v-if="warnAboutEditing"
       variant="warning"
       class="mb-4"
       :title="t('editCallout.warning')"
     />
-
-    <AppFormSection :help="inputT('intro.help')">
-      <RichTextEditor
-        v-model="data.introText"
-        :label="inputT('intro.label')"
-        required
-      />
-    </AppFormSection>
 
     <div class="flex gap-8 mt-8">
       <div class="flex-0 basis-menu">

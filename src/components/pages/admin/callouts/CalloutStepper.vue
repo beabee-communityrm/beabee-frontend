@@ -38,19 +38,19 @@ const props = defineProps<{
 const { t } = useI18n();
 
 const steps = reactive({
-  content: {
-    name: t('createCallout.steps.content.title'),
-    validated: false,
-    error: false,
-    component: markRaw(StepContent),
-    data: props.stepsProps.content,
-  },
   titleAndImage: {
     name: t('createCallout.steps.titleAndImage.title'),
     validated: false,
     error: false,
     component: markRaw(StepTitleAndImage),
     data: props.stepsProps.titleAndImage,
+  },
+  content: {
+    name: t('createCallout.steps.content.title'),
+    validated: false,
+    error: false,
+    component: markRaw(StepContent),
+    data: props.stepsProps.content,
   },
   settings: {
     name: t('createCallout.steps.settings.title'),
@@ -82,8 +82,8 @@ const steps = reactive({
 });
 
 const stepsInOrder = [
-  steps.content,
   steps.titleAndImage,
+  steps.content,
   steps.endMessage,
   steps.settings,
   //steps.mailchimp,

@@ -54,7 +54,6 @@ export function convertCalloutToSteps(
 
   return {
     content: {
-      introText: callout?.intro || '',
       formSchema: callout?.formSchema || {
         slides: [getSlideSchema(1)],
       },
@@ -63,6 +62,7 @@ export function convertCalloutToSteps(
       title: callout?.title || '',
       description: callout?.excerpt || '',
       coverImageURL: callout?.image || '',
+      introText: callout?.intro || '',
       useCustomSlug: !!callout,
       autoSlug: '',
       slug: callout?.slug || '',
@@ -127,7 +127,7 @@ export function convertStepsToCallout(
     title: steps.titleAndImage.title,
     excerpt: steps.titleAndImage.description,
     image: steps.titleAndImage.coverImageURL,
-    intro: steps.content.introText,
+    intro: steps.titleAndImage.introText,
     formSchema: steps.content.formSchema,
     responseViewSchema: steps.settings.showResponses
       ? {

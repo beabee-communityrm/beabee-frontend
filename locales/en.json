@@ -637,10 +637,7 @@
     "steps": {
       "content": {
         "inputs": {
-          "intro": {
-            "help": "<p>The <strong>Introduction text</strong> appears alongside the callout. It should explain why you are doing this callout and give any context the user might need before answering.</p>\n",
-            "label": "Introduction text"
-          }
+          "intro": {}
         },
         "title": "Content"
       },
@@ -810,6 +807,10 @@
           "image": {
             "help": "<p>The <strong>Cover image</strong> will serve as an illustration for the callout on menus and forms.</p>\n",
             "label": "Cover image"
+          },
+          "intro": {
+            "help": "<p>The <strong>Introduction text</strong> appears alongside the callout. It should explain why you are doing this callout and give any context the user might need before answering.</p>\n",
+            "label": "Introduction text"
           },
           "overrideShare": {
             "label": "Use callout title and description for sharing?",
