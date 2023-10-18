@@ -12,7 +12,12 @@ meta:
       {{ callout.title }}
     </h1>
 
-    <CalloutThanksBox v-if="latestResponse" id="thanks" :callout="callout" />
+    <CalloutThanksBox
+      v-if="latestResponse"
+      id="thanks"
+      :callout="callout"
+      class="mb-6"
+    />
 
     <AppBoxout
       v-else-if="!isOpen && callout.expires"
@@ -24,11 +29,11 @@ meta:
       variant="info"
     />
 
-    <div class="md:max-w-2xl">
+    <div class="md:max-w-2xl flex flex-col gap-6">
       <template v-if="!isEmbed">
         <div
           v-if="isOpen || latestResponse"
-          class="mb-6 flex items-center justify-between"
+          class="flex items-center justify-between"
         >
           <div class="flex items-center text-sm font-semibold text-body-60">
             <div>
@@ -46,43 +51,50 @@ meta:
             :icon="showSharingPanel ? faCaretDown : faShare"
             variant="primaryOutlined"
             @click="showSharingPanel = !showSharingPanel"
-            >{{ t('common.share') }}</AppButton
           >
+            {{ t('common.share') }}
+          </AppButton>
         </div>
 
         <transition name="slide">
           <SharingPanel v-if="showSharingPanel" :slug="callout.slug" />
         </transition>
 
-        <figure class="mb-6">
-          <img class="w-full object-cover" :src="callout.image" />
-        </figure>
-
-        <div class="content-message mb-6 text-lg" v-html="callout.intro" />
+        <img class="w-full" :src="callout.image" />
+        <div class="content-message text-lg" v-html="callout.intro" />
       </template>
 
       <CalloutLoginPrompt v-if="showLoginPrompt" />
       <CalloutMemberOnlyPrompt v-else-if="showMemberOnlyPrompt && !isPreview" />
-      <template v-else-if="showResponseForm">
-        <AppNotification
-          v-if="isPreview"
-          variant="warning"
-          :title="t('callout.showingPreview')"
-          class="mb-4"
-        />
+      <div v-else-if="showResponsePanel">
+        <AppButton
+          v-if="canRespond && !showResponseForm"
+          @click="showResponseForm = true"
+        >
+          {{ t('callout.getStarted') }}
+        </AppButton>
 
-        <CalloutForm
-          v-if="
-            responses /* Form.IO doesn't handle reactivity so wait for responses to load */
-          "
-          :callout="callout"
-          :answers="latestResponse?.answers"
-          :preview="isPreview"
-          :readonly="!canRespond"
-          :style="isEmbed ? 'no-bg' : undefined"
-          @submitted="handleSubmitResponse"
-        />
-      </template>
+        <template v-else>
+          <AppNotification
+            v-if="isPreview"
+            variant="warning"
+            :title="t('callout.showingPreview')"
+            class="mb-4"
+          />
+
+          <CalloutForm
+            v-if="
+              responses /* Form.IO doesn't handle reactivity so wait for responses to load */
+            "
+            :callout="callout"
+            :answers="latestResponse?.answers"
+            :preview="isPreview"
+            :readonly="!canRespond"
+            :style="isEmbed ? 'no-bg' : undefined"
+            @submitted="handleSubmitResponse"
+          />
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -155,6 +167,7 @@ const callout = ref<GetCalloutDataWith<'form'>>();
 const responses = ref<Paginated<GetCalloutResponseDataWith<'answers'>>>();
 
 const showSharingPanel = ref(false);
+const showResponseForm = ref(false);
 
 const isPreview = computed(
   () => route.query.preview === null && canAdmin.value
@@ -168,7 +181,7 @@ const latestResponse = computed(() =>
     : responses.value?.items?.[0]
 );
 
-const showResponseForm = computed(
+const showResponsePanel = computed(
   () =>
     // Preview mode
     isPreview.value ||

@@ -1,10 +1,5 @@
 <template>
-  <AppBoxout
-    :title="callout.thanksTitle"
-    :icon="faThumbsUp"
-    class="mb-6"
-    variant="success"
-  >
+  <AppBoxout :title="callout.thanksTitle" :icon="faThumbsUp" variant="success">
     <div
       class="content-message font-normal text-body-80"
       v-html="callout.thanksText"
