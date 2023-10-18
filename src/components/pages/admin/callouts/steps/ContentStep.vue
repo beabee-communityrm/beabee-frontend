@@ -88,6 +88,7 @@
           </div>
           <div class="flex-0 basis-[15rem]">
             <AppCheckbox
+              v-if="env.experimentalFeatures"
               v-model="showAdvancedOptions"
               :label="t('calloutBuilder.showAdvancedOptions')"
             />
@@ -154,6 +155,7 @@ import AppInput from '../../../../forms/AppInput.vue';
 import AppButtonGroup from '../../../../button/AppButtonGroup.vue';
 import FormBuilderNavigation from '../../../../form-builder/FormBuilderNavigation.vue';
 import AppCheckbox from '../../../../forms/AppCheckbox.vue';
+import env from '../../../../../env';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
