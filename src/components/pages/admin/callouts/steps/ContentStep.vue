@@ -23,32 +23,36 @@
     </AppFormSection>
 
     <div class="flex gap-8 mt-8">
-      <ul class="flex-0 basis-menu">
-        <li
-          v-for="(slide, slideNo) in data.formSchema.slides"
-          :key="slide.id"
-          class="mb-4 flex gap-2 rounded p-4"
-          :class="
-            currentSlideNo === slideNo
-              ? 'bg-white'
-              : 'cursor-pointer bg-primary-10'
-          "
-          @click="currentSlideNo = slideNo"
-        >
-          <div>
-            <font-awesome-icon
-              :icon="faGripVertical"
-              class="cursor-grab text-body-60 hover:text-body"
-            />
-          </div>
-          <div class="flex-1">
-            <p class="font-semibold">{{ slideNo + 1 }}: {{ slide.title }}</p>
-            <p v-if="slide.navigation.nextSlideId" class="mt-1 text-xs">
-              ↳
-              {{ getNextSlideLabel(slide.navigation.nextSlideId) }}
-            </p>
-          </div>
-        </li>
+      <div class="flex-0 basis-menu">
+        <Draggable v-model="data.formSchema.slides" item-key="id">
+          <template #item="{ element, index }">
+            <div
+              class="mb-4 flex gap-2 rounded p-4"
+              :class="
+                currentSlideNo === index
+                  ? 'bg-white'
+                  : 'cursor-pointer bg-primary-10'
+              "
+              @click="currentSlideNo = index"
+            >
+              <div>
+                <font-awesome-icon
+                  :icon="faGripVertical"
+                  class="cursor-grab text-body-60 hover:text-body"
+                />
+              </div>
+              <div class="flex-1">
+                <p class="font-semibold">
+                  {{ index + 1 }}: {{ element.title }}
+                </p>
+                <p v-if="element.navigation.nextSlideId" class="mt-1 text-xs">
+                  ↳
+                  {{ getNextSlideLabel(element.navigation.nextSlideId) }}
+                </p>
+              </div>
+            </div>
+          </template>
+        </Draggable>
 
         <AppButton
           variant="primary"
@@ -58,7 +62,7 @@
         >
           {{ t('calloutBuilder.actions.addSlide') }}
         </AppButton>
-      </ul>
+      </div>
 
       <div class="flex-1 callout-slide-builder">
         <!-- These styles replicate the FormBuilder layout -->
@@ -156,6 +160,7 @@ import AppButtonGroup from '../../../../button/AppButtonGroup.vue';
 import FormBuilderNavigation from '../../../../form-builder/FormBuilderNavigation.vue';
 import AppCheckbox from '../../../../forms/AppCheckbox.vue';
 import env from '../../../../../env';
+import Draggable from 'vuedraggable';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
