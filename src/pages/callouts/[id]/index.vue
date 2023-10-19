@@ -11,97 +11,98 @@ meta:
     {{ callout.title }}
   </h1>
 
-  <CalloutThanksBox
-    v-if="latestResponse || thanks"
-    id="thanks"
-    :callout="callout"
-    class="mb-6"
-  />
+  <div v-if="responses /* Avoids layout thrashing */">
+    <CalloutThanksBox
+      v-if="latestResponse || thanks"
+      id="thanks"
+      :callout="callout"
+      class="mb-6"
+    />
 
-  <AppMessageBox
-    v-else-if="!isOpen && callout.expires /* Type narrowing */"
-    :title="t('callout.ended', { date: formatLocale(callout.expires, 'PPP') })"
-    :icon="faInfoCircle"
-    class="mb-6"
-    variant="info"
-  />
+    <AppMessageBox
+      v-else-if="!isOpen && callout.expires /* Type narrowing */"
+      :title="
+        t('callout.ended', { date: formatLocale(callout.expires, 'PPP') })
+      "
+      :icon="faInfoCircle"
+      class="mb-6"
+      variant="info"
+    />
 
-  <div class="md:max-w-2xl flex flex-col gap-6">
-    <template v-if="!showResponseForm">
-      <div
-        v-if="isOpen || latestResponse"
-        class="flex items-center justify-between"
-      >
-        <div class="flex items-center text-sm font-semibold text-body-60">
-          <ItemStatusText :item="callout" />
-          <span
-            v-if="latestResponse"
-            class="border-body-40 ml-3 w-32 border-l pl-3"
-          >
-            {{ t('callout.youResponded') }}
-          </span>
-        </div>
-        <AppButton
-          v-if="isOpen"
-          :icon="showSharingPanel ? faCaretDown : faShare"
-          variant="primaryOutlined"
-          @click="showSharingPanel = !showSharingPanel"
+    <div class="md:max-w-2xl flex flex-col gap-6">
+      <template v-if="!showResponseForm">
+        <div
+          v-if="isOpen || latestResponse"
+          class="flex items-center justify-between"
         >
-          {{ t('common.share') }}
-        </AppButton>
-      </div>
+          <div class="flex items-center text-sm font-semibold text-body-60">
+            <ItemStatusText :item="callout" />
+            <span
+              v-if="latestResponse"
+              class="border-body-40 ml-3 w-32 border-l pl-3"
+            >
+              {{ t('callout.youResponded') }}
+            </span>
+          </div>
+          <AppButton
+            v-if="isOpen"
+            :icon="showSharingPanel ? faCaretDown : faShare"
+            variant="primaryOutlined"
+            @click="showSharingPanel = !showSharingPanel"
+          >
+            {{ t('common.share') }}
+          </AppButton>
+        </div>
 
-      <transition name="slide">
-        <SharingPanel v-if="showSharingPanel" :slug="callout.slug" />
-      </transition>
+        <transition name="slide">
+          <SharingPanel v-if="showSharingPanel" :slug="callout.slug" />
+        </transition>
 
-      <img class="w-full" :src="callout.image" />
-      <div class="content-message text-lg" v-html="callout.intro" />
-    </template>
-
-    <CalloutLoginPrompt v-if="showLoginPrompt" />
-    <CalloutMemberOnlyPrompt v-else-if="showMemberOnlyPrompt && !isPreview" />
-    <div v-else-if="showResponsePanel">
-      <AppButton
-        v-if="canRespond && !showResponseForm"
-        class="w-full"
-        :to="{
-          path: '/callouts/' + callout.slug + '/respond',
-          query: { preview: isPreview ? null : undefined },
-        }"
-      >
-        {{
-          latestResponse
-            ? t('callout.actions.updateResponse')
-            : t('actions.getStarted')
-        }}
-      </AppButton>
-
-      <template v-else>
-        <AppNotification
-          v-if="isPreview"
-          variant="warning"
-          :title="t('callout.showingPreview')"
-          class="mb-4"
-        />
-
-        <AppHeading v-if="latestResponse" class="mt-6 mb-4">
-          {{ t('callout.yourResponse') }}
-        </AppHeading>
-
-        <CalloutForm
-          v-if="
-            responses /* Form.IO doesn't handle reactivity so wait for responses to load */
-          "
-          :callout="callout"
-          :answers="latestResponse?.answers"
-          :preview="isPreview"
-          :readonly="!canRespond"
-          :all-slides="!canRespond"
-          :style="isEmbed ? 'no-bg' : undefined"
-          @submitted="handleSubmitResponse"
-        />
+        <img class="w-full" :src="callout.image" />
+        <div class="content-message text-lg" v-html="callout.intro" />
       </template>
+
+      <CalloutLoginPrompt v-if="showLoginPrompt" />
+      <CalloutMemberOnlyPrompt v-else-if="showMemberOnlyPrompt && !isPreview" />
+      <div v-else-if="showResponsePanel">
+        <AppButton
+          v-if="canRespond && !showResponseForm"
+          class="w-full"
+          :to="{
+            path: '/callouts/' + callout.slug + '/respond',
+            query: { preview: isPreview ? null : undefined },
+          }"
+        >
+          {{
+            latestResponse
+              ? t('callout.actions.updateResponse')
+              : t('actions.getStarted')
+          }}
+        </AppButton>
+
+        <template v-else>
+          <AppNotification
+            v-if="isPreview"
+            variant="warning"
+            :title="t('callout.showingPreview')"
+            class="mb-4"
+          />
+
+          <AppHeading v-if="latestResponse" class="mt-6 mb-4">
+            {{ t('callout.yourResponse') }}
+          </AppHeading>
+
+          <CalloutForm
+            :callout="callout"
+            :answers="latestResponse?.answers"
+            :preview="isPreview"
+            :readonly="!canRespond"
+            :all-slides="!canRespond"
+            :style="isEmbed ? 'no-bg' : undefined"
+            @submitted="handleSubmitResponse"
+          />
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -202,13 +203,13 @@ const showResponsePanel = computed(
   () =>
     // Preview mode
     isPreview.value ||
-    // Callout is open and current user has access
+    // Current user has previously responded
+    latestResponse.value ||
+    // Callout is open, current user has access and not on the thanks page
     (isOpen.value &&
       !showLoginPrompt.value &&
       !showMemberOnlyPrompt.value &&
-      !props.thanks) ||
-    // Current user has previously responded
-    latestResponse.value
+      !props.thanks)
 );
 
 const showResponseForm = computed(() => isEmbed || props.respond);
