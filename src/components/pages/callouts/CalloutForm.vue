@@ -42,10 +42,9 @@
     <div v-if="totalSlides > 1" class="flex gap-4 justify-between">
       <div>
         <AppButton
-          v-if="currentSlide.navigation.prevText"
+          v-if="currentSlide.navigation.prevText && currentSlideNo > 0"
           type="button"
           variant="primaryOutlined"
-          :disabled="currentSlideNo === 0"
           @click="handlePrevSlide"
         >
           {{ currentSlide.navigation.prevText }}
