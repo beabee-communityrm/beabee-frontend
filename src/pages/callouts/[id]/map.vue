@@ -9,7 +9,7 @@ meta:
 
 <template>
   <div
-    v-if="callout?.responseViewSchema?.map"
+    v-if="callout.responseViewSchema?.map"
     class="absolute inset-0 flex flex-col"
   >
     <div v-if="!isEmbed" class="flex-0 p-6 pb-1 shadow-lg z-10">
@@ -145,7 +145,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { computed, onBeforeMount, ref, watch } from 'vue';
+import { computed, onBeforeMount, ref, toRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import {
   MglMap,
@@ -169,7 +169,7 @@ import {
   GetCalloutDataWith,
   GetCalloutResponseMapData,
 } from '../../../utils/api/api.interface';
-import { fetchCallout, fetchResponsesForMap } from '../../../utils/api/callout';
+import { fetchResponsesForMap } from '../../../utils/api/callout';
 import PageTitle from '../../../components/PageTitle.vue';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -207,7 +207,9 @@ type GetCalloutResponseMapDataWithAddress = GetCalloutResponseMapData & {
   address: CalloutResponseAnswerAddress;
 };
 
-const props = defineProps<{ id: string }>();
+const props = defineProps<{
+  callout: GetCalloutDataWith<'form' | 'responseViewSchema'>;
+}>();
 
 const map = useMap();
 const route = useRoute();
@@ -216,10 +218,9 @@ const { t } = useI18n();
 
 const sidePanelRef = ref<HTMLElement>();
 
-const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();
 const responses = ref<GetCalloutResponseMapDataWithAddress[]>([]);
 
-const { isOpen } = useCallout(callout);
+const { isOpen } = useCallout(toRef(props, 'callout'));
 
 const isAddMode = ref(false);
 const newResponseAnswers = ref<CalloutResponseAnswers>();
@@ -227,7 +228,7 @@ const geocodeAddress = ref<CalloutResponseAnswerAddress>();
 
 // Use the address from the new response to show a marker on the map
 const newResponseAddress = computed(() => {
-  const addressProp = callout.value?.responseViewSchema?.map?.addressProp;
+  const addressProp = props.callout.responseViewSchema?.map?.addressProp;
   if (addressProp && newResponseAnswers.value) {
     const [slideId, answerKey] = addressProp.split('.');
     const addressAnswer = newResponseAnswers.value[slideId]?.[answerKey];
@@ -241,7 +242,7 @@ const newResponseAddress = computed(() => {
 const responsesCollecton = computed<
   GeoJSON.FeatureCollection<GeoJSON.Point, GetCalloutResponseMapData>
 >(() => {
-  const mapSchema = callout.value?.responseViewSchema?.map;
+  const mapSchema = props.callout.responseViewSchema?.map;
   return {
     type: 'FeatureCollection',
     features: mapSchema
@@ -355,7 +356,7 @@ function handleCancelAddMode() {
 
 // Geolocate where the user has clicked
 async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
-  const mapSchema = callout.value?.responseViewSchema?.map;
+  const mapSchema = props.callout.responseViewSchema?.map;
   if (!mapSchema) return;
 
   const coords = e.event.lngLat;
@@ -402,15 +403,14 @@ watch(selectedResponseFeature, (newFeature) => {
 
 // Load callout and responses
 onBeforeMount(async () => {
-  callout.value = await fetchCallout(props.id, ['form', 'responseViewSchema']);
-  if (!callout.value.responseViewSchema?.map) {
+  if (!props.callout.responseViewSchema?.map) {
     throw new Error('Callout does not have a map schema');
   }
 
   // TODO: pagination
-  responses.value = (await fetchResponsesForMap(props.id)).items.filter(
-    (r): r is GetCalloutResponseMapDataWithAddress => !!r.address
-  );
+  responses.value = (
+    await fetchResponsesForMap(props.callout.slug)
+  ).items.filter((r): r is GetCalloutResponseMapDataWithAddress => !!r.address);
 });
 
 interface GeocodePickEvent extends Event {
