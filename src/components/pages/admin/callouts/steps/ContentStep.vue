@@ -8,6 +8,13 @@
       :title="t('editCallout.warning')"
     />
 
+    <AppNotification
+      v-if="wasJustReplicated"
+      variant="success"
+      class="mb-4"
+      :title="t('editCallout.replicated')"
+    />
+
     <div class="flex gap-8 mt-8">
       <div class="flex-0 basis-menu">
         <Draggable v-model="slides" item-key="id">
@@ -144,6 +151,7 @@ import FormBuilderNavigation from '../../../../form-builder/FormBuilderNavigatio
 import AppCheckbox from '../../../../forms/AppCheckbox.vue';
 import env from '../../../../../env';
 import Draggable from 'vuedraggable';
+import { useRoute } from 'vue-router';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
@@ -152,6 +160,8 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
+
+const wasJustReplicated = useRoute().query.replicated !== undefined;
 
 const currentSlideNo = ref(0);
 const showAdvancedOptions = ref(false);
