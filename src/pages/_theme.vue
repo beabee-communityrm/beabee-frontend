@@ -62,7 +62,37 @@ meta:
   <section class="my-5">
     <h2 class="mb-2 font-title text-2xl">Components</h2>
 
-    <section>
+    <section class="my-5">
+      <h3 class="mb-2 font-title text-xl">Buttons</h3>
+      <div class="bg-white p-4 flex flex-wrap">
+        <div class="m-2">
+          <AppButton variant="primary">primary</AppButton>
+        </div>
+        <div class="m-2">
+          <AppButton variant="link">link</AppButton>
+        </div>
+        <div class="m-2">
+          <AppButton variant="danger">danger</AppButton>
+        </div>
+        <div class="m-2">
+          <AppButton variant="primaryOutlined">primaryOutlined</AppButton>
+        </div>
+        <div class="m-2">
+          <AppButton variant="linkOutlined">linkOutlined</AppButton>
+        </div>
+        <div class="m-2">
+          <AppButton variant="dangerOutlined">dangerOutlined</AppButton>
+        </div>
+        <div class="m-2">
+          <AppButton variant="text">text</AppButton>
+        </div>
+        <div class="m-2">
+          <AppButton variant="dangerText">dangerText</AppButton>
+        </div>
+      </div>
+    </section>
+
+    <section class="my-5">
       <h3 class="mb-2 font-title text-xl">AppSlider</h3>
       <div class="bg-white p-4">
         <div class="max-w-[1200px] mx-auto relative">
@@ -112,6 +142,7 @@ meta:
 
 <script lang="ts" setup>
 import AppColor from '../components/AppColor.vue';
+import AppButton from '../components/button/AppButton.vue';
 import AppSlider from '../components/AppSlider.vue';
 import {
   faAngleRight as NextIcon,
