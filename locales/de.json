@@ -264,6 +264,7 @@
     }
   },
   "callout": {
+    "actions": {},
     "addAPoint": "Klicken Sie dort auf die Karte, wo Sie einen Ort ergänzen möchten",
     "addLocation": "Neuen Ort eingeben",
     "closed": "Dieser Callout ist beendet.",

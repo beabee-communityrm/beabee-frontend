@@ -30,21 +30,19 @@ meta:
     />
 
     <div class="md:max-w-2xl flex flex-col gap-6">
-      <template v-if="!isEmbed">
+      <template v-if="!showResponseForm">
         <div
           v-if="isOpen || latestResponse"
           class="flex items-center justify-between"
         >
           <div class="flex items-center text-sm font-semibold text-body-60">
-            <div>
-              <ItemStatusText :item="callout" />
-            </div>
-            <div
+            <ItemStatusText :item="callout" />
+            <span
               v-if="latestResponse"
               class="border-body-40 ml-3 w-32 border-l pl-3"
             >
               {{ t('callout.youResponded') }}
-            </div>
+            </span>
           </div>
           <AppButton
             v-if="isOpen"
@@ -68,10 +66,18 @@ meta:
       <CalloutMemberOnlyPrompt v-else-if="showMemberOnlyPrompt && !isPreview" />
       <div v-else-if="showResponsePanel">
         <AppButton
-          v-if="canRespond && !isEmbed && !showResponseForm"
-          @click="showResponseForm = true"
+          v-if="canRespond && !showResponseForm"
+          class="w-full"
+          :to="{
+            path: '/callouts/' + callout.slug + '/respond',
+            query: { preview: isPreview ? null : undefined },
+          }"
         >
-          {{ t('callout.getStarted') }}
+          {{
+            latestResponse
+              ? t('callout.actions.updateResponse')
+              : t('actions.getStarted')
+          }}
         </AppButton>
 
         <template v-else>
@@ -82,6 +88,10 @@ meta:
             class="mb-4"
           />
 
+          <AppHeading v-if="latestResponse" class="mt-6 mb-4">
+            {{ t('callout.yourResponse') }}
+          </AppHeading>
+
           <CalloutForm
             v-if="
               responses /* Form.IO doesn't handle reactivity so wait for responses to load */
@@ -90,6 +100,7 @@ meta:
             :answers="latestResponse?.answers"
             :preview="isPreview"
             :readonly="!canRespond"
+            :all-slides="!canRespond"
             :style="isEmbed ? 'no-bg' : undefined"
             @submitted="handleSubmitResponse"
           />
@@ -129,8 +140,9 @@ import CalloutMemberOnlyPrompt from '../../../components/pages/callouts/CalloutM
 import CalloutThanksBox from '../../../components/pages/callouts/CalloutThanksBox.vue';
 import AppMessageBox from '../../../components/AppMessageBox.vue';
 import { formatLocale } from '../../../utils/dates';
+import AppHeading from '../../../components/AppHeading.vue';
 
-const props = defineProps<{ id: string }>();
+const props = defineProps<{ id: string; respond?: boolean }>();
 
 const { t } = useI18n();
 const route = useRoute();
@@ -157,7 +169,11 @@ addBreadcrumb(
               to: '/callouts',
               icon: faBullhorn,
             },
-            { title: callout.value.title },
+            {
+              title: callout.value.title,
+              to: '/callouts/' + callout.value.slug,
+            },
+            ...(props.respond ? [{ title: t('actions.respond') }] : []),
           ]
       : []
   )
@@ -167,7 +183,6 @@ const callout = ref<GetCalloutDataWith<'form'>>();
 const responses = ref<Paginated<GetCalloutResponseDataWith<'answers'>>>();
 
 const showSharingPanel = ref(false);
-const showResponseForm = ref(false);
 
 const isPreview = computed(
   () => route.query.preview === null && canAdmin.value
@@ -190,6 +205,8 @@ const showResponsePanel = computed(
     // Current user has previously responded
     latestResponse.value
 );
+
+const showResponseForm = computed(() => isEmbed || props.respond);
 
 const canRespond = computed(
   () =>
