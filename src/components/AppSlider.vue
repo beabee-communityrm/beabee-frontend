@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { withDefaults, ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 // TODO: this is a DOM type, but is not detected by Volar
 type ScrollBehavior = 'auto' | 'smooth'
