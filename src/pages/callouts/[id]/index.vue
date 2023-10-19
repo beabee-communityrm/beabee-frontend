@@ -19,8 +19,8 @@ meta:
       class="mb-6"
     />
 
-    <AppBoxout
-      v-else-if="!isOpen && callout.expires"
+    <AppMessageBox
+      v-else-if="!isOpen && callout.expires /* Type narrowing */"
       :title="
         t('callout.ended', { date: formatLocale(callout.expires, 'PPP') })
       "
@@ -68,7 +68,7 @@ meta:
       <CalloutMemberOnlyPrompt v-else-if="showMemberOnlyPrompt && !isPreview" />
       <div v-else-if="showResponsePanel">
         <AppButton
-          v-if="canRespond && !showResponseForm"
+          v-if="canRespond && !isEmbed && !showResponseForm"
           @click="showResponseForm = true"
         >
           {{ t('callout.getStarted') }}
@@ -127,7 +127,7 @@ import { useCallout } from '../../../components/pages/callouts/use-callout';
 import CalloutLoginPrompt from '../../../components/pages/callouts/CalloutLoginPrompt.vue';
 import CalloutMemberOnlyPrompt from '../../../components/pages/callouts/CalloutMemberOnlyPrompt.vue';
 import CalloutThanksBox from '../../../components/pages/callouts/CalloutThanksBox.vue';
-import AppBoxout from '../../../components/AppBoxout.vue';
+import AppMessageBox from '../../../components/AppMessageBox.vue';
 import { formatLocale } from '../../../utils/dates';
 
 const props = defineProps<{ id: string }>();
