@@ -3,7 +3,6 @@
   A slider component that allows you to slide between elements. Useful for things like modals with multiple steps or a carousel.
 
   ## Props
-  - `showNavigationButtons` (boolean): Whether or not to show the navigation buttons. Defaults to `false`.
   - `infinite` (boolean): Whether or not to allow infinite scrolling. Defaults to `false`.
 
   ## Events
@@ -37,7 +36,6 @@ import { ref, onMounted, onUnmounted } from 'vue';
 type ScrollBehavior = 'auto' | 'smooth';
 
 export interface AppSliderProps {
-  showNavigationButtons: boolean;
   infinite: boolean;
 }
 
@@ -51,7 +49,6 @@ const emit = defineEmits<{
 }>();
 
 const props = withDefaults(defineProps<AppSliderProps>(), {
-  showNavigationButtons: false,
   infinite: false,
 });
 
@@ -63,6 +60,7 @@ const slideEls = ref<HTMLElement[]>([]);
 /**
  * Go to a specific slide
  * @param slideNumber The slide number to go to
+ * @param behavior The scroll behavior to use
  */
 const toSlide = (slideNumber: number, behavior: ScrollBehavior = 'smooth') => {
   // Get the slide element
@@ -89,6 +87,7 @@ const toSlide = (slideNumber: number, behavior: ScrollBehavior = 'smooth') => {
 
 /**
  * Go to the previous slide
+ * @param behavior The scroll behavior to use
  */
 const prevSlide = (behavior?: ScrollBehavior) => {
   let prevIndex = activeSlide.value - 1;
@@ -102,6 +101,7 @@ const prevSlide = (behavior?: ScrollBehavior) => {
 
 /**
  * Go to the next slide
+ * @param behavior The scroll behavior to use
  */
 const nextSlide = (behavior?: ScrollBehavior) => {
   let nextIndex = activeSlide.value + 1;
@@ -113,7 +113,11 @@ const nextSlide = (behavior?: ScrollBehavior) => {
   toSlide(nextIndex, behavior);
 };
 
+/**
+ * Handle window resize events
+ */
 const handleResize = () => {
+  // If the user resizes the window, we want to make sure the active slide is still centered
   toSlide(activeSlide.value, 'auto');
 };
 

@@ -97,11 +97,14 @@ meta:
       <div class="bg-white p-4">
         <div class="max-w-[1200px] mx-auto relative">
           <AppSlider :show-navigation-buttons="true" :infinite="true">
-
             <!-- Put your slides here -->
             <template #slides>
               <div class="flex-none w-full bg-danger">
-                <img class="mx-auto max-w-full" src="https://picsum.photos/seed/1/1200/300" alt="Lorem Picsum">
+                <img
+                  class="mx-auto max-w-full"
+                  src="https://picsum.photos/seed/1/1200/300"
+                  alt="Lorem Picsum"
+                />
               </div>
               <div class="flex-none w-full bg-success">
                 <div class="w-full h-full flex justify-center items-center">
@@ -109,7 +112,11 @@ meta:
                 </div>
               </div>
               <div class="flex-none w-full bg-warning">
-                <img class="mx-auto max-w-full" src="https://picsum.photos/seed/2/1200/300" alt="Lorem Picsum">
+                <img
+                  class="mx-auto max-w-full"
+                  src="https://picsum.photos/seed/2/1200/300"
+                  alt="Lorem Picsum"
+                />
               </div>
             </template>
 
@@ -117,26 +124,30 @@ meta:
             <template #navigation="{ nextSlide, prevSlide, toSlide }">
               <span class="w-full h-full flex justify-between absolute top-0">
                 <button class="" @click="prevSlide()">
-                  <font-awesome-icon class="text-2xl p-2 text-white hover:text-link" :icon="PrevIcon" />
+                  <font-awesome-icon
+                    class="text-2xl p-2 text-white hover:text-link"
+                    :icon="PrevIcon"
+                  />
                 </button>
                 <button @click="nextSlide()">
-                  <font-awesome-icon class="text-2xl p-2 text-white hover:text-link" :icon="NextIcon" />
+                  <font-awesome-icon
+                    class="text-2xl p-2 text-white hover:text-link"
+                    :icon="NextIcon"
+                  />
                 </button>
               </span>
 
-              <button class="text-2xl p-2 text-white hover:text-link absolute top-0 left-0" @click="toSlide(0)">
+              <button
+                class="text-2xl p-2 text-white hover:text-link absolute top-0 left-0"
+                @click="toSlide(0)"
+              >
                 <font-awesome-icon :icon="ResetIcon" />
               </button>
-
             </template>
-
           </AppSlider>
         </div>
       </div>
-
     </section>
-
-
   </section>
 </template>
 
