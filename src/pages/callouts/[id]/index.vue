@@ -13,7 +13,7 @@ meta:
     </h1>
 
     <CalloutThanksBox
-      v-if="latestResponse"
+      v-if="latestResponse || thanks"
       id="thanks"
       :callout="callout"
       class="mb-6"
@@ -122,7 +122,7 @@ import AppButton from '../../../components/button/AppButton.vue';
 import { currentUser, canAdmin, isEmbed } from '../../../store';
 import SharingPanel from '../../../components/pages/callouts/CalloutSharingPanel.vue';
 
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import ItemStatusText from '../../../components/item/ItemStatusText.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
 import {
@@ -142,10 +142,15 @@ import AppMessageBox from '../../../components/AppMessageBox.vue';
 import { formatLocale } from '../../../utils/dates';
 import AppHeading from '../../../components/AppHeading.vue';
 
-const props = defineProps<{ id: string; respond?: boolean }>();
+const props = defineProps<{
+  id: string;
+  respond?: boolean; // Flag for /respond route
+  thanks?: boolean; // Flag for /thanks route
+}>();
 
 const { t } = useI18n();
 const route = useRoute();
+const router = useRouter();
 
 addBreadcrumb(
   computed(() =>
@@ -201,7 +206,10 @@ const showResponsePanel = computed(
     // Preview mode
     isPreview.value ||
     // Callout is open and current user has access
-    (isOpen.value && !showLoginPrompt.value && !showMemberOnlyPrompt.value) ||
+    (isOpen.value &&
+      !showLoginPrompt.value &&
+      !showMemberOnlyPrompt.value &&
+      !props.thanks) ||
     // Current user has previously responded
     latestResponse.value
 );
@@ -217,7 +225,8 @@ const canRespond = computed(
 );
 
 function handleSubmitResponse() {
-  document.getElementById('thanks')?.scrollIntoView();
+  router.push({ path: `/callouts/${callout.value?.slug}/thanks` });
+
   addNotification({
     title: t('callout.responseSubmitted'),
     variant: 'success',
