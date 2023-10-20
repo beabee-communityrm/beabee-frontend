@@ -96,6 +96,7 @@
           :key="currentSlideNo /* FormBuilder isn't reactive */"
           v-model="slides[currentSlideNo].components"
           :advanced="showAdvancedOptions"
+          :slides="slides"
         />
 
         <!-- These styles replicate the FormBuilder layout -->
