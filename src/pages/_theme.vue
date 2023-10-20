@@ -162,13 +162,13 @@ meta:
                 <button class="" @click="prevSlide()">
                   <font-awesome-icon
                     class="text-2xl p-2 text-white hover:text-link"
-                    :icon="PrevIcon"
+                    :icon="faAngleLeft"
                   />
                 </button>
                 <button @click="nextSlide()">
                   <font-awesome-icon
                     class="text-2xl p-2 text-white hover:text-link"
-                    :icon="NextIcon"
+                    :icon="faAngleRight"
                   />
                 </button>
               </span>
@@ -177,7 +177,7 @@ meta:
                 class="text-2xl p-2 text-white hover:text-link absolute top-0 left-0"
                 @click="toSlide(0)"
               >
-                <font-awesome-icon :icon="ResetIcon" />
+                <font-awesome-icon :icon="faRotateBack" />
               </button>
             </template>
           </AppSlider>
@@ -197,9 +197,9 @@ import AppCheckbox from '../components/forms/AppCheckbox.vue';
 import { Step } from '../components/stepper/stepper.interface';
 
 import {
-  faAngleRight as NextIcon,
-  faAngleLeft as PrevIcon,
-  faRotateBack as ResetIcon,
+  faAngleRight,
+  faAngleLeft,
+  faRotateBack,
 } from '@fortawesome/free-solid-svg-icons';
 
 const appStepper = ref({

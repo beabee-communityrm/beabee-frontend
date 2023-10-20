@@ -1,5 +1,5 @@
 export interface Step {
   name: string;
-  validated?: boolean;
-  error?: boolean;
+  validated: boolean;
+  error: boolean;
 }
