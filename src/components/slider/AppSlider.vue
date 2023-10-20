@@ -36,15 +36,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-
-export interface AppSliderProps {
-  infinite: boolean;
-}
-
-export interface AppSliderSlideEventDetails {
-  slideNumber: number;
-  slideEl: HTMLElement;
-}
+import { AppSliderProps, AppSliderSlideEventDetails } from './slider.interface';
 
 const emit = defineEmits<{
   (e: 'slide', details: AppSliderSlideEventDetails): void;

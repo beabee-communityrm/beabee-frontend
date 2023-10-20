@@ -133,27 +133,27 @@ meta:
       <div class="bg-white p-4">
         <div class="max-w-[1200px] mx-auto relative">
           <AppSlider :show-navigation-buttons="true" :infinite="true">
-            <!-- Put your slides here -->
             <template #slides>
-              <div class="flex-none w-full bg-danger">
+              <!-- Put your slides here -->
+              <AppSlide>
                 <img
                   class="mx-auto max-w-full"
                   src="https://picsum.photos/seed/1/1200/300"
                   alt="Lorem Picsum"
                 />
-              </div>
-              <div class="flex-none w-full bg-success">
+              </AppSlide>
+              <AppSlide class="bg-success">
                 <div class="w-full h-full flex justify-center items-center">
                   <p>You can put anything you want in here!</p>
                 </div>
-              </div>
-              <div class="flex-none w-full bg-warning">
+              </AppSlide>
+              <AppSlide>
                 <img
                   class="mx-auto max-w-full"
                   src="https://picsum.photos/seed/2/1200/300"
                   alt="Lorem Picsum"
                 />
-              </div>
+              </AppSlide>
             </template>
 
             <!-- Define your custom navigation template here -->
@@ -209,7 +209,8 @@ import { ref } from 'vue';
 import AppColor from '../components/AppColor.vue';
 import AppButton from '../components/button/AppButton.vue';
 import AppInput from '../components/forms/AppInput.vue';
-import AppSlider from '../components/AppSlider.vue';
+import AppSlider from '../components/slider/AppSlider.vue';
+import AppSlide from '../components/slider/AppSlide.vue';
 import AppStepper from '../components/stepper/AppStepper.vue';
 import AppCheckbox from '../components/forms/AppCheckbox.vue';
 import AppQRCode from '../components/AppQRCode.vue';
