@@ -184,16 +184,26 @@ meta:
         </div>
       </div>
     </section>
+
+    <section class="my-5">
+      <h3 class="mb-2 font-title text-xl">AppQRCode</h3>
+      <div class="bg-white p-4 w-64">
+        <AppQRCode qr-data="Hello world!" />
+      </div>
+    </section>
   </section>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+
 import AppColor from '../components/AppColor.vue';
 import AppButton from '../components/button/AppButton.vue';
 import AppSlider from '../components/AppSlider.vue';
 import AppStepper from '../components/stepper/AppStepper.vue';
 import AppCheckbox from '../components/forms/AppCheckbox.vue';
+import AppQRCode from '../components/AppQRCode.vue';
+
 import { Step } from '../components/stepper/stepper.interface';
 
 import {
