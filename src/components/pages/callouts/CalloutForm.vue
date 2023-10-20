@@ -142,8 +142,15 @@ const showGuestFields = computed(
 );
 
 async function handleSubmit() {
+  // Only submit answers for slides in the current flow
+  // The user might have visited other flows then gone back
+  const validAnswers: CalloutResponseAnswers = {};
+  for (const slideId of slideIds.value) {
+    validAnswers[slideId] = answersProxy.value[slideId];
+  }
+
   if (props.onSubmit) {
-    return props.onSubmit(answersProxy.value);
+    return props.onSubmit(validAnswers);
   }
 
   formError.value = '';
@@ -155,7 +162,7 @@ async function handleSubmit() {
           guestName: guestName.value,
           guestEmail: guestEmail.value,
         }),
-      answers: answersProxy.value,
+      answers: validAnswers,
     });
     emit('submitted');
   } catch (err) {
