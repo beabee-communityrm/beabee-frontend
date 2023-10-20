@@ -3,5 +3,6 @@
   "i18n-ally.keystyle": "nested",
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "cSpell.words": ["beabee"]
 }

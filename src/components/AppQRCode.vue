@@ -65,8 +65,8 @@ type ErrorCorrectionLevel = 'L' | 'M' | 'Q' | 'H';
 
 interface AppQRCodeProps {
   qrData: string;
-  typeNumber: TypeNumber;
-  correctionLevel: ErrorCorrectionLevel;
+  typeNumber?: TypeNumber;
+  correctionLevel?: ErrorCorrectionLevel;
 }
 
 const qrContainerEl = ref<HTMLDivElement | null>(null);
@@ -81,7 +81,7 @@ const onQrDataChanged = (newValue: AppQRCodeProps) => {
     throw new Error('qrContainerEl is null!');
   }
 
-  const qr = qrCode(newValue.typeNumber, newValue.correctionLevel);
+  const qr = qrCode(newValue.typeNumber || 0, newValue.correctionLevel || 'H');
   qr.addData(newValue.qrData);
   qr.make();
 

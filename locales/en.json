@@ -4,6 +4,8 @@
     "contactInformation": "Contact information",
     "deliveryAddress": "Delivery address",
     "deliveryOptIn": "Delivery opt-in",
+    "disableMFA": "Disable 2FA",
+    "enableMFA": "Enable 2FA",
     "loginDetail": "Login details",
     "newsletter": {
       "cantUpdate": "To change this contact's newsletter status, please contact support{'@'}beabee.io.",

@@ -13,6 +13,7 @@ meta:
   <div class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
     <div>
       <ChangePassword />
+      <SetMFA contact-id="me" />
       <Suspense>
         <ContactUpdateAccount id="me" />
       </Suspense>
@@ -24,6 +25,7 @@ meta:
 import PageTitle from '../../components/PageTitle.vue';
 import { useI18n } from 'vue-i18n';
 import ChangePassword from '../../components/pages/profile/account/ChangePassword.vue';
+import SetMFA from '../../components/pages/profile/account/SetMFA.vue';
 import ContactUpdateAccount from '../../components/contact/ContactUpdateAccount.vue';
 
 const { t } = useI18n();

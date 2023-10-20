@@ -125,4 +125,10 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize);
 });
+
+defineExpose({
+  prevSlide,
+  nextSlide,
+  toSlide,
+});
 </script>

@@ -1,5 +1,5 @@
 export interface AppSliderProps {
-  infinite: boolean;
+  infinite?: boolean;
 }
 
 export interface AppSliderSlideEventDetails {
