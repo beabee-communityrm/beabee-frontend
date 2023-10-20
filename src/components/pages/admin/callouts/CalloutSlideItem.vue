@@ -43,8 +43,8 @@ const nextSlides = computed(() => {
   return [nextSlideId, ...decisionSlideIds]
     .filter((v, i, a) => a.indexOf(v) === i) // Filter unique
     .map((id) => props.slides.findIndex((s) => s.id === id))
+    .filter((no) => no > -1)
     .sort()
-    .map((no) => props.slides[no]?.title)
-    .filter((v) => !!v);
+    .map((no) => `${no + 1}: ${props.slides[no].title}`);
 });
 </script>
