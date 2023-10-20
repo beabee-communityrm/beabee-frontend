@@ -42,7 +42,7 @@
         <!-- These styles replicate the FormBuilder layout -->
         <div class="flex gap-8 items-end mb-4">
           <div class="flex-1 max-w-2xl flex gap-4 justify-between items-end">
-            <div>
+            <div class="flex-1">
               <AppInput
                 v-model="slides[currentSlideNo].title"
                 :label="t('calloutBuilder.internalTitle')"
