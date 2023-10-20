@@ -81,6 +81,8 @@ const onQrDataChanged = (newValue: AppQRCodeProps) => {
     throw new Error('qrContainerEl is null!');
   }
 
+  console.debug('onQrDataChanged', newValue);
+
   const qr = qrCode(newValue.typeNumber, newValue.correctionLevel);
   qr.addData(newValue.qrData);
   qr.make();
@@ -92,7 +94,7 @@ const onQrDataChanged = (newValue: AppQRCodeProps) => {
 };
 
 onMounted(() => {
-  watch(props, onQrDataChanged);
+  watch(props, onQrDataChanged, { deep: true });
   onQrDataChanged(props);
 });
 </script>
