@@ -18,12 +18,12 @@
     <div class="flex gap-8 mt-8">
       <div class="flex-0 basis-menu">
         <Draggable v-model="slides" item-key="id">
-          <template #item="{ index }">
+          <template #item="{ element, index }">
             <CalloutSlideItem
               :slide-no="index"
               :slides="slides"
-              :active="currentSlideNo === index"
-              @select="currentSlideNo = index"
+              :active="currentSlideId === element.id"
+              @select="currentSlideId = $event"
             />
           </template>
         </Draggable>
@@ -44,7 +44,7 @@
           <div class="flex-1 max-w-2xl flex gap-4 justify-between items-end">
             <div class="flex-1">
               <AppInput
-                v-model="slides[currentSlideNo].title"
+                v-model="currentSlide.title"
                 :label="t('calloutBuilder.internalTitle')"
                 required
               />
@@ -74,8 +74,8 @@
         </div>
 
         <FormBuilder
-          :key="currentSlideNo /* FormBuilder isn't reactive */"
-          v-model="slides[currentSlideNo].components"
+          :key="currentSlideId /* FormBuilder isn't reactive */"
+          v-model="currentSlide.components"
           :advanced="showAdvancedOptions"
           :slides="slides"
         />
@@ -85,7 +85,7 @@
           <div class="flex-1 max-w-2xl">
             <div class="bg-white p-6 pt-0 shadow-md relative -mt-6 mb-4">
               <FormBuilderNavigation
-                v-model="slides[currentSlideNo].navigation"
+                v-model="currentSlide.navigation"
                 :slides="slides"
                 :current-slide-no="currentSlideNo"
                 :is-first="isFirstSlide"
@@ -145,7 +145,6 @@ const { t } = useI18n();
 
 const wasJustReplicated = useRoute().query.replicated !== undefined;
 
-const currentSlideNo = ref(0);
 const showAdvancedOptions = ref(false);
 
 const slides = computed({
@@ -154,6 +153,13 @@ const slides = computed({
   set: (v) => (props.data.formSchema.slides = v),
 });
 
+const currentSlideId = ref(slides.value[0].id);
+
+const currentSlideNo = computed({
+  get: () => slides.value.findIndex((s) => s.id === currentSlideId.value),
+  set: (v) => (currentSlideId.value = slides.value[v].id),
+});
+const currentSlide = computed(() => slides.value[currentSlideNo.value]);
 const totalSlides = computed(() => slides.value.length);
 const isFirstSlide = computed(() => currentSlideNo.value === 0);
 const isLastSlide = computed(
