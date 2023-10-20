@@ -174,26 +174,26 @@ async function handleSubmit() {
 }
 
 function handleNextSlide() {
-  const decisionComponent = getDecisionComponent(currentSlide.value);
+  let nextSlideId;
 
+  // If there is a decision component check if the user has selected a value
+  const decisionComponent = getDecisionComponent(currentSlide.value);
   if (decisionComponent) {
     const value =
       answersProxy.value[currentSlide.value.id]?.[decisionComponent.key];
 
-    const nextId = decisionComponent.values.find((v) => v.value === value)
+    nextSlideId = decisionComponent.values.find((v) => v.value === value)
       ?.nextSlideId;
-
-    if (nextId) {
-      slideIds.value.unshift(nextId);
-      return;
-    }
   }
 
-  const nextId =
-    currentSlide.value.navigation.nextSlideId ||
-    slides.value[currentSlideNo.value + 1].id;
+  // Otherwise use the next slide ID from the navigation
+  if (!nextSlideId) {
+    nextSlideId =
+      currentSlide.value.navigation.nextSlideId ||
+      slides.value[currentSlideNo.value + 1].id;
+  }
 
-  slideIds.value.unshift(nextId);
+  slideIds.value.unshift(nextSlideId);
 }
 
 function handlePrevSlide() {
