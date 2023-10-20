@@ -93,6 +93,42 @@ meta:
     </section>
 
     <section class="my-5">
+      <h3 class="mb-2 font-title text-xl">AppStepper</h3>
+      <div class="bg-white p-4">
+        <AppStepper
+          v-model="appStepper.selectedStepIndex"
+          :steps="appStepper.steps"
+        />
+        <div
+          v-for="(step, index) in appStepper.steps"
+          v-show="index === appStepper.selectedStepIndex"
+          :key="index"
+          class="border-2 border-primary p-5"
+        >
+          <p>{{ index }}: {{ step.name }}</p>
+          <AppCheckbox
+            v-model="step.validated"
+            label="validated"
+            class="font-bold"
+          />
+          <AppCheckbox v-model="step.error" label="error" class="font-bold" />
+        </div>
+        <AppButton
+          class="m-2"
+          variant="primaryOutlined"
+          @click="appStepper.selectedStepIndex--"
+          >Back</AppButton
+        >
+        <AppButton
+          class="m-2"
+          variant="primary"
+          @click="appStepper.selectedStepIndex++"
+          >Next</AppButton
+        >
+      </div>
+    </section>
+
+    <section class="my-5">
       <h3 class="mb-2 font-title text-xl">AppSlider</h3>
       <div class="bg-white p-4">
         <div class="max-w-[1200px] mx-auto relative">
@@ -152,12 +188,38 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
 import AppColor from '../components/AppColor.vue';
 import AppButton from '../components/button/AppButton.vue';
 import AppSlider from '../components/AppSlider.vue';
+import AppStepper from '../components/stepper/AppStepper.vue';
+import AppCheckbox from '../components/forms/AppCheckbox.vue';
+import { Step } from '../components/stepper/stepper.interface';
+
 import {
   faAngleRight as NextIcon,
   faAngleLeft as PrevIcon,
   faRotateBack as ResetIcon,
 } from '@fortawesome/free-solid-svg-icons';
+
+const appStepper = ref({
+  selectedStepIndex: 0,
+  steps: [
+    {
+      name: 'Step 1',
+      validated: true,
+      error: false,
+    },
+    {
+      name: 'Step 2',
+      validated: false,
+      error: false,
+    },
+    {
+      name: 'Step 3',
+      validated: false,
+      error: false,
+    },
+  ] as Step[],
+});
 </script>

@@ -35,10 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-
-// TODO: this is a DOM type, but is not detected by Volar
-type ScrollBehavior = 'auto' | 'smooth';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 
 export interface AppSliderProps {
   infinite: boolean;
@@ -58,7 +55,7 @@ const props = withDefaults(defineProps<AppSliderProps>(), {
 });
 
 const activeSlide = ref(0);
-const slideCount = ref(0);
+const slideCount = computed(() => slideEls.value.length);
 const slidesContainerEl = ref<HTMLElement | null>(null);
 const slideEls = ref<HTMLElement[]>([]);
 
@@ -127,11 +124,10 @@ const handleResize = () => {
 };
 
 onMounted(() => {
-  slideEls.value.push(
-    ...(Array.from(slidesContainerEl.value?.children || []) as HTMLElement[])
-  );
-  slideCount.value = slideEls.value.length;
-  window.addEventListener('resize', handleResize);
+  slideEls.value = Array.from(
+    slidesContainerEl.value?.children || []
+  ) as HTMLElement[];
+  window.addEventListener('resize', handleResize, { passive: true });
 });
 
 onUnmounted(() => {
