@@ -12,6 +12,11 @@
   - `slides`: The slides to display in the slider.
   - `navigation`: The navigation buttons to display. Receives the `prevSlide`, `nextSlide`, and `toSlide` functions as props.
 
+  ## Possible improvements
+  - Add support for touch (scrolling by swiping)
+  - Add support for keyboard navigation
+  - Add support for indicators
+
 -->
 
 <template>
