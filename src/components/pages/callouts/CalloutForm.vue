@@ -67,11 +67,8 @@
 
 <script lang="ts" setup>
 import {
-  CalloutComponentSchema,
   CalloutResponseAnswers,
   CalloutSlideSchema,
-  RadioCalloutComponentSchema,
-  flattenComponents,
 } from '@beabee/beabee-common';
 import { computed, ref } from 'vue';
 import { GetCalloutDataWith } from '../../../utils/api/api.interface';
@@ -84,6 +81,7 @@ import AppNotification from '../../AppNotification.vue';
 import FormRenderer from '../../form-renderer/FormRenderer.vue';
 import AppButton from '../../button/AppButton.vue';
 import useVuelidate from '@vuelidate/core';
+import { getDecisionComponent } from '../../../utils/callouts';
 
 const { t } = useI18n();
 const validation = useVuelidate();
@@ -168,18 +166,8 @@ async function handleSubmit() {
   }
 }
 
-function isDecisionComponent(
-  component: CalloutComponentSchema
-): component is RadioCalloutComponentSchema {
-  return (
-    component.type === 'radio' && component.values.some((v) => v.nextSlideId)
-  );
-}
-
 function handleNextSlide() {
-  const decisionComponent = flattenComponents(
-    currentSlide.value.components
-  ).filter(isDecisionComponent)[0];
+  const decisionComponent = getDecisionComponent(currentSlide.value);
 
   if (decisionComponent) {
     const value =

@@ -69,7 +69,6 @@ import {
   CalloutSlideSchema,
 } from '@beabee/beabee-common';
 import { formOpts, FormBuilderRef } from './form-builder.interface';
-import { useI18n } from 'vue-i18n';
 
 const emit = defineEmits<{
   (e: 'update:modelValue', components: CalloutComponentSchema[]): void;
@@ -80,8 +79,6 @@ const props = defineProps<{
   advanced?: boolean;
   slides?: CalloutSlideSchema[];
 }>();
-
-const { t } = useI18n();
 
 const formBuilderRef = ref<FormBuilderRef>();
 
