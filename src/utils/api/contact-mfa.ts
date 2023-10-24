@@ -1,36 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  ContributionPeriod,
-  Paginated,
-  PaymentMethod,
-  RoleType,
-} from '@beabee/beabee-common';
-
 import axios from '../../lib/axios';
 import {
   GetContactMfaData,
   CreateContactMfaData,
   UpdateContactMfaData,
-  GetContactData,
-  GetContactDataWith,
-  GetContactsQuery,
-  GetContactWith,
-  GetPaymentData,
-  GetPaymentsQuery,
-  ContactRoleData,
-  PaymentFlowParams,
   Serial,
-  SetContributionData,
-  StartContributionData,
-  UpdateContactData,
-  UpdateContactRoleData,
 } from './api.interface';
 
-import { deserializeDate } from '.';
-import env from '../../env';
-
 export function deserializeContactMfa<T>(data: T): T {
-  console.debug('deserializeContactMfa', data);
+  // Nothing to do for now
   return data;
 }
 
@@ -62,6 +39,6 @@ export async function updateContactMfa(
   return deserializeContactMfa(data);
 }
 
-export async function deleteContactMfa(id: string, role: RoleType): Promise<void> {
+export async function deleteContactMfa(id: string): Promise<void> {
   await axios.delete(`/contact/${id}/mfa`);
 }
