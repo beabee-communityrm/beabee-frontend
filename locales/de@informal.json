@@ -4,9 +4,38 @@
     "contactInformation": "Kontaktdaten",
     "deliveryAddress": "Adresse",
     "deliveryOptIn": "Postsendung",
-    "disableMFA": "Deaktivere 2FA",
-    "enableMFA": "Aktivere 2FA",
     "loginDetail": "Anmeldedaten",
+    "mfa": {
+      "codeInput": {
+        "label": "Code"
+      },
+      "disable": "Deaktiveren",
+      "enable": "Aktiveren",
+      "enterCode": {
+        "desc": "Gebe den Code ein, der in deiner Authentifizierungs-App angezeigt wird.",
+        "title": "Code überprüfen"
+      },
+      "modalTitle": "Aktivere 2-Faktor Authentifizierung",
+      "nextButton": {
+        "label": "Weiter"
+      },
+      "prevButton": {
+        "label": "Zurück"
+      },
+      "result": {
+        "invalidCode": "Der Code konnte nicht bestätigt werden. Bitte versuche es erneut oder kontaktiere den Support.",
+        "successful": "Die 2-Faktor Authentifizierung wurde erfolgreich eingerichtet.",
+        "title": "Ergebnis"
+      },
+      "saveButton": {
+        "label": "Speichern"
+      },
+      "scan": {
+        "desc": "Scanne den unten stehenden QR-Code mit deiner Authentifizierungs-App.",
+        "title": "QR-Code scannen"
+      },
+      "title": "2-Faktor Authentifizierung"
+    },
     "newsletter": {
       "cantUpdate": "Um den Newsletter-Status dieses Kontakts zu ändern, wende dich bitte an support{'@'}beabee.io.",
       "currentStatus": {
@@ -893,8 +922,7 @@
         "required": "Ort benötigt"
       },
       "color": {
-        "pattern": "Ungültiger Farbcode",
-        "required": "Farbe benötigt"
+        "pattern": "Ungültiger Farbcode"
       },
       "confirmPassword": {
         "password": "Passwort ungültig",
@@ -936,6 +964,9 @@
       "url": {
         "required": "URL benötigt",
         "url": "Ungültige URL"
+      },
+      "verifyCode": {
+        "required": "Code benötigt"
       }
     },
     "firstName": "Vorname",

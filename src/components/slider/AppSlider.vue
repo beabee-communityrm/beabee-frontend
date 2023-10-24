@@ -31,6 +31,10 @@
     :prev-slide="prevSlide"
     :next-slide="nextSlide"
     :to-slide="toSlide"
+    :is-first-slide="isFirstSlide"
+    :is-last-slide="isLastSlide"
+    :slide-count="slideCount"
+    :active-slide="activeSlide"
   ></slot>
 </template>
 
@@ -48,6 +52,8 @@ const props = withDefaults(defineProps<AppSliderProps>(), {
 
 const activeSlide = ref(0);
 const slideCount = computed(() => slideEls.value.length);
+const isFirstSlide = computed(() => activeSlide.value === 0);
+const isLastSlide = computed(() => activeSlide.value === slideCount.value - 1);
 const slidesContainerEl = ref<HTMLElement | null>(null);
 const slideEls = ref<HTMLElement[]>([]);
 
@@ -71,10 +77,13 @@ const toSlide = (slideNumber: number, behavior: ScrollBehavior = 'smooth') => {
   // Scroll to the slide
   slideEl.scrollIntoView({ behavior, block: 'center' });
 
+  const oldSlideNumber = activeSlide.value;
+
   // Finish up
   activeSlide.value = slideNumber;
   emit('slide', {
     slideNumber,
+    oldSlideNumber,
     slideEl,
   });
 };
@@ -130,5 +139,9 @@ defineExpose({
   prevSlide,
   nextSlide,
   toSlide,
+  isFirstSlide,
+  isLastSlide,
+  slideCount,
+  activeSlide,
 });
 </script>

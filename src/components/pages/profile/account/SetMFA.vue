@@ -1,6 +1,6 @@
 <template>
   <AppHeading class="my-3">
-    {{ t('accountPage.enableMFA') }}
+    {{ t('accountPage.mfa.title') }}
   </AppHeading>
 
   <AppButton
@@ -8,12 +8,12 @@
     :icon="faMobileAlt"
     @click="toggleMFAModal"
   >
-    {{ t(`accountPage.enableMFA`) }}
+    {{ t(`accountPage.mfa.enable`) }}
   </AppButton>
 
   <AppModal
     :open="showMFASettingsModal"
-    :title="changeLabel"
+    :title="modalTitle"
     class="w-full"
     @close="onCloseMFAModal"
   >
@@ -25,43 +25,74 @@
     <AppSlider ref="appSliderCo" @slide="onSlideChange">
       <template #slides>
         <AppSlide>
-          <div class="whitespace-break-spaces text-center">
-            <p>Scan the QR code below with your authenticator app.</p>
+          <div class="whitespace-break-spaces">
+            <p class="text-center">
+              {{ t(`accountPage.mfa.scan.desc`) }}
+            </p>
             <AppQRCode v-if="totpUrl" :qr-data="totpUrl" />
           </div>
         </AppSlide>
         <AppSlide>
-          <div class="h-full flex justify-center items-center">
-            <div>
+          <div
+            class="whitespace-break-spaces h-full flex flex-col justify-between items-center"
+          >
+            <p class="text-center">
+              {{ t(`accountPage.mfa.enterCode.desc`) }}
+            </p>
+            <span class="w-full h-full flex flex-col justify-center px-4">
               <AppInput
                 v-model="userToken"
                 :value="userToken"
-                label="Verify code"
-                name="verify-code"
+                type="text"
+                :label="codeLabel"
+                name="verifyCode"
                 required
               />
-            </div>
+            </span>
           </div>
         </AppSlide>
         <AppSlide>
-          <div class="h-full flex justify-center items-center">
-            <p v-if="userTokenValid">2FA has been successfully set up</p>
-            <p v-else>Invalid token</p>
+          <div
+            class="whitespace-break-spaces h-full flex justify-center items-center text-center"
+          >
+            <p class="text-success" v-if="userTokenValid">
+              {{ t(`accountPage.mfa.result.successful`) }}
+            </p>
+            <p class="text-danger" v-else>
+              {{ t(`accountPage.mfa.result.invalidCode`) }}
+            </p>
           </div>
         </AppSlide>
       </template>
 
-      <template #navigation="{ nextSlide, prevSlide }">
+      <template
+        #navigation="{ nextSlide, prevSlide, isFirstSlide, isLastSlide }"
+      >
         <span class="flex justify-between mt-3">
-          <AppButton variant="linkOutlined" @click="prevSlide()"
-            >Back</AppButton
+          <AppButton
+            :disabled="isFirstSlide"
+            variant="linkOutlined"
+            @click="prevSlide()"
           >
-          <AppButton variant="link" @click="nextSlide()">Continue</AppButton>
+            {{ t(`accountPage.mfa.prevButton.label`) }}
+          </AppButton>
+          <AppButton
+            v-if="isLastSlide"
+            :disabled="!allStepsDone"
+            variant="link"
+            @click="saveMFA()"
+          >
+            {{ t(`accountPage.mfa.saveButton.label`) }}
+          </AppButton>
+          <AppButton v-else="isLastSlide" variant="link" @click="nextSlide()">
+            {{ t(`accountPage.mfa.nextButton.label`) }}
+          </AppButton>
         </span>
       </template>
     </AppSlider>
   </AppModal>
 </template>
+
 <script lang="ts" setup>
 import { onBeforeMount, ref, toRef, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -94,17 +125,17 @@ const appStepper = ref({
   selectedStepIndex: 0,
   steps: [
     {
-      name: 'Scan QR Code',
+      name: t(`accountPage.mfa.scan.title`),
       validated: false,
       error: false,
     },
     {
-      name: 'Verify code',
+      name: t(`accountPage.mfa.enterCode.title`),
       validated: false,
       error: false,
     },
     {
-      name: 'Result',
+      name: t(`accountPage.mfa.result.title`),
       validated: false,
       error: false,
     },
@@ -115,7 +146,7 @@ const props = defineProps<{
   contactId: string;
 }>();
 
-/** Authentificator app url to scan (otpauth://totp/...) */
+/** Authenticator app url to scan (otpauth://totp/...) */
 const totpUrl = ref<string | undefined>(undefined);
 
 /** Information about the app totp is set up for */
@@ -125,7 +156,7 @@ const totpApp = ref<TOTPApp>({
 });
 
 /** Secret used to generate totp */
-const totpSecred = ref(new Secret());
+const totpSecret = ref(new Secret());
 
 /** User token used to verify totp  */
 const userToken = ref('');
@@ -136,11 +167,8 @@ const userTokenValid = ref(false);
 /** TOTP instance */
 let totp: TOTP | null = null;
 
-onBeforeMount(() => {
-  showMFASettingsModal.value = false;
-});
-
-const changeLabel = computed(() => t(`accountPage.enableMFA`));
+const modalTitle = computed(() => t(`accountPage.mfa.modalTitle`));
+const codeLabel = computed(() => t(`accountPage.mfa.codeInput.label`));
 
 /** Called when the modal is closed */
 const onCloseMFAModal = () => {
@@ -152,24 +180,29 @@ const toggleMFAModal = () => {
   showMFASettingsModal.value = !showMFASettingsModal.value;
 };
 
+const saveMFA = () => {
+  onCloseMFAModal();
+  // TODO: save totp to contact in db
+};
+
 /** Called when the slider changes */
 const onSlideChange = (details: AppSliderSlideEventDetails) => {
-  syncStepperWithSlider(details.slideNumber);
-  validateStep(details.slideNumber);
+  syncStepperWithSlider(details);
+  validateStep(details);
 };
 
 /** Sync the stepper with the slider */
-const syncStepperWithSlider = (slideNumber: number) => {
-  if (appStepper.value.selectedStepIndex === slideNumber) {
+const syncStepperWithSlider = (details: AppSliderSlideEventDetails) => {
+  if (appStepper.value.selectedStepIndex === details.slideNumber) {
     return;
   }
-  appStepper.value.selectedStepIndex = slideNumber;
+  appStepper.value.selectedStepIndex = details.slideNumber;
 
   validatePreviousSteps();
 };
 
-const validateStep = (stepIndex: number) => {
-  if (stepIndex === 2) {
+const validateStep = (details: AppSliderSlideEventDetails) => {
+  if (details.slideNumber === 2) {
     validateTOTOToken();
   }
 };
@@ -186,12 +219,12 @@ const onStepperChange = (stepIndex: number) => {
   validatePreviousSteps();
 };
 
-const onTOPTAppChanged = (newValue: TOTPApp) => {
-  totpSecred.value = new Secret();
+const onTOTPAppChanged = (newValue: TOTPApp) => {
+  totpSecret.value = new Secret();
   totp = new TOTP({
     issuer: newValue.issuer,
     label: newValue.label,
-    secret: totpSecred.value,
+    secret: totpSecret.value,
   });
   totpUrl.value = totp.toString();
 };
@@ -200,6 +233,7 @@ const validateTOTOToken = () => {
   if (!totp) {
     throw new Error('totp is null!');
   }
+  const validateStep = appStepper.value.steps[1];
   const resultStep = appStepper.value.steps[2];
   const delta = totp.validate({
     token: userToken.value,
@@ -209,10 +243,24 @@ const validateTOTOToken = () => {
   // To check if the authenticator works it should be enough to check if the token is one step ahead or behind
   userTokenValid.value = delta !== null && delta <= 1 && delta >= -1;
 
+  validateStep.error = !userTokenValid.value;
   resultStep.error = !userTokenValid.value;
+  validateStep.validated = userTokenValid.value;
+  resultStep.validated = userTokenValid.value;
 
   return userTokenValid.value;
 };
+
+const allStepsDone = computed(() => {
+  return (
+    appStepper.value.steps[0].validated &&
+    !appStepper.value.steps[0].error &&
+    appStepper.value.steps[1].validated &&
+    !appStepper.value.steps[1].error &&
+    appStepper.value.steps[2].validated &&
+    !appStepper.value.steps[2].error
+  );
+});
 
 watch(
   toRef(props, 'contactId'),
@@ -224,5 +272,9 @@ watch(
   { immediate: true }
 );
 
-watch(totpApp, onTOPTAppChanged, { deep: true });
+watch(totpApp, onTOTPAppChanged, { deep: true });
+
+onBeforeMount(() => {
+  showMFASettingsModal.value = false;
+});
 </script>

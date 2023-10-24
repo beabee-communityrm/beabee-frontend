@@ -4,5 +4,6 @@ export interface AppSliderProps {
 
 export interface AppSliderSlideEventDetails {
   slideNumber: number;
+  oldSlideNumber: number;
   slideEl: HTMLElement;
 }

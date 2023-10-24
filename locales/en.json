@@ -4,9 +4,38 @@
     "contactInformation": "Contact information",
     "deliveryAddress": "Delivery address",
     "deliveryOptIn": "Delivery opt-in",
-    "disableMFA": "Disable 2FA",
-    "enableMFA": "Enable 2FA",
     "loginDetail": "Login details",
+    "mfa": {
+      "codeInput": {
+        "label": "Code"
+      },
+      "disable": "Disable",
+      "enable": "Enable",
+      "enterCode": {
+        "desc": "Enter the code that is displayed in your authenticator app.",
+        "title": "Verify code"
+      },
+      "modalTitle": "Enable 2-factor authentication",
+      "nextButton": {
+        "label": "Continue"
+      },
+      "prevButton": {
+        "label": "Back"
+      },
+      "result": {
+        "invalidCode": "The code could not be confirmed, please try again or contact support.",
+        "successful": "2-factor authentication has been successfully set up.",
+        "title": "Result"
+      },
+      "saveButton": {
+        "label": "Save"
+      },
+      "scan": {
+        "desc": "Scan the QR code below with your authenticator app.",
+        "title": "Scan QR Code"
+      },
+      "title": "2-factor authentication"
+    },
     "newsletter": {
       "cantUpdate": "To change this contact's newsletter status, please contact support{'@'}beabee.io.",
       "currentStatus": {
@@ -896,8 +925,7 @@
         "required": "City/Town is required"
       },
       "color": {
-        "pattern": "Invalid color",
-        "required": "Color is required"
+        "pattern": "Invalid color"
       },
       "confirmPassword": {
         "password": "Invalid password",
@@ -939,6 +967,9 @@
       "url": {
         "required": "URL is required",
         "url": "Invalid URL"
+      },
+      "verifyCode": {
+        "required": "Code is required"
       }
     },
     "firstName": "First name",
