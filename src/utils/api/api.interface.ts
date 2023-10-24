@@ -70,15 +70,13 @@ interface ContactMfaData {
   type: ContactMfaType;
 }
 
-export type GetContactMfaData = Pick<ContactMfaData, 'type'>;
+export type fetchContactMfaData = Pick<ContactMfaData, 'type'> | null;
 
 export interface CreateContactMfaData extends ContactMfaData {
   secret: string;
   /** The code from the authenticator app */
   token: string;
 }
-
-export type UpdateContactMfaData = Partial<ContactMfaData>;
 
 export interface PaymentFlowParams {
   clientSecret?: string;

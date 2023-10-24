@@ -18,6 +18,16 @@
   </AppHeading>
 
   <AppButton
+    v-if="isEnabled"
+    variant="primaryOutlined"
+    :icon="faMobileAlt"
+    @click="disableMFA"
+  >
+    {{ t(`accountPage.mfa.disable`) }}
+  </AppButton>
+
+  <AppButton
+    v-else
     variant="primaryOutlined"
     :icon="faMobileAlt"
     @click="toggleMFAModal"
@@ -118,7 +128,11 @@ import { faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import { TOTP, Secret } from 'otpauth';
 
 import { fetchContact } from '../../../../utils/api/contact';
-import { createContactMfa } from '../../../../utils/api/contact-mfa';
+import {
+  createContactMfa,
+  fetchContactMfa,
+  deleteContactMfa,
+} from '../../../../utils/api/contact-mfa';
 import { ContactMfaType } from '../../../../utils/api/api.interface';
 
 import AppButton from '../../../button/AppButton.vue';
@@ -146,6 +160,9 @@ const appSliderCo = ref<InstanceType<typeof AppSlider> | null>(null);
 
 /** Used to show/hide the modal */
 const showMFASettingsModal = ref(false);
+
+/** Is multi factor authentication enabled? */
+const isEnabled = ref(false);
 
 /** Stepper component state */
 const appStepper = ref({
@@ -215,11 +232,23 @@ const toggleMFAModal = () => {
 
 const saveMFA = async () => {
   closeMFAModal();
-  await createContactMfa('me', {
+  const result = await createContactMfa(props.contactId, {
     secret: totpSecret.value.base32,
     token: userToken.value,
     type: ContactMfaType.TOTP,
   });
+  isEnabled.value = true;
+  resetState();
+  return result;
+};
+
+/**
+ * Disable MFA for the contact
+ * TODO: Show confirmation dialog
+ */
+const disableMFA = async () => {
+  await deleteContactMfa(props.contactId);
+  isEnabled.value = false;
   resetState();
 };
 
@@ -325,6 +354,11 @@ watch(
     const contact = await fetchContact(contactId, ['profile']);
     totpIdentity.value.issuer = 'beabee'; // TODO: Use name of beabee instance
     totpIdentity.value.label = contact.email;
+
+    const contactMfa = await fetchContactMfa(contactId);
+    if (contactMfa && contactMfa.type === ContactMfaType.TOTP) {
+      isEnabled.value = true;
+    }
   },
   { immediate: true }
 );
