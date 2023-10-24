@@ -9,7 +9,7 @@ meta:
 <template>
   <div v-if="callout" class="md:max-w-2xl">
     <template v-if="!isEmbed">
-      <h1 class="mb-6 font-title text-4xl font-bold">{{ callout.title }}</h1>
+      <AppTitle big class="mb-6">{{ callout.title }}</AppTitle>
       <div class="mb-6 flex items-center justify-between">
         <div class="flex items-center text-sm font-semibold text-body-60">
           <div>
@@ -92,6 +92,7 @@ import {
   GetCalloutResponseDataWith,
 } from '../../../utils/api/api.interface';
 import { fetchCallout, fetchResponses } from '../../../utils/api/callout';
+import AppTitle from '../../../components/AppTitle.vue';
 import AppButton from '../../../components/button/AppButton.vue';
 import { currentUser, canAdmin, isEmbed } from '../../../store';
 import SharingPanel from '../../../components/pages/callouts/CalloutSharingPanel.vue';
