@@ -70,10 +70,10 @@
           <div
             class="whitespace-break-spaces h-full flex justify-center items-center text-center"
           >
-            <p class="text-success" v-if="userTokenValid">
+            <p v-if="userTokenValid" class="text-success">
               {{ t(`accountPage.mfa.result.successful`) }}
             </p>
-            <p class="text-danger" v-else>
+            <p v-else class="text-danger">
               {{ t(`accountPage.mfa.result.invalidCode`) }}
             </p>
           </div>
@@ -215,7 +215,7 @@ const toggleMFAModal = () => {
 
 const saveMFA = async () => {
   closeMFAModal();
-  const result = await createContactMfa('me', {
+  await createContactMfa('me', {
     secret: totpSecret.value.base32,
     token: userToken.value,
     type: ContactMfaType.TOTP,

@@ -23,12 +23,12 @@ type Noop = {};
 // Dates are serialized in API response
 export type Serial<T> = {
   [P in keyof T]: T[P] extends Date
-  ? string
-  : T[P] extends Date | undefined
-  ? string | undefined
-  : T[P] extends Date | null
-  ? string | null
-  : T[P];
+    ? string
+    : T[P] extends Date | undefined
+    ? string | undefined
+    : T[P] extends Date | null
+    ? string | null
+    : T[P];
 };
 
 // Allow null in place of possibly undefined fields, useful for create/update as
@@ -57,7 +57,7 @@ interface ContactData {
  * TODO: Move to common
  */
 export enum ContactMfaType {
-  TOTP = "totp"
+  TOTP = 'totp',
   // E.g. U2F, EMAIL, SMS, HOTP, etc.
 }
 
@@ -70,9 +70,7 @@ interface ContactMfaData {
   type: ContactMfaType;
 }
 
-export interface GetContactMfaData extends Pick<ContactMfaData, 'type'> {
-  // No more data for now
-}
+export type GetContactMfaData = Pick<ContactMfaData, 'type'>;
 
 export interface CreateContactMfaData extends ContactMfaData {
   secret: string;
@@ -80,9 +78,7 @@ export interface CreateContactMfaData extends ContactMfaData {
   token: string;
 }
 
-export interface UpdateContactMfaData extends Partial<ContactMfaData> {
-  // No more data for now
-}
+export type UpdateContactMfaData = Partial<ContactMfaData>;
 
 export interface PaymentFlowParams {
   clientSecret?: string;
@@ -394,7 +390,7 @@ export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
 
 export type CreateCalloutData = AllowNull<
   CalloutData &
-  CalloutFormData & { responseViewSchema?: CalloutResponseViewSchema | null }
+    CalloutFormData & { responseViewSchema?: CalloutResponseViewSchema | null }
 >;
 export type UpdateCalloutData = Partial<CreateCalloutData>;
 
@@ -454,14 +450,14 @@ export type GetCalloutResponseWith =
 
 export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
   GetCalloutResponseData &
-  ('answers' extends With ? { answers: CalloutResponseAnswers } : Noop) &
-  ('assignee' extends With ? { assignee: GetContactData | null } : Noop) &
-  ('callout' extends With ? { callout: GetCalloutData } : Noop) &
-  ('contact' extends With ? { contact: GetContactData | null } : Noop) &
-  ('latestComment' extends With
-    ? { latestComment: GetCalloutResponseCommentData | null }
-    : Noop) &
-  ('tags' extends With ? { tags: { id: string; name: string }[] } : Noop);
+    ('answers' extends With ? { answers: CalloutResponseAnswers } : Noop) &
+    ('assignee' extends With ? { assignee: GetContactData | null } : Noop) &
+    ('callout' extends With ? { callout: GetCalloutData } : Noop) &
+    ('contact' extends With ? { contact: GetContactData | null } : Noop) &
+    ('latestComment' extends With
+      ? { latestComment: GetCalloutResponseCommentData | null }
+      : Noop) &
+    ('tags' extends With ? { tags: { id: string; name: string }[] } : Noop);
 
 export interface UpdateCalloutResponseCommentData {
   text: string;

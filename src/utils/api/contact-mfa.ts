@@ -15,15 +15,16 @@ export async function createContactMfa(
   id: string,
   dataIn: CreateContactMfaData
 ): Promise<CreateContactMfaData> {
-  const { data } = await axios.post<Serial<CreateContactMfaData>>(`/contact/${id}/mfa`, dataIn);
+  const { data } = await axios.post<Serial<CreateContactMfaData>>(
+    `/contact/${id}/mfa`,
+    dataIn
+  );
   return deserializeContactMfa(data);
 }
 
-export async function fetchContact(
-  id: string,
-): Promise<GetContactMfaData> {
+export async function fetchContact(id: string): Promise<GetContactMfaData> {
   const { data } = await axios.get<Serial<GetContactMfaData>>(
-    `/contact/${id}/mfa`,
+    `/contact/${id}/mfa`
   );
   return deserializeContactMfa(data);
 }
@@ -34,7 +35,7 @@ export async function updateContactMfa(
 ): Promise<UpdateContactMfaData> {
   const { data } = await axios.patch<Serial<UpdateContactMfaData>>(
     `/contact/${id}/mfa`,
-    dataIn,
+    dataIn
   );
   return deserializeContactMfa(data);
 }
