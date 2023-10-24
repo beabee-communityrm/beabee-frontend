@@ -1,3 +1,17 @@
+<!--
+  # SetMFA
+  This component is used to set up MFA for a contact.
+  It uses a slider to guide the user through the process.
+
+  ## Props
+  - `contactId` (string): The id of the contact to set up MFA for.
+
+  ## Possible improvements
+  - Add support for other MFA types (e.g. SMS)
+  - Transform this component into a general useable wizard component
+
+-->
+
 <template>
   <AppHeading class="my-3">
     {{ t('accountPage.mfa.title') }}
@@ -30,6 +44,7 @@
               {{ t(`accountPage.mfa.scan.desc`) }}
             </p>
             <AppQRCode v-if="totpUrl" :qr-data="totpUrl" />
+            <!-- TODO: Allow other options like show url / secret key here? -->
           </div>
         </AppSlide>
         <AppSlide>
@@ -70,10 +85,13 @@
       >
         <span class="flex justify-between mt-3">
           <AppButton
-            :disabled="isFirstSlide"
+            v-if="isFirstSlide"
             variant="linkOutlined"
-            @click="prevSlide()"
+            @click="closeMFAModal()"
           >
+            {{ t(`accountPage.mfa.closeButton.label`) }}
+          </AppButton>
+          <AppButton v-else variant="linkOutlined" @click="prevSlide()">
             {{ t(`accountPage.mfa.prevButton.label`) }}
           </AppButton>
           <AppButton
@@ -84,7 +102,7 @@
           >
             {{ t(`accountPage.mfa.saveButton.label`) }}
           </AppButton>
-          <AppButton v-else="isLastSlide" variant="link" @click="nextSlide()">
+          <AppButton v-else variant="link" @click="nextSlide()">
             {{ t(`accountPage.mfa.nextButton.label`) }}
           </AppButton>
         </span>
@@ -98,7 +116,10 @@ import { onBeforeMount, ref, toRef, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import { TOTP, Secret } from 'otpauth';
+
 import { fetchContact } from '../../../../utils/api/contact';
+import { createContactMfa } from '../../../../utils/api/contact-mfa';
+import { ContactMfaType } from '../../../../utils/api/api.interface';
 
 import AppButton from '../../../button/AppButton.vue';
 import AppModal from '../../../AppModal.vue';
@@ -112,15 +133,21 @@ import AppInput from '../../../forms/AppInput.vue';
 import type { Step } from '../../../stepper/stepper.interface';
 import type { AppSliderSlideEventDetails } from '../../../slider/slider.interface';
 
-interface TOTPApp {
+/** Totp identity */
+interface TotpIdentity {
   issuer?: string;
   label?: string;
 }
 
 const { t } = useI18n();
 
+/** Reference to slider component */
 const appSliderCo = ref<InstanceType<typeof AppSlider> | null>(null);
+
+/** Used to show/hide the modal */
 const showMFASettingsModal = ref(false);
+
+/** Stepper component state */
 const appStepper = ref({
   selectedStepIndex: 0,
   steps: [
@@ -150,7 +177,7 @@ const props = defineProps<{
 const totpUrl = ref<string | undefined>(undefined);
 
 /** Information about the app totp is set up for */
-const totpApp = ref<TOTPApp>({
+const totpIdentity = ref<TotpIdentity>({
   issuer: undefined,
   label: undefined,
 });
@@ -172,6 +199,12 @@ const codeLabel = computed(() => t(`accountPage.mfa.codeInput.label`));
 
 /** Called when the modal is closed */
 const onCloseMFAModal = () => {
+  closeMFAModal();
+  resetState();
+};
+
+/** Close the modal */
+const closeMFAModal = () => {
   showMFASettingsModal.value = false;
 };
 
@@ -180,15 +213,32 @@ const toggleMFAModal = () => {
   showMFASettingsModal.value = !showMFASettingsModal.value;
 };
 
-const saveMFA = () => {
-  onCloseMFAModal();
-  // TODO: save totp to contact in db
+const saveMFA = async () => {
+  closeMFAModal();
+  const result = await createContactMfa('me', {
+    secret: totpSecret.value.base32,
+    token: userToken.value,
+    type: ContactMfaType.TOTP,
+  });
+  resetState();
 };
 
 /** Called when the slider changes */
 const onSlideChange = (details: AppSliderSlideEventDetails) => {
   syncStepperWithSlider(details);
   validateStep(details);
+};
+
+/** Reset / init the state of the component */
+const resetState = () => {
+  appSliderCo.value?.toSlide(0);
+  appStepper.value.selectedStepIndex = 0;
+  appStepper.value.steps.forEach((step) => {
+    step.validated = false;
+    step.error = false;
+  });
+  userToken.value = '';
+  userTokenValid.value = false;
 };
 
 /** Sync the stepper with the slider */
@@ -201,12 +251,14 @@ const syncStepperWithSlider = (details: AppSliderSlideEventDetails) => {
   validatePreviousSteps();
 };
 
+/** Validate the current step */
 const validateStep = (details: AppSliderSlideEventDetails) => {
   if (details.slideNumber === 2) {
     validateTOTOToken();
   }
 };
 
+/** Validate all previous steps */
 const validatePreviousSteps = () => {
   for (let i = 0; i < appStepper.value.steps.length; i++) {
     const step = appStepper.value.steps[i];
@@ -214,12 +266,14 @@ const validatePreviousSteps = () => {
   }
 };
 
+/** Called when the stepper changes */
 const onStepperChange = (stepIndex: number) => {
   appSliderCo.value?.toSlide(stepIndex);
   validatePreviousSteps();
 };
 
-const onTOTPAppChanged = (newValue: TOTPApp) => {
+/** Called when the totp identity changes */
+const onTotpIdentityChanged = (newValue: TotpIdentity) => {
   totpSecret.value = new Secret();
   totp = new TOTP({
     issuer: newValue.issuer,
@@ -229,6 +283,7 @@ const onTOTPAppChanged = (newValue: TOTPApp) => {
   totpUrl.value = totp.toString();
 };
 
+/** Validate the totp token / user input code */
 const validateTOTOToken = () => {
   if (!totp) {
     throw new Error('totp is null!');
@@ -251,6 +306,7 @@ const validateTOTOToken = () => {
   return userTokenValid.value;
 };
 
+/** Are all steps done with no errors? */
 const allStepsDone = computed(() => {
   return (
     appStepper.value.steps[0].validated &&
@@ -262,19 +318,21 @@ const allStepsDone = computed(() => {
   );
 });
 
+/** Fetch the contact and set the totp identity */
 watch(
   toRef(props, 'contactId'),
   async (contactId) => {
     const contact = await fetchContact(contactId, ['profile']);
-    totpApp.value.issuer = 'beabee'; // TODO use name of beabee instance
-    totpApp.value.label = contact.email;
+    totpIdentity.value.issuer = 'beabee'; // TODO: Use name of beabee instance
+    totpIdentity.value.label = contact.email;
   },
   { immediate: true }
 );
 
-watch(totpApp, onTOTPAppChanged, { deep: true });
+/** Watch totp identity changes */
+watch(totpIdentity, onTotpIdentityChanged, { deep: true });
 
 onBeforeMount(() => {
-  showMFASettingsModal.value = false;
+  resetState();
 });
 </script>

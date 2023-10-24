@@ -6,6 +6,9 @@
     "deliveryOptIn": "Delivery opt-in",
     "loginDetail": "Login details",
     "mfa": {
+      "closeButton": {
+        "label": "Close"
+      },
       "codeInput": {
         "label": "Code"
       },
@@ -13,7 +16,7 @@
       "enable": "Enable",
       "enterCode": {
         "desc": "Enter the code that is displayed in your authenticator app.",
-        "title": "Verify code"
+        "title": "Verification"
       },
       "modalTitle": "Enable 2-factor authentication",
       "nextButton": {
@@ -25,14 +28,14 @@
       "result": {
         "invalidCode": "The code could not be confirmed, please try again or contact support.",
         "successful": "2-factor authentication has been successfully set up.",
-        "title": "Result"
+        "title": "Done"
       },
       "saveButton": {
         "label": "Save"
       },
       "scan": {
         "desc": "Scan the QR code below with your authenticator app.",
-        "title": "Scan QR Code"
+        "title": "QR Code"
       },
       "title": "2-factor authentication"
     },
