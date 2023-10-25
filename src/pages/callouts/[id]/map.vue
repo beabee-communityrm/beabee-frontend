@@ -136,6 +136,13 @@ meta:
       @close="router.push({ hash: '' })"
     />
 
+    <CalloutIntroPanel
+      v-if="!isEmbed"
+      :callout="callout"
+      :show="introOpen"
+      @close="introOpen = false"
+    />
+
     <CalloutAddResponsePanel
       :callout="callout"
       :answers="newResponseAnswers"
@@ -175,6 +182,7 @@ import PageTitle from '../../../components/PageTitle.vue';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import 'vue-maplibre-gl/dist/vue-maplibre-gl.css';
 import CalloutShowResponsePanel from '../../../components/pages/callouts/CalloutShowResponsePanel.vue';
+import CalloutIntroPanel from '../../../components/pages/callouts/CalloutIntroPanel.vue';
 import {
   CalloutResponseAnswerAddress,
   CalloutResponseAnswers,
@@ -223,6 +231,7 @@ const responses = ref<GetCalloutResponseMapDataWithAddress[]>([]);
 const { isOpen } = useCallout(toRef(props, 'callout'));
 
 const isAddMode = ref(false);
+const introOpen = ref(true);
 const newResponseAnswers = ref<CalloutResponseAnswers>();
 const geocodeAddress = ref<CalloutResponseAnswerAddress>();
 
@@ -276,6 +285,7 @@ const selectedResponseFeature = computed(() => {
 
 // Zoom to a cluster or open a response
 function handleClick(e: { event: MapMouseEvent; map: Map }) {
+  introOpen.value = false;
   if (isAddMode.value) {
     if (!newResponseAnswers.value) {
       handleAddClick(e);
@@ -342,6 +352,7 @@ function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
 function handleStartAddMode() {
   if (!map.map) return;
   isAddMode.value = true;
+  introOpen.value = false;
   map.map.getCanvas().style.cursor = 'crosshair';
   router.push({ hash: '' });
 }

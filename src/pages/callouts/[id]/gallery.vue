@@ -27,7 +27,10 @@ meta:
           :key="response.number"
           class="flex-1 min-w-[250px] sm:max-w-sm p-3"
         >
-          <router-link :to="`${HASH_PREFIX}${response.number}`">
+          <router-link
+            :to="`${HASH_PREFIX}${response.number}`"
+            @click="introOpen = false"
+          >
             <img
               class="w-full mb-2 aspect-video object-cover"
               loading="lazy"
@@ -51,8 +54,18 @@ meta:
     <CalloutShowResponsePanel
       :callout="callout"
       :response="selectedResponse"
-      @close="router.push({ hash: '' })"
+      @close="
+        router.push({ hash: '' });
+        introOpen = false;
+      "
       @click.stop
+    />
+
+    <CalloutIntroPanel
+      v-if="!isEmbed"
+      :callout="callout"
+      :show="introOpen && !selectedResponse"
+      @close="introOpen = false"
     />
   </div>
 </template>
@@ -66,6 +79,7 @@ import {
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 import CalloutShowResponsePanel from '../../../components/pages/callouts/CalloutShowResponsePanel.vue';
+import CalloutIntroPanel from '../../../components/pages/callouts/CalloutIntroPanel.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import { faMap } from '@fortawesome/free-solid-svg-icons';
 import { useI18n } from 'vue-i18n';
@@ -82,6 +96,8 @@ const router = useRouter();
 const { t } = useI18n();
 
 const responses = ref<GetCalloutResponseMapData[]>([]);
+
+const introOpen = ref(true);
 
 const selectedResponse = computed(() => {
   if (route.hash.startsWith(HASH_PREFIX)) {
