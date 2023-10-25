@@ -313,7 +313,7 @@ const onTotpIdentityChanged = (newValue: TotpIdentity) => {
 };
 
 /** Validate the totp token / user input code */
-const validateTOTOToken = () => {
+const validateTOTOToken = (window = 2) => {
   if (!totp) {
     throw new Error('totp is null!');
   }
@@ -321,11 +321,10 @@ const validateTOTOToken = () => {
   const resultStep = appStepper.value.steps[2];
   const delta = totp.validate({
     token: userToken.value,
-    window: 1,
+    window,
   });
 
-  // To check if the authenticator works it should be enough to check if the token is one step ahead or behind
-  userTokenValid.value = delta !== null && delta <= 1 && delta >= -1;
+  userTokenValid.value = delta === 0;
 
   validateStep.error = !userTokenValid.value;
   resultStep.error = !userTokenValid.value;
