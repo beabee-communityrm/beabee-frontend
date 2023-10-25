@@ -8,7 +8,7 @@
     </h2>
     <span class="h-px flex-grow bg-primary-20" />
   </div>
-  <AppHeading class="mb-2 hidden md:block"><slot /></AppHeading>
+  <AppHeading class="hidden md:block"><slot /></AppHeading>
 </template>
 <script lang="ts" setup>
 import AppHeading from '../../../components/AppHeading.vue';

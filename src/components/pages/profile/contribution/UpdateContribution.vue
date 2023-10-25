@@ -1,7 +1,7 @@
 <template>
   <div>
     <form @submit.prevent="handleSubmit">
-      <AppHeading class="mb-2">{{ buttonText }}</AppHeading>
+      <AppHeading>{{ buttonText }}</AppHeading>
 
       <p v-if="isManualActiveMember" class="mb-4">
         {{
@@ -71,9 +71,9 @@
       class="w-full"
       @close="reset"
     >
-      <AppHeading class="mb-4">{{
-        t(`paymentMethods.${newContribution.paymentMethod}.setLabel`)
-      }}</AppHeading>
+      <AppHeading>
+        {{ t(`paymentMethods.${newContribution.paymentMethod}.setLabel`) }}
+      </AppHeading>
       <StripePayment
         :client-secret="stripeClientSecret"
         :public-key="content.stripePublicKey"

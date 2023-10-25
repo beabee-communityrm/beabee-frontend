@@ -8,7 +8,7 @@ meta:
 <template>
   <App2ColGrid>
     <template #col1>
-      <AppHeading class="mb-2">
+      <AppHeading>
         {{ t('contribution.updateContribution') }}
       </AppHeading>
       <template v-if="contributionData && contributionInfo">

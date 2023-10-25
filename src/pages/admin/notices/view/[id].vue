@@ -10,9 +10,7 @@ meta:
     <PageTitle :title="`${notice.name}`"></PageTitle>
     <div class="flex flex-col-reverse gap-8 lg:flex-row lg:justify-between">
       <div class="flex-initial basis-3/4">
-        <AppHeading class="mb-4">
-          {{ t('noticeAdminOverview.summary') }}
-        </AppHeading>
+        <AppHeading>{{ t('noticeAdminOverview.summary') }}</AppHeading>
         <AppNotice :notice="notice"></AppNotice>
         <ItemStatus :item="notice"></ItemStatus>
         <ItemDateRange :item="notice" />

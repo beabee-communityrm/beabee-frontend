@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppHeading class="mb-4">{{ t('contribution.paymentMethod') }}</AppHeading>
+    <AppHeading>{{ t('contribution.paymentMethod') }}</AppHeading>
 
     <PaymentMethod class="mb-4" :source="paymentSource" />
 

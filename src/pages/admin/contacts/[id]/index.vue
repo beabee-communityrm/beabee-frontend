@@ -23,7 +23,9 @@ meta:
       </AppInfoList>
 
       <div v-if="!env.cnrMode">
-        <AppHeading>{{ t('contactOverview.contribution') }}</AppHeading>
+        <AppHeading class="mt-6">
+          {{ t('contactOverview.contribution') }}
+        </AppHeading>
         <AppInfoList>
           <AppInfoListItem
             :name="t('contacts.data.amount')"
@@ -62,7 +64,7 @@ meta:
         </AppInfoList>
       </div>
 
-      <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
+      <AppHeading class="mt-6">{{ t('contactOverview.roles') }}</AppHeading>
       <div class="relative mt-4">
         <RoleEditor
           :roles="contact.roles"
@@ -110,7 +112,7 @@ meta:
         />
       </AppInfoList>
 
-      <AppHeading>{{ t('contactOverview.about') }}</AppHeading>
+      <AppHeading class="mt-6">{{ t('contactOverview.about') }}</AppHeading>
       <div
         class="mb-4 text-sm text-body-80"
         v-html="t('contactOverview.annotation.copy')"
