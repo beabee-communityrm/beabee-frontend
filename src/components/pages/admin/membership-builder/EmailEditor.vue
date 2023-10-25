@@ -1,7 +1,7 @@
 <template>
-  <App2ColGrid>
+  <App2ColGrid class="mb-6">
     <template #col1>
-      <AppSubHeading class="mb-4">{{ label }}</AppSubHeading>
+      <AppSubHeading class="mb-2">{{ label }}</AppSubHeading>
       <template v-if="email">
         <div class="mb-4">
           <AppInput v-model="email.subject" label="Subject" required />
