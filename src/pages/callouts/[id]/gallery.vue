@@ -27,7 +27,10 @@ meta:
           :key="response.number"
           class="flex-1 min-w-[250px] sm:max-w-sm p-3"
         >
-          <router-link :to="`${HASH_PREFIX}${response.number}`">
+          <router-link
+            :to="`${HASH_PREFIX}${response.number}`"
+            @click="introOpen = false"
+          >
             <img
               class="w-full mb-2 aspect-video object-cover"
               loading="lazy"
@@ -51,13 +54,16 @@ meta:
     <CalloutShowResponsePanel
       :callout="callout"
       :response="selectedResponse"
-      @close="router.push({ hash: '' })"
+      @close="
+        router.push({ hash: '' });
+        introOpen = false;
+      "
       @click.stop
     />
 
     <CalloutIntroPanel
       :callout="callout"
-      :show="introOpen"
+      :show="introOpen && !selectedResponse"
       @close="introOpen = false"
     />
   </div>
@@ -90,7 +96,7 @@ const { t } = useI18n();
 
 const responses = ref<GetCalloutResponseMapData[]>([]);
 
-const introOpen = ref(false);
+const introOpen = ref(true);
 
 const selectedResponse = computed(() => {
   if (route.hash.startsWith(HASH_PREFIX)) {
