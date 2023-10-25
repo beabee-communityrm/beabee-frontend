@@ -7,7 +7,7 @@
       </figure>
       <div class="mb-6 text-lg" v-html="callout.intro"></div>
       <AppButton variant="primary" class="px-6" @click="$emit('close')">
-        {{ t('callout.getStarted') }}
+        {{ t('actions.getStarted') }}
       </AppButton>
     </div>
   </CalloutSidePanel>
