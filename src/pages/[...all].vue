@@ -21,7 +21,7 @@ meta:
       </template>
     </i18n-t>
 
-    <AppButton class="w-full" to="/profile">
+    <AppButton class="w-full" to="/">
       {{ t('notFound.goBack') }}
     </AppButton>
   </AuthBox>
