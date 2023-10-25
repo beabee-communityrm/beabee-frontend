@@ -137,6 +137,7 @@ meta:
     />
 
     <CalloutIntroPanel
+      v-if="!isEmbed"
       :callout="callout"
       :show="introOpen"
       @close="introOpen = false"
