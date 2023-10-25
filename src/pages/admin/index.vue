@@ -57,7 +57,7 @@ meta:
     </div>
     <div class="col-span-12 md:col-span-7 xl:col-span-7">
       <AppHeading>{{ t('adminDashboard.latestCallout.title') }}</AppHeading>
-      <div class="relative mb-8 mt-4 block rounded bg-white p-4">
+      <div class="relative mb-8 block rounded bg-white p-4">
         <div v-if="latestCallout">
           <CalloutSummary :callout="latestCallout" />
           <router-link
