@@ -1,7 +1,7 @@
 <template>
   <CalloutSidePanel :show="!!answers" @close="$emit('close')">
     <AppHeading class="mb-4">{{ t('callout.addLocation') }}</AppHeading>
-    <CalloutThanksBox v-if="showOnlyThanks" :callout="callout" />
+    <CalloutThanksBox v-if="showOnlyThanks" :callout="callout" class="p-0" />
     <template v-else>
       <CalloutLoginPrompt v-if="showLoginPrompt" />
       <CalloutMemberOnlyPrompt v-else-if="showMemberOnlyPrompt" />

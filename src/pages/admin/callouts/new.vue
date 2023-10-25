@@ -205,19 +205,6 @@ async function reset() {
     : undefined;
   steps.value = convertCalloutToSteps(callout);
   status.value = callout?.status;
-
-  if (!steps.value.content.formSchema.components.length) {
-    steps.value.content.formSchema.components.push({
-      type: 'button',
-      label: t('actions.submit'),
-      key: 'submit',
-      size: 'md',
-      block: false,
-      action: 'submit',
-      disableOnInvalid: true,
-      theme: 'primary',
-    });
-  }
 }
 
 let interval: number | undefined;

@@ -33,6 +33,8 @@
     "edit": "Bearbeiten",
     "endnow": "Jetzt beenden",
     "export": "Exportieren",
+    "getStarted": "Starten",
+    "next": "Weiter",
     "noBack": "Nein, gehe zurück",
     "participate": "Teilnehmen",
     "preview": "Vorschau",
@@ -40,6 +42,7 @@
     "reopen": "Wieder aktivieren",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
+    "respond": "Antworten",
     "revertToDraft": "Zu Entwurf zurückkehren",
     "save": "Speichern",
     "saveAndAnother": "Speichern und weiteren hinzufügen",
@@ -263,10 +266,13 @@
     }
   },
   "callout": {
+    "actions": {
+      "updateResponse": "Antwort bearbeiten"
+    },
     "addAPoint": "Klicken Sie dort auf die Karte, wo Sie einen Ort ergänzen möchten",
     "addLocation": "Neuen Ort eingeben",
-    "closed": "Dieser Callout ist beendet.",
     "contactDetails": "Kontaktdaten",
+    "ended": "Dieser Callout ist seit dem {date} beendet.",
     "form": {
       "email": "Ihre E-Mail-Adresse",
       "guestFieldsMissing": "Bitte geben Sie uns Ihre Kontaktdaten.",
@@ -288,7 +294,8 @@
       "gallery": "Galerie",
       "map": "Karten"
     },
-    "youResponded": "Sie haben geantwortet ♥"
+    "youResponded": "Sie haben geantwortet ♥",
+    "yourResponse": "Ihre Antwort"
   },
   "calloutAdmin": {
     "deleted": "Callout gelöscht",
@@ -337,7 +344,20 @@
     "updated": "Änderungen gespeichert!"
   },
   "calloutBuilder": {
-    "showAdvancedOptions": "Erweiterte Optionen anzeigen"
+    "actions": {
+      "addSlide": "Slide hinzufügen",
+      "removeSlide": "Slide entfernen"
+    },
+    "internalTitle": "Interner Titel",
+    "nextButton": "Text für den Weiter-Button",
+    "nextSlide": {
+      "default": "-- Standard --",
+      "label": "Nächster Slide"
+    },
+    "prevButton": "Text für den Zurück-Button",
+    "showAdvancedOptions": "Erweiterte Optionen anzeigen",
+    "slideNo": "Slide {no}",
+    "submitButton": "Text für den Submit-Button"
   },
   "calloutResponse": {
     "data": {
@@ -621,12 +641,6 @@
     "lastSavedNow": "Zuletzt vor wenigen Augenblicken gespeichert.",
     "steps": {
       "content": {
-        "inputs": {
-          "intro": {
-            "help": "<p>Die <strong>Einleitung</strong> erscheint vor den Fragen. Erkläre darin, warum du den Callout machst, also was das Ziel ist und wie die Antworten helfen. Gib so viel Kontext wie möglich, um den Teilnehmenden die Beantwortung zu erleichtern.</p>\n",
-            "label": "Einleitung"
-          }
-        },
         "title": "Inhalt"
       },
       "dates": {
@@ -793,6 +807,10 @@
           "image": {
             "help": "<p>Das <strong>Titelbild</strong> dient zur Illustration des Callouts.</p>\n",
             "label": "Titelbild"
+          },
+          "intro": {
+            "help": "<p>Die <strong>Einleitung</strong> erscheint vor den Fragen. Erkläre darin, warum du den Callout machst, also was das Ziel ist und wie die Antworten helfen. Gib so viel Kontext wie möglich, um den Teilnehmenden die Beantwortung zu erleichtern.</p>\n",
+            "label": "Einleitung"
           },
           "overrideShare": {
             "label": "Callout-Titel und -Beschreibung zum Teilen verwenden?",

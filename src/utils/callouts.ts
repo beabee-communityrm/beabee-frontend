@@ -1,9 +1,31 @@
-import { CalloutComponentSchema, ItemStatus } from '@beabee/beabee-common';
+import {
+  CalloutComponentSchema,
+  CalloutSlideSchema,
+  ItemStatus,
+} from '@beabee/beabee-common';
 import { format } from 'date-fns';
 import { CalloutStepsProps } from '../components/pages/admin/callouts/callouts.interface';
 import { FilterItem, FilterItems } from '../components/search/search.interface';
 import { CreateCalloutData, GetCalloutDataWith } from './api/api.interface';
 import env from '../env';
+import i18n from '../lib/i18n';
+
+const { t } = i18n.global;
+
+export function getSlideSchema(no: number): CalloutSlideSchema {
+  const id = 'slide' + Math.random().toString(36).substring(2, 8);
+  return {
+    id,
+    title: t('calloutBuilder.slideNo', { no }),
+    components: [],
+    navigation: {
+      nextText: t('actions.next'),
+      prevText: t('actions.back'),
+      nextSlideId: '',
+      submitText: t('actions.submit'),
+    },
+  };
+}
 
 export function convertCalloutToSteps(
   callout?: GetCalloutDataWith<'form' | 'responseViewSchema'>
@@ -32,13 +54,15 @@ export function convertCalloutToSteps(
 
   return {
     content: {
-      introText: callout?.intro || '',
-      formSchema: callout?.formSchema || { components: [] },
+      formSchema: callout?.formSchema || {
+        slides: [getSlideSchema(1)],
+      },
     },
     titleAndImage: {
       title: callout?.title || '',
       description: callout?.excerpt || '',
       coverImageURL: callout?.image || '',
+      introText: callout?.intro || '',
       useCustomSlug: !!callout,
       autoSlug: '',
       slug: callout?.slug || '',
@@ -103,7 +127,7 @@ export function convertStepsToCallout(
     title: steps.titleAndImage.title,
     excerpt: steps.titleAndImage.description,
     image: steps.titleAndImage.coverImageURL,
-    intro: steps.content.introText,
+    intro: steps.titleAndImage.introText,
     formSchema: steps.content.formSchema,
     responseViewSchema: steps.settings.showResponses
       ? {
@@ -168,10 +192,10 @@ function convertValuesToOptions(
 }
 
 function convertComponentToFilter(
-  component: CalloutComponentSchema
+  component: CalloutComponentSchema & { fullKey: string }
 ): FilterItem {
   const baseItem = {
-    label: component.label || component.key,
+    label: component.label || component.fullKey,
     nullable: true,
   };
 
@@ -206,10 +230,10 @@ function convertComponentToFilter(
 }
 
 export function convertComponentsToFilters(
-  components: CalloutComponentSchema[]
+  components: (CalloutComponentSchema & { fullKey: string })[]
 ): FilterItems {
   const items = components.map((c) => {
-    return [`answers.${c.key}`, convertComponentToFilter(c)] as const;
+    return [`answers.${c.fullKey}`, convertComponentToFilter(c)] as const;
   });
 
   return Object.fromEntries(items);

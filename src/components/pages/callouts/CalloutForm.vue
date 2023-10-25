@@ -1,32 +1,75 @@
 <template>
-  <form
-    class="callout-form"
-    :class="style === 'sm' ? 'is-sm' : style === 'no-bg' ? '' : 'has-bg'"
-    @submit.prevent
-  >
-    <GuestFields
-      v-if="showGuestFields"
-      v-model:name="guestName"
-      v-model:email="guestEmail"
-    />
+  <form class="callout-form" :class="formStyle" @submit.prevent>
+    <template v-if="allSlides">
+      <FormRenderer
+        v-for="slide in slides"
+        :key="slide.id"
+        v-model="answersProxy[slide.id]"
+        :components="slide.components"
+        :readonly="readonly"
+      />
+    </template>
     <FormRenderer
-      :form="callout.formSchema"
-      :answers="answers"
+      v-else
+      :key="currentSlide.id"
+      v-model="answersProxy[currentSlide.id]"
+      :components="currentSlide.components"
       :readonly="readonly"
-      :before-submit="beforeSubmit"
-      @submit="handleSubmission"
     />
-    <AppNotification
-      v-if="formError"
-      class="mt-4"
-      variant="error"
-      :title="formError"
-    />
+    <template v-if="isLastSlide && !readonly && !preview">
+      <GuestFields
+        v-if="showGuestFields"
+        v-model:name="guestName"
+        v-model:email="guestEmail"
+      />
+      <AppNotification
+        v-if="formError"
+        class="mb-4"
+        variant="error"
+        :title="formError"
+      />
+      <AppButton
+        type="submit"
+        class="w-full mb-4"
+        variant="primary"
+        :disabled="validation.$invalid"
+        :loading="isLoading"
+        @click="handleSubmit"
+      >
+        {{ currentSlide.navigation.submitText }}
+      </AppButton>
+    </template>
+    <div v-if="totalSlides > 1" class="flex gap-4 justify-between">
+      <div>
+        <AppButton
+          v-if="currentSlide.navigation.prevText && currentSlideNo > 0"
+          type="button"
+          variant="primaryOutlined"
+          @click="handlePrevSlide"
+        >
+          {{ currentSlide.navigation.prevText }}
+        </AppButton>
+      </div>
+      <div>
+        <AppButton
+          v-if="currentSlideNo < totalSlides - 1"
+          type="button"
+          variant="primary"
+          :disabled="validation.$invalid"
+          @click="handleNextSlide"
+        >
+          {{ currentSlide.navigation.nextText }}
+        </AppButton>
+      </div>
+    </div>
   </form>
 </template>
 
 <script lang="ts" setup>
-import { CalloutResponseAnswers } from '@beabee/beabee-common';
+import {
+  CalloutResponseAnswers,
+  CalloutSlideSchema,
+} from '@beabee/beabee-common';
 import { computed, ref } from 'vue';
 import { GetCalloutDataWith } from '../../../utils/api/api.interface';
 import { useI18n } from 'vue-i18n';
@@ -36,9 +79,11 @@ import { isRequestError } from '../../../utils/api';
 import GuestFields from './GuestFields.vue';
 import AppNotification from '../../AppNotification.vue';
 import FormRenderer from '../../form-renderer/FormRenderer.vue';
-import { FormSubmission } from '../../form-renderer/form-renderer.interface';
+import AppButton from '../../button/AppButton.vue';
+import useVuelidate from '@vuelidate/core';
 
 const { t } = useI18n();
+const validation = useVuelidate();
 
 const emit = defineEmits<{ (e: 'submitted'): void }>();
 const props = defineProps<{
@@ -46,31 +91,62 @@ const props = defineProps<{
   answers?: CalloutResponseAnswers;
   preview?: boolean;
   readonly?: boolean;
-  style?: 'no-bg' | 'sm';
+  style?: 'simple' | 'no-bg' | 'small';
+  allSlides?: boolean;
+  onSubmit?(answers: CalloutResponseAnswers): void;
 }>();
 
 const guestName = ref('');
 const guestEmail = ref('');
 const formError = ref('');
+const isLoading = ref(false);
+
+const formStyle = computed(() => {
+  switch (props.style) {
+    case 'small':
+      return 'is-small';
+    case 'simple':
+      return 'is-simple';
+    case 'no-bg':
+      return '';
+    default:
+      return 'has-bg';
+  }
+});
+
+const slides = computed(() => props.callout.formSchema.slides);
+
+const initialAnswers = Object.fromEntries(
+  slides.value.map((slide) => [slide.id, props.answers?.[slide.id] || {}])
+);
+
+const answersProxy = ref<CalloutResponseAnswers>(initialAnswers);
+
+const slideIds = ref<string[]>([slides.value[0].id]);
+
+const currentSlide = computed(
+  () =>
+    slides.value.find((s) => s.id === slideIds.value[0]) as CalloutSlideSchema // Should always be defined
+);
+
+const currentSlideNo = computed(() => slides.value.indexOf(currentSlide.value));
+
+const totalSlides = computed(() => (props.allSlides ? 1 : slides.value.length));
+const isLastSlide = computed(
+  () => currentSlideNo.value === totalSlides.value - 1
+);
 
 const showGuestFields = computed(
   () => props.callout.access === 'guest' && !currentUser.value
 );
 
-function beforeSubmit(): boolean {
-  formError.value = props.preview
-    ? // Can't submit in preview mode
-      t('callout.showingPreview')
-    : showGuestFields.value && !(guestName.value && guestEmail.value)
-    ? // If guest fields are required check they are filled in
-      t('callout.form.guestFieldsMissing')
-    : '';
+async function handleSubmit() {
+  if (props.onSubmit) {
+    return props.onSubmit(answersProxy.value);
+  }
 
-  return !formError.value;
-}
-
-async function handleSubmission(submission: FormSubmission) {
   formError.value = '';
+  isLoading.value = true;
   try {
     await createResponse(props.callout.slug, {
       ...(!currentUser.value &&
@@ -78,15 +154,26 @@ async function handleSubmission(submission: FormSubmission) {
           guestName: guestName.value,
           guestEmail: guestEmail.value,
         }),
-      answers: submission.data,
+      answers: answersProxy.value,
     });
     emit('submitted');
   } catch (err) {
-    if (isRequestError(err)) {
-      formError.value = t('callout.form.submittingResponseError');
-    } else {
-      throw err;
-    }
+    formError.value = t('callout.form.submittingResponseError');
+    if (!isRequestError(err)) throw err;
+  } finally {
+    isLoading.value = false;
   }
+}
+
+function handleNextSlide() {
+  const nextId =
+    currentSlide.value.navigation.nextSlideId ||
+    slides.value[currentSlideNo.value + 1].id;
+
+  slideIds.value.unshift(nextId);
+}
+
+function handlePrevSlide() {
+  slideIds.value.shift();
 }
 </script>

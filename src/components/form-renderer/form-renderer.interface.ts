@@ -1,5 +1,6 @@
 import { CalloutResponseAnswers } from '@beabee/beabee-common';
 
-export interface FormSubmission {
-  data: CalloutResponseAnswers;
+export interface FormChangeEvent {
+  isValid: boolean;
+  data: CalloutResponseAnswers[string];
 }

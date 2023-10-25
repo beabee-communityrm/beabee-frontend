@@ -33,6 +33,8 @@
     "edit": "Edit",
     "endnow": "End now",
     "export": "Export",
+    "getStarted": "Get started",
+    "next": "Next",
     "noBack": "No, go back",
     "participate": "Participate",
     "preview": "Preview",
@@ -40,6 +42,7 @@
     "reopen": "Reopen",
     "replicate": "Replicate",
     "reset": "Reset",
+    "respond": "Respond",
     "revertToDraft": "Revert to draft",
     "save": "Save",
     "saveAndAnother": "Save and add another",
@@ -263,10 +266,13 @@
     }
   },
   "callout": {
+    "actions": {
+      "updateResponse": "Update your response"
+    },
     "addAPoint": "Click on the map where you want to add a point",
     "addLocation": "Add a new location",
-    "closed": "This callout is closed",
     "contactDetails": "Contact details",
+    "ended": "This callout ended on {date}",
     "form": {
       "email": "Your email",
       "guestFieldsMissing": "Please tell us your contact details",
@@ -289,7 +295,8 @@
       "gallery": "Gallery",
       "map": "Map"
     },
-    "youResponded": "You replied to this callout ♥"
+    "youResponded": "You replied to this callout ♥",
+    "yourResponse": "Your response"
   },
   "calloutAdmin": {
     "deleted": "Callout deleted.",
@@ -338,7 +345,20 @@
     "updated": "Your callout was successfully updated."
   },
   "calloutBuilder": {
-    "showAdvancedOptions": "Show advanced options"
+    "actions": {
+      "addSlide": "Add slide",
+      "removeSlide": "Remove slide"
+    },
+    "internalTitle": "Internal title",
+    "nextButton": "Next button text",
+    "nextSlide": {
+      "default": "-- Default --",
+      "label": "Next slide"
+    },
+    "prevButton": "Back button text",
+    "showAdvancedOptions": "Show advanced options",
+    "slideNo": "Slide {no}",
+    "submitButton": "Submit button text"
   },
   "calloutResponse": {
     "data": {
@@ -622,12 +642,6 @@
     "lastSavedNow": "Last saved just now",
     "steps": {
       "content": {
-        "inputs": {
-          "intro": {
-            "help": "<p>The <strong>Introduction text</strong> appears alongside the callout. It should explain why you are doing this callout and give any context the user might need before answering.</p>\n",
-            "label": "Introduction text"
-          }
-        },
         "title": "Content"
       },
       "dates": {
@@ -796,6 +810,10 @@
           "image": {
             "help": "<p>The <strong>Cover image</strong> will serve as an illustration for the callout on menus and forms.</p>\n",
             "label": "Cover image"
+          },
+          "intro": {
+            "help": "<p>The <strong>Introduction text</strong> appears alongside the callout. It should explain why you are doing this callout and give any context the user might need before answering.</p>\n",
+            "label": "Introduction text"
           },
           "overrideShare": {
             "label": "Use callout title and description for sharing?",

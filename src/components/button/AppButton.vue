@@ -32,6 +32,7 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
+import { RouteLocationRaw } from 'vue-router';
 
 // Variant classes for [base, hover, loading icon]
 const variantClasses = {
@@ -77,7 +78,7 @@ const props = withDefaults(
     loading?: boolean;
     type?: 'button' | 'submit';
     href?: string;
-    to?: string;
+    to?: RouteLocationRaw;
     variant?: keyof typeof variantClasses;
     size?: 'xs' | 'sm' | 'md';
     icon?: IconDefinition;
