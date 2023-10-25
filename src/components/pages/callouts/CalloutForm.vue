@@ -1,5 +1,5 @@
 <template>
-  <form class="callout-form" :class="formStyle" @submit.prevent>
+  <form :class="formClass" @submit.prevent>
     <template v-if="allSlides">
       <FormRenderer
         v-for="slide in slides"
@@ -91,7 +91,8 @@ const props = defineProps<{
   answers?: CalloutResponseAnswers;
   preview?: boolean;
   readonly?: boolean;
-  style?: 'simple' | 'no-bg' | 'small';
+  style?: 'simple' | 'small';
+  noBg?: boolean;
   allSlides?: boolean;
   onSubmit?(answers: CalloutResponseAnswers): void;
 }>();
@@ -101,18 +102,14 @@ const guestEmail = ref('');
 const formError = ref('');
 const isLoading = ref(false);
 
-const formStyle = computed(() => {
-  switch (props.style) {
-    case 'small':
-      return 'is-small';
-    case 'simple':
-      return 'is-simple';
-    case 'no-bg':
-      return '';
-    default:
-      return 'has-bg';
-  }
-});
+const formClass = computed(() => [
+  'callout-form',
+  {
+    'is-simple': props.style === 'simple',
+    'is-small': props.style === 'small',
+    'has-bg': !props.noBg,
+  },
+]);
 
 const slides = computed(() => props.callout.formSchema.slides);
 
