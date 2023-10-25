@@ -1,5 +1,5 @@
 <template>
-  <div class="my-2 flex h-auto flex-col border border-primary-40 p-5">
+  <div class="mb-6 flex h-auto flex-col border border-primary-40 p-5">
     {{ t('callout.share.address') }}
 
     <div

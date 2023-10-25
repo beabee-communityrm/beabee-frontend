@@ -33,6 +33,7 @@
     "edit": "Bearbeiten",
     "endnow": "Jetzt beenden",
     "export": "Exportieren",
+    "next": "Weiter",
     "noBack": "Nein, gehe zurück",
     "participate": "Teilnehmen",
     "preview": "Vorschau",
@@ -263,6 +264,7 @@
     }
   },
   "callout": {
+    "actions": {},
     "addAPoint": "Klicken Sie dort auf die Karte, wo Sie einen Ort ergänzen möchten",
     "addLocation": "Neuen Ort eingeben",
     "closed": "Dieser Callout ist beendet.",
@@ -337,7 +339,20 @@
     "updated": "Änderungen gespeichert!"
   },
   "calloutBuilder": {
-    "showAdvancedOptions": "Erweiterte Optionen anzeigen"
+    "actions": {
+      "addSlide": "Slide hinzufügen",
+      "removeSlide": "Slide entfernen"
+    },
+    "internalTitle": "Interner Titel",
+    "nextButton": "Text für den Weiter-Button",
+    "nextSlide": {
+      "default": "-- Standard --",
+      "label": "Nächster Slide"
+    },
+    "prevButton": "Text für den Zurück-Button",
+    "showAdvancedOptions": "Erweiterte Optionen anzeigen",
+    "slideNo": "Slide {no}",
+    "submitButton": "Text für den Submit-Button"
   },
   "calloutResponse": {
     "data": {
@@ -622,10 +637,7 @@
     "steps": {
       "content": {
         "inputs": {
-          "intro": {
-            "help": "<p>Die <strong>Einleitung</strong> erscheint vor den Fragen. Erkläre darin, warum du den Callout machst, also was das Ziel ist und wie die Antworten helfen. Gib so viel Kontext wie möglich, um den Teilnehmenden die Beantwortung zu erleichtern.</p>\n",
-            "label": "Einleitung"
-          }
+          "intro": {}
         },
         "title": "Inhalt"
       },
@@ -793,6 +805,10 @@
           "image": {
             "help": "<p>Das <strong>Titelbild</strong> dient zur Illustration des Callouts.</p>\n",
             "label": "Titelbild"
+          },
+          "intro": {
+            "help": "<p>Die <strong>Einleitung</strong> erscheint vor den Fragen. Erkläre darin, warum du den Callout machst, also was das Ziel ist und wie die Antworten helfen. Gib so viel Kontext wie möglich, um den Teilnehmenden die Beantwortung zu erleichtern.</p>\n",
+            "label": "Einleitung"
           },
           "overrideShare": {
             "label": "Callout-Titel und -Beschreibung zum Teilen verwenden?",

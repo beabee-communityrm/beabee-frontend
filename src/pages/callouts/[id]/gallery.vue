@@ -8,7 +8,7 @@ meta:
 </route>
 
 <template>
-  <div v-if="callout" class="absolute inset-0 flex flex-col">
+  <div class="absolute inset-0 flex flex-col">
     <div v-if="!isEmbed" class="flex-0 p-6 pb-1 z-10 shadow-lg">
       <PageTitle :title="callout.title" no-collapse>
         <router-link
@@ -58,7 +58,7 @@ meta:
 </template>
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref } from 'vue';
-import { fetchCallout, fetchResponsesForMap } from '../../../utils/api/callout';
+import { fetchResponsesForMap } from '../../../utils/api/callout';
 import {
   GetCalloutDataWith,
   GetCalloutResponseMapData,
@@ -73,13 +73,14 @@ import { isEmbed } from '../../../store';
 
 const HASH_PREFIX = '#response-' as const;
 
-const props = defineProps<{ id: string }>();
+const props = defineProps<{
+  callout: GetCalloutDataWith<'form' | 'responseViewSchema'>;
+}>();
 
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
 
-const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();
 const responses = ref<GetCalloutResponseMapData[]>([]);
 
 const selectedResponse = computed(() => {
@@ -92,16 +93,14 @@ const selectedResponse = computed(() => {
 });
 
 onBeforeMount(async () => {
-  callout.value = await fetchCallout(props.id, ['form', 'responseViewSchema']);
-
-  if (!callout?.value.responseViewSchema?.gallery) {
+  if (!props.callout.responseViewSchema?.gallery) {
     throw new Error('Callout does not have a gallery');
   }
 
   // TODO: pagination
-  responses.value = (await fetchResponsesForMap(props.id)).items.filter(
-    (i) => i.photos.length > 0
-  );
+  responses.value = (
+    await fetchResponsesForMap(props.callout.slug)
+  ).items.filter((i) => i.photos.length > 0);
 });
 </script>
 

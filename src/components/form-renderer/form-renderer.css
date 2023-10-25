@@ -13,7 +13,7 @@
 }
 
 /* Apply to form renderer */
-.callout-form.has-bg .callout-form-renderer,
+.callout-form.has-bg,
 /* Apply to form builder form area */
 .callout-form-builder .formarea {
   @apply bg-white p-6 shadow-md;
@@ -280,7 +280,7 @@
 }
 
 /* Apply to form renderer in small mode */
-.callout-form.is-sm .callout-form-renderer {
+.callout-form.is-small .callout-form-renderer {
   @apply text-base;
 
   .form-group {
@@ -289,5 +289,35 @@
 
   .col-form-label {
     @apply text-base font-body;
+  }
+}
+
+/* Apply to form renderer in simple mode */
+.callout-form.is-simple .callout-form-renderer {
+  @apply text-base;
+
+  .formio-form {
+    @apply min-h-0;
+  }
+
+  .form-group {
+    @apply mb-1 block;
+  }
+
+  .formio-component-file {
+    @apply hidden;
+  }
+
+  .col-form-label {
+    @apply font-bold text-base mb-0 inline;
+    &::after {
+      @apply text-body;
+      content: ': ';
+    }
+  }
+
+  div[ref='element'],
+  div[ref='value'] {
+    @apply inline;
   }
 }
