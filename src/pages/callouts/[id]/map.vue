@@ -217,6 +217,8 @@ type GetCalloutResponseMapDataWithAddress = GetCalloutResponseMapData & {
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form' | 'responseViewSchema'>;
+  // Suppress the warning about the ID prop being passed by the router
+  id: string;
 }>();
 
 const map = useMap();

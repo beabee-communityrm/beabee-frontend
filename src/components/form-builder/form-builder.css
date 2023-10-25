@@ -47,6 +47,10 @@
   .component-settings-button {
     @apply h-auto w-8 bg-white text-center text-base;
   }
+
+  .form-radio-nextslide {
+    @apply text-sm text-body-80;
+  }
 }
 
 .formio-dialog {

@@ -42,7 +42,7 @@
     <div v-if="totalSlides > 1" class="flex gap-4 justify-between">
       <div>
         <AppButton
-          v-if="currentSlide.navigation.prevText && currentSlideNo > 0"
+          v-if="currentSlide.navigation.prevText && slideIds.length > 1"
           type="button"
           variant="primaryOutlined"
           @click="handlePrevSlide"
@@ -81,6 +81,7 @@ import AppNotification from '../../AppNotification.vue';
 import FormRenderer from '../../form-renderer/FormRenderer.vue';
 import AppButton from '../../button/AppButton.vue';
 import useVuelidate from '@vuelidate/core';
+import { getDecisionComponent } from '../../../utils/callouts';
 
 const { t } = useI18n();
 const validation = useVuelidate();
@@ -141,8 +142,15 @@ const showGuestFields = computed(
 );
 
 async function handleSubmit() {
+  // Only submit answers for slides in the current flow
+  // The user might have visited other flows then gone back
+  const validAnswers: CalloutResponseAnswers = {};
+  for (const slideId of slideIds.value) {
+    validAnswers[slideId] = answersProxy.value[slideId];
+  }
+
   if (props.onSubmit) {
-    return props.onSubmit(answersProxy.value);
+    return props.onSubmit(validAnswers);
   }
 
   formError.value = '';
@@ -154,7 +162,7 @@ async function handleSubmit() {
           guestName: guestName.value,
           guestEmail: guestEmail.value,
         }),
-      answers: answersProxy.value,
+      answers: validAnswers,
     });
     emit('submitted');
   } catch (err) {
@@ -166,11 +174,26 @@ async function handleSubmit() {
 }
 
 function handleNextSlide() {
-  const nextId =
-    currentSlide.value.navigation.nextSlideId ||
-    slides.value[currentSlideNo.value + 1].id;
+  let nextSlideId;
 
-  slideIds.value.unshift(nextId);
+  // If there is a decision component check if the user has selected a value
+  const decisionComponent = getDecisionComponent(currentSlide.value);
+  if (decisionComponent) {
+    const value =
+      answersProxy.value[currentSlide.value.id]?.[decisionComponent.key];
+
+    nextSlideId = decisionComponent.values.find((v) => v.value === value)
+      ?.nextSlideId;
+  }
+
+  // Otherwise use the next slide ID from the navigation
+  if (!nextSlideId) {
+    nextSlideId =
+      currentSlide.value.navigation.nextSlideId ||
+      slides.value[currentSlideNo.value + 1].id;
+  }
+
+  slideIds.value.unshift(nextSlideId);
 }
 
 function handlePrevSlide() {

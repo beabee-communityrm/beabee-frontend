@@ -19,31 +19,12 @@
       <div class="flex-0 basis-menu">
         <Draggable v-model="slides" item-key="id">
           <template #item="{ element, index }">
-            <div
-              class="mb-4 flex gap-2 rounded p-4"
-              :class="
-                currentSlideNo === index
-                  ? 'bg-white'
-                  : 'cursor-pointer bg-primary-10'
-              "
-              @click="currentSlideNo = index"
-            >
-              <div>
-                <font-awesome-icon
-                  :icon="faGripVertical"
-                  class="cursor-grab text-body-60 hover:text-body"
-                />
-              </div>
-              <div class="flex-1">
-                <p class="font-semibold">
-                  {{ index + 1 }}: {{ element.title }}
-                </p>
-                <p v-if="element.navigation.nextSlideId" class="mt-1 text-xs">
-                  ↳
-                  {{ getNextSlideLabel(element.navigation.nextSlideId) }}
-                </p>
-              </div>
-            </div>
+            <CalloutSlideItem
+              :slide-no="index"
+              :slides="slides"
+              :active="currentSlideId === element.id"
+              @select="currentSlideId = $event"
+            />
           </template>
         </Draggable>
 
@@ -61,9 +42,9 @@
         <!-- These styles replicate the FormBuilder layout -->
         <div class="flex gap-8 items-end mb-4">
           <div class="flex-1 max-w-2xl flex gap-4 justify-between items-end">
-            <div>
+            <div class="flex-1">
               <AppInput
-                v-model="slides[currentSlideNo].title"
+                v-model="currentSlide.title"
                 :label="t('calloutBuilder.internalTitle')"
                 required
               />
@@ -93,9 +74,10 @@
         </div>
 
         <FormBuilder
-          :key="currentSlideNo /* FormBuilder isn't reactive */"
-          v-model="slides[currentSlideNo].components"
+          :key="currentSlideId /* FormBuilder isn't reactive */"
+          v-model="currentSlide.components"
           :advanced="showAdvancedOptions"
+          :slides="slides"
         />
 
         <!-- These styles replicate the FormBuilder layout -->
@@ -103,7 +85,7 @@
           <div class="flex-1 max-w-2xl">
             <div class="bg-white p-6 pt-0 shadow-md relative -mt-6 mb-4">
               <FormBuilderNavigation
-                v-model="slides[currentSlideNo].navigation"
+                v-model="currentSlide.navigation"
                 :slides="slides"
                 :current-slide-no="currentSlideNo"
                 :is-first="isFirstSlide"
@@ -139,7 +121,6 @@ import FormBuilder from '../../../../form-builder/FormBuilder.vue';
 import {
   faChevronLeft,
   faChevronRight,
-  faGripVertical,
   faPlus,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
@@ -152,6 +133,7 @@ import AppCheckbox from '../../../../forms/AppCheckbox.vue';
 import env from '../../../../../env';
 import Draggable from 'vuedraggable';
 import { useRoute } from 'vue-router';
+import CalloutSlideItem from '../CalloutSlideItem.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
@@ -163,11 +145,21 @@ const { t } = useI18n();
 
 const wasJustReplicated = useRoute().query.replicated !== undefined;
 
-const currentSlideNo = ref(0);
 const showAdvancedOptions = ref(false);
 
-const slides = computed(() => props.data.formSchema.slides);
+const slides = computed({
+  get: () => props.data.formSchema.slides,
+  // eslint-disable-next-line vue/no-mutating-props
+  set: (v) => (props.data.formSchema.slides = v),
+});
 
+const currentSlideId = ref(slides.value[0].id);
+
+const currentSlideNo = computed({
+  get: () => slides.value.findIndex((s) => s.id === currentSlideId.value),
+  set: (v) => (currentSlideId.value = slides.value[v].id),
+});
+const currentSlide = computed(() => slides.value[currentSlideNo.value]);
 const totalSlides = computed(() => slides.value.length);
 const isFirstSlide = computed(() => currentSlideNo.value === 0);
 const isLastSlide = computed(
@@ -179,13 +171,6 @@ const warnAboutEditing = computed(
 );
 
 const validation = useVuelidate();
-
-function getNextSlideLabel(nextSlideId: string) {
-  const nextSlideNo = slides.value.findIndex((s) => s.id === nextSlideId);
-  const nextSlide = slides.value[nextSlideNo];
-
-  return nextSlide ? `${nextSlideNo + 1}: ${nextSlide.title}` : '???';
-}
 
 function handleAddSlide() {
   slides.value.push(getSlideSchema(totalSlides.value + 1));

@@ -143,6 +143,8 @@ const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
   respond?: boolean; // Flag for /respond route
   thanks?: boolean; // Flag for /thanks route
+  // Suppress the warning about the ID prop being passed by the router
+  id?: string;
 }>();
 
 const { t } = useI18n();

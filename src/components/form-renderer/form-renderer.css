@@ -185,6 +185,10 @@
     @apply flex-1;
   }
 
+  .formio-component-datagrid {
+    @apply overflow-visible;
+  }
+
   /* Styling for input errors */
   .formio-errors {
     @apply mt-1.5 text-sm font-semibold;

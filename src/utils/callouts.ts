@@ -2,6 +2,8 @@ import {
   CalloutComponentSchema,
   CalloutSlideSchema,
   ItemStatus,
+  RadioCalloutComponentSchema,
+  flattenComponents,
 } from '@beabee/beabee-common';
 import { format } from 'date-fns';
 import { CalloutStepsProps } from '../components/pages/admin/callouts/callouts.interface';
@@ -237,4 +239,18 @@ export function convertComponentsToFilters(
   });
 
   return Object.fromEntries(items);
+}
+
+function isDecisionComponent(
+  component: CalloutComponentSchema
+): component is RadioCalloutComponentSchema {
+  return (
+    component.type === 'radio' && component.values.some((v) => v.nextSlideId)
+  );
+}
+
+export function getDecisionComponent(
+  slide: CalloutSlideSchema
+): RadioCalloutComponentSchema | undefined {
+  return flattenComponents(slide.components).find(isDecisionComponent);
 }

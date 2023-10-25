@@ -3,7 +3,12 @@
     ref="formBuilderRef"
     class="callout-form-builder"
     :form="{ components: modelValue }"
-    :options="formOpts"
+    :options="{
+      ...formOpts,
+      formConfig: {
+        slides: slides?.map((s) => ({ value: s.id, label: s.title })),
+      },
+    }"
     @change="handleChange"
   />
 </template>
@@ -59,7 +64,10 @@ import {
 import { onBeforeMount, onBeforeUnmount, ref, toRef, watch } from 'vue';
 
 import { FormBuilder } from '../../lib/formio';
-import { CalloutComponentSchema } from '@beabee/beabee-common';
+import {
+  CalloutComponentSchema,
+  CalloutSlideSchema,
+} from '@beabee/beabee-common';
 import { formOpts, FormBuilderRef } from './form-builder.interface';
 
 const emit = defineEmits<{
@@ -69,13 +77,14 @@ const emit = defineEmits<{
 const props = defineProps<{
   modelValue: CalloutComponentSchema[];
   advanced?: boolean;
+  slides?: CalloutSlideSchema[];
 }>();
 
 const formBuilderRef = ref<FormBuilderRef>();
 
 function handleChange() {
   if (!formBuilderRef.value) return;
-  emit('update:modelValue', formBuilderRef.value.form.components);
+  emit('update:modelValue', formBuilderRef.value.builder.form.components);
 }
 
 watch(toRef(props, 'advanced'), (show) => {
