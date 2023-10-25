@@ -280,6 +280,7 @@ const selectedResponseFeature = computed(() => {
 
 // Zoom to a cluster or open a response
 function handleClick(e: { event: MapMouseEvent; map: Map }) {
+  introOpen.value = false;
   if (isAddMode.value) {
     if (!newResponseAnswers.value) {
       handleAddClick(e);
@@ -346,6 +347,7 @@ function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
 function handleStartAddMode() {
   if (!map.map) return;
   isAddMode.value = true;
+  introOpen.value = false;
   map.map.getCanvas().style.cursor = 'crosshair';
   router.push({ hash: '' });
 }
