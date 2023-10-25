@@ -6,49 +6,40 @@ meta:
 </route>
 
 <template>
-  <PageTitle :title="t('menu.payments')" border>
-    <div class="flex-1 md:hidden">
-      <AppSelect v-model="currentStatus" :items="statusItems" />
-    </div>
-  </PageTitle>
+  <PageTitle :title="t('menu.payments')" border />
 
-  <div class="md:flex">
-    <div class="hidden flex-none basis-[220px] md:block">
-      <AppVTabs v-model="currentStatus" :items="statusItems" />
-    </div>
-    <div class="flex-auto">
-      <AppSearch
-        v-model="currentRules"
-        :filter-groups="filterGroups"
-        :filter-items="filterItems"
-        @reset="currentRules = undefined"
-      />
-      <AppPaginatedTable
-        v-model:query="currentPaginatedQuery"
-        keypath="paymentsAdmin.showingOf"
-        :headers="headers"
-        :result="paymentsTable"
-      >
-        <template #value-status="{ value }">
-          <PaymentStatus :status="value" />
-        </template>
-        <template #value-contact="{ value }">
-          <router-link
-            :to="'/admin/contacts/' + value.id"
-            class="text-base font-bold text-link"
-          >
-            {{ value.displayName }}
-          </router-link>
-        </template>
-        <template #value-chargeDate="{ value }">
-          <span class="whitespace-nowrap">{{ formatLocale(value, 'PP') }}</span>
-        </template>
-        <template #value-amount="{ value }">
-          {{ n(value, 'currency') }}
-        </template>
-      </AppPaginatedTable>
-    </div>
-  </div>
+  <AppFilterGrid v-model="currentStatus" :items="statusItems">
+    <AppSearch
+      v-model="currentRules"
+      :filter-groups="filterGroups"
+      :filter-items="filterItems"
+      @reset="currentRules = undefined"
+    />
+    <AppPaginatedTable
+      v-model:query="currentPaginatedQuery"
+      keypath="paymentsAdmin.showingOf"
+      :headers="headers"
+      :result="paymentsTable"
+    >
+      <template #value-status="{ value }">
+        <PaymentStatus :status="value" />
+      </template>
+      <template #value-contact="{ value }">
+        <router-link
+          :to="'/admin/contacts/' + value.id"
+          class="text-base font-bold text-link"
+        >
+          {{ value.displayName }}
+        </router-link>
+      </template>
+      <template #value-chargeDate="{ value }">
+        <span class="whitespace-nowrap">{{ formatLocale(value, 'PP') }}</span>
+      </template>
+      <template #value-amount="{ value }">
+        {{ n(value, 'currency') }}
+      </template>
+    </AppPaginatedTable>
+  </AppFilterGrid>
 </template>
 
 <script lang="ts" setup>
@@ -71,8 +62,6 @@ import { fetchPayments } from '../../../utils/api/payment';
 import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
 import { formatLocale } from '../../../utils/dates';
 import PaymentStatus from '../../../components/payment/PaymentStatus.vue';
-import AppVTabs from '../../../components/tabs/AppVTabs.vue';
-import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppSearch from '../../../components/search/AppSearch.vue';
 import {
   headers,
@@ -80,6 +69,7 @@ import {
   filterGroups,
   filterItems,
 } from '../../../components/pages/admin/payments.interface';
+import AppFilterGrid from '../../../components/AppFilterGrid.vue';
 
 const { t, n } = useI18n();
 
