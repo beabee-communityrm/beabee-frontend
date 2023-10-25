@@ -33,6 +33,7 @@
     "edit": "Bearbeiten",
     "endnow": "Jetzt beenden",
     "export": "Exportieren",
+    "getStarted": "Starten",
     "next": "Weiter",
     "noBack": "Nein, gehe zurück",
     "participate": "Teilnehmen",
@@ -41,6 +42,7 @@
     "reopen": "Wieder aktivieren",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
+    "respond": "Antworten",
     "revertToDraft": "Zu Entwurf zurückkehren",
     "save": "Speichern",
     "saveAndAnother": "Speichern und weiteren hinzufügen",
@@ -264,11 +266,13 @@
     }
   },
   "callout": {
-    "actions": {},
+    "actions": {
+      "updateResponse": "Antwort bearbeiten"
+    },
     "addAPoint": "Klicken Sie dort auf die Karte, wo Sie einen Ort ergänzen möchten",
     "addLocation": "Neuen Ort eingeben",
-    "closed": "Dieser Callout ist beendet.",
     "contactDetails": "Kontaktdaten",
+    "ended": "Dieser Callout ist seit dem {date} beendet.",
     "form": {
       "email": "Deine E-Mail-Adresse",
       "guestFieldsMissing": "Bitte gib' uns Deine Kontaktdaten. ",
@@ -290,7 +294,8 @@
       "gallery": "Galerie",
       "map": "Karten"
     },
-    "youResponded": "Du hast geantwortet ♥"
+    "youResponded": "Du hast geantwortet ♥",
+    "yourResponse": "Deine Antwort"
   },
   "calloutAdmin": {
     "deleted": "Callout gelöscht",
@@ -636,9 +641,6 @@
     "lastSavedNow": "Zuletzt vor wenigen Augenblicken gespeichert.",
     "steps": {
       "content": {
-        "inputs": {
-          "intro": {}
-        },
         "title": "Inhalt"
       },
       "dates": {
