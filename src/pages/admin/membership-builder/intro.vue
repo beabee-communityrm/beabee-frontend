@@ -16,7 +16,7 @@ meta:
       />
     </template>
   </App2ColGrid>
-  <App2ColGrid v-if="showIntroMessage">
+  <App2ColGrid v-if="showIntroMessage" extended>
     <template #col1>
       <AppForm
         :button-text="t('form.saveChanges')"
