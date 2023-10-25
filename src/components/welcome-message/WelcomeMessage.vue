@@ -19,9 +19,9 @@
 
     <div class="clear-left" />
 
-    <FontAwesomeIcon
-      class="absolute top-4 right-4 cursor-pointer text-2xl"
-      :icon="['fas', 'times']"
+    <font-awesome-icon
+      class="absolute right-4 top-4 cursor-pointer text-2xl"
+      :icon="faTimes"
       @click="$emit('close')"
     />
   </div>
@@ -31,6 +31,7 @@
 import WelcomeIcon from './WelcomeIcon.vue';
 import { useI18n } from 'vue-i18n';
 import AppSubHeading from '../AppSubHeading.vue';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 

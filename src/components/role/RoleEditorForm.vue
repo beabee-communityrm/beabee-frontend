@@ -76,7 +76,7 @@ const { t } = useI18n();
 const emit = defineEmits(['cancel', 'save']);
 const props = defineProps<{
   role?: ContactRoleData;
-  onSave?: (data: ContactRoleData) => Promise<void>;
+  onSave?: (data: ContactRoleData) => Promise<void> | void;
   availableRoles?: RoleType[];
 }>();
 

@@ -6,11 +6,16 @@ import {
   GetCalloutResponsesQuery,
   CreateCalloutResponseData,
   CreateCalloutData,
+  UpdateCalloutData,
   GetCalloutWith,
   GetCalloutDataWith,
   GetCalloutData,
   GetCalloutResponseWith,
   GetCalloutResponseDataWith,
+  GetCalloutTagData,
+  CreateCalloutTagData,
+  UpdateCalloutTagData,
+  GetCalloutResponseMapData,
 } from './api.interface';
 import { deserializeDate } from '.';
 import { deserializeCalloutResponse } from './callout-response';
@@ -63,7 +68,7 @@ export async function createCallout(
 
 export async function updateCallout(
   slug: string,
-  calloutData: CreateCalloutData
+  calloutData: UpdateCalloutData
 ): Promise<GetCalloutData> {
   const { data } = await axios.patch<Serial<GetCalloutData>>(
     '/callout/' + slug,
@@ -76,20 +81,8 @@ export async function deleteCallout(slug: string): Promise<void> {
   await axios.delete('/callout/' + slug);
 }
 
-export async function fetchResponse<With extends GetCalloutResponseWith = void>(
-  slug: string,
-  id: string,
-  _with?: readonly With[]
-): Promise<GetCalloutResponseDataWith<With>> {
-  const { data } = await axios.get<Serial<GetCalloutResponseDataWith<With>>>(
-    `/callout/${slug}/responses/${id}`,
-    { params: { with: _with } }
-  );
-  return deserializeCalloutResponse(data);
-}
-
 export async function fetchResponses<
-  With extends GetCalloutResponseWith = void
+  With extends GetCalloutResponseWith = void,
 >(
   slug: string,
   query?: GetCalloutResponsesQuery,
@@ -104,6 +97,16 @@ export async function fetchResponses<
   };
 }
 
+export async function fetchResponsesForMap(
+  slug: string,
+  query?: GetCalloutResponsesQuery
+): Promise<Paginated<GetCalloutResponseMapData>> {
+  const { data } = await axios.get<
+    Paginated<Serial<GetCalloutResponseMapData>>
+  >(`/callout/${slug}/responses/map`, { params: query });
+  return data;
+}
+
 export async function createResponse(
   slug: string,
   data: CreateCalloutResponseData
@@ -113,4 +116,47 @@ export async function createResponse(
     guestName: data.guestName,
     guestEmail: data.guestEmail,
   });
+}
+
+export async function fetchTags(slug: string): Promise<GetCalloutTagData[]> {
+  const { data } = await axios.get<Serial<GetCalloutTagData>[]>(
+    `/callout/${slug}/tags`
+  );
+
+  return data;
+}
+
+export async function createTag(
+  slug: string,
+  dataIn: CreateCalloutTagData
+): Promise<GetCalloutTagData> {
+  const { data } = await axios.post<Serial<GetCalloutTagData>>(
+    `/callout/${slug}/tags`,
+    {
+      name: dataIn.name,
+      description: dataIn.description,
+    }
+  );
+
+  return data;
+}
+
+export async function updateTag(
+  slug: string,
+  tagId: string,
+  dataIn: UpdateCalloutTagData
+): Promise<GetCalloutTagData> {
+  const { data } = await axios.patch<Serial<GetCalloutTagData>>(
+    `/callout/${slug}/tags/${tagId}`,
+    {
+      name: dataIn.name,
+      description: dataIn.description,
+    }
+  );
+
+  return data;
+}
+
+export async function deleteTag(slug: string, tagId: string): Promise<void> {
+  await axios.delete(`/callout/${slug}/tags/${tagId}`);
 }

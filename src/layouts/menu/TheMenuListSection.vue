@@ -1,8 +1,5 @@
 <template>
-  <nav
-    class="px-2 lg:px-4"
-    :class="section.type === 'main' ? 'text-body-80' : 'text-grey-dark'"
-  >
+  <nav class="px-2 text-body-80 lg:px-4">
     <div v-if="!isFirst" class="my-2 border-t border-primary-40" />
     <div v-if="section.title" class="pb-2 md:hidden lg:inline-block">
       {{ t(section.title) }}
@@ -14,7 +11,6 @@
             <TheMenuListItem
               :icon="item.icon"
               :title="t(item.title)"
-              :type="section.type"
               :is-active="
                 item.isActive
                   ? item.isActive.test(route.path)

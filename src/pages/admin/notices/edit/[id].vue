@@ -8,7 +8,7 @@ meta:
 <template>
   <template v-if="notice">
     <PageTitle
-      :title="`${t('editNotice.title')}: ${notice.name}`"
+      :title="t('editNotice.title', { title: notice.name })"
       border
     ></PageTitle>
 
@@ -19,6 +19,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { faSignHanging } from '@fortawesome/free-solid-svg-icons';
 import { ref, onBeforeMount, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
@@ -31,6 +32,7 @@ import {
   GetNoticeData,
 } from '../../../../utils/api/api.interface';
 import { updateNotice, fetchNotice } from '../../../../utils/api/notice';
+import { addNotification } from '../../../../store/notifications';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -40,7 +42,7 @@ const notice = ref<GetNoticeData | undefined>();
 
 addBreadcrumb(
   computed(() => [
-    { title: t('menu.notices'), to: '/admin/notices', icon: 'sign-hanging' },
+    { title: t('menu.notices'), to: '/admin/notices', icon: faSignHanging },
     ...(notice.value
       ? [
           {
@@ -59,10 +61,11 @@ onBeforeMount(async () => {
 
 async function handleSubmit(formData: CreateNoticeData) {
   if (!notice.value) return; // ToDo: Redirect to 404 if notice could not be fetched
-  const updatedNotice: GetNoticeData | undefined = await updateNotice(
-    notice.value.id,
-    formData
-  );
-  if (updatedNotice) router.push('/admin/notices/view/' + updatedNotice.id);
+  await updateNotice(notice.value.id, formData);
+  addNotification({
+    variant: 'success',
+    title: t('noticeAdminOverview.updated'),
+  });
+  router.push({ path: '/admin/notices/view/' + notice.value.id });
 }
 </script>

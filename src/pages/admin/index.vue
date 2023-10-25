@@ -11,7 +11,7 @@ meta:
     {{ t('adminDashboard.welcomeBack', { firstName: currentUser?.firstname }) }}
   </p>
   <div class="grid grid-cols-12 gap-6">
-    <div class="col-span-12 md:col-span-5 xl:col-span-5">
+    <div v-if="!env.cnrMode" class="col-span-12 md:col-span-5 xl:col-span-5">
       <AppHeading>{{ t('adminDashboard.numbers.title') }}</AppHeading>
       <div v-if="stats" class="mb-6 flex gap-4">
         <KeyStat
@@ -57,7 +57,7 @@ meta:
     </div>
     <div class="col-span-12 md:col-span-7 xl:col-span-7">
       <AppHeading>{{ t('adminDashboard.latestCallout.title') }}</AppHeading>
-      <div class="relative mt-4 mb-8 block rounded bg-white p-4">
+      <div class="relative mb-8 mt-4 block rounded bg-white p-4">
         <div v-if="latestCallout">
           <CalloutSummary :callout="latestCallout" />
           <router-link
@@ -106,13 +106,15 @@ import {
   GetStatsData,
 } from '../../utils/api/api.interface';
 import { fetchContacts } from '../../utils/api/contact';
-import { formatDistanceLocale } from '../../utils/dates/locale-date-formats';
+import { formatDistanceLocale } from '../../utils/dates';
 import HintBox from '../../components/pages/admin/HintBox.vue';
 import { fetchCallouts } from '../../utils/api/callout';
 import CalloutSummary from '../../components/callout/CalloutSummary.vue';
 import { fetchStats } from '../../utils/api/stats';
 import { subDays } from 'date-fns';
 import { addBreadcrumb } from '../../store/breadcrumb';
+import { faChartLine } from '@fortawesome/free-solid-svg-icons';
+import env from '../../env';
 
 const { n, t } = useI18n();
 
@@ -121,7 +123,7 @@ addBreadcrumb(
     {
       title: t('menu.dashboard'),
       to: '/admin',
-      icon: 'chart-line',
+      icon: faChartLine,
     },
   ])
 );

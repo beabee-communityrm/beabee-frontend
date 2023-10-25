@@ -1,5 +1,8 @@
 import {
   CalloutFormSchema,
+  CalloutResponseAnswerAddress,
+  CalloutResponseAnswerFileUpload,
+  CalloutResponseAnswers,
   ContributionPeriod,
   ContributionType,
   ItemStatus,
@@ -191,6 +194,11 @@ export interface GetPaymentData {
   status: PaymentStatus;
 }
 
+export type GetPaymentWith = 'contact' | void;
+
+export type GetPaymentDataWith<With extends GetPaymentWith> = GetPaymentData &
+  ('contact' extends With ? { contact: GetContactData | null } : Noop);
+
 export type GetPaymentsQuery = PaginatedQuery; // TODO: constrain fields
 
 export interface LoginData {
@@ -265,6 +273,9 @@ export interface JoinSetupContent {
   mailTitle: string;
   mailText: string;
   mailOptIn: string;
+  surveySlug: string;
+  surveyRequired: boolean;
+  surveyText: string;
 }
 
 export interface ProfileContent {
@@ -307,43 +318,152 @@ interface CalloutFormData {
   shareDescription?: string;
 }
 
+export interface CalloutMapSchema {
+  style: string;
+  center: [number, number];
+  bounds: [[number, number], [number, number]];
+  minZoom: number;
+  maxZoom: number;
+  initialZoom: number;
+  addressProp: string;
+  addressPattern: string;
+  addressPatternProp: string;
+}
+
+export interface CalloutResponseViewSchema {
+  buckets: string[];
+  titleProp: string;
+  imageProp: string;
+  imageFilter: string;
+  links: { text: string; url: string }[];
+  gallery: boolean;
+  map: CalloutMapSchema | null;
+}
+
 export interface GetCalloutData extends CalloutData {
   slug: string;
   status: ItemStatus;
 }
 
-export type GetCalloutWith = 'form' | 'responseCount' | 'hasAnswered' | void;
+export type GetCalloutWith =
+  | 'form'
+  | 'responseViewSchema'
+  | 'responseCount'
+  | 'hasAnswered'
+  | void;
 
 export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
   ('responseCount' extends With ? { responseCount: number } : Noop) &
   ('hasAnswered' extends With ? { hasAnswered: boolean } : Noop) &
+  ('responseViewSchema' extends With
+    ? { responseViewSchema: CalloutResponseViewSchema | null }
+    : Noop) &
   ('form' extends With ? CalloutFormData : Noop);
 
-export type CreateCalloutData = AllowNull<CalloutData & CalloutFormData>;
+export type CreateCalloutData = AllowNull<
+  CalloutData &
+    CalloutFormData & { responseViewSchema?: CalloutResponseViewSchema | null }
+>;
+export type UpdateCalloutData = Partial<CreateCalloutData>;
 
 export type GetCalloutsQuery = PaginatedQuery; // TODO: constrain fields
 export type GetCalloutResponsesQuery = PaginatedQuery; // TODO: constrain fields
+export type GetCalloutResponseCommentsQuery = PaginatedQuery; // TODO: constrain fields
 
-type CalloutResponseAnswer =
-  | string
-  | boolean
-  | number
-  | null
-  | undefined
-  | Record<string, boolean>;
-export type CalloutResponseAnswers = Record<string, CalloutResponseAnswer>;
+export interface GetCalloutTagData {
+  id: string;
+  name: string;
+}
+
+export interface CreateCalloutTagData {
+  name: string;
+  description: string;
+}
+
+export type UpdateCalloutTagData = Partial<CreateCalloutTagData>;
 
 export interface GetCalloutResponseData {
   id: string;
+  number: number;
   createdAt: Date;
   updatedAt: Date;
+  bucket: string;
+  guestName: string | null;
+  guestEmail: string | null;
+}
+
+export interface GetCalloutResponseMapData {
+  number: number;
+  answers: CalloutResponseAnswers;
+  title: string;
+  photos: CalloutResponseAnswerFileUpload[];
+  address?: CalloutResponseAnswerAddress;
 }
 
 export interface CreateCalloutResponseData {
   guestName?: string;
   guestEmail?: string;
   answers: CalloutResponseAnswers;
+  bucket?: string;
+  tags?: string[];
+  assigneeId?: string | null;
 }
+
+export type UpdateCalloutResponseData = Partial<CreateCalloutResponseData>;
+
+export type GetCalloutResponseWith =
+  | 'answers'
+  | 'assignee'
+  | 'callout'
+  | 'contact'
+  | 'latestComment'
+  | 'tags'
+  | void;
+
+export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
+  GetCalloutResponseData &
+    ('answers' extends With ? { answers: CalloutResponseAnswers } : Noop) &
+    ('assignee' extends With ? { assignee: GetContactData | null } : Noop) &
+    ('callout' extends With ? { callout: GetCalloutData } : Noop) &
+    ('contact' extends With ? { contact: GetContactData | null } : Noop) &
+    ('latestComment' extends With
+      ? { latestComment: GetCalloutResponseCommentData | null }
+      : Noop) &
+    ('tags' extends With ? { tags: { id: string; name: string }[] } : Noop);
+
+export interface UpdateCalloutResponseCommentData {
+  text: string;
+}
+
+export interface CalloutResponseCommentData
+  extends UpdateCalloutResponseCommentData {
+  responseId: string;
+}
+
+export interface GetCalloutResponseCommentData
+  extends CalloutResponseCommentData {
+  contact: GetContactData;
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export type CreateCalloutResponseCommentData = CalloutResponseCommentData;
+
+export interface CreateApiKeyData {
+  description: string;
+}
+
+export interface GetApiKeyData {
+  id: string;
+  description: string;
+  creator: GetContactData;
+  createdAt: Date;
+}
+
+export type GetApiKeysQuery = PaginatedQuery; // TODO: contrain fields
+
+export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
 
 interface NoticeData {
   name: string;
@@ -353,16 +473,6 @@ interface NoticeData {
   buttonText?: string;
   url?: string;
 }
-export type GetCalloutResponseWith = 'answers' | 'callout' | 'contact' | void;
-
-export type GetCalloutResponseDataWith<With extends GetCalloutResponseWith> =
-  GetCalloutResponseData &
-    ('answers' extends With ? { answers: CalloutResponseAnswers } : Noop) &
-    ('callout' extends With ? { callout: GetCalloutData } : Noop) &
-    ('contact' extends With ? { contact: GetContactData | null } : Noop);
-
-export type GetNoticesQuery = PaginatedQuery; // TODO: constrain fields
-
 export interface GetNoticeData extends NoticeData {
   id: string;
   createdAt: Date;
@@ -427,3 +537,7 @@ export interface GetEmailData {
 }
 
 export type UpdateEmailData = GetEmailData;
+
+export interface GetUploadFlowData {
+  id: string;
+}

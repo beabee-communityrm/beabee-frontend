@@ -6,20 +6,10 @@
     :class="hasError && 'border-danger-70 bg-danger-10'"
     :required="required"
     v-bind="$attrs"
-    @blur="validation.value.$touch"
+    @blur="validation.$touch"
   />
-
-  <div
-    v-if="hasError"
-    class="mt-1.5 text-xs font-semibold text-danger"
-    role="alert"
-  >
-    {{ validation.$errors[0].$message }}
-  </div>
-
-  <div v-if="infoMessage" class="mt-2 text-xs">
-    <InfoMessage :message="infoMessage" />
-  </div>
+  <AppInputError v-if="hasError" :message="validation.$errors[0].$message" />
+  <AppInputHelp v-if="infoMessage" :message="infoMessage" />
 </template>
 
 <script lang="ts" setup>
@@ -27,8 +17,9 @@ import { computed } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import { helpers, requiredIf } from '@vuelidate/validators';
 import { useI18n } from 'vue-i18n';
-import InfoMessage from '../InfoMessage.vue';
+import AppInputHelp from './AppInputHelp.vue';
 import AppLabel from './AppLabel.vue';
+import AppInputError from './AppInputError.vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = withDefaults(

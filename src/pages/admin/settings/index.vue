@@ -106,9 +106,9 @@ meta:
             required
           />
         </div>
-        <h4 class="mt-6 mb-2 font-title text-lg font-bold text-body-60">
+        <AppSubHeading class="mb-2">
           {{ t('adminSettings.general.footer.dataPrivacy.title') }}
-        </h4>
+        </AppSubHeading>
         <div class="mb-4">
           <AppInput
             v-model="footerData.privacyLink"
@@ -131,50 +131,10 @@ meta:
             type="url"
           />
         </div>
-        <h4 class="mt-6 mb-2 font-title text-lg font-bold text-body-60">
+        <AppSubHeading class="mb-2">
           {{ t('adminSettings.general.footer.otherLinks.title') }}
-        </h4>
-        <div
-          v-for="(link, i) in footerData.footerLinks"
-          :key="i"
-          class="mb-4 flex gap-4"
-        >
-          <div class="flex-1">
-            <AppInput
-              v-model="footerData.footerLinks[i].text"
-              :label="t('adminSettings.general.footer.otherLinks.linkText')"
-              required
-            />
-          </div>
-          <div class="flex-1">
-            <AppInput
-              v-model="footerData.footerLinks[i].url"
-              :label="t('adminSettings.general.footer.otherLinks.url')"
-              type="url"
-              required
-            />
-          </div>
-          <div class="flex-0 self-end">
-            <button
-              class="-ml-2 p-2 leading-tight text-primary-80 hover:text-primary"
-              type="button"
-              @click="removeLink(i)"
-            >
-              <font-awesome-icon :icon="['fa', 'times']" />
-            </button>
-          </div>
-        </div>
-
-        <div class="mb-4">
-          <AppButton
-            variant="primaryOutlined"
-            size="sm"
-            icon="plus"
-            @click="addLink"
-          >
-            {{ t('adminSettings.general.footer.otherLinks.add') }}
-          </AppButton>
-        </div>
+        </AppSubHeading>
+        <AppLinkList v-model="footerData.footerLinks" class="mb-4" />
       </AppForm>
     </template>
   </App2ColGrid>
@@ -187,7 +147,6 @@ import AppImageUpload from '../../../components/forms/AppImageUpload.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppTextArea from '../../../components/forms/AppTextArea.vue';
-import AppButton from '../../../components/forms/AppButton.vue';
 import { ShareContent } from '../../../utils/api/api.interface';
 import { fetchContent, updateContent } from '../../../utils/api/content';
 import { generalContent as storeGeneralContent } from '../../../store';
@@ -195,6 +154,8 @@ import AppHeading from '../../../components/AppHeading.vue';
 import axios from '../../../lib/axios';
 import AppForm from '../../../components/forms/AppForm.vue';
 import App2ColGrid from '../../../components/App2ColGrid.vue';
+import AppSubHeading from '../../../components/AppSubHeading.vue';
+import AppLinkList from '../../../components/forms/AppLinkList.vue';
 
 const { t } = useI18n();
 
@@ -227,14 +188,6 @@ const footerData = reactive({
 });
 
 const shareContent = ref<ShareContent>();
-
-function addLink() {
-  footerData.footerLinks.push({ text: '', url: 'https://' });
-}
-
-function removeLink(i: number) {
-  footerData.footerLinks.splice(i, 1);
-}
 
 async function handleSaveGeneral() {
   storeGeneralContent.value = await updateContent('general', generalData);

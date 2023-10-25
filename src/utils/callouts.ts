@@ -1,21 +1,68 @@
-import { CalloutComponentSchema, ItemStatus } from '@beabee/beabee-common';
+import {
+  CalloutComponentSchema,
+  CalloutSlideSchema,
+  ItemStatus,
+} from '@beabee/beabee-common';
 import { format } from 'date-fns';
-import { CalloutStepsProps } from '../components/pages/callouts/callouts.interface';
+import { CalloutStepsProps } from '../components/pages/admin/callouts/callouts.interface';
 import { FilterItem, FilterItems } from '../components/search/search.interface';
 import { CreateCalloutData, GetCalloutDataWith } from './api/api.interface';
+import env from '../env';
+import i18n from '../lib/i18n';
+
+const { t } = i18n.global;
+
+export function getSlideSchema(no: number): CalloutSlideSchema {
+  const id = 'slide' + Math.random().toString(36).substring(2, 8);
+  return {
+    id,
+    title: t('calloutBuilder.slideNo', { no }),
+    components: [],
+    navigation: {
+      nextText: t('actions.next'),
+      prevText: t('actions.back'),
+      nextSlideId: '',
+      submitText: t('actions.submit'),
+    },
+  };
+}
 
 export function convertCalloutToSteps(
-  callout?: GetCalloutDataWith<'form'>
+  callout?: GetCalloutDataWith<'form' | 'responseViewSchema'>
 ): CalloutStepsProps {
+  const settings = env.cnrMode
+    ? ({
+        whoCanTakePart: 'everyone',
+        allowAnonymousResponses: 'guests',
+        showOnUserDashboards: false,
+        usersCanEditAnswers: false,
+        multipleResponses: true,
+      } as const)
+    : ({
+        whoCanTakePart:
+          !callout || callout.access === 'member' ? 'members' : 'everyone',
+        allowAnonymousResponses:
+          callout?.access === 'anonymous'
+            ? 'guests'
+            : callout?.access === 'only-anonymous'
+            ? 'all'
+            : 'none',
+        showOnUserDashboards: !callout?.hidden,
+        usersCanEditAnswers: callout?.allowUpdate || false,
+        multipleResponses: callout?.allowMultiple || false,
+      } as const);
+
   return {
     content: {
-      introText: callout?.intro || '',
-      formSchema: callout?.formSchema || { components: [] },
+      formSchema: callout?.formSchema || {
+        slides: [getSlideSchema(1)],
+      },
     },
     titleAndImage: {
       title: callout?.title || '',
       description: callout?.excerpt || '',
       coverImageURL: callout?.image || '',
+      introText: callout?.intro || '',
       useCustomSlug: !!callout,
       autoSlug: '',
       slug: callout?.slug || '',
@@ -23,12 +70,32 @@ export function convertCalloutToSteps(
       shareTitle: callout?.shareTitle || '',
       shareDescription: callout?.shareDescription || '',
     },
-    visibility: {
-      whoCanTakePart:
-        !callout || callout.access === 'member' ? 'members' : 'everyone',
-      allowAnonymousResponses: callout?.access === 'anonymous',
-      showOnUserDashboards: !callout?.hidden,
-      usersCanEditAnswers: callout?.allowUpdate || false,
+    settings: {
+      ...settings,
+      showResponses: !!callout?.responseViewSchema,
+      responseViews: [
+        ...(callout?.responseViewSchema?.gallery ? ['gallery' as const] : []),
+        ...(callout?.responseViewSchema?.map ? ['map' as const] : []),
+      ],
+      responseBuckets: callout?.responseViewSchema?.buckets || [],
+      responseTitleProp: callout?.responseViewSchema?.titleProp || '',
+      responseImageProp: callout?.responseViewSchema?.imageProp || '',
+      responseImageFilter: callout?.responseViewSchema?.imageFilter || '',
+      responseLinks: callout?.responseViewSchema?.links || [],
+      mapSchema: callout?.responseViewSchema?.map || {
+        style: '',
+        bounds: [
+          [-180, -90],
+          [180, 90],
+        ],
+        center: [0, 0],
+        initialZoom: 3,
+        maxZoom: 18,
+        minZoom: 1,
+        addressProp: '',
+        addressPattern: '',
+        addressPatternProp: '',
+      },
     },
     endMessage: {
       whenFinished: callout?.thanksRedirect ? 'redirect' : 'message',
@@ -60,23 +127,44 @@ export function convertStepsToCallout(
     title: steps.titleAndImage.title,
     excerpt: steps.titleAndImage.description,
     image: steps.titleAndImage.coverImageURL,
-    intro: steps.content.introText,
+    intro: steps.titleAndImage.introText,
     formSchema: steps.content.formSchema,
+    responseViewSchema: steps.settings.showResponses
+      ? {
+          buckets: steps.settings.responseBuckets,
+          titleProp: steps.settings.responseTitleProp,
+          imageProp: steps.settings.responseImageProp,
+          imageFilter: steps.settings.responseImageFilter,
+          gallery: steps.settings.responseViews.includes('gallery'),
+          links: steps.settings.responseLinks,
+          map: steps.settings.responseViews.includes('map')
+            ? {
+                ...steps.settings.mapSchema,
+                addressPattern: steps.settings.mapSchema.addressPatternProp
+                  ? steps.settings.mapSchema.addressPattern
+                  : '',
+              }
+            : null,
+        }
+      : null,
     starts: steps.dates.startNow
       ? new Date()
       : new Date(steps.dates.startDate + 'T' + steps.dates.startTime),
     expires: steps.dates.hasEndDate
       ? new Date(steps.dates.endDate + 'T' + steps.dates.endTime)
       : null,
-    allowUpdate: steps.visibility.usersCanEditAnswers,
-    allowMultiple: false,
-    hidden: !steps.visibility.showOnUserDashboards,
+    allowMultiple: steps.settings.multipleResponses,
+    allowUpdate:
+      !steps.settings.multipleResponses && steps.settings.usersCanEditAnswers,
+    hidden: !steps.settings.showOnUserDashboards,
     access:
-      steps.visibility.whoCanTakePart === 'members'
+      steps.settings.whoCanTakePart === 'members'
         ? 'member'
-        : steps.visibility.allowAnonymousResponses
+        : steps.settings.allowAnonymousResponses === 'none'
+        ? 'guest'
+        : steps.settings.allowAnonymousResponses === 'guests'
         ? 'anonymous'
-        : 'guest',
+        : 'only-anonymous',
     ...(steps.endMessage.whenFinished === 'message'
       ? {
           thanksText: steps.endMessage.thankYouText,
@@ -104,10 +192,10 @@ function convertValuesToOptions(
 }
 
 function convertComponentToFilter(
-  component: CalloutComponentSchema
+  component: CalloutComponentSchema & { fullKey: string }
 ): FilterItem {
   const baseItem = {
-    label: component.label || component.key,
+    label: component.label || component.fullKey,
     nullable: true,
   };
 
@@ -133,16 +221,19 @@ function convertComponentToFilter(
         options: convertValuesToOptions(component.values),
       };
 
+    case 'textarea':
+      return { ...baseItem, type: 'blob' };
+
     default:
       return { ...baseItem, type: 'text' };
   }
 }
 
 export function convertComponentsToFilters(
-  components: CalloutComponentSchema[]
+  components: (CalloutComponentSchema & { fullKey: string })[]
 ): FilterItems {
   const items = components.map((c) => {
-    return [`answers.${c.key}`, convertComponentToFilter(c)] as const;
+    return [`answers.${c.fullKey}`, convertComponentToFilter(c)] as const;
   });
 
   return Object.fromEntries(items);

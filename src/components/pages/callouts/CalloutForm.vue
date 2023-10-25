@@ -1,105 +1,179 @@
 <template>
-  <div class="flex gap-8">
-    <div class="flex-0 basis-menu">
-      <AppStepper v-model="selectedStepIndex" :steps="stepsInOrder" />
-    </div>
-    <div class="flex-1">
-      <AppHeading class="mb-5">{{ selectedStep.name }}</AppHeading>
-      <component
-        :is="step.component"
-        v-for="step in stepsInOrder"
-        v-show="selectedStep === step"
-        :key="step.name"
-        v-model:data="step.data"
-        v-model:validated="step.validated"
-        v-model:error="step.error"
-        :is-active="selectedStep === step"
-        :status="status"
+  <form class="callout-form" :class="formStyle" @submit.prevent>
+    <template v-if="allSlides">
+      <FormRenderer
+        v-for="slide in slides"
+        :key="slide.id"
+        v-model="answersProxy[slide.id]"
+        :components="slide.components"
+        :readonly="readonly"
       />
+    </template>
+    <FormRenderer
+      v-else
+      :key="currentSlide.id"
+      v-model="answersProxy[currentSlide.id]"
+      :components="currentSlide.components"
+      :readonly="readonly"
+    />
+    <template v-if="isLastSlide && !readonly && !preview">
+      <GuestFields
+        v-if="showGuestFields"
+        v-model:name="guestName"
+        v-model:email="guestEmail"
+      />
+      <AppNotification
+        v-if="formError"
+        class="mb-4"
+        variant="error"
+        :title="formError"
+      />
+      <AppButton
+        type="submit"
+        class="w-full mb-4"
+        variant="primary"
+        :disabled="validation.$invalid"
+        :loading="isLoading"
+        @click="handleSubmit"
+      >
+        {{ currentSlide.navigation.submitText }}
+      </AppButton>
+    </template>
+    <div v-if="totalSlides > 1" class="flex gap-4 justify-between">
+      <div>
+        <AppButton
+          v-if="currentSlide.navigation.prevText && currentSlideNo > 0"
+          type="button"
+          variant="primaryOutlined"
+          @click="handlePrevSlide"
+        >
+          {{ currentSlide.navigation.prevText }}
+        </AppButton>
+      </div>
+      <div>
+        <AppButton
+          v-if="currentSlideNo < totalSlides - 1"
+          type="button"
+          variant="primary"
+          :disabled="validation.$invalid"
+          @click="handleNextSlide"
+        >
+          {{ currentSlide.navigation.nextText }}
+        </AppButton>
+      </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <script lang="ts" setup>
-import { ItemStatus } from '@beabee/beabee-common';
-import { ref, computed, markRaw, reactive } from 'vue';
+import {
+  CalloutResponseAnswers,
+  CalloutSlideSchema,
+} from '@beabee/beabee-common';
+import { computed, ref } from 'vue';
+import { GetCalloutDataWith } from '../../../utils/api/api.interface';
 import { useI18n } from 'vue-i18n';
-import AppHeading from '../../AppHeading.vue';
-import AppStepper from '../../stepper/AppStepper.vue';
-import { CalloutStepsProps } from './callouts.interface';
-
-import StepVisibility from './steps/VisibilityStep.vue';
-import StepTitleAndImage from './steps/TitleAndImage.vue';
-import StepEndMessage from './steps/EndMessage.vue';
-// import StepMailchimpSync from './steps/MailchimpSync.vue';
-import StepDatesAndDuration from './steps/DatesAndDuration.vue';
-import StepContent from './steps/ContentStep.vue';
-
-const props = defineProps<{
-  stepsProps: CalloutStepsProps;
-  status: ItemStatus | undefined;
-}>();
+import { currentUser } from '../../../store';
+import { createResponse } from '../../../utils/api/callout';
+import { isRequestError } from '../../../utils/api';
+import GuestFields from './GuestFields.vue';
+import AppNotification from '../../AppNotification.vue';
+import FormRenderer from '../../form-renderer/FormRenderer.vue';
+import AppButton from '../../button/AppButton.vue';
+import useVuelidate from '@vuelidate/core';
 
 const { t } = useI18n();
+const validation = useVuelidate();
 
-const steps = reactive({
-  content: {
-    name: t('createCallout.steps.content.title'),
-    description: t('createCallout.steps.content.description'),
-    validated: false,
-    error: false,
-    component: markRaw(StepContent),
-    data: props.stepsProps.content,
-  },
-  titleAndImage: {
-    name: t('createCallout.steps.titleAndImage.title'),
-    description: t('createCallout.steps.titleAndImage.description'),
-    validated: false,
-    error: false,
-    component: markRaw(StepTitleAndImage),
-    data: props.stepsProps.titleAndImage,
-  },
-  visibility: {
-    name: t('createCallout.steps.visibility.title'),
-    description: t('createCallout.steps.visibility.description'),
-    validated: false,
-    error: false,
-    component: markRaw(StepVisibility),
-    data: props.stepsProps.visibility,
-  },
-  endMessage: {
-    name: t('createCallout.steps.endMessage.title'),
-    description: t('createCallout.steps.endMessage.description'),
-    validated: false,
-    error: false,
-    component: markRaw(StepEndMessage),
-    data: props.stepsProps.endMessage,
-  },
-  /*mailchimp: {
-    name: t('createCallout.steps.mailchimp.title'),
-    description: t('createCallout.steps.mailchimp.description'),
-    validated: !props.status,
-    error: false,
-    component: markRaw(StepMailchimpSync),
-  },*/
-  dates: {
-    name: t('createCallout.steps.dates.title'),
-    description: t('createCallout.steps.dates.description'),
-    validated: false,
-    error: false,
-    component: markRaw(StepDatesAndDuration),
-    data: props.stepsProps.dates,
-  },
+const emit = defineEmits<{ (e: 'submitted'): void }>();
+const props = defineProps<{
+  callout: GetCalloutDataWith<'form'>;
+  answers?: CalloutResponseAnswers;
+  preview?: boolean;
+  readonly?: boolean;
+  style?: 'simple' | 'no-bg' | 'small';
+  allSlides?: boolean;
+  onSubmit?(answers: CalloutResponseAnswers): void;
+}>();
+
+const guestName = ref('');
+const guestEmail = ref('');
+const formError = ref('');
+const isLoading = ref(false);
+
+const formStyle = computed(() => {
+  switch (props.style) {
+    case 'small':
+      return 'is-small';
+    case 'simple':
+      return 'is-simple';
+    case 'no-bg':
+      return '';
+    default:
+      return 'has-bg';
+  }
 });
 
-const stepsInOrder = [
-  steps.content,
-  steps.titleAndImage,
-  steps.visibility,
-  steps.endMessage,
-  //steps.mailchimp,
-  steps.dates,
-];
-const selectedStepIndex = ref(0);
-const selectedStep = computed(() => stepsInOrder[selectedStepIndex.value]);
+const slides = computed(() => props.callout.formSchema.slides);
+
+const initialAnswers = Object.fromEntries(
+  slides.value.map((slide) => [slide.id, props.answers?.[slide.id] || {}])
+);
+
+const answersProxy = ref<CalloutResponseAnswers>(initialAnswers);
+
+const slideIds = ref<string[]>([slides.value[0].id]);
+
+const currentSlide = computed(
+  () =>
+    slides.value.find((s) => s.id === slideIds.value[0]) as CalloutSlideSchema // Should always be defined
+);
+
+const currentSlideNo = computed(() => slides.value.indexOf(currentSlide.value));
+
+const totalSlides = computed(() => (props.allSlides ? 1 : slides.value.length));
+const isLastSlide = computed(
+  () => currentSlideNo.value === totalSlides.value - 1
+);
+
+const showGuestFields = computed(
+  () => props.callout.access === 'guest' && !currentUser.value
+);
+
+async function handleSubmit() {
+  if (props.onSubmit) {
+    return props.onSubmit(answersProxy.value);
+  }
+
+  formError.value = '';
+  isLoading.value = true;
+  try {
+    await createResponse(props.callout.slug, {
+      ...(!currentUser.value &&
+        props.callout?.access === 'guest' && {
+          guestName: guestName.value,
+          guestEmail: guestEmail.value,
+        }),
+      answers: answersProxy.value,
+    });
+    emit('submitted');
+  } catch (err) {
+    formError.value = t('callout.form.submittingResponseError');
+    if (!isRequestError(err)) throw err;
+  } finally {
+    isLoading.value = false;
+  }
+}
+
+function handleNextSlide() {
+  const nextId =
+    currentSlide.value.navigation.nextSlideId ||
+    slides.value[currentSlideNo.value + 1].id;
+
+  slideIds.value.unshift(nextId);
+}
+
+function handlePrevSlide() {
+  slideIds.value.shift();
+}
 </script>

@@ -3,8 +3,13 @@
     <AppLabel v-if="label" :label="label" :required="required" />
     <select
       v-model="value"
-      class="w-full rounded border border-primary-40 bg-white p-2 leading-tight focus:shadow-input focus:outline-none"
-      :class="inputClass"
+      class="w-full rounded border p-2 leading-tight focus:shadow-input focus:outline-none"
+      :class="{
+        [inputClass || '']: true,
+        'cursor-not-allowed border-primary-20 bg-grey-lighter': disabled,
+        'border-primary-40 bg-white': !disabled,
+      }"
+      :disabled="disabled"
       :required="required"
     >
       <template v-for="item in items">
@@ -26,14 +31,7 @@
         />
       </template>
     </select>
-
-    <div
-      v-if="hasError"
-      class="mt-1.5 text-xs font-semibold text-danger"
-      role="alert"
-    >
-      {{ validation.$errors[0].$message }}
-    </div>
+    <AppInputError v-if="hasError" :message="validation.$errors[0].$message" />
   </div>
 </template>
 
@@ -44,6 +42,7 @@ import { computed } from 'vue';
 import AppLabel from './AppLabel.vue';
 import { SelectGroup, SelectItem } from './form.interface';
 import AppSelectItem from './AppSelectItem.vue';
+import AppInputError from './AppInputError.vue';
 
 function isGroup(item: SelectItem | SelectGroup): item is SelectGroup {
   return 'items' in item;
@@ -54,6 +53,7 @@ const props = defineProps<{
   label?: string;
   modelValue?: string | number | null;
   items: (SelectItem | SelectGroup)[];
+  disabled?: boolean;
   required?: boolean;
   inputClass?: string;
 }>();

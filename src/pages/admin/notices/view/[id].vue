@@ -20,21 +20,21 @@ meta:
 
       <div class="flex-0 flex flex-wrap gap-2 lg:flex-col">
         <ActionButton
-          icon="pencil-alt"
+          :icon="faPencilAlt"
           :to="`/admin/notices/edit/${notice.id}`"
         >
           {{ t('actions.edit') }}
         </ActionButton>
 
-        <ActionButton icon="trash" @click="showDeleteModal = true">
+        <ActionButton :icon="faTrash" @click="showDeleteModal = true">
           {{ t('actions.delete') }}
         </ActionButton>
 
         <AppConfirmDialog
           :open="showDeleteModal"
           :title="t('noticeAdminOverview.actions.confirmDelete.title')"
-          :cancel="t('noticeAdminOverview.actions.confirmDelete.actionNo')"
-          :confirm="t('noticeAdminOverview.actions.confirmDelete.actionYes')"
+          :cancel="t('actions.noBack')"
+          :confirm="t('actions.yesDelete')"
           variant="danger"
           @close="showDeleteModal = false"
           @confirm="confirmDeleteNotice"
@@ -53,13 +53,18 @@ import AppConfirmDialog from '../../../../components/AppConfirmDialog.vue';
 import AppHeading from '../../../../components/AppHeading.vue';
 import AppNotice from '../../../../components/AppNotice.vue';
 import PageTitle from '../../../../components/PageTitle.vue';
-import ActionButton from '../../../../components/pages/callouts/ActionButton.vue';
+import ActionButton from '../../../../components/button/ActionButton.vue';
 import { GetNoticeData } from '../../../../utils/api/api.interface';
 import { deleteNotice, fetchNotice } from '../../../../utils/api/notice';
 import ItemStatus from '../../../../components/item/ItemStatusText.vue';
 import ItemDateRange from '../../../../components/item/ItemDateRange.vue';
 import { useRouter } from 'vue-router';
 import { addBreadcrumb } from '../../../../store/breadcrumb';
+import {
+  faPencilAlt,
+  faSignHanging,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps<{ id: string }>();
 const { t } = useI18n();
@@ -69,7 +74,7 @@ const router = useRouter();
 
 addBreadcrumb(
   computed(() => [
-    { title: t('menu.notices'), to: '/admin/notices', icon: 'sign-hanging' },
+    { title: t('menu.notices'), to: '/admin/notices', icon: faSignHanging },
     { title: notice.value?.name || '' },
   ])
 );

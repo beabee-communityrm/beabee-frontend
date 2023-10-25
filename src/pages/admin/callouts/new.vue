@@ -17,13 +17,10 @@ meta:
       no-collapse
     >
       <div class="flex items-center gap-2">
-        <span v-if="lastSavedText" class="text-sm text-body-60">
-          {{ lastSavedText }}
-        </span>
         <AppAsyncButton
           v-if="!isLive"
           variant="primaryOutlined"
-          icon="eye"
+          :icon="faEye"
           :disabled="!status"
           @click="handlePreview"
         >
@@ -40,7 +37,7 @@ meta:
         </AppAsyncButton>
       </div>
     </PageTitle>
-    <CalloutForm :steps-props="steps" :status="status" />
+    <CalloutStepper :steps-props="steps" :status="status" />
   </div>
 </template>
 
@@ -54,17 +51,18 @@ import {
   fetchCallout,
   updateCallout,
 } from '../../../utils/api/callout';
-import { CalloutStepsProps } from '../../../components/pages/callouts/callouts.interface';
-import CalloutForm from '../../../components/pages/callouts/CalloutForm.vue';
+import { CalloutStepsProps } from '../../../components/pages/admin/callouts/callouts.interface';
+import CalloutStepper from '../../../components/pages/admin/callouts/CalloutStepper.vue';
 import {
   convertCalloutToSteps,
   convertStepsToCallout,
 } from '../../../utils/callouts';
 import PageTitle from '../../../components/PageTitle.vue';
 import useVuelidate from '@vuelidate/core';
-import AppAsyncButton from '../../../components/forms/AppAsyncButton.vue';
-import { formatDistanceLocale } from '../../../utils/dates/locale-date-formats';
+import AppAsyncButton from '../../../components/button/AppAsyncButton.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
+import { addNotification } from '../../../store/notifications';
+import { faBullhorn, faEye } from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps<{ id?: string }>();
 
@@ -78,7 +76,7 @@ addBreadcrumb(
       ? [
           {
             title: t('menu.callouts'),
-            icon: 'bullhorn',
+            icon: faBullhorn,
             to: '/admin/callouts',
           },
           ...(props.id
@@ -109,7 +107,7 @@ const lastSaved = ref<Date>();
 
 const now = ref(new Date());
 
-const isPublish = computed(
+const canStartNow = computed(
   () =>
     steps.value &&
     (steps.value.dates.startNow ||
@@ -126,20 +124,16 @@ const isNewOrDraft = computed(
   () => !status.value || status.value === ItemStatus.Draft
 );
 
-const lastSavedText = computed(() => {
-  if (!lastSaved.value) return;
-
-  return +now.value - +lastSaved.value < 20000
-    ? t('createCallout.lastSavedNow')
-    : t('createCallout.lastSaved', {
-        duration: formatDistanceLocale(now.value, lastSaved.value),
-      });
-});
+const isUpdateAction = computed(
+  () =>
+    isLive.value ||
+    (status.value === ItemStatus.Scheduled && !canStartNow.value)
+);
 
 const updateAction = computed(() =>
-  isLive.value || (status.value === ItemStatus.Scheduled && !isPublish.value)
+  isUpdateAction.value
     ? t('actions.update')
-    : isPublish.value
+    : canStartNow.value
     ? t('actions.publish')
     : t('actions.schedule')
 );
@@ -170,14 +164,23 @@ async function saveCallout(asDraft = false) {
 
 async function handleUpdate() {
   const callout = await saveCallout();
-  router.push({
-    path: '/admin/callouts/view/' + callout.slug,
-    query: { [props.id ? 'updated' : 'created']: null },
+  addNotification({
+    title: props.id
+      ? t('calloutAdminOverview.updated')
+      : t('calloutAdminOverview.created'),
+    variant: 'success',
   });
+  if (!isUpdateAction.value) {
+    router.push({ path: '/admin/callouts/view/' + callout.slug });
+  }
 }
 
 async function handleSaveDraft() {
   const callout = await saveCallout(true);
+  addNotification({
+    title: 'Saved draft',
+    variant: 'success',
+  });
   router.push({ path: '/admin/callouts/edit/' + callout.slug });
   // If reverting from other status then reset form
   if (!isNewOrDraft.value) {
@@ -197,22 +200,11 @@ async function handlePreview() {
 }
 
 async function reset() {
-  const callout = props.id ? await fetchCallout(props.id, ['form']) : undefined;
+  const callout = props.id
+    ? await fetchCallout(props.id, ['form', 'responseViewSchema'])
+    : undefined;
   steps.value = convertCalloutToSteps(callout);
   status.value = callout?.status;
-
-  if (!steps.value.content.formSchema.components.length) {
-    steps.value.content.formSchema.components.push({
-      type: 'button',
-      label: t('actions.submit'),
-      key: 'submit',
-      size: 'md',
-      block: false,
-      action: 'submit',
-      disableOnInvalid: true,
-      theme: 'primary',
-    });
-  }
 }
 
 let interval: number | undefined;

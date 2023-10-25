@@ -35,14 +35,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ContributionPeriod, PaymentMethod } from '@beabee/beabee-common';
+import {
+  calcPaymentFee,
+  ContributionPeriod,
+  PaymentMethod,
+} from '@beabee/beabee-common';
 import { computed, watch } from 'vue';
 import ContributionPeriod_ from './ContributionPeriod.vue';
 import ContributionAmount from './ContributionAmount.vue';
 import ContributionFee from './ContributionFee.vue';
 import ContributionMethod from './ContributionMethod.vue';
 import { ContributionContent } from './contribution.interface';
-import calcPaymentFee from '../../utils/calcPaymentFee';
 
 const props = withDefaults(
   defineProps<{

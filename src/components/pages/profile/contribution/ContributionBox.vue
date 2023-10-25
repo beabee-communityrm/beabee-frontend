@@ -66,10 +66,7 @@ import {
   MembershipStatus,
 } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
-import {
-  formatDistanceLocale,
-  formatLocale,
-} from '../../../../utils/dates/locale-date-formats';
+import { formatDistanceLocale, formatLocale } from '../../../../utils/dates';
 import { computed } from 'vue';
 import { ContributionInfo } from '../../../../utils/api/api.interface';
 import AppSubHeading from '../../../AppSubHeading.vue';

@@ -11,10 +11,10 @@
       hide-headers
       class="w-full"
     >
-      <template #chargeDate="{ value }">
+      <template #value-chargeDate="{ value }">
         {{ formatLocale(value, 'PPP') }}
       </template>
-      <template #amount="{ value, item }">
+      <template #value-amount="{ value, item }">
         <span class="mr-3">
           {{ getStatusText(item) }}
         </span>
@@ -44,7 +44,7 @@ import { computed, ref, watchEffect } from 'vue';
 
 import AppTable from '../table/AppTable.vue';
 import AppPagination from '../AppPagination.vue';
-import { formatLocale } from '../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../utils/dates';
 
 import { fetchPayments } from '../../utils/api/contact';
 import { GetPaymentData } from '../../utils/api/api.interface';
@@ -89,11 +89,11 @@ function getRowClass(item: GetPaymentData) {
 function getStatusText(item: GetPaymentData) {
   switch (item.status) {
     case PaymentStatus.Cancelled:
-      return t('contribution.paymentHistory.status.cancelled');
+      return t('common.paymentStatus.cancelled');
     case PaymentStatus.Failed:
-      return t('contribution.paymentHistory.status.failed');
+      return t('common.paymentStatus.failed');
     case PaymentStatus.Pending:
-      return t('contribution.paymentHistory.status.pending');
+      return t('common.paymentStatus.pending');
   }
 }
 

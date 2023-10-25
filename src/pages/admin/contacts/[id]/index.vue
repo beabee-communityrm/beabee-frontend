@@ -22,39 +22,48 @@ meta:
         />
       </AppInfoList>
 
-      <AppHeading class="mt-6">{{
-        t('contactOverview.contribution')
-      }}</AppHeading>
-      <AppInfoList>
-        <AppInfoListItem
-          :name="t('contacts.data.amount')"
-          :value="
-            contact.contributionAmount
-              ? n(contact.contributionAmount, 'currency')
-              : '–'
-          "
-        />
-        <AppInfoListItem
-          :name="t('contacts.data.period')"
-          :value="contact.contributionPeriod"
-        />
-        <AppInfoListItem
-          v-if="contact.contribution.type === ContributionType.Automatic"
-          :name="t('contacts.data.payingFee')"
-          :value="
-            contact.contribution.payFee ? t('common.yes') : t('common.no')
-          "
-        />
-        <AppInfoListItem
-          :name="t('contactOverview.contributionType')"
-          :value="contact.contribution.type"
-        />
-      </AppInfoList>
+      <div v-if="!env.cnrMode">
+        <AppHeading>{{ t('contactOverview.contribution') }}</AppHeading>
+        <AppInfoList>
+          <AppInfoListItem
+            :name="t('contacts.data.amount')"
+            :value="
+              contact.contributionAmount
+                ? n(contact.contributionAmount, 'currency')
+                : '–'
+            "
+          />
+          <AppInfoListItem
+            :name="t('contacts.data.period')"
+            :value="contact.contributionPeriod"
+          />
+          <AppInfoListItem
+            v-if="contact.contribution.type === ContributionType.Automatic"
+            :name="t('contacts.data.payingFee')"
+            :value="
+              contact.contribution.payFee ? t('common.yes') : t('common.no')
+            "
+          />
+          <AppInfoListItem
+            :name="t('contactOverview.contributionType')"
+            :value="contact.contribution.type"
+          />
+          <AppInfoListItem
+            v-if="contact.contribution.paymentSource?.method"
+            :name="t('contribution.paymentMethod')"
+          >
+            <PaymentMethod :source="contact.contribution.paymentSource" />
+          </AppInfoListItem>
+          <AppInfoListItem
+            v-if="contact.contribution.cancellationDate"
+            :name="t('contactOverview.cancellationDate')"
+            :value="formatLocale(contact.contribution.cancellationDate, 'PPP')"
+          />
+        </AppInfoList>
+      </div>
 
-      <AppHeading class="mt-6">
-        {{ t('contactOverview.roles') }}
-      </AppHeading>
-      <div class="relative">
+      <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
+      <div class="relative mt-4">
         <RoleEditor
           :roles="contact.roles"
           @delete="handleDeleteRole"
@@ -64,7 +73,7 @@ meta:
           v-if="changingRoles"
           class="absolute inset-0 flex items-center justify-center bg-primary-5/50"
         >
-          <font-awesome-icon :icon="['fas', 'circle-notch']" spin />
+          <font-awesome-icon :icon="faCircleNotch" spin />
         </div>
       </div>
     </template>
@@ -91,7 +100,9 @@ meta:
         />
         <AppInfoListItem
           :name="t('contactOverview.newsletter')"
-          :value="contact.profile.newsletterStatus"
+          :value="
+            t('common.newsletterStatus.' + contact.profile.newsletterStatus)
+          "
         />
         <AppInfoListItem
           :name="t('contacts.data.groups')"
@@ -126,27 +137,30 @@ meta:
             v-if="contactTags.length > 0"
             v-model="contactAnnotations.tags"
             :tags="contactTags"
-            label="Tags"
+            :label="t('contacts.data.tags')"
           />
         </div>
       </AppForm>
-    </template>
-    <div class="hidden">
-      <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
-      <p>{{ t('contactOverview.security.whatDoTheButtonsDo') }}</p>
-      <form @submit.prevent="handleSecurityAction">
-        <AppButton type="submit" variant="primaryOutlined" class="mt-4">{{
-          t('contactOverview.security.loginOverride')
-        }}</AppButton>
-        <AppButton type="submit" variant="primaryOutlined" class="mt-2 ml-6">{{
-          t('contactOverview.security.resetPassword')
-        }}</AppButton>
-      </form>
-      <div v-if="securityLink" class="mt-4">
-        <p class="mt-4">{{ t('contactOverview.security.instructions') }}</p>
-        <AppInput readonly :value="securityLink" class="mt-2"></AppInput>
+      <div class="hidden">
+        <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
+        <p>{{ t('contactOverview.security.whatDoTheButtonsDo') }}</p>
+        <form @submit.prevent="handleSecurityAction">
+          <AppButton type="submit" variant="primaryOutlined" class="mt-4">{{
+            t('contactOverview.security.loginOverride')
+          }}</AppButton>
+          <AppButton
+            type="submit"
+            variant="primaryOutlined"
+            class="ml-6 mt-2"
+            >{{ t('contactOverview.security.resetPassword') }}</AppButton
+          >
+        </form>
+        <div v-if="securityLink" class="mt-4">
+          <p class="mt-4">{{ t('contactOverview.security.instructions') }}</p>
+          <AppInput readonly :value="securityLink" class="mt-2"></AppInput>
+        </div>
       </div>
-    </div>
+    </template>
   </App2ColGrid>
 </template>
 
@@ -155,7 +169,7 @@ import { ContributionType, RoleType } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../../components/AppHeading.vue';
 import AppInput from '../../../../components/forms/AppInput.vue';
-import AppButton from '../../../../components/forms/AppButton.vue';
+import AppButton from '../../../../components/button/AppButton.vue';
 import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown.vue';
 import RoleEditor from '../../../../components/role/RoleEditor.vue';
 import { onBeforeMount, ref, reactive } from 'vue';
@@ -172,11 +186,14 @@ import {
 } from '../../../../utils/api/contact';
 import AppInfoList from '../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
-import { formatLocale } from '../../../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../../../utils/dates';
 import { fetchContent } from '../../../../utils/api/content';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 import AppForm from '../../../../components/forms/AppForm.vue';
 import App2ColGrid from '../../../../components/App2ColGrid.vue';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import PaymentMethod from '../../../../components/payment-method/PaymentMethod.vue';
+import env from '../../../../env';
 
 const { t, n } = useI18n();
 
@@ -184,6 +201,8 @@ const props = defineProps<{
   contact: GetContactData;
 }>();
 
+// TODO: remove this when we rework how the contact is passed to child pages
+// eslint-disable-next-line vue/no-dupe-keys
 const contact = ref<GetContactDataWith<
   'profile' | 'contribution' | 'roles'
 > | null>(null);

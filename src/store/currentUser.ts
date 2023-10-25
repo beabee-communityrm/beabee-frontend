@@ -1,11 +1,14 @@
+import { RoleType } from '@beabee/beabee-common';
+import { computed, ComputedRef, ref } from 'vue';
 import axios from '../lib/axios';
-import { ref } from 'vue';
 import { fetchContact } from '../utils/api/contact';
 import { GetContactData } from '../utils/api/api.interface';
 
-export async function updateCurrentUser(): Promise<void> {
+export async function updateCurrentUser(
+  contact?: GetContactData
+): Promise<void> {
   try {
-    currentUser.value = await fetchContact('me');
+    currentUser.value = contact || (await fetchContact('me'));
   } catch (err) {
     currentUser.value = null;
   }
@@ -23,3 +26,13 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const currentUserCan = (role: RoleType): ComputedRef<boolean> => {
+  return computed(() => {
+    return (
+      currentUser.value != null && currentUser.value.activeRoles.includes(role)
+    );
+  });
+};
+
+export const canAdmin = currentUserCan('admin');

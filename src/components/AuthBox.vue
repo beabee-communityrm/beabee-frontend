@@ -1,9 +1,39 @@
 <template>
-  <div class="mx-auto px-4">
+  <div
+    class="max-w-lg"
+    :class="{
+      'rounded-md bg-white p-6 shadow-auth-box md:p-8': !isEmbed,
+      'mx-auto gap-8 md:flex md:max-w-3xl': !preview,
+    }"
+  >
     <div
-      class="mx-auto mb-3 max-w-[30rem] rounded-md bg-white py-6 px-6 shadow-auth-box md:py-8 md:px-8"
+      v-if="!isEmbed"
+      class="flex-initial basis-64 mb-4"
+      :class="{ 'md:mb-0': !preview }"
     >
+      <div
+        class="flex gap-4 items-center justify-center"
+        :class="{
+          'mb-4': !!$slots.header,
+          'md:flex-col md:items-start': !preview,
+        }"
+      >
+        <AppLogo
+          :class="{ [title ? 'w-20' : 'w-40']: true, 'md:w-full': !preview }"
+        />
+        <AppTitle v-if="title" class="flex-1">{{ title }}</AppTitle>
+      </div>
+      <slot name="header" />
+    </div>
+    <div class="flex-1">
       <slot />
     </div>
   </div>
 </template>
+<script lang="ts" setup>
+import { isEmbed } from '../store';
+import AppLogo from './AppLogo.vue';
+import AppTitle from './AppTitle.vue';
+
+defineProps<{ title?: string; preview?: boolean }>();
+</script>

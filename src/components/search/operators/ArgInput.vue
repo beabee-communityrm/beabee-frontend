@@ -21,7 +21,9 @@
     v-else
     v-model="value"
     :type="
-      item.type === 'contact' || item.type === 'array' ? 'text' : item.type
+      item.type === 'contact' || item.type === 'array' || item.type === 'blob'
+        ? 'text'
+        : item.type
     "
     :prefix="prefix"
     required
@@ -31,7 +33,7 @@
 <script lang="ts" setup>
 import { RuleValue } from '@beabee/beabee-common';
 import { computed } from 'vue';
-import { formatLocale } from '../../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../../utils/dates';
 import AppInput from '../../forms/AppInput.vue';
 import AppRadioGroup from '../../forms/AppRadioGroup.vue';
 import AppSelect from '../../forms/AppSelect.vue';

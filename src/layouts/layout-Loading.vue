@@ -4,24 +4,26 @@
     :style="backgroundStyle"
   >
     <AuthBox class="text-center">
-      <AppLogo class="mb-5 inline-block w-28" />
-      <h1 class="mb-5 text-2.5xl">{{ t('common.loading') }}</h1>
+      <div class="text-center flex h-full flex-col justify-center">
+        <AppTitle class="mb-5" big>{{ t('common.loading') }}</AppTitle>
 
-      <font-awesome-icon
-        class="text-[60px] text-body-60"
-        :icon="['fas', 'circle-notch']"
-        spin
-      />
+        <font-awesome-icon
+          class="text-[60px] text-body-60"
+          :icon="faCircleNotch"
+          spin
+        />
 
-      <router-view />
+        <router-view />
+      </div>
     </AuthBox>
   </main>
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import AuthBox from '../components/AuthBox.vue';
-import backgroundStyle from '../utils/backgroundStyle';
-import AppLogo from '../components/AppLogo.vue';
+import { backgroundStyle } from '../store';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import AppTitle from '../components/AppTitle.vue';
 
 const { t } = useI18n();
 </script>

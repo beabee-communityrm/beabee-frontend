@@ -1,10 +1,10 @@
 <template>
   <AppForm
-    :button-text="t('form.saveChanges')"
+    :button-text="t('actions.update')"
     :success-text="t('form.saved')"
     @submit="handleSubmit"
   >
-    <AppHeading class="mt-6 mb-2">
+    <AppHeading class="mb-2 mt-6">
       {{ t('accountPage.contactInformation') }}
     </AppHeading>
 
@@ -15,7 +15,39 @@
       :optional-names="isAdmin"
     />
 
-    <AppHeading class="mt-6 mb-2">
+    <template v-if="accountContent.showNewsletterOptIn && isAdmin">
+      <AppHeading class="mb-2 mt-6">
+        {{ t('accountPage.newsletter.title') }}
+      </AppHeading>
+
+      <p class="mb-4">
+        {{
+          t('accountPage.newsletter.currentStatus.' + currentNewsletterStatus)
+        }}
+      </p>
+
+      <AppNotification
+        v-if="
+          currentNewsletterStatus === NewsletterStatus.Cleaned ||
+          currentNewsletterStatus === NewsletterStatus.Pending
+        "
+        variant="warning"
+        :title="t('accountPage.newsletter.cantUpdate')"
+      />
+      <AppCheckbox
+        v-else-if="currentNewsletterStatus === NewsletterStatus.Subscribed"
+        v-model="data.newsletterToggle"
+        :label="t('accountPage.newsletter.unsubscribe')"
+      />
+      <AppCheckbox
+        v-else
+        v-model="data.newsletterToggle"
+        :label="t('accountPage.newsletter.subscribe')"
+        class="mb-4"
+      />
+    </template>
+
+    <AppHeading class="mb-2 mt-6">
       {{ t('accountPage.deliveryAddress') }}
     </AppHeading>
 
@@ -49,7 +81,8 @@
   </AppForm>
 </template>
 <script lang="ts" setup>
-import { computed, reactive, toRef, watch } from 'vue';
+import { NewsletterStatus } from '@beabee/beabee-common';
+import { computed, reactive, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppAddress from '../AppAddress.vue';
 import ContactBasicFields from './ContactBasicFields.vue';
@@ -59,6 +92,8 @@ import { fetchContent } from '../../utils/api/content';
 import { fetchContact, updateContact } from '../../utils/api/contact';
 import AppRadioGroup from '../forms/AppRadioGroup.vue';
 import AppForm from '../forms/AppForm.vue';
+import AppNotification from '../AppNotification.vue';
+import AppCheckbox from '../forms/AppCheckbox.vue';
 
 const props = defineProps<{
   id: string;
@@ -70,10 +105,13 @@ const isAdmin = computed(() => props.id !== 'me');
 
 const accountContent = await fetchContent('join/setup');
 
+const currentNewsletterStatus = ref(NewsletterStatus.None);
+
 const data = reactive({
   emailAddress: '',
   firstName: '',
   lastName: '',
+  newsletterToggle: false,
   deliveryOptIn: false,
   addressLine1: '',
   addressLine2: '' as string | undefined,
@@ -89,7 +127,10 @@ watch(
     data.emailAddress = contact.email;
     data.firstName = contact.firstname;
     data.lastName = contact.lastname;
+    data.newsletterToggle = false;
     data.deliveryOptIn = contact.profile.deliveryOptIn;
+
+    currentNewsletterStatus.value = contact.profile.newsletterStatus;
 
     const address = contact.profile.deliveryAddress;
     data.addressLine1 = address?.line1 || '';
@@ -101,11 +142,22 @@ watch(
 );
 
 async function handleSubmit() {
+  const newNewsletterStatus =
+    data.newsletterToggle &&
+    (currentNewsletterStatus.value === NewsletterStatus.Subscribed
+      ? NewsletterStatus.Unsubscribed
+      : NewsletterStatus.Subscribed);
+
   await updateContact(props.id, {
     email: data.emailAddress,
     firstname: data.firstName,
     lastname: data.lastName,
     profile: {
+      // Only update newsletter status if the checkbox was ticked
+      ...(newNewsletterStatus && {
+        newsletterStatus: newNewsletterStatus,
+      }),
+      // Only update opt in if it's visible
       ...(accountContent.showMailOptIn && {
         deliveryOptIn: data.deliveryOptIn,
       }),
@@ -117,5 +169,10 @@ async function handleSubmit() {
       },
     },
   });
+
+  if (newNewsletterStatus) {
+    currentNewsletterStatus.value = newNewsletterStatus;
+    data.newsletterToggle = false;
+  }
 }
 </script>

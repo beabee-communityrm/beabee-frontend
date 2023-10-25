@@ -7,7 +7,10 @@ meta:
 
 <template>
   <PageTitle :title="t('membershipBuilder.title')" />
-  <AppTabs :items="tabs" :selected="route.name ? route.name as string : null" />
+  <AppTabs
+    :items="tabs"
+    :selected="route.name ? (route.name as string) : null"
+  />
   <router-view ref="mbRouterView"></router-view>
 </template>
 <script lang="ts" setup>
@@ -17,6 +20,7 @@ import PageTitle from '../../components/PageTitle.vue';
 import AppTabs from '../../components/tabs/AppTabs.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { addBreadcrumb } from '../../store/breadcrumb';
+import { faHandsHelping } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -55,7 +59,7 @@ addBreadcrumb(
     {
       title: t('membershipBuilder.title'),
       to: '/admin/membership-builder',
-      icon: 'hands-helping',
+      icon: faHandsHelping,
     },
     ...(selectedTab.value
       ? [

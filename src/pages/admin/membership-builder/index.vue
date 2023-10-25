@@ -41,9 +41,9 @@ meta:
           :error-message="validation.backgroundUrl.$errors[0]?.$message"
         />
 
-        <h4 class="mb-4 text-lg font-semibold">
+        <AppSubHeading class="mb-2">
           {{ stepT('suggestedAmounts') }} *
-        </h4>
+        </AppSubHeading>
         <div class="mb-4 flex gap-4">
           <PeriodAmounts
             v-for="(period, periodI) in joinContent.periods"
@@ -84,14 +84,7 @@ meta:
       </AppForm>
     </template>
     <template #col2>
-      <div
-        class="bg-cover bg-center p-4 pt-8"
-        :style="`background-image: url(${backgroundUrl})`"
-      >
-        <AuthBox>
-          <JoinForm :join-content="joinContent" @submit.prevent="" />
-        </AuthBox>
-      </div>
+      <JoinForm :join-content="joinContent" preview />
     </template>
   </App2ColGrid>
 </template>
@@ -108,13 +101,13 @@ import AppSelect from '../../../components/forms/AppSelect.vue';
 import { ContributionPeriod } from '@beabee/beabee-common';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import JoinForm from '../../../components/pages/join/JoinForm.vue';
-import AuthBox from '../../../components/AuthBox.vue';
 import AppImageUpload from '../../../components/forms/AppImageUpload.vue';
 import { generalContent } from '../../../store';
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import PeriodAmounts from '../../../components/pages/admin/membership-builder/PeriodAmounts.vue';
 import App2ColGrid from '../../../components/App2ColGrid.vue';
+import AppSubHeading from '../../../components/AppSubHeading.vue';
 
 const joinContent = ref<JoinContent>();
 const backgroundUrl = ref('');

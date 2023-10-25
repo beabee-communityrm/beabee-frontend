@@ -1,9 +1,8 @@
 <template>
   <Teleport to="body">
     <div
-      class="fixed inset-0 z-50 flex h-full items-center justify-center bg-black bg-opacity-50 p-4"
+      class="fixed inset-0 z-40 flex h-full items-center justify-center bg-black bg-opacity-50 p-4"
       :class="{ hidden: !open }"
-      @click="$emit('close')"
     >
       <div
         ref="divRef"
@@ -12,11 +11,11 @@
         @click.stop
       >
         <button
-          class="absolute top-0 right-0 h-8 w-8 hover:text-primary"
+          class="absolute right-0 top-0 h-8 w-8 hover:text-primary"
           type="button"
           @click="$emit('close')"
         >
-          <font-awesome-icon :icon="['fa', 'times']" />
+          <font-awesome-icon :icon="faTimes" />
         </button>
         <AppHeading v-if="title" class="mb-4">
           <span :class="{ 'text-danger': variant === 'danger' }">
@@ -34,6 +33,7 @@
 import { onBeforeUnmount, ref, toRef, watch } from 'vue';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import AppHeading from './AppHeading.vue';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 defineEmits(['close']);
 const props = defineProps<{

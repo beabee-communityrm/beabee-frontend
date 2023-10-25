@@ -15,16 +15,17 @@ const { t } = i18n.global;
 
 export const headers = computed<Header[]>(() => [
   {
-    value: 'response',
+    value: 'number',
     text: t('calloutResponsesPage.response'),
+    sortable: true,
   },
   {
     value: 'contact',
     text: t('calloutResponse.data.contact'),
   },
   {
-    value: 'tags',
-    text: t('calloutResponse.data.tags'),
+    value: 'assignee',
+    text: t('calloutResponse.data.assignee'),
   },
   {
     value: 'createdAt',
@@ -38,13 +39,14 @@ export const filterGroups = computed<FilterGroup<CalloutResponseFilterName>[]>(
   () => [
     {
       label: t('calloutResponse.dataGroup.response'),
-      items: ['createdAt'],
+      items: ['createdAt', 'tags', 'answers'],
     },
   ]
 );
 
 export const filterItems = computed<FilterItems<CalloutResponseFilterName>>(
   () => ({
+    id: withLabel(calloutResponseFilters.id, ''),
     createdAt: withLabel(
       calloutResponseFilters.createdAt,
       t('calloutResponse.data.createdAt')
@@ -53,6 +55,14 @@ export const filterItems = computed<FilterItems<CalloutResponseFilterName>>(
       calloutResponseFilters.updatedAt,
       t('calloutResponse.data.updatedAt')
     ),
+    bucket: withLabel(
+      calloutResponseFilters.bucket,
+      t('calloutResponse.data.bucket')
+    ),
+    tags: withLabel(
+      calloutResponseFilters.tags,
+      t('calloutResponse.data.tags')
+    ),
     callout: withLabel(
       calloutResponseFilters.callout,
       t('calloutResponse.data.callout')
@@ -60,6 +70,14 @@ export const filterItems = computed<FilterItems<CalloutResponseFilterName>>(
     contact: withLabel(
       calloutResponseFilters.contact,
       t('calloutResponse.data.contact')
+    ),
+    assignee: withLabel(
+      calloutResponseFilters.assignee,
+      t('calloutResponse.data.assignee')
+    ),
+    answers: withLabel(
+      calloutResponseFilters.answers,
+      t('calloutResponse.data.answers')
     ),
   })
 );

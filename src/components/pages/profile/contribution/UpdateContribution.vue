@@ -1,27 +1,34 @@
 <template>
   <div>
     <form @submit.prevent="handleSubmit">
-      <AppHeading class="mb-2">{{ t('contribution.billing') }} </AppHeading>
+      <AppHeading class="mb-2">{{ buttonText }}</AppHeading>
 
       <p v-if="isManualActiveMember" class="mb-4">
-        {{ t('contribution.manualPayment') }}
-      </p>
-
-      <AppAlert
-        v-if="modelValue.nextAmount && modelValue.renewalDate"
-        variant="info"
-        class="mb-4"
-      >
-        <template #icon
-          ><font-awesome-icon :icon="['fa', 'info-circle']"
-        /></template>
         {{
-          t('contribution.nextAmountChanging', {
-            nextAmount: n(modelValue.nextAmount, 'currency'),
-            renewalDate: formatLocale(modelValue.renewalDate, 'PPP'),
+          t('contribution.manualPayment', {
+            source:
+              (modelValue.paymentSource?.method === null &&
+                modelValue.paymentSource.source) ||
+              t('contribution.manualPaymentSource'),
           })
         }}
-      </AppAlert>
+      </p>
+
+      <AppNotification
+        v-if="modelValue.nextAmount && modelValue.renewalDate"
+        variant="info"
+        :title="
+          t('contribution.nextAmountChanging', {
+            nextAmount: n(modelValue.nextAmount || 5, 'currency'),
+            renewalDate: formatLocale(
+              modelValue.renewalDate || new Date(),
+              'PPP'
+            ),
+          })
+        "
+        :icon="faInfoCircle"
+        class="mb-4"
+      />
 
       <Contribution
         v-model:amount="newContribution.amount"
@@ -40,13 +47,12 @@
         :renewal-date="modelValue.renewalDate || new Date()"
       />
 
-      <MessageBox v-if="hasUpdated" class="mb-4" type="success">
-        {{ t('contribution.updatedContribution') }}
-      </MessageBox>
-
-      <MessageBox v-if="cantUpdate" class="mb-4" type="error">
-        {{ t('contribution.contributionUpdateError') }}
-      </MessageBox>
+      <AppNotification
+        v-if="cantUpdate"
+        class="mb-4"
+        variant="error"
+        :title="t('contribution.contributionUpdateError')"
+      />
 
       <AppButton
         :disabled="!canSubmit || validation.$invalid"
@@ -55,17 +61,10 @@
         class="mb-4 w-full"
         :loading="loading"
       >
-        {{
-          isManualActiveMember
-            ? t('contribution.updatePaymentType')
-            : isActiveMember
-            ? t('contribution.updateContribution')
-            : isExpiringMember
-            ? t('contribution.restartContribution')
-            : t('contribution.startContribution')
-        }}
+        {{ buttonText }}
       </AppButton>
     </form>
+
     <AppModal
       v-if="stripeClientSecret"
       :open="stripePaymentLoaded"
@@ -96,9 +95,8 @@ import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import Contribution from '../../../contribution/Contribution.vue';
-import AppButton from '../../../forms/AppButton.vue';
+import AppButton from '../../../button/AppButton.vue';
 import ProrateContribution from './ProrateContribution.vue';
-import MessageBox from '../../../MessageBox.vue';
 import { ContributionContent } from '../../../contribution/contribution.interface';
 import {
   startContribution,
@@ -108,11 +106,13 @@ import {
 import AppModal from '../../../AppModal.vue';
 import StripePayment from '../../../StripePayment.vue';
 import { currentUser } from '../../../../store/currentUser';
-import AppAlert from '../../../AppAlert.vue';
-import { formatLocale } from '../../../../utils/dates/locale-date-formats';
+import { formatLocale } from '../../../../utils/dates';
 import AppHeading from '../../../AppHeading.vue';
 import { isRequestError } from '../../../../utils/api';
 import { ContributionInfo } from '../../../../utils/api/api.interface';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { addNotification } from '../../../../store/notifications';
+import AppNotification from '../../../AppNotification.vue';
 
 const validation = useVuelidate();
 
@@ -133,7 +133,6 @@ const newContribution = reactive({
 });
 
 const cantUpdate = ref(false);
-const hasUpdated = ref(false);
 const loading = ref(false);
 const stripeClientSecret = ref('');
 const stripePaymentLoaded = ref(false);
@@ -170,7 +169,18 @@ const showChangePeriod = computed(
 const canSubmit = computed(
   () =>
     !isAutoActiveMember.value ||
-    props.modelValue.amount != newContribution.amount
+    props.modelValue.amount != newContribution.amount ||
+    props.modelValue.payFee != newContribution.payFee
+);
+
+const buttonText = computed(() =>
+  isManualActiveMember.value
+    ? t('contribution.updatePaymentType')
+    : isActiveMember.value
+    ? t('contribution.updateContribution')
+    : isExpiringMember.value
+    ? t('contribution.restartContribution')
+    : t('contribution.startContribution')
 );
 
 async function handleCreate() {
@@ -187,7 +197,10 @@ async function handleUpdate() {
     const data = await updateContribution(newContribution);
     emit('update:modelValue', data);
 
-    hasUpdated.value = true;
+    addNotification({
+      variant: 'success',
+      title: t('contribution.updatedContribution'),
+    });
   } catch (err) {
     if (isRequestError(err, 'cant-update-contribution')) {
       cantUpdate.value = true;
@@ -212,7 +225,6 @@ function onStripeLoaded() {
 
 function reset() {
   cantUpdate.value = false;
-  hasUpdated.value = false;
   loading.value = false;
   stripeClientSecret.value = '';
   stripePaymentLoaded.value = false;

@@ -8,9 +8,11 @@
         </div>
         <RichTextEditor v-model="email.body" label="Message" required />
       </template>
-      <AppAlert v-else variant="warning">
-        This email is managed by your email provider, you can't edit it here
-      </AppAlert>
+      <AppNotification v-else variant="warning" title="Can't edit email">
+        <p>
+          This email is managed by your email provider, you can't edit it here
+        </p>
+      </AppNotification>
     </template>
     <template v-if="email" #col2>
       <div class="content-message bg-white p-4 shadow" v-html="emailBody" />
@@ -23,8 +25,8 @@ import { currentUser } from '../../../../store';
 import AppSubHeading from '../../../AppSubHeading.vue';
 import AppInput from '../../../forms/AppInput.vue';
 import RichTextEditor from '../../../rte/RichTextEditor.vue';
-import AppAlert from '../../../AppAlert.vue';
 import App2ColGrid from '../../../App2ColGrid.vue';
+import AppNotification from '../../../AppNotification.vue';
 
 const props = defineProps<{
   label: string;

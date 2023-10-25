@@ -84,34 +84,69 @@ meta:
             />
           </div>
         </template>
+
+        <AppSubHeading class="mb-2">
+          {{ stepT('joinSurvey.title') }}
+        </AppSubHeading>
+        <p class="mb-4">{{ stepT('joinSurvey.text') }}</p>
+        <div class="mb-4">
+          <AppSelect
+            v-model="setupContent.surveySlug"
+            :label="stepT('joinSurvey.slug')"
+            :items="[
+              { id: '', label: t('common.selectNone') },
+              ...openCallouts.map((callout) => ({
+                id: callout.slug,
+                label: callout.title,
+              })),
+            ]"
+          />
+          <AppInputHelp :message="stepT('joinSurvey.slugHelp')" />
+        </div>
+        <template v-if="setupContent.surveySlug">
+          <RichTextEditor
+            v-model="setupContent.surveyText"
+            :label="stepT('joinSurvey.textIntro')"
+            class="mb-4"
+          />
+
+          <AppCheckbox
+            v-model="setupContent.surveyRequired"
+            :label="stepT('joinSurvey.required')"
+            class="mb-4 font-semibold"
+          />
+        </template>
       </AppForm>
     </template>
     <template #col2>
-      <div class="bg-cover bg-center p-4 pt-8" :style="backgroundStyle">
-        <Suspense>
-          <AuthBox>
-            <SetupForm :setup-content="setupContent" />
-          </AuthBox>
-        </Suspense>
-      </div>
+      <Suspense>
+        <SetupForm :setup-content="setupContent" preview />
+      </Suspense>
     </template>
   </App2ColGrid>
 </template>
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue';
-import { JoinSetupContent } from '../../../utils/api/api.interface';
+import {
+  GetCalloutData,
+  JoinSetupContent,
+} from '../../../utils/api/api.interface';
 import { fetchContent, updateContent } from '../../../utils/api/content';
 import AppForm from '../../../components/forms/AppForm.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import { useI18n } from 'vue-i18n';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import SetupForm from '../../../components/pages/join/SetupForm.vue';
-import AuthBox from '../../../components/AuthBox.vue';
 import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
 import App2ColGrid from '../../../components/App2ColGrid.vue';
-import backgroundStyle from '../../../utils/backgroundStyle';
+import AppSelect from '../../../components/forms/AppSelect.vue';
+import AppInputHelp from '../../../components/forms/AppInputHelp.vue';
+import { fetchCallouts } from '../../../utils/api/callout';
+import { ItemStatus } from '@beabee/beabee-common';
+import AppSubHeading from '../../../components/AppSubHeading.vue';
 
 const setupContent = ref<JoinSetupContent>();
+const openCallouts = ref<GetCalloutData[]>([]);
 
 const { t } = useI18n();
 
@@ -126,5 +161,19 @@ async function handleUpdate() {
 
 onBeforeMount(async () => {
   setupContent.value = await fetchContent('join/setup');
+
+  openCallouts.value = (
+    await fetchCallouts({
+      limit: 100,
+      rules: {
+        condition: 'AND',
+        rules: [
+          { field: 'status', operator: 'equal', value: [ItemStatus.Open] },
+          { field: 'expires', operator: 'is_empty', value: [] },
+        ],
+      },
+      sort: 'title',
+    })
+  ).items;
 });
 </script>

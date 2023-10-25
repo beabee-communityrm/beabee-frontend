@@ -17,6 +17,7 @@ import PageTitle from '../../components/PageTitle.vue';
 import AppTabs from '../../components/tabs/AppTabs.vue';
 import { computed } from 'vue';
 import { addBreadcrumb } from '../../store/breadcrumb';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -36,6 +37,10 @@ const tabs = computed(() =>
       id: 'adminSettingsTheme',
       label: t('adminSettings.theme.label'),
     },
+    {
+      id: 'adminSettingsApikeys',
+      label: t('adminSettings.apikey.label'),
+    },
   ].map((item) => ({
     ...item,
     to: router.resolve({ name: item.id }).href,
@@ -51,7 +56,7 @@ addBreadcrumb(
     {
       title: t('menu.adminSettings'),
       to: '/admin/settings',
-      icon: 'cogs',
+      icon: faCog,
     },
     ...(selectedTab.value
       ? [

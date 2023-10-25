@@ -8,7 +8,7 @@
       @click="isRelative = !isRelative"
     >
       <font-awesome-icon
-        :icon="['fa', isRelative ? 'circle-arrow-right' : 'circle-dot']"
+        :icon="isRelative ? faCircleArrowRight : faCircleDot"
       />
     </button>
     <div>
@@ -29,6 +29,10 @@
   </span>
 </template>
 <script lang="ts" setup>
+import {
+  faCircleArrowRight,
+  faCircleDot,
+} from '@fortawesome/free-solid-svg-icons';
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import { computed, ref, watch } from 'vue';

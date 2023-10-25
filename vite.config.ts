@@ -1,7 +1,7 @@
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import vueI18n from '@intlify/vite-plugin-vue-i18n';
+import vueI18n from '@intlify/unplugin-vue-i18n/vite';
 import pages from 'vite-plugin-pages';
 import replace from '@rollup/plugin-replace';
 
@@ -14,11 +14,13 @@ export default ({ command, mode }) => {
     vue(),
     vueI18n({
       include: path.resolve(__dirname, './locales/*'),
+      strictMessage: false,
     }),
     theme(),
     pages(),
   ];
 
+  // Use environment variables when developing locally
   if (command === 'serve') {
     plugins.push(
       replace({
@@ -27,6 +29,9 @@ export default ({ command, mode }) => {
           __apiUrl__: env.API_BASE_URL,
           __revision__: '',
           __appsignalKey__: env.APPSIGNAL_KEY || '',
+          __maptilerKey__: env.MAPTILER_KEY || '',
+          __cnrMode__: env.CNR_MODE || '',
+          __experimentalFeatures__: env.EXPERIMENTAL_FEATURES || '',
         },
         preventAssignment: true,
       })
@@ -40,6 +45,7 @@ export default ({ command, mode }) => {
     plugins,
     server: {
       port: 3000,
+      // Proxy API requests to the backend
       proxy: {
         '^/(api|login|upload|uploads|favicon.png)': {
           target: env.API_PROXY_URL,
@@ -50,6 +56,7 @@ export default ({ command, mode }) => {
         },
       },
     },
+    // Useful for linking beabee-common locally
     ...(command === 'serve' && {
       optimizeDeps: {
         exclude: ['@beabee/beabee-common'],

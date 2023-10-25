@@ -8,17 +8,6 @@ meta:
 <template>
   <div class="flex flex-col-reverse gap-8 lg:flex-row lg:justify-between">
     <div class="flex-initial basis-1/2">
-      <AppAlert v-if="wasJustCreated || wasJustUpdated" class="mb-8">
-        <template #icon>
-          <font-awesome-icon :icon="['fa', 'magic']" />
-        </template>
-        {{
-          wasJustCreated
-            ? t('calloutAdminOverview.created')
-            : t('calloutAdminOverview.updated')
-        }}
-      </AppAlert>
-
       <AppHeading>{{ t('calloutAdminOverview.summary') }}</AppHeading>
 
       <div class="mb-8 rounded bg-white p-4">
@@ -63,7 +52,7 @@ meta:
       </AppInfoList>
     </div>
     <div class="flex-0 flex flex-wrap gap-2 lg:flex-col">
-      <ActionButton icon="eye" :to="`/callouts/${callout.slug}?preview`">
+      <ActionButton :icon="faEye" :to="`/callouts/${callout.slug}?preview`">
         {{
           callout.status === ItemStatus.Open ||
           callout.status === ItemStatus.Ended
@@ -73,28 +62,42 @@ meta:
       </ActionButton>
       <ActionButton
         v-if="callout.status === ItemStatus.Open"
-        icon="reply"
+        :icon="faReply"
         :to="`/callouts/${callout.slug}`"
       >
         {{ t('actions.participate') }}
       </ActionButton>
       <ActionButton
-        icon="pencil-alt"
+        :icon="faPencilAlt"
         :to="'/admin/callouts/edit/' + callout.slug"
       >
         {{ t('actions.edit') }}
       </ActionButton>
-      <ActionButton icon="clone" @click="replicateThisCallout()">
+      <ActionButton :icon="faClone" @click="replicateThisCallout()">
         {{ t('actions.replicate') }}
       </ActionButton>
-      <ActionButton icon="trash" @click="showDeleteModal = true">
+      <ActionButton
+        v-if="callout.status === ItemStatus.Open"
+        :icon="faHourglassEnd"
+        @click="endThisCallout()"
+      >
+        {{ t('actions.endnow') }}
+      </ActionButton>
+      <ActionButton
+        v-if="callout.status === ItemStatus.Ended"
+        :icon="faHourglassStart"
+        @click="reopenThisCallout()"
+      >
+        {{ t('actions.reopen') }}
+      </ActionButton>
+      <ActionButton :icon="faTrash" @click="showDeleteModal = true">
         {{ t('actions.delete') }}
       </ActionButton>
       <AppConfirmDialog
         :open="showDeleteModal"
         :title="t('calloutAdminOverview.actions.confirmDelete.title')"
-        :cancel="t('calloutAdminOverview.actions.confirmDelete.actionNo')"
-        :confirm="t('calloutAdminOverview.actions.confirmDelete.actionYes')"
+        :cancel="t('actions.noBack')"
+        :confirm="t('actions.yesDelete')"
         variant="danger"
         @close="showDeleteModal = false"
         @confirm="confirmDeleteCallout"
@@ -108,36 +111,61 @@ meta:
 import { ItemStatus } from '@beabee/beabee-common';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { GetCalloutDataWith } from '../../../../../utils/api/api.interface';
-import { deleteCallout } from '../../../../../utils/api/callout';
+import { deleteCallout, updateCallout } from '../../../../../utils/api/callout';
 import AppHeading from '../../../../../components/AppHeading.vue';
 import AppInfoList from '../../../../../components/AppInfoList.vue';
 import AppInfoListItem from '../../../../../components/AppInfoListItem.vue';
-import ActionButton from '../../../../../components/pages/callouts/ActionButton.vue';
+import ActionButton from '../../../../../components/button/ActionButton.vue';
 import CalloutSummary from '../../../../../components/callout/CalloutSummary.vue';
-import AppAlert from '../../../../../components/AppAlert.vue';
 import { createCallout } from '../../../../../utils/api/callout';
 import AppConfirmDialog from '../../../../../components/AppConfirmDialog.vue';
+import { addNotification } from '../../../../../store/notifications';
+import {
+  faClone,
+  faEye,
+  faPencilAlt,
+  faReply,
+  faTrash,
+  faHourglassStart,
+  faHourglassEnd,
+} from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps<{
-  callout: GetCalloutDataWith<'form'>;
+  callout: GetCalloutDataWith<'form' | 'responseCount'>;
 }>();
 const { t } = useI18n();
 
-const route = useRoute();
 const router = useRouter();
-const wasJustCreated = route.query.created !== undefined;
-const wasJustUpdated = route.query.updated !== undefined;
 
 const showDeleteModal = ref(false);
 
 async function confirmDeleteCallout() {
   await deleteCallout(props.callout.slug);
-  router.push({
-    path: '/admin/callouts',
-    query: { deleted: null },
+  addNotification({
+    title: t('calloutAdmin.deleted'),
+    variant: 'error',
   });
+  router.push({ path: '/admin/callouts' });
+}
+
+async function endThisCallout() {
+  await updateCallout(props.callout.slug, { expires: new Date() });
+  addNotification({
+    title: t('calloutAdmin.ended'),
+    variant: 'success',
+  });
+  router.push({ path: '/admin/callouts' });
+}
+
+async function reopenThisCallout() {
+  await updateCallout(props.callout.slug, { expires: null });
+  addNotification({
+    title: t('calloutAdmin.reopened'),
+    variant: 'success',
+  });
+  router.push({ path: '/admin/callouts' });
 }
 
 async function replicateThisCallout() {
@@ -145,10 +173,13 @@ async function replicateThisCallout() {
     ...props.callout,
     slug: props.callout.slug + '-copy',
     title: props.callout.title + ' copy',
-    status: undefined,
     starts: null,
     expires: null,
+    // TODO: Remove these extra properties, should be handled elsewhere
+    status: undefined,
+    responseCount: undefined,
   };
+
   const newCallout = await createCallout(newCalloutData);
   router.push({
     path: '/admin/callouts/edit/' + newCallout.slug,

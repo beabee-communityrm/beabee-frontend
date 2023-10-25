@@ -1,5 +1,5 @@
 <template>
-  <AppButton variant="link" size="sm" icon="floppy-disk" @click="handleOpen">
+  <AppButton variant="link" size="sm" :icon="faFloppyDisk" @click="handleOpen">
     {{ t('advancedSearch.saveSegment.title') }}
   </AppButton>
   <AppModal
@@ -37,9 +37,9 @@
       </div>
       <AppButton
         class="w-full"
+        type="submit"
         :disabled="validation.$invalid"
         :loading="isSaving"
-        @click="handleSubmit"
       >
         {{
           shouldUpdate
@@ -53,6 +53,7 @@
 
 <script lang="ts" setup>
 import { RuleGroup } from '@beabee/beabee-common';
+import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import useVuelidate from '@vuelidate/core';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -62,9 +63,10 @@ import {
 } from '../../../../utils/api/api.interface';
 import { createSegment, updateSegment } from '../../../../utils/api/segments';
 import AppModal from '../../../AppModal.vue';
-import AppButton from '../../../forms/AppButton.vue';
+import AppButton from '../../../button/AppButton.vue';
 import AppInput from '../../../forms/AppInput.vue';
 import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
+import { addNotification } from '../../../../store/notifications';
 
 const emit = defineEmits(['saved']);
 const props = defineProps<{
@@ -97,10 +99,18 @@ async function handleSubmit() {
     segment = await updateSegment(props.segment.id, {
       ruleGroup: props.rules,
     });
+    addNotification({
+      variant: 'success',
+      title: t('advancedSearch.updatedSegment', { segment: segment.name }),
+    });
   } else {
     segment = await createSegment({
       name: newSegmentName.value,
       ruleGroup: props.rules,
+    });
+    addNotification({
+      variant: 'success',
+      title: t('advancedSearch.createdSegment', { segment: segment.name }),
     });
   }
 

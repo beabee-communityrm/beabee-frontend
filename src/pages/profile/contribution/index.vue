@@ -9,15 +9,30 @@ meta:
 
   <App2ColGrid v-if="!isIniting">
     <template #col1>
-      <AppAlert v-if="updatedPaymentSource" class="mb-8">{{
-        t('contribution.updatedPaymentSource')
-      }}</AppAlert>
-      <AppAlert v-if="startedContribution" class="mb-8">{{
-        t('contribution.startedContribution')
-      }}</AppAlert>
-      <AppAlert v-if="cancelledContribution" class="mb-8" variant="danger">
-        {{ t('contribution.cancelledContribution') }}
-      </AppAlert>
+      <AppNotification
+        v-if="updatedPaymentSource"
+        class="mb-8"
+        variant="success"
+        :title="t('contribution.updatedPaymentSource')"
+        removeable
+        @remove="updatedPaymentSource = false"
+      />
+      <AppNotification
+        v-if="startedContribution"
+        class="mb-8"
+        variant="success"
+        :title="t('contribution.startedContribution')"
+        removeable
+        @remove="startedContribution = false"
+      />
+      <AppNotification
+        v-if="cancelledContribution"
+        class="mb-8"
+        variant="error"
+        :title="t('contribution.cancelledContribution')"
+        removeable
+        @remove="cancelledContribution = false"
+      />
 
       <ContributionBox :contribution="contribution" class="mb-9" />
 
@@ -34,8 +49,11 @@ meta:
         :payment-source="contribution.paymentSource"
         :stripe-public-key="content.stripePublicKey"
       />
-
-      <CancelContribution :contribution="contribution" />
+      <ContactCancelContribution
+        id="me"
+        :contribution="contribution"
+        @cancel="$router.push('/profile/contribution/cancel')"
+      />
     </template>
     <template #col2>
       <ContactPaymentsHistory id="me" />
@@ -54,10 +72,9 @@ import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import ContributionBox from '../../../components/pages/profile/contribution/ContributionBox.vue';
-import CancelContribution from '../../../components/pages/profile/contribution/CancelContribution.vue';
+import ContactCancelContribution from '../../../components/contact/ContactCancelContribution.vue';
 import PaymentSource from '../../../components/pages/profile/contribution/PaymentSource.vue';
 import PageTitle from '../../../components/PageTitle.vue';
-import AppAlert from '../../../components/AppAlert.vue';
 import ContactPaymentsHistory from '../../../components/contact/ContactPaymentsHistory.vue';
 import { currentUser } from '../../../store';
 import UpdateContribution from '../../../components/pages/profile/contribution/UpdateContribution.vue';
@@ -66,13 +83,16 @@ import { fetchContribution } from '../../../utils/api/contact';
 import { ContributionContent } from '../../../components/contribution/contribution.interface';
 import { fetchContent } from '../../../utils/api/content';
 import App2ColGrid from '../../../components/App2ColGrid.vue';
+import AppNotification from '../../../components/AppNotification.vue';
 
 const { t } = useI18n();
-
 const route = useRoute();
-const updatedPaymentSource = route.query.updatedPaymentSource !== undefined;
-const startedContribution = route.query.startedContribution !== undefined;
-const cancelledContribution = route.query.cancelled !== undefined;
+
+const updatedPaymentSource = ref(
+  route.query.updatedPaymentSource !== undefined
+);
+const startedContribution = ref(route.query.startedContribution !== undefined);
+const cancelledContribution = ref(route.query.cancelled !== undefined);
 
 const content = ref<ContributionContent>({
   initialAmount: 5,

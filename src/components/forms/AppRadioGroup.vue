@@ -4,7 +4,7 @@
     <label
       v-for="[value, optLabel] in options"
       :key="value.toString()"
-      class="items-center"
+      class="items-baseline"
       :class="inline ? 'mr-3 inline-flex align-top' : 'mb-1 flex'"
     >
       <input
@@ -13,7 +13,7 @@
         :name="name"
         :value="value"
         :checked="modelValue === value"
-        class="mr-1 -mb-[1px]"
+        class="mr-1.5"
         :required="required"
       />
       {{ optLabel }}

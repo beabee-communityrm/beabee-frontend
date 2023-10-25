@@ -1,4 +1,4 @@
-FROM node:16.18-alpine as builder
+FROM node:16.20-alpine as builder
 
 WORKDIR /opt/beabee-frontend
 
@@ -6,9 +6,9 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . ./
-RUN NODE_ENV=production npx vite build
+RUN NODE_ENV=production npx vite build && npx vite build -c vite.config.public.ts
 
-FROM nginx:1.23.3-alpine
+FROM nginx:1.24-alpine
 
 ARG REVISION
 

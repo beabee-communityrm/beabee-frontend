@@ -11,9 +11,16 @@ export const validFonts = {
   'roboto-slab': ['Roboto Slab', 'serif'],
   rubik: ['Rubik', 'sans-serif'],
   ubuntu: ['Ubuntu', 'sans-serif'],
+  'work-sans': ['Work Sans', 'sans-serif'],
 };
 
-type FontId = keyof typeof validFonts;
+const allFonts = {
+  ...validFonts,
+  'helvetica-neue-lt': ['Helvetica Neue LT', 'sans-serif'],
+  queue: ['Queue', 'sans-serif'],
+};
+
+type FontId = keyof typeof allFonts;
 
 export type Theme = {
   colors: {
@@ -42,7 +49,7 @@ export type PartialTheme = {
 };
 
 function getFont(s: string | undefined): FontId {
-  return s !== undefined && s in validFonts ? (s as FontId) : 'open-sans';
+  return s !== undefined && s in allFonts ? (s as FontId) : 'open-sans';
 }
 
 function setCSSVar(name: string, value: string) {
@@ -115,8 +122,8 @@ watch(
 
     // Load fonts
 
-    setCSSVar('--ff-body', validFonts[fonts.body].join(','));
-    setCSSVar('--ff-title', validFonts[fonts.title].join(','));
+    setCSSVar('--ff-body', allFonts[fonts.body].join(','));
+    setCSSVar('--ff-title', allFonts[fonts.title].join(','));
 
     import(`../assets/styles/fonts-${fonts.body}.css`);
     if (fonts.title !== fonts.body) {
@@ -125,5 +132,6 @@ watch(
   },
   {
     deep: true,
+    immediate: true, // Initialise default theme on page load
   }
 );

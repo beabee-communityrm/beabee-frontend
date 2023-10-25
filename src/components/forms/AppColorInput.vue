@@ -1,7 +1,7 @@
 <template>
   <div class="mb-2 flex">
     <div
-      class="flex-0 mt-1.5 mr-2 h-7 w-7 rounded-full"
+      class="flex-0 mr-2 mt-1.5 h-7 w-7 rounded-full"
       :style="{ backgroundColor: modelValue }"
     />
     <div class="flex-1">
@@ -20,7 +20,7 @@
     @color-change="changeColor($event.colors.hex)"
   >
     <template #format-switch-button>
-      <font-awesome-icon :icon="['fa', 'sort']" />
+      <font-awesome-icon :icon="faSort" />
     </template>
   </ColorPicker>
 </template>
@@ -30,6 +30,7 @@ import { ColorPicker } from 'vue-accessible-color-picker';
 import AppInput from './AppInput.vue';
 import { ref, watch } from 'vue';
 import useVuelidate from '@vuelidate/core';
+import { faSort } from '@fortawesome/free-solid-svg-icons';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{

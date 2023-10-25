@@ -107,7 +107,7 @@ export function getDefaultValue(type: FilterType): RuleValue {
 // Enforces type safety for the operator and initial values
 function withDefault<T extends FilterType>(
   type: T,
-  operator: keyof typeof operatorsByType[T]
+  operator: keyof (typeof operatorsByType)[T]
 ): Pick<Rule, 'operator' | 'value'> {
   const params = operatorsByTypeMap[type][operator as RuleOperator];
   return {
@@ -121,6 +121,7 @@ const ruleDefaultsByType: Record<
   () => Pick<Rule, 'operator' | 'value'>
 > = {
   text: () => withDefault('text', 'equal'),
+  blob: () => withDefault('blob', 'contains'),
   number: () => withDefault('number', 'equal'),
   enum: () => withDefault('enum', 'equal'),
   boolean: () => withDefault('boolean', 'equal'),
