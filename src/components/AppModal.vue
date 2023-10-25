@@ -17,7 +17,7 @@
         >
           <font-awesome-icon :icon="faTimes" />
         </button>
-        <AppHeading v-if="title" class="mb-4">
+        <AppHeading v-if="title">
           <span :class="{ 'text-danger': variant === 'danger' }">
             {{ title }}
           </span>

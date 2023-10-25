@@ -1,8 +1,6 @@
 <template>
   <div v-if="canCancel">
-    <AppHeading class="mb-2">
-      {{ t('contribution.cancelContribution') }}
-    </AppHeading>
+    <AppHeading>{{ t('contribution.cancelContribution') }}</AppHeading>
 
     <p v-if="props.contribution.membershipExpiryDate" class="mb-3 text-sm">
       {{

@@ -42,7 +42,7 @@ meta:
       </AppButtonGroup>
     </div>
 
-    <AppHeading class="mb-4">
+    <AppHeading>
       {{ t('calloutResponsesPage.responseNo', { no: n(response.number) }) }}
     </AppHeading>
     <p v-if="response.tags.length > 0" class="mb-4">

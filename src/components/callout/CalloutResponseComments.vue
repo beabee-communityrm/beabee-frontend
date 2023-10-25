@@ -1,5 +1,5 @@
 <template>
-  <AppHeading class="mb-4">
+  <AppHeading>
     {{ t('calloutResponseComments.comments') }}
   </AppHeading>
 

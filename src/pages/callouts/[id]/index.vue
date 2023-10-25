@@ -88,7 +88,7 @@ meta:
             class="mb-4"
           />
 
-          <AppHeading v-if="latestResponse" class="mt-6 mb-4">
+          <AppHeading v-if="latestResponse" class="mt-6">
             {{ t('callout.yourResponse') }}
           </AppHeading>
 
