@@ -54,10 +54,11 @@ meta:
       @close="router.push({ hash: '' })"
       @click.stop
     />
+
     <CalloutIntroPanel
       :callout="callout"
-      :show="!!introOpen"
-      @close="handleCloseIntro"
+      :show="introOpen"
+      @close="introOpen = false"
     />
   </div>
 </template>
@@ -98,10 +99,6 @@ const selectedResponse = computed(() => {
     return undefined;
   }
 });
-
-function handleCloseIntro() {
-  introOpen.value = false;
-}
 
 onBeforeMount(async () => {
   callout.value = await fetchCallout(props.id, ['form', 'responseViewSchema']);
