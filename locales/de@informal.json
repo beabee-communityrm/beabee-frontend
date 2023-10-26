@@ -576,6 +576,9 @@
     "security": {
       "instructions": "Link kopieren und teilen:",
       "loginOverride": "Automatischer Login",
+      "mfa": {
+        "desc": "Dieser Kontakt hat 2FA eingeschaltet. Klick auf \"{ disableLabel }\", um es auszuschalten."
+      },
       "resetPassword": "Passwort zurücksetzen",
       "title": "Sicherheit",
       "whatDoTheButtonsDo": "Auf den Button klicken, um Link zu erzeugen:"

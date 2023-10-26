@@ -12,6 +12,9 @@
   - `slides`: The slides to display in the slider.
   - `navigation`: The navigation buttons to display. Receives the `prevSlide`, `nextSlide`, and `toSlide` functions as props.
 
+  ## Note
+  - To get the slide animation working on Safari you need a polyfill for `scroll-behavior: smooth`. I recommend [smoothscroll-polyfill](https://github.com/iamdustan/smoothscroll)
+
   ## Possible improvements
   - Add support for touch (scrolling by swiping)
   - Add support for keyboard navigation

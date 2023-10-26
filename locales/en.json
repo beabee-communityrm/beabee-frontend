@@ -577,6 +577,9 @@
     "security": {
       "instructions": "Copy and share this link:",
       "loginOverride": "Login override",
+      "mfa": {
+        "desc": "This contact has 2FA enabled. Click on the \"{ disableLabel }\" button to disable it."
+      },
       "resetPassword": "Reset password",
       "title": "Security",
       "whatDoTheButtonsDo": "Click the button to generate an emergency link:"

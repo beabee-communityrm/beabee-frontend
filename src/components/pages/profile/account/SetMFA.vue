@@ -265,6 +265,7 @@ const saveMfaAndNotify = async () => {
   return result;
 };
 
+/** Disable MFA and notify the user */
 const disableMfaAndNotify = async () => {
   showDisableConfirmModal.value = false;
   await disableMfa();
@@ -274,9 +275,7 @@ const disableMfaAndNotify = async () => {
   });
 };
 
-/**
- * Disable MFA for the contact
- */
+/** Disable MFA for the contact */
 const disableMfa = async () => {
   await deleteContactMfa(props.contactId);
   isEnabled.value = false;

@@ -40,6 +40,17 @@ meta:
         />
       </div>
 
+      <div class="mb-3">
+        <AppInput
+          v-if="hasMFAEnabled"
+          v-model="data.token"
+          type="text"
+          name="verifyCode"
+          required
+          :label="t('accountPage.mfa.codeInput.label')"
+        />
+      </div>
+
       <div class="mb-4">
         <router-link class="text-sm underline" to="/auth/forgot-password">
           {{ t('login.forgotPassword') }}
@@ -74,7 +85,7 @@ meta:
 import AppInput from '../../components/forms/AppInput.vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { reactive, ref } from 'vue';
+import { reactive, ref, toRef, watch } from 'vue';
 import { isInternalUrl } from '../../utils';
 import { updateCurrentUser } from '../../store';
 import { LoginData, LOGIN_CODES } from '../../utils/api/api.interface';
@@ -101,18 +112,11 @@ const hasCredentialError = ref(false);
 const hasMFAEnabled = ref(false);
 const hasWrongMFAToken = ref(false);
 
-let emailBefore = '';
-
 async function submitLogin() {
   loading.value = true;
   hasCredentialError.value = false;
   hasWrongMFAToken.value = false;
 
-  // Only reset MFA if email changed
-  if (emailBefore !== data.email) {
-    hasMFAEnabled.value = false;
-  }
-  emailBefore = data.email;
   try {
     await login(data);
     await updateCurrentUser();
@@ -133,4 +137,7 @@ async function submitLogin() {
     loading.value = false;
   }
 }
+
+// Reset MFA if email changed
+watch(toRef(data, 'email'), () => (hasMFAEnabled.value = false));
 </script>
