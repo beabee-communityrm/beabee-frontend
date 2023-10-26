@@ -21,19 +21,31 @@
     v-if="isEnabled"
     variant="primaryOutlined"
     :icon="faMobileAlt"
-    @click="disableMFA"
+    @click="showDisableConfirmModal = true"
   >
-    {{ t(`accountPage.mfa.disable`) }}
+    {{ t(`actions.disable`) }}
   </AppButton>
 
   <AppButton
     v-else
     variant="primaryOutlined"
     :icon="faMobileAlt"
-    @click="toggleMFAModal"
+    @click="showMFASettingsModal = !showMFASettingsModal"
   >
-    {{ t(`accountPage.mfa.enable`) }}
+    {{ t(`actions.enable`) }}
   </AppButton>
+
+  <AppConfirmDialog
+    :open="showDisableConfirmModal"
+    :title="t('accountPage.mfa.confirmDelete.title')"
+    :cancel="t('actions.noBack')"
+    :confirm="t('actions.yesDisable')"
+    variant="danger"
+    @close="showDisableConfirmModal = false"
+    @confirm="disableMfaAndNotify"
+  >
+    <p>{{ t('accountPage.mfa.confirmDelete.desc') }}</p>
+  </AppConfirmDialog>
 
   <AppModal
     :open="showMFASettingsModal"
@@ -67,7 +79,6 @@
             <span class="w-full h-full flex flex-col justify-center px-4">
               <AppInput
                 v-model="userToken"
-                :value="userToken"
                 type="text"
                 :label="codeLabel"
                 name="verifyCode"
@@ -99,21 +110,21 @@
             variant="linkOutlined"
             @click="closeMFAModal()"
           >
-            {{ t(`accountPage.mfa.closeButton.label`) }}
+            {{ t(`actions.close`) }}
           </AppButton>
           <AppButton v-else variant="linkOutlined" @click="prevSlide()">
-            {{ t(`accountPage.mfa.prevButton.label`) }}
+            {{ t(`actions.back`) }}
           </AppButton>
           <AppButton
             v-if="isLastSlide"
             :disabled="!allStepsDone"
             variant="link"
-            @click="saveMFA()"
+            @click="saveMfaAndNotify()"
           >
-            {{ t(`accountPage.mfa.saveButton.label`) }}
+            {{ t(`actions.save`) }}
           </AppButton>
           <AppButton v-else variant="link" @click="nextSlide()">
-            {{ t(`accountPage.mfa.nextButton.label`) }}
+            {{ t(`actions.next`) }}
           </AppButton>
         </span>
       </template>
@@ -143,6 +154,10 @@ import AppSlide from '../../../slider/AppSlide.vue';
 import AppQRCode from '../../../AppQRCode.vue';
 import AppStepper from '../../../stepper/AppStepper.vue';
 import AppInput from '../../../forms/AppInput.vue';
+import AppConfirmDialog from '../../../AppConfirmDialog.vue';
+
+import { addNotification } from '../../../../store/notifications';
+import { generalContent } from '../../../../store';
 
 import type { Step } from '../../../stepper/stepper.interface';
 import type { AppSliderSlideEventDetails } from '../../../slider/slider.interface';
@@ -160,6 +175,8 @@ const appSliderCo = ref<InstanceType<typeof AppSlider> | null>(null);
 
 /** Used to show/hide the modal */
 const showMFASettingsModal = ref(false);
+
+const showDisableConfirmModal = ref(false);
 
 /** Is multi factor authentication enabled? */
 const isEnabled = ref(false);
@@ -225,12 +242,7 @@ const closeMFAModal = () => {
   showMFASettingsModal.value = false;
 };
 
-/** Toggle the modal */
-const toggleMFAModal = () => {
-  showMFASettingsModal.value = !showMFASettingsModal.value;
-};
-
-const saveMFA = async () => {
+const saveMfaAndNotify = async () => {
   closeMFAModal();
   const result = await createContactMfa(props.contactId, {
     secret: totpSecret.value.base32,
@@ -239,14 +251,26 @@ const saveMFA = async () => {
   });
   isEnabled.value = true;
   resetState();
+  addNotification({
+    title: t('accountPage.mfa.enabledNotification'),
+    variant: 'success',
+  });
   return result;
+};
+
+const disableMfaAndNotify = async () => {
+  showDisableConfirmModal.value = false;
+  await disableMfa();
+  addNotification({
+    title: t('accountPage.mfa.disabledNotification'),
+    variant: 'error',
+  });
 };
 
 /**
  * Disable MFA for the contact
- * TODO: Show confirmation dialog
  */
-const disableMFA = async () => {
+const disableMfa = async () => {
   await deleteContactMfa(props.contactId);
   isEnabled.value = false;
   resetState();
@@ -283,7 +307,7 @@ const syncStepperWithSlider = (details: AppSliderSlideEventDetails) => {
 /** Validate the current step */
 const validateStep = (details: AppSliderSlideEventDetails) => {
   if (details.slideNumber === 2) {
-    validateTOTOToken();
+    validateTotpToken();
   }
 };
 
@@ -312,10 +336,10 @@ const onTotpIdentityChanged = (newValue: TotpIdentity) => {
   totpUrl.value = totp.toString();
 };
 
-/** Validate the totp token / user input code */
-const validateTOTOToken = (window = 2) => {
+/** Validate the **T**imed **O**ne **T**ime **P**assword token / user input code */
+const validateTotpToken = (window = 2) => {
   if (!totp) {
-    throw new Error('totp is null!');
+    throw new Error('totp is falsy!');
   }
   const validateStep = appStepper.value.steps[1];
   const resultStep = appStepper.value.steps[2];
@@ -336,22 +360,16 @@ const validateTOTOToken = (window = 2) => {
 
 /** Are all steps done with no errors? */
 const allStepsDone = computed(() => {
-  return (
-    appStepper.value.steps[0].validated &&
-    !appStepper.value.steps[0].error &&
-    appStepper.value.steps[1].validated &&
-    !appStepper.value.steps[1].error &&
-    appStepper.value.steps[2].validated &&
-    !appStepper.value.steps[2].error
-  );
+  return appStepper.value.steps.every((s) => s.validated && !s.error);
 });
 
-/** Fetch the contact and set the totp identity */
+/** Fetch the contact and set the TOTP identity */
 watch(
   toRef(props, 'contactId'),
   async (contactId) => {
     const contact = await fetchContact(contactId, ['profile']);
-    totpIdentity.value.issuer = 'beabee'; // TODO: Use name of beabee instance
+    totpIdentity.value.issuer =
+      generalContent.value.organisationName || 'beabee';
     totpIdentity.value.label = contact.email;
 
     const contactMfa = await fetchContactMfa(contactId);
@@ -362,7 +380,7 @@ watch(
   { immediate: true }
 );
 
-/** Watch totp identity changes */
+/** Watch TOTP identity changes */
 watch(totpIdentity, onTotpIdentityChanged, { deep: true });
 
 onBeforeMount(() => {

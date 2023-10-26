@@ -1,6 +1,6 @@
 import axios from '../../lib/axios';
 import {
-  fetchContactMfaData,
+  GetContactMfaData,
   CreateContactMfaData,
   Serial,
 } from './api.interface';
@@ -10,7 +10,9 @@ import {
  * @param data The data to deserialize
  * @returns The deserialized data
  */
-export function deserializeContactMfa<T>(data: T): T {
+export function deserializeContactMfa(
+  data: Serial<GetContactMfaData>
+): GetContactMfaData {
   // Nothing to do for now
   return data;
 }
@@ -24,12 +26,11 @@ export function deserializeContactMfa<T>(data: T): T {
 export async function createContactMfa(
   contactId: string,
   dataIn: CreateContactMfaData
-): Promise<CreateContactMfaData> {
-  const { data } = await axios.post<Serial<CreateContactMfaData>>(
+): Promise<void> {
+  await axios.post<Serial<CreateContactMfaData>>(
     `/contact/${contactId}/mfa`,
     dataIn
   );
-  return deserializeContactMfa(data);
 }
 
 /**
@@ -39,11 +40,10 @@ export async function createContactMfa(
  */
 export async function fetchContactMfa(
   contactId: string
-): Promise<fetchContactMfaData> {
-  let { data } = await axios.get<fetchContactMfaData>(
+): Promise<GetContactMfaData> {
+  let { data } = await axios.get<Serial<GetContactMfaData>>(
     `/contact/${contactId}/mfa`
   );
-  data = data || null;
   return deserializeContactMfa(data);
 }
 

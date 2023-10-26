@@ -40,17 +40,6 @@ meta:
         />
       </div>
 
-      <div class="mb-3">
-        <AppInput
-          v-if="hasMFAEnabled"
-          v-model="data.token"
-          type="text"
-          name="verifyCode"
-          required
-          :label="t('accountPage.mfa.codeInput.label')"
-        />
-      </div>
-
       <div class="mb-4">
         <router-link class="text-sm underline" to="/auth/forgot-password">
           {{ t('login.forgotPassword') }}
@@ -134,7 +123,7 @@ async function submitLogin() {
     if (err.response?.status === 401) {
       if (err.response?.data?.code === LOGIN_CODES.REQUIRES_2FA) {
         hasMFAEnabled.value = true;
-      } else if (err.response?.data?.code === LOGIN_CODES.WRONG_2FA_TOKEN) {
+      } else if (err.response?.data?.code === LOGIN_CODES.INVALID_TOKEN) {
         hasWrongMFAToken.value = true;
       } else {
         hasCredentialError.value = true;

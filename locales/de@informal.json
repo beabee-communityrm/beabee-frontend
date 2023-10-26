@@ -6,32 +6,23 @@
     "deliveryOptIn": "Postsendung",
     "loginDetail": "Anmeldedaten",
     "mfa": {
-      "closeButton": {
-        "label": "Schließen"
-      },
       "codeInput": {
         "label": "Code"
       },
-      "disable": "Deaktiveren",
-      "enable": "Aktiveren",
+      "confirmDelete": {
+        "desc": "Möchtest du die Multi-Faktor-Authentifizierung wirklich deaktivieren? \nDanach brauchst du nur noch dein Passwort zum Anmelden. Bitte vergiss \nnicht, den Eintrag in deiner Authenticator-App zu löschen. Du kannst \ndiese Funktion jederzeit wieder einschalten.",
+        "title": "2FA deaktivieren"
+      },
+      "disabledNotification": "Zwei-Faktor Authentifizierung erfolgreich deaktiviert",
       "enterCode": {
         "desc": "Gebe den Code ein, der in deiner Authentifizierungs-App angezeigt wird.",
         "title": "Überprüfung"
       },
       "modalTitle": "Aktivere 2-Faktor Authentifizierung",
-      "nextButton": {
-        "label": "Weiter"
-      },
-      "prevButton": {
-        "label": "Zurück"
-      },
       "result": {
         "invalidCode": "Der Code konnte nicht bestätigt werden. Bitte versuche es erneut oder kontaktiere den Support.",
         "successful": "Die 2-Faktor Authentifizierung wurde erfolgreich eingerichtet.",
         "title": "Fertig"
-      },
-      "saveButton": {
-        "label": "Speichern"
       },
       "scan": {
         "desc": "Scanne den unten stehenden QR-Code mit deiner Authentifizierungs-App.",
@@ -61,10 +52,13 @@
     "back": "Zurück",
     "cancel": "Abbrechen",
     "chooseFile": "Datei auswählen",
+    "close": "Schließen",
     "continue": "Weiter",
     "create": "Erstellen",
     "delete": "Löschen",
+    "disable": "Deaktivieren",
     "edit": "Bearbeiten",
+    "enable": "Aktivieren",
     "endnow": "Jetzt beenden",
     "export": "Exportieren",
     "getStarted": "Starten",
@@ -89,6 +83,7 @@
     "update": "Änderungen speichern",
     "view": "Anzeigen",
     "yesDelete": "Ja, Hinweis löschen",
+    "yesDisable": "Ja, deaktivieren",
     "yesRemove": "Ja, löschen"
   },
   "addContact": {
@@ -313,6 +308,7 @@
       "name": "Dein Name",
       "submittingResponseError": "Es gab ein Problem bei der Übermittlung deiner Antworten. Bitte versuche es erneut."
     },
+    "getStarted": "Starten",
     "joinNow": "Mitglied werden",
     "loginToYourAccount": "Einloggen",
     "membersOnly": "An diesem Callout können nur zahlende Mitglieder teilnehmen. Um teilzunehmen",
@@ -903,7 +899,6 @@
   },
   "footer": {
     "contactUs": "Kontaktiere uns unter",
-    "contacts": "Kontakte",
     "handbookResources": "Handbuch & Ressourcen",
     "impressum": "Impressum",
     "joinCommunity": "Mitglied werden",
@@ -1161,7 +1156,6 @@
     "admin": "Administration",
     "adminSettings": "Einstellungen",
     "callouts": "Callouts",
-    "community": "Community",
     "contacts": "Kontakte",
     "contribution": "Beitrag",
     "dashboard": "Dashboard",

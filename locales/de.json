@@ -6,32 +6,24 @@
     "deliveryOptIn": "Postsendung",
     "loginDetail": "Anmeldedaten",
     "mfa": {
-      "closeButton": {
-        "label": "Schließen"
-      },
       "codeInput": {
         "label": "Code"
       },
-      "disable": "Deaktiveren",
-      "enable": "Aktiveren",
+      "confirmDelete": {
+        "desc": "Möchten Sie die Multi-Faktor-Authentifizierung wirklich deaktivieren? \nDanach benötigen Sie nur noch Ihr Passwort zur Anmeldung. Bitte \nvergessen Sie nicht, den Eintrag aus Ihrer Authenticator-App zu \nentfernen. Sie können diese Funktion jederzeit wieder aktivieren.",
+        "title": "2FA deaktivieren"
+      },
+      "disabledNotification": "Zwei-Faktor Authentifizierung erfolgreich deaktiviert",
+      "enabledNotification": "Two-factor authentication successfully activated",
       "enterCode": {
         "desc": "Geben Sie den Code ein, der in Ihrer Authentifizierungs-App angezeigt wird.",
         "title": "Überprüfung"
       },
       "modalTitle": "Aktivere 2-Faktor Authentifizierung",
-      "nextButton": {
-        "label": "Weiter"
-      },
-      "prevButton": {
-        "label": "Zurück"
-      },
       "result": {
         "invalidCode": "Der Code konnte nicht bestätigt werden. Bitte versuchen Sie es erneut oder kontaktieren Sie den Support.",
         "successful": "Die 2-Faktor Authentifizierung wurde erfolgreich eingerichtet.",
         "title": "Fertig"
-      },
-      "saveButton": {
-        "label": "Speichern"
       },
       "scan": {
         "desc": "Scannen Sie den unten stehenden QR-Code mit Ihrer Authentifizierungs-App.",
@@ -61,10 +53,13 @@
     "back": "Zurück",
     "cancel": "Abbrechen",
     "chooseFile": "Datei auswählen",
+    "close": "Schließen",
     "continue": "Weiter",
     "create": "Erstellen",
     "delete": "Löschen",
+    "disable": "Deaktivieren",
     "edit": "Bearbeiten",
+    "enable": "Aktivieren",
     "endnow": "Jetzt beenden",
     "export": "Exportieren",
     "getStarted": "Starten",
@@ -89,6 +84,7 @@
     "update": "Änderungen speichern",
     "view": "Anzeigen",
     "yesDelete": "Ja, Hinweis löschen",
+    "yesDisable": "Ja, deaktivieren",
     "yesRemove": "Ja, löschen"
   },
   "addContact": {
@@ -313,6 +309,7 @@
       "name": "Ihr Name",
       "submittingResponseError": "Es gab ein Problem bei der Übermittlung ihrer Antworten. Bitte versuchen Sie es erneut."
     },
+    "getStarted": "Starten",
     "joinNow": "Mitglied werden",
     "loginToYourAccount": "Einloggen",
     "membersOnly": "An diesem Callout können nur zahlende Mitglieder teilnehmen. Um teilzunehmen",
@@ -903,7 +900,6 @@
   },
   "footer": {
     "contactUs": "Kontaktieren Sie uns unter",
-    "contacts": "Kontakte",
     "handbookResources": "Handbuch & Ressourcen",
     "impressum": "Impressum",
     "joinCommunity": "Mitglied werden",
@@ -1161,7 +1157,6 @@
     "admin": "Administration",
     "adminSettings": "Einstellungen",
     "callouts": "Callouts",
-    "community": "Community",
     "contacts": "Kontakte",
     "contribution": "Beitrag",
     "dashboard": "Dashboard",
