@@ -5,7 +5,7 @@
       :class="{ 'border-b border-primary-40 pb-3': border }"
     >
       <AppTitle
-        class="mr-4 text-primary-80 font-light"
+        class="mr-4 text-primary-80 !font-light"
         :class="{ 'hidden md:block': !noCollapse }"
       >
         {{ title }}
