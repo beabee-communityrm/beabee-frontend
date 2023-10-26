@@ -9,7 +9,7 @@
         :class="$slots.header && 'mb-4'"
       >
         <AppLogo class="w-20 md:w-full" />
-        <AppTitle v-if="title">{{ title }}</AppTitle>
+        <AppTitle v-if="title" class="self-start">{{ title }}</AppTitle>
       </div>
       <slot name="header" />
     </div>
