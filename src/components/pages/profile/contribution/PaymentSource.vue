@@ -96,7 +96,7 @@ async function handleUpdate() {
     } else if (data.clientSecret) {
       stripeClientSecret.value = data.clientSecret;
     }
-  } catch (err: unknown) {
+  } catch (err) {
     loading.value = false;
     if (isRequestError(err, 'cant-update-contribution')) {
       cantUpdate.value = true;

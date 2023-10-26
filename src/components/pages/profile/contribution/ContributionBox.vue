@@ -7,7 +7,7 @@
     class="flex flex-col bg-white p-8 shadow"
   >
     <template v-if="contribution.membershipStatus === MembershipStatus.Expired">
-      <AppSubHeading class="mb-2">{{
+      <AppSubHeading class="mb-3">{{
         t('contribution.expired')
       }}</AppSubHeading>
 

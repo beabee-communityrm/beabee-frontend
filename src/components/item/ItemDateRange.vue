@@ -1,6 +1,6 @@
 <template>
-  <p v-if="item.starts">
-    <font-awesome-icon :icon="faCalendar" class="mr-2" />
+  <p v-if="item.starts" class="flex items-center">
+    <font-awesome-icon :icon="faCalendar" class="mr-1" />
     {{ formatLocale(item.starts, 'PP') + ' - ' }}
     {{ item.expires && formatLocale(item.expires, 'PP') }}
   </p>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <form @submit.prevent="handleSubmit">
-      <AppHeading class="mb-2">{{ buttonText }}</AppHeading>
+      <AppHeading class="mb-3">{{ buttonText }}</AppHeading>
 
       <p v-if="isManualActiveMember" class="mb-4">
         {{
