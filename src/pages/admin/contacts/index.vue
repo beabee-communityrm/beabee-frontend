@@ -7,103 +7,93 @@ meta:
 
 <template>
   <PageTitle :title="t('menu.contacts')" border>
-    <div class="flex-1 md:hidden">
-      <AppSelect v-model="currentSegmentId" :items="segmentItems" />
-    </div>
     <div class="flex-0 ml-3">
       <AppButton to="/admin/contacts/add">
         {{ t('contacts.addContact') }}
       </AppButton>
     </div>
   </PageTitle>
-  <div class="md:flex">
-    <div class="hidden flex-none basis-[220px] md:block">
-      <AppVTabs v-model="currentSegmentId" :items="segmentItems" />
-    </div>
-    <div class="flex-auto">
-      <AppSearch
-        v-model="currentRules"
-        :filter-groups="filterGroups"
-        :filter-items="filterItems"
-        :has-changed="hasUnsavedSegment"
-        @reset="currentRules = undefined"
-      >
-        <AppSearchInput
-          v-model="currentSearch"
-          :placeholder="t('contacts.search')"
-        />
-      </AppSearch>
-      <SaveSegment
-        v-if="hasUnsavedSegment && currentRules"
-        :segment="currentSegment"
-        :rules="currentRules"
-        @saved="handleSavedSegment"
+  <AppFilterGrid v-model="currentSegmentId" :items="segmentItems">
+    <AppSearch
+      v-model="currentRules"
+      :filter-groups="filterGroups"
+      :filter-items="filterItems"
+      :has-changed="hasUnsavedSegment"
+      @reset="currentRules = undefined"
+    >
+      <AppSearchInput
+        v-model="currentSearch"
+        :placeholder="t('contacts.search')"
       />
-      <AppPaginatedTable
-        v-model:query="currentPaginatedQuery"
-        :headers="headers"
-        :result="contactsTable"
-        keypath="contacts.showingOf"
-      >
-        <template #actions>
-          <AppButton
-            :icon="faDownload"
-            variant="primaryOutlined"
-            :title="t('actions.export')"
-            @click="handleExport"
-          />
-        </template>
-        <template #empty>
-          <p>
-            {{
-              currentRules || currentSearch
-                ? t('contacts.noResults')
-                : t('contacts.noContacts')
-            }}
-          </p>
-        </template>
-        <template #value-firstname="{ item }">
-          <router-link
-            :to="'/admin/contacts/' + item.id"
-            class="text-base font-bold text-link"
-          >
-            {{ item.displayName }}
-          </router-link>
-        </template>
-        <template #value-contributionMonthlyAmount="{ item }">
-          <span v-if="item.contributionAmount">
-            {{ n(item.contributionAmount, 'currency') }}/{{
-              item.contributionPeriod === ContributionPeriod.Monthly
-                ? t('common.month')
-                : t('common.year')
-            }}
-          </span>
-        </template>
-        <template #value-joined="{ value }">
-          <span class="whitespace-nowrap">{{
-            formatLocale(value, 'PPP')
-          }}</span>
-        </template>
-        <template #value-membershipStarts="{ item }">
-          <span class="whitespace-nowrap">{{
-            getMembershipStartDate(item)
-          }}</span>
-        </template>
-        <template #after="{ item }">
-          <p v-if="item.profile.description" class="whitespace-normal text-xs">
-            {{ item.profile.description }}
-          </p>
-          <div
-            v-if="item.profile.tags.length > 0"
-            :class="item.profile.description && 'mt-2'"
-          >
-            <font-awesome-icon :icon="faTag" class="mr-2" />
-            <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
-          </div>
-        </template>
-      </AppPaginatedTable>
-    </div>
-  </div>
+    </AppSearch>
+    <SaveSegment
+      v-if="hasUnsavedSegment && currentRules"
+      :segment="currentSegment"
+      :rules="currentRules"
+      @saved="handleSavedSegment"
+    />
+    <AppPaginatedTable
+      v-model:query="currentPaginatedQuery"
+      :headers="headers"
+      :result="contactsTable"
+      keypath="contacts.showingOf"
+    >
+      <template #actions>
+        <AppButton
+          :icon="faDownload"
+          variant="primaryOutlined"
+          :title="t('actions.export')"
+          @click="handleExport"
+        />
+      </template>
+      <template #empty>
+        <p>
+          {{
+            currentRules || currentSearch
+              ? t('contacts.noResults')
+              : t('contacts.noContacts')
+          }}
+        </p>
+      </template>
+      <template #value-firstname="{ item }">
+        <router-link
+          :to="'/admin/contacts/' + item.id"
+          class="text-base font-bold text-link"
+        >
+          {{ item.displayName }}
+        </router-link>
+      </template>
+      <template #value-contributionMonthlyAmount="{ item }">
+        <span v-if="item.contributionAmount">
+          {{ n(item.contributionAmount, 'currency') }}/{{
+            item.contributionPeriod === ContributionPeriod.Monthly
+              ? t('common.month')
+              : t('common.year')
+          }}
+        </span>
+      </template>
+      <template #value-joined="{ value }">
+        <span class="whitespace-nowrap">{{ formatLocale(value, 'PPP') }}</span>
+      </template>
+      <template #value-membershipStarts="{ item }">
+        <span class="whitespace-nowrap">{{
+          getMembershipStartDate(item)
+        }}</span>
+      </template>
+      <template #after="{ item }">
+        <p v-if="item.profile.description" class="whitespace-normal text-xs">
+          {{ item.profile.description }}
+        </p>
+        <div
+          v-if="item.profile.tags.length > 0"
+          :class="item.profile.description && 'mt-2'"
+        >
+          <font-awesome-icon :icon="faTag" class="mr-2" />
+          <AppTag v-for="tag in item.profile.tags" :key="tag" :tag="tag" />
+        </div>
+      </template>
+    </AppPaginatedTable>
+  </AppFilterGrid>
 </template>
 
 <script lang="ts" setup>
@@ -125,8 +115,6 @@ import { formatLocale } from '../../../utils/dates';
 import { fetchSegments } from '../../../utils/api/segments';
 import AppButton from '../../../components/button/AppButton.vue';
 import AppSearch from '../../../components/search/AppSearch.vue';
-import AppSelect from '../../../components/forms/AppSelect.vue';
-import AppVTabs from '../../../components/tabs/AppVTabs.vue';
 import AppTag from '../../../components/AppTag.vue';
 import {
   headers,
@@ -135,6 +123,7 @@ import {
 } from '../../../components/pages/admin/contacts/contacts.interface';
 import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
 import SaveSegment from '../../../components/pages/admin/contacts/SaveSegment.vue';
+import AppFilterGrid from '../../../components/AppFilterGrid.vue';
 import { addBreadcrumb } from '../../../store/breadcrumb';
 import {
   definePaginatedQuery,

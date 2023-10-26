@@ -1,10 +1,11 @@
-import { CalloutFormSchema } from '@beabee/beabee-common';
+import { CalloutComponentSchema } from '@beabee/beabee-common';
 
 export interface FormBuilderRef {
-  form: CalloutFormSchema;
+  builder: { form: { components: CalloutComponentSchema[] } };
 }
 
 export const formOpts = {
+  noDefaultSubmitButton: true,
   builder: {
     basic: false,
     advanced: false,

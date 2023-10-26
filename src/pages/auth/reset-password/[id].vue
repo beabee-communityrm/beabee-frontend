@@ -136,7 +136,7 @@ async function handleSubmit() {
         variant: 'success',
         title: t('resetPassword.success'),
       });
-      router.push({ path: '/profile' });
+      router.push({ path: '/' });
     }
   } catch (err) {
     hasError.value = true;

@@ -6,8 +6,8 @@ meta:
 </route>
 
 <template>
-  <div v-if="contact" class="grid gap-8 lg:grid-cols-2">
-    <div>
+  <App2ColGrid v-if="contact">
+    <template #col1>
       <AppHeading>{{ t('contactOverview.overview') }}</AppHeading>
       <AppInfoList>
         <AppInfoListItem
@@ -21,8 +21,65 @@ meta:
           "
         />
       </AppInfoList>
-    </div>
-    <div>
+
+      <div v-if="!env.cnrMode">
+        <AppHeading class="mt-6">
+          {{ t('contactOverview.contribution') }}
+        </AppHeading>
+        <AppInfoList>
+          <AppInfoListItem
+            :name="t('contacts.data.amount')"
+            :value="
+              contact.contributionAmount
+                ? n(contact.contributionAmount, 'currency')
+                : '–'
+            "
+          />
+          <AppInfoListItem
+            :name="t('contacts.data.period')"
+            :value="contact.contributionPeriod"
+          />
+          <AppInfoListItem
+            v-if="contact.contribution.type === ContributionType.Automatic"
+            :name="t('contacts.data.payingFee')"
+            :value="
+              contact.contribution.payFee ? t('common.yes') : t('common.no')
+            "
+          />
+          <AppInfoListItem
+            :name="t('contactOverview.contributionType')"
+            :value="contact.contribution.type"
+          />
+          <AppInfoListItem
+            v-if="contact.contribution.paymentSource?.method"
+            :name="t('contribution.paymentMethod')"
+          >
+            <PaymentMethod :source="contact.contribution.paymentSource" />
+          </AppInfoListItem>
+          <AppInfoListItem
+            v-if="contact.contribution.cancellationDate"
+            :name="t('contactOverview.cancellationDate')"
+            :value="formatLocale(contact.contribution.cancellationDate, 'PPP')"
+          />
+        </AppInfoList>
+      </div>
+
+      <AppHeading class="mt-6">{{ t('contactOverview.roles') }}</AppHeading>
+      <div class="relative mt-4">
+        <RoleEditor
+          :roles="contact.roles"
+          @delete="handleDeleteRole"
+          @update="handleUpdateRole"
+        />
+        <div
+          v-if="changingRoles"
+          class="absolute inset-0 flex items-center justify-center bg-primary-5/50"
+        >
+          <font-awesome-icon :icon="faCircleNotch" spin />
+        </div>
+      </div>
+    </template>
+    <template #col2>
       <AppHeading>{{ t('contactOverview.information') }}</AppHeading>
       <AppInfoList>
         <AppInfoListItem
@@ -54,52 +111,10 @@ meta:
           :value="contact.profile.newsletterGroups.join(', ')"
         />
       </AppInfoList>
-    </div>
 
-    <div v-if="!env.cnrMode">
-      <AppHeading>{{ t('contactOverview.contribution') }}</AppHeading>
-      <AppInfoList>
-        <AppInfoListItem
-          :name="t('contacts.data.amount')"
-          :value="
-            contact.contributionAmount
-              ? n(contact.contributionAmount, 'currency')
-              : '–'
-          "
-        />
-        <AppInfoListItem
-          :name="t('contacts.data.period')"
-          :value="contact.contributionPeriod"
-        />
-        <AppInfoListItem
-          v-if="contact.contribution.type === ContributionType.Automatic"
-          :name="t('contacts.data.payingFee')"
-          :value="
-            contact.contribution.payFee ? t('common.yes') : t('common.no')
-          "
-        />
-        <AppInfoListItem
-          :name="t('contactOverview.contributionType')"
-          :value="contact.contribution.type"
-        />
-        <AppInfoListItem
-          v-if="contact.contribution.paymentSource?.method"
-          :name="t('contribution.paymentMethod')"
-        >
-          <PaymentMethod :source="contact.contribution.paymentSource" />
-        </AppInfoListItem>
-        <AppInfoListItem
-          v-if="contact.contribution.cancellationDate"
-          :name="t('contactOverview.cancellationDate')"
-          :value="formatLocale(contact.contribution.cancellationDate, 'PPP')"
-        />
-      </AppInfoList>
-    </div>
-
-    <div class="row-span-3 max-w-xl">
-      <AppHeading>{{ t('contactOverview.about') }}</AppHeading>
+      <AppHeading class="mt-6">{{ t('contactOverview.about') }}</AppHeading>
       <div
-        class="mb-5 text-sm text-body-80"
+        class="mb-4 text-sm text-body-80"
         v-html="t('contactOverview.annotation.copy')"
       />
 
@@ -128,72 +143,56 @@ meta:
           />
         </div>
       </AppForm>
-    </div>
 
-    <div>
-      <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
-      <div class="relative mt-4">
-        <RoleEditor
-          :roles="contact.roles"
-          @delete="handleDeleteRole"
-          @update="handleUpdateRole"
-        />
-        <div
-          v-if="changingRoles"
-          class="absolute inset-0 flex items-center justify-center bg-primary-5/50"
-        >
-          <font-awesome-icon :icon="faCircleNotch" spin />
-        </div>
-      </div>
-    </div>
+      <!-- Security -->
+      <section class="mt-6">
+        <!-- Hide this as long as 2FA is the only option but disabled -->
+        <AppHeading v-if="mfa.isEnabled">{{
+          t('contactOverview.security.title')
+        }}</AppHeading>
 
-    <div>
-      <!-- Hide this as long as 2FA is the only option but disabled -->
-      <AppHeading v-if="mfa.isEnabled">{{
-        t('contactOverview.security.title')
-      }}</AppHeading>
-
-      <!-- Multi factor authentication -->
-      <section v-if="mfa.isEnabled" class="mt-4">
-        <p>
-          {{
-            t('contactOverview.security.mfa.desc', {
-              disableLabel: t('actions.disable'),
-            })
-          }}
-        </p>
-        <AppButton
-          type="button"
-          variant="primaryOutlined"
-          class="mt-4"
-          :icon="faMobileAlt"
-          @click="mfa.showDisableConfirmModal = true"
-        >
-          {{ t(`actions.disable`) }}
-        </AppButton>
-      </section>
-
-      <!-- Not implemented yet -->
-      <section class="mt-4 hidden">
-        <p>{{ t('contactOverview.security.whatDoTheButtonsDo') }}</p>
-        <form @submit.prevent="handleSecurityAction">
-          <AppButton type="submit" variant="primaryOutlined" class="mt-4">{{
-            t('contactOverview.security.loginOverride')
-          }}</AppButton>
+        <!-- Multi factor authentication -->
+        <section v-if="mfa.isEnabled" class="mt-4">
+          <p>
+            {{
+              t('contactOverview.security.mfa.desc', {
+                disableLabel: t('actions.disable'),
+              })
+            }}
+          </p>
           <AppButton
-            type="submit"
+            type="button"
             variant="primaryOutlined"
-            class="ml-6 mt-2"
-            >{{ t('contactOverview.security.resetPassword') }}</AppButton
+            class="mt-4"
+            :icon="faMobileAlt"
+            @click="mfa.showDisableConfirmModal = true"
           >
-        </form>
-        <div v-if="securityLink" class="mt-4">
-          <p class="mt-4">{{ t('contactOverview.security.instructions') }}</p>
-          <AppInput readonly :value="securityLink" class="mt-2"></AppInput>
-        </div>
+            {{ t(`actions.disable`) }}
+          </AppButton>
+        </section>
+
+        <!-- Not implemented yet -->
+        <section class="mt-4 hidden">
+          <p>{{ t('contactOverview.security.whatDoTheButtonsDo') }}</p>
+          <form @submit.prevent="handleSecurityAction">
+            <AppButton type="submit" variant="primaryOutlined" class="mt-4">{{
+              t('contactOverview.security.loginOverride')
+            }}</AppButton>
+            <AppButton
+              type="submit"
+              variant="primaryOutlined"
+              class="ml-6 mt-2"
+              >{{ t('contactOverview.security.resetPassword') }}</AppButton
+            >
+          </form>
+          <div v-if="securityLink" class="mt-4">
+            <p class="mt-4">{{ t('contactOverview.security.instructions') }}</p>
+            <AppInput readonly :value="securityLink" class="mt-2"></AppInput>
+          </div>
+        </section>
       </section>
-    </div>
-  </div>
+    </template>
+  </App2ColGrid>
 
   <AppConfirmDialog
     :open="mfa.showDisableConfirmModal"
@@ -225,6 +224,7 @@ import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 import AppForm from '../../../../components/forms/AppForm.vue';
 import PaymentMethod from '../../../../components/payment-method/PaymentMethod.vue';
 import AppConfirmDialog from '../../../../components/AppConfirmDialog.vue';
+import App2ColGrid from '../../../../components/App2ColGrid.vue';
 
 import {
   GetContactData,

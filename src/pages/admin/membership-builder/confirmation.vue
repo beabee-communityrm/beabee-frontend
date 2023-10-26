@@ -6,122 +6,124 @@ meta:
 </route>
 
 <template>
-  <div class="mb-8 grid grid-cols-2 gap-8">
-    <div>
+  <App2ColGrid class="mb-8">
+    <template #col1>
       <p>{{ stepT('text') }}</p>
-    </div>
-  </div>
-  <div v-if="setupContent" class="grid grid-cols-2 gap-8">
-    <AppForm
-      :button-text="t('form.saveChanges')"
-      :success-text="t('form.saved')"
-      @submit="handleUpdate"
-    >
-      <div class="mb-4">
-        <AppInput
-          v-model="setupContent.welcome"
-          :label="stepT('welcomeMessage')"
-        />
-      </div>
-
-      <AppCheckbox
-        v-model="setupContent.showMailOptIn"
-        :label="stepT('showMailOptIn')"
-        class="mb-4 font-semibold"
-      />
-
-      <template v-if="setupContent.showMailOptIn">
+    </template>
+  </App2ColGrid>
+  <App2ColGrid v-if="setupContent" extended>
+    <template #col1>
+      <AppForm
+        :button-text="t('form.saveChanges')"
+        :success-text="t('form.saved')"
+        @submit="handleUpdate"
+      >
         <div class="mb-4">
           <AppInput
-            v-model="setupContent.mailTitle"
-            :label="stepT('optInTitle')"
-            required
+            v-model="setupContent.welcome"
+            :label="stepT('welcomeMessage')"
           />
         </div>
-        <div class="mb-4">
-          <RichTextEditor
-            v-model="setupContent.mailText"
-            :label="stepT('optInText')"
-            required
-          />
-        </div>
-        <div class="mb-4">
-          <AppInput
-            v-model="setupContent.mailOptIn"
-            :label="stepT('optInLabel')"
-            required
-          />
-        </div>
-      </template>
-
-      <AppCheckbox
-        v-model="setupContent.showNewsletterOptIn"
-        :label="stepT('showNewsletterOptIn')"
-        class="mb-4 font-semibold"
-      />
-
-      <template v-if="setupContent.showNewsletterOptIn">
-        <div class="mb-4">
-          <AppInput
-            v-model="setupContent.newsletterTitle"
-            :label="stepT('optInTitle')"
-            required
-          />
-        </div>
-        <div class="mb-4">
-          <RichTextEditor
-            v-model="setupContent.newsletterText"
-            :label="stepT('optInText')"
-            required
-          />
-        </div>
-        <div class="mb-4">
-          <AppInput
-            v-model="setupContent.newsletterOptIn"
-            :label="stepT('optInLabel')"
-            required
-          />
-        </div>
-      </template>
-
-      <AppSubHeading class="mb-2">
-        {{ stepT('joinSurvey.title') }}
-      </AppSubHeading>
-      <p class="mb-4">{{ stepT('joinSurvey.text') }}</p>
-      <div class="mb-4">
-        <AppSelect
-          v-model="setupContent.surveySlug"
-          :label="stepT('joinSurvey.slug')"
-          :items="[
-            { id: '', label: t('common.selectNone') },
-            ...openCallouts.map((callout) => ({
-              id: callout.slug,
-              label: callout.title,
-            })),
-          ]"
-        />
-        <AppInputHelp :message="stepT('joinSurvey.slugHelp')" />
-      </div>
-      <template v-if="setupContent.surveySlug">
-        <RichTextEditor
-          v-model="setupContent.surveyText"
-          :label="stepT('joinSurvey.textIntro')"
-          class="mb-4"
-        />
 
         <AppCheckbox
-          v-model="setupContent.surveyRequired"
-          :label="stepT('joinSurvey.required')"
+          v-model="setupContent.showMailOptIn"
+          :label="stepT('showMailOptIn')"
           class="mb-4 font-semibold"
         />
-      </template>
-    </AppForm>
-    <div>
+
+        <template v-if="setupContent.showMailOptIn">
+          <div class="mb-4">
+            <AppInput
+              v-model="setupContent.mailTitle"
+              :label="stepT('optInTitle')"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <RichTextEditor
+              v-model="setupContent.mailText"
+              :label="stepT('optInText')"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <AppInput
+              v-model="setupContent.mailOptIn"
+              :label="stepT('optInLabel')"
+              required
+            />
+          </div>
+        </template>
+
+        <AppCheckbox
+          v-model="setupContent.showNewsletterOptIn"
+          :label="stepT('showNewsletterOptIn')"
+          class="mb-4 font-semibold"
+        />
+
+        <template v-if="setupContent.showNewsletterOptIn">
+          <div class="mb-4">
+            <AppInput
+              v-model="setupContent.newsletterTitle"
+              :label="stepT('optInTitle')"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <RichTextEditor
+              v-model="setupContent.newsletterText"
+              :label="stepT('optInText')"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <AppInput
+              v-model="setupContent.newsletterOptIn"
+              :label="stepT('optInLabel')"
+              required
+            />
+          </div>
+        </template>
+
+        <AppSubHeading class="mb-2">
+          {{ stepT('joinSurvey.title') }}
+        </AppSubHeading>
+        <p class="mb-4">{{ stepT('joinSurvey.text') }}</p>
+        <div class="mb-4">
+          <AppSelect
+            v-model="setupContent.surveySlug"
+            :label="stepT('joinSurvey.slug')"
+            :items="[
+              { id: '', label: t('common.selectNone') },
+              ...openCallouts.map((callout) => ({
+                id: callout.slug,
+                label: callout.title,
+              })),
+            ]"
+          />
+          <AppInputHelp :message="stepT('joinSurvey.slugHelp')" />
+        </div>
+        <template v-if="setupContent.surveySlug">
+          <RichTextEditor
+            v-model="setupContent.surveyText"
+            :label="stepT('joinSurvey.textIntro')"
+            class="mb-4"
+          />
+
+          <AppCheckbox
+            v-model="setupContent.surveyRequired"
+            :label="stepT('joinSurvey.required')"
+            class="mb-4 font-semibold"
+          />
+        </template>
+      </AppForm>
+    </template>
+    <template #col2>
       <Suspense>
         <SetupForm :setup-content="setupContent" preview />
       </Suspense>
-    </div>
-  </div>
+    </template>
+  </App2ColGrid>
 </template>
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue';
@@ -136,6 +138,7 @@ import { useI18n } from 'vue-i18n';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import SetupForm from '../../../components/pages/join/SetupForm.vue';
 import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
+import App2ColGrid from '../../../components/App2ColGrid.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppInputHelp from '../../../components/forms/AppInputHelp.vue';
 import { fetchCallouts } from '../../../utils/api/callout';

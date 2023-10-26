@@ -7,9 +7,11 @@ meta:
 
 <template>
   <PageTitle :title="t('addNotice.title')" border></PageTitle>
-  <div class="grid lg:grid-cols-2">
-    <NoticeForm :notice="undefined" @submit="handleSubmit"></NoticeForm>
-  </div>
+  <App2ColGrid>
+    <template #col1>
+      <NoticeForm :notice="undefined" @submit="handleSubmit"></NoticeForm>
+    </template>
+  </App2ColGrid>
 </template>
 
 <script lang="ts" setup>
@@ -27,6 +29,7 @@ import {
 import { addBreadcrumb } from '../../../store/breadcrumb';
 import { faSignHanging } from '@fortawesome/free-solid-svg-icons';
 import { addNotification } from '../../../store/notifications';
+import App2ColGrid from '../../../components/App2ColGrid.vue';
 
 const { t } = useI18n();
 const router = useRouter();

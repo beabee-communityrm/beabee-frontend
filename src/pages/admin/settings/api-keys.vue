@@ -69,11 +69,9 @@ meta:
     </template>
   </AppPaginatedTable>
 
-  <div class="grid md:grid-cols-2 md:gap-12 lg:grid-cols-3">
-    <div>
-      <AppHeading class="mb-2">
-        {{ t('adminSettings.apikey.create') }}
-      </AppHeading>
+  <App2ColGrid>
+    <template #col1>
+      <AppHeading>{{ t('adminSettings.apikey.create') }}</AppHeading>
       <AppForm :button-text="t('actions.create')" @submit="generateApiKey">
         <div class="mb-4">
           <AppInput
@@ -83,8 +81,8 @@ meta:
           />
         </div>
       </AppForm>
-    </div>
-  </div>
+    </template>
+  </App2ColGrid>
 </template>
 
 <script lang="ts" setup>
@@ -111,6 +109,7 @@ import { Header } from '../../../components/table/table.interface';
 import { formatLocale } from '../../../utils/dates';
 import { addNotification } from '../../../store/notifications';
 import AppHeading from '../../../components/AppHeading.vue';
+import App2ColGrid from '../../../components/App2ColGrid.vue';
 
 const { t } = useI18n();
 

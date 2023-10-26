@@ -178,7 +178,9 @@ meta:
                 {{
                   stringifyAnswer(
                     currentInlineComponent,
-                    item.answers[currentInlineComponent.key]
+                    item.answers[currentInlineComponent.slideId]?.[
+                      currentInlineComponent.key
+                    ]
                   )
                 }}
               </span>
@@ -210,10 +212,10 @@ meta:
 </template>
 <script lang="ts" setup>
 import {
-  flattenComponents,
   Paginated,
   Rule,
   RuleGroup,
+  getCalloutComponents,
   stringifyAnswer,
 } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
@@ -284,7 +286,7 @@ const currentInlineAnswer = ref('');
 const currentInlineComponent = computed(
   () =>
     showInlineAnswer.value &&
-    formComponents.value.find((c) => c.key === currentInlineAnswer.value)
+    formComponents.value.find((c) => c.fullKey === currentInlineAnswer.value)
 );
 
 const selectedResponseItems = computed(
@@ -328,13 +330,13 @@ const bucketItems = computed(() =>
 );
 
 const formComponents = computed(() =>
-  flattenComponents(props.callout.formSchema.components).filter(
+  getCalloutComponents(props.callout.formSchema).filter(
     (c) => !!c.input && c.type !== 'button'
   )
 );
 
-const formFilterItems = computed(() =>
-  convertComponentsToFilters(formComponents.value)
+const formFilterItems = computed(
+  () => convertComponentsToFilters(formComponents.value) // TODO: Use @beabee/beabee-common method
 );
 
 const filterGroupsWithQuestions = computed(() => [

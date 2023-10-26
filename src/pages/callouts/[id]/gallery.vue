@@ -8,7 +8,7 @@ meta:
 </route>
 
 <template>
-  <div v-if="callout" class="absolute inset-0 flex flex-col">
+  <div class="absolute inset-0 flex flex-col">
     <div v-if="!isEmbed" class="flex-0 p-6 pb-1 z-10 shadow-lg">
       <PageTitle :title="callout.title" no-collapse>
         <router-link
@@ -27,7 +27,10 @@ meta:
           :key="response.number"
           class="flex-1 min-w-[250px] sm:max-w-sm p-3"
         >
-          <router-link :to="`${HASH_PREFIX}${response.number}`">
+          <router-link
+            :to="`${HASH_PREFIX}${response.number}`"
+            @click="introOpen = false"
+          >
             <img
               class="w-full mb-2 aspect-video object-cover"
               loading="lazy"
@@ -51,14 +54,24 @@ meta:
     <CalloutShowResponsePanel
       :callout="callout"
       :response="selectedResponse"
-      @close="router.push({ hash: '' })"
+      @close="
+        router.push({ hash: '' });
+        introOpen = false;
+      "
       @click.stop
+    />
+
+    <CalloutIntroPanel
+      v-if="!isEmbed"
+      :callout="callout"
+      :show="introOpen && !selectedResponse"
+      @close="introOpen = false"
     />
   </div>
 </template>
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref } from 'vue';
-import { fetchCallout, fetchResponsesForMap } from '../../../utils/api/callout';
+import { fetchResponsesForMap } from '../../../utils/api/callout';
 import {
   GetCalloutDataWith,
   GetCalloutResponseMapData,
@@ -66,6 +79,7 @@ import {
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 import CalloutShowResponsePanel from '../../../components/pages/callouts/CalloutShowResponsePanel.vue';
+import CalloutIntroPanel from '../../../components/pages/callouts/CalloutIntroPanel.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import { faMap } from '@fortawesome/free-solid-svg-icons';
 import { useI18n } from 'vue-i18n';
@@ -73,14 +87,19 @@ import { isEmbed } from '../../../store';
 
 const HASH_PREFIX = '#response-' as const;
 
-const props = defineProps<{ id: string }>();
+const props = defineProps<{
+  callout: GetCalloutDataWith<'form' | 'responseViewSchema'>;
+  // Suppress the warning about the ID prop being passed by the router
+  id: string;
+}>();
 
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
 
-const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();
 const responses = ref<GetCalloutResponseMapData[]>([]);
+
+const introOpen = ref(true);
 
 const selectedResponse = computed(() => {
   if (route.hash.startsWith(HASH_PREFIX)) {
@@ -92,16 +111,14 @@ const selectedResponse = computed(() => {
 });
 
 onBeforeMount(async () => {
-  callout.value = await fetchCallout(props.id, ['form', 'responseViewSchema']);
-
-  if (!callout?.value.responseViewSchema?.gallery) {
+  if (!props.callout.responseViewSchema?.gallery) {
     throw new Error('Callout does not have a gallery');
   }
 
   // TODO: pagination
-  responses.value = (await fetchResponsesForMap(props.id)).items.filter(
-    (i) => i.photos.length > 0
-  );
+  responses.value = (
+    await fetchResponsesForMap(props.callout.slug)
+  ).items.filter((i) => i.photos.length > 0);
 });
 </script>
 

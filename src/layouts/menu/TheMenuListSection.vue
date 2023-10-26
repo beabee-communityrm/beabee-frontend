@@ -1,7 +1,7 @@
 <template>
-  <nav class="px-2 text-body-80 xl:px-4">
+  <nav class="px-2 text-body-80 lg:px-4">
     <div v-if="!isFirst" class="my-2 border-t border-primary-40" />
-    <div v-if="section.title" class="pb-2 md:hidden xl:inline-block">
+    <div v-if="section.title" class="pb-2 md:hidden lg:inline-block">
       {{ t(section.title) }}
     </div>
     <ul class="flex flex-col">

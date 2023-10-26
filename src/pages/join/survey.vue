@@ -20,7 +20,7 @@ meta:
     <CalloutForm
       v-if="joinSurvey"
       :callout="joinSurvey"
-      :style="'sm'"
+      :style="'small'"
       @submitted="goToProfile"
     />
     <div v-if="!setupContent.surveyRequired" class="text-center">

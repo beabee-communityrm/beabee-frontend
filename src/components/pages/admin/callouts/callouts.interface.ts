@@ -19,7 +19,6 @@ export const buckets = computed(() => [
 ]);
 
 export interface ContentStepProps {
-  introText: string;
   formSchema: CalloutFormSchema;
 }
 
@@ -27,6 +26,7 @@ export interface TitleAndImageStepProps {
   title: string;
   description: string;
   coverImageURL: string;
+  introText: string;
   autoSlug: string;
   useCustomSlug: boolean;
   slug: string;

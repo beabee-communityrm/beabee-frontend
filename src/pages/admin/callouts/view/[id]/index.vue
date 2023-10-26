@@ -15,7 +15,7 @@ meta:
       </div>
 
       <AppHeading>{{ t('calloutAdminOverview.settings.label') }}</AppHeading>
-      <AppInfoList>
+      <AppInfoList class="mb-4">
         <AppInfoListItem
           :name="t('calloutAdminOverview.settings.openTo.label')"
           :value="

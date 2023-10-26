@@ -1,21 +1,20 @@
 <template>
   <Form
     class="callout-form-renderer"
-    :class="{ 'has-no-bg': noBg }"
-    :form="form"
-    :submission="answers && { data: answers }"
+    :form="{ components }"
+    :submission="modelValue && { data: modelValue }"
     :options="formOpts"
-    @submit="$emit('submit', $event)"
+    @change="handleChange"
   />
 </template>
 <script lang="ts" setup>
 import {
-  CalloutFormSchema,
+  CalloutComponentSchema,
   CalloutResponseAnswers,
 } from '@beabee/beabee-common';
-import { computed, onBeforeMount } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { Form } from '../../lib/formio';
-import { FormSubmission } from './form-renderer.interface';
+import { FormChangeEvent } from './form-renderer.interface';
 import { config, dom, library } from '@fortawesome/fontawesome-svg-core';
 import {
   faCalendar,
@@ -27,33 +26,37 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { generalContent } from '../../store';
 import { useI18n } from 'vue-i18n';
+import useVuelidate from '@vuelidate/core';
+import { sameAs } from '@vuelidate/validators';
 
-defineEmits<{
-  (e: 'submit', submission: FormSubmission): void;
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: CalloutResponseAnswers[string]): void;
 }>();
 const props = defineProps<{
-  form: CalloutFormSchema;
-  answers?: CalloutResponseAnswers;
+  components: CalloutComponentSchema[];
+  modelValue?: CalloutResponseAnswers[string];
   readonly?: boolean;
-  noBg?: boolean;
-  beforeSubmit?: (submission: FormSubmission) => boolean;
 }>();
 
 const { t } = useI18n();
+
+const isValid = ref(false);
+
+useVuelidate({ isValid: { yes: sameAs(true) } }, { isValid });
+
+function handleChange(evt: FormChangeEvent, changes?: { noValidate: boolean }) {
+  // This handler gets lots of different change events. Use the second argument to
+  // differentiate for the ones we care about.
+  if (changes && !changes.noValidate) {
+    isValid.value = evt.isValid;
+    emit('update:modelValue', evt.data);
+  }
+}
 
 const formOpts = computed(() => ({
   readOnly: props.readonly,
   noAlerts: true,
   renderMode: props.readonly ? 'html' : 'form',
-  hooks: {
-    beforeSubmit: (
-      submission: FormSubmission,
-      next: (err?: unknown) => void
-    ) => {
-      const canSubmit = !props.beforeSubmit || props.beforeSubmit(submission);
-      next(canSubmit ? undefined : true);
-    },
-  },
   language: generalContent.value.locale,
   i18n: {
     [generalContent.value.locale]: {
