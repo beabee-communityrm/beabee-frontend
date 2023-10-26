@@ -141,12 +141,6 @@ export const adminMenu: MenuSection[] = env.cnrMode
             icon: faCog,
             isActive: /^\/admin\/settings.*/,
           },
-          {
-            title: 'menu.uiToolkit',
-            href: '/admin/ui-toolkit',
-            icon: faCog,
-            isActive: /^\/admin\/ui-toolkit.*/,
-          },
         ],
       },
     ];
