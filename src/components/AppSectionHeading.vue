@@ -1,5 +1,5 @@
 <template>
-  <h4 class="font-title text-xl font-regular tracking-tight text-primary">
+  <h4 class="font-title text-xl font-regular tracking-tight text-body">
     <slot />
   </h4>
 </template>
