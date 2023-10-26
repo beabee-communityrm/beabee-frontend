@@ -59,7 +59,7 @@ module.exports = {
         'auth-box': '0 0 1rem 0.125rem rgba(51, 51, 51, 0.4)',
       },
       fontSize: {
-        '2.5xl': '1.75rem',
+        '2.4xl': '1.625rem',
         '3.5xl': '2rem',
       },
       transitionProperty: {

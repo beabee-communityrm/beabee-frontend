@@ -15,28 +15,24 @@ meta:
   </div>
 
   <div class="grid gap-8 lg:grid-cols-2">
-    <div class="mb-6">
-      <AppHeading class="mb-3">Headings</AppHeading>
+    <div class="mb-6 space-y-3">
+      <AppHeading>Headings</AppHeading>
 
-      <p class="mb-3">
+      <p>
         These are the different levels of headings we have and use in the page
         area content.
       </p>
-      <div class="bg-white p-6 mb-3">
-        <AppTitle class="mb-3">h1 AppTitle 32px (was 28px)</AppTitle>
-        <AppHeading class="mb-3">h2 AppHeading 24px (was 20px)</AppHeading>
-        <AppSubHeading class="mb-3"
-          >h3 AppSubHeading 20px (was 18px)</AppSubHeading
-        >
-        <AppSectionHeading class="mb-3"
-          >h4 AppSectionHeading 18px (new)</AppSectionHeading
-        >
+      <div class="bg-white p-6 mb-3 space-y-3">
+        <AppTitle>h1 AppTitle 32px (was 28px)</AppTitle>
+        <AppHeading>h2 AppHeading 26px (was 20px)</AppHeading>
+        <AppSubHeading>h3 AppSubHeading 20px (was 18px)</AppSubHeading>
+        <AppSectionHeading>h4 AppSectionHeading 18px (new)</AppSectionHeading>
       </div>
-      <AppSectionHeading class="mt-6 mb-3">Other headings</AppSectionHeading>
-      <div class="bg-white p-6 mb-3">
-        <PageTitle class="mb-3" :title="t('menu.uiToolkit')" />
-        <AppTitle big class="mb-3">h1 AppTitle .big 48px</AppTitle>
-        <SectionTitle class="mb-3">h2 SectionTitle</SectionTitle>
+      <AppSectionHeading>Other headings</AppSectionHeading>
+      <div class="bg-white p-6 mb-3 space-y-3">
+        <PageTitle :title="t('menu.uiToolkit')" />
+        <AppTitle big>h1 AppTitle big 48px</AppTitle>
+        <SectionTitle>h2 SectionTitle</SectionTitle>
       </div>
       <p class="mb-3">
         The PageTitle component, extends AppTitle. It should be used only once,
@@ -89,14 +85,14 @@ meta:
     </div>
   </div>
 
-  <div class="mb-6">
-    <AppHeading class="mb-3">Buttons</AppHeading>
+  <div class="mb-2">
+    <AppHeading>Buttons</AppHeading>
   </div>
 
   <div class="grid gap-8 lg:grid-cols-2">
-    <div class="mb-6">
+    <div class="mb-6 space-y-3">
       <p>All button styles and uses</p>
-      <ul>
+      <ul class="flex flex-col space-y-4">
         <li><AppButton variant="primary">Primary</AppButton></li>
         <li>
           <AppButton variant="primaryOutlined">Primary Outlined</AppButton>
@@ -113,7 +109,7 @@ import AppTitle from '../../../components/AppTitle.vue';
 import PageTitle from '../../../components/PageTitle.vue';
 import AppHeading from '../../../components/AppHeading.vue';
 import AppSubHeading from '../../../components/AppSubHeading.vue';
-import AppSectionHeading from '../../../components/AppSubHeading.vue';
+import AppSectionHeading from '../../../components/AppSectionHeading.vue';
 import SectionTitle from '../../../components/pages/profile/SectionTitle.vue';
 import AppButton from '../../../components/button/AppButton.vue';
 
