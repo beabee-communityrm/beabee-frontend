@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-4 flex">
-      <div class="flex-1">
+      <div class="flex-1 space-y-3">
         <AppSubHeading>{{ callout.title }}</AppSubHeading>
         <p>{{ callout.excerpt }}</p>
       </div>

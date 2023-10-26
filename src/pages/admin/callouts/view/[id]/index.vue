@@ -8,7 +8,9 @@ meta:
 <template>
   <div class="flex flex-col-reverse gap-8 lg:flex-row lg:justify-between">
     <div class="flex-initial basis-1/2">
-      <AppHeading>{{ t('calloutAdminOverview.summary') }}</AppHeading>
+      <AppHeading class="mb-3">{{
+        t('calloutAdminOverview.summary')
+      }}</AppHeading>
 
       <div class="mb-8 rounded bg-white p-4">
         <CalloutSummary :callout="callout" />
