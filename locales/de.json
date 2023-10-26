@@ -29,6 +29,10 @@
         "desc": "Scannen Sie den unten stehenden QR-Code mit Ihrer Authentifizierungs-App.",
         "title": "QR-Code"
       },
+      "secretInput": {
+        "desc": "Alternativ können Sie den nachstehenden Code in Ihre Authenticator-App eingeben.",
+        "label": "Secret"
+      },
       "title": "2-Faktor Authentifizierung"
     },
     "newsletter": {

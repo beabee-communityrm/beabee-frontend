@@ -29,6 +29,10 @@
         "desc": "Scan the QR code below with your authenticator app.",
         "title": "QR Code"
       },
+      "secretInput": {
+        "desc": "Alternatively, you can enter the following code into your Authenticator app.",
+        "label": "Secret code"
+      },
       "title": "2-factor authentication"
     },
     "newsletter": {

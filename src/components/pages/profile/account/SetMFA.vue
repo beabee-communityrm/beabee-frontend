@@ -49,7 +49,7 @@
 
   <AppModal
     :open="showMFASettingsModal"
-    :title="modalTitle"
+    :title="t(`accountPage.mfa.modalTitle`)"
     class="w-full"
     @close="onCloseMFAModal"
   >
@@ -66,7 +66,17 @@
               {{ t(`accountPage.mfa.scan.desc`) }}
             </p>
             <AppQRCode v-if="totpUrl" :qr-data="totpUrl" />
-            <!-- TODO: Allow other options like show url / secret key here? -->
+            <p class="text-center">
+              {{ t(`accountPage.mfa.secretInput.desc`) }}
+            </p>
+            <div class="p-4">
+              <AppInput
+                readonly
+                type="text"
+                :value="totpSecret.base32"
+                :label="t(`accountPage.mfa.secretInput.label`)"
+              ></AppInput>
+            </div>
           </div>
         </AppSlide>
         <AppSlide>
@@ -80,7 +90,7 @@
               <AppInput
                 v-model="userToken"
                 type="text"
-                :label="codeLabel"
+                :label="t(`accountPage.mfa.codeInput.label`)"
                 name="verifyCode"
                 required
               />
@@ -227,9 +237,6 @@ const userTokenValid = ref(false);
 
 /** TOTP instance */
 let totp: TOTP | null = null;
-
-const modalTitle = computed(() => t(`accountPage.mfa.modalTitle`));
-const codeLabel = computed(() => t(`accountPage.mfa.codeInput.label`));
 
 /** Called when the modal is closed */
 const onCloseMFAModal = () => {

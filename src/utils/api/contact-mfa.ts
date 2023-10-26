@@ -41,7 +41,7 @@ export async function createContactMfa(
 export async function fetchContactMfa(
   contactId: string
 ): Promise<GetContactMfaData> {
-  let { data } = await axios.get<Serial<GetContactMfaData>>(
+  const { data } = await axios.get<Serial<GetContactMfaData>>(
     `/contact/${contactId}/mfa`
   );
   return deserializeContactMfa(data);
