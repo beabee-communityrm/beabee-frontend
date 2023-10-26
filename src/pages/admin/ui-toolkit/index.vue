@@ -7,13 +7,6 @@ meta:
 
 <template>
   <PageTitle border :title="t('menu.uiToolkit')" />
-  <div class="mb-6 space-y-3">
-    <AppHeading>{{ t('uiToolkit.typography.title') }}</AppHeading>
-    <p>
-      List of fonts here (title font / text font; serif vs sans)
-    </p>
-  </div>
-
   <div class="grid gap-8 lg:grid-cols-2">
     <div>
       <div class="mb-10 space-y-3">
@@ -66,51 +59,10 @@ meta:
           data or pagination.
         </p>
         <p class="text-xs bg-white p-3">
-          Extra small text is used for additional information, e.g. password input field details or payment method details.
+          Extra small text is used for additional information, e.g. password
+          input field details or payment method details.
         </p>
       </div>
-      <div class="mb-10 space-y-3">
-        <AppHeading>Labels, tags</AppHeading>
-        <p class="flex items-baseline">
-          <AppBadge class="w-fit mr-2">AppBadge</AppBadge> - didn't find this
-          component in use
-        </p>
-        <ul>
-          <li class="flex items-baseline">
-            <AppRoundBadge :type="success" /> - success
-          </li>
-          <li class="flex items-baseline">
-            <AppRoundBadge :type="warning" /> - warning
-          </li>
-          <li class="flex items-baseline">
-            <AppRoundBadge :type="danger" /> - danger
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="mb-6">
-      <AppHeading class="mb-3">Things to review</AppHeading>
-      <ul>
-        <li>Callout card component: should use a heading for card title</li>
-        <li>headings are missing mobile size adjustments</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="mb-2">
-    <AppHeading>Buttons</AppHeading>
-  </div>
-
-  <div class="grid gap-8 lg:grid-cols-2">
-    <div class="mb-6 space-y-3">
-      <p>All button styles and uses</p>
-      <ul class="flex flex-col space-y-4">
-        <li><AppButton variant="primary">Primary</AppButton></li>
-        <li>
-          <AppButton variant="primaryOutlined">Primary Outlined</AppButton>
-        </li>
-      </ul>
     </div>
   </div>
 </template>
