@@ -1,7 +1,7 @@
 <template>
   <AppSelect v-model="selectedItem" :items="items" class="mb-4 md:hidden" />
   <ul
-    class="mb-4 hidden border-b border-primary-40 text-sm md:-mx-2 md:mb-6 md:flex"
+    class="mb-4 hidden border-b border-primary-40 text-sm xl:text-base md:-mx-2 md:mb-6 md:flex"
   >
     <li v-for="item in items" :key="item.id">
       <router-link
