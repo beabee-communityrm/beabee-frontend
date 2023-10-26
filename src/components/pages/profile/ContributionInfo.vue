@@ -1,26 +1,19 @@
-<template>
-  <div class="flex w-[17rem] pt-3">
-    <div class="flex-1">
-      <div class="title uppercase">{{ t('common.joined') }}</div>
-
-      <div class="content">
-        <div v-for="(item, index) in formattedJoinedDate" :key="index">
-          {{ item }}
-        </div>
-      </div>
-    </div>
-
-    <div v-if="contact.contributionAmount" class="w-px bg-primary-20" />
-
-    <div v-if="contact.contributionAmount" class="flex-1 pl-4">
-      <div class="title uppercase">{{ t('common.contributing') }}</div>
-
-      <div class="content">
-        {{ n(contact.contributionAmount, 'currency') }}<br />
-        {{ t('common.every') }}<br />
-        {{ period }}<br />
-      </div>
-    </div>
+<template
+  ><div class="flex pt-3">
+    <AppInfoList>
+      <AppInfoListItem
+        :name="t('common.joined')"
+        :value="formatLocale(contact.joined, 'PPP')"
+      />
+      <AppInfoListItem
+        :name="t('common.contributing')"
+        :value="
+          contact.contributionAmount
+            ? n(contact.contributionAmount, 'currency')
+            : '–'
+        "
+      />
+    </AppInfoList>
   </div>
 </template>
 
@@ -30,6 +23,8 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { formatLocale } from '../../../utils/dates';
 import { GetContactData } from '../../../utils/api/api.interface';
+import AppInfoList from '../../AppInfoList.vue';
+import AppInfoListItem from '../../AppInfoListItem.vue';
 
 const { t, n } = useI18n();
 
