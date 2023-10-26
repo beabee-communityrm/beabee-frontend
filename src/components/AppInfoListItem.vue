@@ -1,6 +1,6 @@
 <template>
   <div class="mb-2 border-l border-primary-20 pl-2">
-    <dd class="block text-sm font-semibold text-body-80">{{ name }}</dd>
+    <dd class="block text-sm mb-1 font-semibold text-body-80">{{ name }}</dd>
     <dt class="font-bold">
       <slot>
         {{ valueWithDefault }}
