@@ -13,9 +13,7 @@
       </div>
 
       <div class="flex-grow px-4">
-        <h3 class="mb-2 font-title text-2xl font-semibold leading-tight">
-          {{ callout.title }}
-        </h3>
+        <AppSubHeading class="my-2">{{ callout.title }}</AppSubHeading>
 
         <p class="mb-2 text-sm leading-tight">{{ callout.excerpt }}</p>
 
@@ -49,6 +47,7 @@ import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { formatDistanceLocale } from '../../utils/dates';
 import { GetCalloutData } from '../../utils/api/api.interface';
+import AppSubHeading from '../AppSubHeading.vue';
 
 const { t } = useI18n();
 
