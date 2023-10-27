@@ -1,11 +1,75 @@
 {
+  "accountPage": {
+    "mfa": {
+      "codeInput": {},
+      "confirmDelete": {},
+      "enterCode": {},
+      "result": {},
+      "scan": {},
+      "secretInput": {},
+      "validateButton": {}
+    },
+    "newsletter": {
+      "currentStatus": {}
+    }
+  },
   "actions": {
     "back": "Terug",
     "getStarted": "Start",
     "next": "Volgende",
     "submit": "Indienen"
   },
+  "addContact": {
+    "errors": {}
+  },
+  "addNotice": {
+    "form": {}
+  },
+  "adminDashboard": {
+    "latestCallout": {},
+    "mostRecentMembers": {},
+    "numbers": {}
+  },
+  "adminSettings": {
+    "apikey": {
+      "confirmCreate": {},
+      "confirmDelete": {}
+    },
+    "email": {},
+    "general": {
+      "footer": {
+        "dataPrivacy": {},
+        "otherLinks": {}
+      },
+      "socialSharing": {}
+    },
+    "theme": {
+      "colorNames": {},
+      "presetColors": {}
+    }
+  },
+  "advancedSearch": {
+    "matchType": {},
+    "matchWord": {},
+    "operators": {
+      "all": {},
+      "array": {},
+      "blob": {},
+      "boolean": {},
+      "date": {},
+      "enum": {},
+      "number": {},
+      "text": {}
+    },
+    "saveSegment": {
+      "createOrUpdate": {}
+    }
+  },
+  "apiKey": {
+    "data": {}
+  },
   "callout": {
+    "actions": {},
     "addAPoint": "Klik op de kaart als je een punt wilt toevoegen",
     "addLocation": "Voeg een locatie toe",
     "ended": "Deze oproep is geëindigd op {date}",
@@ -23,13 +87,55 @@
       "map": "Kaart"
     }
   },
+  "calloutAdmin": {},
+  "calloutAdminOverview": {
+    "actions": {
+      "confirmDelete": {}
+    },
+    "dates": {},
+    "settings": {
+      "answers": {},
+      "contactInfo": {},
+      "endsWith": {},
+      "openTo": {}
+    }
+  },
+  "calloutBuilder": {
+    "actions": {},
+    "nextSlide": {}
+  },
+  "calloutResponse": {
+    "data": {},
+    "dataGroup": {}
+  },
+  "calloutResponseBuckets": {},
+  "calloutResponseComments": {
+    "actions": {},
+    "confirmDelete": {}
+  },
+  "calloutResponsePage": {
+    "actions": {},
+    "notifications": {}
+  },
+  "calloutResponsesPage": {},
+  "callouts": {
+    "data": {}
+  },
+  "calloutsAdmin": {
+    "data": {},
+    "filter": {}
+  },
   "common": {
+    "contributionType": {},
     "copy": "Kopiëren",
     "every": "elke",
     "hello": "Hallo",
     "in": "in",
     "loading": "Ladt...",
+    "newsletterStatus": {},
     "noResults": "Geen resultaten gevonden",
+    "paymentStatus": {},
+    "role": {},
     "selectNone": "Geen",
     "selectOne": "Kiies er één",
     "share": "Delen",
@@ -44,6 +150,109 @@
     "timeAgo": "{time} geleden",
     "timeIn": "in {time}"
   },
+  "contactContribution": {
+    "confirmCancel": {},
+    "updateNotice": {}
+  },
+  "contactOverview": {
+    "annotation": {},
+    "security": {
+      "mfa": {}
+    }
+  },
+  "contacts": {
+    "data": {},
+    "dataGroup": {}
+  },
+  "contribution": {
+    "paymentHistory": {}
+  },
+  "createCallout": {
+    "steps": {
+      "content": {},
+      "dates": {
+        "inputs": {
+          "expires": {
+            "opts": {}
+          },
+          "starts": {
+            "opts": {}
+          }
+        }
+      },
+      "endMessage": {
+        "inputs": {
+          "action": {
+            "opts": {}
+          },
+          "text": {},
+          "title": {},
+          "url": {}
+        }
+      },
+      "mailchimp": {},
+      "settings": {
+        "inputs": {
+          "anonymous": {
+            "opts": {}
+          },
+          "editable": {
+            "opts": {}
+          },
+          "mapSchema": {
+            "addressPattern": {},
+            "addressPatternProp": {},
+            "addressProp": {},
+            "bounds": {},
+            "center": {},
+            "initialZoom": {},
+            "maxZoom": {},
+            "minZoom": {},
+            "style": {}
+          },
+          "multiple": {
+            "opts": {}
+          },
+          "responseImageFilter": {},
+          "responseImageProp": {},
+          "responseLinks": {},
+          "responseTitleProp": {},
+          "showResponses": {},
+          "visible": {
+            "opts": {}
+          },
+          "whichResponseBuckets": {},
+          "whichResponseViews": {
+            "opts": {}
+          },
+          "who": {
+            "opts": {}
+          }
+        }
+      },
+      "titleAndImage": {
+        "inputs": {
+          "description": {},
+          "image": {},
+          "intro": {},
+          "overrideShare": {
+            "opts": {}
+          },
+          "shareDescription": {},
+          "shareTitle": {},
+          "slug": {
+            "opts": {}
+          },
+          "title": {}
+        }
+      }
+    }
+  },
+  "editCallout": {},
+  "editNotice": {},
+  "folderEditor": {
+    "confirmDelete": {}
+  },
   "footer": {
     "contactUs": "Neem contact met ons op",
     "impressum": "Impressum",
@@ -51,6 +260,7 @@
     "privacyPolicy": "Privacy verklaring",
     "terms": "Algemene voorwaarden"
   },
+  "forgotPassword": {},
   "form": {
     "email": "E-mail",
     "errorMessages": {
@@ -58,11 +268,26 @@
       "validation": "Er ontbreekt iets. Bekijk de velden hierboven."
     },
     "errors": {
+      "address": {},
+      "addressLine1": {},
+      "cityOrTown": {},
+      "color": {},
+      "confirmPassword": {},
+      "email": {},
       "file": {
         "rateLimited": "Upload mislukt: je hebt te veel bestanden geupload, wacht een paar minuten en probeer het opnieuw",
         "tooBig": "Upload mislukt: het bestand mag niet groter zijn dan 20Mb"
-      }
-    }
+      },
+      "firstName": {},
+      "lastName": {},
+      "name": {},
+      "password": {},
+      "postCode": {},
+      "unknown": {},
+      "url": {},
+      "verifyCode": {}
+    },
+    "richtext": {}
   },
   "formRenderer": {
     "components": {
@@ -76,6 +301,7 @@
       }
     }
   },
+  "homePage": {},
   "item": {
     "status": {
       "endedOn": "op {date}",
@@ -83,7 +309,27 @@
       "startsIn": "Gestart in {duration}"
     }
   },
+  "join": {
+    "errors": {
+      "confirmEmail": {},
+      "duplicateEmail": {},
+      "failed": {}
+    }
+  },
+  "joinPayment": {},
+  "joinSetup": {},
   "locale": "nl",
+  "login": {},
+  "membershipBuilder": {
+    "steps": {
+      "accountConfirmation": {
+        "joinSurvey": {}
+      },
+      "emails": {},
+      "intro": {},
+      "joinForm": {}
+    }
+  },
   "menu": {
     "callouts": "Oproepen"
   },
@@ -91,10 +337,48 @@
     "goBack": "Ga terug naar home",
     "text": "Deze pagina bestaat niet. Als u denkt dat dit een vergissing is, neem dan contact op met {support}."
   },
+  "noticeAdminOverview": {
+    "actions": {
+      "confirmDelete": {}
+    }
+  },
+  "notices": {
+    "data": {}
+  },
   "notification": {
     "error": "Er ging iets fout. Probeer de pagina te herladen"
   },
   "pageTitle": {
     "notFound": "Pagina niet gevonden"
+  },
+  "paymentMethods": {
+    "gc_direct-debit": {},
+    "s_bacs": {},
+    "s_card": {},
+    "s_sepa": {}
+  },
+  "payments": {
+    "data": {},
+    "dataGroup": {}
+  },
+  "paymentsAdmin": {
+    "filter": {}
+  },
+  "resetPassword": {},
+  "reviewerEditor": {
+    "confirmDelete": {}
+  },
+  "roleEditor": {
+    "confirmDelete": {},
+    "expires": {
+      "opts": {}
+    },
+    "starts": {
+      "opts": {}
+    }
+  },
+  "setPassword": {},
+  "tagEditor": {
+    "confirmDelete": {}
   }
 }
