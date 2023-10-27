@@ -1,20 +1,18 @@
 <template>
-  <div class="flex flex-wrap gap-x-2 gap-y-4">
-    <label
-      class="flex flex-grow basis-[250px] items-center overflow-hidden rounded border border-primary-40 text-sm"
+  <div class="flex flex-wrap gap-2">
+    <div
+      class="flex flex-grow basis-[250px] rounded border border-primary-40 text-sm"
       :class="hasError ? 'border-danger bg-danger-10' : 'bg-white'"
     >
-      <div
-        class="flex flex-1 items-baseline overflow-hidden px-6 py-3 font-bold"
-      >
-        <span class="text-body-60">{{ generalContent.currencySymbol }}</span>
-        <div class="relative mx-1 overflow-hidden">
-          <div class="text-6xl font-semibold">
+      <label class="flex-1 px-6 flex items-baseline text-body-60 font-bold">
+        <span>{{ generalContent.currencySymbol }}</span>
+        <div class="relative mx-1 font-semibold">
+          <div class="text-6xl/[7rem]">
             {{ amount || '0' }}
           </div>
           <input
             :value="amount"
-            class="absolute inset-0 h-full w-full border-0 text-6xl font-semibold text-body outline-none"
+            class="absolute inset-0 w-full border-0 text-body text-6xl/[7rem] outline-none"
             :min="minAmount"
             :class="{ 'bg-danger-10': hasError }"
             @input="handleInput"
@@ -23,9 +21,8 @@
             @keyup.down="changeAmount(amount - 1)"
           />
         </div>
-
-        <div class="whitespace-nowrap text-body-60">/ {{ period }}</div>
-      </div>
+        <div class="flex-0">/ {{ period }}</div>
+      </label>
 
       <div class="flex h-full flex-none flex-col">
         <button
@@ -45,7 +42,7 @@
           ▼
         </button>
       </div>
-    </label>
+    </div>
 
     <div
       class="flex flex-grow basis-[120px] flex-wrap overflow-hidden rounded p-[1px]"
@@ -68,7 +65,7 @@
 
     <div
       v-if="hasError"
-      class="col-span-12 mt-0 text-sm font-semibold text-danger md:mt-1.5"
+      class="col-span-12 mt-0 text-sm font-semibold text-danger"
       role="alert"
     >
       {{ t('join.minimumContribution') }}
