@@ -74,13 +74,16 @@ meta:
             />
           </div>
         </div>
-        <div class="mb-4 flex gap-4">
-          <AppCheckbox
-            v-model="joinContent.showAbsorbFee"
-            :label="stepT('showAbsorbFee')"
-            class="font-semibold"
-          />
-        </div>
+        <AppCheckbox
+          v-model="joinContent.showNoContribution"
+          :label="stepT('showNoContribution')"
+          class="font-semibold mb-4"
+        />
+        <AppCheckbox
+          v-model="joinContent.showAbsorbFee"
+          :label="stepT('showAbsorbFee')"
+          class="font-semibold mb-4"
+        />
       </AppForm>
     </template>
     <template #col2>

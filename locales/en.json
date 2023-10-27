@@ -1111,7 +1111,8 @@
         "formSubtitle": "Subtitle",
         "formTitle": "Title",
         "minAmount": "Minimum amount",
-        "showAbsorbFee": "Ask about processing fee",
+        "showAbsorbFee": "Ask user about absorbing the payment fee",
+        "showNoContribution": "Allow user to opt to join without a contribution",
         "suggestedAmounts": "Suggested contribution amounts",
         "text": "In this section you can edit, fine tune and preview your membership join form.",
         "title": "Join form"
