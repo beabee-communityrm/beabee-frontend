@@ -91,8 +91,9 @@ const onQrDataChanged = (newValue: AppQRCodeProps) => {
   svgEl.setAttribute('height', '100%');
 };
 
+watch(props, onQrDataChanged, { deep: true });
+
 onMounted(() => {
-  watch(props, onQrDataChanged, { deep: true });
   onQrDataChanged(props);
 });
 </script>
