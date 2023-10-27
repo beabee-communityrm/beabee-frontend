@@ -42,7 +42,7 @@ const sheets = google.sheets({ version: 'v4', auth });
 const localeData = {};
 
 function processKeyData(keyOpts, keyData) {
-  if (keyData !== undefined) {
+  if (keyData) {
     return (
       keyOpts
         // Apply handlers

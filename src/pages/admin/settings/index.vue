@@ -172,6 +172,10 @@ const locales = [
     id: 'de@informal',
     label: 'German (informal)',
   },
+  {
+    id: 'nl',
+    label: 'Dutch (callouts only)',
+  },
 ];
 
 const generalData = reactive({

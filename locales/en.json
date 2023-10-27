@@ -581,7 +581,8 @@
       "instructions": "Copy and share this link:",
       "loginOverride": "Login override",
       "mfa": {
-        "desc": "This contact has 2FA enabled. Click on the \"{ disableLabel }\" button to disable it."
+        "desc": "This contact has 2FA enabled. Click on the \"{ disableLabel }\" button to disable it.",
+        "disabledDesc": "2FA is not enabled for this contact."
       },
       "resetPassword": "Reset password",
       "title": "Security",
@@ -1053,7 +1054,7 @@
     "status": {
       "endedOn": "on {date}",
       "endsIn": "Ends in {duration}",
-      "startsIn": "starts in {duration}"
+      "startsIn": "Starts in {duration}"
     }
   },
   "join": {

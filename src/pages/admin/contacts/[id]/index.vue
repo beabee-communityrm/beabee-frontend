@@ -6,7 +6,7 @@ meta:
 </route>
 
 <template>
-  <App2ColGrid v-if="contact">
+  <App2ColGrid v-if="contact" extended>
     <template #col1>
       <AppHeading>{{ t('contactOverview.overview') }}</AppHeading>
       <AppInfoList>
@@ -78,9 +78,40 @@ meta:
           <font-awesome-icon :icon="faCircleNotch" spin />
         </div>
       </div>
+
+      <AppHeading class="mt-6">{{ t('contactOverview.about') }}</AppHeading>
+      <div
+        class="mb-4 text-sm text-body-80"
+        v-html="t('contactOverview.annotation.copy')"
+      />
+      <AppForm
+        :button-text="t('form.saveChanges')"
+        :success-text="t('contacts.data.annotationsCopy')"
+        @submit.prevent="handleFormSubmit"
+      >
+        <div class="mb-4">
+          <AppInput
+            v-model="contactAnnotations.description"
+            :label="t('contacts.data.description')"
+          />
+        </div>
+        <RichTextEditor
+          v-model="contactAnnotations.notes"
+          :label="t('contacts.data.notes')"
+          class="mb-4"
+        />
+        <div class="mb-4">
+          <TagDropdown
+            v-if="contactTags.length > 0"
+            v-model="contactAnnotations.tags"
+            :tags="contactTags"
+            :label="t('contacts.data.tags')"
+          />
+        </div>
+      </AppForm>
     </template>
     <template #col2>
-      <AppHeading>{{ t('contactOverview.information') }}</AppHeading>
+      <AppHeading>{{ t('contactOverview.profile') }}</AppHeading>
       <AppInfoList>
         <AppInfoListItem
           :name="t('contacts.data.preferredChannel')"
@@ -112,44 +143,9 @@ meta:
         />
       </AppInfoList>
 
-      <AppHeading class="mt-6">{{ t('contactOverview.about') }}</AppHeading>
-      <div
-        class="mb-4 text-sm text-body-80"
-        v-html="t('contactOverview.annotation.copy')"
-      />
-
-      <AppForm
-        :button-text="t('form.saveChanges')"
-        :success-text="t('contacts.data.annotationsCopy')"
-        @submit.prevent="handleFormSubmit"
-      >
-        <div class="mb-4">
-          <AppInput
-            v-model="contactAnnotations.description"
-            :label="t('contacts.data.description')"
-          />
-        </div>
-        <RichTextEditor
-          v-model="contactAnnotations.notes"
-          :label="t('contacts.data.notes')"
-          class="mb-4"
-        />
-        <div class="mb-4">
-          <TagDropdown
-            v-if="contactTags.length > 0"
-            v-model="contactAnnotations.tags"
-            :tags="contactTags"
-            :label="t('contacts.data.tags')"
-          />
-        </div>
-      </AppForm>
-
       <!-- Security -->
       <section class="mt-6">
-        <!-- Hide this as long as 2FA is the only option but disabled -->
-        <AppHeading v-if="mfa.isEnabled">{{
-          t('contactOverview.security.title')
-        }}</AppHeading>
+        <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
 
         <!-- Multi factor authentication -->
         <section v-if="mfa.isEnabled" class="mt-4">
@@ -160,6 +156,7 @@ meta:
               })
             }}
           </p>
+
           <AppButton
             type="button"
             variant="primaryOutlined"
@@ -169,6 +166,12 @@ meta:
           >
             {{ t(`actions.disable`) }}
           </AppButton>
+        </section>
+
+        <section v-else class="mt-4">
+          <p>
+            {{ t('contactOverview.security.mfa.disabledDesc') }}
+          </p>
         </section>
 
         <!-- Not implemented yet -->
@@ -191,6 +194,19 @@ meta:
           </div>
         </section>
       </section>
+
+      <template v-if="joinSurvey && joinSurveyResponse">
+        <AppHeading class="mt-6">
+          {{ t('contactOverview.joinSurvey') }}
+        </AppHeading>
+        <CalloutForm
+          :callout="joinSurvey"
+          :answers="joinSurveyResponse.answers"
+          :style="'small'"
+          all-slides
+          readonly
+        />
+      </template>
     </template>
   </App2ColGrid>
 
@@ -230,6 +246,8 @@ import {
   GetContactData,
   GetContactDataWith,
   ContactRoleData,
+  GetCalloutDataWith,
+  GetCalloutResponseDataWith,
 } from '../../../../utils/api/api.interface';
 import {
   deleteRole,
@@ -247,6 +265,8 @@ import {
 import { ContactMfaType } from '../../../../utils/api/api.interface';
 
 import env from '../../../../env';
+import { fetchCallout, fetchResponses } from '../../../../utils/api/callout';
+import CalloutForm from '../../../../components/pages/callouts/CalloutForm.vue';
 
 import { addNotification } from '../../../../store/notifications';
 
@@ -291,6 +311,8 @@ const disableMfa = async () => {
   await deleteContactMfa(props.contact.id);
   mfa.value.isEnabled = false;
 };
+const joinSurvey = ref<GetCalloutDataWith<'form'>>();
+const joinSurveyResponse = ref<GetCalloutResponseDataWith<'answers'>>();
 
 async function handleFormSubmit() {
   await updateContact(props.contact.id, {
@@ -334,9 +356,31 @@ onBeforeMount(async () => {
 
   contactTags.value = (await fetchContent('contacts')).tags;
 
+  // Fetch MFA information
   const contactMfa = await fetchContactMfa(props.contact.id);
   if (contactMfa && contactMfa.type === ContactMfaType.TOTP) {
     mfa.value.isEnabled = true;
+  }
+
+  const setupContent = await fetchContent('join/setup');
+  if (setupContent.surveySlug) {
+    joinSurvey.value = await fetchCallout(setupContent.surveySlug, ['form']);
+    const responses = await fetchResponses(
+      setupContent.surveySlug,
+      {
+        limit: 1,
+        order: 'DESC',
+        sort: 'createdAt',
+        rules: {
+          condition: 'AND',
+          rules: [
+            { field: 'contact', operator: 'equal', value: [props.contact.id] },
+          ],
+        },
+      },
+      ['answers']
+    );
+    joinSurveyResponse.value = responses.items[0];
   }
 });
 </script>

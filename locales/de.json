@@ -581,7 +581,8 @@
       "instructions": "Link kopieren und teilen:",
       "loginOverride": "Automatischer Login",
       "mfa": {
-        "desc": "Dieser Kontakt hat 2FA aktiviert. Klicken Sie auf \"{ disableLabel }\", um es zu deaktivieren."
+        "desc": "Dieser Kontakt hat 2FA aktiviert. Klicken Sie auf \"{ disableLabel }\", um es zu deaktivieren.",
+        "disabledDesc": "Dieser Kontakt hat keine 2FA aktiviert."
       },
       "resetPassword": "Passwort zurücksetzen",
       "title": "Sicherheit",
@@ -918,7 +919,6 @@
     "terms": "Allgemeine Geschäftsbedingungen"
   },
   "forgotPassword": {
-    "backToLogin": "",
     "checkInbox": "Bitte schauen Sie in Ihren Posteingang und befolgen Sie die Anleitung in der E-Mail. Sollte die E-Mail nicht auftauchen, schauen Sie auch in ihrem Spamordner nach.",
     "description": "Bitte geben Sie Ihre E-Mail-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.",
     "message": "Gibt es einen Account mit der E-Mail-Adresse {email}, bekommen Sie in Kürze eine Nachricht.",
@@ -1051,7 +1051,7 @@
     "status": {
       "endedOn": "am {date}",
       "endsIn": "Endet in {duration}",
-      "startsIn": "startet in {duration}"
+      "startsIn": "Startet in {duration}"
     }
   },
   "join": {
