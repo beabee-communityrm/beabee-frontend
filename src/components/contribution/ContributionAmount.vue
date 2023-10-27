@@ -2,7 +2,13 @@
   <div class="flex flex-wrap gap-2">
     <div
       class="flex flex-grow basis-[250px] rounded border border-primary-40 text-sm"
-      :class="hasError ? 'border-danger bg-danger-10' : 'bg-white'"
+      :class="
+        disabled
+          ? 'opacity-50'
+          : hasError
+          ? 'border-danger bg-danger-10'
+          : 'bg-white'
+      "
     >
       <label class="flex-1 px-6 flex items-baseline text-body-60 font-bold">
         <span>{{ generalContent.currencySymbol }}</span>
@@ -15,6 +21,7 @@
             class="absolute inset-0 w-full border-0 text-body text-6xl/[7rem] outline-none"
             :min="minAmount"
             :class="{ 'bg-danger-10': hasError }"
+            :disabled="disabled"
             @input="handleInput"
             @keydown.up.prevent="0 /* just stop caret moving */"
             @keyup.up="changeAmount(amount + 1)"
@@ -28,6 +35,7 @@
         <button
           class="amount-button border-b border-l"
           type="button"
+          :disabled="disabled"
           @click="changeAmount(amount + 1)"
         >
           ▲
@@ -36,6 +44,7 @@
         <button
           class="amount-button border-l"
           type="button"
+          :disabled="disabled"
           :class="{ 'is-invalid': amount <= minAmount }"
           @click="changeAmount(amount - 1)"
         >
@@ -44,24 +53,18 @@
       </div>
     </div>
 
-    <div
-      class="flex flex-grow basis-[120px] flex-wrap overflow-hidden rounded p-[1px]"
-    >
-      <button
-        v-for="(definedAmount, index) in definedAmounts"
-        :key="index"
-        type="button"
-        class="flex-grow basis-[90px] p-2 text-sm font-semibold outline outline-1"
-        :class="
-          definedAmount === amount
-            ? 'z-20 bg-link font-bold text-white outline-link-110'
-            : 'bg-white outline-primary-40 hover:z-10 hover:bg-link-10 hover:outline-link'
-        "
-        @click="changeAmount(definedAmount)"
-      >
-        {{ n(definedAmount, 'currency') }}
-      </button>
-    </div>
+    <AppChoice
+      :model-value="amount"
+      :items="
+        definedAmounts.map((amount) => ({
+          label: n(amount, 'currency'),
+          value: amount,
+        }))
+      "
+      :disabled="disabled"
+      :size="'xs'"
+      @update:model-value="changeAmount($event)"
+    />
 
     <div
       v-if="hasError"
@@ -80,6 +83,7 @@ import { useI18n } from 'vue-i18n';
 import { minValue } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import { generalContent } from '../../store';
+import AppChoice from '../forms/AppChoice.vue';
 
 const { t, n } = useI18n();
 
@@ -89,6 +93,7 @@ const props = defineProps<{
   isMonthly: boolean;
   minAmount: number;
   definedAmounts: number[];
+  disabled: boolean;
 }>();
 
 const amount = computed({
@@ -113,7 +118,9 @@ const hasError = computed(() => validation.value.$errors.length > 0);
 
 const rules = computed(() => ({
   amount: {
-    minValue: minValue(toRefs(props).minAmount),
+    ...(!props.disabled && {
+      minValue: minValue(toRefs(props).minAmount),
+    }),
   },
 }));
 
@@ -126,7 +133,7 @@ const period = computed(() => {
 
 <style lang="postcss" scoped>
 .amount-button {
-  @apply h-1/2 border-primary-40 bg-white px-4 py-2 text-primary-70 hover:bg-primary-5 hover:text-primary;
+  @apply h-1/2 border-primary-40 bg-white px-4 py-2 text-primary-70 enabled:hover:bg-primary-5 enabled:hover:text-primary;
   &.is-invalid {
     @apply cursor-not-allowed text-grey;
   }
