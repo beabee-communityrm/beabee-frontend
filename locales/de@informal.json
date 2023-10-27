@@ -869,7 +869,6 @@
   },
   "footer": {
     "contactUs": "Kontaktiere uns unter",
-    "contacts": "Kontakte",
     "handbookResources": "Handbuch & Ressourcen",
     "impressum": "Impressum",
     "joinCommunity": "Mitglied werden",
@@ -1008,7 +1007,7 @@
     "status": {
       "endedOn": "am {date}",
       "endsIn": "Endet in {duration}",
-      "startsIn": "startet in {duration}"
+      "startsIn": "Startet in {duration}"
     }
   },
   "join": {
@@ -1122,7 +1121,6 @@
     "admin": "Administration",
     "adminSettings": "Einstellungen",
     "callouts": "Callouts",
-    "community": "Community",
     "contacts": "Kontakte",
     "contribution": "Beitrag",
     "dashboard": "Dashboard",
