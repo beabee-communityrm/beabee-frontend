@@ -1,0 +1,100 @@
+{
+  "actions": {
+    "back": "Terug",
+    "getStarted": "Start",
+    "next": "Volgende",
+    "submit": "Indienen"
+  },
+  "callout": {
+    "addAPoint": "Klik op de kaart als je een punt wilt toevoegen",
+    "addLocation": "Voeg een locatie toe",
+    "ended": "Deze oproep is geëindigd op {date}",
+    "form": {
+      "submittingResponseError": "er was een probleem om je antwoord te verwerken, probeer het opnieuw"
+    },
+    "getStarted": "Start",
+    "responseSubmitted": "Antwoord ingediend",
+    "share": {
+      "address": "Deel deze oproep met het volgende adres:",
+      "services": "Of deel snel via een van deze diensten:"
+    },
+    "views": {
+      "gallery": "Gallerij",
+      "map": "Kaart"
+    }
+  },
+  "common": {
+    "copy": "Kopiëren",
+    "every": "elke",
+    "hello": "Hallo",
+    "in": "in",
+    "loading": "Ladt...",
+    "noResults": "Geen resultaten gevonden",
+    "selectNone": "Geen",
+    "selectOne": "Kiies er één",
+    "share": "Delen",
+    "show": "Laat zien",
+    "status": {
+      "draft": "Ontwerp",
+      "ended": "Beëindigd",
+      "open": "Open",
+      "scheduled": "Gepland"
+    },
+    "thankYou": "Dankjewel",
+    "timeAgo": "{time} geleden",
+    "timeIn": "in {time}"
+  },
+  "footer": {
+    "contactUs": "Neem contact met ons op",
+    "impressum": "Impressum",
+    "poweredBy": "We versterken onafhankelijk lokale redacties",
+    "privacyPolicy": "Privacy verklaring",
+    "terms": "Algemene voorwaarden"
+  },
+  "form": {
+    "email": "E-mail",
+    "errorMessages": {
+      "generic": "Oeps, er ging iets fout! Neem contact op met support als het nog een keer gebeurd.",
+      "validation": "Er ontbreekt iets. Bekijk de velden hierboven."
+    },
+    "errors": {
+      "file": {
+        "rateLimited": "Upload mislukt: je hebt te veel bestanden geupload, wacht een paar minuten en probeer het opnieuw",
+        "tooBig": "Upload mislukt: het bestand mag niet groter zijn dan 20Mb"
+      }
+    }
+  },
+  "formRenderer": {
+    "components": {
+      "file": {
+        "browse": "Upload van je apparaat",
+        "dropFiles": "Plaats het bestand hier",
+        "or": "of",
+        "switchToFileUpload": "Verander naar bestand upload",
+        "takePicture": "Neem een foto",
+        "useCamera": "gebruik je camera"
+      }
+    }
+  },
+  "item": {
+    "status": {
+      "endedOn": "op {date}",
+      "endsIn": "Beëindigd op {duration}",
+      "startsIn": "Gestart in {duration}"
+    }
+  },
+  "locale": "nl",
+  "menu": {
+    "callouts": "Oproepen"
+  },
+  "notFound": {
+    "goBack": "Ga terug naar home",
+    "text": "Deze pagina bestaat niet. Als u denkt dat dit een vergissing is, neem dan contact op met {support}."
+  },
+  "notification": {
+    "error": "Er ging iets fout. Probeer de pagina te herladen"
+  },
+  "pageTitle": {
+    "notFound": "Pagina niet gevonden"
+  }
+}
