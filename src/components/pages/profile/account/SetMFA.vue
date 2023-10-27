@@ -90,9 +90,12 @@
                 required
               />
 
-              <p v-if="steps.enterCode.error" class="text-center">
-                Token invalid TODO
-              </p>
+              <AppNotification
+                :class="{ 'opacity-0': !steps.enterCode.error }"
+                class="my-4"
+                variant="error"
+                :title="t('accountPage.mfa.result.invalidCode')"
+              />
             </span>
           </div>
         </AppSlide>
@@ -150,7 +153,7 @@
                 (!steps.enterCode.validated || steps.enterCode.error)
               "
               variant="link"
-              @click="validateTotpToken()"
+              @click="nextSlideIfValid()"
             >
               {{ t(`accountPage.mfa.validateButton.label`) }}
             </AppButton>
@@ -186,6 +189,7 @@ import AppSlide from '../../../slider/AppSlide.vue';
 import AppQRCode from '../../../AppQRCode.vue';
 import AppInput from '../../../forms/AppInput.vue';
 import AppConfirmDialog from '../../../AppConfirmDialog.vue';
+import AppNotification from '../../../AppNotification.vue';
 
 import { addNotification } from '../../../../store/notifications';
 import { generalContent } from '../../../../store';
@@ -270,6 +274,7 @@ const closeMFAModal = () => {
   showMFASettingsModal.value = false;
 };
 
+/** Save MFA on server and notify the user */
 const saveMfaAndNotify = async () => {
   closeMFAModal();
   const result = await createContactMfa(props.contactId, {
@@ -355,12 +360,21 @@ const validateTotpToken = (window = 2) => {
 
   userTokenValid.value = delta === 0;
 
-  steps.enterCode.error = !userTokenValid.value;
-  steps.result.error = !userTokenValid.value;
-  steps.enterCode.validated = userTokenValid.value;
-  steps.result.validated = userTokenValid.value;
-
   return userTokenValid.value;
+};
+
+const nextSlideIfValid = () => {
+  const isValid = validateTotpToken();
+
+  if (isValid) {
+    steps.enterCode.error = !userTokenValid.value;
+    steps.enterCode.validated = userTokenValid.value;
+
+    appSliderCo.value?.nextSlide();
+
+    steps.result.error = !userTokenValid.value;
+    steps.result.validated = userTokenValid.value;
+  }
 };
 
 /** Are all steps done with no errors? */
