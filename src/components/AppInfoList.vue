@@ -1,5 +1,5 @@
 <template>
-  <dl class="mt-4 flex flex-wrap gap-4">
+  <dl class="flex flex-wrap gap-4">
     <slot />
   </dl>
 </template>

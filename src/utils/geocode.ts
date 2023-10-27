@@ -2,6 +2,7 @@ import { CalloutResponseAnswerAddress } from '@beabee/beabee-common';
 import { GeocodingFeature } from '@maptiler/client';
 import { geocoding } from '../lib/maptiler';
 import { generalContent } from '../store';
+import env from '../env';
 
 export interface GeocodeResult {
   formatted_address: string;
@@ -32,6 +33,10 @@ export async function reverseGeocode(
   lat: number,
   lng: number
 ): Promise<GeocodeResult | undefined> {
+  if (!env.maptilerKey) {
+    return undefined;
+  }
+
   const data = await geocoding.reverse([lng, lat], {
     language: generalContent.value.locale,
     types: ['address', 'postal_code', 'municipality', 'county', 'region'],

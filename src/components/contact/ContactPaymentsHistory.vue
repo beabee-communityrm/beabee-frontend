@@ -1,8 +1,6 @@
 <template>
   <div v-if="paymentsHistoryTable.total > 0">
-    <AppHeading class="mb-2">{{
-      t('contribution.paymentHistory.title')
-    }}</AppHeading>
+    <AppHeading>{{ t('contribution.paymentHistory.title') }}</AppHeading>
     <AppTable
       :sort="{ by: 'chargeDate', type: SortType.Desc }"
       :headers="headers"

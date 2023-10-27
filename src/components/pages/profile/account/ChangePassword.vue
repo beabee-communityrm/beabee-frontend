@@ -1,5 +1,5 @@
 <template>
-  <AppHeading class="mb-3">
+  <AppHeading>
     {{ t('accountPage.loginDetail') }}
   </AppHeading>
 

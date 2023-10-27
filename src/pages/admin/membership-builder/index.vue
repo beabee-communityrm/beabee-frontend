@@ -6,88 +6,87 @@ meta:
 </route>
 
 <template>
-  <div class="mb-8 grid grid-cols-2 gap-8">
-    <div>
+  <App2ColGrid class="mb-8">
+    <template #col1>
       <p>{{ stepT('text') }}</p>
-    </div>
-  </div>
-  <div v-if="joinContent" class="mb-12 grid grid-cols-2 gap-8">
-    <AppForm
-      :button-text="t('form.saveChanges')"
-      :success-text="t('form.saved')"
-      @submit="handleUpdate"
-    >
-      <div class="mb-4">
-        <AppInput
-          v-model="joinContent.title"
-          :label="stepT('formTitle')"
-          required
-        />
-      </div>
-      <RichTextEditor
-        v-model="joinContent.subtitle"
-        :label="stepT('formSubtitle')"
-        class="mb-4"
-      />
-
-      <AppImageUpload
-        v-model="validation.backgroundUrl.$model"
-        :label="stepT('backgroundImage')"
-        :width="1440"
-        :height="810"
-        class="mb-4"
-        required
-        :error-message="validation.backgroundUrl.$errors[0]?.$message"
-      />
-
-      <AppSubHeading class="mb-2">
-        {{ stepT('suggestedAmounts') }} *
-      </AppSubHeading>
-      <div class="mb-4 flex gap-4">
-        <PeriodAmounts
-          v-for="(period, periodI) in joinContent.periods"
-          :key="period.name"
-          v-model="joinContent.periods[periodI].presetAmounts"
-          :period="period.name"
-          :min-monthly-amount="joinContent.minMonthlyAmount"
-          class="flex-1"
-        />
-      </div>
-      <div class="mb-4 flex gap-4">
-        <div class="flex-1">
-          <AppLabel :label="stepT('minAmount')" />
+    </template>
+  </App2ColGrid>
+  <App2ColGrid v-if="joinContent" extended>
+    <template #col1>
+      <AppForm
+        :button-text="t('form.saveChanges')"
+        :success-text="t('form.saved')"
+        @submit="handleUpdate"
+      >
+        <div class="mb-4">
           <AppInput
-            v-model="joinContent.minMonthlyAmount"
-            type="number"
-            :min="1"
-            required
-            class="block w-32"
-          />
-        </div>
-        <div class="flex-1">
-          <AppSelect
-            v-model="selectedDefaultAmount"
-            :label="stepT('defaultAmount')"
-            :items="defaultAmounts"
+            v-model="joinContent.title"
+            :label="stepT('formTitle')"
             required
           />
         </div>
-      </div>
-      <div class="mb-4 flex gap-4">
-        <AppCheckbox
-          v-model="joinContent.showAbsorbFee"
-          :label="stepT('showAbsorbFee')"
-          class="font-semibold"
+        <RichTextEditor
+          v-model="joinContent.subtitle"
+          :label="stepT('formSubtitle')"
+          class="mb-4"
         />
-      </div>
-    </AppForm>
-    <div
-      class="bg-cover bg-center p-4 pt-8"
-      :style="`background-image: url(${backgroundUrl})`"
-    >
-      <JoinForm :join-content="joinContent" />
-    </div>
-  </div>
+
+        <AppImageUpload
+          v-model="validation.backgroundUrl.$model"
+          :label="stepT('backgroundImage')"
+          :width="1440"
+          :height="810"
+          class="mb-4"
+          required
+          :error-message="validation.backgroundUrl.$errors[0]?.$message"
+        />
+
+        <AppSubHeading class="mb-2">
+          {{ stepT('suggestedAmounts') }} *
+        </AppSubHeading>
+        <div class="mb-4 flex gap-4">
+          <PeriodAmounts
+            v-for="(period, periodI) in joinContent.periods"
+            :key="period.name"
+            v-model="joinContent.periods[periodI].presetAmounts"
+            :period="period.name"
+            :min-monthly-amount="joinContent.minMonthlyAmount"
+            class="flex-1"
+          />
+        </div>
+        <div class="mb-4 flex gap-4">
+          <div class="flex-1">
+            <AppLabel :label="stepT('minAmount')" />
+            <AppInput
+              v-model="joinContent.minMonthlyAmount"
+              type="number"
+              :min="1"
+              required
+              class="block w-32"
+            />
+          </div>
+          <div class="flex-1">
+            <AppSelect
+              v-model="selectedDefaultAmount"
+              :label="stepT('defaultAmount')"
+              :items="defaultAmounts"
+              required
+            />
+          </div>
+        </div>
+        <div class="mb-4 flex gap-4">
+          <AppCheckbox
+            v-model="joinContent.showAbsorbFee"
+            :label="stepT('showAbsorbFee')"
+            class="font-semibold"
+          />
+        </div>
+      </AppForm>
+    </template>
+    <template #col2>
+      <JoinForm :join-content="joinContent" preview />
+    </template>
+  </App2ColGrid>
 </template>
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref } from 'vue';
@@ -107,6 +106,7 @@ import { generalContent } from '../../../store';
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import PeriodAmounts from '../../../components/pages/admin/membership-builder/PeriodAmounts.vue';
+import App2ColGrid from '../../../components/App2ColGrid.vue';
 import AppSubHeading from '../../../components/AppSubHeading.vue';
 
 const joinContent = ref<JoinContent>();

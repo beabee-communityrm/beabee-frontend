@@ -6,8 +6,8 @@ meta:
 </route>
 
 <template>
-  <div v-if="contact" class="grid gap-8 lg:grid-cols-2">
-    <div>
+  <App2ColGrid v-if="contact" extended>
+    <template #col1>
       <AppHeading>{{ t('contactOverview.overview') }}</AppHeading>
       <AppInfoList>
         <AppInfoListItem
@@ -21,9 +21,97 @@ meta:
           "
         />
       </AppInfoList>
-    </div>
-    <div>
-      <AppHeading>{{ t('contactOverview.information') }}</AppHeading>
+
+      <div v-if="!env.cnrMode">
+        <AppHeading class="mt-6">
+          {{ t('contactOverview.contribution') }}
+        </AppHeading>
+        <AppInfoList>
+          <AppInfoListItem
+            :name="t('contacts.data.amount')"
+            :value="
+              contact.contributionAmount
+                ? n(contact.contributionAmount, 'currency')
+                : '–'
+            "
+          />
+          <AppInfoListItem
+            :name="t('contacts.data.period')"
+            :value="contact.contributionPeriod"
+          />
+          <AppInfoListItem
+            v-if="contact.contribution.type === ContributionType.Automatic"
+            :name="t('contacts.data.payingFee')"
+            :value="
+              contact.contribution.payFee ? t('common.yes') : t('common.no')
+            "
+          />
+          <AppInfoListItem
+            :name="t('contactOverview.contributionType')"
+            :value="contact.contribution.type"
+          />
+          <AppInfoListItem
+            v-if="contact.contribution.paymentSource?.method"
+            :name="t('contribution.paymentMethod')"
+          >
+            <PaymentMethod :source="contact.contribution.paymentSource" />
+          </AppInfoListItem>
+          <AppInfoListItem
+            v-if="contact.contribution.cancellationDate"
+            :name="t('contactOverview.cancellationDate')"
+            :value="formatLocale(contact.contribution.cancellationDate, 'PPP')"
+          />
+        </AppInfoList>
+      </div>
+
+      <AppHeading class="mt-6">{{ t('contactOverview.roles') }}</AppHeading>
+      <div class="relative mt-4">
+        <RoleEditor
+          :roles="contact.roles"
+          @delete="handleDeleteRole"
+          @update="handleUpdateRole"
+        />
+        <div
+          v-if="changingRoles"
+          class="absolute inset-0 flex items-center justify-center bg-primary-5/50"
+        >
+          <font-awesome-icon :icon="faCircleNotch" spin />
+        </div>
+      </div>
+
+      <AppHeading class="mt-6">{{ t('contactOverview.about') }}</AppHeading>
+      <div
+        class="mb-4 text-sm text-body-80"
+        v-html="t('contactOverview.annotation.copy')"
+      />
+      <AppForm
+        :button-text="t('form.saveChanges')"
+        :success-text="t('contacts.data.annotationsCopy')"
+        @submit.prevent="handleFormSubmit"
+      >
+        <div class="mb-4">
+          <AppInput
+            v-model="contactAnnotations.description"
+            :label="t('contacts.data.description')"
+          />
+        </div>
+        <RichTextEditor
+          v-model="contactAnnotations.notes"
+          :label="t('contacts.data.notes')"
+          class="mb-4"
+        />
+        <div class="mb-4">
+          <TagDropdown
+            v-if="contactTags.length > 0"
+            v-model="contactAnnotations.tags"
+            :tags="contactTags"
+            :label="t('contacts.data.tags')"
+          />
+        </div>
+      </AppForm>
+    </template>
+    <template #col2>
+      <AppHeading>{{ t('contactOverview.profile') }}</AppHeading>
       <AppInfoList>
         <AppInfoListItem
           :name="t('contacts.data.preferredChannel')"
@@ -54,116 +142,40 @@ meta:
           :value="contact.profile.newsletterGroups.join(', ')"
         />
       </AppInfoList>
-    </div>
-
-    <div v-if="!env.cnrMode">
-      <AppHeading>{{ t('contactOverview.contribution') }}</AppHeading>
-      <AppInfoList>
-        <AppInfoListItem
-          :name="t('contacts.data.amount')"
-          :value="
-            contact.contributionAmount
-              ? n(contact.contributionAmount, 'currency')
-              : '–'
-          "
-        />
-        <AppInfoListItem
-          :name="t('contacts.data.period')"
-          :value="contact.contributionPeriod"
-        />
-        <AppInfoListItem
-          v-if="contact.contribution.type === ContributionType.Automatic"
-          :name="t('contacts.data.payingFee')"
-          :value="
-            contact.contribution.payFee ? t('common.yes') : t('common.no')
-          "
-        />
-        <AppInfoListItem
-          :name="t('contactOverview.contributionType')"
-          :value="contact.contribution.type"
-        />
-        <AppInfoListItem
-          v-if="contact.contribution.paymentSource?.method"
-          :name="t('contribution.paymentMethod')"
-        >
-          <PaymentMethod :source="contact.contribution.paymentSource" />
-        </AppInfoListItem>
-        <AppInfoListItem
-          v-if="contact.contribution.cancellationDate"
-          :name="t('contactOverview.cancellationDate')"
-          :value="formatLocale(contact.contribution.cancellationDate, 'PPP')"
-        />
-      </AppInfoList>
-    </div>
-
-    <div class="row-span-3 max-w-xl">
-      <AppHeading>{{ t('contactOverview.about') }}</AppHeading>
-      <div
-        class="mb-5 text-sm text-body-80"
-        v-html="t('contactOverview.annotation.copy')"
-      />
-
-      <AppForm
-        :button-text="t('form.saveChanges')"
-        :success-text="t('contacts.data.annotationsCopy')"
-        @submit.prevent="handleFormSubmit"
-      >
-        <div class="mb-4">
-          <AppInput
-            v-model="contactAnnotations.description"
-            :label="t('contacts.data.description')"
-          />
-        </div>
-        <RichTextEditor
-          v-model="contactAnnotations.notes"
-          :label="t('contacts.data.notes')"
-          class="mb-4"
-        />
-        <div class="mb-4">
-          <TagDropdown
-            v-if="contactTags.length > 0"
-            v-model="contactAnnotations.tags"
-            :tags="contactTags"
-            :label="t('contacts.data.tags')"
-          />
-        </div>
-      </AppForm>
-    </div>
-
-    <div>
-      <AppHeading>{{ t('contactOverview.roles') }}</AppHeading>
-      <div class="relative mt-4">
-        <RoleEditor
-          :roles="contact.roles"
-          @delete="handleDeleteRole"
-          @update="handleUpdateRole"
-        />
-        <div
-          v-if="changingRoles"
-          class="absolute inset-0 flex items-center justify-center bg-primary-5/50"
-        >
-          <font-awesome-icon :icon="faCircleNotch" spin />
+      <div class="hidden">
+        <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
+        <p>{{ t('contactOverview.security.whatDoTheButtonsDo') }}</p>
+        <form @submit.prevent="handleSecurityAction">
+          <AppButton type="submit" variant="primaryOutlined" class="mt-4">{{
+            t('contactOverview.security.loginOverride')
+          }}</AppButton>
+          <AppButton
+            type="submit"
+            variant="primaryOutlined"
+            class="ml-6 mt-2"
+            >{{ t('contactOverview.security.resetPassword') }}</AppButton
+          >
+        </form>
+        <div v-if="securityLink" class="mt-4">
+          <p class="mt-4">{{ t('contactOverview.security.instructions') }}</p>
+          <AppInput readonly :value="securityLink" class="mt-2"></AppInput>
         </div>
       </div>
-    </div>
 
-    <div class="hidden">
-      <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
-      <p>{{ t('contactOverview.security.whatDoTheButtonsDo') }}</p>
-      <form @submit.prevent="handleSecurityAction">
-        <AppButton type="submit" variant="primaryOutlined" class="mt-4">{{
-          t('contactOverview.security.loginOverride')
-        }}</AppButton>
-        <AppButton type="submit" variant="primaryOutlined" class="ml-6 mt-2">{{
-          t('contactOverview.security.resetPassword')
-        }}</AppButton>
-      </form>
-      <div v-if="securityLink" class="mt-4">
-        <p class="mt-4">{{ t('contactOverview.security.instructions') }}</p>
-        <AppInput readonly :value="securityLink" class="mt-2"></AppInput>
-      </div>
-    </div>
-  </div>
+      <template v-if="joinSurvey && joinSurveyResponse">
+        <AppHeading class="mt-6">
+          {{ t('contactOverview.joinSurvey') }}
+        </AppHeading>
+        <CalloutForm
+          :callout="joinSurvey"
+          :answers="joinSurveyResponse.answers"
+          :style="'small'"
+          all-slides
+          readonly
+        />
+      </template>
+    </template>
+  </App2ColGrid>
 </template>
 
 <script lang="ts" setup>
@@ -179,6 +191,8 @@ import {
   GetContactData,
   GetContactDataWith,
   ContactRoleData,
+  GetCalloutDataWith,
+  GetCalloutResponseDataWith,
 } from '../../../../utils/api/api.interface';
 import {
   deleteRole,
@@ -192,9 +206,12 @@ import { formatLocale } from '../../../../utils/dates';
 import { fetchContent } from '../../../../utils/api/content';
 import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 import AppForm from '../../../../components/forms/AppForm.vue';
+import App2ColGrid from '../../../../components/App2ColGrid.vue';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import PaymentMethod from '../../../../components/payment-method/PaymentMethod.vue';
 import env from '../../../../env';
+import { fetchCallout, fetchResponses } from '../../../../utils/api/callout';
+import CalloutForm from '../../../../components/pages/callouts/CalloutForm.vue';
 
 const { t, n } = useI18n();
 
@@ -215,6 +232,9 @@ const contactAnnotations = reactive({
 });
 const securityLink = ref('');
 const changingRoles = ref(false);
+
+const joinSurvey = ref<GetCalloutDataWith<'form'>>();
+const joinSurveyResponse = ref<GetCalloutResponseDataWith<'answers'>>();
 
 async function handleFormSubmit() {
   await updateContact(props.contact.id, {
@@ -257,5 +277,26 @@ onBeforeMount(async () => {
   contactAnnotations.tags = contact.value.profile.tags || [];
 
   contactTags.value = (await fetchContent('contacts')).tags;
+
+  const setupContent = await fetchContent('join/setup');
+  if (setupContent.surveySlug) {
+    joinSurvey.value = await fetchCallout(setupContent.surveySlug, ['form']);
+    const responses = await fetchResponses(
+      setupContent.surveySlug,
+      {
+        limit: 1,
+        order: 'DESC',
+        sort: 'createdAt',
+        rules: {
+          condition: 'AND',
+          rules: [
+            { field: 'contact', operator: 'equal', value: [props.contact.id] },
+          ],
+        },
+      },
+      ['answers']
+    );
+    joinSurveyResponse.value = responses.items[0];
+  }
 });
 </script>

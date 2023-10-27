@@ -6,15 +6,17 @@
 .formio-dialog .preview-panel {
   @apply text-lg;
 
-  /* Give callouts a white background */
-  &:not(.has-no-bg) .formio-form {
-    @apply bg-white p-6 shadow-md;
-  }
-
   /* Form labels same styling as .content-message h3 */
   .col-form-label {
     @apply font-title text-xl font-semibold mb-2;
   }
+}
+
+/* Apply to form renderer */
+.callout-form.has-bg,
+/* Apply to form builder form area */
+.callout-form-builder .formarea {
+  @apply bg-white p-6 shadow-md;
 }
 
 /* Apply to form renderer */
@@ -183,6 +185,10 @@
     @apply flex-1;
   }
 
+  .formio-component-datagrid {
+    @apply overflow-visible;
+  }
+
   /* Styling for input errors */
   .formio-errors {
     @apply mt-1.5 text-sm font-semibold;
@@ -274,5 +280,48 @@
   /* Respect text formatting */
   div[ref='value'] {
     @apply whitespace-pre-wrap break-words;
+  }
+}
+
+/* Apply to form renderer in small mode */
+.callout-form.is-small .callout-form-renderer {
+  @apply text-base;
+
+  .form-group {
+    @apply mb-4;
+  }
+
+  .col-form-label {
+    @apply text-base font-body;
+  }
+}
+
+/* Apply to form renderer in simple mode */
+.callout-form.is-simple .callout-form-renderer {
+  @apply text-base;
+
+  .formio-form {
+    @apply min-h-0;
+  }
+
+  .form-group {
+    @apply mb-1 block;
+  }
+
+  .formio-component-file {
+    @apply hidden;
+  }
+
+  .col-form-label {
+    @apply font-bold text-base mb-0 inline;
+    &::after {
+      @apply text-body;
+      content: ': ';
+    }
+  }
+
+  div[ref='element'],
+  div[ref='value'] {
+    @apply inline;
   }
 }

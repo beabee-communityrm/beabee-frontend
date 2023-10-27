@@ -1,7 +1,7 @@
 <template>
-  <div class="mb-8 grid grid-cols-2 gap-8">
-    <div>
-      <AppSubHeading class="mb-4">{{ label }}</AppSubHeading>
+  <App2ColGrid class="mb-6">
+    <template #col1>
+      <AppSubHeading class="mb-2">{{ label }}</AppSubHeading>
       <template v-if="email">
         <div class="mb-4">
           <AppInput v-model="email.subject" label="Subject" required />
@@ -13,11 +13,11 @@
           This email is managed by your email provider, you can't edit it here
         </p>
       </AppNotification>
-    </div>
-    <div v-if="email">
+    </template>
+    <template v-if="email" #col2>
       <div class="content-message bg-white p-4 shadow" v-html="emailBody" />
-    </div>
-  </div>
+    </template>
+  </App2ColGrid>
 </template>
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
@@ -25,6 +25,7 @@ import { currentUser } from '../../../../store';
 import AppSubHeading from '../../../AppSubHeading.vue';
 import AppInput from '../../../forms/AppInput.vue';
 import RichTextEditor from '../../../rte/RichTextEditor.vue';
+import App2ColGrid from '../../../App2ColGrid.vue';
 import AppNotification from '../../../AppNotification.vue';
 
 const props = defineProps<{

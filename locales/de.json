@@ -33,6 +33,8 @@
     "edit": "Bearbeiten",
     "endnow": "Jetzt beenden",
     "export": "Exportieren",
+    "getStarted": "Starten",
+    "next": "Weiter",
     "noBack": "Nein, gehe zurück",
     "participate": "Teilnehmen",
     "preview": "Vorschau",
@@ -40,12 +42,14 @@
     "reopen": "Wieder aktivieren",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
+    "respond": "Antworten",
     "revertToDraft": "Zu Entwurf zurückkehren",
     "save": "Speichern",
     "saveAndAnother": "Speichern und weiteren hinzufügen",
     "saveDraft": "Entwurf speichern",
     "schedule": "Planen",
     "search": "Suchen",
+    "skip": "Überspringen",
     "submit": "Abschicken",
     "unpublish": "Veröffentlichung aufheben",
     "update": "Änderungen speichern",
@@ -262,10 +266,13 @@
     }
   },
   "callout": {
+    "actions": {
+      "updateResponse": "Antwort bearbeiten"
+    },
     "addAPoint": "Klicken Sie dort auf die Karte, wo Sie einen Ort ergänzen möchten",
     "addLocation": "Neuen Ort eingeben",
-    "closed": "Dieser Callout ist beendet.",
     "contactDetails": "Kontaktdaten",
+    "ended": "Dieser Callout ist seit dem {date} beendet.",
     "form": {
       "email": "Ihre E-Mail-Adresse",
       "guestFieldsMissing": "Bitte geben Sie uns Ihre Kontaktdaten.",
@@ -287,7 +294,8 @@
       "gallery": "Galerie",
       "map": "Karten"
     },
-    "youResponded": "Sie haben geantwortet ♥"
+    "youResponded": "Sie haben geantwortet ♥",
+    "yourResponse": "Ihre Antwort"
   },
   "calloutAdmin": {
     "deleted": "Callout gelöscht",
@@ -336,7 +344,20 @@
     "updated": "Änderungen gespeichert!"
   },
   "calloutBuilder": {
-    "showAdvancedOptions": "Erweiterte Optionen anzeigen"
+    "actions": {
+      "addSlide": "Slide hinzufügen",
+      "removeSlide": "Slide entfernen"
+    },
+    "internalTitle": "Interner Titel",
+    "nextButton": "Text für den Weiter-Button",
+    "nextSlide": {
+      "default": "-- Standard --",
+      "label": "Nächster Slide"
+    },
+    "prevButton": "Text für den Zurück-Button",
+    "showAdvancedOptions": "Erweiterte Optionen anzeigen",
+    "slideNo": "Slide {no}",
+    "submitButton": "Text für den Submit-Button"
   },
   "calloutResponse": {
     "data": {
@@ -380,6 +401,7 @@
     },
     "editMode": "Vorsicht, du befindest dich im Bearbeitungsmodus!",
     "manageFolders": "Ordner bearbeiten",
+    "manageReviewers": "Auswerter bearbeiten",
     "manageTags": "Tags bearbeiten",
     "notifications": {
       "addedAssignee": "\"{assignee}\" zugewiesen",
@@ -474,6 +496,7 @@
       "member": "Mitglied",
       "superadmin": "Überadmin"
     },
+    "selectNone": "-- Keine --",
     "selectOne": "Auswählen",
     "share": "Teilen",
     "show": "Anzeigen",
@@ -511,7 +534,7 @@
     "cancellationDate": "Gekündigt am",
     "contribution": "Beitrag",
     "contributionType": "Zahlungsart",
-    "information": "Information",
+    "joinSurvey": "Anmelde-Fragebogen",
     "newsletter": "Newsletter",
     "overview": "Überblick",
     "pickTag": "Tag aus der Liste wählen",
@@ -618,12 +641,6 @@
     "lastSavedNow": "Zuletzt vor wenigen Augenblicken gespeichert.",
     "steps": {
       "content": {
-        "inputs": {
-          "intro": {
-            "help": "<p>Die <strong>Einleitung</strong> erscheint vor den Fragen. Erkläre darin, warum du den Callout machst, also was das Ziel ist und wie die Antworten helfen. Gib so viel Kontext wie möglich, um den Teilnehmenden die Beantwortung zu erleichtern.</p>\n",
-            "label": "Einleitung"
-          }
-        },
         "title": "Inhalt"
       },
       "dates": {
@@ -741,9 +758,7 @@
             "help": "<p>Das Bild wird verwendet, um die Antwort in der Karten- oder Galerieansicht zu visualisieren. Wichtig: Es muss sich um eine Datei-Upload-Komponente handeln.</p>\n",
             "label": "Welches Feld soll als Bild für Darstellung der Antwort dienen?"
           },
-          "responseLinks": {
-            "label": "Add links to the bottom of responses?"
-          },
+          "responseLinks": {},
           "responseTitleProp": {
             "help": "<p>Der Titel erscheint als Überschrift auf jeder Antwort in der Karten- oder Galerieansicht.</p>\n",
             "label": "Welches Feld soll als Überschrift dienen?"
@@ -792,6 +807,10 @@
           "image": {
             "help": "<p>Das <strong>Titelbild</strong> dient zur Illustration des Callouts.</p>\n",
             "label": "Titelbild"
+          },
+          "intro": {
+            "help": "<p>Die <strong>Einleitung</strong> erscheint vor den Fragen. Erkläre darin, warum du den Callout machst, also was das Ziel ist und wie die Antworten helfen. Gib so viel Kontext wie möglich, um den Teilnehmenden die Beantwortung zu erleichtern.</p>\n",
+            "label": "Einleitung"
           },
           "overrideShare": {
             "label": "Callout-Titel und -Beschreibung zum Teilen verwenden?",
@@ -850,7 +869,6 @@
   },
   "footer": {
     "contactUs": "Kontaktieren Sie uns unter",
-    "contacts": "Kontakte",
     "handbookResources": "Handbuch & Ressourcen",
     "impressum": "Impressum",
     "joinCommunity": "Mitglied werden",
@@ -988,7 +1006,7 @@
     "status": {
       "endedOn": "am {date}",
       "endsIn": "Endet in {duration}",
-      "startsIn": "startet in {duration}"
+      "startsIn": "Startet in {duration}"
     }
   },
   "join": {
@@ -1050,6 +1068,14 @@
     "steps": {
       "accountConfirmation": {
         "description": "Stelle ein, welche persönlichen Informationen Du über deine Mitglieder sammeln willst.",
+        "joinSurvey": {
+          "required": "Die Mitglieder müssen den Fragebogen ausfüllen, ehe sie fortfahren können.",
+          "slug": "Callout",
+          "slugHelp": "Du kannst jeden Callout verwenden, der Enddatum hat.",
+          "text": "Als Teil des Anmeldeprozesses kannst du deine neuen Mitglieder einen kurzen Fragebogen ausfüllen lassen. Du kannst zum Beispiel zusätzliche Informationen abfragen oder in Erfahrung bringen, warum sie Mitglied geworden sind.",
+          "textIntro": "Erkläre deinen Mitgliedern kurz, warum du weitere Informationen von ihnen haben möchtest.",
+          "title": "Anmelde-Fragebogen"
+        },
         "optInLabel": "Beschriftung Kontrollkästchen ",
         "optInText": "Text",
         "optInTitle": "Überschrift",
@@ -1094,7 +1120,6 @@
     "admin": "Administration",
     "adminSettings": "Einstellungen",
     "callouts": "Callouts",
-    "community": "Community",
     "contacts": "Kontakte",
     "contribution": "Beitrag",
     "dashboard": "Dashboard",

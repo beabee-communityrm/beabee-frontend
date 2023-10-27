@@ -46,13 +46,16 @@
           </div>
         </div>
       </div>
-      <Form
+
+      <CalloutForm
         :key="response.number"
-        class="callout-form-simple"
-        :form="viewOnlyFormSchema"
-        :submission="{ data: response.answers }"
-        :options="{ readOnly: true, noAlerts: true, renderMode: 'html' }"
+        :callout="viewOnlyCallout"
+        :answers="response.answers"
+        readonly
+        all-slides
+        :style="'simple'"
       />
+
       <ul
         v-if="callout.responseViewSchema.links.length > 0"
         class="columns-2 gap-4 border-t border-t-primary mt-8 pt-8"
@@ -76,7 +79,6 @@
 </template>
 
 <script lang="ts" setup>
-import { filterComponents } from '@beabee/beabee-common';
 import {
   faChevronLeft,
   faChevronRight,
@@ -86,8 +88,9 @@ import {
   GetCalloutDataWith,
   GetCalloutResponseMapData,
 } from '../../../utils/api/api.interface';
-import { Form } from '../../../lib/formio';
 import CalloutSidePanel from './CalloutSidePanel.vue';
+import CalloutForm from './CalloutForm.vue';
+import { filterComponents } from '@beabee/beabee-common';
 
 defineEmits<(e: 'close') => void>();
 const props = defineProps<{
@@ -98,11 +101,15 @@ const props = defineProps<{
 const currentPhotoIndex = ref(0);
 
 // Don't show admin-only fields (they would always be empty as the API doesn't return their answers)
-const viewOnlyFormSchema = computed(() => ({
-  components: filterComponents(
-    props.callout.formSchema.components,
-    (c) => !c.adminOnly
-  ),
+const viewOnlyCallout = computed(() => ({
+  ...props.callout,
+  formSchema: {
+    ...props.callout.formSchema,
+    slides: props.callout.formSchema.slides.map((slide) => ({
+      ...slide,
+      components: filterComponents(slide.components, (c) => !c.adminOnly),
+    })),
+  },
 }));
 
 watch(

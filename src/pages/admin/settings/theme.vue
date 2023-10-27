@@ -13,35 +13,36 @@ meta:
     @submit.prevent="handleSubmit"
     @reset="resetTheme"
   >
-    <div class="mb-8 grid gap-8 lg:grid-cols-2">
-      <div v-if="fonts">
-        <AppHeading class="mb-4">
+    <App2ColGrid>
+      <template #col1>
+        <AppHeading>
           {{ t('adminSettings.theme.fonts') }}
         </AppHeading>
-
-        <div class="mb-4">
-          <AppSelect
-            v-model="fonts.title"
-            :label="t('adminSettings.theme.titleFont')"
-            :items="availableFonts"
-            required
+        <div v-if="fonts">
+          <div class="mb-4">
+            <AppSelect
+              v-model="fonts.title"
+              :label="t('adminSettings.theme.titleFont')"
+              :items="availableFonts"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <AppSelect
+              v-model="fonts.body"
+              :label="t('adminSettings.theme.bodyFont')"
+              :items="availableFonts"
+              required
+            />
+          </div>
+          <div
+            class="content-i18n text-sm font-semibold text-body-80"
+            v-html="t('adminSettings.theme.fontNotListed')"
           />
         </div>
-        <div class="mb-4">
-          <AppSelect
-            v-model="fonts.body"
-            :label="t('adminSettings.theme.bodyFont')"
-            :items="availableFonts"
-            required
-          />
-        </div>
-        <div
-          class="content-i18n text-sm font-semibold text-body-80"
-          v-html="t('adminSettings.theme.fontNotListed')"
-        />
-      </div>
-      <div>
-        <AppHeading class="mb-4">
+      </template>
+      <template #col2>
+        <AppHeading>
           {{ t('adminSettings.theme.colors') }}
         </AppHeading>
         <label
@@ -93,8 +94,8 @@ meta:
             <AppColorInput :id="name" v-model="customColors[name]" />
           </div>
         </div>
-      </div>
-    </div>
+      </template>
+    </App2ColGrid>
   </AppForm>
 </template>
 
@@ -108,6 +109,7 @@ import { generalContent } from '../../../store';
 import AppColorInput from '../../../components/forms/AppColorInput.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppForm from '../../../components/forms/AppForm.vue';
+import App2ColGrid from '../../../components/App2ColGrid.vue';
 
 const { t } = useI18n();
 

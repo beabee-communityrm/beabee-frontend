@@ -6,33 +6,31 @@ meta:
 </route>
 
 <template>
-  <div>
-    <div class="mb-8 grid grid-cols-2 gap-8">
-      <div>
-        <p>{{ stepT('text') }}</p>
-      </div>
-    </div>
+  <App2ColGrid class="mb-8">
+    <template #col1>
+      <p>{{ stepT('text') }}</p>
+    </template>
+  </App2ColGrid>
 
-    <AppForm
-      :button-text="t('form.saveChanges')"
-      :success-text="t('form.saved')"
-      @submit="handleUpdate"
-    >
-      <EmailEditor
-        v-if="welcomeEmail !== undefined"
-        :label="stepT('welcomeEmail')"
-        :email="welcomeEmail"
-        :footer="emailFooter"
-      />
+  <AppForm
+    :button-text="t('form.saveChanges')"
+    :success-text="t('form.saved')"
+    @submit="handleUpdate"
+  >
+    <EmailEditor
+      v-if="welcomeEmail !== undefined"
+      :label="stepT('welcomeEmail')"
+      :email="welcomeEmail"
+      :footer="emailFooter"
+    />
 
-      <EmailEditor
-        v-if="cancellationEmail !== undefined"
-        :label="stepT('cancellationEmail')"
-        :email="cancellationEmail"
-        :footer="emailFooter"
-      />
-    </AppForm>
-  </div>
+    <EmailEditor
+      v-if="cancellationEmail !== undefined"
+      :label="stepT('cancellationEmail')"
+      :email="cancellationEmail"
+      :footer="emailFooter"
+    />
+  </AppForm>
 </template>
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue';
@@ -43,6 +41,7 @@ import { GetEmailData } from '../../../utils/api/api.interface';
 import { fetchContent } from '../../../utils/api/content';
 import { fetchEmail, updateEmail } from '../../../utils/api/email';
 import { isRequestError } from '../../../utils/api';
+import App2ColGrid from '../../../components/App2ColGrid.vue';
 
 const { t } = useI18n();
 const stepT = (key: string) => t('membershipBuilder.steps.emails.' + key);

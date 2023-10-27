@@ -1,9 +1,17 @@
 import { watch } from 'vue';
-import { createI18n } from 'vue-i18n';
+import {
+  DefaultLocaleMessageSchema,
+  LocaleMessages,
+  createI18n,
+} from 'vue-i18n';
 import { generalContent } from '../store';
+
+import en from '../../locales/en.json';
 
 const i18n = createI18n({
   legacy: false,
+  fallbackLocale: 'en',
+  messages: { en } as LocaleMessages<DefaultLocaleMessageSchema>,
 });
 
 watch(
@@ -13,8 +21,12 @@ watch(
     const [justLocale] = newLocale.split('@');
 
     if (i18n.global.locale.value !== justLocale) {
-      const messages = await import(`../../locales/${newLocale}.json`);
-      i18n.global.setLocaleMessage(justLocale, messages.default);
+      // en is already loaded
+      if (newLocale !== 'en') {
+        const messages = await import(`../../locales/${newLocale}.json`);
+        i18n.global.setLocaleMessage(justLocale, messages.default);
+      }
+
       i18n.global.setNumberFormat(justLocale, {
         currency: {
           style: 'currency',

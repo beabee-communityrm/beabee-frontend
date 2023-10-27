@@ -7,8 +7,8 @@ meta:
 <template>
   <PageTitle :title="t('menu.contribution')" />
 
-  <div v-if="!isIniting" class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
-    <div>
+  <App2ColGrid v-if="!isIniting">
+    <template #col1>
       <AppNotification
         v-if="updatedPaymentSource"
         class="mb-8"
@@ -49,17 +49,16 @@ meta:
         :payment-source="contribution.paymentSource"
         :stripe-public-key="content.stripePublicKey"
       />
-
       <ContactCancelContribution
         id="me"
         :contribution="contribution"
         @cancel="$router.push('/profile/contribution/cancel')"
       />
-    </div>
-    <div>
-      <ContactPaymentsHistory id="me" class="lg:ml-10" />
-    </div>
-  </div>
+    </template>
+    <template #col2>
+      <ContactPaymentsHistory id="me" />
+    </template>
+  </App2ColGrid>
 </template>
 
 <script lang="ts" setup>
@@ -83,6 +82,7 @@ import { ContributionInfo } from '../../../utils/api/api.interface';
 import { fetchContribution } from '../../../utils/api/contact';
 import { ContributionContent } from '../../../components/contribution/contribution.interface';
 import { fetchContent } from '../../../utils/api/content';
+import App2ColGrid from '../../../components/App2ColGrid.vue';
 import AppNotification from '../../../components/AppNotification.vue';
 
 const { t } = useI18n();
