@@ -12,9 +12,7 @@ meta:
     <div>
       <div class="mb-10 space-y-3">
         <AppHeading>Headings</AppHeading>
-        <p class="mb-3">
-          All headings are set in the title font.
-        </p>
+        <p class="mb-3">All headings are set in the title font.</p>
 
         <div class="bg-white p-6 space-y-3">
           <AppTitle>h1 AppTitle 32px</AppTitle>
@@ -52,9 +50,7 @@ meta:
     <div>
       <div class="mb-10 space-y-3">
         <AppHeading>Paragraphs</AppHeading>
-        <p>
-          Texts are set using the body text font.
-        </p>
+        <p>Texts are set using the body text font.</p>
         <p class="text-lg">
           This is a lead paragraph, with the <em>text-lg</em> class. It's used
           to highlight a paragraph in a text, such as the first sentence in an

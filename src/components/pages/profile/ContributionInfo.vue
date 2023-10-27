@@ -1,5 +1,5 @@
-<template
-  ><div class="flex pt-3">
+<template>
+  <div class="flex pt-3">
     <AppInfoList>
       <AppInfoListItem
         :name="t('common.joined')"
