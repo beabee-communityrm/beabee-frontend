@@ -535,10 +535,11 @@
     "cancellationDate": "Cancelled on",
     "contribution": "Contribution",
     "contributionType": "Type",
-    "information": "Information",
+    "joinSurvey": "Join survey",
     "newsletter": "Newsletter",
     "overview": "Overview",
     "pickTag": "Pick a tag from the list below",
+    "profile": "Profile",
     "roles": "Roles",
     "security": {
       "instructions": "Copy and share this link:",

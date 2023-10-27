@@ -9,7 +9,7 @@
         v-else-if="answers"
         :answers="answers"
         :callout="callout"
-        :style="'no-bg'"
+        no-bg
         @submitted="handleSubmitted"
       />
     </template>
