@@ -13,9 +13,10 @@ type ApiRequestError = AxiosError & {
 
 export function isRequestError(
   err: unknown,
-  code?: string
+  code?: string,
+  status = 400
 ): err is ApiRequestError {
-  if (axios.isAxiosError(err) && err.response?.status === 400) {
+  if (axios.isAxiosError(err) && err.response?.status === status) {
     const data = err.response.data as ApiError;
     return !code || data.code === code;
   }

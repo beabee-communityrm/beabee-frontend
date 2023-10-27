@@ -27,10 +27,7 @@ export async function createContactMfa(
   contactId: string,
   dataIn: CreateContactMfaData
 ): Promise<void> {
-  await axios.post<Serial<CreateContactMfaData>>(
-    `/contact/${contactId}/mfa`,
-    dataIn
-  );
+  await axios.post<undefined>(`/contact/${contactId}/mfa`, dataIn);
 }
 
 /**

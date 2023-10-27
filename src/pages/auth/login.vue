@@ -90,6 +90,7 @@ import { isInternalUrl } from '../../utils';
 import { updateCurrentUser } from '../../store';
 import { LoginData, LOGIN_CODES } from '../../utils/api/api.interface';
 import { login } from '../../utils/api/auth';
+import { isRequestError } from '../../utils/api/index';
 import AppForm from '../../components/forms/AppForm.vue';
 import AppNotification from '../../components/AppNotification.vue';
 import AppTitle from '../../components/AppTitle.vue';
@@ -122,9 +123,8 @@ async function submitLogin() {
     await updateCurrentUser();
     // TODO: use router when legacy app is gone
     window.location.href = isInternalUrl(redirectTo) ? redirectTo : '/';
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    if (err.response?.status === 401) {
+  } catch (err) {
+    if (isRequestError(err, undefined, 401)) {
       if (err.response?.data?.code === LOGIN_CODES.REQUIRES_2FA) {
         hasMFAEnabled.value = true;
       } else if (err.response?.data?.code === LOGIN_CODES.INVALID_TOKEN) {
