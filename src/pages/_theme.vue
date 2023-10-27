@@ -98,6 +98,7 @@ meta:
         <AppStepper
           v-model="appStepper.selectedStepIndex"
           :steps="appStepper.steps"
+          class="justify-center"
         />
         <div
           v-for="(step, index) in appStepper.steps"
@@ -129,7 +130,9 @@ meta:
     </section>
 
     <section class="my-5">
-      <h3 class="mb-2 font-title text-xl">AppSlider</h3>
+      <h3 class="mb-2 font-title text-xl">
+        AppSlider <small>with custom navigation</small>
+      </h3>
       <div class="bg-white p-4">
         <div class="max-w-[1200px] mx-auto relative">
           <AppSlider :show-navigation-buttons="true" :infinite="true">
@@ -186,6 +189,48 @@ meta:
     </section>
 
     <section class="my-5">
+      <h3 class="mb-2 font-title text-xl">
+        AppSlider <small>with AppStepper</small>
+      </h3>
+      <div class="bg-white p-4">
+        <div class="max-w-[1200px] mx-auto relative">
+          <AppSlider
+            :show-navigation-buttons="true"
+            :infinite="true"
+            :steps="[
+              { name: 'Step 1', validated: true, error: false },
+              { name: 'Step 2', validated: false, error: true },
+              { name: 'Step 3', validated: false, error: false },
+            ]"
+          >
+            <template #slides>
+              <!-- Put your slides here -->
+              <AppSlide>
+                <img
+                  class="mx-auto max-w-full"
+                  src="https://picsum.photos/seed/1/1200/300"
+                  alt="Lorem Picsum"
+                />
+              </AppSlide>
+              <AppSlide class="bg-success">
+                <div class="w-full h-full flex justify-center items-center">
+                  <p>You can put anything you want in here!</p>
+                </div>
+              </AppSlide>
+              <AppSlide>
+                <img
+                  class="mx-auto max-w-full"
+                  src="https://picsum.photos/seed/2/1200/300"
+                  alt="Lorem Picsum"
+                />
+              </AppSlide>
+            </template>
+          </AppSlider>
+        </div>
+      </div>
+    </section>
+
+    <section class="my-5">
       <h3 class="mb-2 font-title text-xl">AppQRCode</h3>
       <div class="bg-white p-4 w-64">
         <AppQRCode :qr-data="appQRCode.data" />
@@ -193,7 +238,6 @@ meta:
         <p>Change the data to see the QR code change.</p>
         <AppInput
           v-model="appQRCode.data"
-          :value="appQRCode.data"
           label="Data"
           name="QR code data"
           required
@@ -215,7 +259,7 @@ import AppStepper from '../components/stepper/AppStepper.vue';
 import AppCheckbox from '../components/forms/AppCheckbox.vue';
 import AppQRCode from '../components/AppQRCode.vue';
 
-import { Step } from '../components/stepper/stepper.interface';
+import { AppStepperStep } from '@type/app-stepper-step';
 
 import {
   faAngleRight,
@@ -241,7 +285,7 @@ const appStepper = ref({
       validated: false,
       error: false,
     },
-  ] as Step[],
+  ] as AppStepperStep[],
 });
 
 const appQRCode = ref({

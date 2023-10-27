@@ -53,12 +53,7 @@
     class="w-full"
     @close="onCloseMFAModal"
   >
-    <AppStepper
-      v-model="appStepper.selectedStepIndex"
-      :steps="appStepper.steps"
-      @update:model-value="onStepperChange"
-    />
-    <AppSlider ref="appSliderCo" @slide="onSlideChange">
+    <AppSlider ref="appSliderCo" :steps="stepsInOrder" @slide="onSlideChange">
       <template #slides>
         <AppSlide>
           <div class="whitespace-break-spaces">
@@ -94,6 +89,10 @@
                 name="verifyCode"
                 required
               />
+
+              <p v-if="steps.enterCode.error" class="text-center">
+                Token invalid TODO
+              </p>
             </span>
           </div>
         </AppSlide>
@@ -112,30 +111,53 @@
       </template>
 
       <template
-        #navigation="{ nextSlide, prevSlide, isFirstSlide, isLastSlide }"
+        #navigation="{
+          nextSlide,
+          prevSlide,
+          isFirstSlide,
+          isLastSlide,
+          activeSlide,
+        }"
       >
         <span class="flex justify-between mt-3">
-          <AppButton
-            v-if="isFirstSlide"
-            variant="linkOutlined"
-            @click="closeMFAModal()"
-          >
-            {{ t(`actions.close`) }}
-          </AppButton>
-          <AppButton v-else variant="linkOutlined" @click="prevSlide()">
-            {{ t(`actions.back`) }}
-          </AppButton>
-          <AppButton
-            v-if="isLastSlide"
-            :disabled="!allStepsDone"
-            variant="link"
-            @click="saveMfaAndNotify()"
-          >
-            {{ t(`actions.save`) }}
-          </AppButton>
-          <AppButton v-else variant="link" @click="nextSlide()">
-            {{ t(`actions.next`) }}
-          </AppButton>
+          <!-- Back buttons -->
+          <section>
+            <AppButton
+              v-if="isFirstSlide"
+              variant="linkOutlined"
+              @click="closeMFAModal()"
+            >
+              {{ t(`actions.close`) }}
+            </AppButton>
+            <AppButton v-else variant="linkOutlined" @click="prevSlide()">
+              {{ t(`actions.back`) }}
+            </AppButton>
+          </section>
+
+          <!-- Next buttons -->
+          <section>
+            <AppButton
+              v-if="isLastSlide"
+              :disabled="!allStepsDone"
+              variant="link"
+              @click="saveMfaAndNotify()"
+            >
+              {{ t(`actions.save`) }}
+            </AppButton>
+            <AppButton
+              v-else-if="
+                activeSlide === 1 &&
+                (!steps.enterCode.validated || steps.enterCode.error)
+              "
+              variant="link"
+              @click="validateTotpToken()"
+            >
+              {{ t(`accountPage.mfa.validateButton.label`) }}
+            </AppButton>
+            <AppButton v-else variant="link" @click="nextSlide()">
+              {{ t(`actions.next`) }}
+            </AppButton>
+          </section>
         </span>
       </template>
     </AppSlider>
@@ -143,7 +165,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, ref, toRef, computed, watch } from 'vue';
+import { onBeforeMount, ref, toRef, computed, watch, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import { TOTP, Secret } from 'otpauth';
@@ -162,21 +184,16 @@ import AppHeading from '../../../AppHeading.vue';
 import AppSlider from '../../../slider/AppSlider.vue';
 import AppSlide from '../../../slider/AppSlide.vue';
 import AppQRCode from '../../../AppQRCode.vue';
-import AppStepper from '../../../stepper/AppStepper.vue';
 import AppInput from '../../../forms/AppInput.vue';
 import AppConfirmDialog from '../../../AppConfirmDialog.vue';
 
 import { addNotification } from '../../../../store/notifications';
 import { generalContent } from '../../../../store';
 
-import type { Step } from '../../../stepper/stepper.interface';
-import type { AppSliderSlideEventDetails } from '../../../slider/slider.interface';
-
-/** Totp identity */
-interface TotpIdentity {
-  issuer?: string;
-  label?: string;
-}
+import type { AppStepperStep } from '@type/app-stepper-step';
+import type { AppSliderSlideEventDetails } from '@type/app-slider-slide-event-details';
+import type { SetMfaSteps } from '@type/set-mfa-steps';
+import type { SetMfaTotpIdentity } from '@type/set-mfa-totp-identity';
 
 const { t } = useI18n();
 
@@ -191,27 +208,31 @@ const showDisableConfirmModal = ref(false);
 /** Is multi factor authentication enabled? */
 const isEnabled = ref(false);
 
-/** Stepper component state */
-const appStepper = ref({
-  selectedStepIndex: 0,
-  steps: [
-    {
-      name: t(`accountPage.mfa.scan.title`),
-      validated: false,
-      error: false,
-    },
-    {
-      name: t(`accountPage.mfa.enterCode.title`),
-      validated: false,
-      error: false,
-    },
-    {
-      name: t(`accountPage.mfa.result.title`),
-      validated: false,
-      error: false,
-    },
-  ] as Step[],
+/** Stepper steps */
+const steps = reactive<SetMfaSteps>({
+  qrCode: {
+    name: t(`accountPage.mfa.scan.title`),
+    validated: false,
+    error: false,
+  },
+  enterCode: {
+    name: t(`accountPage.mfa.enterCode.title`),
+    validated: false,
+    error: false,
+  },
+  result: {
+    name: t(`accountPage.mfa.result.title`),
+    validated: false,
+    error: false,
+  },
 });
+
+/** Stepper steps as array */
+const stepsInOrder = ref<AppStepperStep[]>([
+  steps.qrCode,
+  steps.enterCode,
+  steps.result,
+]);
 
 const props = defineProps<{
   contactId: string;
@@ -221,7 +242,7 @@ const props = defineProps<{
 const totpUrl = ref<string | undefined>(undefined);
 
 /** Information about the app totp is set up for */
-const totpIdentity = ref<TotpIdentity>({
+const totpIdentity = ref<SetMfaTotpIdentity>({
   issuer: undefined,
   label: undefined,
 });
@@ -284,15 +305,16 @@ const disableMfa = async () => {
 
 /** Called when the slider changes */
 const onSlideChange = (details: AppSliderSlideEventDetails) => {
-  syncStepperWithSlider(details);
-  validateStep(details);
+  // Validate current step here if needed
+
+  // Validate previous steps
+  validatePreviousSteps(details.slideNumber);
 };
 
 /** Reset / init the state of the component */
 const resetState = () => {
   appSliderCo.value?.toSlide(0);
-  appStepper.value.selectedStepIndex = 0;
-  appStepper.value.steps.forEach((step) => {
+  stepsInOrder.value.forEach((step) => {
     step.validated = false;
     step.error = false;
   });
@@ -300,39 +322,17 @@ const resetState = () => {
   userTokenValid.value = false;
 };
 
-/** Sync the stepper with the slider */
-const syncStepperWithSlider = (details: AppSliderSlideEventDetails) => {
-  if (appStepper.value.selectedStepIndex === details.slideNumber) {
-    return;
-  }
-  appStepper.value.selectedStepIndex = details.slideNumber;
-
-  validatePreviousSteps();
-};
-
-/** Validate the current step */
-const validateStep = (details: AppSliderSlideEventDetails) => {
-  if (details.slideNumber === 2) {
-    validateTotpToken();
-  }
-};
-
 /** Validate all previous steps */
-const validatePreviousSteps = () => {
-  for (let i = 0; i < appStepper.value.steps.length; i++) {
-    const step = appStepper.value.steps[i];
-    step.validated = i < appStepper.value.selectedStepIndex;
+const validatePreviousSteps = (slideNumber: number) => {
+  if (!stepsInOrder.value) return;
+  for (let i = 0; i < stepsInOrder.value.length; i++) {
+    const step = stepsInOrder.value[i];
+    step.validated = i < slideNumber;
   }
-};
-
-/** Called when the stepper changes */
-const onStepperChange = (stepIndex: number) => {
-  appSliderCo.value?.toSlide(stepIndex);
-  validatePreviousSteps();
 };
 
 /** Called when the totp identity changes */
-const onTotpIdentityChanged = (newValue: TotpIdentity) => {
+const onTotpIdentityChanged = (newValue: SetMfaTotpIdentity) => {
   totpSecret.value = new Secret();
   totp = new TOTP({
     issuer: newValue.issuer,
@@ -347,8 +347,7 @@ const validateTotpToken = (window = 2) => {
   if (!totp) {
     throw new Error('totp is falsy!');
   }
-  const validateStep = appStepper.value.steps[1];
-  const resultStep = appStepper.value.steps[2];
+
   const delta = totp.validate({
     token: userToken.value,
     window,
@@ -356,17 +355,17 @@ const validateTotpToken = (window = 2) => {
 
   userTokenValid.value = delta === 0;
 
-  validateStep.error = !userTokenValid.value;
-  resultStep.error = !userTokenValid.value;
-  validateStep.validated = userTokenValid.value;
-  resultStep.validated = userTokenValid.value;
+  steps.enterCode.error = !userTokenValid.value;
+  steps.result.error = !userTokenValid.value;
+  steps.enterCode.validated = userTokenValid.value;
+  steps.result.validated = userTokenValid.value;
 
   return userTokenValid.value;
 };
 
 /** Are all steps done with no errors? */
 const allStepsDone = computed(() => {
-  return appStepper.value.steps.every((s) => s.validated && !s.error);
+  return stepsInOrder.value.every((s) => s.validated && !s.error);
 });
 
 /** Fetch the contact and set the TOTP identity */

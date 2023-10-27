@@ -14,6 +14,7 @@
         "title": "2FA deaktivieren"
       },
       "disabledNotification": "Zwei-Faktor Authentifizierung erfolgreich deaktiviert",
+      "enabledNotification": "Zwei-Faktor Authentifizierung erfolgreich aktiviert",
       "enterCode": {
         "desc": "Gebe den Code ein, der in deiner Authentifizierungs-App angezeigt wird.",
         "title": "Überprüfung"
@@ -32,7 +33,10 @@
         "desc": "Oder gib einfach den folgenden Code in deine Authenticator-App ein.",
         "label": "Secret"
       },
-      "title": "2-Faktor Authentifizierung"
+      "title": "2-Faktor Authentifizierung",
+      "validateButton": {
+        "label": "Token überprüfen"
+      }
     },
     "newsletter": {
       "cantUpdate": "Um den Newsletter-Status dieses Kontakts zu ändern, wende dich bitte an support{'@'}beabee.io.",

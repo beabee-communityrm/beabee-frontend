@@ -4,13 +4,14 @@
 
   ## Props
   - `infinite` (boolean): Whether or not to allow infinite scrolling. Defaults to `false`.
+  - 'steps' (AppStepperStep[](Optional)): The steps to display in the stepper. Defaults to `[]`. If no steps are provided, no stepper will not be displayed.
 
   ## Events
   - `slide` (details: AppSliderSlideEventDetails): Emitted when a slide is scrolled to. `details` contains the slide number and the slide element.
 
   ## Slots
-  - `slides`: The slides to display in the slider.
-  - `navigation`: The navigation buttons to display. Receives the `prevSlide`, `nextSlide`, and `toSlide` functions as props.
+  - `slides` (Required): The slides to display in the slider.
+  - `navigation` (Optional): The navigation buttons to display. Receives the `prevSlide`, `nextSlide`, and `toSlide` functions as props.
 
   ## Note
   - To get the slide animation working on Safari you need a polyfill for `scroll-behavior: smooth`. I recommend [smoothscroll-polyfill](https://github.com/iamdustan/smoothscroll)
@@ -23,6 +24,13 @@
 -->
 
 <template>
+  <AppStepper
+    v-if="steps && steps.length > 0"
+    v-model="activeSlide"
+    class="justify-center"
+    :steps="steps"
+    @update:model-value="onStepperChange"
+  />
   <div
     ref="slidesContainerEl"
     class="w-full overflow-x-hidden whitespace-nowrap flex flex-nowrap"
@@ -43,7 +51,11 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { AppSliderProps, AppSliderSlideEventDetails } from './slider.interface';
+
+import AppStepper from '../stepper/AppStepper.vue';
+
+import type { AppSliderProps } from '@type/app-slider-props';
+import type { AppSliderSlideEventDetails } from '@type/app-slider-slide-event-details';
 
 const emit = defineEmits<{
   (e: 'slide', details: AppSliderSlideEventDetails): void;
@@ -59,6 +71,11 @@ const isFirstSlide = computed(() => activeSlide.value === 0);
 const isLastSlide = computed(() => activeSlide.value === slideCount.value - 1);
 const slidesContainerEl = ref<HTMLElement | null>(null);
 const slideEls = ref<HTMLElement[]>([]);
+
+/** Called when the stepper changes */
+const onStepperChange = (stepIndex: number) => {
+  toSlide(stepIndex);
+};
 
 /**
  * Go to a specific slide

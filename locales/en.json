@@ -33,7 +33,10 @@
         "desc": "Alternatively, you can enter the following code into your Authenticator app.",
         "label": "Secret code"
       },
-      "title": "2-factor authentication"
+      "title": "2-factor authentication",
+      "validateButton": {
+        "label": "Verify token"
+      }
     },
     "newsletter": {
       "cantUpdate": "To change this contact's newsletter status, please contact support{'@'}beabee.io.",

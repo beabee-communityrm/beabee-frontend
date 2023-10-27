@@ -1,4 +1,4 @@
-export interface Step {
+export interface AppStepperStep {
   name: string;
   validated: boolean;
   error: boolean;
