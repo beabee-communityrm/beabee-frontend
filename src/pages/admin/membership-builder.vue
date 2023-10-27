@@ -11,7 +11,7 @@ meta:
     :items="tabs"
     :selected="route.name ? (route.name as string) : null"
   />
-  <router-view ref="mbRouterView"></router-view>
+  <router-view />
 </template>
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
