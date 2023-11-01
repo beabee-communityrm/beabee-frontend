@@ -24,7 +24,7 @@ meta:
         <AppCheckbox
           v-model="setupContent.showMailOptIn"
           :label="stepT('showMailOptIn')"
-          class="mb-4 font-semibold"
+          class="mb-4"
         />
 
         <template v-if="setupContent.showMailOptIn">
@@ -54,7 +54,7 @@ meta:
         <AppCheckbox
           v-model="setupContent.showNewsletterOptIn"
           :label="stepT('showNewsletterOptIn')"
-          class="mb-4 font-semibold"
+          class="mb-4"
         />
 
         <template v-if="setupContent.showNewsletterOptIn">
@@ -109,7 +109,7 @@ meta:
           <AppCheckbox
             v-model="setupContent.surveyRequired"
             :label="stepT('joinSurvey.required')"
-            class="mb-4 font-semibold"
+            class="mb-4"
           />
         </template>
       </AppForm>

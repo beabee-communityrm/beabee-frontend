@@ -10,7 +10,7 @@ meta:
   <AppCheckbox
     v-model="showIntroMessage"
     :label="stepT('showWelcomeMessage')"
-    class="mb-4 font-semibold"
+    class="mb-4"
   />
   <App2ColGrid v-if="showIntroMessage" extended>
     <template #col1>

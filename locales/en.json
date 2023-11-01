@@ -1112,6 +1112,11 @@
         "formSubtitle": "Subtitle",
         "formTitle": "Title",
         "minAmount": "Minimum amount",
+        "payment": "Payment options",
+        "paymentMethods": {
+          "help": "You must enable the payment method on the payment provider before enabling it here",
+          "label": "Payment methods"
+        },
         "showAbsorbFee": "Ask about processing fee",
         "suggestedAmounts": "Suggested contribution amounts",
         "text": "In this section you can edit, fine tune and preview your membership join form.",

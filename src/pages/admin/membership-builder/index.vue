@@ -39,7 +39,7 @@ meta:
         />
 
         <AppSubHeading class="mb-2">
-          {{ stepT('suggestedAmounts') }} *
+          {{ stepT('suggestedAmounts') }}
         </AppSubHeading>
         <div class="mb-4 flex gap-4">
           <PeriodAmounts
@@ -53,10 +53,10 @@ meta:
         </div>
         <div class="mb-4 flex gap-4">
           <div class="flex-1">
-            <AppLabel :label="stepT('minAmount')" />
             <AppInput
               v-model="joinContent.minMonthlyAmount"
               type="number"
+              :label="stepT('minAmount')"
               :min="1"
               required
               class="block w-32"
@@ -71,13 +71,24 @@ meta:
             />
           </div>
         </div>
-        <div class="mb-4 flex gap-4">
-          <AppCheckbox
-            v-model="joinContent.showAbsorbFee"
-            :label="stepT('showAbsorbFee')"
-            class="font-semibold"
-          />
-        </div>
+
+        <AppSubHeading class="mb-2">
+          {{ stepT('payment') }}
+        </AppSubHeading>
+
+        <AppCheckboxGroup
+          v-model="joinContent.paymentMethods"
+          :label="stepT('paymentMethods.label')"
+          :info-message="stepT('paymentMethods.help')"
+          :options="availablePaymentMethods"
+          class="mb-4"
+          required
+        />
+        <AppCheckbox
+          v-model="joinContent.showAbsorbFee"
+          :label="stepT('showAbsorbFee')"
+          class="mb-4"
+        />
       </AppForm>
     </template>
     <template #col2>
@@ -92,7 +103,6 @@ import { fetchContent, updateContent } from '../../../utils/api/content';
 import AppForm from '../../../components/forms/AppForm.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
-import AppLabel from '../../../components/forms/AppLabel.vue';
 import { useI18n } from 'vue-i18n';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import { ContributionPeriod } from '@beabee/beabee-common';
@@ -105,6 +115,7 @@ import { required } from '@vuelidate/validators';
 import PeriodAmounts from '../../../components/pages/admin/membership-builder/PeriodAmounts.vue';
 import App2ColGrid from '../../../components/App2ColGrid.vue';
 import AppSubHeading from '../../../components/AppSubHeading.vue';
+import AppCheckboxGroup from '../../../components/forms/AppCheckboxGroup.vue';
 
 const joinContent = ref<JoinContent>();
 const backgroundUrl = ref('');
@@ -137,6 +148,17 @@ const defaultAmounts = computed(() => {
       )
     : [];
 });
+
+const availablePaymentMethods = computed<[string, string][]>(() =>
+  joinContent.value
+    ? joinContent.value.availablePaymentMethods.map((method) => [
+        method,
+        `${method.startsWith('s_') ? 'Stripe' : 'GoCardless'}: ${t(
+          `paymentMethods.${method}.label`
+        )}`,
+      ])
+    : []
+);
 
 const validation = useVuelidate(
   { backgroundUrl: { required } },
