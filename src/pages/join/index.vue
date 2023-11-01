@@ -84,6 +84,7 @@ const joinContent = ref<JoinContent>({
   subtitle: '',
   title: '',
   paymentMethods: [],
+  availablePaymentMethods: [],
   stripePublicKey: '',
   stripeCountry: 'eu',
 });
