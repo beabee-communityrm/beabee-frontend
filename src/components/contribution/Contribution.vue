@@ -105,8 +105,10 @@ const definedAmounts = computed(() => {
   return selectedPeriod?.presetAmounts || [];
 });
 
-watch(periodProxy, () => {
-  amountProxy.value = definedAmounts.value[0];
+watch(isMonthly, (value) => {
+  amountProxy.value = value
+    ? Math.floor(amountProxy.value / 12)
+    : amountProxy.value * 12;
 });
 
 const shouldForceFee = computed(() => {
