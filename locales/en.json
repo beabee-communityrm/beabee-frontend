@@ -1106,6 +1106,9 @@
         "title": "Welcome message"
       },
       "joinForm": {
+        "availablePaymentMethods": {
+          "label": "Available payment methods"
+        },
         "backgroundImage": "Background image",
         "defaultAmount": "Default amount",
         "description": "Fine tune your membership join form",
@@ -1115,7 +1118,7 @@
         "payment": "Payment options",
         "paymentMethods": {
           "help": "You must enable the payment method on the payment provider before enabling it here",
-          "label": "Payment methods"
+          "label": "Enabled payment methods"
         },
         "showAbsorbFee": "Ask about processing fee",
         "suggestedAmounts": "Suggested contribution amounts",
