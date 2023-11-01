@@ -76,14 +76,29 @@ meta:
           {{ stepT('payment') }}
         </AppSubHeading>
 
-        <AppCheckboxGroup
-          v-model="joinContent.paymentMethods"
-          :label="stepT('paymentMethods.label')"
-          :info-message="stepT('paymentMethods.help')"
-          :options="availablePaymentMethods"
-          class="mb-4"
-          required
-        />
+        <AppLabel :label="stepT('availablePaymentMethods.label')" required />
+        <Draggable
+          class="grid gap-2 grid-cols-3 bg-grey-lighter p-2 border-grey border-2 border-dashed mb-4"
+          group="paymentMethods"
+          :list="availablePaymentMethods"
+        >
+          <template #item="{ element }">
+            <PaymentMethodButton :method="element" @click.prevent />
+          </template>
+        </Draggable>
+
+        <AppLabel :label="stepT('paymentMethods.label')" required />
+        <Draggable
+          class="grid gap-2 grid-cols-3 bg-primary-10 p-2 border-primary-40 border-2 border-dashed"
+          group="paymentMethods"
+          :list="joinContent.paymentMethods"
+        >
+          <template #item="{ element }">
+            <PaymentMethodButton :method="element" />
+          </template>
+        </Draggable>
+        <AppInputHelp :message="stepT('paymentMethods.help')" class="mb-4" />
+
         <AppCheckbox
           v-model="joinContent.showAbsorbFee"
           :label="stepT('showAbsorbFee')"
@@ -115,7 +130,10 @@ import { required } from '@vuelidate/validators';
 import PeriodAmounts from '../../../components/pages/admin/membership-builder/PeriodAmounts.vue';
 import App2ColGrid from '../../../components/App2ColGrid.vue';
 import AppSubHeading from '../../../components/AppSubHeading.vue';
-import AppCheckboxGroup from '../../../components/forms/AppCheckboxGroup.vue';
+import Draggable from 'vuedraggable';
+import PaymentMethodButton from '../../../components/payment/PaymentMethodButton.vue';
+import AppInputHelp from '../../../components/forms/AppInputHelp.vue';
+import AppLabel from '../../../components/forms/AppLabel.vue';
 
 const joinContent = ref<JoinContent>();
 const backgroundUrl = ref('');
@@ -149,14 +167,11 @@ const defaultAmounts = computed(() => {
     : [];
 });
 
-const availablePaymentMethods = computed<[string, string][]>(() =>
+const availablePaymentMethods = computed(() =>
   joinContent.value
-    ? joinContent.value.availablePaymentMethods.map((method) => [
-        method,
-        `${method.startsWith('s_') ? 'Stripe' : 'GoCardless'}: ${t(
-          `paymentMethods.${method}.label`
-        )}`,
-      ])
+    ? joinContent.value.availablePaymentMethods.filter(
+        (pm) => !joinContent.value?.paymentMethods.includes(pm)
+      )
     : []
 );
 

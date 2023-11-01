@@ -54,7 +54,7 @@ meta:
             v-if="contact.contribution.paymentSource?.method"
             :name="t('contribution.paymentMethod')"
           >
-            <PaymentMethod :source="contact.contribution.paymentSource" />
+            <PaymentSourceText :source="contact.contribution.paymentSource" />
           </AppInfoListItem>
           <AppInfoListItem
             v-if="contact.contribution.cancellationDate"
@@ -208,10 +208,10 @@ import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
 import AppForm from '../../../../components/forms/AppForm.vue';
 import App2ColGrid from '../../../../components/App2ColGrid.vue';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import PaymentMethod from '../../../../components/payment-method/PaymentMethod.vue';
 import env from '../../../../env';
 import { fetchCallout, fetchResponses } from '../../../../utils/api/callout';
 import CalloutForm from '../../../../components/pages/callouts/CalloutForm.vue';
+import PaymentSourceText from '../../../../components/payment/PaymentSourceText.vue';
 
 const { t, n } = useI18n();
 
