@@ -6,16 +6,12 @@ meta:
 </route>
 
 <template>
-  <App2ColGrid>
-    <template #col1>
-      <p class="mb-8">{{ stepT('text') }}</p>
-      <AppCheckbox
-        v-model="showIntroMessage"
-        :label="stepT('showWelcomeMessage')"
-        class="mb-4 font-semibold"
-      />
-    </template>
-  </App2ColGrid>
+  <p class="mb-8">{{ stepT('text') }}</p>
+  <AppCheckbox
+    v-model="showIntroMessage"
+    :label="stepT('showWelcomeMessage')"
+    class="mb-4 font-semibold"
+  />
   <App2ColGrid v-if="showIntroMessage" extended>
     <template #col1>
       <AppForm

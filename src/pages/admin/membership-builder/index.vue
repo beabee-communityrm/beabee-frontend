@@ -6,11 +6,8 @@ meta:
 </route>
 
 <template>
-  <App2ColGrid class="mb-8">
-    <template #col1>
-      <p>{{ stepT('text') }}</p>
-    </template>
-  </App2ColGrid>
+  <p class="mb-8">{{ stepT('text') }}</p>
+
   <App2ColGrid v-if="joinContent" extended>
     <template #col1>
       <AppForm
