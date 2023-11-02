@@ -53,6 +53,7 @@
         :answers="response.answers"
         readonly
         all-slides
+        no-bg
         :style="'simple'"
       />
 
