@@ -41,7 +41,7 @@ meta:
           :error-message="validation.backgroundUrl.$errors[0]?.$message"
         />
 
-        <AppSubHeading class="mb-2">
+        <AppSubHeading>
           {{ stepT('suggestedAmounts') }} *
         </AppSubHeading>
         <div class="mb-4 flex gap-4">

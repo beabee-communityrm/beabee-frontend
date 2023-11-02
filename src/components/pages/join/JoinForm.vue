@@ -5,7 +5,7 @@
     </template>
 
     <AppForm :button-text="buttonText" full-button @submit="onSubmit">
-      <AppSubHeading v-if="joinContent.showNoContribution" class="mb-1">
+      <AppSubHeading v-if="joinContent.showNoContribution">
         {{ t('join.contribution') }}
       </AppSubHeading>
 

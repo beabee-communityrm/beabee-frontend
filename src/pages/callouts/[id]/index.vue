@@ -7,7 +7,7 @@ meta:
 </route>
 
 <template>
-  <AppTitle v-if="!isEmbed" big class="mb-6">{{ callout.title }}</AppTitle>
+  <AppTitle v-if="!isEmbed" big>{{ callout.title }}</AppTitle>
 
   <div v-if="responses /* Avoids layout thrashing */">
     <CalloutThanksBox

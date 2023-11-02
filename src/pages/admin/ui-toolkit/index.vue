@@ -7,7 +7,7 @@ meta:
 
 <template>
   <PageTitle border :title="t('menu.uiToolkit')" />
-  <AppTitle class="mb-3">Typography</AppTitle>
+  <AppTitle>Typography</AppTitle>
   <div class="grid gap-8 lg:grid-cols-2">
     <div>
       <div class="mb-10">

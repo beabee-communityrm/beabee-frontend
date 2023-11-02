@@ -6,7 +6,7 @@ meta:
 
 <template>
   <AuthBox>
-    <AppTitle big class="mb-4">
+    <AppTitle big>
       {{ t('pageTitle.notFound') }}
     </AppTitle>
 

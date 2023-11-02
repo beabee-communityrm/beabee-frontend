@@ -106,7 +106,7 @@ meta:
             required
           />
         </div>
-        <AppSubHeading class="mb-2">
+        <AppSubHeading>
           {{ t('adminSettings.general.footer.dataPrivacy.title') }}
         </AppSubHeading>
         <div class="mb-4">
@@ -131,7 +131,7 @@ meta:
             type="url"
           />
         </div>
-        <AppSubHeading class="mb-2">
+        <AppSubHeading>
           {{ t('adminSettings.general.footer.otherLinks.title') }}
         </AppSubHeading>
         <AppLinkList v-model="footerData.footerLinks" class="mb-4" />

@@ -5,7 +5,7 @@
   >
     <AuthBox class="text-center">
       <div class="text-center flex h-full flex-col justify-center">
-        <AppTitle class="mb-5" big>{{ t('common.loading') }}</AppTitle>
+        <AppTitle big>{{ t('common.loading') }}</AppTitle>
 
         <font-awesome-icon
           class="text-[60px] text-body-60"
