@@ -37,7 +37,6 @@ module.exports = {
         DEFAULT: '3px',
       },
       lineHeight: {
-        tight: '1.2',
         5.5: '1.375rem',
       },
       screens: {
