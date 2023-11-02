@@ -124,6 +124,7 @@ export async function updateContribution(
     '/contact/me/contribution',
     {
       amount: dataIn.amount,
+      period: dataIn.period,
       payFee: dataIn.payFee && dataIn.period === ContributionPeriod.Monthly,
       prorate: dataIn.prorate && dataIn.period === ContributionPeriod.Annually,
     }

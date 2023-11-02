@@ -55,6 +55,7 @@
     "update": "Update",
     "view": "View",
     "yesDelete": "Yes, delete it",
+    "yesDisable": "Yes, disable it",
     "yesRemove": "Yes, remove it"
   },
   "addContact": {
