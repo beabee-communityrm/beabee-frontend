@@ -113,6 +113,12 @@
       },
       "copied": "API key copied to clipboard",
       "create": "Create a new API key",
+      "expires": {
+        "days": "In {n} days",
+        "never": "Never"
+      },
+      "expiresHelp": "For better security you should always set an expiry date help prevent long term unauthorized to your system.",
+      "expiresNeverWarning": "I understand the risks of not setting an expiry date",
       "label": "API keys",
       "showingOf": "Showing {start} to {end} API keys out of {total}"
     },
@@ -263,6 +269,7 @@
     "data": {
       "createdAt": "Created",
       "description": "Description",
+      "expires": "Expiry date",
       "token": "Token"
     }
   },

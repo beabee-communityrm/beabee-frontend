@@ -113,6 +113,7 @@
       },
       "copied": "API Key in die Zwischenablage kopiert",
       "create": "Neuen API Key erstellen",
+      "expires": {},
       "label": "API Keys",
       "showingOf": "API Keys {start} bis {end} von {total} werden angezeigt."
     },
@@ -263,6 +264,7 @@
     "data": {
       "createdAt": "Erstellt",
       "description": "Beschreibung",
+      "expires": "Enddatum",
       "token": "Token"
     }
   },

@@ -263,6 +263,7 @@
     "data": {
       "createdAt": "Erstellt",
       "description": "Beschreibung",
+      "expires": "Enddatum",
       "token": "Token"
     }
   },
