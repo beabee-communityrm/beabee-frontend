@@ -98,7 +98,7 @@ meta:
             :preview="isPreview"
             :readonly="!canRespond"
             :all-slides="!canRespond"
-            :style="isEmbed ? 'no-bg' : undefined"
+            :no-bg="isEmbed"
             @submitted="handleSubmitResponse"
           />
         </template>

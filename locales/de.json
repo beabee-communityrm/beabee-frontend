@@ -54,8 +54,9 @@
     "unpublish": "Veröffentlichung aufheben",
     "update": "Änderungen speichern",
     "view": "Anzeigen",
-    "yesDelete": "Ja, Hinweis löschen",
-    "yesRemove": "Ja, löschen"
+    "yesDelete": "Ja, löschen",
+    "yesDisable": "Ja, deaktivieren",
+    "yesRemove": "Ja, entfernen"
   },
   "addContact": {
     "contactSaved": "Kontakt gespeichert",
@@ -279,6 +280,7 @@
       "name": "Ihr Name",
       "submittingResponseError": "Es gab ein Problem bei der Übermittlung ihrer Antworten. Bitte versuchen Sie es erneut."
     },
+    "getStarted": "Starten",
     "joinNow": "Mitglied werden",
     "loginToYourAccount": "Einloggen",
     "membersOnly": "An diesem Callout können nur zahlende Mitglieder teilnehmen. Um teilzunehmen",
@@ -534,10 +536,11 @@
     "cancellationDate": "Gekündigt am",
     "contribution": "Beitrag",
     "contributionType": "Zahlungsart",
-    "information": "Information",
+    "joinSurvey": "Anmelde-Fragebogen",
     "newsletter": "Newsletter",
     "overview": "Überblick",
     "pickTag": "Tag aus der Liste wählen",
+    "profile": "Profil",
     "roles": "Rolle",
     "security": {
       "instructions": "Link kopieren und teilen:",
@@ -877,6 +880,7 @@
     "terms": "Allgemeine Geschäftsbedingungen"
   },
   "forgotPassword": {
+    "backToLogin": "Zurück zum Login",
     "checkInbox": "Bitte schauen Sie in Ihren Posteingang und befolgen Sie die Anleitung in der E-Mail. Sollte die E-Mail nicht auftauchen, schauen Sie auch in ihrem Spamordner nach.",
     "description": "Bitte geben Sie Ihre E-Mail-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.",
     "message": "Gibt es einen Account mit der E-Mail-Adresse {email}, bekommen Sie in Kürze eine Nachricht.",
