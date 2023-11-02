@@ -49,12 +49,21 @@ meta:
     :result="apiKeyTable"
     class="mb-8"
   >
+    <template #value-id="{ item }"> {{ item.id }}_••••••••••••••••••</template>
     <template #value-createdAt="{ value }">
       <span class="whitespace-nowrap">{{ formatLocale(value, 'PP') }}</span>
     </template>
-    <template #value-id="{ item }"> {{ item.id }}_••••••••••••••••••</template>
-    <template #value-actions="{ item }"
-      ><AppButton
+    <template #value-expires="{ value }">
+      <span class="whitespace-nowrap">
+        {{
+          value
+            ? formatDistanceLocale(value, new Date())
+            : t('adminSettings.apikey.expires.never')
+        }}
+      </span>
+    </template>
+    <template #value-actions="{ item }">
+      <AppButton
         :title="t('actions.delete')"
         :icon="faTrash"
         variant="dangerOutlined"
@@ -106,7 +115,7 @@ import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
 import { definePaginatedQuery } from '../../../utils/pagination';
 import { Paginated } from '@beabee/beabee-common';
 import { Header } from '../../../components/table/table.interface';
-import { formatLocale } from '../../../utils/dates';
+import { formatDistanceLocale, formatLocale } from '../../../utils/dates';
 import { addNotification } from '../../../store/notifications';
 import AppHeading from '../../../components/AppHeading.vue';
 import App2ColGrid from '../../../components/App2ColGrid.vue';
@@ -138,6 +147,12 @@ const headers: Header[] = [
   {
     value: 'createdAt',
     text: t('apiKey.data.createdAt'),
+    align: 'right',
+    sortable: true,
+  },
+  {
+    value: 'expires',
+    text: t('apiKey.data.expires'),
     align: 'right',
     sortable: true,
   },
