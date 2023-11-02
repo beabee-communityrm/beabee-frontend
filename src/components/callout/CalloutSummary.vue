@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="mb-4 flex">
-      <div class="flex-1 space-y-3">
+      <div class="flex-1">
         <AppSubHeading>{{ callout.title }}</AppSubHeading>
-        <p>{{ callout.excerpt }}</p>
+        <p class="mb-3">{{ callout.excerpt }}</p>
       </div>
       <div class="flex-0 ml-4">
         <img class="w-[150px]" :src="callout.image" />
