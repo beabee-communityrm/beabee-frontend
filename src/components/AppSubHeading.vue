@@ -1,5 +1,7 @@
 <template>
-  <h3 class="font-title text-1.8xl font-semibold tracking-tight text-body-60">
+  <h3
+    class="font-title text-1.8xl font-semibold tracking-tight text-body-60 mb-3"
+  >
     <slot />
   </h3>
 </template>

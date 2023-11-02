@@ -7,7 +7,7 @@ meta:
 
 <template>
   <div v-if="callout">
-    <PageTitle border class="mb-2" :title="callout.title" no-collapse />
+    <PageTitle border :title="callout.title" no-collapse />
     <router-view :callout="callout"></router-view>
   </div>
 </template>
@@ -35,8 +35,9 @@ addBreadcrumb(
   ])
 );
 
-const callout =
-  ref<GetCalloutDataWith<'form' | 'responseCount' | 'responseViewSchema'>>();
+const callout = ref<
+  GetCalloutDataWith<'form' | 'responseCount' | 'responseViewSchema'>
+>();
 
 onBeforeMount(async () => {
   callout.value = await fetchCallout(props.id, [
