@@ -51,17 +51,7 @@ meta:
     </template>
 
     <template #value-expires="{ item }">
-      <time
-        v-if="item.expires"
-        :datetime="item.expires.toISOString()"
-        :title="formatLocale(item.expires, 'PPPppp')"
-      >
-        {{
-          t('common.timeAgo', {
-            time: formatDistanceLocale(new Date(), item.expires),
-          })
-        }}
-      </time>
+      <AppTime v-if="item.expires" :datetime="item.expires" />
       <span v-else>-</span>
     </template>
 
@@ -99,6 +89,7 @@ import { Header } from '../../components/table/table.interface';
 import AppTable from '../../components/table/AppTable.vue';
 import { defineParam } from '../../utils/pagination';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import AppTime from '../../components/AppTime.vue';
 
 formatDistanceLocale;
 formatLocale;

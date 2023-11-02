@@ -55,11 +55,8 @@ meta:
     </template>
     <template #value-expires="{ value }">
       <span class="whitespace-nowrap">
-        {{
-          value
-            ? formatDistanceLocale(value, new Date())
-            : t('adminSettings.apikey.expires.never')
-        }}
+        <AppTime v-if="value" :datetime="value" />
+        <span v-else> {{ t('adminSettings.apikey.expires.never') }}</span>
       </span>
     </template>
     <template #value-actions="{ item }">
@@ -135,13 +132,14 @@ import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
 import { definePaginatedQuery } from '../../../utils/pagination';
 import { Paginated } from '@beabee/beabee-common';
 import { Header } from '../../../components/table/table.interface';
-import { formatDistanceLocale, formatLocale } from '../../../utils/dates';
+import { formatLocale } from '../../../utils/dates';
 import { addNotification } from '../../../store/notifications';
 import AppHeading from '../../../components/AppHeading.vue';
 import App2ColGrid from '../../../components/App2ColGrid.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import { addDays } from 'date-fns';
+import AppTime from '../../../components/AppTime.vue';
 
 const { n, t } = useI18n();
 
