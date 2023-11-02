@@ -1,8 +1,8 @@
 <template>
-  <div class="mb-5">
+  <div>
     <div
       class="flex justify-between items-center"
-      :class="{ 'border-b border-primary-40 pb-1': border }"
+      :class="{ 'has-border border-b border-primary-40 pb-3 mb-5': border }"
     >
       <AppTitle
         light
@@ -24,3 +24,8 @@ defineProps<{
   noCollapse?: boolean;
 }>();
 </script>
+<style lang="postcss" scoped>
+.has-border h1 {
+  @apply mb-0;
+}
+</style>
