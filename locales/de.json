@@ -54,8 +54,9 @@
     "unpublish": "Veröffentlichung aufheben",
     "update": "Änderungen speichern",
     "view": "Anzeigen",
-    "yesDelete": "Ja, Hinweis löschen",
-    "yesRemove": "Ja, löschen"
+    "yesDelete": "Ja, löschen",
+    "yesDisable": "Ja, deaktivieren",
+    "yesRemove": "Ja, entfernen"
   },
   "addContact": {
     "contactSaved": "Kontakt gespeichert",
