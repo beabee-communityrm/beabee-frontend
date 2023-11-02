@@ -15,7 +15,7 @@
       <div class="flex-grow px-4">
         <AppSubHeading class="my-2">{{ callout.title }}</AppSubHeading>
 
-        <p class="mb-2 text-sm leading-tight">{{ callout.excerpt }}</p>
+        <p class="mb-2 text-sm">{{ callout.excerpt }}</p>
 
         <div class="mb-3 flex items-end text-sm">
           <div v-if="callout.expires" class="ml-auto flex flex-col">

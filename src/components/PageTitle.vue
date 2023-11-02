@@ -2,18 +2,16 @@
   <div class="mb-5">
     <div
       class="flex justify-between items-center"
-      :class="{ 'border-b border-primary-40 pb-3': border }"
+      :class="{ 'border-b border-primary-40 pb-1': border }"
     >
       <AppTitle
-        class="mr-4 text-primary-80 !font-light"
+        light
+        class="mr-4 text-primary-80"
         :class="{ 'hidden md:block': !noCollapse }"
       >
         {{ title }}
       </AppTitle>
       <slot></slot>
-    </div>
-    <div v-if="subTitle" class="text-sm text-primary-80">
-      {{ subTitle }}
     </div>
   </div>
 </template>
@@ -22,7 +20,6 @@ import AppTitle from './AppTitle.vue';
 
 defineProps<{
   title: string;
-  subTitle?: string;
   border?: boolean;
   noCollapse?: boolean;
 }>();

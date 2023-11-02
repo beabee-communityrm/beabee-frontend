@@ -10,20 +10,20 @@ meta:
   <AppTitle class="mb-3">Typography</AppTitle>
   <div class="grid gap-8 lg:grid-cols-2">
     <div>
-      <div class="mb-10 space-y-3">
+      <div class="mb-10">
         <AppHeading>Headings</AppHeading>
         <p class="mb-3">All headings are set in the title font.</p>
 
-        <div class="bg-white p-6 space-y-3">
+        <div class="bg-white p-6">
           <AppTitle>h1 AppTitle 32px</AppTitle>
           <AppHeading>h2 AppHeading 26px</AppHeading>
           <AppSubHeading>h3 AppSubHeading 22px</AppSubHeading>
           <AppSectionHeading>h4 AppSectionHeading 20px</AppSectionHeading>
         </div>
       </div>
-      <div class="mb-10 space-y-3">
+      <div class="mb-10">
         <AppSubHeading>Other headings</AppSubHeading>
-        <div class="bg-white p-6 mb-3 space-y-3">
+        <div class="bg-white p-6 mb-3">
           <!-- <PageTitle :title="t('menu.uiToolkit')" /> -->
           <PageTitle title="PageTitle" />
           <p>
@@ -48,7 +48,7 @@ meta:
     </div>
 
     <div>
-      <div class="mb-10 space-y-3">
+      <div class="mb-10">
         <AppHeading>Paragraphs</AppHeading>
         <p>Texts are set using the body text font.</p>
         <p class="text-lg">
