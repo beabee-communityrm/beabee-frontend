@@ -6,11 +6,7 @@ meta:
 </route>
 
 <template>
-  <App2ColGrid class="mb-8">
-    <template #col1>
-      <p>{{ stepT('text') }}</p>
-    </template>
-  </App2ColGrid>
+  <p class="mb-8">{{ stepT('text') }}</p>
 
   <AppForm
     :button-text="t('form.saveChanges')"
@@ -41,7 +37,6 @@ import { GetEmailData } from '../../../utils/api/api.interface';
 import { fetchContent } from '../../../utils/api/content';
 import { fetchEmail, updateEmail } from '../../../utils/api/email';
 import { isRequestError } from '../../../utils/api';
-import App2ColGrid from '../../../components/App2ColGrid.vue';
 
 const { t } = useI18n();
 const stepT = (key: string) => t('membershipBuilder.steps.emails.' + key);

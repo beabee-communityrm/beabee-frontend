@@ -1,5 +1,8 @@
 <template>
-  <label class="flex flex-row items-start font-semibold">
+  <label
+    class="flex flex-row items-start"
+    :class="{ 'font-semibold': !notStandalone }"
+  >
     <input
       v-model="modelValueProxy"
       type="checkbox"
@@ -23,6 +26,7 @@ const props = defineProps<{
   disabled?: boolean;
   label?: string;
   icon?: IconDefinition;
+  notStandalone?: boolean;
 }>();
 
 const modelValueProxy = computed({

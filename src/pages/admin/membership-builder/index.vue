@@ -6,11 +6,8 @@ meta:
 </route>
 
 <template>
-  <App2ColGrid class="mb-8">
-    <template #col1>
-      <p>{{ stepT('text') }}</p>
-    </template>
-  </App2ColGrid>
+  <p class="mb-8">{{ stepT('text') }}</p>
+
   <App2ColGrid v-if="joinContent" extended>
     <template #col1>
       <AppForm
@@ -42,7 +39,7 @@ meta:
         />
 
         <AppSubHeading class="mb-2">
-          {{ stepT('suggestedAmounts') }} *
+          {{ stepT('suggestedAmounts') }}
         </AppSubHeading>
         <div class="mb-4 flex gap-4">
           <PeriodAmounts
@@ -56,10 +53,10 @@ meta:
         </div>
         <div class="mb-4 flex gap-4">
           <div class="flex-1">
-            <AppLabel :label="stepT('minAmount')" />
             <AppInput
               v-model="joinContent.minMonthlyAmount"
               type="number"
+              :label="stepT('minAmount')"
               :min="1"
               required
               class="block w-32"
@@ -74,13 +71,39 @@ meta:
             />
           </div>
         </div>
-        <div class="mb-4 flex gap-4">
-          <AppCheckbox
-            v-model="joinContent.showAbsorbFee"
-            :label="stepT('showAbsorbFee')"
-            class="font-semibold"
-          />
-        </div>
+
+        <AppSubHeading class="mb-2">
+          {{ stepT('payment') }}
+        </AppSubHeading>
+
+        <AppLabel :label="stepT('availablePaymentMethods.label')" required />
+        <Draggable
+          class="grid gap-2 grid-cols-3 bg-grey-lighter p-2 border-grey border-2 border-dashed mb-4"
+          group="paymentMethods"
+          :list="availablePaymentMethods"
+        >
+          <template #item="{ element }">
+            <PaymentMethodButton :method="element" @click.prevent />
+          </template>
+        </Draggable>
+
+        <AppLabel :label="stepT('paymentMethods.label')" required />
+        <Draggable
+          class="grid gap-2 grid-cols-3 bg-primary-10 p-2 border-primary-40 border-2 border-dashed"
+          group="paymentMethods"
+          :list="joinContent.paymentMethods"
+        >
+          <template #item="{ element }">
+            <PaymentMethodButton :method="element" />
+          </template>
+        </Draggable>
+        <AppInputHelp :message="stepT('paymentMethods.help')" class="mb-4" />
+
+        <AppCheckbox
+          v-model="joinContent.showAbsorbFee"
+          :label="stepT('showAbsorbFee')"
+          class="mb-4"
+        />
       </AppForm>
     </template>
     <template #col2>
@@ -95,7 +118,6 @@ import { fetchContent, updateContent } from '../../../utils/api/content';
 import AppForm from '../../../components/forms/AppForm.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
-import AppLabel from '../../../components/forms/AppLabel.vue';
 import { useI18n } from 'vue-i18n';
 import AppSelect from '../../../components/forms/AppSelect.vue';
 import { ContributionPeriod } from '@beabee/beabee-common';
@@ -108,6 +130,10 @@ import { required } from '@vuelidate/validators';
 import PeriodAmounts from '../../../components/pages/admin/membership-builder/PeriodAmounts.vue';
 import App2ColGrid from '../../../components/App2ColGrid.vue';
 import AppSubHeading from '../../../components/AppSubHeading.vue';
+import Draggable from 'vuedraggable';
+import PaymentMethodButton from '../../../components/payment/PaymentMethodButton.vue';
+import AppInputHelp from '../../../components/forms/AppInputHelp.vue';
+import AppLabel from '../../../components/forms/AppLabel.vue';
 
 const joinContent = ref<JoinContent>();
 const backgroundUrl = ref('');
@@ -140,6 +166,14 @@ const defaultAmounts = computed(() => {
       )
     : [];
 });
+
+const availablePaymentMethods = computed(() =>
+  joinContent.value
+    ? joinContent.value.availablePaymentMethods.filter(
+        (pm) => !joinContent.value?.paymentMethods.includes(pm)
+      )
+    : []
+);
 
 const validation = useVuelidate(
   { backgroundUrl: { required } },

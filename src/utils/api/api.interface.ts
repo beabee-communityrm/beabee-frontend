@@ -259,6 +259,7 @@ export interface JoinContent {
   showAbsorbFee: boolean;
   showNoContribution: boolean;
   paymentMethods: PaymentMethod[];
+  availablePaymentMethods: PaymentMethod[];
   stripePublicKey: string;
   stripeCountry: StripeFeeCountry;
 }

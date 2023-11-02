@@ -6,11 +6,7 @@ meta:
 </route>
 
 <template>
-  <App2ColGrid class="mb-8">
-    <template #col1>
-      <p>{{ stepT('text') }}</p>
-    </template>
-  </App2ColGrid>
+  <p class="mb-8">{{ stepT('text') }}</p>
   <App2ColGrid v-if="setupContent" extended>
     <template #col1>
       <AppForm
@@ -28,7 +24,7 @@ meta:
         <AppCheckbox
           v-model="setupContent.showMailOptIn"
           :label="stepT('showMailOptIn')"
-          class="mb-4 font-semibold"
+          class="mb-4"
         />
 
         <template v-if="setupContent.showMailOptIn">
@@ -58,7 +54,7 @@ meta:
         <AppCheckbox
           v-model="setupContent.showNewsletterOptIn"
           :label="stepT('showNewsletterOptIn')"
-          class="mb-4 font-semibold"
+          class="mb-4"
         />
 
         <template v-if="setupContent.showNewsletterOptIn">
@@ -113,7 +109,7 @@ meta:
           <AppCheckbox
             v-model="setupContent.surveyRequired"
             :label="stepT('joinSurvey.required')"
-            class="mb-4 font-semibold"
+            class="mb-4"
           />
         </template>
       </AppForm>

@@ -2,7 +2,7 @@
   <div>
     <AppHeading>{{ t('contribution.paymentMethod') }}</AppHeading>
 
-    <PaymentMethod class="mb-4" :source="paymentSource" />
+    <PaymentSourceText class="mb-4" :source="paymentSource" />
 
     <AppNotification
       v-if="cantUpdate"
@@ -55,8 +55,8 @@ import AppModal from '../../../AppModal.vue';
 import { computed } from 'vue';
 import AppHeading from '../../../AppHeading.vue';
 import { isRequestError } from '../../../../utils/api';
-import PaymentMethod from '../../../payment-method/PaymentMethod.vue';
 import AppNotification from '../../../AppNotification.vue';
+import PaymentSourceText from '../../../payment/PaymentSourceText.vue';
 
 const { t } = useI18n();
 

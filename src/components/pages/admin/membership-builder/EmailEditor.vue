@@ -1,5 +1,5 @@
 <template>
-  <App2ColGrid class="mb-6">
+  <App2ColGrid class="mb-6" extended>
     <template #col1>
       <AppSubHeading class="mb-2">{{ label }}</AppSubHeading>
       <template v-if="email">

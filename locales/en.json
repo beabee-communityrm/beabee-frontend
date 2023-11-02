@@ -1107,12 +1107,20 @@
         "title": "Welcome message"
       },
       "joinForm": {
+        "availablePaymentMethods": {
+          "label": "Available payment methods"
+        },
         "backgroundImage": "Background image",
         "defaultAmount": "Default amount",
         "description": "Fine tune your membership join form",
         "formSubtitle": "Subtitle",
         "formTitle": "Title",
         "minAmount": "Minimum amount",
+        "payment": "Payment options",
+        "paymentMethods": {
+          "help": "You must enable the payment method on the payment provider before enabling it here",
+          "label": "Enabled payment methods"
+        },
         "showAbsorbFee": "Ask about processing fee",
         "suggestedAmounts": "Suggested contribution amounts",
         "text": "In this section you can edit, fine tune and preview your membership join form.",
