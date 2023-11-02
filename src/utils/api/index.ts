@@ -5,17 +5,17 @@ interface ApiError {
   code: string;
 }
 
-type ApiRequestError = AxiosError & {
+type ApiRequestError<T, D> = AxiosError<T, D> & {
   response: AxiosResponse<ApiError> & {
     status: 400;
   };
 };
 
-export function isRequestError(
+export function isRequestError<T = unknown, D = unknown>(
   err: unknown,
   code?: string,
   status = 400
-): err is ApiRequestError {
+): err is ApiRequestError<T, D> {
   if (axios.isAxiosError(err) && err.response?.status === status) {
     const data = err.response.data as ApiError;
     return !code || data.code === code;

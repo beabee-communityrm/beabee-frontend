@@ -3,6 +3,7 @@
     "mfa": {
       "codeInput": {},
       "confirmDelete": {},
+      "createUnknownErrorNotification": "De 2-factor authenticatie kon niet worden opgeslagen vanwege een \nonbekende fout. Probeer het opnieuw of neem contact op met de \nondersteuning.",
       "enterCode": {},
       "result": {},
       "scan": {},

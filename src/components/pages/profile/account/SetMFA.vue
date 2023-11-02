@@ -55,6 +55,7 @@
   >
     <AppSlider ref="appSliderCo" :steps="stepsInOrder" @slide="onSlideChange">
       <template #slides>
+        <!-- QR code and secret slide -->
         <AppSlide>
           <div class="whitespace-break-spaces">
             <p class="text-center">
@@ -74,6 +75,7 @@
             </div>
           </div>
         </AppSlide>
+        <!-- User token verification slide -->
         <AppSlide>
           <div
             class="whitespace-break-spaces h-full flex flex-col justify-between items-center"
@@ -91,7 +93,10 @@
               />
 
               <AppNotification
-                :class="{ 'opacity-0': !steps.enterCode.error }"
+                :class="{
+                  'opacity-1': steps.enterCode.error,
+                  'opacity-0': !steps.enterCode.error,
+                }"
                 class="my-4"
                 variant="error"
                 :title="t('accountPage.mfa.result.invalidCode')"
@@ -99,16 +104,25 @@
             </span>
           </div>
         </AppSlide>
+        <!-- Last result slide with save button -->
         <AppSlide>
           <div
             class="whitespace-break-spaces h-full flex justify-center items-center text-center"
           >
-            <p v-if="userTokenValid" class="text-success">
-              {{ t(`accountPage.mfa.result.successful`) }}
-            </p>
-            <p v-else class="text-danger">
-              {{ t(`accountPage.mfa.result.invalidCode`) }}
-            </p>
+            <span class="w-full h-full flex flex-col justify-center px-4">
+              <AppNotification
+                v-if="userTokenValid"
+                class="my-4"
+                variant="success"
+                :title="t('accountPage.mfa.result.successful')"
+              />
+              <AppNotification
+                v-else
+                class="my-4"
+                variant="error"
+                :title="t('accountPage.mfa.result.invalidCode')"
+              />
+            </span>
           </div>
         </AppSlide>
       </template>
@@ -137,26 +151,32 @@
             </AppButton>
           </section>
 
-          <!-- Next buttons -->
+          <!-- Next button variants -->
           <section>
+            <!-- Last save button -->
             <AppButton
               v-if="isLastSlide"
-              :disabled="!allStepsDone"
+              :disabled="!validationStepsDone"
               variant="link"
               @click="saveMfaAndNotify()"
             >
               {{ t(`actions.save`) }}
             </AppButton>
+
+            <!-- Verify token next button -->
             <AppButton
               v-else-if="
                 activeSlide === 1 &&
                 (!steps.enterCode.validated || steps.enterCode.error)
               "
+              :disabled="!userToken"
               variant="link"
               @click="nextSlideIfValid()"
             >
               {{ t(`accountPage.mfa.validateButton.label`) }}
             </AppButton>
+
+            <!-- Default next button -->
             <AppButton v-else variant="link" @click="nextSlide()">
               {{ t(`actions.next`) }}
             </AppButton>
@@ -173,31 +193,34 @@ import { useI18n } from 'vue-i18n';
 import { faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import { TOTP, Secret } from 'otpauth';
 
-import { fetchContact } from '../../../../utils/api/contact';
+import { fetchContact } from '@utils/api/contact';
 import {
   createContactMfa,
   fetchContactMfa,
   deleteContactMfa,
-} from '../../../../utils/api/contact-mfa';
-import { ContactMfaType } from '../../../../utils/api/api.interface';
+} from '@utils/api/contact-mfa';
+import { ContactMfaType } from '@utils/api/api.interface';
+import { isRequestError } from '@utils/api/index';
+import { LOGIN_CODES } from '@utils/api/api.interface';
 
-import AppButton from '../../../button/AppButton.vue';
-import AppModal from '../../../AppModal.vue';
-import AppHeading from '../../../AppHeading.vue';
-import AppSlider from '../../../slider/AppSlider.vue';
-import AppSlide from '../../../slider/AppSlide.vue';
-import AppQRCode from '../../../AppQRCode.vue';
-import AppInput from '../../../forms/AppInput.vue';
-import AppConfirmDialog from '../../../AppConfirmDialog.vue';
-import AppNotification from '../../../AppNotification.vue';
+import AppButton from '@components/button/AppButton.vue';
+import AppModal from '@components/AppModal.vue';
+import AppHeading from '@components/AppHeading.vue';
+import AppSlider from '@components/slider/AppSlider.vue';
+import AppSlide from '@components/slider/AppSlide.vue';
+import AppQRCode from '@components/AppQRCode.vue';
+import AppInput from '@components/forms/AppInput.vue';
+import AppConfirmDialog from '@components/AppConfirmDialog.vue';
+import AppNotification from '@components/AppNotification.vue';
 
-import { addNotification } from '../../../../store/notifications';
-import { generalContent } from '../../../../store';
+import { addNotification } from '@store/notifications';
+import { generalContent } from '@store/index';
 
 import type { AppStepperStep } from '@type/app-stepper-step';
 import type { AppSliderSlideEventDetails } from '@type/app-slider-slide-event-details';
 import type { SetMfaSteps } from '@type/set-mfa-steps';
 import type { SetMfaTotpIdentity } from '@type/set-mfa-totp-identity';
+import type { ContactMfaCreateApiErrorData } from '@type/contact-mfa-create-api-error-data';
 
 const { t } = useI18n();
 
@@ -276,19 +299,43 @@ const closeMFAModal = () => {
 
 /** Save MFA on server and notify the user */
 const saveMfaAndNotify = async () => {
-  closeMFAModal();
-  const result = await createContactMfa(props.contactId, {
-    secret: totpSecret.value.base32,
-    token: userToken.value,
-    type: ContactMfaType.TOTP,
-  });
+  try {
+    await createContactMfa(props.contactId, {
+      secret: totpSecret.value.base32,
+      token: userToken.value,
+      type: ContactMfaType.TOTP,
+    });
+  } catch (error) {
+    return onCreateError(error);
+  }
+
   isEnabled.value = true;
+  closeMFAModal();
   resetState();
   addNotification({
     title: t('accountPage.mfa.enabledNotification'),
     variant: 'success',
   });
-  return result;
+};
+
+/** Called when an error occurs while creating MFA */
+const onCreateError = (error: unknown) => {
+  if (
+    isRequestError<ContactMfaCreateApiErrorData>(error) &&
+    error.response.data.message === LOGIN_CODES.INVALID_TOKEN
+  ) {
+    // If server says the token is invalid, set the token as invalid and go to the previous slide
+    setValidationStates(false);
+    appSliderCo.value?.prevSlide();
+    return;
+  }
+
+  // Start from the beginning on an unknown error
+  resetState();
+  addNotification({
+    title: t('accountPage.mfa.createUnknownErrorNotification'),
+    variant: 'error',
+  });
 };
 
 /** Disable MFA and notify the user */
@@ -310,7 +357,10 @@ const disableMfa = async () => {
 
 /** Called when the slider changes */
 const onSlideChange = (details: AppSliderSlideEventDetails) => {
-  // Validate current step here if needed
+  // Reset state if the user goes back to the first slide
+  if (details.slideNumber === 0) {
+    resetState();
+  }
 
   // Validate previous steps
   validatePreviousSteps(details.slideNumber);
@@ -347,6 +397,13 @@ const onTotpIdentityChanged = (newValue: SetMfaTotpIdentity) => {
   totpUrl.value = totp.toString();
 };
 
+/** Reset the user token validation state if the user token changes */
+const onUserTokenChanged = () => {
+  userTokenValid.value = false;
+  steps.enterCode.error = false;
+  steps.enterCode.validated = false;
+};
+
 /** Validate the **T**imed **O**ne **T**ime **P**assword token / user input code */
 const validateTotpToken = (window = 2) => {
   if (!totp) {
@@ -363,23 +420,41 @@ const validateTotpToken = (window = 2) => {
   return userTokenValid.value;
 };
 
-const nextSlideIfValid = () => {
-  const isValid = validateTotpToken();
+/**
+ * Set the validation state of the slides
+ * @param isValid Is the token valid?
+ */
+const setValidationStates = (isValid: boolean) => {
+  userTokenValid.value = isValid;
+
+  steps.enterCode.error = !isValid;
+  steps.enterCode.validated = isValid;
 
   if (isValid) {
-    steps.enterCode.error = !userTokenValid.value;
-    steps.enterCode.validated = userTokenValid.value;
+    steps.result.error = !isValid;
+    steps.result.validated = isValid;
+  }
 
+  return isValid;
+};
+
+/** Validate token and go to next slide if valid */
+const nextSlideIfValid = () => {
+  const isValid = setValidationStates(validateTotpToken());
+
+  if (isValid) {
     appSliderCo.value?.nextSlide();
-
-    steps.result.error = !userTokenValid.value;
-    steps.result.validated = userTokenValid.value;
   }
 };
 
 /** Are all steps done with no errors? */
-const allStepsDone = computed(() => {
-  return stepsInOrder.value.every((s) => s.validated && !s.error);
+const validationStepsDone = computed(() => {
+  return (
+    steps.qrCode.validated &&
+    !steps.qrCode.error &&
+    steps.enterCode.validated &&
+    !steps.enterCode.error
+  );
 });
 
 /** Fetch the contact and set the TOTP identity */
@@ -401,6 +476,8 @@ watch(
 
 /** Watch TOTP identity changes */
 watch(totpIdentity, onTotpIdentityChanged, { deep: true });
+
+watch(userToken, onUserTokenChanged);
 
 onBeforeMount(() => {
   resetState();

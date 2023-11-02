@@ -13,6 +13,7 @@
         "desc": "Möchtest du die Multi-Faktor-Authentifizierung wirklich deaktivieren? \nDanach brauchst du nur noch dein Passwort zum Anmelden. Bitte vergiss \nnicht, den Eintrag in deiner Authenticator-App zu löschen. Du kannst \ndiese Funktion jederzeit wieder einschalten.",
         "title": "2FA deaktivieren"
       },
+      "createUnknownErrorNotification": "Die 2-Faktor-Authentifizierung konnte aufgrund eines unbekannten Fehlers nicht gespeichert werden. Bitte versuche es erneut oder kontaktiere den Support.",
       "disabledNotification": "Zwei-Faktor Authentifizierung erfolgreich deaktiviert",
       "enabledNotification": "Zwei-Faktor Authentifizierung erfolgreich aktiviert",
       "enterCode": {
@@ -90,9 +91,9 @@
     "unpublish": "Veröffentlichung aufheben",
     "update": "Änderungen speichern",
     "view": "Anzeigen",
-    "yesDelete": "Ja, Hinweis löschen",
+    "yesDelete": "Ja, löschen",
     "yesDisable": "Ja, deaktivieren",
-    "yesRemove": "Ja, löschen"
+    "yesRemove": "Ja, entfernen"
   },
   "addContact": {
     "contactSaved": "Kontakt gespeichert",
@@ -572,10 +573,11 @@
     "cancellationDate": "Gekündigt am",
     "contribution": "Beitrag",
     "contributionType": "Zahlungsart",
-    "information": "Information",
+    "joinSurvey": "Anmelde-Fragebogen",
     "newsletter": "Newsletter",
     "overview": "Überblick",
     "pickTag": "Tag aus der Liste wählen",
+    "profile": "Profil",
     "roles": "Rolle",
     "security": {
       "instructions": "Link kopieren und teilen:",
@@ -919,6 +921,7 @@
     "terms": "Allgemeine Geschäftsbedingungen"
   },
   "forgotPassword": {
+    "backToLogin": "Zurück zum Login",
     "checkInbox": "Bitte schaue in deinen Posteingang und befolge die Anleitung in der E-Mail. Sollte die E-mail nicht auftauchen, checke deinen Spamordner. ",
     "description": "Bitte gib deine E-Mail-Adresse ein. Wir schicken dir dann die Anleitung zum Zurücksetzen deines Passworts.",
     "message": "Gibt es einen Account mit der E-mail-Adresse {email}, bekommst du in Kürze eine Nachricht.",

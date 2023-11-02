@@ -13,6 +13,7 @@
         "desc": "Are you sure you want to disable Multi-Factor Authentication? From then on, you'll only need your password to log in. Remember to delete the entry from your Authenticator app. You can always enable it again.",
         "title": "Disable 2FA"
       },
+      "createUnknownErrorNotification": "The 2-factor authentication could not be saved due to an unknown error. Please try again or contact support.",
       "disabledNotification": "Two-factor authentication successfully deactivated",
       "enabledNotification": "Two-factor authentication successfully activated",
       "enterCode": {
@@ -91,7 +92,7 @@
     "update": "Update",
     "view": "View",
     "yesDelete": "Yes, delete it",
-    "yesDisable": "Yes, disable",
+    "yesDisable": "Yes, disable it",
     "yesRemove": "Yes, remove it"
   },
   "addContact": {
@@ -572,10 +573,11 @@
     "cancellationDate": "Cancelled on",
     "contribution": "Contribution",
     "contributionType": "Type",
-    "information": "Information",
+    "joinSurvey": "Join survey",
     "newsletter": "Newsletter",
     "overview": "Overview",
     "pickTag": "Pick a tag from the list below",
+    "profile": "Profile",
     "roles": "Roles",
     "security": {
       "instructions": "Copy and share this link:",

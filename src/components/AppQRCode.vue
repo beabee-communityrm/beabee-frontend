@@ -1,5 +1,5 @@
 <!--
-  # AppQRCode
+  # AppQrCode
   A component that displays a QR code.
 
   ## Props
@@ -15,68 +15,16 @@
 import { ref, onMounted, watch } from 'vue';
 import qrCode from 'qrcode-generator';
 
-// Types not exported by qrcode-generator
-
-/** Type number (1 ~ 40), or 0 for auto detection. */
-type TypeNumber =
-  | 0
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 9
-  | 10
-  | 11
-  | 12
-  | 13
-  | 14
-  | 15
-  | 16
-  | 17
-  | 18
-  | 19
-  | 20
-  | 21
-  | 22
-  | 23
-  | 24
-  | 25
-  | 26
-  | 27
-  | 28
-  | 29
-  | 30
-  | 31
-  | 32
-  | 33
-  | 34
-  | 35
-  | 36
-  | 37
-  | 38
-  | 39
-  | 40;
-
-type ErrorCorrectionLevel = 'L' | 'M' | 'Q' | 'H';
-
-interface AppQRCodeProps {
-  qrData: string;
-  typeNumber?: TypeNumber;
-  correctionLevel?: ErrorCorrectionLevel;
-}
+import type { AppQrCodeProps } from '@type/app-qr-code-props';
 
 const qrContainerEl = ref<HTMLDivElement | null>(null);
 
-const props = withDefaults(defineProps<AppQRCodeProps>(), {
+const props = withDefaults(defineProps<AppQrCodeProps>(), {
   typeNumber: 0,
   correctionLevel: 'H',
 });
 
-const onQrDataChanged = (newValue: AppQRCodeProps) => {
+const onQrDataChanged = (newValue: AppQrCodeProps) => {
   if (!qrContainerEl.value) {
     throw new Error('qrContainerEl is null!');
   }

@@ -97,6 +97,9 @@ const toSlide = (slideNumber: number, behavior: ScrollBehavior = 'smooth') => {
   // Scroll to the slide
   slideEl.scrollIntoView({ behavior, block: 'center' });
 
+  // Only emit the event if the slide actually changed
+  if (slideNumber === activeSlide.value) return;
+
   const oldSlideNumber = activeSlide.value;
 
   // Finish up
