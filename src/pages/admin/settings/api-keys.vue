@@ -89,6 +89,26 @@ meta:
             required
           />
         </div>
+        <AppSelect
+          v-model="newApiKeyData.expiresInDays"
+          :label="t('apiKey.data.expires')"
+          :items="[
+            { id: 0, label: t('adminSettings.apikey.expires.never') },
+            ...[30, 60, 90].map((days) => ({
+              id: days,
+              label: t('adminSettings.apikey.expires.days', { n: n(days) }),
+            })),
+          ]"
+          :info-message="t('adminSettings.apikey.expiresHelp')"
+          required
+          class="mb-4"
+        />
+        <AppCheckbox
+          v-if="newApiKeyData.expiresInDays === 0"
+          :label="t('adminSettings.apikey.expiresNeverWarning')"
+          required
+          class="mb-4"
+        />
       </AppForm>
     </template>
   </App2ColGrid>
@@ -119,8 +139,11 @@ import { formatDistanceLocale, formatLocale } from '../../../utils/dates';
 import { addNotification } from '../../../store/notifications';
 import AppHeading from '../../../components/AppHeading.vue';
 import App2ColGrid from '../../../components/App2ColGrid.vue';
+import AppSelect from '../../../components/forms/AppSelect.vue';
+import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
+import { addDays } from 'date-fns';
 
-const { t } = useI18n();
+const { n, t } = useI18n();
 
 const validation = useVuelidate();
 
@@ -131,6 +154,7 @@ const tokenToShow = ref('');
 
 const newApiKeyData = reactive({
   description: '',
+  expiresInDays: 30,
 });
 
 const headers: Header[] = [
@@ -168,8 +192,17 @@ watchEffect(async () => {
 });
 
 async function generateApiKey() {
-  tokenToShow.value = (await createApiKey(newApiKeyData)).token;
+  const data = {
+    description: newApiKeyData.description,
+    expires:
+      newApiKeyData.expiresInDays === 0
+        ? null
+        : addDays(new Date(), newApiKeyData.expiresInDays),
+  };
+  tokenToShow.value = (await createApiKey(data)).token;
+
   newApiKeyData.description = '';
+  newApiKeyData.expiresInDays = 30;
   validation.value.$reset();
   showConfirmCreateModal.value = true;
   await refreshApiKeys();
