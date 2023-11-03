@@ -12,6 +12,7 @@ function deserializeApiKey(apiKey: Serial<GetApiKeyData>): GetApiKeyData {
   return {
     ...apiKey,
     createdAt: deserializeDate(apiKey.createdAt),
+    expires: deserializeDate(apiKey.expires),
   };
 }
 

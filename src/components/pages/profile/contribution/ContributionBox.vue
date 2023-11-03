@@ -26,7 +26,12 @@
       <div v-if="contribution.membershipStatus === MembershipStatus.Expiring">
         <i18n-t keypath="contribution.willExpire">
           <template #expires>
-            <b class="text-danger"> {{ formattedExpiryDate }}</b>
+            <AppTime
+              v-if="contribution.membershipExpiryDate"
+              :datetime="contribution.membershipExpiryDate"
+              time-only
+              class="text-danger font-bold"
+            />
           </template>
         </i18n-t>
       </div>
@@ -64,10 +69,11 @@ import {
   MembershipStatus,
 } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
-import { formatDistanceLocale, formatLocale } from '../../../../utils/dates';
+import { formatLocale } from '../../../../utils/dates';
 import { computed } from 'vue';
 import { ContributionInfo } from '../../../../utils/api/api.interface';
 import AppSubHeading from '../../../AppSubHeading.vue';
+import AppTime from '../../../AppTime.vue';
 
 const { n, t } = useI18n();
 
@@ -79,11 +85,5 @@ const period = computed(() =>
   props.contribution.period === ContributionPeriod.Monthly
     ? t('common.month')
     : t('common.year')
-);
-
-const formattedExpiryDate = computed(() =>
-  props.contribution.membershipExpiryDate
-    ? formatDistanceLocale(new Date(), props.contribution.membershipExpiryDate)
-    : undefined
 );
 </script>

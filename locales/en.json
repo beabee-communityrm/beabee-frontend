@@ -113,6 +113,12 @@
       },
       "copied": "API key copied to clipboard",
       "create": "Create a new API key",
+      "expires": {
+        "days": "In {n} days",
+        "never": "Never"
+      },
+      "expiresHelp": "For better security you should always set an expiry date to help prevent long term unauthorized to your system.",
+      "expiresNeverWarning": "I understand the risks of not setting an expiry date",
       "label": "API keys",
       "showingOf": "Showing {start} to {end} API keys out of {total}"
     },
@@ -263,6 +269,7 @@
     "data": {
       "createdAt": "Created",
       "description": "Description",
+      "expires": "Expiry date",
       "token": "Token"
     }
   },
@@ -469,7 +476,6 @@
     "every": "every",
     "goBack": "Go back",
     "hello": "Hello",
-    "in": "in",
     "itemsPerPage": "{items} items per page",
     "joined": "Joined",
     "loading": "Loading...",
@@ -1020,7 +1026,6 @@
     "absorbFeeOptIn": "Yes, I'll absorb the {fee} fee.",
     "absorbFeeText": "Our payment processor charges us per transaction which means we receive less from monthly contributions. Are you happy to absorb the {fee} transaction fee?  Alternatively you could pay annually.",
     "contribute": "Contribute {amount} / {period}",
-    "contribution": "Contribution",
     "errors": {
       "confirmEmail": {
         "message": "Almost there! We just need to confirm your email address to finish setting up your membership.",

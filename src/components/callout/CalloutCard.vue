@@ -18,14 +18,11 @@
         <p class="mb-2 text-sm">{{ callout.excerpt }}</p>
 
         <div class="mb-3 flex items-end text-sm">
-          <div v-if="callout.expires" class="ml-auto flex flex-col">
+          <div v-if="callout.expires" class="ml-auto flex flex-col text-right">
             <span class="font-semibold">{{
-              `${t('common.until')} ${formattedExpiresDate}`
+              `${t('common.until')} ${formatLocale(callout.expires, 'MMMM d')}`
             }}</span>
-
-            <span class="text-right text-body-80">{{
-              `${t('common.timeIn', { time: expiresIn })}`
-            }}</span>
+            <AppTime class="text-body-80" :datetime="callout.expires" />
           </div>
         </div>
       </div>
@@ -42,33 +39,13 @@
 </template>
 
 <script lang="ts" setup>
-import { format } from 'date-fns';
-import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { formatDistanceLocale } from '../../utils/dates';
 import { GetCalloutData } from '../../utils/api/api.interface';
+import AppTime from '../AppTime.vue';
 import AppSubHeading from '../AppSubHeading.vue';
+import { formatLocale } from '../../utils/dates';
+
+defineProps<{ callout: GetCalloutData }>();
 
 const { t } = useI18n();
-
-const props = defineProps<{
-  callout: GetCalloutData;
-}>();
-
-const formattedExpiresDate = ref('');
-const expiresIn = ref('');
-
-const formatDate = () => {
-  if (props.callout.expires) {
-    formattedExpiresDate.value = `${format(
-      props.callout.expires,
-      'MMMM'
-    )} ${format(props.callout.expires, 'd')}`;
-    expiresIn.value = formatDistanceLocale(new Date(), props.callout.expires);
-  }
-};
-
-onBeforeMount(() => {
-  formatDate();
-});
 </script>

@@ -17,10 +17,15 @@
       :headers="headers"
       :items="result?.items || null"
       :selectable="selectable"
+      :row-class="rowClass"
       class="mb-4 w-full"
     >
-      <template v-for="(_, name) in $slots" #[name]="slotData">
-        <slot :name="name" v-bind="slotData" />
+      <template
+        v-for="(name, index) of Object.keys($slots)"
+        #[name]="slotData"
+        :key="index"
+      >
+        <slot :name="name" v-bind="slotData || {}"></slot>
       </template>
     </AppTable>
     <AppPaginatedTableResult
@@ -32,16 +37,16 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup generic="I extends Item">
 import { Paginated } from '@beabee/beabee-common';
 import AppPaginatedTableResult from './AppPaginatedTableResult.vue';
 import AppTable from './AppTable.vue';
-import { Header, SortType } from './table.interface';
+import { Header, Item, SortType } from './table.interface';
 
 defineProps<{
   headers: Header[];
   keypath: string;
-  result: Paginated<unknown> | undefined;
+  result: Paginated<I> | undefined;
   query: {
     page: number;
     limit: number;
@@ -51,5 +56,6 @@ defineProps<{
     };
   };
   selectable?: boolean;
+  rowClass?: (item: I) => string;
 }>();
 </script>

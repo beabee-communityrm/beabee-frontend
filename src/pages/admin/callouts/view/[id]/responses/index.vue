@@ -151,11 +151,7 @@ meta:
           <span v-else>-</span>
         </template>
         <template #value-createdAt="{ value }">
-          {{
-            t('common.timeAgo', {
-              time: formatDistanceLocale(new Date(), value),
-            })
-          }}
+          <AppTime :datetime="value" />
         </template>
 
         <template #after="{ item }">
@@ -187,18 +183,11 @@ meta:
             </p>
             <div v-if="showLatestComment && item.latestComment">
               <font-awesome-icon :icon="faComment" class="mr-2" />
-              <span class="font-semibold text-body-60">
-                {{
-                  t('common.timeAgo', {
-                    time: formatDistanceLocale(
-                      new Date(),
-                      item.latestComment.createdAt
-                    ),
-                  })
-                }}
-                •
-              </span>
-              <b>{{ item.latestComment.contact.displayName }}:{{ ' ' }}</b>
+              <AppTime
+                class="font-semibold text-body-60"
+                :datetime="item.latestComment.createdAt"
+              />
+              <b> • {{ item.latestComment.contact.displayName }}:{{ ' ' }}</b>
               <span
                 class="inline-block italic"
                 v-html="item.latestComment.text"
@@ -238,7 +227,6 @@ import {
 } from '../../../../../../utils/api/api.interface';
 import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
 import { convertComponentsToFilters } from '../../../../../../utils/callouts';
-import { formatDistanceLocale } from '../../../../../../utils/dates';
 import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
 import { updateCalloutResponses } from '../../../../../../utils/api/callout-response';
 import AppTag from '../../../../../../components/AppTag.vue';
@@ -263,6 +251,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { addNotification } from '../../../../../../store/notifications';
 import { addBreadcrumb } from '../../../../../../store/breadcrumb';
+import AppTime from '../../../../../../components/AppTime.vue';
 
 const props = defineProps<{ callout: GetCalloutDataWith<'form'> }>();
 

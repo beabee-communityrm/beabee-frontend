@@ -1,9 +1,10 @@
 <template>
   <label class="flex flex-row items-start font-semibold">
     <input
-      v-model="modelValueProxy"
+      v-model="value"
       type="checkbox"
       :disabled="disabled"
+      :required="required"
       :value="true"
       class="mt-1"
     />
@@ -15,18 +16,28 @@
 </template>
 <script lang="ts" setup>
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
-import { computed } from 'vue';
+import useVuelidate from '@vuelidate/core';
+import { sameAs } from '@vuelidate/validators';
+import { computed, ref, toRef, watch } from 'vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
-  modelValue: boolean;
+  modelValue?: boolean;
   disabled?: boolean;
   label?: string;
   icon?: IconDefinition;
+  required?: boolean;
 }>();
 
-const modelValueProxy = computed({
-  get: () => props.modelValue,
-  set: (checked) => emit('update:modelValue', !!checked),
+const value = ref(false);
+watch(value, () => emit('update:modelValue', value.value));
+watch(toRef(props, 'modelValue'), (newValue) => (value.value = newValue), {
+  immediate: true,
 });
+
+const rules = computed(() =>
+  props.required ? { v: { ticked: sameAs(true) } } : { v: {} }
+);
+
+useVuelidate(rules, { v: value });
 </script>
