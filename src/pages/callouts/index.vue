@@ -83,16 +83,12 @@ import CalloutCard from '../../components/callout/CalloutCard.vue';
 import AppSearchInput from '../../components/forms/AppSearchInput.vue';
 import { fetchCallouts } from '../../utils/api/callout';
 import AppPagination from '../../components/AppPagination.vue';
-import { formatDistanceLocale, formatLocale } from '../../utils/dates';
 import AppToggle from '../../components/forms/AppToggle.vue';
 import { Header } from '../../components/table/table.interface';
 import AppTable from '../../components/table/AppTable.vue';
 import { defineParam } from '../../utils/pagination';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import AppTime from '../../components/AppTime.vue';
-
-formatDistanceLocale;
-formatLocale;
 
 const { t } = useI18n();
 

@@ -28,7 +28,12 @@
       <div v-if="contribution.membershipStatus === MembershipStatus.Expiring">
         <i18n-t keypath="contribution.willExpire">
           <template #expires>
-            <b class="text-danger"> {{ formattedExpiryDate }}</b>
+            <AppTime
+              v-if="contribution.membershipExpiryDate"
+              :datetime="contribution.membershipExpiryDate"
+              time-only
+              class="text-danger font-bold"
+            />
           </template>
         </i18n-t>
       </div>
@@ -70,6 +75,7 @@ import { formatDistanceLocale, formatLocale } from '../../../../utils/dates';
 import { computed } from 'vue';
 import { ContributionInfo } from '../../../../utils/api/api.interface';
 import AppSubHeading from '../../../AppSubHeading.vue';
+import AppTime from '../../../AppTime.vue';
 
 const { n, t } = useI18n();
 
