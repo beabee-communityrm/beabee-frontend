@@ -82,7 +82,7 @@
   </table>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup generic="I extends Item">
 import {
   faCaretDown,
   faCaretUp,
@@ -92,26 +92,20 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { hasSlotContent } from '../../utils';
 import AppCheckbox from '../forms/AppCheckbox.vue';
-import { Header, SortType } from './table.interface';
+import { Header, Item, SortType } from './table.interface';
 
 interface Sort {
   by: string | null;
   type: SortType;
 }
 
-// TODO: it would be really nice to be able to make this a generic
-// but unfortunately Vue doesn't support that at the moment
-// https://github.com/vuejs/rfcs/discussions/436
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Item = any;
-
 const props = defineProps<{
   sort?: Sort;
   headers: Header[];
-  items: Item[] | null;
+  items: I[] | null;
   selectable?: boolean;
   hideHeaders?: boolean;
-  rowClass?: (item: Item) => string;
+  rowClass?: (item: I) => string;
 }>();
 
 const emit = defineEmits(['update:sort']);
@@ -136,7 +130,7 @@ const allSelected = computed({
   },
 });
 
-function rowClasses(item: Item): string {
+function rowClasses(item: I): string {
   return (
     (props.rowClass ? props.rowClass(item) : '') +
     (props.selectable && item.selected ? ' bg-primary-10' : '')
