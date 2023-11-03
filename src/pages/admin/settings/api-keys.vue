@@ -86,13 +86,7 @@ meta:
         <AppSelect
           v-model="newApiKeyData.expiresInDays"
           :label="t('apiKey.data.expires')"
-          :items="[
-            { id: 0, label: t('adminSettings.apikey.expires.never') },
-            ...[30, 60, 90].map((days) => ({
-              id: days,
-              label: t('adminSettings.apikey.expires.days', { n: n(days) }),
-            })),
-          ]"
+          :items="expiresInOptions"
           :info-message="t('adminSettings.apikey.expiresHelp')"
           required
           class="mb-4"
@@ -114,7 +108,7 @@ import { useI18n } from 'vue-i18n';
 import AppForm from '../../../components/forms/AppForm.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
 import { faCopy, faTrash, faWarning } from '@fortawesome/free-solid-svg-icons';
-import { ref, watchEffect } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import { GetApiKeyData } from '../../../utils/api/api.interface';
 import {
   createApiKey,
@@ -148,6 +142,19 @@ const initialData = () => ({
   expiresInDays: 30,
 });
 const newApiKeyData = ref(initialData());
+
+const expiresInOptions = computed(() => {
+  const neverExpiresOption = {
+    id: 0,
+    label: t('adminSettings.apikey.expires.never'),
+  };
+  const daysOptions = [30, 60, 90].map((days) => ({
+    id: days,
+    label: t('adminSettings.apikey.expires.days', { n: n(days) }),
+  }));
+
+  return [neverExpiresOption, ...daysOptions];
+});
 
 const headers: Header[] = [
   {
