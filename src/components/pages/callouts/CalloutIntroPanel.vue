@@ -1,7 +1,7 @@
 <template>
   <CalloutSidePanel :show="show" @close="$emit('close')">
     <div class="flex flex-col lg:justify-center items-start h-full">
-      <AppTitle class="pt-8 mb-4">{{ callout.title }}</AppTitle>
+      <AppTitle class="pt-8">{{ callout.title }}</AppTitle>
       <figure class="mb-6">
         <img class="w-full object-cover" :src="callout.image" />
       </figure>

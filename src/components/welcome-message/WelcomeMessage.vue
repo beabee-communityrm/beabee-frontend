@@ -6,7 +6,7 @@
         :class="!small && 'lg:mb-8 lg:mr-8 lg:w-[17rem]'"
       />
 
-      <AppSubHeading class="mb-4">
+      <AppSubHeading>
         {{ t('homePage.welcome', { firstName, lastName }) }}
       </AppSubHeading>
     </div>

@@ -7,7 +7,7 @@ meta:
 
 <template>
   <div v-if="callout">
-    <PageTitle class="mb-2" :title="callout.title" no-collapse />
+    <PageTitle border :title="callout.title" no-collapse />
     <router-view :callout="callout"></router-view>
   </div>
 </template>
