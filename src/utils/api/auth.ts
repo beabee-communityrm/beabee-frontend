@@ -21,9 +21,23 @@ export async function forgotPassword(email: string): Promise<void> {
   });
 }
 
+export async function lostMfaDevice(email: string): Promise<void> {
+  await axios.post('reset-device', {
+    email,
+    resetUrl: env.appUrl + '/auth/reset-device',
+  });
+}
+
 export async function resetPassword(
   password: string,
   resetPasswordFlowId: string
 ): Promise<void> {
   await axios.put(`reset-password/${resetPasswordFlowId}`, { password });
+}
+
+export async function resetMfaDevice(
+  password: string,
+  resetMfaFlowId: string
+): Promise<void> {
+  await axios.put(`reset-device/${resetMfaFlowId}`, { password });
 }

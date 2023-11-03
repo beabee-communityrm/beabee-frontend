@@ -40,6 +40,12 @@ meta:
         />
       </div>
 
+      <div class="mb-4">
+        <router-link class="text-sm underline" to="/auth/forgot-password">
+          {{ t('login.forgotPassword') }}
+        </router-link>
+      </div>
+
       <div class="mb-3">
         <AppInput
           v-if="hasMFAEnabled"
@@ -47,13 +53,18 @@ meta:
           type="text"
           name="verifyCode"
           required
+          maxlength="6"
+          minlength="6"
           :label="t('accountPage.mfa.codeInput.label')"
         />
       </div>
 
-      <div class="mb-4">
-        <router-link class="text-sm underline" to="/auth/forgot-password">
-          {{ t('login.forgotPassword') }}
+      <div v-if="hasMFAEnabled" class="mb-4">
+        <router-link
+          class="text-sm underline"
+          :to="'/auth/lost-device/' + data.email"
+        >
+          {{ t('login.lostMfaDevice') }}
         </router-link>
       </div>
 
