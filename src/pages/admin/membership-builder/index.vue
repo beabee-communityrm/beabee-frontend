@@ -41,9 +41,7 @@ meta:
           :error-message="validation.backgroundUrl.$errors[0]?.$message"
         />
 
-        <AppSubHeading class="mb-2">
-          {{ stepT('suggestedAmounts') }} *
-        </AppSubHeading>
+        <AppSubHeading> {{ stepT('suggestedAmounts') }} * </AppSubHeading>
         <div class="mb-4 flex gap-4">
           <PeriodAmounts
             v-for="(period, periodI) in joinContent.periods"
@@ -57,13 +55,17 @@ meta:
         <div class="mb-4 flex gap-4">
           <div class="flex-1">
             <AppLabel :label="stepT('minAmount')" />
-            <AppInput
-              v-model="joinContent.minMonthlyAmount"
-              type="number"
-              :min="1"
-              required
-              class="block w-32"
-            />
+            <div class="max-w-[12rem]">
+              <AppInput
+                v-model="joinContent.minMonthlyAmount"
+                type="number"
+                :min="1"
+                :prefix="generalContent.currencySymbol"
+                :suffix="'/ ' + t('common.month')"
+                required
+                class="block w-32"
+              />
+            </div>
           </div>
           <div class="flex-1">
             <AppSelect
@@ -74,13 +76,16 @@ meta:
             />
           </div>
         </div>
-        <div class="mb-4 flex gap-4">
-          <AppCheckbox
-            v-model="joinContent.showAbsorbFee"
-            :label="stepT('showAbsorbFee')"
-            class="font-semibold"
-          />
-        </div>
+        <AppCheckbox
+          v-model="joinContent.showNoContribution"
+          :label="stepT('showNoContribution')"
+          class="font-semibold mb-4"
+        />
+        <AppCheckbox
+          v-model="joinContent.showAbsorbFee"
+          :label="stepT('showAbsorbFee')"
+          class="font-semibold mb-4"
+        />
       </AppForm>
     </template>
     <template #col2>
@@ -135,7 +140,11 @@ const defaultAmounts = computed(() => {
     ? joinContent.value.periods.flatMap((period) =>
         period.presetAmounts.map((amount) => ({
           id: `${period.name}_${amount}`,
-          label: `${n(amount, 'currency')}/${t('common.' + period.name)}`,
+          label: `${n(amount, 'currency')} / ${
+            period.name === ContributionPeriod.Monthly
+              ? t('common.month')
+              : t('common.year')
+          }`,
         }))
       )
     : [];

@@ -1,7 +1,7 @@
 <template>
   <a
     :href="item.to"
-    class="group flex items-baseline justify-between rounded p-2 text-sm"
+    class="group flex items-baseline justify-between rounded p-2 text-sm xl:text-base"
     :class="selected && 'bg-white font-semibold'"
     @click.prevent="emit('click', item.id)"
   >

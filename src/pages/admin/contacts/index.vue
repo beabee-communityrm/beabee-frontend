@@ -85,7 +85,7 @@ meta:
           {{ item.profile.description }}
         </p>
         <div
-          v-if="item.profile.tags.length > 0"
+          v-if="item.profile.tags && item.profile.tags.length > 0"
           :class="item.profile.description && 'mt-2'"
         >
           <font-awesome-icon :icon="faTag" class="mr-2" />

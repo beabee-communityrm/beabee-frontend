@@ -51,17 +51,7 @@ meta:
     </template>
 
     <template #value-expires="{ item }">
-      <time
-        v-if="item.expires"
-        :datetime="item.expires.toISOString()"
-        :title="formatLocale(item.expires, 'PPPppp')"
-      >
-        {{
-          t('common.timeAgo', {
-            time: formatDistanceLocale(new Date(), item.expires),
-          })
-        }}
-      </time>
+      <AppTime v-if="item.expires" :datetime="item.expires" />
       <span v-else>-</span>
     </template>
 
@@ -93,15 +83,12 @@ import CalloutCard from '../../components/callout/CalloutCard.vue';
 import AppSearchInput from '../../components/forms/AppSearchInput.vue';
 import { fetchCallouts } from '../../utils/api/callout';
 import AppPagination from '../../components/AppPagination.vue';
-import { formatDistanceLocale, formatLocale } from '../../utils/dates';
 import AppToggle from '../../components/forms/AppToggle.vue';
 import { Header } from '../../components/table/table.interface';
 import AppTable from '../../components/table/AppTable.vue';
 import { defineParam } from '../../utils/pagination';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-
-formatDistanceLocale;
-formatLocale;
+import AppTime from '../../components/AppTime.vue';
 
 const { t } = useI18n();
 

@@ -8,7 +8,7 @@ meta:
 
 <template>
   <AuthBox>
-    <AppTitle big class="mb-4">
+    <AppTitle big>
       {{ t('join.errors.confirmEmail.title') }}
     </AppTitle>
     <div class="md:text-lg">

@@ -45,13 +45,10 @@ meta:
           <router-link :to="'/admin/contacts/' + member.id" class="text-link">
             {{ member.displayName }}
           </router-link>
-          <span class="flex-1 text-right text-sm font-semibold text-body-60">
-            {{
-              t('common.timeAgo', {
-                time: formatDistanceLocale(new Date(), member.joined),
-              })
-            }}
-          </span>
+          <AppTime
+            class="flex-1 text-right text-sm font-semibold text-body-60"
+            :datetime="member.joined"
+          />
         </li>
       </ul>
     </div>
@@ -106,7 +103,6 @@ import {
   GetStatsData,
 } from '../../utils/api/api.interface';
 import { fetchContacts } from '../../utils/api/contact';
-import { formatDistanceLocale } from '../../utils/dates';
 import HintBox from '../../components/pages/admin/HintBox.vue';
 import { fetchCallouts } from '../../utils/api/callout';
 import CalloutSummary from '../../components/callout/CalloutSummary.vue';
@@ -115,6 +111,7 @@ import { subDays } from 'date-fns';
 import { addBreadcrumb } from '../../store/breadcrumb';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import env from '../../env';
+import AppTime from '../../components/AppTime.vue';
 
 const { n, t } = useI18n();
 

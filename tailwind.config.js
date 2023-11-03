@@ -37,7 +37,6 @@ module.exports = {
         DEFAULT: '3px',
       },
       lineHeight: {
-        tight: '1.3',
         5.5: '1.375rem',
       },
       screens: {
@@ -60,7 +59,8 @@ module.exports = {
         'auth-box': '0 0 1rem 0.125rem rgba(51, 51, 51, 0.4)',
       },
       fontSize: {
-        '2.5xl': '1.75rem',
+        '1.8xl': '1.375rem',
+        '2.2xl': '1.625rem',
         '3.5xl': '2rem',
       },
       transitionProperty: {

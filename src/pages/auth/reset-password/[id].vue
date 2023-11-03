@@ -9,7 +9,7 @@ meta:
 <template>
   <AuthBox>
     <form @submit.prevent>
-      <AppTitle class="mb-2">
+      <AppTitle>
         {{ mode === 'set' ? t('setPassword.title') : t('resetPassword.title') }}
       </AppTitle>
 

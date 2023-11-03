@@ -24,7 +24,7 @@ meta:
         v-if="formVisible"
         class="rounded rounded-t-none border border-primary-20 bg-primary-10 p-4"
       >
-        <AppSubHeading class="mb-4">
+        <AppSubHeading>
           {{ t('tagEditor.addNewTag') }}
         </AppSubHeading>
         <TagEditorForm @cancel="formVisible = false" @save="handleNewTag" />
