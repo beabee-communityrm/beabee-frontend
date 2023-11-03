@@ -1,3 +1,10 @@
+<!--
+  # AppTime
+  A component that displays the relative time from a date to the current time.
+  ## Props
+  - `datetime` (Date): The date object
+  - `timeOnly` (boolean): Only display relative time without prefix/suffix
+-->
 <template>
   <time
     :datetime="datetime.toISOString()"
