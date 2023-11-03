@@ -3,7 +3,7 @@
     <form @submit.prevent="handleSubmit">
       <AppHeading>{{ buttonText }}</AppHeading>
 
-      <p v-if="isManualActiveMember" class="mb-4">
+      <p v-if="isManualActiveMember" class="mb-3">
         {{
           t('contribution.manualPayment', {
             source:

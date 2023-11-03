@@ -7,9 +7,7 @@ meta:
 </route>
 
 <template>
-  <h1 v-if="!isEmbed" class="mb-6 font-title text-4xl font-bold">
-    {{ callout.title }}
-  </h1>
+  <AppTitle v-if="!isEmbed" big>{{ callout.title }}</AppTitle>
 
   <div v-if="responses /* Avoids layout thrashing */">
     <CalloutThanksBox
@@ -138,6 +136,7 @@ import CalloutThanksBox from '../../../components/pages/callouts/CalloutThanksBo
 import AppMessageBox from '../../../components/AppMessageBox.vue';
 import { formatLocale } from '../../../utils/dates';
 import AppHeading from '../../../components/AppHeading.vue';
+import AppTitle from '../../../components/AppTitle.vue';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;

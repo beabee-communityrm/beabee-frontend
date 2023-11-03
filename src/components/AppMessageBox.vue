@@ -4,7 +4,7 @@
       <font-awesome-icon :icon="icon" />
     </div>
     <div class="flex-1">
-      <AppSubHeading :class="[textColor, { 'mb-1': $slots.default }]">
+      <AppSubHeading :class="textColor">
         {{ title }}
       </AppSubHeading>
       <slot />

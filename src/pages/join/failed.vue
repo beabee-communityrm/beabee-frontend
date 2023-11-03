@@ -8,7 +8,7 @@ meta:
 
 <template>
   <AuthBox>
-    <AppTitle big class="mb-4">
+    <AppTitle big>
       {{ t('join.errors.failed.title') }}
     </AppTitle>
     <p class="mb-5 md:text-lg">{{ t('join.errors.failed.message') }}</p>

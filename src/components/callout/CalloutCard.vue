@@ -3,7 +3,7 @@
     class="callout-card group w-full cursor-pointer overflow-hidden rounded bg-white shadow md:max-w-[19rem]"
   >
     <router-link :to="`/callouts/${callout.slug}`" class="flex h-full flex-col">
-      <div class="mb-2 h-36 bg-primary-40">
+      <div class="h-36 bg-primary-40">
         <img
           v-if="callout.image"
           class="h-full w-full object-cover"
@@ -12,12 +12,10 @@
         />
       </div>
 
-      <div class="flex-grow px-4">
-        <h3 class="mb-2 font-title text-2xl font-semibold leading-tight">
-          {{ callout.title }}
-        </h3>
+      <div class="flex-grow p-4">
+        <AppSubHeading>{{ callout.title }}</AppSubHeading>
 
-        <p class="mb-2 text-sm leading-tight">{{ callout.excerpt }}</p>
+        <p class="mb-2 text-sm">{{ callout.excerpt }}</p>
 
         <div class="mb-3 flex items-end text-sm">
           <div v-if="callout.expires" class="ml-auto flex flex-col">
@@ -49,6 +47,7 @@ import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { formatDistanceLocale } from '../../utils/dates';
 import { GetCalloutData } from '../../utils/api/api.interface';
+import AppSubHeading from '../AppSubHeading.vue';
 
 const { t } = useI18n();
 

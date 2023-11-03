@@ -5,10 +5,8 @@ meta:
 </route>
 
 <template>
-  <PageTitle
-    :title="t('accountPage.title')"
-    :sub-title="t('accountPage.subTitle')"
-  />
+  <PageTitle border :title="t('accountPage.title')" />
+  <p class="mb-5 text-sm text-primary-80">{{ t('accountPage.subTitle') }}</p>
 
   <App2ColGrid>
     <template #col1>

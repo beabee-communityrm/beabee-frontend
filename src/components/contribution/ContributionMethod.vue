@@ -1,6 +1,6 @@
 <template>
   <div v-if="methods.length > 1" :class="disabled && 'opacity-50'">
-    <AppSubHeading class="mb-2">{{ t('join.paymentMethod') }}</AppSubHeading>
+    <AppSubHeading>{{ t('join.paymentMethod') }}</AppSubHeading>
     <div
       class="grid gap-2"
       :class="methods.length > 2 ? 'grid-cols-3' : 'grid-cols-2'"

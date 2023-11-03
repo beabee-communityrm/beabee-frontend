@@ -9,7 +9,7 @@ meta:
 <template>
   <AuthBox>
     <form @submit.prevent>
-      <AppTitle class="mb-2">{{ t('forgotPassword.title') }}</AppTitle>
+      <AppTitle>{{ t('forgotPassword.title') }}</AppTitle>
 
       <template v-if="!isRequestSuccessful">
         <p class="mb-4">{{ t('forgotPassword.description') }}</p>
