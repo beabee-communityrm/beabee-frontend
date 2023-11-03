@@ -1,7 +1,5 @@
 <template>
-  <h2
-    class="font-title text-2.2xl tracking-tight font-semibold text-body-60 mb-3"
-  >
+  <h2 class="font-title text-2.2xl font-semibold text-body-60 mb-3">
     <slot />
   </h2>
 </template>
