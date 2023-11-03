@@ -116,13 +116,15 @@ function changeAmount(newAmount: number, allowInvalid = false) {
 
 const hasError = computed(() => validation.value.$errors.length > 0);
 
-const rules = computed(() => ({
-  amount: {
-    ...(!props.disabled && {
-      minValue: minValue(toRefs(props).minAmount),
-    }),
-  },
-}));
+const rules = computed(() =>
+  props.disabled
+    ? { amount: {} }
+    : {
+        amount: {
+          minValue: minValue(toRefs(props).minAmount),
+        },
+      }
+);
 
 const validation = useVuelidate(rules, { amount });
 
