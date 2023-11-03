@@ -7,32 +7,27 @@ meta:
 
 <template>
   <AppConfirmDialog
-    :open="showDeleteModal"
+    :open="!!apiKeyToDelete"
     :title="t('adminSettings.apikey.confirmDelete.title')"
     :cancel="t('actions.noBack')"
     :confirm="t('actions.yesDelete')"
     variant="danger"
-    @close="
-      {
-        showDeleteModal = false;
-        apiKeyToDelete = '';
-      }
-    "
+    @close="apiKeyToDelete = ''"
     @confirm="confirmDeleteApiKey"
   >
     <p>{{ t('adminSettings.apikey.confirmDelete.text') }}</p>
   </AppConfirmDialog>
 
   <AppConfirmDialog
-    :open="showConfirmCreateModal"
+    :open="!!newApiKeySecret"
     :title="t('adminSettings.apikey.confirmCreate.title')"
     :confirm="t('actions.continue')"
-    @close="confirmCreateApiKey"
-    @confirm="confirmCreateApiKey"
+    @close="newApiKeySecret = ''"
+    @confirm="newApiKeySecret = ''"
   >
     <p class="mb-4">{{ t('adminSettings.apikey.confirmCreate.text') }}</p>
     <div class="flex gap-2">
-      <pre class="overflow-scroll text-sm">{{ tokenToShow }} </pre>
+      <pre class="overflow-scroll text-sm">{{ newApiKeySecret }} </pre>
       <AppButton
         :icon="faCopy"
         size="sm"
@@ -65,12 +60,7 @@ meta:
         :icon="faTrash"
         variant="dangerOutlined"
         size="sm"
-        @click="
-          ($event) => {
-            showDeleteModal = true;
-            apiKeyToDelete = item.id;
-          }
-        "
+        @click="apiKeyToDelete = item.id"
       />
     </template>
   </AppPaginatedTable>
@@ -116,10 +106,8 @@ import useVuelidate from '@vuelidate/core';
 import { useI18n } from 'vue-i18n';
 import AppForm from '../../../components/forms/AppForm.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
-
 import { faCopy, faTrash } from '@fortawesome/free-solid-svg-icons';
-
-import { reactive, ref, watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { GetApiKeyData } from '../../../utils/api/api.interface';
 import {
   createApiKey,
@@ -145,26 +133,23 @@ const { n, t } = useI18n();
 
 const validation = useVuelidate();
 
-const showDeleteModal = ref(false);
-const showConfirmCreateModal = ref(false);
 const apiKeyToDelete = ref('');
-const tokenToShow = ref('');
+const newApiKeySecret = ref('');
 
-const newApiKeyData = reactive({
+const initialData = () => ({
   description: '',
   expiresInDays: 30,
 });
+const newApiKeyData = ref(initialData());
 
 const headers: Header[] = [
   {
     value: 'description',
     text: t('apiKey.data.description'),
-    width: '50%',
   },
   {
     value: 'id',
     text: t('apiKey.data.token'),
-    width: '50%',
   },
   {
     value: 'createdAt',
@@ -185,24 +170,16 @@ const apiKeyTable = ref<Paginated<GetApiKeyData>>();
 
 const currentPaginatedQuery = definePaginatedQuery('createdAt');
 
-watchEffect(async () => {
-  apiKeyTable.value = await fetchApiKeys(currentPaginatedQuery.query);
-});
-
 async function generateApiKey() {
+  const { description, expiresInDays } = newApiKeyData.value;
   const data = {
-    description: newApiKeyData.description,
-    expires:
-      newApiKeyData.expiresInDays === 0
-        ? null
-        : addDays(new Date(), newApiKeyData.expiresInDays),
+    description,
+    expires: expiresInDays === 0 ? null : addDays(new Date(), expiresInDays),
   };
-  tokenToShow.value = (await createApiKey(data)).token;
+  newApiKeySecret.value = (await createApiKey(data)).token;
 
-  newApiKeyData.description = '';
-  newApiKeyData.expiresInDays = 30;
+  newApiKeyData.value = initialData();
   validation.value.$reset();
-  showConfirmCreateModal.value = true;
   await refreshApiKeys();
 }
 
@@ -212,18 +189,14 @@ async function refreshApiKeys() {
 
 async function confirmDeleteApiKey() {
   await deleteApiKey(apiKeyToDelete.value);
-  showDeleteModal.value = false;
   apiKeyToDelete.value = '';
   await refreshApiKeys();
 }
 
-async function confirmCreateApiKey() {
-  showConfirmCreateModal.value = false;
-  tokenToShow.value = '';
-}
+watchEffect(refreshApiKeys);
 
 function copyToClipboard() {
-  navigator.clipboard.writeText(tokenToShow.value);
+  navigator.clipboard.writeText(newApiKeySecret.value);
   addNotification({
     title: t('adminSettings.apikey.copied'),
     variant: 'success',
