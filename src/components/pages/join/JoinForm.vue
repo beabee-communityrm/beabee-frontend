@@ -5,37 +5,33 @@
     </template>
 
     <AppForm :button-text="buttonText" full-button @submit="onSubmit">
-      <AppSubHeading v-if="joinContent.showNoContribution">
-        {{ t('join.contribution') }}
-      </AppSubHeading>
-
-      <AppCheckbox
-        v-if="joinContent.showNoContribution"
-        v-model="signUpData.noContribution"
-        class="mb-4"
-        :label="t('join.noContribution')"
+      <AccountSection
+        v-if="generalContent.hideContribution"
+        v-model:email="signUpData.email"
+        v-model:password="signUpData.password"
+        class="mb-6"
       />
-
       <Contribution
-        v-if="!generalContent.hideContribution && !signUpData.noContribution"
+        v-else
         v-model:amount="signUpData.amount"
         v-model:period="signUpData.period"
         v-model:payFee="signUpData.payFee"
         v-model:paymentMethod="signUpData.paymentMethod"
         :content="joinContent"
+        :disabled="signUpData.noContribution"
       >
+        <AppCheckbox
+          v-if="joinContent.showNoContribution"
+          v-model="signUpData.noContribution"
+          class="mb-4"
+          :label="t('join.noContribution')"
+        />
         <AccountSection
           v-model:email="signUpData.email"
           v-model:password="signUpData.password"
+          class="my-6"
         />
       </Contribution>
-
-      <!-- TODO: clean this up by always having account section above contribution -->
-      <AccountSection
-        v-else
-        v-model:email="signUpData.email"
-        v-model:password="signUpData.password"
-      />
     </AppForm>
 
     <p class="mb-2 mt-6 text-center text-xs">
@@ -64,7 +60,6 @@ import { generalContent } from '../../../store';
 import { useJoin } from './use-join';
 import AccountSection from './AccountSection.vue';
 import Contribution from '../../contribution/Contribution.vue';
-import AppSubHeading from '../../AppSubHeading.vue';
 import { JoinContent } from '../../../utils/api/api.interface';
 import AppCheckbox from '../../forms/AppCheckbox.vue';
 import AppForm from '../../forms/AppForm.vue';
