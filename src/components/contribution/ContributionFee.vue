@@ -1,12 +1,12 @@
 <template>
-  <section class="mb-8">
+  <section class="mb-8" :class="disabled && 'opacity-50'">
     <p class="mb-2 text-sm leading-normal">
       {{ t('join.absorbFeeText', { fee: n(fee, 'currency') }) }}
     </p>
 
     <AppCheckbox
       v-model="payFee"
-      :disabled="force"
+      :disabled="force || disabled"
       :label="
         t(force ? 'join.absorbFeeForce' : 'join.absorbFeeOptIn', {
           fee: n(fee, 'currency'),
@@ -24,33 +24,18 @@ import AppCheckbox from '../forms/AppCheckbox.vue';
 
 const { t, n } = useI18n();
 
-const emits = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue']);
 
-const props = defineProps({
-  amount: {
-    type: Number,
-    default: 0,
-  },
-  fee: {
-    type: Number,
-    default: 0,
-  },
-  force: {
-    type: Boolean,
-    required: true,
-  },
-  modelValue: {
-    type: Boolean,
-    required: true,
-  },
-});
+const props = defineProps<{
+  amount: number;
+  fee: number;
+  force: boolean;
+  modelValue: boolean;
+  disabled: boolean;
+}>();
 
 const payFee = computed<boolean>({
-  get() {
-    return props.modelValue;
-  },
-  set(value) {
-    emits('update:modelValue', value);
-  },
+  get: () => !props.disabled && props.modelValue,
+  set: (value) => emit('update:modelValue', value),
 });
 </script>

@@ -11,6 +11,7 @@
         class="flex-1"
         :class="{
           'border-l border-primary-40': prefix,
+          'border-r border-primary-40': suffix,
           'border-danger-70': hasError,
         }"
       >
@@ -27,6 +28,7 @@
           @blur="validation.$touch"
         />
       </div>
+      <span v-if="suffix" class="flex-0 px-2">{{ suffix }}</span>
     </div>
     <div v-if="$slots.after" class="flex-0 ml-2"><slot name="after" /></div>
   </div>
@@ -68,6 +70,7 @@ const props = withDefaults(
     pattern?: string;
     hideErrorMessage?: boolean;
     prefix?: string;
+    suffix?: string;
   }>(),
   {
     modelValue: undefined,
@@ -80,6 +83,7 @@ const props = withDefaults(
     sameAs: undefined,
     pattern: undefined,
     prefix: undefined,
+    suffix: undefined,
   }
 );
 
