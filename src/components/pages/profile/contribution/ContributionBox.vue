@@ -71,7 +71,7 @@ import {
   MembershipStatus,
 } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
-import { formatDistanceLocale, formatLocale } from '../../../../utils/dates';
+import { formatLocale } from '../../../../utils/dates';
 import { computed } from 'vue';
 import { ContributionInfo } from '../../../../utils/api/api.interface';
 import AppSubHeading from '../../../AppSubHeading.vue';
@@ -87,11 +87,5 @@ const period = computed(() =>
   props.contribution.period === ContributionPeriod.Monthly
     ? t('common.month')
     : t('common.year')
-);
-
-const formattedExpiryDate = computed(() =>
-  props.contribution.membershipExpiryDate
-    ? formatDistanceLocale(new Date(), props.contribution.membershipExpiryDate)
-    : undefined
 );
 </script>
