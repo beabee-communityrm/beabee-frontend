@@ -22,11 +22,11 @@ type Noop = {};
 
 // Dates are serialized in API response
 export type Serial<T> = {
-  [P in keyof T]: T[P] extends Date
+  [P in keyof T]: Date extends T[P]
     ? string
-    : T[P] extends Date | undefined
+    : Date | undefined extends T[P]
     ? string | undefined
-    : T[P] extends Date | null
+    : Date | null extends T[P]
     ? string | null
     : T[P];
 };
@@ -492,11 +492,13 @@ export type CreateCalloutResponseCommentData = CalloutResponseCommentData;
 
 export interface CreateApiKeyData {
   description: string;
+  expires: Date | null;
 }
 
 export interface GetApiKeyData {
   id: string;
   description: string;
+  expires: Date | null;
   creator: GetContactData;
   createdAt: Date;
 }

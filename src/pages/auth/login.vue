@@ -9,7 +9,7 @@ meta:
 <template>
   <AuthBox>
     <AppForm :button-text="t('login.login')" full-button @submit="submitLogin">
-      <AppTitle class="mb-2">{{ t('login.title') }}</AppTitle>
+      <AppTitle>{{ t('login.title') }}</AppTitle>
 
       <div class="mb-5">
         <span>{{ t('login.notMember') }}</span>

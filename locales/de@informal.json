@@ -150,6 +150,12 @@
       },
       "copied": "API Key in die Zwischenablage kopiert",
       "create": "Neuen API Key erstellen",
+      "expires": {
+        "days": "In {n} Tagen",
+        "never": "Nie"
+      },
+      "expiresHelp": "Aus Sicherheitsgründen sollte immer ein Enddatum eingestellt werden, um zu verhindern, dass das System langfristig unbefugt genutzt wird.",
+      "expiresNeverWarning": "Ich habe das Risiko verstanden, kein Enddatum festzulegen.",
       "label": "API Keys",
       "showingOf": "API Keys {start} bis {end} von {total} werden angezeigt."
     },
@@ -300,6 +306,7 @@
     "data": {
       "createdAt": "Erstellt",
       "description": "Beschreibung",
+      "expires": "Enddatum",
       "token": "Token"
     }
   },

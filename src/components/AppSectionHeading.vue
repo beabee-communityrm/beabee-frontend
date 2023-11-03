@@ -1,7 +1,7 @@
 <template>
-  <h2 class="font-title text-2.2xl/tight font-semibold text-body-60 mb-3">
+  <h4 class="font-title text-xl font-regular text-body mb-3">
     <slot />
-  </h2>
+  </h4>
 </template>
 <script lang="ts" setup>
 /* Stub script for better type inference */

@@ -85,7 +85,7 @@ meta:
           </div>
         </template>
 
-        <AppSubHeading class="mb-2">
+        <AppSubHeading>
           {{ stepT('joinSurvey.title') }}
         </AppSubHeading>
         <p class="mb-4">{{ stepT('joinSurvey.text') }}</p>

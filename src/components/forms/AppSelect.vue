@@ -32,6 +32,7 @@
       </template>
     </select>
     <AppInputError v-if="hasError" :message="validation.$errors[0].$message" />
+    <AppInputHelp v-if="infoMessage" :message="infoMessage" />
   </div>
 </template>
 
@@ -43,6 +44,7 @@ import AppLabel from './AppLabel.vue';
 import { SelectGroup, SelectItem } from './form.interface';
 import AppSelectItem from './AppSelectItem.vue';
 import AppInputError from './AppInputError.vue';
+import AppInputHelp from './AppInputHelp.vue';
 
 function isGroup(item: SelectItem | SelectGroup): item is SelectGroup {
   return 'items' in item;
@@ -56,6 +58,7 @@ const props = defineProps<{
   disabled?: boolean;
   required?: boolean;
   inputClass?: string;
+  infoMessage?: string;
 }>();
 
 const value = computed({

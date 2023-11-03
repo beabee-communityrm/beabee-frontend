@@ -10,7 +10,7 @@
     @delete="refreshComments"
   />
   <div class="bg-white p-4">
-    <AppSubHeading class="mb-2">
+    <AppSubHeading>
       {{ t('calloutResponseComments.addComment') }}
     </AppSubHeading>
     <CalloutResponseCommentForm @submit="handleSubmit" />
