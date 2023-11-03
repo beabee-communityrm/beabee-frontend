@@ -22,8 +22,7 @@ meta:
       <div class="mb-5">
         <AppInput
           v-model="data.password"
-          :label="t('resetDevice.password')"
-          :info-message="t('form.passwordInfo')"
+          :label="t('form.password')"
           type="password"
           name="password"
           required

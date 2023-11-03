@@ -506,7 +506,6 @@
     "every": "every",
     "goBack": "Go back",
     "hello": "Hello",
-    "in": "in",
     "itemsPerPage": "{items} items per page",
     "joined": "Joined",
     "loading": "Loading...",
@@ -1040,9 +1039,7 @@
     }
   },
   "homePage": {
-    "editProfile": "Edit your community profile",
     "manageContribution": "Manage contribution",
-    "manageYourContribution": "Manage your contribution",
     "newCallout": "New callout!",
     "openCallouts": "Open callouts",
     "quickActions": "Quick actions",
@@ -1064,7 +1061,6 @@
     "absorbFeeOptIn": "Yes, I'll absorb the {fee} fee.",
     "absorbFeeText": "Our payment processor charges us per transaction which means we receive less from monthly contributions. Are you happy to absorb the {fee} transaction fee?  Alternatively you could pay annually.",
     "contribute": "Contribute {amount} / {period}",
-    "contribution": "Contribution",
     "errors": {
       "confirmEmail": {
         "message": "Almost there! We just need to confirm your email address to finish setting up your membership.",
@@ -1112,9 +1108,16 @@
     "hasWrongMFAToken": "Your entered 2FA token is not correct.",
     "joinNow": "Join now!",
     "login": "Login",
+    "lostMfaDevice": "Lost your 2FA device?",
     "notMember": "Not a member?",
     "title": "Log in to your account",
     "wrongCredentials": "Wrong password/email combination"
+  },
+  "lostDevice": {
+    "description": "Please enter your email address, and we will send you instructions on how to reset your 2FA.",
+    "emailSent": "We've sent an email with instructions to reset your 2FA. Please check your inbox.",
+    "resetDevice": "Reset Device",
+    "title": "Lost your 2FA device?"
   },
   "membershipBuilder": {
     "steps": {
@@ -1159,7 +1162,8 @@
         "formSubtitle": "Subtitle",
         "formTitle": "Title",
         "minAmount": "Minimum amount",
-        "showAbsorbFee": "Ask about processing fee",
+        "showAbsorbFee": "Ask user about absorbing the payment fee",
+        "showNoContribution": "Allow user to join without a contribution",
         "suggestedAmounts": "Suggested contribution amounts",
         "text": "In this section you can edit, fine tune and preview your membership join form.",
         "title": "Join form"
@@ -1264,6 +1268,11 @@
       "successful": "Successful payments"
     },
     "showingOf": "Showing {start} to {end} payments out of {total}"
+  },
+  "resetDevice": {
+    "deleteDevice": "Remove 2FA Protection",
+    "description": "To remove 2FA protection, please enter your password. This will reset your current 2FA settings, allowing you to set up a new device.",
+    "title": "Reset 2FA Protection"
   },
   "resetPassword": {
     "changePassword": "Change password",

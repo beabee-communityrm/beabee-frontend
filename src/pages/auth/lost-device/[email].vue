@@ -36,7 +36,7 @@ meta:
 
         <div class="text-center">
           <AppButton to="/auth/login" variant="text" size="sm">
-            {{ t('lostDevice.backToLogin') }}
+            {{ t('forgotPassword.backToLogin') }}
           </AppButton>
         </div>
       </template>

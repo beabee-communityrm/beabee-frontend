@@ -506,7 +506,6 @@
     "every": "pro",
     "goBack": "Zurück",
     "hello": "Hallo",
-    "in": "in",
     "itemsPerPage": "{items} Einträge pro Seite",
     "joined": "Mitglied seit",
     "loading": "Lädt...",
@@ -1038,9 +1037,7 @@
     }
   },
   "homePage": {
-    "editProfile": "Profil bearbeiten",
     "manageContribution": "Beitrag ändern",
-    "manageYourContribution": "Beitrag ändern",
     "newCallout": "Neuer Callout!",
     "openCallouts": "Aktuelle Callouts",
     "quickActions": "Schnellaktionen",
@@ -1062,7 +1059,6 @@
     "absorbFeeOptIn": "Ja, ich übernehme die {fee} Transaktionskosten.",
     "absorbFeeText": "Unser Zahlungsdienstleister stellt uns jede Transaktion in Rechnung. Das heißt, wir erhalten weniger von deinem monatlichen Beitrag. Möchtest du die Kosten dafür übernehmen? Alternativ kannst du auch jährlich bezahlen.",
     "contribute": "Mit {amount} pro {period} unterstützen.",
-    "contribution": "Beitrag",
     "errors": {
       "confirmEmail": {
         "message": "Fast geschafft! Wir müssen nur noch deine E-Mail-Adresse bestätigen, um fortzufahren.",
@@ -1110,9 +1106,16 @@
     "hasWrongMFAToken": "Dein eingegebener 2FA Token stimmt nicht.",
     "joinNow": "Jetzt Mitglied werden!",
     "login": "Login",
+    "lostMfaDevice": "2FA-Gerät verloren?",
     "notMember": "Noch kein Mitglied?",
     "title": "Einloggen",
     "wrongCredentials": "Falsche Kombination von Passwort und E-Mail."
+  },
+  "lostDevice": {
+    "description": "Bitte gib deine E-Mail-Adresse ein, und wir senden dir Anweisungen, wie du dein 2FA zurücksetzen kannst.",
+    "emailSent": "Wir haben dir eine E-Mail mit Anweisungen zum Zurücksetzen deines 2FA geschickt. Bitte checke dein Postfach.",
+    "resetDevice": "Gerät zurücksetzen",
+    "title": "Du hast dein 2FA-Gerät verloren?"
   },
   "membershipBuilder": {
     "steps": {
@@ -1157,7 +1160,8 @@
         "formSubtitle": "Untertitel",
         "formTitle": "Titel",
         "minAmount": "Mindestbeitrag",
-        "showAbsorbFee": "Um Übernahme der Transaktionskosten bitten",
+        "showAbsorbFee": "Nutzer um Ausgleich der Gebühren bitten",
+        "showNoContribution": "Registrierung ohne Zahlung erlauben",
         "suggestedAmounts": "Beiträge vorschlagen",
         "text": "In diesem Abschnitt kannst du dein Registrierungsformular bearbeiten, optimieren und ansehen.",
         "title": "Registrierung"
@@ -1262,6 +1266,11 @@
       "successful": "Erfolgreiche Zahlungen"
     },
     "showingOf": "Zahlungen {start} bis {end} von {total}"
+  },
+  "resetDevice": {
+    "deleteDevice": "2FA-Schutz entfernen",
+    "description": "Um den 2FA-Schutz zu entfernen, gib bitte dein Passwort ein. Dadurch werden deine aktuellen 2FA-Einstellungen zurückgesetzt und du kannst ein neues Gerät einrichten.",
+    "title": "2FA-Schutz zurücksetzen"
   },
   "resetPassword": {
     "changePassword": "Passwort ändern",
