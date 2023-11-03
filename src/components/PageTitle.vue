@@ -1,18 +1,16 @@
 <template>
-  <div>
-    <div
-      class="flex justify-between items-center"
-      :class="{ 'has-border border-b border-primary-40 pb-3 mb-5': border }"
+  <div
+    class="flex justify-between items-center"
+    :class="{ 'border-b border-primary-40 mb-5': border }"
+  >
+    <AppTitle
+      light
+      class="mr-4 text-primary-80"
+      :class="{ 'hidden md:block': !noCollapse }"
     >
-      <AppTitle
-        light
-        class="mr-4 text-primary-80"
-        :class="{ 'hidden md:block': !noCollapse }"
-      >
-        {{ title }}
-      </AppTitle>
-      <slot></slot>
-    </div>
+      {{ title }}
+    </AppTitle>
+    <slot></slot>
   </div>
 </template>
 <script lang="ts" setup>
@@ -24,8 +22,3 @@ defineProps<{
   noCollapse?: boolean;
 }>();
 </script>
-<style lang="postcss" scoped>
-.has-border h1 {
-  @apply mb-0;
-}
-</style>
