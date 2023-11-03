@@ -42,6 +42,10 @@ meta:
     keypath="adminSettings.apikey.showingOf"
     :headers="headers"
     :result="apiKeyTable"
+    :row-class="
+      (item) =>
+        item.expires && item.expires < new Date() ? 'bg-danger-10' : ''
+    "
     class="mb-8"
   >
     <template #value-id="{ item }"> {{ item.id }}_••••••••••••••••••</template>
@@ -51,7 +55,10 @@ meta:
     <template #value-expires="{ value }">
       <span class="whitespace-nowrap">
         <AppTime v-if="value" :datetime="value" />
-        <span v-else> {{ t('adminSettings.apikey.expires.never') }}</span>
+        <span v-else :title="t('adminSettings.apikey.expiresHelp')">
+          <font-awesome-icon :icon="faWarning" />
+          {{ t('adminSettings.apikey.expires.never') }}
+        </span>
       </span>
     </template>
     <template #value-actions="{ item }">
@@ -106,7 +113,7 @@ import useVuelidate from '@vuelidate/core';
 import { useI18n } from 'vue-i18n';
 import AppForm from '../../../components/forms/AppForm.vue';
 import AppInput from '../../../components/forms/AppInput.vue';
-import { faCopy, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCopy, faTrash, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { ref, watchEffect } from 'vue';
 import { GetApiKeyData } from '../../../utils/api/api.interface';
 import {
