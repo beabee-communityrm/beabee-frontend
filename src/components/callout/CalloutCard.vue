@@ -3,7 +3,7 @@
     class="callout-card group w-full cursor-pointer overflow-hidden rounded bg-white shadow md:max-w-[19rem]"
   >
     <router-link :to="`/callouts/${callout.slug}`" class="flex h-full flex-col">
-      <div class="mb-2 h-36 bg-primary-40">
+      <div class="h-36 bg-primary-40">
         <img
           v-if="callout.image"
           class="h-full w-full object-cover"
@@ -12,8 +12,8 @@
         />
       </div>
 
-      <div class="flex-grow px-4">
-        <AppSubHeading class="my-2">{{ callout.title }}</AppSubHeading>
+      <div class="flex-grow p-4">
+        <AppSubHeading>{{ callout.title }}</AppSubHeading>
 
         <p class="mb-2 text-sm">{{ callout.excerpt }}</p>
 
