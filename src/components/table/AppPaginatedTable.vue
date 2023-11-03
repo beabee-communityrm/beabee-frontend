@@ -17,6 +17,7 @@
       :headers="headers"
       :items="result?.items || null"
       :selectable="selectable"
+      :row-class="rowClass"
       class="mb-4 w-full"
     >
       <template
@@ -55,5 +56,6 @@ defineProps<{
     };
   };
   selectable?: boolean;
+  rowClass?: (item: I) => string;
 }>();
 </script>
