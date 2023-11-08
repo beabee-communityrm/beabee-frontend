@@ -305,7 +305,7 @@
   }
 
   .form-group {
-    @apply mb-1 block;
+    @apply mb-1 block border-t border-t-grey pt-2 first:border-0;
   }
 
   .formio-component-file {
@@ -313,10 +313,9 @@
   }
 
   .col-form-label {
-    @apply font-bold text-base mb-0 inline;
+    @apply font-bold text-base mb-0;
     &::after {
-      @apply text-body;
-      content: ': ';
+      @apply hidden;
     }
   }
 
