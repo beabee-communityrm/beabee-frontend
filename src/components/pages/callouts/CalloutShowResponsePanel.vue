@@ -16,7 +16,7 @@
             class="w-full flex-none p-4"
           >
             <img
-              class="w-full"
+              class="max-h-[300px] w-full object-contain"
               :style="{ filter: callout.responseViewSchema.imageFilter }"
               :src="photo.url + '?w=600&h=600'"
             />
