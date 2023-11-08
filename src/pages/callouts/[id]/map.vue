@@ -287,7 +287,6 @@ const selectedResponseFeature = computed(() => {
 
 // Zoom to a cluster or open a response
 function handleClick(e: { event: MapMouseEvent; map: Map }) {
-  introOpen.value = false;
   if (isAddMode.value) {
     if (!newResponseAnswers.value) {
       handleAddClick(e);
@@ -415,6 +414,8 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
 // Centre map on selected feature when it changes
 watch(selectedResponseFeature, (newFeature) => {
   if (!map.map || !newFeature) return;
+
+  introOpen.value = false;
 
   map.map.easeTo({
     center: newFeature.geometry.coordinates as LngLatLike,
