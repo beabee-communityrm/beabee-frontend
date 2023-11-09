@@ -40,11 +40,30 @@
     :title="t('accountPage.mfa.confirmDelete.title')"
     :cancel="t('actions.noBack')"
     :confirm="t('actions.yesDisable')"
+    :disable-confirm="!userTokenInputValid"
     variant="danger"
-    @close="showDisableConfirmModal = false"
+    @close="closeDisableConfirmModal"
     @confirm="disableMfaAndNotify"
   >
-    <p>{{ t('accountPage.mfa.confirmDelete.desc') }}</p>
+    <p class="mb-3">{{ t('accountPage.mfa.confirmDelete.desc') }}</p>
+    <p class="mb-5">{{ t('accountPage.mfa.confirmDelete.descToken') }}</p>
+    <AppInput
+      v-model="userToken"
+      type="text"
+      :label="t(`accountPage.mfa.codeInput.label`)"
+      name="verifyCode"
+      required
+      min="6"
+      max="6"
+      @update:validation="onUserTokenInputValidationChanged"
+    />
+
+    <AppNotification
+      v-if="disableMfaValidated && !userTokenValid"
+      class="my-4"
+      variant="error"
+      :title="t('accountPage.mfa.result.invalidCode')"
+    />
   </AppConfirmDialog>
 
   <AppModal
@@ -90,6 +109,9 @@
                 :label="t(`accountPage.mfa.codeInput.label`)"
                 name="verifyCode"
                 required
+                min="6"
+                max="6"
+                @update:validation="onUserTokenInputValidationChanged"
               />
 
               <AppNotification
@@ -158,7 +180,7 @@
               v-if="isLastSlide"
               :disabled="!validationStepsDone"
               variant="link"
-              @click="saveMfaAndNotify()"
+              @click="createMfaAndNotify()"
             >
               {{ t(`actions.save`) }}
             </AppButton>
@@ -169,7 +191,7 @@
                 activeSlide === 1 &&
                 (!steps.enterCode.validated || steps.enterCode.error)
               "
-              :disabled="!userToken"
+              :disabled="!userTokenInputValid"
               variant="link"
               @click="nextSlideIfValid()"
             >
@@ -221,6 +243,7 @@ import type { AppSliderSlideEventDetails } from '@type/app-slider-slide-event-de
 import type { SetMfaSteps } from '@type/set-mfa-steps';
 import type { SetMfaTotpIdentity } from '@type/set-mfa-totp-identity';
 import type { ContactMfaCreateApiErrorData } from '@type/contact-mfa-create-api-error-data';
+import type { ContactMfaDeleteApiErrorData } from '@type/contact-mfa-delete-api-error-data';
 
 const { t } = useI18n();
 
@@ -283,6 +306,11 @@ const userToken = ref('');
 /** Is the user token valid? */
 const userTokenValid = ref(false);
 
+/** Is the user token input valid? */
+const userTokenInputValid = ref(false);
+
+const disableMfaValidated = ref(false);
+
 /** TOTP instance */
 let totp: TOTP | null = null;
 
@@ -292,13 +320,22 @@ const onCloseMFAModal = () => {
   resetState();
 };
 
+/** Called when the disable confirm modal is closed */
+const closeDisableConfirmModal = () => {
+  showDisableConfirmModal.value = false;
+  resetState();
+};
+
 /** Close the modal */
 const closeMFAModal = () => {
   showMFASettingsModal.value = false;
 };
 
-/** Save MFA on server and notify the user */
-const saveMfaAndNotify = async () => {
+/**
+ * Create MFA for the contact
+ * @returns Was creating MFA successful?
+ */
+const createMfa = async () => {
   try {
     await createContactMfa(props.contactId, {
       secret: totpSecret.value.base32,
@@ -306,7 +343,37 @@ const saveMfaAndNotify = async () => {
       type: ContactMfaType.TOTP,
     });
   } catch (error) {
-    return onCreateError(error);
+    onCreateError(error);
+    return false;
+  }
+  return true;
+};
+
+/**
+ * Disable MFA for the contact
+ * @returns Was disabling MFA successful?
+ */
+const disableMfa = async () => {
+  disableMfaValidated.value = true;
+  try {
+    await deleteContactMfa(props.contactId, {
+      type: ContactMfaType.TOTP,
+      token: userToken.value,
+    });
+  } catch (error) {
+    onDeleteError(error);
+    return false;
+  }
+  isEnabled.value = false;
+  resetState();
+  return true;
+};
+
+/** Save MFA on server and notify the user */
+const createMfaAndNotify = async () => {
+  const success = await createMfa();
+  if (!success) {
+    return;
   }
 
   isEnabled.value = true;
@@ -318,10 +385,25 @@ const saveMfaAndNotify = async () => {
   });
 };
 
+/** Disable MFA and notify the user */
+const disableMfaAndNotify = async () => {
+  const success = await disableMfa();
+  if (!success) {
+    return;
+  }
+
+  closeDisableConfirmModal();
+
+  addNotification({
+    title: t('accountPage.mfa.disabledNotification'),
+    variant: 'error',
+  });
+};
+
 /** Called when an error occurs while creating MFA */
 const onCreateError = (error: unknown) => {
   if (
-    isRequestError<ContactMfaCreateApiErrorData>(error) &&
+    isRequestError<ContactMfaCreateApiErrorData>(error, undefined, 401) &&
     error.response.data.message === LOGIN_CODES.INVALID_TOKEN
   ) {
     // If server says the token is invalid, set the token as invalid and go to the previous slide
@@ -338,21 +420,21 @@ const onCreateError = (error: unknown) => {
   });
 };
 
-/** Disable MFA and notify the user */
-const disableMfaAndNotify = async () => {
-  showDisableConfirmModal.value = false;
-  await disableMfa();
+const onDeleteError = (error: unknown) => {
+  if (
+    isRequestError<ContactMfaDeleteApiErrorData>(error, undefined, 403) &&
+    (error.response.data.code === LOGIN_CODES.INVALID_TOKEN ||
+      error.response.data.code === LOGIN_CODES.MISSING_TOKEN)
+  ) {
+    // If server says the token is invalid, set the token as invalid
+    setValidationStates(false);
+    return;
+  }
+
   addNotification({
-    title: t('accountPage.mfa.disabledNotification'),
+    title: t('accountPage.mfa.deleteUnknownErrorNotification'),
     variant: 'error',
   });
-};
-
-/** Disable MFA for the contact */
-const disableMfa = async () => {
-  await deleteContactMfa(props.contactId);
-  isEnabled.value = false;
-  resetState();
 };
 
 /** Called when the slider changes */
@@ -375,6 +457,7 @@ const resetState = () => {
   });
   userToken.value = '';
   userTokenValid.value = false;
+  userTokenInputValid.value = false;
 };
 
 /** Validate all previous steps */
@@ -397,11 +480,21 @@ const onTotpIdentityChanged = (newValue: SetMfaTotpIdentity) => {
   totpUrl.value = totp.toString();
 };
 
-/** Reset the user token validation state if the user token changes */
+/**
+ * Reset the user token validation state if the user token changes
+ */
 const onUserTokenChanged = () => {
   userTokenValid.value = false;
   steps.enterCode.error = false;
   steps.enterCode.validated = false;
+};
+
+/**
+ * Called when the user token input validation changes. This is not the same as the token validation, this is just the validation of the input.
+ * @param isValid Is the input valid?
+ */
+const onUserTokenInputValidationChanged = (isValid: boolean) => {
+  userTokenInputValid.value = isValid;
 };
 
 /** Validate the **T**imed **O**ne **T**ime **P**assword token / user input code */

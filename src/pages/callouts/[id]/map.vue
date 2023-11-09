@@ -287,7 +287,6 @@ const selectedResponseFeature = computed(() => {
 
 // Zoom to a cluster or open a response
 function handleClick(e: { event: MapMouseEvent; map: Map }) {
-  introOpen.value = false;
   if (isAddMode.value) {
     if (!newResponseAnswers.value) {
       handleAddClick(e);
@@ -391,22 +390,34 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
     },
   };
 
-  const [slideId, answerKey] = mapSchema.addressProp.split('.');
+  const [addressSlideId, addressKey] = mapSchema.addressProp.split('.');
+
   newResponseAnswers.value = {
-    [slideId]: { [answerKey]: address },
+    [addressSlideId]: { [addressKey]: address },
   };
 
   if (mapSchema.addressPatternProp && result) {
-    const [slideId, answerKey] = mapSchema.addressPatternProp.split('.');
-    newResponseAnswers.value[slideId] = {
-      [answerKey]: formatGeocodeResult(result, mapSchema.addressPattern),
-    };
+    const [patternSlideId, patternKey] =
+      mapSchema.addressPatternProp.split('.');
+
+    newResponseAnswers.value[patternSlideId] ||= {};
+
+    // TODO: clean this up
+    const newResponseAnswer = newResponseAnswers.value[patternSlideId];
+    if (newResponseAnswer) {
+      newResponseAnswer[patternKey] = formatGeocodeResult(
+        result,
+        mapSchema.addressPattern
+      );
+    }
   }
 }
 
 // Centre map on selected feature when it changes
 watch(selectedResponseFeature, (newFeature) => {
   if (!map.map || !newFeature) return;
+
+  introOpen.value = false;
 
   map.map.easeTo({
     center: newFeature.geometry.coordinates as LngLatLike,

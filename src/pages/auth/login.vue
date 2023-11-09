@@ -53,8 +53,8 @@ meta:
           type="text"
           name="verifyCode"
           required
-          maxlength="6"
-          minlength="6"
+          min="6"
+          max="6"
           :label="t('accountPage.mfa.codeInput.label')"
         />
       </div>

@@ -11,9 +11,11 @@
       },
       "confirmDelete": {
         "desc": "Möchtest du die Multi-Faktor-Authentifizierung wirklich deaktivieren? \nDanach brauchst du nur noch dein Passwort zum Anmelden. Bitte vergiss \nnicht, den Eintrag in deiner Authenticator-App zu löschen. Du kannst \ndiese Funktion jederzeit wieder einschalten.",
+        "descToken": "Um 2FA zu deaktivieren, gib bitte deinen aktuellen 2FA-Code ein:",
         "title": "2FA deaktivieren"
       },
       "createUnknownErrorNotification": "Die 2-Faktor-Authentifizierung konnte aufgrund eines unbekannten Fehlers nicht gespeichert werden. Bitte versuche es erneut oder kontaktiere den Support.",
+      "deleteUnknownErrorNotification": "Die 2-Faktor-Authentifizierung konnte aufgrund eines unbekannten Fehlers nicht entfernt werden. Bitte versuche es erneut oder kontaktiere den Support.",
       "disabledNotification": "Zwei-Faktor Authentifizierung erfolgreich deaktiviert",
       "enabledNotification": "Zwei-Faktor Authentifizierung erfolgreich aktiviert",
       "enterCode": {
@@ -1003,6 +1005,8 @@
         "url": "Ungültige URL"
       },
       "verifyCode": {
+        "max": "Dein Code darf höchstens {max} Zeichen lang sein.",
+        "min": "Dein Code muss mindestens {min} Zeichen haben.",
         "required": "Code benötigt"
       }
     },
@@ -1044,7 +1048,8 @@
     }
   },
   "homePage": {
-    "manageContribution": "Beitrag ändern",
+    "editProfile": "Profil bearbeiten",
+    "manageYourContribution": "Beitrag ändern",
     "newCallout": "Neuer Callout!",
     "openCallouts": "Aktuelle Callouts",
     "quickActions": "Schnellaktionen",

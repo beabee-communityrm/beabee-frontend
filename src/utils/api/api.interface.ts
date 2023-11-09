@@ -77,6 +77,11 @@ export interface CreateContactMfaData extends ContactMfaData {
   token: string;
 }
 
+export interface DeleteContactMfaData extends ContactMfaData {
+  /** The code from the authenticator app */
+  token?: string;
+}
+
 export interface PaymentFlowParams {
   clientSecret?: string;
   redirectUrl?: string;
@@ -244,6 +249,7 @@ export enum LOGIN_CODES {
   REQUIRES_2FA = 'requires-2fa',
   UNSUPPORTED_2FA = 'unsupported-2fa',
   INVALID_TOKEN = 'invalid-token',
+  MISSING_TOKEN = 'missing-token',
 }
 
 export interface ContactsContent {

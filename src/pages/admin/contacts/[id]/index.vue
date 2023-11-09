@@ -306,9 +306,11 @@ const disableMfaAndNotify = async () => {
   });
 };
 
-/** Disable MFA for the contact */
+/** Disable MFA for the contact by the admin */
 const disableMfa = async () => {
-  await deleteContactMfa(props.contact.id);
+  await deleteContactMfa(props.contact.id, {
+    type: ContactMfaType.TOTP,
+  });
   mfa.value.isEnabled = false;
 };
 const joinSurvey = ref<GetCalloutDataWith<'form'>>();

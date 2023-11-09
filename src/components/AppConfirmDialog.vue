@@ -19,6 +19,7 @@
         {{ cancel }}
       </AppButton>
       <AppButton
+        :disabled="disableConfirm === true"
         :loading="isConfirming"
         :variant="variant"
         @click="handleConfirm"
@@ -38,6 +39,7 @@ const props = defineProps<{
   open: boolean;
   variant?: 'danger';
   confirm: string;
+  disableConfirm?: boolean | undefined;
   cancel?: string | undefined;
   title: string;
   onConfirm?: () => Promise<void> | void;

@@ -11,9 +11,11 @@
       },
       "confirmDelete": {
         "desc": "Are you sure you want to disable Multi-Factor Authentication? From then on, you'll only need your password to log in. Remember to delete the entry from your Authenticator app. You can always enable it again.",
+        "descToken": "To deactivate 2FA, please enter your current 2FA code:",
         "title": "Disable 2FA"
       },
       "createUnknownErrorNotification": "The 2-factor authentication could not be saved due to an unknown error. Please try again or contact support.",
+      "deleteUnknownErrorNotification": "The 2-factor authentication could not be deleted due to an unknown error. Please try again or contact support.",
       "disabledNotification": "Two-factor authentication successfully deactivated",
       "enabledNotification": "Two-factor authentication successfully activated",
       "enterCode": {
@@ -1005,6 +1007,8 @@
         "url": "Invalid URL"
       },
       "verifyCode": {
+        "max": "The code may only be a maximum of {max} characters long.",
+        "min": "The code must be at least {min} characters long.",
         "required": "Code is required"
       }
     },
@@ -1046,7 +1050,8 @@
     }
   },
   "homePage": {
-    "manageContribution": "Manage contribution",
+    "editProfile": "Edit your community profile",
+    "manageYourContribution": "Manage your contribution",
     "newCallout": "New callout!",
     "openCallouts": "Open callouts",
     "quickActions": "Quick actions",
@@ -1182,7 +1187,6 @@
     "account": "Account",
     "admin": "Administration",
     "adminSettings": "Settings",
-    "uiToolkit": "UI Toolkit",
     "callouts": "Callouts",
     "contacts": "Contacts",
     "contribution": "Contribution",
@@ -1340,11 +1344,5 @@
       "title": "Remove tag"
     },
     "name": "Name"
-  },
-  "uiToolkit": {
-    "typography": {
-      "title": "Typography",
-    },
-    "title": "UI Toolkit"
-  },
+  }
 }
