@@ -399,15 +399,17 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
   if (mapSchema.addressPatternProp && result) {
     const [patternSlideId, patternKey] =
       mapSchema.addressPatternProp.split('.');
-    if (!newResponseAnswers.value[patternSlideId]) {
-      newResponseAnswers.value[patternSlideId] = {};
-    }
+
+    newResponseAnswers.value[patternSlideId] ||= {};
 
     // TODO: clean this up
-    newResponseAnswers.value[patternSlideId]![patternKey] = formatGeocodeResult(
-      result,
-      mapSchema.addressPattern
-    );
+    const newResponseAnswer = newResponseAnswers.value[patternSlideId];
+    if (newResponseAnswer) {
+      newResponseAnswer[patternKey] = formatGeocodeResult(
+        result,
+        mapSchema.addressPattern
+      );
+    }
   }
 }
 
