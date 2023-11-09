@@ -16,7 +16,7 @@
             class="w-full flex-none p-4"
           >
             <img
-              class="w-full"
+              class="max-h-[300px] w-full object-contain"
               :style="{ filter: callout.responseViewSchema.imageFilter }"
               :src="photo.url + '?w=600&h=600'"
             />
@@ -120,28 +120,3 @@ watch(
   }
 );
 </script>
-
-<style lang="postcss">
-.callout-form-simple {
-  .form-group {
-    @apply mb-1;
-  }
-
-  .formio-component-file {
-    @apply hidden;
-  }
-
-  .col-form-label {
-    @apply font-bold font-title;
-    &::after {
-      @apply text-body;
-      content: ': ';
-    }
-  }
-
-  div[ref='element'],
-  div[ref='value'] {
-    @apply inline;
-  }
-}
-</style>
