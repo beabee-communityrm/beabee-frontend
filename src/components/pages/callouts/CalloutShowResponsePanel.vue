@@ -29,7 +29,7 @@
           <div>
             <button
               v-show="currentPhotoIndex > 0"
-              class="bg-primary text-white w-10 h-10 rounded-full"
+              class="bg-primary text-white w-10 h-10 rounded-ful flex items-center justify-center"
               @click="currentPhotoIndex--"
             >
               <font-awesome-icon :icon="faChevronLeft" />
@@ -38,7 +38,7 @@
           <div>
             <button
               v-show="currentPhotoIndex < response.photos.length - 1"
-              class="bg-primary text-white w-10 h-10 rounded-full"
+              class="bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center"
               @click="currentPhotoIndex++"
             >
               <font-awesome-icon :icon="faChevronRight" />
