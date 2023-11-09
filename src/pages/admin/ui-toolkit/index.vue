@@ -77,7 +77,6 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppTitle from '../../../components/AppTitle.vue';
 import PageTitle from '../../../components/PageTitle.vue';

@@ -11,9 +11,11 @@
       },
       "confirmDelete": {
         "desc": "Möchten Sie die Multi-Faktor-Authentifizierung wirklich deaktivieren? \nDanach benötigen Sie nur noch Ihr Passwort zur Anmeldung. Bitte \nvergessen Sie nicht, den Eintrag aus Ihrer Authenticator-App zu \nentfernen. Sie können diese Funktion jederzeit wieder aktivieren.",
+        "descToken": "Um die 2FA zu deaktivieren, geben Sie bitte Ihren aktuellen 2FA-Code ein:",
         "title": "2FA deaktivieren"
       },
       "createUnknownErrorNotification": "Die 2-Faktor-Authentifizierung konnte aufgrund eines unbekannten Fehlers\n nicht gespeichert werden. Bitte versuchen Sie es erneut oder \nkontaktieren Sie den Support.",
+      "deleteUnknownErrorNotification": "Die 2-Faktor-Authentifizierung konnte aufgrund eines unbekannten Fehlers\n nicht entfernt werden. Bitte versuchen Sie es erneut oder \nkontaktieren Sie den Support.",
       "disabledNotification": "Zwei-Faktor Authentifizierung erfolgreich deaktiviert",
       "enabledNotification": "Zwei-Faktor Authentifizierung erfolgreich aktiviert",
       "enterCode": {
@@ -1003,6 +1005,8 @@
         "url": "Ungültige URL"
       },
       "verifyCode": {
+        "max": "Der Code darf maximal {max} Zeichen lang sein.",
+        "min": "Der Code muss mindestens {min} Zeichen lang sein.",
         "required": "Code benötigt"
       }
     },
@@ -1045,7 +1049,6 @@
   },
   "homePage": {
     "editProfile": "Profil bearbeiten",
-    "manageContribution": "Beitrag ändern",
     "manageYourContribution": "Beitrag ändern",
     "newCallout": "Neuer Callout!",
     "openCallouts": "Aktuelle Callouts",
@@ -1115,9 +1118,16 @@
     "hasWrongMFAToken": "Der von Ihnen eingegebene 2FA Token ist nicht korrekt.",
     "joinNow": "Jetzt Mitglied werden!",
     "login": "Login",
+    "lostMfaDevice": "2FA-Gerät verloren?",
     "notMember": "Noch kein Mitglied?",
     "title": "Einloggen",
     "wrongCredentials": "Falsche Kombination von Passwort und E-Mail."
+  },
+  "lostDevice": {
+    "description": "Bitte geben Sie Ihre E-Mail-Adresse ein, und wir senden Ihnen Anweisungen zum Zurücksetzen Ihres 2FA.",
+    "emailSent": "Wir haben eine E-Mail mit Anweisungen zum Zurücksetzen Ihres 2FA versendet. Bitte überprüfen Sie Ihr Postfach.",
+    "resetDevice": "Gerät zurücksetzen",
+    "title": "Haben Sie Ihr 2FA-Gerät verloren?"
   },
   "membershipBuilder": {
     "steps": {
@@ -1268,6 +1278,11 @@
       "successful": "Erfolgreiche Zahlungen"
     },
     "showingOf": "Zahlungen {start} bis {end} von {total}"
+  },
+  "resetDevice": {
+    "deleteDevice": "2FA-Schutz entfernen",
+    "description": "Um den 2FA-Schutz zu entfernen, geben Sie bitte Ihr Passwort ein. \nDadurch werden Ihre aktuellen 2FA-Einstellungen zurückgesetzt und Sie \nkönnen ein neues Gerät einrichten.",
+    "title": "2FA-Schutz zurücksetzen"
   },
   "resetPassword": {
     "changePassword": "Passwort ändern",

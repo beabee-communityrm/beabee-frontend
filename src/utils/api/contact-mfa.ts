@@ -2,6 +2,7 @@ import axios from '../../lib/axios';
 import {
   GetContactMfaData,
   CreateContactMfaData,
+  DeleteContactMfaData,
   Serial,
 } from './api.interface';
 
@@ -48,6 +49,9 @@ export async function fetchContactMfa(
  * Delete a contact MFA
  * @param id The contact id
  */
-export async function deleteContactMfa(id: string): Promise<void> {
-  await axios.delete(`/contact/${id}/mfa`);
+export async function deleteContactMfa(
+  id: string,
+  dataIn: DeleteContactMfaData
+): Promise<void> {
+  await axios.delete(`/contact/${id}/mfa`, { data: dataIn });
 }

@@ -2,7 +2,9 @@
   "accountPage": {
     "mfa": {
       "codeInput": {},
-      "confirmDelete": {},
+      "confirmDelete": {
+        "descToken": "Om 2FA te deactiveren, voer alstublieft uw huidige 2FA-code in:"
+      },
       "createUnknownErrorNotification": "De 2-factor authenticatie kon niet worden opgeslagen vanwege een \nonbekende fout. Probeer het opnieuw of neem contact op met de \nondersteuning.",
       "enterCode": {},
       "result": {},
@@ -34,7 +36,8 @@
   "adminSettings": {
     "apikey": {
       "confirmCreate": {},
-      "confirmDelete": {}
+      "confirmDelete": {},
+      "expires": {}
     },
     "email": {},
     "general": {
@@ -287,7 +290,10 @@
       "postCode": {},
       "unknown": {},
       "url": {},
-      "verifyCode": {}
+      "verifyCode": {
+        "max": "De code mag maximaal {max} tekens lang zijn.",
+        "min": "De code moet minimaal {min} tekens lang zijn."
+      }
     },
     "richtext": {}
   },
@@ -321,7 +327,15 @@
   "joinPayment": {},
   "joinSetup": {},
   "locale": "nl",
-  "login": {},
+  "login": {
+    "lostMfaDevice": "2FA-apparaat kwijt?"
+  },
+  "lostDevice": {
+    "description": "Voer uw e-mailadres in, dan sturen we u instructies om uw 2FA te resetten.",
+    "emailSent": "We hebben een e-mail gestuurd met instructies om je 2FA te resetten. Controleer je inbox.",
+    "resetDevice": "Apparaat resetten",
+    "title": "Bent u uw 2FA-apparaat kwijt?"
+  },
   "membershipBuilder": {
     "steps": {
       "accountConfirmation": {
@@ -365,6 +379,11 @@
   },
   "paymentsAdmin": {
     "filter": {}
+  },
+  "resetDevice": {
+    "deleteDevice": "2FA-beveiliging verwijderen",
+    "description": "Om de 2FA-beveiliging te verwijderen, voer alstublieft uw wachtwoord in.\n Hierdoor wordt uw huidige 2FA-instellingen gereset en kunt u een nieuw \napparaat instellen.",
+    "title": "\"2FA-beveiliging resetten"
   },
   "resetPassword": {},
   "reviewerEditor": {

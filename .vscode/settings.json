@@ -4,6 +4,13 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
   "editor.formatOnSave": true,
-  "cSpell.words": ["beabee", "fortawesome", "otpauth", "qrcode", "TOTP"],
+  "cSpell.words": [
+    "beabee",
+    "fortawesome",
+    "otpauth",
+    "qrcode",
+    "TOTP",
+    "Vuelidate"
+  ],
   "vs-code-prettier-eslint.prettierLast": false
 }
