@@ -305,7 +305,7 @@
   }
 
   .form-group {
-    @apply mb-1 block;
+    @apply mb-1 block border-t border-t-grey pt-2 first:border-0 leading-tight;
   }
 
   .formio-component-file {
