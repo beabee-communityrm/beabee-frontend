@@ -15,6 +15,8 @@ import {
   RuleGroup,
 } from '@beabee/beabee-common';
 
+import { CONTACT_MFA_TYPE } from '@enums/contact-mfa-type';
+
 // Not really sure why but this work for conditional intersections
 // https://stackoverflow.com/questions/65549362/how-to-create-a-conditional-intersection-based-on-a-generic-parameter
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -53,20 +55,11 @@ interface ContactData {
 }
 
 /**
- * Contact multi factor authentication information
- * TODO: Move to common
- */
-export enum ContactMfaType {
-  TOTP = 'totp',
-  // E.g. U2F, EMAIL, SMS, HOTP, etc.
-}
-
-/**
  * Contact multi factor authentication data
  * TODO: Move to common
  */
 interface ContactMfaData {
-  type: ContactMfaType;
+  type: CONTACT_MFA_TYPE;
 }
 
 export type GetContactMfaData = Pick<ContactMfaData, 'type'> | null;
@@ -236,20 +229,6 @@ export interface LoginData {
   password: string;
   /** Optional multi factor authentication token */
   token?: string;
-}
-
-/**
- * The login codes that can be returned by the login request
- * TODO: Move to common
- */
-export enum LOGIN_CODES {
-  LOCKED = 'account-locked',
-  LOGGED_IN = 'logged-in',
-  LOGIN_FAILED = 'login-failed',
-  REQUIRES_2FA = 'requires-2fa',
-  UNSUPPORTED_2FA = 'unsupported-2fa',
-  INVALID_TOKEN = 'invalid-token',
-  MISSING_TOKEN = 'missing-token',
 }
 
 export interface ContactsContent {

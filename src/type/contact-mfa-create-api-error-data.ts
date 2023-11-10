@@ -1,4 +1,4 @@
-import { LOGIN_CODES } from '@utils/api/api.interface';
+import { LOGIN_CODES } from '@enums/login-codes';
 
 export interface ContactMfaCreateApiErrorData {
   httpCode: number;

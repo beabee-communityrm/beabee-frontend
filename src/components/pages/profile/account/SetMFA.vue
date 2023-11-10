@@ -221,9 +221,9 @@ import {
   fetchContactMfa,
   deleteContactMfa,
 } from '@utils/api/contact-mfa';
-import { ContactMfaType } from '@utils/api/api.interface';
+import { CONTACT_MFA_TYPE } from '@enums/contact-mfa-type';
 import { isRequestError } from '@utils/api/index';
-import { LOGIN_CODES } from '@utils/api/api.interface';
+import { LOGIN_CODES } from '@enums/login-codes';
 
 import AppButton from '@components/button/AppButton.vue';
 import AppModal from '@components/AppModal.vue';
@@ -340,7 +340,7 @@ const createMfa = async () => {
     await createContactMfa(props.contactId, {
       secret: totpSecret.value.base32,
       token: userToken.value,
-      type: ContactMfaType.TOTP,
+      type: CONTACT_MFA_TYPE.TOTP,
     });
   } catch (error) {
     onCreateError(error);
@@ -357,7 +357,7 @@ const disableMfa = async () => {
   disableMfaValidated.value = true;
   try {
     await deleteContactMfa(props.contactId, {
-      type: ContactMfaType.TOTP,
+      type: CONTACT_MFA_TYPE.TOTP,
       token: userToken.value,
     });
   } catch (error) {
@@ -560,7 +560,7 @@ watch(
     totpIdentity.value.label = contact.email;
 
     const contactMfa = await fetchContactMfa(contactId);
-    if (contactMfa && contactMfa.type === ContactMfaType.TOTP) {
+    if (contactMfa && contactMfa.type === CONTACT_MFA_TYPE.TOTP) {
       isEnabled.value = true;
     }
   },

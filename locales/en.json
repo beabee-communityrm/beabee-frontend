@@ -1234,6 +1234,7 @@
     "forgotPassword": "Forgot password",
     "join": "Join",
     "login": "Login",
+    "lostDevice": "Lost your 2FA device?",
     "notFound": "Page not found",
     "resetPassword": "Reset password",
     "setup": "Setup"
@@ -1284,6 +1285,10 @@
   "resetDevice": {
     "deleteDevice": "Remove 2FA Protection",
     "description": "To remove 2FA protection, please enter your password. This will reset your current 2FA settings, allowing you to set up a new device.",
+    "errorLink": "request another link",
+    "errorText": "The link might have expired or your password is wrong, you could {newLink}.",
+    "errorTitle": "Resetting the 2FA device was unsuccessful",
+    "success": "Resetting the 2FA device was successful.",
     "title": "Reset 2FA Protection"
   },
   "resetPassword": {

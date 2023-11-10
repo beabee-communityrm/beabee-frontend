@@ -365,6 +365,7 @@
     "error": "Er ging iets fout. Probeer de pagina te herladen"
   },
   "pageTitle": {
+    "lostDevice": "Bent u uw 2FA-apparaat kwijt?",
     "notFound": "Pagina niet gevonden"
   },
   "paymentMethods": {
@@ -383,6 +384,8 @@
   "resetDevice": {
     "deleteDevice": "2FA-beveiliging verwijderen",
     "description": "Om de 2FA-beveiliging te verwijderen, voer alstublieft uw wachtwoord in.\n Hierdoor wordt uw huidige 2FA-instellingen gereset en kunt u een nieuw \napparaat instellen.",
+    "errorTitle": "Het resetten van het 2FA-apparaat is mislukt",
+    "success": "Het resetten van het 2FA-apparaat is gelukt.",
     "title": "\"2FA-beveiliging resetten"
   },
   "resetPassword": {},

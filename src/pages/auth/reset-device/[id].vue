@@ -38,7 +38,7 @@ meta:
         <p>
           <i18n-t keypath="resetDevice.errorText">
             <template #newLink>
-              <router-link to="/auth/forgot-password" class="underline">{{
+              <router-link to="/auth/lost-device" class="underline">{{
                 t('resetDevice.errorLink')
               }}</router-link>
             </template>

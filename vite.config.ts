@@ -29,6 +29,7 @@ export default ({ command, mode }) => {
     '@store': `${path.resolve(__dirname, './src/store')}/`,
     '@type': `${path.resolve(__dirname, './src/types')}/`,
     '@utils': `${path.resolve(__dirname, './src/utils')}/`,
+    '@enums': `${path.resolve(__dirname, './src/enums')}/`,
   };
 
   // Use environment variables when developing locally

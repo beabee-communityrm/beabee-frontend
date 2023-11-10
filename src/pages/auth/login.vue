@@ -93,19 +93,24 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import AppInput from '../../components/forms/AppInput.vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { reactive, ref, toRef, watch } from 'vue';
-import { isInternalUrl } from '../../utils';
-import { updateCurrentUser } from '../../store';
-import { LoginData, LOGIN_CODES } from '../../utils/api/api.interface';
-import { login } from '../../utils/api/auth';
-import { isRequestError } from '../../utils/api/index';
-import AppForm from '../../components/forms/AppForm.vue';
-import AppNotification from '../../components/AppNotification.vue';
-import AppTitle from '../../components/AppTitle.vue';
-import AuthBox from '../../components/AuthBox.vue';
+
+import AppInput from '@components/forms/AppInput.vue';
+import AppForm from '@components/forms/AppForm.vue';
+import AppNotification from '@components/AppNotification.vue';
+import AppTitle from '@components/AppTitle.vue';
+import AuthBox from '@components/AuthBox.vue';
+
+import { isInternalUrl } from '@utils/index';
+import { LoginData } from '@utils/api/api.interface';
+import { login } from '@utils/api/auth';
+import { isRequestError } from '@utils/api/index';
+
+import { updateCurrentUser } from '@store/index';
+
+import { LOGIN_CODES } from '@enums/login-codes';
 
 const { t } = useI18n();
 

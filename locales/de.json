@@ -1232,6 +1232,7 @@
     "forgotPassword": "Passwort vergessen",
     "join": "Mitglied werden",
     "login": "Login",
+    "lostDevice": "Haben Sie Ihr 2FA-Gerät verloren?",
     "notFound": "Seite nicht gefunden",
     "resetPassword": "Passwort zurücksetzen",
     "setup": "Account fertigstellen"
@@ -1282,6 +1283,10 @@
   "resetDevice": {
     "deleteDevice": "2FA-Schutz entfernen",
     "description": "Um den 2FA-Schutz zu entfernen, geben Sie bitte Ihr Passwort ein. \nDadurch werden Ihre aktuellen 2FA-Einstellungen zurückgesetzt und Sie \nkönnen ein neues Gerät einrichten.",
+    "errorLink": "einen neuen Link anfordern",
+    "errorText": "Der Link scheint abgelaufen zu sein oder Ihr Passwort ist falsch. Sie können {newLink}.",
+    "errorTitle": "Das Zurücksetzen des 2FA-Gerätes ist nicht gelungen",
+    "success": "Das Zurücksetzen des 2FA-Gerätes war erfolgreich.",
     "title": "2FA-Schutz zurücksetzen"
   },
   "resetPassword": {
