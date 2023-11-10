@@ -1,7 +1,8 @@
 import { CalloutFormSchema } from '@beabee/beabee-common';
-import { computed } from 'vue';
+import { computed, Raw, Component } from 'vue';
 import i18n from '../../../../lib/i18n';
 import { CalloutMapSchema } from '../../../../utils/api/api.interface';
+import { AppStepperStep } from '../../../../type/app-stepper-step';
 
 const { t } = i18n.global;
 
@@ -78,11 +79,13 @@ export interface CalloutStepsProps {
   dates: DateAndDurationStepProps;
 }
 
+export interface CalloutStep<T> extends AppStepperStep {
+  validated: boolean;
+  error: boolean;
+  data: T;
+  component: Raw<Component>;
+}
+
 export type CalloutSteps = {
-  [P in keyof CalloutStepsProps]: {
-    title: string;
-    validated: boolean;
-    error: boolean;
-    data: CalloutStepsProps[P];
-  };
+  [P in keyof CalloutStepsProps]: CalloutStep<CalloutStepsProps[P]>;
 };

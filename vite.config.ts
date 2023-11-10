@@ -20,6 +20,17 @@ export default ({ command, mode }) => {
     pages(),
   ];
 
+  // Keep this in sync with tsconfig.json -> compilerOptions.paths
+  const alias = {
+    '@components': `${path.resolve(__dirname, './src/components')}/`,
+    '@layouts': `${path.resolve(__dirname, './src/layouts')}/`,
+    '@lib': `${path.resolve(__dirname, './src/lib')}/`,
+    '@pages': `${path.resolve(__dirname, './src/pages')}/`,
+    '@store': `${path.resolve(__dirname, './src/store')}/`,
+    '@type': `${path.resolve(__dirname, './src/types')}/`,
+    '@utils': `${path.resolve(__dirname, './src/utils')}/`,
+  };
+
   // Use environment variables when developing locally
   if (command === 'serve') {
     plugins.push(
@@ -41,6 +52,9 @@ export default ({ command, mode }) => {
   return defineConfig({
     build: {
       sourcemap: true,
+    },
+    resolve: {
+      alias,
     },
     plugins,
     server: {

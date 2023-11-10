@@ -6,6 +6,7 @@ export async function login(data: LoginData): Promise<void> {
   await axios.post('auth/login', {
     email: data.email,
     password: data.password,
+    token: data.token,
   });
 }
 

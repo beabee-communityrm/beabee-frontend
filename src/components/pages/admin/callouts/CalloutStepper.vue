@@ -2,7 +2,7 @@
   <div>
     <AppStepper v-model="selectedStepIndex" :steps="stepsInOrder" />
     <component
-      :is="step.component as any /* TODO: how to type this? */"
+      :is="step.component"
       v-for="step in stepsInOrder"
       v-show="selectedStep === step"
       :key="step.name"
@@ -21,7 +21,7 @@ import { ItemStatus } from '@beabee/beabee-common';
 import { ref, computed, markRaw, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppStepper from '../../../stepper/AppStepper.vue';
-import { CalloutStepsProps } from './callouts.interface';
+import { CalloutStepsProps, CalloutSteps } from './callouts.interface';
 
 import StepSettings from './steps/SettingsStep.vue';
 import StepTitleAndImage from './steps/TitleAndImage.vue';
@@ -37,7 +37,7 @@ const props = defineProps<{
 
 const { t } = useI18n();
 
-const steps = reactive({
+const steps = reactive<CalloutSteps>({
   content: {
     name: t('createCallout.steps.content.title'),
     validated: false,

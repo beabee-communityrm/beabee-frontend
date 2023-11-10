@@ -142,25 +142,58 @@ meta:
           :value="contact.profile.newsletterGroups.join(', ')"
         />
       </AppInfoList>
-      <div class="hidden">
+
+      <!-- Security -->
+      <section class="mt-6">
         <AppHeading>{{ t('contactOverview.security.title') }}</AppHeading>
-        <p>{{ t('contactOverview.security.whatDoTheButtonsDo') }}</p>
-        <form @submit.prevent="handleSecurityAction">
-          <AppButton type="submit" variant="primaryOutlined" class="mt-4">{{
-            t('contactOverview.security.loginOverride')
-          }}</AppButton>
+
+        <!-- Multi factor authentication -->
+        <section v-if="mfa.isEnabled" class="mt-4">
+          <p>
+            {{
+              t('contactOverview.security.mfa.desc', {
+                disableLabel: t('actions.disable'),
+              })
+            }}
+          </p>
+
           <AppButton
-            type="submit"
+            type="button"
             variant="primaryOutlined"
-            class="ml-6 mt-2"
-            >{{ t('contactOverview.security.resetPassword') }}</AppButton
+            class="mt-4"
+            :icon="faMobileAlt"
+            @click="mfa.showDisableConfirmModal = true"
           >
-        </form>
-        <div v-if="securityLink" class="mt-4">
-          <p class="mt-4">{{ t('contactOverview.security.instructions') }}</p>
-          <AppInput readonly :value="securityLink" class="mt-2"></AppInput>
-        </div>
-      </div>
+            {{ t(`actions.disable`) }}
+          </AppButton>
+        </section>
+
+        <section v-else class="mt-4">
+          <p>
+            {{ t('contactOverview.security.mfa.disabledDesc') }}
+          </p>
+        </section>
+
+        <!-- Not implemented yet -->
+        <section class="mt-4 hidden">
+          <p>{{ t('contactOverview.security.whatDoTheButtonsDo') }}</p>
+          <form @submit.prevent="handleSecurityAction">
+            <AppButton type="submit" variant="primaryOutlined" class="mt-4">{{
+              t('contactOverview.security.loginOverride')
+            }}</AppButton>
+            <AppButton
+              type="submit"
+              variant="primaryOutlined"
+              class="ml-6 mt-2"
+              >{{ t('contactOverview.security.resetPassword') }}</AppButton
+            >
+          </form>
+          <div v-if="securityLink" class="mt-4">
+            <p class="mt-4">{{ t('contactOverview.security.instructions') }}</p>
+            <AppInput readonly :value="securityLink" class="mt-2"></AppInput>
+          </div>
+        </section>
+      </section>
 
       <template v-if="joinSurvey && joinSurveyResponse">
         <AppHeading class="mt-6">
@@ -176,42 +209,62 @@ meta:
       </template>
     </template>
   </App2ColGrid>
+
+  <AppConfirmDialog
+    :open="mfa.showDisableConfirmModal"
+    :title="t('accountPage.mfa.confirmDelete.title')"
+    :cancel="t('actions.noBack')"
+    :confirm="t('actions.yesDisable')"
+    variant="danger"
+    @close="mfa.showDisableConfirmModal = false"
+    @confirm="disableMfaAndNotify"
+  >
+    <p>{{ t('accountPage.mfa.confirmDelete.desc') }}</p>
+  </AppConfirmDialog>
 </template>
 
 <script lang="ts" setup>
+import { onBeforeMount, ref, reactive } from 'vue';
 import { ContributionType, RoleType } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
-import AppHeading from '../../../../components/AppHeading.vue';
-import AppInput from '../../../../components/forms/AppInput.vue';
-import AppButton from '../../../../components/button/AppButton.vue';
-import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown.vue';
-import RoleEditor from '../../../../components/role/RoleEditor.vue';
-import { onBeforeMount, ref, reactive } from 'vue';
+import { faCircleNotch, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
+
+import AppHeading from '@components/AppHeading.vue';
+import AppInput from '@components/forms/AppInput.vue';
+import AppButton from '@components/button/AppButton.vue';
+import TagDropdown from '@components/pages/admin/contacts/TagDropdown.vue';
+import RoleEditor from '@components/role/RoleEditor.vue';
+import AppInfoList from '@components/AppInfoList.vue';
+import AppInfoListItem from '@components/AppInfoListItem.vue';
+import RichTextEditor from '@components/rte/RichTextEditor.vue';
+import AppForm from '@components/forms/AppForm.vue';
+import PaymentMethod from '@components/payment-method/PaymentMethod.vue';
+import AppConfirmDialog from '@components/AppConfirmDialog.vue';
+import App2ColGrid from '@components/App2ColGrid.vue';
+import CalloutForm from '@components/pages/callouts/CalloutForm.vue';
+
 import {
   GetContactData,
   GetContactDataWith,
   ContactRoleData,
   GetCalloutDataWith,
   GetCalloutResponseDataWith,
-} from '../../../../utils/api/api.interface';
+} from '@utils/api/api.interface';
 import {
   deleteRole,
   fetchContact,
   updateContact,
   updateRole,
-} from '../../../../utils/api/contact';
-import AppInfoList from '../../../../components/AppInfoList.vue';
-import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
-import { formatLocale } from '../../../../utils/dates';
-import { fetchContent } from '../../../../utils/api/content';
-import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
-import AppForm from '../../../../components/forms/AppForm.vue';
-import App2ColGrid from '../../../../components/App2ColGrid.vue';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import PaymentMethod from '../../../../components/payment-method/PaymentMethod.vue';
+} from '@utils/api/contact';
+import { formatLocale } from '@utils/dates';
+import { fetchContent } from '@utils/api/content';
+import { fetchContactMfa, deleteContactMfa } from '@utils/api/contact-mfa';
+import { ContactMfaType } from '@utils/api/api.interface';
+import { fetchCallout, fetchResponses } from '@utils/api/callout';
+
+import { addNotification } from '@store/notifications';
+
 import env from '../../../../env';
-import { fetchCallout, fetchResponses } from '../../../../utils/api/callout';
-import CalloutForm from '../../../../components/pages/callouts/CalloutForm.vue';
 
 const { t, n } = useI18n();
 
@@ -232,6 +285,45 @@ const contactAnnotations = reactive({
 });
 const securityLink = ref('');
 const changingRoles = ref(false);
+
+/** Multi factor authentication state */
+const mfa = ref({
+  showDisableConfirmModal: false,
+  isEnabled: false,
+});
+
+/** Disable MFA and notify the admin */
+const disableMfaAndNotify = async () => {
+  mfa.value.showDisableConfirmModal = false;
+  await disableMfa();
+  addNotification({
+    title: t('accountPage.mfa.disabledNotification'),
+    variant: 'warning',
+  });
+};
+
+/** Disable MFA for the contact by the admin */
+const disableMfa = async () => {
+  try {
+    await deleteContactMfa(props.contact.id, {
+      type: ContactMfaType.TOTP,
+    });
+  } catch (error) {
+    onDeleteMfaError();
+    return false;
+  }
+
+  mfa.value.isEnabled = false;
+
+  return true;
+};
+
+const onDeleteMfaError = () => {
+  addNotification({
+    title: t('accountPage.mfa.deleteUnknownErrorNotification'),
+    variant: 'error',
+  });
+};
 
 const joinSurvey = ref<GetCalloutDataWith<'form'>>();
 const joinSurveyResponse = ref<GetCalloutResponseDataWith<'answers'>>();
@@ -277,6 +369,12 @@ onBeforeMount(async () => {
   contactAnnotations.tags = contact.value.profile.tags || [];
 
   contactTags.value = (await fetchContent('contacts')).tags;
+
+  // Fetch MFA information
+  const contactMfa = await fetchContactMfa(props.contact.id);
+  if (contactMfa && contactMfa.type === ContactMfaType.TOTP) {
+    mfa.value.isEnabled = true;
+  }
 
   const setupContent = await fetchContent('join/setup');
   if (setupContent.surveySlug) {

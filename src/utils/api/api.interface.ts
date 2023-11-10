@@ -52,6 +52,36 @@ interface ContactData {
   displayName: string;
 }
 
+/**
+ * Contact multi factor authentication information
+ * TODO: Move to common
+ */
+export enum ContactMfaType {
+  TOTP = 'totp',
+  // E.g. U2F, EMAIL, SMS, HOTP, etc.
+}
+
+/**
+ * Contact multi factor authentication data
+ * TODO: Move to common
+ */
+interface ContactMfaData {
+  type: ContactMfaType;
+}
+
+export type GetContactMfaData = Pick<ContactMfaData, 'type'> | null;
+
+export interface CreateContactMfaData extends ContactMfaData {
+  secret: string;
+  /** The code from the authenticator app */
+  token: string;
+}
+
+export interface DeleteContactMfaData extends ContactMfaData {
+  /** The code from the authenticator app */
+  token?: string;
+}
+
 export interface PaymentFlowParams {
   clientSecret?: string;
   redirectUrl?: string;
@@ -204,6 +234,22 @@ export type GetPaymentsQuery = PaginatedQuery; // TODO: constrain fields
 export interface LoginData {
   email: string;
   password: string;
+  /** Optional multi factor authentication token */
+  token?: string;
+}
+
+/**
+ * The login codes that can be returned by the login request
+ * TODO: Move to common
+ */
+export enum LOGIN_CODES {
+  LOCKED = 'account-locked',
+  LOGGED_IN = 'logged-in',
+  LOGIN_FAILED = 'login-failed',
+  REQUIRES_2FA = 'requires-2fa',
+  UNSUPPORTED_2FA = 'unsupported-2fa',
+  INVALID_TOKEN = 'invalid-token',
+  MISSING_TOKEN = 'missing-token',
 }
 
 export interface ContactsContent {
