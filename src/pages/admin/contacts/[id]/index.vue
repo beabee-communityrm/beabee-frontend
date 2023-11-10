@@ -229,18 +229,19 @@ import { ContributionType, RoleType } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import { faCircleNotch, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 
-import AppHeading from '../../../../components/AppHeading.vue';
-import AppInput from '../../../../components/forms/AppInput.vue';
-import AppButton from '../../../../components/button/AppButton.vue';
-import TagDropdown from '../../../../components/pages/admin/contacts/TagDropdown.vue';
-import RoleEditor from '../../../../components/role/RoleEditor.vue';
-import AppInfoList from '../../../../components/AppInfoList.vue';
-import AppInfoListItem from '../../../../components/AppInfoListItem.vue';
-import RichTextEditor from '../../../../components/rte/RichTextEditor.vue';
-import AppForm from '../../../../components/forms/AppForm.vue';
-import PaymentMethod from '../../../../components/payment-method/PaymentMethod.vue';
-import AppConfirmDialog from '../../../../components/AppConfirmDialog.vue';
-import App2ColGrid from '../../../../components/App2ColGrid.vue';
+import AppHeading from '@components/AppHeading.vue';
+import AppInput from '@components/forms/AppInput.vue';
+import AppButton from '@components/button/AppButton.vue';
+import TagDropdown from '@components/pages/admin/contacts/TagDropdown.vue';
+import RoleEditor from '@components/role/RoleEditor.vue';
+import AppInfoList from '@components/AppInfoList.vue';
+import AppInfoListItem from '@components/AppInfoListItem.vue';
+import RichTextEditor from '@components/rte/RichTextEditor.vue';
+import AppForm from '@components/forms/AppForm.vue';
+import PaymentMethod from '@components/payment-method/PaymentMethod.vue';
+import AppConfirmDialog from '@components/AppConfirmDialog.vue';
+import App2ColGrid from '@components/App2ColGrid.vue';
+import CalloutForm from '@components/pages/callouts/CalloutForm.vue';
 
 import {
   GetContactData,
@@ -248,27 +249,22 @@ import {
   ContactRoleData,
   GetCalloutDataWith,
   GetCalloutResponseDataWith,
-} from '../../../../utils/api/api.interface';
+} from '@utils/api/api.interface';
 import {
   deleteRole,
   fetchContact,
   updateContact,
   updateRole,
-} from '../../../../utils/api/contact';
+} from '@utils/api/contact';
+import { formatLocale } from '@utils/dates';
+import { fetchContent } from '@utils/api/content';
+import { fetchContactMfa, deleteContactMfa } from '@utils/api/contact-mfa';
+import { ContactMfaType } from '@utils/api/api.interface';
+import { fetchCallout, fetchResponses } from '@utils/api/callout';
 
-import { formatLocale } from '../../../../utils/dates';
-import { fetchContent } from '../../../../utils/api/content';
-import {
-  fetchContactMfa,
-  deleteContactMfa,
-} from '../../../../utils/api/contact-mfa';
-import { ContactMfaType } from '../../../../utils/api/api.interface';
+import { addNotification } from '@store/notifications';
 
 import env from '../../../../env';
-import { fetchCallout, fetchResponses } from '../../../../utils/api/callout';
-import CalloutForm from '../../../../components/pages/callouts/CalloutForm.vue';
-
-import { addNotification } from '../../../../store/notifications';
 
 const { t, n } = useI18n();
 
@@ -302,17 +298,33 @@ const disableMfaAndNotify = async () => {
   await disableMfa();
   addNotification({
     title: t('accountPage.mfa.disabledNotification'),
-    variant: 'error',
+    variant: 'warning',
   });
 };
 
 /** Disable MFA for the contact by the admin */
 const disableMfa = async () => {
-  await deleteContactMfa(props.contact.id, {
-    type: ContactMfaType.TOTP,
-  });
+  try {
+    await deleteContactMfa(props.contact.id, {
+      type: ContactMfaType.TOTP,
+    });
+  } catch (error) {
+    onDeleteMfaError();
+    return false;
+  }
+
   mfa.value.isEnabled = false;
+
+  return true;
 };
+
+const onDeleteMfaError = () => {
+  addNotification({
+    title: t('accountPage.mfa.deleteUnknownErrorNotification'),
+    variant: 'error',
+  });
+};
+
 const joinSurvey = ref<GetCalloutDataWith<'form'>>();
 const joinSurveyResponse = ref<GetCalloutResponseDataWith<'answers'>>();
 
