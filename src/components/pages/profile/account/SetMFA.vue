@@ -396,7 +396,7 @@ const disableMfaAndNotify = async () => {
 
   addNotification({
     title: t('accountPage.mfa.disabledNotification'),
-    variant: 'error',
+    variant: 'warning',
   });
 };
 
