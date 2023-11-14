@@ -63,22 +63,22 @@ import { ItemStatus } from '@beabee/beabee-common';
 import { ref, onBeforeMount, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import NoticeContainer from '../../components/pages/profile/NoticeContainer.vue';
-import ContributionInfo from '../../components/pages/profile/ContributionInfo.vue';
-import QuickActions from '../../components/pages/profile/QuickActions.vue';
-import SectionTitle from '../../components/pages/profile/SectionTitle.vue';
-import PageTitle from '../../components/PageTitle.vue';
-import AppButton from '../../components/button/AppButton.vue';
-import CalloutCard from '../../components/callout/CalloutCard.vue';
-import WelcomeMessage from '../../components/welcome-message/WelcomeMessage.vue';
-import {
-  GetCalloutData,
-  GetContactData,
-  ProfileContent,
-} from '../../utils/api/api.interface';
-import { fetchContent } from '../../utils/api/content';
-import { fetchCallouts } from '../../utils/api/callout';
-import { currentUser, generalContent } from '../../store';
+
+import NoticeContainer from '@components/pages/profile/NoticeContainer.vue';
+import ContributionInfo from '@components/pages/profile/ContributionInfo.vue';
+import QuickActions from '@components/pages/profile/QuickActions.vue';
+import SectionTitle from '@components/pages/profile/SectionTitle.vue';
+import PageTitle from '@components/PageTitle.vue';
+import AppButton from '@components/button/AppButton.vue';
+import CalloutCard from '@components/callout/CalloutCard.vue';
+import WelcomeMessage from '@components/welcome-message/WelcomeMessage.vue';
+
+import { fetchContent } from '@utils/api/content';
+import { fetchCallouts } from '@utils/api/callout';
+
+import { currentUser, generalContent } from '@store';
+
+import type { GetContactData, GetCalloutData, ProfileContent } from '@type';
 
 const { t } = useI18n();
 

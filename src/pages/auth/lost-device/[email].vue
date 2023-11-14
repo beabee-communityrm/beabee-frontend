@@ -64,7 +64,7 @@ import AppButton from '@components/button/AppButton.vue';
 import AppTitle from '@components/AppTitle.vue';
 import AuthBox from '@components/AuthBox.vue';
 
-import { lostMfaDevice } from '@utils/api/auth';
+import ResetSecurityFlow from '@utils/api/reset-security-flow.service';
 
 const { t } = useI18n();
 
@@ -81,7 +81,7 @@ const validation = useVuelidate();
 
 const submitLostDevice = async () => {
   loading.value = true;
-  await lostMfaDevice(email.value);
+  await ResetSecurityFlow.resetDeviceBegin(email.value);
 
   isRequestSuccessful.value = true;
   loading.value = false;

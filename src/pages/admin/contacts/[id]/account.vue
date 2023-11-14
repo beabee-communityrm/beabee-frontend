@@ -15,9 +15,10 @@ meta:
   </App2ColGrid>
 </template>
 <script lang="ts" setup>
-import { GetContactData } from '../../../../utils/api/api.interface';
-import ContactUpdateAccount from '../../../../components/contact/ContactUpdateAccount.vue';
-import App2ColGrid from '../../../../components/App2ColGrid.vue';
+import ContactUpdateAccount from '@components/contact/ContactUpdateAccount.vue';
+import App2ColGrid from '@components/App2ColGrid.vue';
+
+import type { GetContactData } from '@type';
 
 defineProps<{
   contact: GetContactData;

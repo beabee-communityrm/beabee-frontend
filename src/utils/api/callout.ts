@@ -1,6 +1,9 @@
 import { Paginated } from '@beabee/beabee-common';
 import axios from '../../lib/axios';
-import {
+import { deserializeDate } from '.';
+import { deserializeCalloutResponse } from './callout-response';
+
+import type {
   GetCalloutsQuery,
   Serial,
   GetCalloutResponsesQuery,
@@ -16,9 +19,7 @@ import {
   CreateCalloutTagData,
   UpdateCalloutTagData,
   GetCalloutResponseMapData,
-} from './api.interface';
-import { deserializeDate } from '.';
-import { deserializeCalloutResponse } from './callout-response';
+} from '@type';
 
 // TODO: how to make this type safe?
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

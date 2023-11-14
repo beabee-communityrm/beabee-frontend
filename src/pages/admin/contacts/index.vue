@@ -105,33 +105,32 @@ import {
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import PageTitle from '../../../components/PageTitle.vue';
-import {
-  GetContactDataWith,
-  GetSegmentDataWith,
-} from '../../../utils/api/api.interface';
-import { fetchContacts } from '../../../utils/api/contact';
-import { formatLocale } from '../../../utils/dates';
-import { fetchSegments } from '../../../utils/api/segments';
-import AppButton from '../../../components/button/AppButton.vue';
-import AppSearch from '../../../components/search/AppSearch.vue';
-import AppTag from '../../../components/AppTag.vue';
+import { faDownload, faTag, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { addBreadcrumb } from '@store/breadcrumb';
+
+import PageTitle from '@components/PageTitle.vue';
+import AppButton from '@components/button/AppButton.vue';
+import AppSearch from '@components/search/AppSearch.vue';
+import AppTag from '@components/AppTag.vue';
 import {
   headers,
   filterGroups,
   filterItems,
-} from '../../../components/pages/admin/contacts/contacts.interface';
-import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
-import SaveSegment from '../../../components/pages/admin/contacts/SaveSegment.vue';
-import AppFilterGrid from '../../../components/AppFilterGrid.vue';
-import { addBreadcrumb } from '../../../store/breadcrumb';
+} from '@components/pages/admin/contacts/contacts.interface';
+import AppSearchInput from '@components/forms/AppSearchInput.vue';
+import SaveSegment from '@components/pages/admin/contacts/SaveSegment.vue';
+import AppFilterGrid from '@components/AppFilterGrid.vue';
+import AppPaginatedTable from '@components/table/AppPaginatedTable.vue';
 import {
   definePaginatedQuery,
   defineParam,
   defineRulesParam,
-} from '../../../utils/pagination';
-import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
-import { faDownload, faTag, faUsers } from '@fortawesome/free-solid-svg-icons';
+} from '@utils/pagination';
+import { fetchContacts } from '@utils/api/contact';
+import { formatLocale } from '@utils/dates';
+import { fetchSegments } from '@utils/api/segments';
+
+import type { GetContactDataWith, GetSegmentDataWith } from '@type';
 
 const { t, n } = useI18n();
 

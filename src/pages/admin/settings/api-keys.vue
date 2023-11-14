@@ -103,32 +103,32 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import { computed, ref, watchEffect } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import { useI18n } from 'vue-i18n';
-import AppForm from '../../../components/forms/AppForm.vue';
-import AppInput from '../../../components/forms/AppInput.vue';
 import { faCopy, faTrash, faWarning } from '@fortawesome/free-solid-svg-icons';
-import { computed, ref, watchEffect } from 'vue';
-import { GetApiKeyData } from '../../../utils/api/api.interface';
-import {
-  createApiKey,
-  fetchApiKeys,
-  deleteApiKey,
-} from '../../../utils/api/api-key';
-import AppButton from '../../../components/button/AppButton.vue';
-import AppConfirmDialog from '../../../components/AppConfirmDialog.vue';
-import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
-import { definePaginatedQuery } from '../../../utils/pagination';
-import { Paginated } from '@beabee/beabee-common';
-import { Header } from '../../../components/table/table.interface';
-import { formatLocale } from '../../../utils/dates';
-import { addNotification } from '../../../store/notifications';
-import AppHeading from '../../../components/AppHeading.vue';
-import App2ColGrid from '../../../components/App2ColGrid.vue';
-import AppSelect from '../../../components/forms/AppSelect.vue';
-import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
 import { addDays } from 'date-fns';
-import AppTime from '../../../components/AppTime.vue';
+import { Paginated } from '@beabee/beabee-common';
+
+import AppForm from '@components/forms/AppForm.vue';
+import AppInput from '@components/forms/AppInput.vue';
+import AppButton from '@components/button/AppButton.vue';
+import AppConfirmDialog from '@components/AppConfirmDialog.vue';
+import AppPaginatedTable from '@components/table/AppPaginatedTable.vue';
+import { Header } from '@components/table/table.interface';
+import AppHeading from '@components/AppHeading.vue';
+import App2ColGrid from '@components/App2ColGrid.vue';
+import AppSelect from '@components/forms/AppSelect.vue';
+import AppCheckbox from '@components/forms/AppCheckbox.vue';
+import AppTime from '@components/AppTime.vue';
+
+import { addNotification } from '@store/notifications';
+
+import { formatLocale } from '@utils/dates';
+import { definePaginatedQuery } from '@utils/pagination';
+import { createApiKey, fetchApiKeys, deleteApiKey } from '@utils/api/api-key';
+
+import type { GetApiKeyData } from '@type';
 
 const { n, t } = useI18n();
 

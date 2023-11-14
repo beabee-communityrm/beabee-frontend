@@ -6,11 +6,13 @@ import {
   flattenComponents,
 } from '@beabee/beabee-common';
 import { format } from 'date-fns';
-import { CalloutStepsProps } from '../components/pages/admin/callouts/callouts.interface';
-import { FilterItem, FilterItems } from '../components/search/search.interface';
-import { CreateCalloutData, GetCalloutDataWith } from './api/api.interface';
+import { CalloutStepsProps } from '@components/pages/admin/callouts/callouts.interface';
+import { FilterItem, FilterItems } from '@components/search/search.interface';
+
 import env from '../env';
-import i18n from '../lib/i18n';
+import i18n from '@lib/i18n';
+
+import type { CreateCalloutData, GetCalloutDataWith } from '@type';
 
 const { t } = i18n.global;
 

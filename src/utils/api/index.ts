@@ -1,15 +1,8 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios from 'axios';
 import { parseISO } from 'date-fns';
 
-interface ApiError {
-  code: string;
-}
-
-type ApiRequestError<T, D> = AxiosError<T, D> & {
-  response: AxiosResponse<ApiError> & {
-    status: 400;
-  };
-};
+import type { ApiRequestError } from '@type/api-request-error';
+import type { ApiError } from '@type/api-error';
 
 export function isRequestError<T = unknown, D = unknown>(
   err: unknown,

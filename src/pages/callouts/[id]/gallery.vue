@@ -71,19 +71,19 @@ meta:
 </template>
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref } from 'vue';
-import { fetchResponsesForMap } from '../../../utils/api/callout';
-import {
-  GetCalloutDataWith,
-  GetCalloutResponseMapData,
-} from '../../../utils/api/api.interface';
-import { useRoute } from 'vue-router';
-import { useRouter } from 'vue-router';
-import CalloutShowResponsePanel from '../../../components/pages/callouts/CalloutShowResponsePanel.vue';
-import CalloutIntroPanel from '../../../components/pages/callouts/CalloutIntroPanel.vue';
-import PageTitle from '../../../components/PageTitle.vue';
-import { faMap } from '@fortawesome/free-solid-svg-icons';
 import { useI18n } from 'vue-i18n';
-import { isEmbed } from '../../../store';
+import { useRoute, useRouter } from 'vue-router';
+import { faMap } from '@fortawesome/free-solid-svg-icons';
+
+import CalloutShowResponsePanel from '@components/pages/callouts/CalloutShowResponsePanel.vue';
+import CalloutIntroPanel from '@components/pages/callouts/CalloutIntroPanel.vue';
+import PageTitle from '@components/PageTitle.vue';
+
+import { fetchResponsesForMap } from '@utils/api/callout';
+
+import { isEmbed } from '@store';
+
+import type { GetCalloutDataWith, GetCalloutResponseMapData } from '@type';
 
 const HASH_PREFIX = '#response-' as const;
 

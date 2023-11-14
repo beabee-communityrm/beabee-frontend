@@ -1,10 +1,9 @@
 import axios from '../../lib/axios';
-import {
-  GetContactMfaData,
-  CreateContactMfaData,
-  DeleteContactMfaData,
-  Serial,
-} from './api.interface';
+
+import type { GetContactMfaData } from '@type/get-contact-mfa-data';
+import type { CreateContactMfaData } from '@type/create-contact-mfa-data';
+import type { DeleteContactMfaData } from '@type/delete-contact-mfa-data';
+import type { Serial } from '@type/serial';
 
 /**
  * Deserialize a contact MFA

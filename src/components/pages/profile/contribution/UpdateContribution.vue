@@ -94,25 +94,30 @@ import {
 import { computed, onBeforeMount, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
-import Contribution from '../../../contribution/Contribution.vue';
-import AppButton from '../../../button/AppButton.vue';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+
+import Contribution from '@components/contribution/Contribution.vue';
+import AppButton from '@components/button/AppButton.vue';
 import ProrateContribution from './ProrateContribution.vue';
-import { ContributionContent } from '../../../contribution/contribution.interface';
+import { ContributionContent } from '@components/contribution/contribution.interface';
+import AppModal from '@components/AppModal.vue';
+import StripePayment from '@components/StripePayment.vue';
+import AppHeading from '@components/AppHeading.vue';
+import AppNotification from '@components/AppNotification.vue';
+
 import {
   startContribution,
   startContributionCompleteUrl,
   updateContribution,
-} from '../../../../utils/api/contact';
-import AppModal from '../../../AppModal.vue';
-import StripePayment from '../../../StripePayment.vue';
-import { currentUser } from '../../../../store/currentUser';
-import { formatLocale } from '../../../../utils/dates';
-import AppHeading from '../../../AppHeading.vue';
-import { isRequestError } from '../../../../utils/api';
-import { ContributionInfo } from '../../../../utils/api/api.interface';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { addNotification } from '../../../../store/notifications';
-import AppNotification from '../../../AppNotification.vue';
+} from '@utils/api/contact';
+
+import { currentUser } from '@store/currentUser';
+import { formatLocale } from '@utils/dates';
+import { isRequestError } from '@utils/api';
+
+import { addNotification } from '@store/notifications';
+
+import type { ContributionInfo } from '@type';
 
 const validation = useVuelidate();
 

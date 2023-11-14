@@ -210,38 +210,33 @@ import {
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import AppButton from '../../../../../../components/button/AppButton.vue';
-import AppSelect from '../../../../../../components/forms/AppSelect.vue';
-import AppVTabs from '../../../../../../components/tabs/AppVTabs.vue';
+import AppButton from '@components/button/AppButton.vue';
+import AppSelect from '@components/forms/AppSelect.vue';
+import AppVTabs from '@components/tabs/AppVTabs.vue';
 import {
   filterGroups,
   filterItems,
   headers,
-} from '../../../../../../components/pages/admin/callout-responses.interface';
-import AppSearch from '../../../../../../components/search/AppSearch.vue';
-import {
-  GetCalloutDataWith,
-  GetCalloutResponseWith,
-  GetCalloutResponseDataWith,
-  UpdateCalloutResponseData,
-} from '../../../../../../utils/api/api.interface';
-import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
-import { convertComponentsToFilters } from '../../../../../../utils/callouts';
-import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
-import { updateCalloutResponses } from '../../../../../../utils/api/callout-response';
-import AppTag from '../../../../../../components/AppTag.vue';
-import MoveBucketButton from '../../../../../../components/pages/admin/callouts/MoveBucketButton.vue';
-import ToggleTagButton from '../../../../../../components/pages/admin/callouts/ToggleTagButton.vue';
-import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
-import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
-import { fetchContacts } from '../../../../../../utils/api/contact';
-import AppPaginatedTable from '../../../../../../components/table/AppPaginatedTable.vue';
+} from '@components/pages/admin/callout-responses.interface';
+import AppSearch from '@components/search/AppSearch.vue';
+
+import { fetchResponses, fetchTags } from '@utils/api/callout';
+import { convertComponentsToFilters } from '@utils/callouts';
+import AppButtonGroup from '@components/button/AppButtonGroup.vue';
+import { updateCalloutResponses } from '@utils/api/callout-response';
+import AppTag from '@components/AppTag.vue';
+import MoveBucketButton from '@components/pages/admin/callouts/MoveBucketButton.vue';
+import ToggleTagButton from '@components/pages/admin/callouts/ToggleTagButton.vue';
+import { buckets } from '@components/pages/admin/callouts/callouts.interface';
+import SetAssigneeButton from '@components/pages/admin/callouts/SetAssigneeButton.vue';
+import { fetchContacts } from '@utils/api/contact';
+import AppPaginatedTable from '@components/table/AppPaginatedTable.vue';
 import {
   definePaginatedQuery,
   defineParam,
   defineRulesParam,
-} from '../../../../../../utils/pagination';
-import AppCheckbox from '../../../../../../components/forms/AppCheckbox.vue';
+} from '@utils/pagination';
+import AppCheckbox from '@components/forms/AppCheckbox.vue';
 import {
   faComment,
   faDownload,
@@ -249,9 +244,16 @@ import {
   faUser,
   faUserPen,
 } from '@fortawesome/free-solid-svg-icons';
-import { addNotification } from '../../../../../../store/notifications';
-import { addBreadcrumb } from '../../../../../../store/breadcrumb';
-import AppTime from '../../../../../../components/AppTime.vue';
+import { addNotification } from '@store/notifications';
+import { addBreadcrumb } from '@store/breadcrumb';
+import AppTime from '@components/AppTime.vue';
+
+import type {
+  GetCalloutDataWith,
+  GetCalloutResponseWith,
+  GetCalloutResponseDataWith,
+  UpdateCalloutResponseData,
+} from '@type';
 
 const props = defineProps<{ callout: GetCalloutDataWith<'form'> }>();
 

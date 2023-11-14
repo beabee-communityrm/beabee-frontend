@@ -172,17 +172,10 @@ import type {
   MapMouseEvent,
 } from 'maplibre-gl';
 import type GeoJSON from 'geojson';
-import {
-  GetCalloutDataWith,
-  GetCalloutResponseMapData,
-} from '../../../utils/api/api.interface';
-import { fetchResponsesForMap } from '../../../utils/api/callout';
-import PageTitle from '../../../components/PageTitle.vue';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
 import 'vue-maplibre-gl/dist/vue-maplibre-gl.css';
-import CalloutShowResponsePanel from '../../../components/pages/callouts/CalloutShowResponsePanel.vue';
-import CalloutIntroPanel from '../../../components/pages/callouts/CalloutIntroPanel.vue';
+
 import {
   CalloutResponseAnswerAddress,
   CalloutResponseAnswers,
@@ -194,22 +187,31 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useI18n } from 'vue-i18n';
 import { GeocodingControl } from '@maptiler/geocoding-control/maplibregl';
+import '@maptiler/geocoding-control/style.css';
+import { GeocodingFeature } from '@maptiler/client';
+
+import PageTitle from '@components/PageTitle.vue';
+import CalloutShowResponsePanel from '@components/pages/callouts/CalloutShowResponsePanel.vue';
+import CalloutIntroPanel from '@components/pages/callouts/CalloutIntroPanel.vue';
+import CalloutAddResponsePanel from '@components/pages/callouts/CalloutAddResponsePanel.vue';
 import {
   HASH_PREFIX,
   useCallout,
-} from '../../../components/pages/callouts/use-callout';
+} from '@components/pages/callouts/use-callout';
+
 import {
   GeocodeResult,
   featureToAddress,
   reverseGeocode,
   formatGeocodeResult,
-} from '../../../utils/geocode';
-import CalloutAddResponsePanel from '../../../components/pages/callouts/CalloutAddResponsePanel.vue';
+} from '@utils/geocode';
+import { fetchResponsesForMap } from '@utils/api/callout';
+
 import env from '../../../env';
 
-import '@maptiler/geocoding-control/style.css';
-import { GeocodingFeature } from '@maptiler/client';
-import { generalContent, isEmbed } from '../../../store';
+import { generalContent, isEmbed } from '@store';
+
+import type { GetCalloutDataWith, GetCalloutResponseMapData } from '@type';
 
 type GetCalloutResponseMapDataWithAddress = GetCalloutResponseMapData & {
   address: CalloutResponseAnswerAddress;

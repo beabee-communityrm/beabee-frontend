@@ -244,13 +244,6 @@ import App2ColGrid from '@components/App2ColGrid.vue';
 import CalloutForm from '@components/pages/callouts/CalloutForm.vue';
 
 import {
-  GetContactData,
-  GetContactDataWith,
-  ContactRoleData,
-  GetCalloutDataWith,
-  GetCalloutResponseDataWith,
-} from '@utils/api/api.interface';
-import {
   deleteRole,
   fetchContact,
   updateContact,
@@ -264,7 +257,15 @@ import { fetchCallout, fetchResponses } from '@utils/api/callout';
 
 import { addNotification } from '@store/notifications';
 
-import env from '../../../../env';
+import env from '@env';
+
+import type {
+  GetContactData,
+  GetContactDataWith,
+  ContactRoleData,
+  GetCalloutDataWith,
+  GetCalloutResponseDataWith,
+} from '@type';
 
 const { t, n } = useI18n();
 

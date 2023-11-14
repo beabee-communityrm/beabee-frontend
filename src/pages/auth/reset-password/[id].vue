@@ -87,18 +87,21 @@ meta:
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
-import AppInput from '../../../components/forms/AppInput.vue';
-import AppButton from '../../../components/button/AppButton.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
-import { resetPassword } from '../../../utils/api/auth';
-import { updateCurrentUser } from '../../../store';
-import { isInternalUrl } from '../../../utils';
-import AppNotification from '../../../components/AppNotification.vue';
-import { addNotification } from '../../../store/notifications';
-import AppTitle from '../../../components/AppTitle.vue';
-import AuthBox from '../../../components/AuthBox.vue';
+
+import AppInput from '@components/forms/AppInput.vue';
+import AppButton from '@components/button/AppButton.vue';
+import AppNotification from '@components/AppNotification.vue';
+import AppTitle from '@components/AppTitle.vue';
+import AuthBox from '@components/AuthBox.vue';
+
+import ResetSecurityFlowService from '@utils/api/reset-security-flow.service';
+import { isInternalUrl } from '@utils/index';
+
+import { updateCurrentUser } from '@store/index';
+import { addNotification } from '@store/notifications';
 
 const props = withDefaults(
   defineProps<{
@@ -126,8 +129,9 @@ async function handleSubmit() {
   hasError.value = false;
 
   try {
-    await resetPassword(data.password, props.id);
+    await ResetSecurityFlowService.resetDeviceComplete(data.password, props.id);
     await updateCurrentUser();
+
     if (isInternalUrl(redirectTo)) {
       // TODO: use router when legacy app is gone
       window.location.href = redirectTo;

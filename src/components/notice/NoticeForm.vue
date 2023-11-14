@@ -60,11 +60,13 @@
 import { format } from 'date-fns';
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { CreateNoticeData, GetNoticeData } from '../../utils/api/api.interface';
-import AppForm from '../forms/AppForm.vue';
-import AppInput from '../forms/AppInput.vue';
-import AppLabel from '../forms/AppLabel.vue';
-import { NoticeFormData } from './notice.interface';
+
+import AppForm from '@components/forms/AppForm.vue';
+import AppInput from '@components/forms/AppInput.vue';
+import AppLabel from '@components/forms/AppLabel.vue';
+
+import type { NoticeFormData } from './notice.interface';
+import type { CreateNoticeData, GetNoticeData } from '@type';
 
 defineEmits(['submit']);
 const props = defineProps<{ notice: GetNoticeData | undefined }>();

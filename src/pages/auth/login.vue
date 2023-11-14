@@ -104,13 +104,14 @@ import AppTitle from '@components/AppTitle.vue';
 import AuthBox from '@components/AuthBox.vue';
 
 import { isInternalUrl } from '@utils/index';
-import { LoginData } from '@utils/api/api.interface';
 import { login } from '@utils/api/auth';
 import { isRequestError } from '@utils/api/index';
 
 import { updateCurrentUser } from '@store/index';
 
 import { LOGIN_CODES } from '@enums/login-codes';
+
+import { LoginData } from '@type';
 
 const { t } = useI18n();
 

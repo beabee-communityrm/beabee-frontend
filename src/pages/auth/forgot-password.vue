@@ -66,7 +66,7 @@ import AppButton from '../../components/button/AppButton.vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import { reactive, ref } from 'vue';
-import { forgotPassword } from '../../utils/api/auth';
+import ResetSecurityFlowService from '../../utils/api/reset-security-flow.service';
 import AppTitle from '../../components/AppTitle.vue';
 import AuthBox from '../../components/AuthBox.vue';
 
@@ -83,13 +83,11 @@ const validation = useVuelidate();
 
 const submitForgotPassword = async () => {
   loading.value = true;
-  forgotPassword(forgotPasswordData.email)
-    .then(() => {
-      isRequestSuccessful.value = true;
-    })
-    .catch((err) => err)
-    .finally(() => {
-      loading.value = false;
-    });
+  try {
+    await ResetSecurityFlowService.resetPasswordBegin(forgotPasswordData.email);
+    isRequestSuccessful.value = true;
+  } finally {
+    loading.value = false;
+  }
 };
 </script>

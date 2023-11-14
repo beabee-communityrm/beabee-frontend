@@ -22,14 +22,26 @@ export default ({ command, mode }) => {
 
   // Keep this in sync with tsconfig.json -> compilerOptions.paths
   const alias = {
-    '@components': `${path.resolve(__dirname, './src/components')}/`,
-    '@layouts': `${path.resolve(__dirname, './src/layouts')}/`,
-    '@lib': `${path.resolve(__dirname, './src/lib')}/`,
-    '@pages': `${path.resolve(__dirname, './src/pages')}/`,
-    '@store': `${path.resolve(__dirname, './src/store')}/`,
-    '@type': `${path.resolve(__dirname, './src/types')}/`,
-    '@utils': `${path.resolve(__dirname, './src/utils')}/`,
-    '@enums': `${path.resolve(__dirname, './src/enums')}/`,
+    '@components/': `${path.resolve(__dirname, './src/components')}/`,
+    '@layouts/': `${path.resolve(__dirname, './src/layouts')}/`,
+    '@lib/': `${path.resolve(__dirname, './src/lib')}/`,
+    '@pages/': `${path.resolve(__dirname, './src/pages')}/`,
+    '@store/': `${path.resolve(__dirname, './src/store')}/`,
+    '@type/': `${path.resolve(__dirname, './src/types')}/`,
+    '@utils/': `${path.resolve(__dirname, './src/utils')}/`,
+    '@enums/': `${path.resolve(__dirname, './src/enums')}/`,
+
+    '@components': `${path.resolve(__dirname, './src/components/index')}`,
+    '@layouts': `${path.resolve(__dirname, './src/layouts/index')}`,
+    '@lib': `${path.resolve(__dirname, './src/lib/index')}`,
+    '@pages': `${path.resolve(__dirname, './src/pages/index')}`,
+    '@store': `${path.resolve(__dirname, './src/store/index')}`,
+    '@type': `${path.resolve(__dirname, './src/types/index')}`,
+    '@utils': `${path.resolve(__dirname, './src/utils/index')}`,
+    '@enums': `${path.resolve(__dirname, './src/enums/index')}`,
+
+    '@env': `${path.resolve(__dirname, './src/env')}`,
+    '@assets': `${path.resolve(__dirname, './src/assets')}`,
   };
 
   // Use environment variables when developing locally

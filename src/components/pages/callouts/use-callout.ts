@@ -1,7 +1,9 @@
 import { ItemStatus } from '@beabee/beabee-common';
 import { Ref, computed } from 'vue';
-import { GetCalloutData } from '../../../utils/api/api.interface';
-import { currentUser } from '../../../store';
+
+import { currentUser } from '@store';
+
+import { GetCalloutData } from '@type';
 
 export const HASH_PREFIX = '#response-' as const;
 

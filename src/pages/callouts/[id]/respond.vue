@@ -8,8 +8,8 @@ meta:
   <CalloutPage :callout="callout" respond />
 </template>
 <script lang="ts" setup>
-import { GetCalloutDataWith } from '../../../utils/api/api.interface';
 import CalloutPage from './index.vue';
+import type { GetCalloutDataWith } from '@type';
 defineProps<{
   callout: GetCalloutDataWith<'form' | 'responseViewSchema'>;
 }>();

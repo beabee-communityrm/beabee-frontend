@@ -1,12 +1,12 @@
 import axios from '../../lib/axios';
-import {
+import type {
   CreateSegmentData,
   GetSegmentData,
   GetSegmentDataWith,
   GetSegmentWith,
   Serial,
   UpdateSegmentData,
-} from './api.interface';
+} from '@type';
 
 export async function fetchSegments<With extends GetSegmentWith = void>(
   _with?: readonly With[]

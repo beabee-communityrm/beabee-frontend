@@ -2,12 +2,13 @@ import { Paginated } from '@beabee/beabee-common';
 import { deserializeDate } from '.';
 
 import axios from '../../lib/axios';
-import {
+
+import type {
   CreateNoticeData,
   GetNoticeData,
   GetNoticesQuery,
   Serial,
-} from './api.interface';
+} from '@type';
 
 function deserializeNotice(notice: Serial<GetNoticeData>): GetNoticeData {
   return {

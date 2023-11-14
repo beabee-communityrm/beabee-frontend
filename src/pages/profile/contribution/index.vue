@@ -71,19 +71,24 @@ import {
 import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import ContributionBox from '../../../components/pages/profile/contribution/ContributionBox.vue';
-import ContactCancelContribution from '../../../components/contact/ContactCancelContribution.vue';
-import PaymentSource from '../../../components/pages/profile/contribution/PaymentSource.vue';
-import PageTitle from '../../../components/PageTitle.vue';
-import ContactPaymentsHistory from '../../../components/contact/ContactPaymentsHistory.vue';
-import { currentUser } from '../../../store';
-import UpdateContribution from '../../../components/pages/profile/contribution/UpdateContribution.vue';
-import { ContributionInfo } from '../../../utils/api/api.interface';
-import { fetchContribution } from '../../../utils/api/contact';
-import { ContributionContent } from '../../../components/contribution/contribution.interface';
-import { fetchContent } from '../../../utils/api/content';
-import App2ColGrid from '../../../components/App2ColGrid.vue';
-import AppNotification from '../../../components/AppNotification.vue';
+
+import ContributionBox from '@components/pages/profile/contribution/ContributionBox.vue';
+import ContactCancelContribution from '@components/contact/ContactCancelContribution.vue';
+import PaymentSource from '@components/pages/profile/contribution/PaymentSource.vue';
+import PageTitle from '@components/PageTitle.vue';
+import ContactPaymentsHistory from '@components/contact/ContactPaymentsHistory.vue';
+import UpdateContribution from '@components/pages/profile/contribution/UpdateContribution.vue';
+import { ContributionContent } from '@components/contribution/contribution.interface';
+
+import { fetchContribution } from '@utils/api/contact';
+import { fetchContent } from '@utils/api/content';
+
+import App2ColGrid from '@components/App2ColGrid.vue';
+import AppNotification from '@components/AppNotification.vue';
+
+import { currentUser } from '@store';
+
+import type { ContributionInfo } from '@type';
 
 const { t } = useI18n();
 const route = useRoute();

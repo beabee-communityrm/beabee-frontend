@@ -85,13 +85,12 @@ import {
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { computed, ref, watch } from 'vue';
-import {
-  GetCalloutDataWith,
-  GetCalloutResponseMapData,
-} from '../../../utils/api/api.interface';
+
 import CalloutSidePanel from './CalloutSidePanel.vue';
 import CalloutForm from './CalloutForm.vue';
 import { filterComponents } from '@beabee/beabee-common';
+
+import type { GetCalloutDataWith, GetCalloutResponseMapData } from '@type';
 
 defineEmits<(e: 'close') => void>();
 const props = defineProps<{

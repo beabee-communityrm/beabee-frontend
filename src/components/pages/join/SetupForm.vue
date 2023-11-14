@@ -55,15 +55,19 @@ import { NewsletterStatus } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { computed, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { JoinSetupContent } from '../../../utils/api/api.interface';
-import AppAddress from '../../AppAddress.vue';
-import ContactBasicFields from '../../contact/ContactBasicFields.vue';
-import ContactMailOptIn from '../../contact/ContactMailOptIn.vue';
-import { fetchContact } from '../../../utils/api/contact';
+
+import AppAddress from '@components/AppAddress.vue';
+import ContactBasicFields from '@components/contact/ContactBasicFields.vue';
+import ContactMailOptIn from '@components/contact/ContactMailOptIn.vue';
+import AppOptIn from '@components/AppOptIn.vue';
+import AppForm from '@components/forms/AppForm.vue';
+import AuthBox from '@components/AuthBox.vue';
+
 import { SetupContactData } from './join.interface';
-import AppOptIn from '../../AppOptIn.vue';
-import AppForm from '../../forms/AppForm.vue';
-import AuthBox from '../../AuthBox.vue';
+
+import { fetchContact } from '@utils/api/contact';
+
+import type { JoinSetupContent } from '@type';
 
 const props = defineProps<{
   setupContent: JoinSetupContent;

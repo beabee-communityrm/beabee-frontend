@@ -2,15 +2,16 @@ import { Paginated, RuleGroup } from '@beabee/beabee-common';
 import axios from '../../lib/axios';
 import { deserializeDate } from '.';
 import { deserializeContact } from './contact';
-import {
+import { deserializeComment } from './callout-response-comments';
+
+import type {
   GetCalloutResponseWith,
   GetCalloutResponsesQuery,
   GetCalloutResponseDataWith,
   Serial,
   UpdateCalloutResponseData,
   GetCalloutResponseData,
-} from './api.interface';
-import { deserializeComment } from './callout-response-comments';
+} from '@type';
 
 // TODO: how to make this type safe?
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

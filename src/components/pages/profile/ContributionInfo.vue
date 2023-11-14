@@ -19,10 +19,13 @@
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
-import { formatLocale } from '../../../utils/dates';
-import { GetContactData } from '../../../utils/api/api.interface';
-import AppInfoList from '../../AppInfoList.vue';
-import AppInfoListItem from '../../AppInfoListItem.vue';
+
+import AppInfoList from '@components/AppInfoList.vue';
+import AppInfoListItem from '@components/AppInfoListItem.vue';
+
+import { formatLocale } from '@utils/dates';
+
+import type { GetContactData } from '@type';
 
 const { t, n } = useI18n();
 

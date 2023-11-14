@@ -67,20 +67,24 @@ import useVuelidate from '@vuelidate/core';
 import { computed, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-import App2ColGrid from '../../../components/App2ColGrid.vue';
-import AppHeading from '../../../components/AppHeading.vue';
-import { UpdateContribution } from '../../../components/contact/contact.interface';
-import ContactBasicFields from '../../../components/contact/ContactBasicFields.vue';
-import ContactContributionFields from '../../../components/contact/ContactContributionFields.vue';
-import AppButton from '../../../components/button/AppButton.vue';
-import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
-import AppForm from '../../../components/forms/AppForm.vue';
-import PageTitle from '../../../components/PageTitle.vue';
-import RoleEditor from '../../../components/role/RoleEditor.vue';
-import { addBreadcrumb } from '../../../store/breadcrumb';
-import { ContactRoleData } from '../../../utils/api/api.interface';
-import { createContact } from '../../../utils/api/contact';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
+
+import App2ColGrid from '@components/App2ColGrid.vue';
+import AppHeading from '@components/AppHeading.vue';
+import { UpdateContribution } from '@components/contact/contact.interface';
+import ContactBasicFields from '@components/contact/ContactBasicFields.vue';
+import ContactContributionFields from '@components/contact/ContactContributionFields.vue';
+import AppButton from '@components/button/AppButton.vue';
+import AppCheckbox from '@components/forms/AppCheckbox.vue';
+import AppForm from '@components/forms/AppForm.vue';
+import PageTitle from '@components/PageTitle.vue';
+import RoleEditor from '@components/role/RoleEditor.vue';
+
+import { addBreadcrumb } from '@store/breadcrumb';
+
+import { createContact } from '@utils/api/contact';
+
+import type { ContactRoleData } from '@type';
 
 const { t } = useI18n();
 const router = useRouter();

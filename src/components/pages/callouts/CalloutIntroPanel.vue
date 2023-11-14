@@ -14,11 +14,13 @@
 </template>
 
 <script lang="ts" setup>
-import { GetCalloutDataWith } from '../../../utils/api/api.interface';
-import CalloutSidePanel from './CalloutSidePanel.vue';
-import AppTitle from '../../AppTitle.vue';
-import AppButton from '../../button/AppButton.vue';
 import { useI18n } from 'vue-i18n';
+
+import CalloutSidePanel from './CalloutSidePanel.vue';
+import AppTitle from '@components/AppTitle.vue';
+import AppButton from '@components/button/AppButton.vue';
+
+import type { GetCalloutDataWith } from '@type';
 
 defineEmits<{ (e: 'close'): void }>();
 defineProps<{ callout: GetCalloutDataWith<'form'>; show: boolean }>();
