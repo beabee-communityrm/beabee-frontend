@@ -1,12 +1,8 @@
 {
   "singleQuotes": true,
-  "noSemicolon": true,
+  "noSemicolon": false,
   "verbose": false,
   "delete": true,
   "local": true,
-  "directory": [
-    "./src/type",
-    "./src/enums",
-    "./src/lib"
-  ]
+  "directory": ["./src/type", "./src/enums", "./src/lib"]
 }

@@ -16,7 +16,7 @@ meta:
 
         <div class="mb-4">
           <AppInput
-            v-model="forgotPasswordData.email"
+            v-model="email"
             type="email"
             name="email"
             :label="t('form.email')"
@@ -45,7 +45,7 @@ meta:
         <p class="mb-5 rounded bg-primary-10 p-4">
           <i18n-t keypath="forgotPassword.message">
             <template #email>
-              <b>{{ forgotPasswordData.email }}</b>
+              <b>{{ email }}</b>
             </template>
           </i18n-t>
           <br />
@@ -61,31 +61,61 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import AppInput from '../../components/forms/AppInput.vue';
-import AppButton from '../../components/button/AppButton.vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
-import { reactive, ref } from 'vue';
-import ResetSecurityFlowService from '../../utils/api/reset-security-flow.service';
-import AppTitle from '../../components/AppTitle.vue';
-import AuthBox from '../../components/AuthBox.vue';
+import { ref } from 'vue';
+
+import AppInput from '@components/forms/AppInput.vue';
+import AppButton from '@components/button/AppButton.vue';
+import AppTitle from '@components/AppTitle.vue';
+import AuthBox from '@components/AuthBox.vue';
+
+import ResetSecurityFlowService from '@utils/api/reset-security-flow.service';
+import { isRequestError } from '@utils/api';
+
+import { RESET_SECURITY_FLOW_ERROR_CODE } from '@enums/reset-security-flow-error-code';
 
 const { t } = useI18n();
 
 const loading = ref(false);
 const isRequestSuccessful = ref(false);
 
-const forgotPasswordData = reactive({
-  email: '',
-});
+const props = withDefaults(
+  defineProps<{
+    email: string;
+  }>(),
+  {
+    email: '',
+  }
+);
+
+const email = ref(props.email);
 
 const validation = useVuelidate();
+
+const onError = (err: unknown) => {
+  // Forbidden errors
+  if (isRequestError(err, undefined, 403)) {
+    if (
+      err.response?.data?.code ===
+      RESET_SECURITY_FLOW_ERROR_CODE.OTHER_ACTIVE_FLOW
+    ) {
+      // TODO: Show error message
+      return;
+    }
+  }
+
+  // Unknown / unhanded errors
+  throw err;
+};
 
 const submitForgotPassword = async () => {
   loading.value = true;
   try {
-    await ResetSecurityFlowService.resetPasswordBegin(forgotPasswordData.email);
+    await ResetSecurityFlowService.resetPasswordBegin(email.value);
     isRequestSuccessful.value = true;
+  } catch (err) {
+    onError(err);
   } finally {
     loading.value = false;
   }

@@ -11,10 +11,17 @@ meta:
 </route>
 
 <template>
-  <LostDevicePage :email="email || ''" />
+  <LostDevicePage :email="email" />
 </template>
 
 <script lang="ts" setup>
 import LostDevicePage from './[email].vue';
-defineProps<{ email: string }>();
+withDefaults(
+  defineProps<{
+    email: string;
+  }>(),
+  {
+    email: '',
+  }
+);
 </script>

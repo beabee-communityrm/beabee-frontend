@@ -120,7 +120,7 @@ const redirectTo = route.query.next as string | undefined;
 
 const loading = ref(false);
 const hasError = ref(false);
-const data = reactive({ password: '', repeatPassword: '' });
+const data = reactive({ password: '', repeatPassword: '', token: '' });
 
 const validation = useVuelidate();
 
@@ -129,7 +129,11 @@ async function handleSubmit() {
   hasError.value = false;
 
   try {
-    await ResetSecurityFlowService.resetDeviceComplete(data.password, props.id);
+    await ResetSecurityFlowService.resetPasswordComplete(
+      props.id,
+      data.password,
+      data.token || undefined
+    );
     await updateCurrentUser();
 
     if (isInternalUrl(redirectTo)) {

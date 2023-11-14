@@ -98,10 +98,7 @@ async function handleSubmit() {
   hasError.value = false;
 
   try {
-    await ResetSecurityFlowService.resetPasswordComplete(
-      data.password,
-      props.id
-    );
+    await ResetSecurityFlowService.resetDeviceComplete(props.id, data.password);
     await updateCurrentUser();
     if (isInternalUrl(redirectTo)) {
       // TODO: use router when legacy app is gone

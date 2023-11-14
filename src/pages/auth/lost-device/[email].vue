@@ -65,23 +65,51 @@ import AppTitle from '@components/AppTitle.vue';
 import AuthBox from '@components/AuthBox.vue';
 
 import ResetSecurityFlow from '@utils/api/reset-security-flow.service';
+import { isRequestError } from '@utils/api';
+
+import { RESET_SECURITY_FLOW_ERROR_CODE } from '@enums/reset-security-flow-error-code';
 
 const { t } = useI18n();
 
 const loading = ref(false);
 const isRequestSuccessful = ref(false);
 
-const props = defineProps<{
-  email: string;
-}>();
+const props = withDefaults(
+  defineProps<{
+    email: string;
+  }>(),
+  {
+    email: '',
+  }
+);
 
 const email = ref(props.email);
 
 const validation = useVuelidate();
 
+const onError = (err: unknown) => {
+  // Forbidden errors
+  if (isRequestError(err, undefined, 403)) {
+    if (
+      err.response?.data?.code ===
+      RESET_SECURITY_FLOW_ERROR_CODE.OTHER_ACTIVE_FLOW
+    ) {
+      // TODO: Show error message
+      return;
+    }
+  }
+
+  // Unknown / unhanded errors
+  throw err;
+};
+
 const submitLostDevice = async () => {
   loading.value = true;
-  await ResetSecurityFlow.resetDeviceBegin(email.value);
+  try {
+    await ResetSecurityFlow.resetDeviceBegin(email.value);
+  } catch (error) {
+    onError(error);
+  }
 
   isRequestSuccessful.value = true;
   loading.value = false;
