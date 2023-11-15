@@ -57,7 +57,7 @@ async function loadEmail(id: string): Promise<GetEmailData | false> {
   try {
     return await fetchEmail(id);
   } catch (err) {
-    if (isRequestError(err, 'external-email-template')) {
+    if (isRequestError(err, ['external-email-template'])) {
       return false;
     }
     return { body: '', subject: '' };

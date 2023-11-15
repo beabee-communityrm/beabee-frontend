@@ -45,8 +45,21 @@ meta:
         />
       </div>
 
+      <div class="mb-3">
+        <AppInput
+          v-if="hasMFAEnabled"
+          v-model="data.token"
+          type="text"
+          name="verifyCode"
+          required
+          min="6"
+          max="6"
+          :label="t('accountPage.mfa.codeInput.label')"
+        />
+      </div>
+
       <AppNotification
-        v-if="hasError"
+        v-if="hasError && !errorCode"
         variant="error"
         class="mb-4"
         :title="t('resetPassword.errorTitle')"
@@ -60,6 +73,15 @@ meta:
             </template>
           </i18n-t>
         </p>
+      </AppNotification>
+
+      <AppNotification
+        v-if="hasError && errorCode"
+        variant="error"
+        class="mb-4"
+        :title="t('resetPassword.errorTitle')"
+      >
+        <p>{{ t('resetPassword.errors.' + errorCode) }}</p>
       </AppNotification>
 
       <AppButton
@@ -86,7 +108,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, toRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
@@ -99,9 +121,12 @@ import AuthBox from '@components/AuthBox.vue';
 
 import ResetSecurityFlowService from '@utils/api/reset-security-flow.service';
 import { isInternalUrl } from '@utils/index';
+import { isRequestError } from '@utils/api';
 
 import { updateCurrentUser } from '@store/index';
 import { addNotification } from '@store/notifications';
+
+import { RESET_SECURITY_FLOW_ERROR_CODE } from '@enums/reset-security-flow-error-code';
 
 const props = withDefaults(
   defineProps<{
@@ -119,10 +144,29 @@ const router = useRouter();
 const redirectTo = route.query.next as string | undefined;
 
 const loading = ref(false);
+const errorCode = ref(RESET_SECURITY_FLOW_ERROR_CODE.NONE);
 const hasError = ref(false);
+const hasMFAEnabled = ref(false);
 const data = reactive({ password: '', repeatPassword: '', token: '' });
 
 const validation = useVuelidate();
+
+const onError = (err: unknown) => {
+  if (isRequestError(err, undefined, [401, 403])) {
+    const code = err.response?.data?.code;
+    if (
+      code === RESET_SECURITY_FLOW_ERROR_CODE.MFA_TOKEN_REQUIRED ||
+      code === RESET_SECURITY_FLOW_ERROR_CODE.INVALID_TOKEN
+    ) {
+      errorCode.value = code as RESET_SECURITY_FLOW_ERROR_CODE;
+      hasMFAEnabled.value = true;
+      return;
+    }
+  }
+
+  // Unknown / unhanded errors
+  throw err;
+};
 
 async function handleSubmit() {
   loading.value = true;
@@ -147,7 +191,10 @@ async function handleSubmit() {
       router.push({ path: '/' });
     }
   } catch (err) {
+    onError(err);
     hasError.value = true;
+    loading.value = false;
+    return;
   }
 
   loading.value = false;

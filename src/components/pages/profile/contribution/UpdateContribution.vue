@@ -207,7 +207,7 @@ async function handleUpdate() {
       title: t('contribution.updatedContribution'),
     });
   } catch (err) {
-    if (isRequestError(err, 'cant-update-contribution')) {
+    if (isRequestError(err, ['cant-update-contribution'])) {
       cantUpdate.value = true;
     }
   }

@@ -932,6 +932,10 @@
     "backToLogin": "Zurück zum Login",
     "checkInbox": "Bitte schaue in deinen Posteingang und befolge die Anleitung in der E-Mail. Sollte die E-mail nicht auftauchen, checke deinen Spamordner. ",
     "description": "Bitte gib deine E-Mail-Adresse ein. Wir schicken dir dann die Anleitung zum Zurücksetzen deines Passworts.",
+    "errorTitle": "Fehler beim Zurücksetzen des Passworts",
+    "errors": {
+      "other-active-flow": "Du hast bereits das Zurücksetzen deiner 2-Faktor-Authentifizierung beantragt. Bitte schließe dies zuerst ab, um auch dein Passwort zurücksetzen zu können."
+    },
     "message": "Gibt es einen Account mit der E-mail-Adresse {email}, bekommst du in Kürze eine Nachricht.",
     "resetPassword": "Passwort zurücksetzen",
     "title": "Passwort vergessen?"
@@ -1126,6 +1130,10 @@
   "lostDevice": {
     "description": "Bitte gib deine E-Mail-Adresse ein, und wir senden dir Anweisungen, wie du dein 2FA zurücksetzen kannst.",
     "emailSent": "Wir haben dir eine E-Mail mit Anweisungen zum Zurücksetzen deines 2FA geschickt. Bitte checke dein Postfach.",
+    "errorTitle": "Fehler beim Zurücksetzen des Zweitgeräts",
+    "errors": {
+      "other-active-flow": "Du hast bereits das Zurücksetzen deines Passwortes beantragt. Bitte \nschließe dies zuerst ab, um auch dein Zweitgerät zurücksetzen zu können."
+    },
     "resetDevice": "Gerät zurücksetzen",
     "title": "Du hast dein 2FA-Gerät verloren?"
   },
@@ -1234,6 +1242,7 @@
     "login": "Login",
     "lostDevice": "Du hast dein 2FA-Gerät verloren?",
     "notFound": "Seite nicht gefunden",
+    "resetDevice": "Zweitgerät zurücksetzen",
     "resetPassword": "Passwort zurücksetzen",
     "setup": "Account fertigstellen"
   },
@@ -1296,6 +1305,10 @@
     "errorLink": "einen neuen Link anfordern",
     "errorText": "Der Link scheint abgelaufen zu sein. Du kannst {newLink}.",
     "errorTitle": "Das Zurücksetzen des Passworts ist schiefgelaufen.",
+    "errors": {
+      "invalid-token": "Leider stimmt der von dir eingegebene 2-Faktor-Authentifizierungs-Token nicht.",
+      "mfa-token-required": "Du hast die 2-Faktor-Authentifizierung aktiviert, du brauchst daher den \nToken aus deiner Authentifizierungs-App, um dein Passwort \nzurückzusetzen. Bitte gib diesen ein."
+    },
     "login": "Einloggen",
     "newPassword": "Neues Passwort",
     "success": "Dein Passwort wurde aktualisiert.",

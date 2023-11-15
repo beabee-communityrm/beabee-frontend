@@ -934,6 +934,10 @@
     "backToLogin": "Back to login page",
     "checkInbox": "Please check your inbox and follow the instructions in the email. Check your spam folder if it doesn't appear.",
     "description": "Please enter your email address and we’ll send you password reset instructions.",
+    "errorTitle": "Error in Password Reset",
+    "errors": {
+      "other-active-flow": "You have already requested to reset your 2-factor authentication. Please complete this process before attempting to reset your password."
+    },
     "message": "If there is an account associated with {email}, you will receive an email shortly.",
     "resetPassword": "Reset your password",
     "title": "Forgot your password?"
@@ -1128,6 +1132,10 @@
   "lostDevice": {
     "description": "Please enter your email address, and we will send you instructions on how to reset your 2FA.",
     "emailSent": "We've sent an email with instructions to reset your 2FA. Please check your inbox.",
+    "errorTitle": "Error in Secondary Device Reset",
+    "errors": {
+      "other-active-flow": "You have already requested a password reset. Please complete this process first before attempting to reset your secondary device."
+    },
     "resetDevice": "Reset Device",
     "title": "Lost your 2FA device?"
   },
@@ -1236,6 +1244,7 @@
     "login": "Login",
     "lostDevice": "Lost your 2FA device?",
     "notFound": "Page not found",
+    "resetDevice": "Reset Secondary Device",
     "resetPassword": "Reset password",
     "setup": "Setup"
   },
@@ -1298,6 +1307,10 @@
     "errorLink": "request another link",
     "errorText": "The link might have expired, you could {newLink}.",
     "errorTitle": "Password reset failed",
+    "errors": {
+      "invalid-token": "Unfortunately, the 2-factor authentication token you entered does not match.",
+      "mfa-token-required": "You have 2-factor authentication enabled, so you need the token from your authentication app to reset your password. Please enter it."
+    },
     "login": "Login to your account",
     "newPassword": "New password",
     "success": "Your password has been reset.",

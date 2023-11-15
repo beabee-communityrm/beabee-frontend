@@ -150,7 +150,7 @@ async function submitLogin() {
     // TODO: use router when legacy app is gone
     window.location.href = isInternalUrl(redirectTo) ? redirectTo : '/';
   } catch (err) {
-    if (isRequestError(err, undefined, 401)) {
+    if (isRequestError(err, undefined, [401])) {
       if (err.response?.data?.code === LOGIN_CODES.REQUIRES_2FA) {
         hasMFAEnabled.value = true;
       } else if (err.response?.data?.code === LOGIN_CODES.INVALID_TOKEN) {

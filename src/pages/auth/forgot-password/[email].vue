@@ -24,6 +24,15 @@ meta:
           />
         </div>
 
+        <AppNotification
+          v-if="errorCode"
+          variant="error"
+          class="mb-4"
+          :title="t('forgotPassword.errorTitle')"
+        >
+          <p>{{ t('forgotPassword.errors.' + errorCode) }}</p>
+        </AppNotification>
+
         <AppButton
           variant="link"
           :disabled="validation.$invalid || loading"
@@ -69,6 +78,7 @@ import AppInput from '@components/forms/AppInput.vue';
 import AppButton from '@components/button/AppButton.vue';
 import AppTitle from '@components/AppTitle.vue';
 import AuthBox from '@components/AuthBox.vue';
+import AppNotification from '@components/AppNotification.vue';
 
 import ResetSecurityFlowService from '@utils/api/reset-security-flow.service';
 import { isRequestError } from '@utils/api';
@@ -78,6 +88,7 @@ import { RESET_SECURITY_FLOW_ERROR_CODE } from '@enums/reset-security-flow-error
 const { t } = useI18n();
 
 const loading = ref(false);
+const errorCode = ref(RESET_SECURITY_FLOW_ERROR_CODE.NONE);
 const isRequestSuccessful = ref(false);
 
 const props = withDefaults(
@@ -90,17 +101,13 @@ const props = withDefaults(
 );
 
 const email = ref(props.email);
-
 const validation = useVuelidate();
 
 const onError = (err: unknown) => {
-  // Forbidden errors
-  if (isRequestError(err, undefined, 403)) {
-    if (
-      err.response?.data?.code ===
-      RESET_SECURITY_FLOW_ERROR_CODE.OTHER_ACTIVE_FLOW
-    ) {
-      // TODO: Show error message
+  if (isRequestError(err, undefined, [403])) {
+    const code = err.response?.data?.code;
+    if (code === RESET_SECURITY_FLOW_ERROR_CODE.OTHER_ACTIVE_FLOW) {
+      errorCode.value = code as RESET_SECURITY_FLOW_ERROR_CODE;
       return;
     }
   }
@@ -111,11 +118,14 @@ const onError = (err: unknown) => {
 
 const submitForgotPassword = async () => {
   loading.value = true;
+  errorCode.value = RESET_SECURITY_FLOW_ERROR_CODE.NONE;
   try {
     await ResetSecurityFlowService.resetPasswordBegin(email.value);
     isRequestSuccessful.value = true;
   } catch (err) {
     onError(err);
+    loading.value = false;
+    return;
   } finally {
     loading.value = false;
   }

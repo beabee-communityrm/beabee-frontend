@@ -403,7 +403,7 @@ const disableMfaAndNotify = async () => {
 /** Called when an error occurs while creating MFA */
 const onCreateError = (error: unknown) => {
   if (
-    isRequestError<ContactMfaCreateApiErrorData>(error, undefined, 401) &&
+    isRequestError<ContactMfaCreateApiErrorData>(error, undefined, [401]) &&
     error.response.data.message === LOGIN_CODES.INVALID_TOKEN
   ) {
     // If server says the token is invalid, set the token as invalid and go to the previous slide
@@ -422,7 +422,7 @@ const onCreateError = (error: unknown) => {
 
 const onDeleteError = (error: unknown) => {
   if (
-    isRequestError<ContactMfaDeleteApiErrorData>(error, undefined, 403) &&
+    isRequestError<ContactMfaDeleteApiErrorData>(error, undefined, [403]) &&
     (error.response.data.code === LOGIN_CODES.INVALID_TOKEN ||
       error.response.data.code === LOGIN_CODES.MISSING_TOKEN)
   ) {

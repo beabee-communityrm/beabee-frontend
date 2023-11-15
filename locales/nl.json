@@ -265,7 +265,12 @@
     "privacyPolicy": "Privacy verklaring",
     "terms": "Algemene voorwaarden"
   },
-  "forgotPassword": {},
+  "forgotPassword": {
+    "errorTitle": "Fout bij het resetten van wachtwoord",
+    "errors": {
+      "other-active-flow": "U heeft al verzocht om uw tweefactorauthenticatie opnieuw in te stellen. Voltooi dit proces alstublieft voordat u probeert uw wachtwoord te resetten."
+    }
+  },
   "form": {
     "email": "E-mail",
     "errorMessages": {
@@ -333,6 +338,10 @@
   "lostDevice": {
     "description": "Voer uw e-mailadres in, dan sturen we u instructies om uw 2FA te resetten.",
     "emailSent": "We hebben een e-mail gestuurd met instructies om je 2FA te resetten. Controleer je inbox.",
+    "errorTitle": "Fout bij het resetten van het secundaire apparaat",
+    "errors": {
+      "other-active-flow": "U heeft al een wachtwoordherstel aangevraagd. Voltooi dit proces eerst voordat u probeert uw secundaire apparaat te resetten."
+    },
     "resetDevice": "Apparaat resetten",
     "title": "Bent u uw 2FA-apparaat kwijt?"
   },
@@ -366,7 +375,8 @@
   },
   "pageTitle": {
     "lostDevice": "Bent u uw 2FA-apparaat kwijt?",
-    "notFound": "Pagina niet gevonden"
+    "notFound": "Pagina niet gevonden",
+    "resetDevice": "Secundair Apparaat Resetten"
   },
   "paymentMethods": {
     "gc_direct-debit": {},
@@ -388,7 +398,12 @@
     "success": "Het resetten van het 2FA-apparaat is gelukt.",
     "title": "\"2FA-beveiliging resetten"
   },
-  "resetPassword": {},
+  "resetPassword": {
+    "errors": {
+      "invalid-token": "Helaas komt de ingevoerde token voor tweefactorauthenticatie niet overeen.",
+      "mfa-token-required": "U heeft tweefactorauthenticatie ingeschakeld, dus u heeft de token uit \nuw authenticatie-app nodig om uw wachtwoord te resetten. Voer deze \nalstublieft in."
+    }
+  },
   "reviewerEditor": {
     "confirmDelete": {}
   },

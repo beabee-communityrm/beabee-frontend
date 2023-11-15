@@ -97,7 +97,7 @@ async function handleUpdate() {
     }
   } catch (err) {
     loading.value = false;
-    if (isRequestError(err, 'cant-update-contribution')) {
+    if (isRequestError(err, ['cant-update-contribution'])) {
       cantUpdate.value = true;
     }
   }

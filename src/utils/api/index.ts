@@ -6,12 +6,12 @@ import type { ApiError } from '@type/api-error';
 
 export function isRequestError<T = unknown, D = unknown>(
   err: unknown,
-  code?: string,
-  status = 400
+  codes: string[] = [],
+  status = [400]
 ): err is ApiRequestError<T, D> {
-  if (axios.isAxiosError(err) && err.response?.status === status) {
+  if (axios.isAxiosError(err) && typeof err.response?.status === 'number' && status.includes(err.response.status)) {
     const data = err.response.data as ApiError;
-    return !code || data.code === code;
+    return !codes.length || codes.includes(data.code);
   }
 
   return false;
