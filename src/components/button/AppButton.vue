@@ -12,6 +12,7 @@
     :disabled="disabled || loading"
     :class="buttonClasses"
     :type="type"
+    ref="innerButton"
   >
     <font-awesome-icon v-if="icon" :icon="icon" /><slot />
     <span v-if="loading" class="absolute inset-0 bg-white opacity-30" />
@@ -31,7 +32,7 @@ import {
   faCircleNotch,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
-import { computed } from 'vue';
+import { computed, ref, Ref } from 'vue';
 import { RouteLocationRaw } from 'vue-router';
 
 // Variant classes for [base, hover, loading icon]
@@ -95,6 +96,15 @@ const props = withDefaults(
   }
 );
 
+const innerButton: Ref<HTMLAnchorElement | HTMLButtonElement | null> =
+  ref(null);
+
+const focus = () => {
+  if (innerButton.value) {
+    innerButton.value.focus();
+  }
+};
+
 const buttonClasses = computed(() => {
   return [
     // Base styles
@@ -113,4 +123,10 @@ const buttonClasses = computed(() => {
 });
 
 const loadingIconClasses = computed(() => variantClasses[props.variant][2]);
+
+// Allow to focus the button from outside
+defineExpose({
+  focus,
+  innerButton,
+});
 </script>

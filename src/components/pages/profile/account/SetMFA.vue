@@ -55,6 +55,7 @@
       required
       min="6"
       max="6"
+      @keyup.enter="disableMfaAndNotify()"
       @update:validation="onUserTokenInputValidationChanged"
     />
 
@@ -111,6 +112,7 @@
                 required
                 min="6"
                 max="6"
+                @keyup.enter="nextSlideIfValid()"
                 @update:validation="onUserTokenInputValidationChanged"
               />
 
@@ -180,6 +182,7 @@
               v-if="isLastSlide"
               :disabled="!validationStepsDone"
               variant="link"
+              ref="saveButton"
               @click="createMfaAndNotify()"
             >
               {{ t(`actions.save`) }}
@@ -210,7 +213,16 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, ref, toRef, computed, watch, reactive } from 'vue';
+import {
+  onBeforeMount,
+  ref,
+  toRef,
+  computed,
+  watch,
+  reactive,
+  Ref,
+  nextTick,
+} from 'vue';
 import { useI18n } from 'vue-i18n';
 import { faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import { TOTP, Secret } from 'otpauth';
@@ -254,6 +266,9 @@ const appSliderCo = ref<InstanceType<typeof AppSlider> | null>(null);
 const showMFASettingsModal = ref(false);
 
 const showDisableConfirmModal = ref(false);
+
+/** Reference to the save button */
+const saveButton: Ref<typeof AppButton | null> = ref(null);
 
 /** Is multi factor authentication enabled? */
 const isEnabled = ref(false);
@@ -365,6 +380,7 @@ const disableMfa = async () => {
     return false;
   }
   isEnabled.value = false;
+  disableMfaValidated.value = false;
   resetState();
   return true;
 };
@@ -442,6 +458,15 @@ const onSlideChange = (details: AppSliderSlideEventDetails) => {
   // Reset state if the user goes back to the first slide
   if (details.slideNumber === 0) {
     resetState();
+  }
+
+  // Focus the save button on the last slide, to allow the user to save with enter
+  if (details.slideNumber === stepsInOrder.value.length - 1) {
+    nextTick(() => {
+      if (saveButton.value) {
+        saveButton.value.focus();
+      }
+    });
   }
 
   // Validate previous steps

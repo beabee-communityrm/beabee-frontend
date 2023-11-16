@@ -30,6 +30,7 @@ meta:
           :info-message="t('form.passwordInfo')"
           type="password"
           name="password"
+          autocomplete="new-password"
           required
         />
       </div>
@@ -40,6 +41,7 @@ meta:
           :label="t('resetPassword.confirmPassword')"
           type="password"
           name="confirmPassword"
+          autocomplete="new-password"
           :same-as="data.password"
           required
         />
@@ -76,7 +78,19 @@ meta:
       </AppNotification>
 
       <AppNotification
-        v-if="hasError && errorCode"
+        v-if="errorCode === RESET_SECURITY_FLOW_ERROR_CODE.MFA_TOKEN_REQUIRED"
+        variant="info"
+        class="mb-4"
+        :title="t('resetPassword.errorTitles.' + errorCode)"
+      >
+        <p>{{ t('resetPassword.errors.' + errorCode) }}</p>
+      </AppNotification>
+
+      <AppNotification
+        v-if="
+          errorCode &&
+          errorCode !== RESET_SECURITY_FLOW_ERROR_CODE.MFA_TOKEN_REQUIRED
+        "
         variant="error"
         class="mb-4"
         :title="t('resetPassword.errorTitle')"

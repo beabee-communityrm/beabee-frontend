@@ -395,10 +395,16 @@
     "deleteDevice": "2FA-beveiliging verwijderen",
     "description": "Om de 2FA-beveiliging te verwijderen, voer alstublieft uw wachtwoord in.\n Hierdoor wordt uw huidige 2FA-instellingen gereset en kunt u een nieuw \napparaat instellen.",
     "errorTitle": "Het resetten van het 2FA-apparaat is mislukt",
+    "errors": {
+      "invalid-password": "Het wachtwoord is ongeldig."
+    },
     "success": "Het resetten van het 2FA-apparaat is gelukt.",
     "title": "\"2FA-beveiliging resetten"
   },
   "resetPassword": {
+    "errorTitles": {
+      "mfa-token-required": "2FA-code vereist"
+    },
     "errors": {
       "invalid-token": "Helaas komt de ingevoerde token voor tweefactorauthenticatie niet overeen.",
       "mfa-token-required": "U heeft tweefactorauthenticatie ingeschakeld, dus u heeft de token uit \nuw authenticatie-app nodig om uw wachtwoord te resetten. Voer deze \nalstublieft in."

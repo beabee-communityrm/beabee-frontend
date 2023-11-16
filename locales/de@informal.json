@@ -1295,6 +1295,9 @@
     "errorLink": "einen neuen Link anfordern",
     "errorText": "Der Link scheint abgelaufen zu sein oder dein Passwort ist falsch. Du kannst {newLink}.",
     "errorTitle": "Das Zurücksetzen des 2FA-Geräts hat nicht geklappt",
+    "errors": {
+      "invalid-password": "Das Passwort ist ungültig."
+    },
     "success": "Das Zurücksetzen des 2FA-Geräts hat geklappt.",
     "title": "2FA-Schutz zurücksetzen"
   },
@@ -1305,6 +1308,9 @@
     "errorLink": "einen neuen Link anfordern",
     "errorText": "Der Link scheint abgelaufen zu sein. Du kannst {newLink}.",
     "errorTitle": "Das Zurücksetzen des Passworts ist schiefgelaufen.",
+    "errorTitles": {
+      "mfa-token-required": "2FA-Code benötigt"
+    },
     "errors": {
       "invalid-token": "Leider stimmt der von dir eingegebene 2-Faktor-Authentifizierungs-Token nicht.",
       "mfa-token-required": "Du hast die 2-Faktor-Authentifizierung aktiviert, du brauchst daher den \nToken aus deiner Authentifizierungs-App, um dein Passwort \nzurückzusetzen. Bitte gib diesen ein."

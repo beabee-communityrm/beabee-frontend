@@ -1297,6 +1297,9 @@
     "errorLink": "request another link",
     "errorText": "The link might have expired or your password is wrong, you could {newLink}.",
     "errorTitle": "Resetting the 2FA device was unsuccessful",
+    "errors": {
+      "invalid-password": "The password is invalid."
+    },
     "success": "Resetting the 2FA device was successful.",
     "title": "Reset 2FA Protection"
   },
@@ -1307,6 +1310,9 @@
     "errorLink": "request another link",
     "errorText": "The link might have expired, you could {newLink}.",
     "errorTitle": "Password reset failed",
+    "errorTitles": {
+      "mfa-token-required": "2FA Code Required"
+    },
     "errors": {
       "invalid-token": "Unfortunately, the 2-factor authentication token you entered does not match.",
       "mfa-token-required": "You have 2-factor authentication enabled, so you need the token from your authentication app to reset your password. Please enter it."
