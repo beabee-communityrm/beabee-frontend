@@ -180,9 +180,9 @@
             <!-- Last save button -->
             <AppButton
               v-if="isLastSlide"
+              ref="saveButton"
               :disabled="!validationStepsDone"
               variant="link"
-              ref="saveButton"
               @click="createMfaAndNotify()"
             >
               {{ t(`actions.save`) }}

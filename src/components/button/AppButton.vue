@@ -9,10 +9,10 @@
   <component
     :is="is"
     v-else
+    ref="innerButton"
     :disabled="disabled || loading"
     :class="buttonClasses"
     :type="type"
-    ref="innerButton"
   >
     <font-awesome-icon v-if="icon" :icon="icon" /><slot />
     <span v-if="loading" class="absolute inset-0 bg-white opacity-30" />
