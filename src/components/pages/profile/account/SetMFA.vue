@@ -331,6 +331,14 @@ let totp: TOTP | null = null;
 
 /** Called when the modal is closed */
 const onCloseMFAModal = () => {
+  // If the user closes the modal on the last slide, save the MFA anyway
+  if (
+    appSliderCo.value &&
+    appSliderCo.value.activeSlide === appSliderCo.value.slideCount - 1
+  ) {
+    return createMfaAndNotify();
+  }
+
   closeMFAModal();
   resetState();
 };

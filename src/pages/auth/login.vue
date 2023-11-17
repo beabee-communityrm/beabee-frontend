@@ -35,6 +35,7 @@ meta:
           v-model="data.password"
           type="password"
           name="password"
+          autocomplete="current-password"
           required
           :label="t('form.password')"
         />

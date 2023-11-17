@@ -28,6 +28,7 @@
         v-model="password"
         type="password"
         name="password"
+        autocomplete="new-password"
         required
         :label="t('form.newPassword')"
         :info-message="t('form.passwordInfo')"
@@ -38,6 +39,7 @@
         v-model="confirmPassword"
         type="password"
         name="confirmPassword"
+        autocomplete="new-password"
         required
         :same-as="password"
         :label="t('form.newPasswordConfirm')"

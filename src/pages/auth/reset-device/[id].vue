@@ -25,7 +25,7 @@ meta:
           :label="t('form.password')"
           type="password"
           name="password"
-          autocomplete="off"
+          autocomplete="current-password"
           required
         />
       </div>
