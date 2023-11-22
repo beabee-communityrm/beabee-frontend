@@ -1,18 +1,18 @@
 <route lang="yaml">
-name: forgot-password
+name: lost-device
 meta:
   layout: Auth
-  pageTitle: pageTitle.forgotPassword
+  pageTitle: pageTitle.lostDevice
   noAuth: true
 </route>
 
 <template>
   <AuthBox>
     <form @submit.prevent>
-      <AppTitle>{{ t('forgotPassword.title') }}</AppTitle>
+      <AppTitle class="mb-2">{{ t('lostDevice.title') }}</AppTitle>
 
       <template v-if="!isRequestSuccessful">
-        <p class="mb-4">{{ t('forgotPassword.description') }}</p>
+        <p class="mb-4">{{ t('lostDevice.description') }}</p>
 
         <div class="mb-4">
           <AppInput
@@ -28,9 +28,9 @@ meta:
           v-if="errorCode"
           variant="error"
           class="mb-4"
-          :title="t('forgotPassword.errorTitle')"
+          :title="t('lostDevice.errorTitle')"
         >
-          <p>{{ t('forgotPassword.errors.' + errorCode) }}</p>
+          <p>{{ t('lostDevice.errors.' + errorCode) }}</p>
         </AppNotification>
 
         <AppButton
@@ -38,9 +38,9 @@ meta:
           :disabled="validation.$invalid || loading"
           type="submit"
           class="w-full mb-2"
-          @click="submitForgotPassword"
+          @click="submitLostDevice"
         >
-          {{ t('forgotPassword.resetPassword') }}
+          {{ t('lostDevice.resetDevice') }}
         </AppButton>
 
         <div class="text-center">
@@ -52,13 +52,7 @@ meta:
 
       <template v-else>
         <p class="mb-5 rounded bg-primary-10 p-4">
-          <i18n-t keypath="forgotPassword.message">
-            <template #email>
-              <b>{{ email }}</b>
-            </template>
-          </i18n-t>
-          <br />
-          {{ t('forgotPassword.checkInbox') }}
+          {{ t('lostDevice.emailSent') }}
         </p>
 
         <AppButton class="w-full" variant="link" to="/auth/login">{{
@@ -70,9 +64,10 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { useI18n } from 'vue-i18n';
-import useVuelidate from '@vuelidate/core';
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
+import useVuelidate from '@vuelidate/core';
 
 import AppInput from '@components/forms/AppInput.vue';
 import AppButton from '@components/button/AppButton.vue';
@@ -80,27 +75,20 @@ import AppTitle from '@components/AppTitle.vue';
 import AuthBox from '@components/AuthBox.vue';
 import AppNotification from '@components/AppNotification.vue';
 
-import ResetSecurityFlowService from '@utils/api/reset-security-flow.service';
+import ResetSecurityFlow from '@utils/api/reset-security-flow.service';
 import { isRequestError } from '@utils/api';
 
 import { RESET_SECURITY_FLOW_ERROR_CODE } from '@enums/reset-security-flow-error-code';
 
 const { t } = useI18n();
+const route = useRoute();
 
 const loading = ref(false);
 const errorCode = ref(RESET_SECURITY_FLOW_ERROR_CODE.NONE);
 const isRequestSuccessful = ref(false);
 
-const props = withDefaults(
-  defineProps<{
-    email: string;
-  }>(),
-  {
-    email: '',
-  }
-);
+const email = ref(route.query.email?.toString() || '');
 
-const email = ref(props.email);
 const validation = useVuelidate();
 
 const onError = (err: unknown) => {
@@ -119,18 +107,19 @@ const onError = (err: unknown) => {
   throw err;
 };
 
-const submitForgotPassword = async () => {
+const submitLostDevice = async () => {
   loading.value = true;
   errorCode.value = RESET_SECURITY_FLOW_ERROR_CODE.NONE;
   try {
-    await ResetSecurityFlowService.resetPasswordBegin(email.value);
-    isRequestSuccessful.value = true;
-  } catch (err) {
-    onError(err);
+    await ResetSecurityFlow.resetDeviceBegin(email.value);
+  } catch (error) {
+    onError(error);
+    isRequestSuccessful.value = false;
     loading.value = false;
     return;
-  } finally {
-    loading.value = false;
   }
+
+  isRequestSuccessful.value = true;
+  loading.value = false;
 };
 </script>

@@ -44,11 +44,7 @@ meta:
       <div class="mb-4">
         <router-link
           class="text-sm underline"
-          :to="
-            data.email
-              ? '/auth/forgot-password/' + data.email
-              : '/auth/forgot-password'
-          "
+          :to="{ path: '/auth/forgot-password', query: { email: data.email } }"
         >
           {{ t('login.forgotPassword') }}
         </router-link>
@@ -70,9 +66,7 @@ meta:
       <div v-if="hasMFAEnabled" class="mb-4">
         <router-link
           class="text-sm underline"
-          :to="
-            data.email ? '/auth/lost-device/' + data.email : '/auth/lost-device'
-          "
+          :to="{ path: '/auth/lost-device', query: { email: data.email } }"
         >
           {{ t('login.lostMfaDevice') }}
         </router-link>
