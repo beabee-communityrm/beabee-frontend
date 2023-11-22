@@ -9,6 +9,13 @@
       class="mb-4"
     />
 
+    <AppNotification
+      v-if="inlineErrorText"
+      variant="error"
+      :title="inlineErrorText"
+      class="mb-4"
+    />
+
     <div class="flex gap-2">
       <AppButton
         type="submit"
@@ -41,6 +48,7 @@ const props = defineProps<{
   resetButtonText?: string;
   successText?: string;
   errorText?: string | Record<string, string>;
+  inlineError?: boolean;
   fullButton?: boolean;
   onSubmit?: (evt: Event) => Promise<unknown> | unknown;
 }>();
@@ -48,6 +56,7 @@ const props = defineProps<{
 const { t } = useI18n();
 
 const isLoading = ref(false);
+const inlineErrorText = ref('');
 
 const validation = useVuelidate();
 
@@ -70,7 +79,11 @@ async function handleSubmit(evt: Event) {
           ? props.errorText[knownError]
           : props.errorText.unknown
         : props.errorText) || t('form.errorMessages.generic');
-    addNotification({ title: errorText, variant: 'error' });
+    if (props.inlineError) {
+      inlineErrorText.value = errorText;
+    } else {
+      addNotification({ title: errorText, variant: 'error' });
+    }
   } finally {
     isLoading.value = false;
   }
