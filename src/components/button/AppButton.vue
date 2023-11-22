@@ -32,7 +32,7 @@ import {
   faCircleNotch,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
-import { computed, ref, Ref } from 'vue';
+import { computed, ref } from 'vue';
 import { RouteLocationRaw } from 'vue-router';
 
 // Variant classes for [base, hover, loading icon]
@@ -96,8 +96,7 @@ const props = withDefaults(
   }
 );
 
-const innerButton: Ref<HTMLAnchorElement | HTMLButtonElement | null> =
-  ref(null);
+const innerButton = ref<HTMLAnchorElement | HTMLButtonElement | null>(null);
 
 const focus = () => {
   if (innerButton.value) {
