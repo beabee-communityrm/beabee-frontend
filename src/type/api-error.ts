@@ -1,3 +1,3 @@
-export interface ApiError {
-  code: string;
+export interface ApiError<Code extends string> {
+  code: Code;
 }

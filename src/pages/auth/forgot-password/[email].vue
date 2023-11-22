@@ -104,12 +104,15 @@ const email = ref(props.email);
 const validation = useVuelidate();
 
 const onError = (err: unknown) => {
-  if (isRequestError(err, undefined, [403])) {
-    const code = err.response?.data?.code;
-    if (code === RESET_SECURITY_FLOW_ERROR_CODE.OTHER_ACTIVE_FLOW) {
-      errorCode.value = code as RESET_SECURITY_FLOW_ERROR_CODE;
-      return;
-    }
+  if (
+    isRequestError(
+      err,
+      [RESET_SECURITY_FLOW_ERROR_CODE.OTHER_ACTIVE_FLOW],
+      [403]
+    )
+  ) {
+    errorCode.value = err.response.data.code;
+    return;
   }
 
   // Unknown / unhanded errors

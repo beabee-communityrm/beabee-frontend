@@ -108,12 +108,15 @@ const data = reactive({ password: '' });
 const validation = useVuelidate();
 
 const onError = (err: unknown) => {
-  if (isRequestError(err, undefined, [401, 403])) {
-    const code = err.response?.data?.code;
-    if (code === RESET_SECURITY_FLOW_ERROR_CODE.INVALID_PASSWORD) {
-      errorCode.value = code as RESET_SECURITY_FLOW_ERROR_CODE;
-      return;
-    }
+  if (
+    isRequestError(
+      err,
+      [RESET_SECURITY_FLOW_ERROR_CODE.INVALID_PASSWORD],
+      [401, 403]
+    )
+  ) {
+    errorCode.value = err.response.data.code;
+    return;
   }
 
   // Unknown / unhanded errors

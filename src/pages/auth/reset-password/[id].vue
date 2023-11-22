@@ -166,16 +166,19 @@ const data = reactive({ password: '', repeatPassword: '', token: '' });
 const validation = useVuelidate();
 
 const onError = (err: unknown) => {
-  if (isRequestError(err, undefined, [401, 403])) {
-    const code = err.response?.data?.code;
-    if (
-      code === RESET_SECURITY_FLOW_ERROR_CODE.MFA_TOKEN_REQUIRED ||
-      code === RESET_SECURITY_FLOW_ERROR_CODE.INVALID_TOKEN
-    ) {
-      errorCode.value = code as RESET_SECURITY_FLOW_ERROR_CODE;
-      hasMFAEnabled.value = true;
-      return;
-    }
+  if (
+    isRequestError(
+      err,
+      [
+        RESET_SECURITY_FLOW_ERROR_CODE.MFA_TOKEN_REQUIRED,
+        RESET_SECURITY_FLOW_ERROR_CODE.INVALID_TOKEN,
+      ],
+      [401, 403]
+    )
+  ) {
+    errorCode.value = err.response.data.code;
+    hasMFAEnabled.value = true;
+    return;
   }
 
   // Unknown / unhanded errors

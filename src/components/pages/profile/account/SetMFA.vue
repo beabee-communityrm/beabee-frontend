@@ -254,8 +254,6 @@ import type { AppStepperStep } from '@type/app-stepper-step';
 import type { AppSliderSlideEventDetails } from '@type/app-slider-slide-event-details';
 import type { SetMfaSteps } from '@type/set-mfa-steps';
 import type { SetMfaTotpIdentity } from '@type/set-mfa-totp-identity';
-import type { ContactMfaCreateApiErrorData } from '@type/contact-mfa-create-api-error-data';
-import type { ContactMfaDeleteApiErrorData } from '@type/contact-mfa-delete-api-error-data';
 
 const { t } = useI18n();
 
@@ -427,7 +425,7 @@ const disableMfaAndNotify = async () => {
 /** Called when an error occurs while creating MFA */
 const onCreateError = (error: unknown) => {
   if (
-    isRequestError<ContactMfaCreateApiErrorData>(error, undefined, [401]) &&
+    isRequestError(error, undefined, [401]) &&
     error.response.data.message === LOGIN_CODES.INVALID_TOKEN
   ) {
     // If server says the token is invalid, set the token as invalid and go to the previous slide
@@ -446,9 +444,11 @@ const onCreateError = (error: unknown) => {
 
 const onDeleteError = (error: unknown) => {
   if (
-    isRequestError<ContactMfaDeleteApiErrorData>(error, undefined, [403]) &&
-    (error.response.data.code === LOGIN_CODES.INVALID_TOKEN ||
-      error.response.data.code === LOGIN_CODES.MISSING_TOKEN)
+    isRequestError(
+      error,
+      [LOGIN_CODES.INVALID_TOKEN, LOGIN_CODES.MISSING_TOKEN],
+      [403]
+    )
   ) {
     // If server says the token is invalid, set the token as invalid
     setValidationStates(false);
