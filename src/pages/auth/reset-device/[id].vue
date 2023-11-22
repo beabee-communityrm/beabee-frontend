@@ -80,7 +80,7 @@ import AppTitle from '@components/AppTitle.vue';
 import AuthBox from '@components/AuthBox.vue';
 import AppNotification from '@components/AppNotification.vue';
 
-import ResetSecurityFlowService from '@utils/api/reset-security-flow.service';
+import { resetDeviceComplete } from '@utils/api/reset-security-flow';
 import { updateCurrentUser } from '@store/index';
 import { isInternalUrl } from '@utils/index';
 import { isRequestError } from '@utils/api';
@@ -128,7 +128,7 @@ async function handleSubmit() {
   hasError.value = false;
 
   try {
-    await ResetSecurityFlowService.resetDeviceComplete(props.id, data.password);
+    await resetDeviceComplete(props.id, data.password);
     await updateCurrentUser();
     if (isInternalUrl(redirectTo)) {
       // TODO: use router when legacy app is gone

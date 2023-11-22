@@ -81,7 +81,7 @@ import AppTitle from '@components/AppTitle.vue';
 import AuthBox from '@components/AuthBox.vue';
 import AppNotification from '@components/AppNotification.vue';
 
-import ResetSecurityFlowService from '@utils/api/reset-security-flow.service';
+import { resetPasswordBegin } from '@utils/api/reset-security-flow';
 import { isRequestError } from '@utils/api';
 
 import { RESET_SECURITY_FLOW_ERROR_CODE } from '@enums/reset-security-flow-error-code';
@@ -116,7 +116,7 @@ const submitForgotPassword = async () => {
   loading.value = true;
   errorCode.value = RESET_SECURITY_FLOW_ERROR_CODE.NONE;
   try {
-    await ResetSecurityFlowService.resetPasswordBegin(email.value);
+    await resetPasswordBegin(email.value);
     isRequestSuccessful.value = true;
   } catch (err) {
     onError(err);

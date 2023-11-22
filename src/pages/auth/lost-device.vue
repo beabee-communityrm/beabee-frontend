@@ -75,7 +75,7 @@ import AppTitle from '@components/AppTitle.vue';
 import AuthBox from '@components/AuthBox.vue';
 import AppNotification from '@components/AppNotification.vue';
 
-import ResetSecurityFlow from '@utils/api/reset-security-flow.service';
+import { resetDeviceBegin } from '@utils/api/reset-security-flow';
 import { isRequestError } from '@utils/api';
 
 import { RESET_SECURITY_FLOW_ERROR_CODE } from '@enums/reset-security-flow-error-code';
@@ -111,7 +111,7 @@ const submitLostDevice = async () => {
   loading.value = true;
   errorCode.value = RESET_SECURITY_FLOW_ERROR_CODE.NONE;
   try {
-    await ResetSecurityFlow.resetDeviceBegin(email.value);
+    await resetDeviceBegin(email.value);
   } catch (error) {
     onError(error);
     isRequestSuccessful.value = false;

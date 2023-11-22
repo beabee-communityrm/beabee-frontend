@@ -133,7 +133,7 @@ import AppNotification from '@components/AppNotification.vue';
 import AppTitle from '@components/AppTitle.vue';
 import AuthBox from '@components/AuthBox.vue';
 
-import ResetSecurityFlowService from '@utils/api/reset-security-flow.service';
+import { resetPasswordComplete } from '@utils/api/reset-security-flow';
 import { isInternalUrl } from '@utils/index';
 import { isRequestError } from '@utils/api';
 
@@ -190,7 +190,7 @@ async function handleSubmit() {
   hasError.value = false;
 
   try {
-    await ResetSecurityFlowService.resetPasswordComplete(
+    await resetPasswordComplete(
       props.id,
       data.password,
       data.token || undefined
