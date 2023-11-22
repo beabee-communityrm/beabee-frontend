@@ -210,8 +210,6 @@ async function handleSubmit() {
   } catch (err) {
     onError(err);
     hasError.value = true;
-    loading.value = false;
-    return;
   }
 
   loading.value = false;
