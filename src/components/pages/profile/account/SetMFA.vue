@@ -426,7 +426,7 @@ const disableMfaAndNotify = async () => {
 const onCreateError = (error: unknown) => {
   if (
     isRequestError(error, undefined, [401]) &&
-    error.response.data.message === LOGIN_CODES.INVALID_TOKEN
+    error.response.data.code === LOGIN_CODES.INVALID_TOKEN
   ) {
     // If server says the token is invalid, set the token as invalid and go to the previous slide
     setValidationStates(false);
