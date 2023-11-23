@@ -147,9 +147,10 @@ async function handleSubmit() {
       )
     ) {
       hasMFAEnabled.value = true;
-    } else {
-      throw err;
+      return false;
     }
+
+    throw err;
   }
 }
 </script>

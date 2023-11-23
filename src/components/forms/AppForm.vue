@@ -52,7 +52,7 @@ const props = defineProps<{
   errorText?: Record<string, string>;
   inlineError?: boolean;
   fullButton?: boolean;
-  onSubmit?: (evt: Event) => Promise<unknown> | unknown;
+  onSubmit?: (evt: Event) => Promise<void | false> | void | false;
 }>();
 
 const { t } = useI18n();
@@ -79,8 +79,8 @@ async function handleSubmit(evt: Event) {
   inlineErrorText.value = '';
 
   try {
-    await props.onSubmit?.(evt);
-    if (props.successText) {
+    const ret = await props.onSubmit?.(evt);
+    if (ret !== false && props.successText) {
       addNotification({
         title: props.successText,
         variant: 'success',
