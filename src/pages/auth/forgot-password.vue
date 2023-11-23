@@ -8,10 +8,21 @@ meta:
 
 <template>
   <AuthBox>
-    <form @submit.prevent>
-      <AppTitle>{{ t('forgotPassword.title') }}</AppTitle>
+    <AppTitle>{{ t('forgotPassword.title') }}</AppTitle>
 
-      <template v-if="!isRequestSuccessful">
+    <template v-if="!isRequestSuccessful">
+      <AppForm
+        :button-text="t('forgotPassword.resetPassword')"
+        :error-text="{
+          [RESET_SECURITY_FLOW_ERROR_CODE.OTHER_ACTIVE_FLOW]: t(
+            'forgotPassword.errors.other-active-flow'
+          ),
+          unknown: t('forgotPassword.errorText'),
+        }"
+        inline-error
+        full-button
+        @submit="submitForgotPassword"
+      >
         <p class="mb-4">{{ t('forgotPassword.description') }}</p>
 
         <div class="mb-4">
@@ -23,49 +34,26 @@ meta:
             required
           />
         </div>
+      </AppForm>
+    </template>
 
-        <AppNotification
-          v-if="errorCode"
-          variant="error"
-          class="mb-4"
-          :title="t('forgotPassword.errorTitle')"
-        >
-          <p>{{ t('forgotPassword.errors.' + errorCode) }}</p>
-        </AppNotification>
+    <template v-else>
+      <p class="rounded bg-primary-10 p-4">
+        <i18n-t keypath="forgotPassword.message">
+          <template #email>
+            <b>{{ email }}</b>
+          </template>
+        </i18n-t>
+        <br />
+        {{ t('forgotPassword.checkInbox') }}
+      </p>
+    </template>
 
-        <AppButton
-          variant="link"
-          :disabled="validation.$invalid || loading"
-          type="submit"
-          class="mb-2 w-full"
-          @click="submitForgotPassword"
-        >
-          {{ t('forgotPassword.resetPassword') }}
-        </AppButton>
-
-        <div class="text-center">
-          <AppButton to="/auth/login" variant="text" size="sm">
-            {{ t('forgotPassword.backToLogin') }}
-          </AppButton>
-        </div>
-      </template>
-
-      <template v-else>
-        <p class="mb-5 rounded bg-primary-10 p-4">
-          <i18n-t keypath="forgotPassword.message">
-            <template #email>
-              <b>{{ email }}</b>
-            </template>
-          </i18n-t>
-          <br />
-          {{ t('forgotPassword.checkInbox') }}
-        </p>
-
-        <AppButton class="w-full" variant="link" to="/auth/login">{{
-          t('login.login')
-        }}</AppButton>
-      </template>
-    </form>
+    <div class="mt-2 text-center">
+      <AppButton to="/auth/login" variant="text" size="sm">
+        {{ t('forgotPassword.backToLogin') }}
+      </AppButton>
+    </div>
   </AuthBox>
 </template>
 
@@ -73,57 +61,26 @@ meta:
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import useVuelidate from '@vuelidate/core';
 
 import AppInput from '@components/forms/AppInput.vue';
+import AppForm from '@components/forms/AppForm.vue';
 import AppButton from '@components/button/AppButton.vue';
 import AppTitle from '@components/AppTitle.vue';
 import AuthBox from '@components/AuthBox.vue';
-import AppNotification from '@components/AppNotification.vue';
 
 import { resetPasswordBegin } from '@utils/api/reset-security-flow';
-import { isRequestError } from '@utils/api';
 
 import { RESET_SECURITY_FLOW_ERROR_CODE } from '@enums/reset-security-flow-error-code';
 
 const { t } = useI18n();
 const route = useRoute();
 
-const loading = ref(false);
-const errorCode = ref(RESET_SECURITY_FLOW_ERROR_CODE.NONE);
 const isRequestSuccessful = ref(false);
 
 const email = ref(route.query.email?.toString() || '');
-const validation = useVuelidate();
-
-const onError = (err: unknown) => {
-  if (
-    isRequestError(
-      err,
-      [RESET_SECURITY_FLOW_ERROR_CODE.OTHER_ACTIVE_FLOW],
-      [403]
-    )
-  ) {
-    errorCode.value = err.response.data.code;
-    return;
-  }
-
-  // Unknown / unhanded errors
-  throw err;
-};
 
 const submitForgotPassword = async () => {
-  loading.value = true;
-  errorCode.value = RESET_SECURITY_FLOW_ERROR_CODE.NONE;
-  try {
-    await resetPasswordBegin(email.value);
-    isRequestSuccessful.value = true;
-  } catch (err) {
-    onError(err);
-    loading.value = false;
-    return;
-  } finally {
-    loading.value = false;
-  }
+  await resetPasswordBegin(email.value);
+  isRequestSuccessful.value = true;
 };
 </script>

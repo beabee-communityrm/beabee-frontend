@@ -8,7 +8,23 @@ meta:
 
 <template>
   <AuthBox>
-    <form @submit.prevent>
+    <AppForm
+      :button-text="
+        mode === 'set' ? t('common.login') : t('resetPassword.changePassword')
+      "
+      :error-text="{
+        [RESET_SECURITY_FLOW_ERROR_CODE.OTHER_ACTIVE_FLOW]: t(
+          'resetPassword.errors.other-active-flow'
+        ),
+        [RESET_SECURITY_FLOW_ERROR_CODE.INVALID_TOKEN]: t(
+          'resetPassword.errors.invalid-token'
+        ),
+        unknown: t('resetPassword.errorText'),
+      }"
+      inline-error
+      full-button
+      @submit="handleSubmit"
+    >
       <AppTitle>
         {{ mode === 'set' ? t('setPassword.title') : t('resetPassword.title') }}
       </AppTitle>
@@ -47,77 +63,37 @@ meta:
         />
       </div>
 
-      <div class="mb-3">
-        <AppInput
-          v-if="hasMFAEnabled"
-          v-model="data.token"
-          type="text"
-          name="verifyCode"
-          required
-          min="6"
-          max="6"
-          :label="t('accountPage.mfa.codeInput.label')"
-        />
-      </div>
+      <template v-if="hasMFAEnabled">
+        <div class="mb-3">
+          <AppInput
+            v-model="data.token"
+            type="text"
+            name="verifyCode"
+            required
+            min="6"
+            max="6"
+            :label="t('accountPage.mfa.codeInput.label')"
+          />
+        </div>
 
-      <AppNotification
-        v-if="hasError && !errorCode"
-        variant="error"
-        class="mb-4"
-        :title="t('resetPassword.errorTitle')"
-      >
-        <p>
-          <i18n-t keypath="resetPassword.errorText">
-            <template #newLink>
-              <router-link to="/auth/forgot-password" class="underline">{{
-                t('resetPassword.errorLink')
-              }}</router-link>
-            </template>
-          </i18n-t>
-        </p>
-      </AppNotification>
-
-      <AppNotification
-        v-if="errorCode === RESET_SECURITY_FLOW_ERROR_CODE.MFA_TOKEN_REQUIRED"
-        variant="info"
-        class="mb-4"
-        :title="t('resetPassword.errorTitles.' + errorCode)"
-      >
-        <p>{{ t('resetPassword.errors.' + errorCode) }}</p>
-      </AppNotification>
-
-      <AppNotification
-        v-if="
-          errorCode &&
-          errorCode !== RESET_SECURITY_FLOW_ERROR_CODE.MFA_TOKEN_REQUIRED
-        "
-        variant="error"
-        class="mb-4"
-        :title="t('resetPassword.errorTitle')"
-      >
-        <p>{{ t('resetPassword.errors.' + errorCode) }}</p>
-      </AppNotification>
-
-      <AppButton
-        variant="link"
-        :disabled="validation.$invalid || loading"
-        class="mb-4 w-full"
-        type="submit"
-        @click="handleSubmit"
-        >{{
-          mode === 'set' ? t('common.login') : t('resetPassword.changePassword')
-        }}</AppButton
-      >
-
-      <div v-if="mode === 'reset'" class="text-center">
-        <router-link
-          variant="link"
-          to="/auth/login"
-          class="font-semibold text-link underline"
-          >{{ t('resetPassword.login') }}</router-link
+        <AppNotification
+          variant="info"
+          class="mb-4"
+          :title="t('resetPassword.errorTitles.mfa-token-required')"
         >
-      </div>
-    </form>
+          <p>{{ t('resetPassword.errors.mfa-token-required') }}</p>
+        </AppNotification>
+      </template>
+    </AppForm>
+
+    <div v-if="mode === 'reset'" class="mb-4 text-center">
+      <router-link
+        variant="link"
+        to="/auth/login"
+        class="font-semibold text-link underline"
+        >{{ t('resetPassword.login') }}</router-link
+      >
+    </div>
   </AuthBox>
 </template>
 
@@ -125,13 +101,12 @@ meta:
 import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import useVuelidate from '@vuelidate/core';
 
 import AppInput from '@components/forms/AppInput.vue';
-import AppButton from '@components/button/AppButton.vue';
 import AppNotification from '@components/AppNotification.vue';
 import AppTitle from '@components/AppTitle.vue';
 import AuthBox from '@components/AuthBox.vue';
+import AppForm from '@components/forms/AppForm.vue';
 
 import { resetPasswordComplete } from '@utils/api/reset-security-flow';
 import { isInternalUrl } from '@utils/index';
@@ -157,38 +132,10 @@ const router = useRouter();
 
 const redirectTo = route.query.next as string | undefined;
 
-const loading = ref(false);
-const errorCode = ref(RESET_SECURITY_FLOW_ERROR_CODE.NONE);
-const hasError = ref(false);
 const hasMFAEnabled = ref(false);
 const data = reactive({ password: '', repeatPassword: '', token: '' });
 
-const validation = useVuelidate();
-
-const onError = (err: unknown) => {
-  if (
-    isRequestError(
-      err,
-      [
-        RESET_SECURITY_FLOW_ERROR_CODE.MFA_TOKEN_REQUIRED,
-        RESET_SECURITY_FLOW_ERROR_CODE.INVALID_TOKEN,
-      ],
-      [401, 403]
-    )
-  ) {
-    errorCode.value = err.response.data.code;
-    hasMFAEnabled.value = true;
-    return;
-  }
-
-  // Unknown / unhanded errors
-  throw err;
-};
-
 async function handleSubmit() {
-  loading.value = true;
-  hasError.value = false;
-
   try {
     await resetPasswordComplete(
       props.id,
@@ -208,10 +155,18 @@ async function handleSubmit() {
       router.push({ path: '/' });
     }
   } catch (err) {
-    onError(err);
-    hasError.value = true;
+    if (
+      isRequestError(
+        err,
+        [RESET_SECURITY_FLOW_ERROR_CODE.MFA_TOKEN_REQUIRED],
+        [401, 403]
+      )
+    ) {
+      hasMFAEnabled.value = true;
+    } else {
+      // Unknown / unhanded errors
+      throw err;
+    }
   }
-
-  loading.value = false;
 }
 </script>

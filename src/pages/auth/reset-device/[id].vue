@@ -8,7 +8,19 @@ meta:
 
 <template>
   <AuthBox>
-    <form @submit.prevent>
+    <AppForm
+      :button-text="t('resetDevice.deleteDevice')"
+      :success-text="t('resetDevice.success')"
+      :error-text="{
+        [RESET_SECURITY_FLOW_ERROR_CODE.INVALID_PASSWORD]: t(
+          'resetDevice.errors.invalid-password'
+        ),
+        unknown: t('resetDevice.errorText'),
+      }"
+      inline-error
+      full-button
+      @submit="handleSubmit"
+    >
       <AppTitle class="mb-2">
         {{ t('resetDevice.title') }}
       </AppTitle>
@@ -29,69 +41,28 @@ meta:
           required
         />
       </div>
-
-      <AppNotification
-        v-if="hasError && !errorCode"
-        variant="error"
-        class="mb-4"
-        :title="t('resetDevice.errorTitle')"
-      >
-        <p>
-          <i18n-t keypath="resetDevice.errorText">
-            <template #newLink>
-              <router-link to="/auth/lost-device" class="underline">{{
-                t('resetDevice.errorLink')
-              }}</router-link>
-            </template>
-          </i18n-t>
-        </p>
-      </AppNotification>
-
-      <AppNotification
-        v-if="hasError && errorCode"
-        variant="error"
-        class="mb-4"
-        :title="t('resetDevice.errorTitle')"
-      >
-        <p>{{ t('resetDevice.errors.' + errorCode) }}</p>
-      </AppNotification>
-
-      <AppButton
-        variant="link"
-        :disabled="validation.$invalid || loading"
-        class="mb-4 w-full"
-        type="submit"
-        @click="handleSubmit"
-        >{{ t('resetDevice.deleteDevice') }}</AppButton
-      >
-    </form>
+    </AppForm>
   </AuthBox>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import useVuelidate from '@vuelidate/core';
 
 import AppInput from '@components/forms/AppInput.vue';
-import AppButton from '@components/button/AppButton.vue';
 import AppTitle from '@components/AppTitle.vue';
 import AuthBox from '@components/AuthBox.vue';
-import AppNotification from '@components/AppNotification.vue';
 
 import { resetDeviceComplete } from '@utils/api/reset-security-flow';
 import { updateCurrentUser } from '@store/index';
 import { isInternalUrl } from '@utils/index';
-import { isRequestError } from '@utils/api';
 
-import { addNotification } from '@store/notifications';
+import AppForm from '@components/forms/AppForm.vue';
 
 import { RESET_SECURITY_FLOW_ERROR_CODE } from '@enums/reset-security-flow-error-code';
 
-const props = defineProps<{
-  id: string;
-}>();
+const props = defineProps<{ id: string }>();
 
 const { t } = useI18n();
 
@@ -100,51 +71,16 @@ const router = useRouter();
 
 const redirectTo = route.query.next as string | undefined;
 
-const loading = ref(false);
-const errorCode = ref(RESET_SECURITY_FLOW_ERROR_CODE.NONE);
-const hasError = ref(false);
 const data = reactive({ password: '' });
 
-const validation = useVuelidate();
-
-const onError = (err: unknown) => {
-  if (
-    isRequestError(
-      err,
-      [RESET_SECURITY_FLOW_ERROR_CODE.INVALID_PASSWORD],
-      [401, 403]
-    )
-  ) {
-    errorCode.value = err.response.data.code;
-    return;
-  }
-
-  // Unknown / unhanded errors
-  throw err;
-};
-
 async function handleSubmit() {
-  loading.value = true;
-  hasError.value = false;
-
-  try {
-    await resetDeviceComplete(props.id, data.password);
-    await updateCurrentUser();
-    if (isInternalUrl(redirectTo)) {
-      // TODO: use router when legacy app is gone
-      window.location.href = redirectTo;
-    } else {
-      addNotification({
-        variant: 'success',
-        title: t('resetDevice.success'),
-      });
-      router.push({ path: '/' });
-    }
-  } catch (err) {
-    onError(err);
-    hasError.value = true;
+  await resetDeviceComplete(props.id, data.password);
+  await updateCurrentUser();
+  if (isInternalUrl(redirectTo)) {
+    // TODO: use router when legacy app is gone
+    window.location.href = redirectTo;
+  } else {
+    router.push({ path: '/' });
   }
-
-  loading.value = false;
 }
 </script>

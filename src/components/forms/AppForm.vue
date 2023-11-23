@@ -38,7 +38,7 @@ import useVuelidate from '@vuelidate/core';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { addNotification } from '../../store/notifications';
-import { getRequestError } from '../../utils/api';
+import { isRequestError } from '../../utils/api';
 import AppNotification from '../AppNotification.vue';
 import AppButton from '../button/AppButton.vue';
 
@@ -72,7 +72,9 @@ async function handleSubmit(evt: Event) {
       });
     }
   } catch (err) {
-    const knownError = getRequestError(err);
+    const knownError = isRequestError(err, undefined, [400, 401, 403])
+      ? err.response.data.code
+      : undefined;
     const errorText =
       (typeof props.errorText === 'object'
         ? knownError && knownError in props.errorText

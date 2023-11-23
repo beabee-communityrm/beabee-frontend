@@ -30,10 +30,6 @@ export function isRequestError<Code extends string, Status extends number>(
   return false;
 }
 
-export function getRequestError(err: unknown): string | undefined {
-  return isRequestError(err) ? err.response.data.code : undefined;
-}
-
 export function deserializeDate(s: string): Date;
 export function deserializeDate<T extends null | undefined>(
   s: string | T
