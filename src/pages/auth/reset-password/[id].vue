@@ -10,7 +10,7 @@ meta:
   <AuthBox>
     <AppForm
       :button-text="
-        mode === 'set' ? t('common.login') : t('resetPassword.changePassword')
+        mode === 'set' ? t('common.login') : t('actions.changePassword')
       "
       :success-text="t('resetPassword.success')"
       :error-text="{ unknown: t('resetPassword.failed') }"
@@ -22,20 +22,18 @@ meta:
         {{ mode === 'set' ? t('setPassword.title') : t('resetPassword.title') }}
       </AppTitle>
 
-      <div class="mb-5">
-        <p class="font-semibold">
-          {{
-            mode === 'set'
-              ? t('setPassword.description')
-              : t('resetPassword.description')
-          }}
-        </p>
-      </div>
+      <p class="mb-4 font-semibold">
+        {{
+          mode === 'set'
+            ? t('setPassword.description')
+            : t('resetPassword.description')
+        }}
+      </p>
 
-      <div class="mb-5">
+      <div class="mb-4">
         <AppInput
           v-model="data.password"
-          :label="t('resetPassword.newPassword')"
+          :label="t('form.newPassword')"
           :info-message="t('form.passwordInfo')"
           type="password"
           name="password"
@@ -44,10 +42,10 @@ meta:
         />
       </div>
 
-      <div class="mb-6">
+      <div class="mb-4">
         <AppInput
           v-model="data.repeatPassword"
-          :label="t('resetPassword.confirmPassword')"
+          :label="t('form.newPasswordConfirm')"
           type="password"
           name="confirmPassword"
           autocomplete="new-password"

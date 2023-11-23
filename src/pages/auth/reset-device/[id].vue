@@ -9,24 +9,22 @@ meta:
 <template>
   <AuthBox>
     <AppForm
-      :button-text="t('resetDevice.deleteDevice')"
+      :button-text="t('actions.reset2FA')"
       :success-text="t('resetDevice.success')"
       :error-text="{ unknown: t('resetDevice.failed') }"
       inline-error
       full-button
       @submit="handleSubmit"
     >
-      <AppTitle class="mb-2">
+      <AppTitle>
         {{ t('resetDevice.title') }}
       </AppTitle>
 
-      <div class="mb-5">
-        <p class="font-semibold">
-          {{ t('resetDevice.description') }}
-        </p>
-      </div>
+      <p class="mb-4 font-semibold">
+        {{ t('resetDevice.description') }}
+      </p>
 
-      <div class="mb-5">
+      <div class="mb-4">
         <AppInput
           v-model="data.password"
           :label="t('form.password')"
@@ -48,14 +46,12 @@ import { useI18n } from 'vue-i18n';
 import AppInput from '@components/forms/AppInput.vue';
 import AppTitle from '@components/AppTitle.vue';
 import AuthBox from '@components/AuthBox.vue';
-
-import { resetDeviceComplete } from '@utils/api/reset-security-flow';
-import { updateCurrentUser } from '@store/index';
-import { isInternalUrl } from '@utils/index';
-
 import AppForm from '@components/forms/AppForm.vue';
 
-import { RESET_SECURITY_FLOW_ERROR_CODE } from '@enums/reset-security-flow-error-code';
+import { resetDeviceComplete } from '@utils/api/reset-security-flow';
+import { isInternalUrl } from '@utils/index';
+
+import { updateCurrentUser } from '@store/index';
 
 const props = defineProps<{ id: string }>();
 

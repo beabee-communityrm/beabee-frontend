@@ -8,16 +8,15 @@ meta:
 
 <template>
   <AuthBox>
-    <AppTitle class="mb-2">{{ t('lostDevice.title') }}</AppTitle>
+    <AppTitle>{{ t('lostDevice.title') }}</AppTitle>
 
     <template v-if="!isRequestSuccessful">
       <AppForm
-        :button-text="t('lostDevice.resetDevice')"
+        :button-text="t('actions.reset2FA')"
         :error-text="{
           [RESET_SECURITY_FLOW_ERROR_CODE.OTHER_ACTIVE_FLOW]: t(
             'lostDevice.errors.other-active-flow'
           ),
-          unknown: t('lostDevice.errorText'),
         }"
         inline-error
         full-button
@@ -39,13 +38,17 @@ meta:
 
     <template v-else>
       <p class="rounded bg-primary-10 p-4">
-        {{ t('lostDevice.emailSent') }}
+        <i18n-t keypath="lostDevice.message">
+          <template #email>
+            <b>{{ email }}</b>
+          </template>
+        </i18n-t>
       </p>
     </template>
 
     <div class="mt-2 text-center">
       <AppButton to="/auth/login" variant="text" size="sm">
-        {{ t('forgotPassword.backToLogin') }}
+        {{ t('actions.backToLogin') }}
       </AppButton>
     </div>
   </AuthBox>
@@ -60,11 +63,11 @@ import AppInput from '@components/forms/AppInput.vue';
 import AppButton from '@components/button/AppButton.vue';
 import AppTitle from '@components/AppTitle.vue';
 import AuthBox from '@components/AuthBox.vue';
+import AppForm from '@components/forms/AppForm.vue';
 
 import { resetDeviceBegin } from '@utils/api/reset-security-flow';
 
 import { RESET_SECURITY_FLOW_ERROR_CODE } from '@enums/reset-security-flow-error-code';
-import AppForm from '@components/forms/AppForm.vue';
 
 const { t } = useI18n();
 const route = useRoute();

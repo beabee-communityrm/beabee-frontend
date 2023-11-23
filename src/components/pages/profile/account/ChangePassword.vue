@@ -12,13 +12,13 @@
       saved = false;
     "
   >
-    {{ t('accountPage.changePassword') }}
+    {{ t('actions.changePassword') }}
   </AppButton>
 
   <AppForm
     v-else
     :success-text="t('accountPage.savedPassword')"
-    :button-text="t('form.saveChanges')"
+    :button-text="t('actions.changePassword')"
     :reset-button-text="t('form.cancel')"
     @submit="handleFormSubmit"
     @reset="showForm = false"

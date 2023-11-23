@@ -12,12 +12,11 @@ meta:
 
     <template v-if="!isRequestSuccessful">
       <AppForm
-        :button-text="t('forgotPassword.resetPassword')"
+        :button-text="t('actions.resetPassword')"
         :error-text="{
           [RESET_SECURITY_FLOW_ERROR_CODE.OTHER_ACTIVE_FLOW]: t(
             'forgotPassword.errors.other-active-flow'
           ),
-          unknown: t('forgotPassword.errorText'),
         }"
         inline-error
         full-button
@@ -44,14 +43,12 @@ meta:
             <b>{{ email }}</b>
           </template>
         </i18n-t>
-        <br />
-        {{ t('forgotPassword.checkInbox') }}
       </p>
     </template>
 
     <div class="mt-2 text-center">
       <AppButton to="/auth/login" variant="text" size="sm">
-        {{ t('forgotPassword.backToLogin') }}
+        {{ t('actions.backToLogin') }}
       </AppButton>
     </div>
   </AuthBox>

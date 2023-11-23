@@ -13,7 +13,7 @@
 -->
 
 <template>
-  <AppHeading class="my-3">
+  <AppHeading class="mt-6">
     {{ t('accountPage.mfa.title') }}
   </AppHeading>
 
