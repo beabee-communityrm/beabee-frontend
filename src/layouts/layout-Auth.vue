@@ -1,7 +1,7 @@
 <template>
   <main
     :class="
-      !isEmbed && 'min-h-screen bg-cover bg-fixed bg-center py-4 px-2 xs:px-4'
+      !isEmbed && 'min-h-screen bg-cover bg-fixed bg-center px-2 py-4 xs:px-4'
     "
     :style="isEmbed ? undefined : backgroundStyle"
   >

@@ -9,7 +9,7 @@
 -->
 
 <template>
-  <div ref="qrContainerEl" class="w-full aspect-square"></div>
+  <div ref="qrContainerEl" class="aspect-square w-full"></div>
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, watch } from 'vue';

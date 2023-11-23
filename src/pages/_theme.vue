@@ -64,7 +64,7 @@ meta:
 
     <section class="my-5">
       <h3 class="mb-2 font-title text-xl">Buttons</h3>
-      <div class="bg-white p-4 flex flex-wrap">
+      <div class="flex flex-wrap bg-white p-4">
         <div class="m-2">
           <AppButton variant="primary">primary</AppButton>
         </div>
@@ -134,7 +134,7 @@ meta:
         AppSlider <small>with custom navigation</small>
       </h3>
       <div class="bg-white p-4">
-        <div class="max-w-[1200px] mx-auto relative">
+        <div class="relative mx-auto max-w-[1200px]">
           <AppSlider :show-navigation-buttons="true" :infinite="true">
             <template #slides>
               <!-- Put your slides here -->
@@ -146,7 +146,7 @@ meta:
                 />
               </AppSlide>
               <AppSlide class="bg-success">
-                <div class="w-full h-full flex justify-center items-center">
+                <div class="flex h-full w-full items-center justify-center">
                   <p>You can put anything you want in here!</p>
                 </div>
               </AppSlide>
@@ -161,23 +161,23 @@ meta:
 
             <!-- Define your custom navigation template here -->
             <template #navigation="{ nextSlide, prevSlide, toSlide }">
-              <span class="w-full h-full flex justify-between absolute top-0">
+              <span class="absolute top-0 flex h-full w-full justify-between">
                 <button class="" @click="prevSlide()">
                   <font-awesome-icon
-                    class="text-2xl p-2 text-white hover:text-link"
+                    class="p-2 text-2xl text-white hover:text-link"
                     :icon="faAngleLeft"
                   />
                 </button>
                 <button @click="nextSlide()">
                   <font-awesome-icon
-                    class="text-2xl p-2 text-white hover:text-link"
+                    class="p-2 text-2xl text-white hover:text-link"
                     :icon="faAngleRight"
                   />
                 </button>
               </span>
 
               <button
-                class="text-2xl p-2 text-white hover:text-link absolute top-0 left-0"
+                class="absolute left-0 top-0 p-2 text-2xl text-white hover:text-link"
                 @click="toSlide(0)"
               >
                 <font-awesome-icon :icon="faRotateBack" />
@@ -193,7 +193,7 @@ meta:
         AppSlider <small>with AppStepper</small>
       </h3>
       <div class="bg-white p-4">
-        <div class="max-w-[1200px] mx-auto relative">
+        <div class="relative mx-auto max-w-[1200px]">
           <AppSlider
             :show-navigation-buttons="true"
             :infinite="true"
@@ -213,7 +213,7 @@ meta:
                 />
               </AppSlide>
               <AppSlide class="bg-success">
-                <div class="w-full h-full flex justify-center items-center">
+                <div class="flex h-full w-full items-center justify-center">
                   <p>You can put anything you want in here!</p>
                 </div>
               </AppSlide>
@@ -232,7 +232,7 @@ meta:
 
     <section class="my-5">
       <h3 class="mb-2 font-title text-xl">AppQRCode</h3>
-      <div class="bg-white p-4 w-64">
+      <div class="w-64 bg-white p-4">
         <AppQRCode :qr-data="appQRCode.data" />
 
         <p>Change the data to see the QR code change.</p>

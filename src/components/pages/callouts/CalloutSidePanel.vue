@@ -2,10 +2,10 @@
   <transition name="side-panel">
     <aside
       v-if="show"
-      class="fixed z-20 left-0 inset-y-0 bg-white p-8 w-full max-w-lg overflow-scroll shadow-lg"
+      class="fixed inset-y-0 left-0 z-20 w-full max-w-lg overflow-scroll bg-white p-8 shadow-lg"
     >
       <button
-        class="absolute right-2 top-2 h-10 w-10 hover:text-primary text-2xl"
+        class="absolute right-2 top-2 h-10 w-10 text-2xl hover:text-primary"
         type="button"
         @click="$emit('close')"
       >
@@ -30,11 +30,11 @@ defineProps<{ show: boolean }>();
 
 .side-panel-enter-from,
 .side-panel-leave-to {
-  @apply transform -translate-x-full;
+  @apply -translate-x-full transform;
 }
 
 .side-panel-enter-to,
 .side-panel-leave-from {
-  @apply transform translate-x-0;
+  @apply translate-x-0 transform;
 }
 </style>
