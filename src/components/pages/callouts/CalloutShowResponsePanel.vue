@@ -1,10 +1,10 @@
 <template>
   <CalloutSidePanel :show="!!response" @close="$emit('close')">
     <div v-if="response && callout.responseViewSchema">
-      <h2 class="text-2xl font-bold font-title mb-4">{{ response.title }}</h2>
+      <h2 class="mb-4 font-title text-2xl font-bold">{{ response.title }}</h2>
       <div
         v-if="response.photos.length > 0"
-        class="relative overflow-hidden mb-4 -mx-4"
+        class="relative -mx-4 mb-4 overflow-hidden"
       >
         <ul
           class="flex items-center transition-transform"
@@ -24,12 +24,12 @@
         </ul>
         <div
           v-if="response.photos.length > 1"
-          class="absolute top-1/2 inset-x-0 flex justify-between text-2xl font-bold transform -translate-y-1/2"
+          class="absolute inset-x-0 top-1/2 flex -translate-y-1/2 transform justify-between text-2xl font-bold"
         >
           <div>
             <button
               v-show="currentPhotoIndex > 0"
-              class="bg-primary text-white w-10 h-10 rounded-full"
+              class="h-10 w-10 rounded-full bg-primary text-white"
               @click="currentPhotoIndex--"
             >
               <font-awesome-icon :icon="faChevronLeft" />
@@ -38,7 +38,7 @@
           <div>
             <button
               v-show="currentPhotoIndex < response.photos.length - 1"
-              class="bg-primary text-white w-10 h-10 rounded-full"
+              class="h-10 w-10 rounded-full bg-primary text-white"
               @click="currentPhotoIndex++"
             >
               <font-awesome-icon :icon="faChevronRight" />
@@ -59,7 +59,7 @@
 
       <ul
         v-if="callout.responseViewSchema.links.length > 0"
-        class="columns-2 gap-4 border-t border-t-primary mt-8 pt-8"
+        class="mt-8 columns-2 gap-4 border-t border-t-primary pt-8"
       >
         <li
           v-for="link in callout.responseViewSchema.links"
@@ -67,7 +67,7 @@
           class="break-inside-avoid"
         >
           <a
-            class="block text-link font-title underline font-bold"
+            class="block font-title font-bold text-link underline"
             :href="link.url"
             target="_blank"
           >

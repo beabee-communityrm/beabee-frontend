@@ -15,7 +15,7 @@
       :title="t('editCallout.replicated')"
     />
 
-    <div class="flex gap-8 mt-8">
+    <div class="mt-8 flex gap-8">
       <div class="flex-0 basis-menu">
         <Draggable v-model="slides" item-key="id">
           <template #item="{ element, index }">
@@ -38,10 +38,10 @@
         </AppButton>
       </div>
 
-      <div class="flex-1 callout-slide-builder">
+      <div class="callout-slide-builder flex-1">
         <!-- These styles replicate the FormBuilder layout -->
-        <div class="flex gap-8 items-end mb-4">
-          <div class="flex-1 max-w-2xl flex gap-4 justify-between items-end">
+        <div class="mb-4 flex items-end gap-8">
+          <div class="flex max-w-2xl flex-1 items-end justify-between gap-4">
             <div class="flex-1">
               <AppInput
                 v-model="currentSlide.title"
@@ -82,8 +82,8 @@
 
         <!-- These styles replicate the FormBuilder layout -->
         <div class="flex gap-8">
-          <div class="flex-1 max-w-2xl">
-            <div class="bg-white p-6 pt-0 shadow-md relative -mt-6 mb-4">
+          <div class="max-w-2xl flex-1">
+            <div class="relative -mt-6 mb-4 bg-white p-6 pt-0 shadow-md">
               <FormBuilderNavigation
                 v-model="currentSlide.navigation"
                 :slides="slides"

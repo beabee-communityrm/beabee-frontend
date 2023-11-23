@@ -3,7 +3,7 @@
     <AppLabel v-if="label" :label="label" :required="required" />
     <div class="flex items-start gap-4">
       <div
-        class="flex-none basis-28 overflow-hidden rounded border border-primary-40 bg-primary-20 relative"
+        class="relative flex-none basis-28 overflow-hidden rounded border border-primary-40 bg-primary-20"
       >
         <img
           :src="imageUrl"
@@ -14,7 +14,7 @@
         />
         <span
           v-if="uploading"
-          class="absolute inset-0 bg-black/50 text-white flex items-center justify-center text-xl"
+          class="absolute inset-0 flex items-center justify-center bg-black/50 text-xl text-white"
         >
           <font-awesome-icon :icon="faCircleNotch" spin />
         </span>

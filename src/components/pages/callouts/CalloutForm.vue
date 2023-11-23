@@ -30,7 +30,7 @@
       />
       <AppButton
         type="submit"
-        class="w-full mb-4"
+        class="mb-4 w-full"
         variant="primary"
         :disabled="validation.$invalid"
         :loading="isLoading"
@@ -39,7 +39,7 @@
         {{ currentSlide.navigation.submitText }}
       </AppButton>
     </template>
-    <div v-if="totalSlides > 1" class="flex gap-4 justify-between">
+    <div v-if="totalSlides > 1" class="flex justify-between gap-4">
       <div>
         <AppButton
           v-if="currentSlide.navigation.prevText && slideIds.length > 1"

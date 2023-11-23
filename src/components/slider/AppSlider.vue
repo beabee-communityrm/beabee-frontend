@@ -33,7 +33,7 @@
   />
   <div
     ref="slidesContainerEl"
-    class="w-full overflow-x-hidden whitespace-nowrap flex flex-nowrap"
+    class="flex w-full flex-nowrap overflow-x-hidden whitespace-nowrap"
   >
     <slot name="slides"></slot>
   </div>

@@ -1,9 +1,9 @@
 {
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
   "i18n-ally.localesPaths": ["locales"],
   "i18n-ally.keystyle": "nested",
   "typescript.tsdk": "node_modules/typescript/lib",
-  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
-  "editor.formatOnSave": true,
   "cSpell.words": [
     "beabee",
     "Callouts",
@@ -12,6 +12,5 @@
     "qrcode",
     "TOTP",
     "Vuelidate"
-  ],
-  "vs-code-prettier-eslint.prettierLast": false
+  ]
 }

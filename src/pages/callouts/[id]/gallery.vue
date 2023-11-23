@@ -9,30 +9,30 @@ meta:
 
 <template>
   <div class="absolute inset-0 flex flex-col">
-    <div v-if="!isEmbed" class="flex-0 p-6 pb-1 z-10 shadow-lg">
+    <div v-if="!isEmbed" class="flex-0 z-10 p-6 pb-1 shadow-lg">
       <PageTitle :title="callout.title" no-collapse>
         <router-link
           v-if="callout.responseViewSchema?.map"
           :to="`/callouts/${callout.slug}/map`"
-          class="text-link font-semibold whitespace-nowrap"
+          class="whitespace-nowrap font-semibold text-link"
         >
           <font-awesome-icon :icon="faMap" /> {{ t('callout.views.map') }}
         </router-link>
       </PageTitle>
     </div>
     <div class="overflow-scroll">
-      <ul class="flex flex-wrap m-3">
+      <ul class="m-3 flex flex-wrap">
         <li
           v-for="response in responses"
           :key="response.number"
-          class="flex-1 min-w-[250px] sm:max-w-sm p-3"
+          class="min-w-[250px] flex-1 p-3 sm:max-w-sm"
         >
           <router-link
             :to="`${HASH_PREFIX}${response.number}`"
             @click="introOpen = false"
           >
             <img
-              class="w-full mb-2 aspect-video object-cover"
+              class="mb-2 aspect-video w-full object-cover"
               loading="lazy"
               :style="{ filter: callout.responseViewSchema?.imageFilter }"
               :src="response.photos[0].url + '?w=400&h=400'"

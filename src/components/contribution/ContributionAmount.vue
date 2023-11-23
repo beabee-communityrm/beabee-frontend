@@ -10,7 +10,7 @@
           : 'bg-white'
       "
     >
-      <label class="flex-1 px-6 flex items-baseline text-body-60 font-bold">
+      <label class="flex flex-1 items-baseline px-6 font-bold text-body-60">
         <span>{{ generalContent.currencySymbol }}</span>
         <div class="relative mx-1 font-semibold">
           <div class="text-6xl/[7rem]">
@@ -18,7 +18,7 @@
           </div>
           <input
             :value="amount"
-            class="absolute inset-0 w-full border-0 text-body text-6xl/[7rem] outline-none"
+            class="absolute inset-0 w-full border-0 text-6xl/[7rem] text-body outline-none"
             :min="minAmount"
             :class="{ 'bg-danger-10': hasError }"
             :disabled="disabled"

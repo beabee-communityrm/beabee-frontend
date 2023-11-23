@@ -79,12 +79,12 @@ meta:
         <AppCheckbox
           v-model="joinContent.showNoContribution"
           :label="stepT('showNoContribution')"
-          class="font-semibold mb-4"
+          class="mb-4 font-semibold"
         />
         <AppCheckbox
           v-model="joinContent.showAbsorbFee"
           :label="stepT('showAbsorbFee')"
-          class="font-semibold mb-4"
+          class="mb-4 font-semibold"
         />
       </AppForm>
     </template>

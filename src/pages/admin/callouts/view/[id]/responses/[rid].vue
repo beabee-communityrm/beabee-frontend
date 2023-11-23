@@ -114,7 +114,7 @@ meta:
 
     <hr class="my-10 border-t border-primary-40" />
 
-    <div class="flex gap-2 mb-4">
+    <div class="mb-4 flex gap-2">
       <AppButton
         v-if="callout.responseViewSchema?.map"
         :to="`/callouts/${callout.slug}/map#response-${response.number}`"
