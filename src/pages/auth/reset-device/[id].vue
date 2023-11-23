@@ -71,7 +71,7 @@ async function handleSubmit() {
     // TODO: use router when legacy app is gone
     window.location.href = redirectTo;
   } else {
-    router.push({ path: '/' });
+    router.push({ path: '/profile/account' });
   }
 }
 </script>
