@@ -37,7 +37,7 @@ meta:
           variant="link"
           :disabled="validation.$invalid || loading"
           type="submit"
-          class="w-full mb-2"
+          class="mb-2 w-full"
           @click="submitLostDevice"
         >
           {{ t('lostDevice.resetDevice') }}
