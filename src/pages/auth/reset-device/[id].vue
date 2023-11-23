@@ -11,12 +11,7 @@ meta:
     <AppForm
       :button-text="t('resetDevice.deleteDevice')"
       :success-text="t('resetDevice.success')"
-      :error-text="{
-        [RESET_SECURITY_FLOW_ERROR_CODE.INVALID_PASSWORD]: t(
-          'resetDevice.errors.invalid-password'
-        ),
-        unknown: t('resetDevice.errorText'),
-      }"
+      :error-text="{ unknown: t('resetDevice.failed') }"
       inline-error
       full-button
       @submit="handleSubmit"

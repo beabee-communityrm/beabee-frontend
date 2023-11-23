@@ -35,25 +35,39 @@
 </template>
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { addNotification } from '../../store/notifications';
 import { isRequestError } from '../../utils/api';
 import AppNotification from '../AppNotification.vue';
 import AppButton from '../button/AppButton.vue';
+import { LOGIN_CODES } from '@enums/login-codes';
+import { RESET_SECURITY_FLOW_ERROR_CODE } from '@enums/reset-security-flow-error-code';
 
 const emit = defineEmits(['reset']);
 const props = defineProps<{
   buttonText: string;
   resetButtonText?: string;
   successText?: string;
-  errorText?: string | Record<string, string>;
+  errorText?: Record<string, string>;
   inlineError?: boolean;
   fullButton?: boolean;
   onSubmit?: (evt: Event) => Promise<unknown> | unknown;
 }>();
 
 const { t } = useI18n();
+
+const errorMessages = computed<Record<string, string>>(() => ({
+  unknown: t('form.errorMessages.generic'),
+  'duplicate-email': t('form.errorMessages.api.duplicate-email'),
+  [LOGIN_CODES.LOGIN_FAILED]: t('form.errorMessages.api.login-failed'),
+  [LOGIN_CODES.INVALID_TOKEN]: t('form.errorMessages.api.invalid-token'),
+  [RESET_SECURITY_FLOW_ERROR_CODE.INVALID_PASSWORD]: t(
+    'form.errorMessages.api.invalid-password'
+  ),
+  [LOGIN_CODES.LOCKED]: t('form.errorMessages.api.account-locked'),
+  ...props.errorText,
+}));
 
 const isLoading = ref(false);
 const inlineErrorText = ref('');
@@ -62,6 +76,7 @@ const validation = useVuelidate();
 
 async function handleSubmit(evt: Event) {
   isLoading.value = true;
+  inlineErrorText.value = '';
 
   try {
     await props.onSubmit?.(evt);
@@ -72,15 +87,11 @@ async function handleSubmit(evt: Event) {
       });
     }
   } catch (err) {
-    const knownError = isRequestError(err, undefined, [400, 401, 403])
+    const errorCode = isRequestError(err, undefined, [400, 401, 403])
       ? err.response.data.code
-      : undefined;
+      : 'unknown';
     const errorText =
-      (typeof props.errorText === 'object'
-        ? knownError && knownError in props.errorText
-          ? props.errorText[knownError]
-          : props.errorText.unknown
-        : props.errorText) || t('form.errorMessages.generic');
+      errorMessages.value[errorCode] || errorMessages.value.unknown;
     if (props.inlineError) {
       inlineErrorText.value = errorText;
     } else {

@@ -266,7 +266,6 @@
     "terms": "Algemene voorwaarden"
   },
   "forgotPassword": {
-    "errorTitle": "Fout bij het resetten van wachtwoord",
     "errors": {
       "other-active-flow": "U heeft al verzocht om uw tweefactorauthenticatie opnieuw in te stellen. Voltooi dit proces alstublieft voordat u probeert uw wachtwoord te resetten."
     }
@@ -274,6 +273,9 @@
   "form": {
     "email": "E-mail",
     "errorMessages": {
+      "api": {
+        "mfa-token-required": "U heeft tweefactorauthenticatie ingeschakeld, dus u heeft de token uit \nuw authenticatie-app nodig om uw wachtwoord te resetten. Voer deze \nalstublieft in."
+      },
       "generic": "Oeps, er ging iets fout! Neem contact op met support als het nog een keer gebeurd.",
       "validation": "Er ontbreekt iets. Bekijk de velden hierboven."
     },
@@ -325,7 +327,6 @@
   "join": {
     "errors": {
       "confirmEmail": {},
-      "duplicateEmail": {},
       "failed": {}
     }
   },
@@ -337,12 +338,9 @@
   },
   "lostDevice": {
     "description": "Voer uw e-mailadres in, dan sturen we u instructies om uw 2FA te resetten.",
-    "emailSent": "We hebben een e-mail gestuurd met instructies om je 2FA te resetten. Controleer je inbox.",
-    "errorTitle": "Fout bij het resetten van het secundaire apparaat",
     "errors": {
       "other-active-flow": "U heeft al een wachtwoordherstel aangevraagd. Voltooi dit proces eerst voordat u probeert uw secundaire apparaat te resetten."
     },
-    "resetDevice": "Apparaat resetten",
     "title": "Bent u uw 2FA-apparaat kwijt?"
   },
   "membershipBuilder": {
@@ -392,24 +390,9 @@
     "filter": {}
   },
   "resetDevice": {
-    "deleteDevice": "2FA-beveiliging verwijderen",
-    "description": "Om de 2FA-beveiliging te verwijderen, voer alstublieft uw wachtwoord in.\n Hierdoor wordt uw huidige 2FA-instellingen gereset en kunt u een nieuw \napparaat instellen.",
-    "errorTitle": "Het resetten van het 2FA-apparaat is mislukt",
-    "errors": {
-      "invalid-password": "Het wachtwoord is ongeldig."
-    },
-    "success": "Het resetten van het 2FA-apparaat is gelukt.",
-    "title": "\"2FA-beveiliging resetten"
+    "success": "Het resetten van het 2FA-apparaat is gelukt."
   },
-  "resetPassword": {
-    "errorTitles": {
-      "mfa-token-required": "2FA-code vereist"
-    },
-    "errors": {
-      "invalid-token": "Helaas komt de ingevoerde token voor tweefactorauthenticatie niet overeen.",
-      "mfa-token-required": "U heeft tweefactorauthenticatie ingeschakeld, dus u heeft de token uit \nuw authenticatie-app nodig om uw wachtwoord te resetten. Voer deze \nalstublieft in."
-    }
-  },
+  "resetPassword": {},
   "reviewerEditor": {
     "confirmDelete": {}
   },

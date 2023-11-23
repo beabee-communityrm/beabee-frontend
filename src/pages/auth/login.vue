@@ -9,11 +9,7 @@ meta:
 <template>
   <AuthBox>
     <AppForm
-      :button-text="t('login.login')"
-      :error-text="{
-        [LOGIN_CODES.INVALID_TOKEN]: t('login.hasWrongMFAToken'),
-        unknown: t('login.wrongCredentials'),
-      }"
+      :button-text="t('common.login')"
       inline-error
       full-button
       @submit="submitLogin"
@@ -60,6 +56,12 @@ meta:
       </div>
 
       <template v-if="hasMFAEnabled">
+        <AppNotification
+          class="mb-4"
+          variant="info"
+          :title="t('form.errorMessages.api.mfa-token-required')"
+        />
+
         <div class="mb-3">
           <AppInput
             v-model="data.token"
@@ -80,12 +82,6 @@ meta:
             {{ t('login.lostMfaDevice') }}
           </router-link>
         </div>
-
-        <AppNotification
-          class="mb-4"
-          variant="info"
-          :title="t('login.hasMFAEnabled')"
-        />
       </template>
     </AppForm>
   </AuthBox>
