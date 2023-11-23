@@ -8,11 +8,11 @@
   >
     <div
       v-if="!isEmbed"
-      class="flex-initial basis-64 mb-4"
+      class="mb-4 flex-initial basis-64"
       :class="{ 'md:mb-0': !preview }"
     >
       <div
-        class="flex gap-4 items-center justify-center"
+        class="flex items-center justify-center gap-4"
         :class="{
           'mb-4': !!$slots.header,
           'md:flex-col md:items-start': !preview,

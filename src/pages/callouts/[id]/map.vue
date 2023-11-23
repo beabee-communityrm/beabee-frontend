@@ -12,19 +12,19 @@ meta:
     v-if="callout.responseViewSchema?.map"
     class="absolute inset-0 flex flex-col"
   >
-    <div v-if="!isEmbed" class="flex-0 p-6 pb-1 shadow-lg z-10">
+    <div v-if="!isEmbed" class="flex-0 z-10 p-6 pb-1 shadow-lg">
       <PageTitle :title="callout.title" no-collapse>
         <router-link
           v-if="callout.responseViewSchema.gallery"
           :to="`/callouts/${callout.slug}/gallery`"
-          class="text-link font-semibold whitespace-nowrap"
+          class="whitespace-nowrap font-semibold text-link"
         >
           <font-awesome-icon :icon="faImages" />
           {{ t('callout.views.gallery') }}
         </router-link>
       </PageTitle>
     </div>
-    <div class="flex-1 relative">
+    <div class="relative flex-1">
       <MglMap
         :center="callout.responseViewSchema.map.center"
         :zoom="callout.responseViewSchema.map.initialZoom"
@@ -110,9 +110,9 @@ meta:
       <transition name="add-notice">
         <div
           v-if="isAddMode && !newResponseAnswers"
-          class="absolute top-10 md:top-20 inset-x-0 flex justify-center"
+          class="absolute inset-x-0 top-10 flex justify-center md:top-20"
         >
-          <p class="bg-white p-4 font-bold rounded shadow-lg mx-4">
+          <p class="mx-4 rounded bg-white p-4 font-bold shadow-lg">
             <font-awesome-icon :icon="faInfoCircle" class="mr-1" />
             {{ t('callout.addAPoint') }}
           </p>
@@ -120,7 +120,7 @@ meta:
       </transition>
       <button
         v-if="isOpen && !isAddMode"
-        class="absolute bottom-8 right-8 rounded-full bg-primary w-20 h-20 text-white shadow-md"
+        class="absolute bottom-8 right-8 h-20 w-20 rounded-full bg-primary text-white shadow-md"
         @click="handleStartAddMode"
       >
         <font-awesome-icon :icon="faPlus" class="text-4xl" />
@@ -469,11 +469,11 @@ function handleLoad(e: { map: Map }) {
 
 .add-notice-enter-from,
 .add-notice-leave-to {
-  @apply opacity-0 -translate-y-8;
+  @apply -translate-y-8 opacity-0;
 }
 
 .add-notice-enter-to,
 .add-notice-leave-from {
-  @apply opacity-100 translate-y-0;
+  @apply translate-y-0 opacity-100;
 }
 </style>

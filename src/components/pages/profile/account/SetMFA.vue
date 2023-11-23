@@ -97,12 +97,12 @@
         <!-- User token verification slide -->
         <AppSlide>
           <div
-            class="whitespace-break-spaces h-full flex flex-col justify-between items-center"
+            class="flex h-full flex-col items-center justify-between whitespace-break-spaces"
           >
             <p class="text-center">
               {{ t(`accountPage.mfa.enterCode.desc`) }}
             </p>
-            <span class="w-full h-full flex flex-col justify-center px-4">
+            <span class="flex h-full w-full flex-col justify-center px-4">
               <AppInput
                 v-model="userToken"
                 type="text"
@@ -129,9 +129,9 @@
         <!-- Last result slide with save button -->
         <AppSlide>
           <div
-            class="whitespace-break-spaces h-full flex justify-center items-center text-center"
+            class="flex h-full items-center justify-center whitespace-break-spaces text-center"
           >
-            <span class="w-full h-full flex flex-col justify-center px-4">
+            <span class="flex h-full w-full flex-col justify-center px-4">
               <AppNotification
                 v-if="userTokenValid"
                 class="my-4"
@@ -158,7 +158,7 @@
           activeSlide,
         }"
       >
-        <span class="flex justify-between mt-3">
+        <span class="mt-3 flex justify-between">
           <!-- Back buttons -->
           <section>
             <AppButton

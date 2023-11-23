@@ -27,7 +27,7 @@ meta:
       variant="info"
     />
 
-    <div class="md:max-w-2xl flex flex-col gap-6">
+    <div class="flex flex-col gap-6 md:max-w-2xl">
       <template v-if="!showResponseForm">
         <div
           v-if="isOpen || latestResponse"

@@ -1,6 +1,6 @@
 <template>
-  <div class="flex gap-4 bg-white p-6 rounded items-center">
-    <div class="flex-0 text-2xl self-start" :class="textColor">
+  <div class="flex items-center gap-4 rounded bg-white p-6">
+    <div class="flex-0 self-start text-2xl" :class="textColor">
       <font-awesome-icon :icon="icon" />
     </div>
     <div class="flex-1">

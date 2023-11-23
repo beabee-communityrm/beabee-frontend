@@ -1,6 +1,6 @@
 <template>
   <h1
-    class="font-title text-3.5xl/tight mb-3"
+    class="mb-3 font-title text-3.5xl/tight"
     :class="[
       big && 'md:text-5xl/tight',
       light ? 'font-light' : 'font-semibold',

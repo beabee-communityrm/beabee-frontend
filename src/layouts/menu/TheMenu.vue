@@ -33,7 +33,7 @@
       <!-- logo on bigger screens -->
 
       <router-link to="/">
-        <AppLogo class="w-12 mx-auto lg:w-20" />
+        <AppLogo class="mx-auto w-12 lg:w-20" />
       </router-link>
     </div>
 
