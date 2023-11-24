@@ -912,15 +912,6 @@
   "editNotice": {
     "title": "Bearbeiten: {title}"
   },
-  "folderEditor": {
-    "add": "Tag hinzufügen",
-    "addNewFolder": "Tag hinzufügen",
-    "confirmDelete": {
-      "text": "Bist du sicher, dass du diesen Tag entfernen willst? Die damit getaggten Antworten werden nicht gelöscht.",
-      "title": "Tag entfernen"
-    },
-    "name": "Name"
-  },
   "footer": {
     "contactUs": "Kontaktiere uns unter",
     "handbookResources": "Handbuch & Ressourcen",
@@ -931,7 +922,7 @@
     "terms": "Allgemeine Geschäftsbedingungen"
   },
   "forgotPassword": {
-    "checkInbox": "Bitte schaue in deinen Posteingang und befolge die Anleitung in der E-Mail. Sollte die E-mail nicht auftauchen, checke deinen Spamordner. ",
+    "backToLogin": "Zurück zum Login",
     "description": "Bitte gib deine E-Mail-Adresse ein. Wir schicken dir dann die Anleitung zum Zurücksetzen deines Passworts.",
     "message": "Gibt es einen Account mit der E-mail-Adresse {email}, bekommst du in Kürze eine Nachricht. Bitte schaue in deinen Posteingang und befolge die Anleitung in der E-Mail. Sollte die E-mail nicht auftauchen, checke deinen Spamordner. ",
     "title": "Passwort vergessen?"
@@ -945,7 +936,6 @@
     "description": "Bezeichnung",
     "email": "E-Mail",
     "errorMessages": {
-      "aggregatorTop": "Hier fehlt etwas! Bitte ergänzen.",
       "api": {
         "duplicate-email": "Diese E-Mail-Adresse existiert bereits.",
         "invalid-token": "Dein eingegebener 2FA Token stimmt nicht.",
@@ -1283,16 +1273,10 @@
   },
   "resetPassword": {
     "description": "Neues Passwort eingeben, um fortzufahren.",
-    "errorLink": "einen neuen Link anfordern",
-    "errorText": "Der Link scheint abgelaufen zu sein. Du kannst {newLink}.",
-    "errorTitle": "Das Zurücksetzen des Passworts ist schiefgelaufen.",
     "failed": "Das Zurücksetzen des Passworts ist schiefgelaufen.",
     "login": "Einloggen",
     "success": "Dein Passwort wurde aktualisiert.",
     "title": "Passwort aktualisieren?"
-  },
-  "reviewerEditor": {
-    "confirmDelete": {}
   },
   "roleEditor": {
     "add": "Rolle hinzufügen",

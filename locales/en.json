@@ -916,15 +916,6 @@
   "editNotice": {
     "title": "Edit: {title}"
   },
-  "folderEditor": {
-    "add": "Add folder",
-    "addNewFolder": "Add a folder",
-    "confirmDelete": {
-      "text": "Are you sure you want to remove this folder? This will only affect this callout.",
-      "title": "Remove folder"
-    },
-    "name": "Name"
-  },
   "footer": {
     "contactUs": "Contact us at",
     "handbookResources": "Handbook & Resources",
@@ -935,7 +926,7 @@
     "terms": "Terms and Conditions"
   },
   "forgotPassword": {
-    "checkInbox": "Please check your inbox and follow the instructions in the email. Check your spam folder if it doesn't appear.",
+    "backToLogin": "Back to login page",
     "description": "Please enter your email address and we’ll send you password reset instructions.",
     "message": "If there is an account associated with {email}, you will receive an email shortly. Check your spam folder if it doesn't appear.",
     "title": "Forgot your password?"
@@ -949,7 +940,6 @@
     "description": "Description",
     "email": "Email",
     "errorMessages": {
-      "aggregatorTop": "Something is missing. Please check for errors below.",
       "api": {
         "account-locked": "Account locked due to too many failed login attempts. Please reset your password or contact support for help.",
         "duplicate-email": "Email address already exists",
@@ -1236,7 +1226,7 @@
     "login": "Login",
     "lostDevice": "Lost your 2FA device?",
     "notFound": "Page not found",
-    "resetDevice": "Reset Secondary Device",
+    "resetDevice": "Reset 2FA device",
     "resetPassword": "Reset password",
     "setup": "Setup"
   },
@@ -1292,22 +1282,11 @@
   },
   "resetPassword": {
     "description": "Set a new password to login.",
-    "errorLink": "request another link",
-    "errorText": "The link might have expired, you could {newLink}.",
-    "errorTitle": "Password reset failed",
     "failed": "Password reset failed, the link might have expired.",
     "login": "Login to your account",
+    "lostDevice": "If you have lost your 2FA device please contact support",
     "success": "Your password has been reset.",
     "title": "Reset your password?"
-  },
-  "reviewerEditor": {
-    "add": "Add reviewer",
-    "addNewReviewer": "Add a reviewer",
-    "confirmDelete": {
-      "text": "Are you sure you want to remove this reviewer from this callout?",
-      "title": "Remove reviewer"
-    },
-    "name": "Name"
   },
   "roleEditor": {
     "add": "Add role",
