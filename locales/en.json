@@ -6,6 +6,7 @@
     "loginDetail": "Login details",
     "mfa": {
       "codeInput": {
+        "info": "If you have lost your 2FA device please contact support",
         "label": "Code"
       },
       "confirmDelete": {

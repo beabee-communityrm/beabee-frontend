@@ -70,6 +70,7 @@ meta:
             min="6"
             max="6"
             :label="t('accountPage.mfa.codeInput.label')"
+            :info-message="t('accountPage.mfa.codeInput.info')"
           />
         </div>
       </template>
