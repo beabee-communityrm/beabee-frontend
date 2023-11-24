@@ -42,7 +42,6 @@ import { isRequestError } from '../../utils/api';
 import AppNotification from '../AppNotification.vue';
 import AppButton from '../button/AppButton.vue';
 import { LOGIN_CODES } from '@enums/login-codes';
-import { RESET_SECURITY_FLOW_ERROR_CODE } from '@enums/reset-security-flow-error-code';
 
 const emit = defineEmits(['reset']);
 const props = defineProps<{
@@ -62,9 +61,6 @@ const errorMessages = computed<Record<string, string>>(() => ({
   'duplicate-email': t('form.errorMessages.api.duplicate-email'),
   [LOGIN_CODES.LOGIN_FAILED]: t('form.errorMessages.api.login-failed'),
   [LOGIN_CODES.INVALID_TOKEN]: t('form.errorMessages.api.invalid-token'),
-  [RESET_SECURITY_FLOW_ERROR_CODE.INVALID_PASSWORD]: t(
-    'form.errorMessages.api.invalid-password'
-  ),
   [LOGIN_CODES.LOCKED]: t('form.errorMessages.api.account-locked'),
   ...props.errorText,
 }));
