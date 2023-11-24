@@ -313,10 +313,9 @@
   }
 
   .col-form-label {
-    @apply font-bold text-base mb-0 inline;
+    @apply font-bold text-base mb-0;
     &::after {
-      @apply text-body;
-      content: ': ';
+      @apply hidden;
     }
   }
 
