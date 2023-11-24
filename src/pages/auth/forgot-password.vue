@@ -13,11 +13,6 @@ meta:
     <template v-if="!isRequestSuccessful">
       <AppForm
         :button-text="t('actions.resetPassword')"
-        :error-text="{
-          [RESET_SECURITY_FLOW_ERROR_CODE.OTHER_ACTIVE_FLOW]: t(
-            'forgotPassword.errors.other-active-flow'
-          ),
-        }"
         inline-error
         full-button
         @submit="submitForgotPassword"
@@ -66,8 +61,6 @@ import AppTitle from '@components/AppTitle.vue';
 import AuthBox from '@components/AuthBox.vue';
 
 import { resetPasswordBegin } from '@utils/api/reset-security-flow';
-
-import { RESET_SECURITY_FLOW_ERROR_CODE } from '@enums/reset-security-flow-error-code';
 
 const { t } = useI18n();
 const route = useRoute();
