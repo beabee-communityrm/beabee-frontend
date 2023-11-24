@@ -92,26 +92,24 @@ meta:
 <script lang="ts" setup>
 import { ItemStatus } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
-import PageTitle from '../../components/PageTitle.vue';
-import { currentUser } from '../../store';
-import AppHeading from '../../components/AppHeading.vue';
-import KeyStat from '../../components/pages/admin/KeyStat.vue';
+import PageTitle from '@components/PageTitle.vue';
+import { currentUser } from '@store';
+import AppHeading from '@components/AppHeading.vue';
+import KeyStat from '@components/pages/admin/KeyStat.vue';
 import { computed, onBeforeMount, ref } from 'vue';
-import {
-  GetCalloutDataWith,
-  GetContactData,
-  GetStatsData,
-} from '../../utils/api/api.interface';
-import { fetchContacts } from '../../utils/api/contact';
-import HintBox from '../../components/pages/admin/HintBox.vue';
-import { fetchCallouts } from '../../utils/api/callout';
-import CalloutSummary from '../../components/callout/CalloutSummary.vue';
-import { fetchStats } from '../../utils/api/stats';
+
+import { fetchContacts } from '@utils/api/contact';
+import HintBox from '@components/pages/admin/HintBox.vue';
+import { fetchCallouts } from '@utils/api/callout';
+import CalloutSummary from '@components/callout/CalloutSummary.vue';
+import { fetchStats } from '@utils/api/stats';
 import { subDays } from 'date-fns';
-import { addBreadcrumb } from '../../store/breadcrumb';
+import { addBreadcrumb } from '@store/breadcrumb';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import env from '../../env';
-import AppTime from '../../components/AppTime.vue';
+import AppTime from '@components/AppTime.vue';
+
+import type { GetCalloutDataWith, GetContactData, GetStatsData } from '@type';
 
 const { n, t } = useI18n();
 

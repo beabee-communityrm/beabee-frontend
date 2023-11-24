@@ -3,7 +3,7 @@
     <div class="col-span-1">
       <slot />
     </div>
-    <div class="col-span-1 text-sm text-grey content-i18n" v-html="help" />
+    <div class="content-i18n col-span-1 text-sm text-grey" v-html="help" />
   </div>
 </template>
 <script lang="ts" setup>

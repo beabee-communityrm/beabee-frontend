@@ -1,7 +1,7 @@
 <template>
   <div
-    class="flex justify-between items-center"
-    :class="{ 'border-b border-primary-40 mb-5': border }"
+    class="flex items-center justify-between"
+    :class="{ 'mb-5 border-b border-primary-40': border }"
   >
     <AppTitle
       light

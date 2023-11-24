@@ -41,12 +41,15 @@ meta:
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import App2ColGrid from '../../../components/App2ColGrid.vue';
-import AppHeading from '../../../components/AppHeading.vue';
-import AppForm from '../../../components/forms/AppForm.vue';
-import AppInput from '../../../components/forms/AppInput.vue';
-import { EmailContent } from '../../../utils/api/api.interface';
-import { fetchContent, updateContent } from '../../../utils/api/content';
+
+import App2ColGrid from '@components/App2ColGrid.vue';
+import AppHeading from '@components/AppHeading.vue';
+import AppForm from '@components/forms/AppForm.vue';
+import AppInput from '@components/forms/AppInput.vue';
+
+import { fetchContent, updateContent } from '@utils/api/content';
+
+import type { EmailContent } from '@type';
 
 const { t } = useI18n();
 

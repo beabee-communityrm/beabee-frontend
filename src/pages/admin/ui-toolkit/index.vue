@@ -23,7 +23,7 @@ meta:
       </div>
       <div class="mb-10">
         <AppSubHeading>Other headings</AppSubHeading>
-        <div class="bg-white p-6 mb-3">
+        <div class="mb-3 bg-white p-6">
           <!-- <PageTitle :title="t('menu.uiToolkit')" /> -->
           <PageTitle title="PageTitle" />
           <p class="mb-3">
@@ -51,7 +51,7 @@ meta:
       <div class="mb-10">
         <AppHeading>Paragraphs</AppHeading>
         <p class="mb-3 text-body-80">Texts are set using the body text font.</p>
-        <p class="text-lg mb-3">
+        <p class="mb-3 text-lg">
           This is a lead paragraph, with the <em>text-lg</em> class. It's used
           to highlight a paragraph in a text, such as the first sentence in an
           error notification box, the introductory paragraph of a callout, or a
@@ -61,13 +61,13 @@ meta:
           This is a normal paragraph. The default body text size is 16px across
           screen sizes.
         </p>
-        <p class="text-sm mb-3">
+        <p class="mb-3 text-sm">
           There is also a small text size, set in 14px, using class
           <em>text-sm</em>. This size is used to set auxiliary texts such as
           informative notes in the callout builder interface, table data or
           pagination.
         </p>
-        <p class="text-xs mb-3">
+        <p class="mb-3 text-xs">
           Extra small text is used for additional information, e.g. password
           input field details or payment method details.
         </p>
@@ -77,17 +77,15 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppTitle from '../../../components/AppTitle.vue';
-import PageTitle from '../../../components/PageTitle.vue';
-import AppHeading from '../../../components/AppHeading.vue';
-import AppSubHeading from '../../../components/AppSubHeading.vue';
-import AppSectionHeading from '../../../components/AppSectionHeading.vue';
-import SectionTitle from '../../../components/pages/profile/SectionTitle.vue';
-import AppBadge from '../../../components/AppBadge.vue';
-import AppRoundBadge from '../../../components/AppRoundBadge.vue';
-import AppButton from '../../../components/button/AppButton.vue';
+import AppTitle from '@components/AppTitle.vue';
+import PageTitle from '@components/PageTitle.vue';
+import AppHeading from '@components/AppHeading.vue';
+import AppSubHeading from '@components/AppSubHeading.vue';
+import AppSectionHeading from '@components/AppSectionHeading.vue';
+import SectionTitle from '@components/pages/profile/SectionTitle.vue';
+
+// TODO: Move ui widgets from src/pages/_theme.vue to here
 
 const { t } = useI18n();
 </script>

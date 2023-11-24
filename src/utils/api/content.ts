@@ -1,5 +1,5 @@
 import axios from '../../lib/axios';
-import {
+import type {
   ContactsContent,
   EmailContent,
   GeneralContent,
@@ -7,7 +7,7 @@ import {
   JoinSetupContent,
   ProfileContent,
   ShareContent,
-} from './api.interface';
+} from '@type';
 
 type ContentId =
   | 'join'

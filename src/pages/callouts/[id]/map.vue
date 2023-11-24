@@ -12,19 +12,19 @@ meta:
     v-if="callout.responseViewSchema?.map"
     class="absolute inset-0 flex flex-col"
   >
-    <div v-if="!isEmbed" class="flex-0 p-6 pb-1 shadow-lg z-10">
+    <div v-if="!isEmbed" class="flex-0 z-10 p-6 pb-1 shadow-lg">
       <PageTitle :title="callout.title" no-collapse>
         <router-link
           v-if="callout.responseViewSchema.gallery"
           :to="`/callouts/${callout.slug}/gallery`"
-          class="text-link font-semibold whitespace-nowrap"
+          class="whitespace-nowrap font-semibold text-link"
         >
           <font-awesome-icon :icon="faImages" />
           {{ t('callout.views.gallery') }}
         </router-link>
       </PageTitle>
     </div>
-    <div class="flex-1 relative">
+    <div class="relative flex-1">
       <MglMap
         :center="callout.responseViewSchema.map.center"
         :zoom="callout.responseViewSchema.map.initialZoom"
@@ -110,9 +110,9 @@ meta:
       <transition name="add-notice">
         <div
           v-if="isAddMode && !newResponseAnswers"
-          class="absolute top-10 md:top-20 inset-x-0 flex justify-center"
+          class="absolute inset-x-0 top-10 flex justify-center md:top-20"
         >
-          <p class="bg-white p-4 font-bold rounded shadow-lg mx-4">
+          <p class="mx-4 rounded bg-white p-4 font-bold shadow-lg">
             <font-awesome-icon :icon="faInfoCircle" class="mr-1" />
             {{ t('callout.addAPoint') }}
           </p>
@@ -120,7 +120,7 @@ meta:
       </transition>
       <button
         v-if="isOpen && !isAddMode"
-        class="absolute bottom-8 right-8 rounded-full bg-primary w-20 h-20 text-white shadow-md"
+        class="absolute bottom-8 right-8 h-20 w-20 rounded-full bg-primary text-white shadow-md"
         @click="handleStartAddMode"
       >
         <font-awesome-icon :icon="faPlus" class="text-4xl" />
@@ -172,17 +172,10 @@ import type {
   MapMouseEvent,
 } from 'maplibre-gl';
 import type GeoJSON from 'geojson';
-import {
-  GetCalloutDataWith,
-  GetCalloutResponseMapData,
-} from '../../../utils/api/api.interface';
-import { fetchResponsesForMap } from '../../../utils/api/callout';
-import PageTitle from '../../../components/PageTitle.vue';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
 import 'vue-maplibre-gl/dist/vue-maplibre-gl.css';
-import CalloutShowResponsePanel from '../../../components/pages/callouts/CalloutShowResponsePanel.vue';
-import CalloutIntroPanel from '../../../components/pages/callouts/CalloutIntroPanel.vue';
+
 import {
   CalloutResponseAnswerAddress,
   CalloutResponseAnswers,
@@ -194,22 +187,31 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useI18n } from 'vue-i18n';
 import { GeocodingControl } from '@maptiler/geocoding-control/maplibregl';
+import '@maptiler/geocoding-control/style.css';
+import { GeocodingFeature } from '@maptiler/client';
+
+import PageTitle from '@components/PageTitle.vue';
+import CalloutShowResponsePanel from '@components/pages/callouts/CalloutShowResponsePanel.vue';
+import CalloutIntroPanel from '@components/pages/callouts/CalloutIntroPanel.vue';
+import CalloutAddResponsePanel from '@components/pages/callouts/CalloutAddResponsePanel.vue';
 import {
   HASH_PREFIX,
   useCallout,
-} from '../../../components/pages/callouts/use-callout';
+} from '@components/pages/callouts/use-callout';
+
 import {
   GeocodeResult,
   featureToAddress,
   reverseGeocode,
   formatGeocodeResult,
-} from '../../../utils/geocode';
-import CalloutAddResponsePanel from '../../../components/pages/callouts/CalloutAddResponsePanel.vue';
+} from '@utils/geocode';
+import { fetchResponsesForMap } from '@utils/api/callout';
+
 import env from '../../../env';
 
-import '@maptiler/geocoding-control/style.css';
-import { GeocodingFeature } from '@maptiler/client';
-import { generalContent, isEmbed } from '../../../store';
+import { generalContent, isEmbed } from '@store';
+
+import type { GetCalloutDataWith, GetCalloutResponseMapData } from '@type';
 
 type GetCalloutResponseMapDataWithAddress = GetCalloutResponseMapData & {
   address: CalloutResponseAnswerAddress;
@@ -399,15 +401,17 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
   if (mapSchema.addressPatternProp && result) {
     const [patternSlideId, patternKey] =
       mapSchema.addressPatternProp.split('.');
-    if (!newResponseAnswers.value[patternSlideId]) {
-      newResponseAnswers.value[patternSlideId] = {};
-    }
+
+    newResponseAnswers.value[patternSlideId] ||= {};
 
     // TODO: clean this up
-    newResponseAnswers.value[patternSlideId]![patternKey] = formatGeocodeResult(
-      result,
-      mapSchema.addressPattern
-    );
+    const newResponseAnswer = newResponseAnswers.value[patternSlideId];
+    if (newResponseAnswer) {
+      newResponseAnswer[patternKey] = formatGeocodeResult(
+        result,
+        mapSchema.addressPattern
+      );
+    }
   }
 }
 
@@ -467,11 +471,11 @@ function handleLoad(e: { map: Map }) {
 
 .add-notice-enter-from,
 .add-notice-leave-to {
-  @apply opacity-0 -translate-y-8;
+  @apply -translate-y-8 opacity-0;
 }
 
 .add-notice-enter-to,
 .add-notice-leave-from {
-  @apply opacity-100 translate-y-0;
+  @apply translate-y-0 opacity-100;
 }
 </style>

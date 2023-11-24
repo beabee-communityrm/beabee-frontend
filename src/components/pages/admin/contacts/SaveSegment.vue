@@ -57,16 +57,17 @@ import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import useVuelidate from '@vuelidate/core';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import {
-  GetSegmentData,
-  GetSegmentDataWith,
-} from '../../../../utils/api/api.interface';
-import { createSegment, updateSegment } from '../../../../utils/api/segments';
-import AppModal from '../../../AppModal.vue';
-import AppButton from '../../../button/AppButton.vue';
-import AppInput from '../../../forms/AppInput.vue';
-import AppRadioGroup from '../../../forms/AppRadioGroup.vue';
-import { addNotification } from '../../../../store/notifications';
+
+import AppModal from '@components/AppModal.vue';
+import AppButton from '@components/button/AppButton.vue';
+import AppInput from '@components/forms/AppInput.vue';
+import AppRadioGroup from '@components/forms/AppRadioGroup.vue';
+
+import { createSegment, updateSegment } from '@utils/api/segments';
+
+import { addNotification } from '@store/notifications';
+
+import type { GetSegmentData, GetSegmentDataWith } from '@type';
 
 const emit = defineEmits(['saved']);
 const props = defineProps<{

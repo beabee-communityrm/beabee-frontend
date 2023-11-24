@@ -15,12 +15,11 @@ import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
-import {
-  CreateCalloutTagData,
-  GetCalloutTagData,
-} from '../../utils/api/api.interface';
-import AppForm from '../forms/AppForm.vue';
-import AppInput from '../forms/AppInput.vue';
+
+import AppForm from '@components/forms/AppForm.vue';
+import AppInput from '@components/forms/AppInput.vue';
+
+import type { CreateCalloutTagData, GetCalloutTagData } from '@type';
 
 const { t } = useI18n();
 

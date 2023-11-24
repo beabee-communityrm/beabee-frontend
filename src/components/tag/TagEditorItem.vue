@@ -45,14 +45,13 @@
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import {
-  GetCalloutTagData,
-  UpdateCalloutTagData,
-} from '../../utils/api/api.interface';
+
 import AppConfirmDialog from '../AppConfirmDialog.vue';
 import AppButton from '../button/AppButton.vue';
 import AppButtonGroup from '../button/AppButtonGroup.vue';
 import TagEditorForm from './TagEditorForm.vue';
+
+import type { GetCalloutTagData, UpdateCalloutTagData } from '@type';
 
 defineEmits<{
   (e: 'delete', id: string): void;

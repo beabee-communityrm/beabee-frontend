@@ -41,14 +41,16 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
-import { GetCalloutDataWith } from '../../utils/api/api.interface';
-
-import env from './../../env';
-import ItemStatusText from '../item/ItemStatusText.vue';
-import ItemDateRange from '../item/ItemDateRange.vue';
-import AppSubHeading from '../AppSubHeading.vue';
-import AppButton from '../button/AppButton.vue';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+
+import env from '@env';
+
+import ItemStatusText from '@components/item/ItemStatusText.vue';
+import ItemDateRange from '@components/item/ItemDateRange.vue';
+import AppSubHeading from '@components/AppSubHeading.vue';
+import AppButton from '@components/button/AppButton.vue';
+
+import type { GetCalloutDataWith } from '@type';
 
 const { t } = useI18n();
 

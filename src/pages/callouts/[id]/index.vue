@@ -27,7 +27,7 @@ meta:
       variant="info"
     />
 
-    <div class="md:max-w-2xl flex flex-col gap-6">
+    <div class="flex flex-col gap-6 md:max-w-2xl">
       <template v-if="!showResponseForm">
         <div
           v-if="isOpen || latestResponse"
@@ -108,35 +108,35 @@ meta:
 import { Paginated } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref, toRef } from 'vue';
 import { useI18n } from 'vue-i18n';
-import {
-  GetCalloutDataWith,
-  GetCalloutResponseDataWith,
-} from '../../../utils/api/api.interface';
-import { fetchResponses } from '../../../utils/api/callout';
-import AppButton from '../../../components/button/AppButton.vue';
-import { currentUser, canAdmin, isEmbed } from '../../../store';
-import SharingPanel from '../../../components/pages/callouts/CalloutSharingPanel.vue';
-
 import { useRoute, useRouter } from 'vue-router';
-import ItemStatusText from '../../../components/item/ItemStatusText.vue';
-import { addBreadcrumb } from '../../../store/breadcrumb';
 import {
   faBullhorn,
   faCaretDown,
   faInfoCircle,
   faShare,
 } from '@fortawesome/free-solid-svg-icons';
-import AppNotification from '../../../components/AppNotification.vue';
-import CalloutForm from '../../../components/pages/callouts/CalloutForm.vue';
-import { addNotification } from '../../../store/notifications';
-import { useCallout } from '../../../components/pages/callouts/use-callout';
-import CalloutLoginPrompt from '../../../components/pages/callouts/CalloutLoginPrompt.vue';
-import CalloutMemberOnlyPrompt from '../../../components/pages/callouts/CalloutMemberOnlyPrompt.vue';
-import CalloutThanksBox from '../../../components/pages/callouts/CalloutThanksBox.vue';
-import AppMessageBox from '../../../components/AppMessageBox.vue';
-import { formatLocale } from '../../../utils/dates';
-import AppHeading from '../../../components/AppHeading.vue';
-import AppTitle from '../../../components/AppTitle.vue';
+
+import AppButton from '@components/button/AppButton.vue';
+import SharingPanel from '@components/pages/callouts/CalloutSharingPanel.vue';
+import ItemStatusText from '@components/item/ItemStatusText.vue';
+import AppNotification from '@components/AppNotification.vue';
+import CalloutForm from '@components/pages/callouts/CalloutForm.vue';
+import { useCallout } from '@components/pages/callouts/use-callout';
+import CalloutLoginPrompt from '@components/pages/callouts/CalloutLoginPrompt.vue';
+import CalloutMemberOnlyPrompt from '@components/pages/callouts/CalloutMemberOnlyPrompt.vue';
+import CalloutThanksBox from '@components/pages/callouts/CalloutThanksBox.vue';
+import AppMessageBox from '@components/AppMessageBox.vue';
+import AppHeading from '@components/AppHeading.vue';
+import AppTitle from '@components/AppTitle.vue';
+
+import { fetchResponses } from '@utils/api/callout';
+import { formatLocale } from '@utils/dates';
+
+import { currentUser, canAdmin, isEmbed } from '@store';
+import { addNotification } from '@store/notifications';
+import { addBreadcrumb } from '@store/breadcrumb';
+
+import type { GetCalloutDataWith, GetCalloutResponseDataWith } from '@type';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;

@@ -19,15 +19,16 @@ meta:
 import { NewsletterStatus } from '@beabee/beabee-common';
 import { onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import {
-  JoinSetupContent,
-  UpdateContactData,
-} from '../../utils/api/api.interface';
-import { fetchContent } from '../../utils/api/content';
-import SetupForm from '../../components/pages/join/SetupForm.vue';
-import { SetupContactData } from '../../components/pages/join/join.interface';
-import { updateContact } from '../../utils/api/contact';
-import { updateCurrentUser } from '../../store';
+
+import SetupForm from '@components/pages/join/SetupForm.vue';
+
+import { fetchContent } from '@utils/api/content';
+import { updateContact } from '@utils/api/contact';
+
+import { updateCurrentUser } from '@store';
+
+import type { SetupContactData } from '@components/pages/join/join.interface';
+import type { JoinSetupContent, UpdateContactData } from '@type';
 
 const router = useRouter();
 

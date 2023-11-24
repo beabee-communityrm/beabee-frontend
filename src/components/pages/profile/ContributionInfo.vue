@@ -18,29 +18,20 @@
 </template>
 
 <script lang="ts" setup>
-import { ContributionPeriod } from '@beabee/beabee-common';
-import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { formatLocale } from '../../../utils/dates';
-import { GetContactData } from '../../../utils/api/api.interface';
-import AppInfoList from '../../AppInfoList.vue';
-import AppInfoListItem from '../../AppInfoListItem.vue';
+
+import AppInfoList from '@components/AppInfoList.vue';
+import AppInfoListItem from '@components/AppInfoListItem.vue';
+
+import { formatLocale } from '@utils/dates';
+
+import type { GetContactData } from '@type';
 
 const { t, n } = useI18n();
 
-const props = defineProps<{
+defineProps<{
   contact: GetContactData;
 }>();
-
-const period = computed(() => {
-  return props.contact.contributionPeriod === ContributionPeriod.Monthly
-    ? t('common.month')
-    : t('common.year');
-});
-
-const formattedJoinedDate = computed(() => {
-  return formatLocale(props.contact.joined, 'do MMMM y').split(' ');
-});
 </script>
 
 <style lang="postcss" scoped>

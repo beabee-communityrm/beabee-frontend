@@ -79,12 +79,12 @@ meta:
         <AppCheckbox
           v-model="joinContent.showNoContribution"
           :label="stepT('showNoContribution')"
-          class="font-semibold mb-4"
+          class="mb-4 font-semibold"
         />
         <AppCheckbox
           v-model="joinContent.showAbsorbFee"
           :label="stepT('showAbsorbFee')"
-          class="font-semibold mb-4"
+          class="mb-4 font-semibold"
         />
       </AppForm>
     </template>
@@ -95,24 +95,28 @@ meta:
 </template>
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref } from 'vue';
-import { JoinContent } from '../../../utils/api/api.interface';
-import { fetchContent, updateContent } from '../../../utils/api/content';
-import AppForm from '../../../components/forms/AppForm.vue';
-import AppInput from '../../../components/forms/AppInput.vue';
-import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
-import AppLabel from '../../../components/forms/AppLabel.vue';
 import { useI18n } from 'vue-i18n';
-import AppSelect from '../../../components/forms/AppSelect.vue';
-import { ContributionPeriod } from '@beabee/beabee-common';
-import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
-import JoinForm from '../../../components/pages/join/JoinForm.vue';
-import AppImageUpload from '../../../components/forms/AppImageUpload.vue';
-import { generalContent } from '../../../store';
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
-import PeriodAmounts from '../../../components/pages/admin/membership-builder/PeriodAmounts.vue';
-import App2ColGrid from '../../../components/App2ColGrid.vue';
-import AppSubHeading from '../../../components/AppSubHeading.vue';
+import { ContributionPeriod } from '@beabee/beabee-common';
+
+import AppForm from '@components/forms/AppForm.vue';
+import AppInput from '@components/forms/AppInput.vue';
+import RichTextEditor from '@components/rte/RichTextEditor.vue';
+import AppLabel from '@components/forms/AppLabel.vue';
+import AppSelect from '@components/forms/AppSelect.vue';
+import AppCheckbox from '@components/forms/AppCheckbox.vue';
+import JoinForm from '@components/pages/join/JoinForm.vue';
+import AppImageUpload from '@components/forms/AppImageUpload.vue';
+import PeriodAmounts from '@components/pages/admin/membership-builder/PeriodAmounts.vue';
+import App2ColGrid from '@components/App2ColGrid.vue';
+import AppSubHeading from '@components/AppSubHeading.vue';
+
+import { fetchContent, updateContent } from '@utils/api/content';
+
+import { generalContent } from '@store';
+
+import type { JoinContent } from '@type';
 
 const joinContent = ref<JoinContent>();
 const backgroundUrl = ref('');

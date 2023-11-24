@@ -114,7 +114,7 @@ meta:
 
     <hr class="my-10 border-t border-primary-40" />
 
-    <div class="flex gap-2 mb-4">
+    <div class="mb-4 flex gap-2">
       <AppButton
         v-if="callout.responseViewSchema?.map"
         :to="`/callouts/${callout.slug}/map#response-${response.number}`"
@@ -157,31 +157,8 @@ meta:
 </template>
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
-import {
-  GetCalloutDataWith,
-  GetCalloutResponseData,
-  GetCalloutResponseDataWith,
-  UpdateCalloutResponseData,
-} from '../../../../../../utils/api/api.interface';
-import { fetchResponses, fetchTags } from '../../../../../../utils/api/callout';
 import { useI18n } from 'vue-i18n';
-import AppHeading from '../../../../../../components/AppHeading.vue';
-import AppInfoList from '../../../../../../components/AppInfoList.vue';
-import AppInfoListItem from '../../../../../../components/AppInfoListItem.vue';
-import { formatLocale } from '../../../../../../utils/dates';
-import AppButton from '../../../../../../components/button/AppButton.vue';
-import AppButtonGroup from '../../../../../../components/button/AppButtonGroup.vue';
-import { addBreadcrumb } from '../../../../../../store/breadcrumb';
-import MoveBucketButton from '../../../../../../components/pages/admin/callouts/MoveBucketButton.vue';
-import ToggleTagButton from '../../../../../../components/pages/admin/callouts/ToggleTagButton.vue';
-import { buckets } from '../../../../../../components/pages/admin/callouts/callouts.interface';
-import AppTag from '../../../../../../components/AppTag.vue';
-import {
-  fetchCalloutResponse,
-  updateCalloutResponse,
-} from '../../../../../../utils/api/callout-response';
-import CalloutResponseComments from '../../../../../../components/callout/CalloutResponseComments.vue';
-import SetAssigneeButton from '../../../../../../components/pages/admin/callouts/SetAssigneeButton.vue';
+import { CalloutResponseAnswers } from '@beabee/beabee-common';
 import {
   faCaretLeft,
   faCaretRight,
@@ -190,10 +167,37 @@ import {
   faTag,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { addNotification } from '../../../../../../store/notifications';
-import AppNotification from '../../../../../../components/AppNotification.vue';
-import { CalloutResponseAnswers } from '@beabee/beabee-common';
-import CalloutForm from '../../../../../../components/pages/callouts/CalloutForm.vue';
+
+import AppHeading from '@components/AppHeading.vue';
+import AppInfoList from '@components/AppInfoList.vue';
+import AppInfoListItem from '@components/AppInfoListItem.vue';
+import AppButton from '@components/button/AppButton.vue';
+import AppButtonGroup from '@components/button/AppButtonGroup.vue';
+import { addBreadcrumb } from '@store/breadcrumb';
+import MoveBucketButton from '@components/pages/admin/callouts/MoveBucketButton.vue';
+import ToggleTagButton from '@components/pages/admin/callouts/ToggleTagButton.vue';
+import { buckets } from '@components/pages/admin/callouts/callouts.interface';
+import AppTag from '@components/AppTag.vue';
+import CalloutResponseComments from '@components/callout/CalloutResponseComments.vue';
+import SetAssigneeButton from '@components/pages/admin/callouts/SetAssigneeButton.vue';
+import AppNotification from '@components/AppNotification.vue';
+import CalloutForm from '@components/pages/callouts/CalloutForm.vue';
+
+import { addNotification } from '@store/notifications';
+
+import { formatLocale } from '@utils/dates';
+import { fetchResponses, fetchTags } from '@utils/api/callout';
+import {
+  fetchCalloutResponse,
+  updateCalloutResponse,
+} from '@utils/api/callout-response';
+
+import type {
+  GetCalloutDataWith,
+  GetCalloutResponseData,
+  GetCalloutResponseDataWith,
+  UpdateCalloutResponseData,
+} from '@type';
 
 const props = defineProps<{
   rid: string;

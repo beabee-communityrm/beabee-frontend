@@ -39,17 +39,21 @@ meta:
 import { Paginated } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppButton from '../../../components/button/AppButton.vue';
-import PageTitle from '../../../components/PageTitle.vue';
-import { GetNoticeData } from '../../../utils/api/api.interface';
-import { Header } from '../../../components/table/table.interface';
-import { fetchNotices } from '../../../utils/api/notice';
-import { formatLocale } from '../../../utils/dates';
-import AppItemStatus from '../../../components/AppItemStatus.vue';
-import { addBreadcrumb } from '../../../store/breadcrumb';
-import { definePaginatedQuery } from '../../../utils/pagination';
-import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
 import { faSignHanging } from '@fortawesome/free-solid-svg-icons';
+
+import AppButton from '@components/button/AppButton.vue';
+import PageTitle from '@components/PageTitle.vue';
+import { Header } from '@components/table/table.interface';
+import AppItemStatus from '@components/AppItemStatus.vue';
+import AppPaginatedTable from '@components/table/AppPaginatedTable.vue';
+
+import { addBreadcrumb } from '@store/breadcrumb';
+
+import { fetchNotices } from '@utils/api/notice';
+import { formatLocale } from '@utils/dates';
+import { definePaginatedQuery } from '@utils/pagination';
+
+import type { GetNoticeData } from '@type';
 
 const { t } = useI18n();
 

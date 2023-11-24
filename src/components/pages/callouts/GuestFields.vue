@@ -1,6 +1,6 @@
 <template>
   <div class="mb-8">
-    <h3 class="mb-2 text-xl font-title font-semibold">
+    <h3 class="mb-2 font-title text-xl font-semibold">
       {{ t('callout.contactDetails') }}
     </h3>
     <p v-if="!env.cnrMode" class="mb-3 text-sm">

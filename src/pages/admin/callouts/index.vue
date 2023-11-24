@@ -62,27 +62,27 @@ meta:
 import { Paginated } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { Header } from '../../../components/table/table.interface';
-import AppButton from '../../../components/button/AppButton.vue';
-import PageTitle from '../../../components/PageTitle.vue';
-import AppItemStatus from '../../../components/AppItemStatus.vue';
-import {
-  GetCalloutDataWith,
-  GetCalloutsQuery,
-} from '../../../utils/api/api.interface';
-import { formatLocale } from '../../../utils/dates';
-import { fetchCallouts } from '../../../utils/api/callout';
-
-import AppSearchInput from '../../../components/forms/AppSearchInput.vue';
-import AppFilterGrid from '../../../components/AppFilterGrid.vue';
-import { addBreadcrumb } from '../../../store/breadcrumb';
-import { definePaginatedQuery, defineParam } from '../../../utils/pagination';
-import AppPaginatedTable from '../../../components/table/AppPaginatedTable.vue';
 import {
   faBullhorn,
   faEye,
   faEyeSlash,
 } from '@fortawesome/free-solid-svg-icons';
+
+import { Header } from '@components/table/table.interface';
+import AppButton from '@components/button/AppButton.vue';
+import PageTitle from '@components/PageTitle.vue';
+import AppItemStatus from '@components/AppItemStatus.vue';
+import AppSearchInput from '@components/forms/AppSearchInput.vue';
+import AppFilterGrid from '@components/AppFilterGrid.vue';
+import AppPaginatedTable from '@components/table/AppPaginatedTable.vue';
+
+import { definePaginatedQuery, defineParam } from '@utils/pagination';
+import { formatLocale } from '@utils/dates';
+import { fetchCallouts } from '@utils/api/callout';
+
+import { addBreadcrumb } from '@store/breadcrumb';
+
+import type { GetCalloutDataWith, GetCalloutsQuery } from '@type';
 
 const { t } = useI18n();
 

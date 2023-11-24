@@ -6,13 +6,13 @@
       v-for="item in items"
       :key="item.value"
       type="button"
-      class="flex-grow basis-[90px] text-sm font-semibold outline outline-1 outline-primary-40 bg-white"
+      class="flex-grow basis-[90px] bg-white text-sm font-semibold outline outline-1 outline-primary-40"
       :class="[
         size === 'xs' ? 'p-2' : 'p-2.5',
         disabled
           ? 'opacity-50'
           : item.value === modelValue
-          ? 'z-20 !bg-link !outline-link-110 font-bold text-white'
+          ? 'z-20 !bg-link font-bold text-white !outline-link-110'
           : 'hover:z-10 hover:bg-link-10 hover:outline-link',
       ]"
       :disabled="disabled"

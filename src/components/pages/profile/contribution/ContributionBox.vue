@@ -30,7 +30,7 @@
               v-if="contribution.membershipExpiryDate"
               :datetime="contribution.membershipExpiryDate"
               time-only
-              class="text-danger font-bold"
+              class="font-bold text-danger"
             />
           </template>
         </i18n-t>
@@ -69,11 +69,13 @@ import {
   MembershipStatus,
 } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
-import { formatLocale } from '../../../../utils/dates';
+import { formatLocale } from '@utils/dates';
 import { computed } from 'vue';
-import { ContributionInfo } from '../../../../utils/api/api.interface';
-import AppSubHeading from '../../../AppSubHeading.vue';
-import AppTime from '../../../AppTime.vue';
+
+import AppSubHeading from '@components/AppSubHeading.vue';
+import AppTime from '@components/AppTime.vue';
+
+import type { ContributionInfo } from '@type';
 
 const { n, t } = useI18n();
 

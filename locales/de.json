@@ -1,10 +1,45 @@
 {
   "accountPage": {
-    "changePassword": "Passwort ändern",
     "contactInformation": "Kontaktdaten",
     "deliveryAddress": "Adresse",
     "deliveryOptIn": "Postsendung",
     "loginDetail": "Anmeldedaten",
+    "mfa": {
+      "codeInput": {
+        "label": "Code"
+      },
+      "confirmDelete": {
+        "desc": "Möchten Sie die Multi-Faktor-Authentifizierung wirklich deaktivieren? \nDanach benötigen Sie nur noch Ihr Passwort zur Anmeldung. Bitte \nvergessen Sie nicht, den Eintrag aus Ihrer Authenticator-App zu \nentfernen. Sie können diese Funktion jederzeit wieder aktivieren.",
+        "descToken": "Um die 2FA zu deaktivieren, geben Sie bitte Ihren aktuellen 2FA-Code ein:",
+        "title": "2FA deaktivieren"
+      },
+      "createUnknownErrorNotification": "Die 2-Faktor-Authentifizierung konnte aufgrund eines unbekannten Fehlers\n nicht gespeichert werden. Bitte versuchen Sie es erneut oder \nkontaktieren Sie den Support.",
+      "deleteUnknownErrorNotification": "Die 2-Faktor-Authentifizierung konnte aufgrund eines unbekannten Fehlers\n nicht entfernt werden. Bitte versuchen Sie es erneut oder \nkontaktieren Sie den Support.",
+      "disabledNotification": "Zwei-Faktor Authentifizierung erfolgreich deaktiviert",
+      "enabledNotification": "Zwei-Faktor Authentifizierung erfolgreich aktiviert",
+      "enterCode": {
+        "desc": "Geben Sie den Code ein, der in Ihrer Authentifizierungs-App angezeigt wird.",
+        "title": "Überprüfung"
+      },
+      "modalTitle": "Aktivere 2-Faktor Authentifizierung",
+      "result": {
+        "invalidCode": "Der Code konnte nicht bestätigt werden. Bitte versuchen Sie es erneut oder kontaktieren Sie den Support.",
+        "successful": "Die 2-Faktor Authentifizierung wurde erfolgreich eingerichtet.",
+        "title": "Fertig"
+      },
+      "scan": {
+        "desc": "Scannen Sie den unten stehenden QR-Code mit Ihrer Authentifizierungs-App.",
+        "title": "QR-Code"
+      },
+      "secretInput": {
+        "desc": "Alternativ können Sie den nachstehenden Code in Ihre Authenticator-App eingeben.",
+        "label": "Secret"
+      },
+      "title": "2-Faktor Authentifizierung",
+      "validateButton": {
+        "label": "Token überprüfen"
+      }
+    },
     "newsletter": {
       "cantUpdate": "Um den Newsletter-Status dieses Kontakts zu ändern, wende dich bitte an support{'@'}beabee.io.",
       "currentStatus": {
@@ -25,12 +60,17 @@
   "actions": {
     "add": "Hinzufügen",
     "back": "Zurück",
+    "backToLogin": "Zurück zum Login",
     "cancel": "Abbrechen",
+    "changePassword": "Passwort ändern",
     "chooseFile": "Datei auswählen",
+    "close": "Schließen",
     "continue": "Weiter",
     "create": "Erstellen",
     "delete": "Löschen",
+    "disable": "Deaktivieren",
     "edit": "Bearbeiten",
+    "enable": "Aktivieren",
     "endnow": "Jetzt beenden",
     "export": "Exportieren",
     "getStarted": "Starten",
@@ -42,6 +82,7 @@
     "reopen": "Wieder aktivieren",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
+    "resetPassword": "Passwort zurücksetzen",
     "respond": "Antworten",
     "revertToDraft": "Zu Entwurf zurückkehren",
     "save": "Speichern",
@@ -551,6 +592,10 @@
     "security": {
       "instructions": "Link kopieren und teilen:",
       "loginOverride": "Automatischer Login",
+      "mfa": {
+        "desc": "Dieser Kontakt hat 2FA aktiviert. Klicken Sie auf \"{ disableLabel }\", um es zu deaktivieren.",
+        "disabledDesc": "Dieser Kontakt hat keine 2FA aktiviert."
+      },
       "resetPassword": "Passwort zurücksetzen",
       "title": "Sicherheit",
       "whatDoTheButtonsDo": "Auf den Button klicken, um Link zu erzeugen:"
@@ -886,11 +931,9 @@
     "terms": "Allgemeine Geschäftsbedingungen"
   },
   "forgotPassword": {
-    "backToLogin": "Zurück zum Login",
     "checkInbox": "Bitte schauen Sie in Ihren Posteingang und befolgen Sie die Anleitung in der E-Mail. Sollte die E-Mail nicht auftauchen, schauen Sie auch in ihrem Spamordner nach.",
     "description": "Bitte geben Sie Ihre E-Mail-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.",
-    "message": "Gibt es einen Account mit der E-Mail-Adresse {email}, bekommen Sie in Kürze eine Nachricht.",
-    "resetPassword": "Passwort zurücksetzen",
+    "message": "Gibt es einen Account mit der E-Mail-Adresse {email}, bekommen Sie in Kürze eine Nachricht. Bitte schauen Sie in Ihren Posteingang und befolgen Sie die Anleitung in der E-Mail. Sollte die E-Mail nicht auftauchen, schauen Sie auch in ihrem Spamordner nach.",
     "title": "Passwort vergessen?"
   },
   "form": {
@@ -903,6 +946,12 @@
     "email": "E-Mail",
     "errorMessages": {
       "aggregatorTop": "Hier fehlt etwas! Bitte ergänzen.",
+      "api": {
+        "duplicate-email": "Diese E-Mail-Adresse existiert bereits.",
+        "invalid-token": "Der von Ihnen eingegebene 2FA Token ist nicht korrekt.",
+        "login-failed": "Falsche Kombination von Passwort und E-Mail.",
+        "mfa-token-required": "Bitte geben Sie den Code Ihrer Authentifizierungs-App ein."
+      },
       "generic": "Upps! Etwas ist schiefgelaufen. Bitte wenden Sie sich an den Support, sollte das erneut passieren.",
       "validation": "Es fehlt etwas! Bitte kontrollieren Sie die obigen Felder."
     },
@@ -960,6 +1009,11 @@
       "url": {
         "required": "URL benötigt",
         "url": "Ungültige URL"
+      },
+      "verifyCode": {
+        "max": "Der Code darf maximal {max} Zeichen lang sein.",
+        "min": "Der Code muss mindestens {min} Zeichen lang sein.",
+        "required": "Code benötigt"
       }
     },
     "firstName": "Vorname",
@@ -1001,7 +1055,6 @@
   },
   "homePage": {
     "editProfile": "Profil bearbeiten",
-    "manageContribution": "Beitrag ändern",
     "manageYourContribution": "Beitrag ändern",
     "newCallout": "Neuer Callout!",
     "openCallouts": "Aktuelle Callouts",
@@ -1029,10 +1082,6 @@
         "message": "Fast geschafft! Wir müssen nur noch Ihre E-Mail-Adresse bestätigen, um fortzufahren.",
         "proceed": "Wir haben Ihnen eine E-Mail geschickt. Bitte klicken Sie auf den Bestätigung-Link, um fortzufahren.",
         "title": "E-Mail-Adresse bestätigen"
-      },
-      "duplicateEmail": {
-        "message": "Diese E-Mail-Adresse ist bereits registriert. Bitte loggen Sie sich ein, um fortzufahren.",
-        "title": "E-Mail-Adresse wiederholen"
       },
       "failed": {
         "backToJoin": "Zurück zur Registrierung",
@@ -1068,10 +1117,14 @@
     "backTo": "Zurück zu {newsroomName}",
     "forgotPassword": "Passwort vergessen?",
     "joinNow": "Jetzt Mitglied werden!",
-    "login": "Login",
+    "lostMfaDevice": "2FA-Gerät verloren?",
     "notMember": "Noch kein Mitglied?",
-    "title": "Einloggen",
-    "wrongCredentials": "Falsche Kombination von Passwort und E-Mail."
+    "title": "Einloggen"
+  },
+  "lostDevice": {
+    "description": "Bitte geben Sie Ihre E-Mail-Adresse ein, und wir senden Ihnen Anweisungen zum Zurücksetzen Ihres 2FA.",
+    "message": "Gibt es einen Account mit der E-Mail-Adresse {email}, bekommen Sie in Kürze eine Nachricht. Bitte schauen Sie in Ihren Posteingang und befolgen Sie die Anleitung in der E-Mail. Sollte die E-Mail nicht auftauchen, schauen Sie auch in ihrem Spamordner nach.",
+    "title": "Haben Sie Ihr 2FA-Gerät verloren?"
   },
   "membershipBuilder": {
     "steps": {
@@ -1176,7 +1229,9 @@
     "forgotPassword": "Passwort vergessen",
     "join": "Mitglied werden",
     "login": "Login",
+    "lostDevice": "Haben Sie Ihr 2FA-Gerät verloren?",
     "notFound": "Seite nicht gefunden",
+    "resetDevice": "Zweitgerät zurücksetzen",
     "resetPassword": "Passwort zurücksetzen",
     "setup": "Account fertigstellen"
   },
@@ -1223,15 +1278,16 @@
     },
     "showingOf": "Zahlungen {start} bis {end} von {total}"
   },
+  "resetDevice": {
+    "success": "Das Zurücksetzen des 2FA-Gerätes war erfolgreich."
+  },
   "resetPassword": {
-    "changePassword": "Passwort ändern",
-    "confirmPassword": "Passwort bestätigen",
     "description": "Neues Passwort eingeben, um fortzufahren.",
     "errorLink": "einen neuen Link anfordern",
     "errorText": "Der Link scheint abgelaufen zu sein. Sie können {newLink}.",
     "errorTitle": "Das Zurücksetzen des Passworts ist schiefgelaufen",
+    "failed": "Das Zurücksetzen des Passworts ist schiefgelaufen",
     "login": "Einloggen",
-    "newPassword": "Neues Passwort",
     "success": "Ihr Passwort wurde aktualisiert.",
     "title": "Passwort aktualisieren?"
   },

@@ -24,15 +24,15 @@ import { ref, onBeforeMount, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-import NoticeForm from '../../../../components/notice/NoticeForm.vue';
-import PageTitle from '../../../../components/PageTitle.vue';
-import { addBreadcrumb } from '../../../../store/breadcrumb';
-import {
-  CreateNoticeData,
-  GetNoticeData,
-} from '../../../../utils/api/api.interface';
-import { updateNotice, fetchNotice } from '../../../../utils/api/notice';
-import { addNotification } from '../../../../store/notifications';
+import NoticeForm from '@components/notice/NoticeForm.vue';
+import PageTitle from '@components/PageTitle.vue';
+
+import { updateNotice, fetchNotice } from '@utils/api/notice';
+
+import { addBreadcrumb } from '@store/breadcrumb';
+import { addNotification } from '@store/notifications';
+
+import type { CreateNoticeData, GetNoticeData } from '@type';
 
 const { t } = useI18n();
 const router = useRouter();

@@ -9,6 +9,13 @@
       class="mb-4"
     />
 
+    <AppNotification
+      v-if="inlineErrorText"
+      variant="error"
+      :title="inlineErrorText"
+      class="mb-4"
+    />
+
     <div class="flex gap-2">
       <AppButton
         type="submit"
@@ -28,49 +35,64 @@
 </template>
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { addNotification } from '../../store/notifications';
-import { getRequestError } from '../../utils/api';
+import { isRequestError } from '../../utils/api';
 import AppNotification from '../AppNotification.vue';
 import AppButton from '../button/AppButton.vue';
+import { LOGIN_CODES } from '@enums/login-codes';
 
 const emit = defineEmits(['reset']);
 const props = defineProps<{
   buttonText: string;
   resetButtonText?: string;
   successText?: string;
-  errorText?: string | Record<string, string>;
+  errorText?: Record<string, string>;
+  inlineError?: boolean;
   fullButton?: boolean;
-  onSubmit?: (evt: Event) => Promise<unknown> | unknown;
+  onSubmit?: (evt: Event) => Promise<void | false> | void | false;
 }>();
 
 const { t } = useI18n();
 
+const errorMessages = computed<Record<string, string>>(() => ({
+  unknown: t('form.errorMessages.generic'),
+  'duplicate-email': t('form.errorMessages.api.duplicate-email'),
+  [LOGIN_CODES.LOGIN_FAILED]: t('form.errorMessages.api.login-failed'),
+  [LOGIN_CODES.INVALID_TOKEN]: t('form.errorMessages.api.invalid-token'),
+  [LOGIN_CODES.LOCKED]: t('form.errorMessages.api.account-locked'),
+  ...props.errorText,
+}));
+
 const isLoading = ref(false);
+const inlineErrorText = ref('');
 
 const validation = useVuelidate();
 
 async function handleSubmit(evt: Event) {
   isLoading.value = true;
+  inlineErrorText.value = '';
 
   try {
-    await props.onSubmit?.(evt);
-    if (props.successText) {
+    const ret = await props.onSubmit?.(evt);
+    if (ret !== false && props.successText) {
       addNotification({
         title: props.successText,
         variant: 'success',
       });
     }
   } catch (err) {
-    const knownError = getRequestError(err);
+    const errorCode = isRequestError(err, undefined, [400, 401])
+      ? err.response.data.code
+      : 'unknown';
     const errorText =
-      (typeof props.errorText === 'object'
-        ? knownError && knownError in props.errorText
-          ? props.errorText[knownError]
-          : props.errorText.unknown
-        : props.errorText) || t('form.errorMessages.generic');
-    addNotification({ title: errorText, variant: 'error' });
+      errorMessages.value[errorCode] || errorMessages.value.unknown;
+    if (props.inlineError) {
+      inlineErrorText.value = errorText;
+    } else {
+      addNotification({ title: errorText, variant: 'error' });
+    }
   } finally {
     isLoading.value = false;
   }

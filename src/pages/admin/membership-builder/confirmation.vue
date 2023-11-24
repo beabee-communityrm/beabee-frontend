@@ -127,23 +127,23 @@ meta:
 </template>
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue';
-import {
-  GetCalloutData,
-  JoinSetupContent,
-} from '../../../utils/api/api.interface';
-import { fetchContent, updateContent } from '../../../utils/api/content';
-import AppForm from '../../../components/forms/AppForm.vue';
-import AppInput from '../../../components/forms/AppInput.vue';
 import { useI18n } from 'vue-i18n';
-import AppCheckbox from '../../../components/forms/AppCheckbox.vue';
-import SetupForm from '../../../components/pages/join/SetupForm.vue';
-import RichTextEditor from '../../../components/rte/RichTextEditor.vue';
-import App2ColGrid from '../../../components/App2ColGrid.vue';
-import AppSelect from '../../../components/forms/AppSelect.vue';
-import AppInputHelp from '../../../components/forms/AppInputHelp.vue';
-import { fetchCallouts } from '../../../utils/api/callout';
 import { ItemStatus } from '@beabee/beabee-common';
-import AppSubHeading from '../../../components/AppSubHeading.vue';
+
+import AppForm from '@components/forms/AppForm.vue';
+import AppInput from '@components/forms/AppInput.vue';
+import AppCheckbox from '@components/forms/AppCheckbox.vue';
+import SetupForm from '@components/pages/join/SetupForm.vue';
+import RichTextEditor from '@components/rte/RichTextEditor.vue';
+import App2ColGrid from '@components/App2ColGrid.vue';
+import AppSelect from '@components/forms/AppSelect.vue';
+import AppInputHelp from '@components/forms/AppInputHelp.vue';
+import AppSubHeading from '@components/AppSubHeading.vue';
+
+import { fetchCallouts } from '@utils/api/callout';
+import { fetchContent, updateContent } from '@utils/api/content';
+
+import type { GetCalloutData, JoinSetupContent } from '@type';
 
 const setupContent = ref<JoinSetupContent>();
 const openCallouts = ref<GetCalloutData[]>([]);

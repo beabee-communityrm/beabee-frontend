@@ -1,14 +1,15 @@
 import { deserializeDate } from '.';
-import axios from '../../lib/axios';
-import {
+import axios from '@lib/axios';
+import { deserializeContact } from './contact';
+import { Paginated } from '@beabee/beabee-common';
+
+import type {
   CreateCalloutResponseCommentData,
   GetCalloutResponseCommentData,
   GetCalloutResponseCommentsQuery,
   Serial,
   UpdateCalloutResponseCommentData,
-} from './api.interface';
-import { deserializeContact } from './contact';
-import { Paginated } from '@beabee/beabee-common';
+} from '@type';
 
 export async function fetchCalloutResponseComments(
   query: GetCalloutResponseCommentsQuery

@@ -1,12 +1,13 @@
 import { Paginated } from '@beabee/beabee-common';
 import axios from '../../lib/axios';
-import {
+import { deserializeDate } from '.';
+
+import type {
   CreateApiKeyData,
   GetApiKeyData,
   GetApiKeysQuery,
   Serial,
-} from './api.interface';
-import { deserializeDate } from '.';
+} from '@type';
 
 function deserializeApiKey(apiKey: Serial<GetApiKeyData>): GetApiKeyData {
   return {

@@ -13,8 +13,9 @@
 
 <script lang="ts" setup>
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
-import { GetCalloutDataWith } from '../../../utils/api/api.interface';
-import AppMessageBox from '../../AppMessageBox.vue';
+import AppMessageBox from '@components/AppMessageBox.vue';
+
+import type { GetCalloutDataWith } from '@type';
 
 defineProps<{
   callout: GetCalloutDataWith<'form'>;

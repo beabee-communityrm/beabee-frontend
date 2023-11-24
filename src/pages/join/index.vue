@@ -56,16 +56,20 @@ import { ContributionPeriod } from '@beabee/beabee-common';
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
-import { generalContent } from '../../store';
-import StripePayment from '../../components/StripePayment.vue';
-import { fetchContent } from '../../utils/api/content';
-import { signUp, completeUrl } from '../../utils/api/signup';
-import { useJoin } from '../../components/pages/join/use-join';
-import JoinForm from '../../components/pages/join/JoinForm.vue';
-import { JoinContent } from '../../utils/api/api.interface';
+
+import StripePayment from '@components/StripePayment.vue';
+import { useJoin } from '@components/pages/join/use-join';
+import JoinForm from '@components/pages/join/JoinForm.vue';
 import { faHandSparkles } from '@fortawesome/free-solid-svg-icons';
-import AppNotification from '../../components/AppNotification.vue';
-import AuthBox from '../../components/AuthBox.vue';
+import AppNotification from '@components/AppNotification.vue';
+import AuthBox from '@components/AuthBox.vue';
+
+import { fetchContent } from '@utils/api/content';
+import { signUp, completeUrl } from '@utils/api/signup';
+
+import { generalContent } from '@store';
+
+import type { JoinContent } from '@type';
 
 const { t } = useI18n();
 

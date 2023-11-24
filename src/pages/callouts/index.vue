@@ -69,26 +69,29 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { ItemStatus, Paginated } from '@beabee/beabee-common';
-import { useI18n } from 'vue-i18n';
-import PageTitle from '../../components/PageTitle.vue';
-import AppHeading from '../../components/AppHeading.vue';
 import { computed, onBeforeMount, ref, watch, watchEffect } from 'vue';
-import {
+import { useI18n } from 'vue-i18n';
+import { ItemStatus, Paginated } from '@beabee/beabee-common';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+
+import PageTitle from '@components/PageTitle.vue';
+import AppHeading from '@components/AppHeading.vue';
+import CalloutCard from '@components/callout/CalloutCard.vue';
+import AppSearchInput from '@components/forms/AppSearchInput.vue';
+import AppPagination from '@components/AppPagination.vue';
+import AppToggle from '@components/forms/AppToggle.vue';
+import { Header } from '@components/table/table.interface';
+import AppTable from '@components/table/AppTable.vue';
+import AppTime from '@components/AppTime.vue';
+
+import { fetchCallouts } from '@utils/api/callout';
+import { defineParam } from '@utils/pagination';
+
+import type {
   GetCalloutData,
   GetCalloutDataWith,
   GetCalloutsQuery,
-} from '../../utils/api/api.interface';
-import CalloutCard from '../../components/callout/CalloutCard.vue';
-import AppSearchInput from '../../components/forms/AppSearchInput.vue';
-import { fetchCallouts } from '../../utils/api/callout';
-import AppPagination from '../../components/AppPagination.vue';
-import AppToggle from '../../components/forms/AppToggle.vue';
-import { Header } from '../../components/table/table.interface';
-import AppTable from '../../components/table/AppTable.vue';
-import { defineParam } from '../../utils/pagination';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import AppTime from '../../components/AppTime.vue';
+} from '@type';
 
 const { t } = useI18n();
 

@@ -1,6 +1,6 @@
 <template>
   <h3
-    class="font-title text-1.8xl/tight font-semibold text-body-60 mb-3 last:mb-0"
+    class="mb-3 font-title text-1.8xl/tight font-semibold text-body-60 last:mb-0"
   >
     <slot />
   </h3>

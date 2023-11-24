@@ -1,6 +1,6 @@
 <template>
   <CalloutSidePanel :show="show" @close="$emit('close')">
-    <div class="flex flex-col lg:justify-center items-start h-full">
+    <div class="flex h-full flex-col items-start lg:justify-center">
       <AppTitle class="pt-8">{{ callout.title }}</AppTitle>
       <figure class="mb-6">
         <img class="w-full object-cover" :src="callout.image" />
@@ -14,11 +14,13 @@
 </template>
 
 <script lang="ts" setup>
-import { GetCalloutDataWith } from '../../../utils/api/api.interface';
-import CalloutSidePanel from './CalloutSidePanel.vue';
-import AppTitle from '../../AppTitle.vue';
-import AppButton from '../../button/AppButton.vue';
 import { useI18n } from 'vue-i18n';
+
+import CalloutSidePanel from './CalloutSidePanel.vue';
+import AppTitle from '@components/AppTitle.vue';
+import AppButton from '@components/button/AppButton.vue';
+
+import type { GetCalloutDataWith } from '@type';
 
 defineEmits<{ (e: 'close'): void }>();
 defineProps<{ callout: GetCalloutDataWith<'form'>; show: boolean }>();

@@ -1,5 +1,5 @@
 import axios from '../../lib/axios';
-import { GetEmailData, Serial, UpdateEmailData } from './api.interface';
+import type { GetEmailData, Serial, UpdateEmailData } from '@type';
 
 export async function fetchEmail(id: string): Promise<GetEmailData | false> {
   return (await axios.get<Serial<GetEmailData>>('/email/' + id)).data;

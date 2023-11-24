@@ -7,7 +7,11 @@ import {
 } from '@beabee/beabee-common';
 
 import axios from '../../lib/axios';
-import {
+
+import { deserializeDate } from '.';
+import env from '../../env';
+
+import type {
   ContributionInfo,
   CreateContactData,
   ForceUpdateContributionData,
@@ -24,10 +28,7 @@ import {
   StartContributionData,
   UpdateContactData,
   UpdateContactRoleData,
-} from './api.interface';
-
-import { deserializeDate } from '.';
-import env from '../../env';
+} from '@type';
 
 // TODO: how to make this type safe?
 export function deserializeContact(data: any): any {
