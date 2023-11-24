@@ -265,11 +265,7 @@
     "privacyPolicy": "Privacy verklaring",
     "terms": "Algemene voorwaarden"
   },
-  "forgotPassword": {
-    "errors": {
-      "other-active-flow": "U heeft al verzocht om uw tweefactorauthenticatie opnieuw in te stellen. Voltooi dit proces alstublieft voordat u probeert uw wachtwoord te resetten."
-    }
-  },
+  "forgotPassword": {},
   "form": {
     "email": "E-mail",
     "errorMessages": {
@@ -338,9 +334,6 @@
   },
   "lostDevice": {
     "description": "Voer uw e-mailadres in, dan sturen we u instructies om uw 2FA te resetten.",
-    "errors": {
-      "other-active-flow": "U heeft al een wachtwoordherstel aangevraagd. Voltooi dit proces eerst voordat u probeert uw secundaire apparaat te resetten."
-    },
     "title": "Bent u uw 2FA-apparaat kwijt?"
   },
   "membershipBuilder": {

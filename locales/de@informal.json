@@ -933,9 +933,6 @@
   "forgotPassword": {
     "checkInbox": "Bitte schaue in deinen Posteingang und befolge die Anleitung in der E-Mail. Sollte die E-mail nicht auftauchen, checke deinen Spamordner. ",
     "description": "Bitte gib deine E-Mail-Adresse ein. Wir schicken dir dann die Anleitung zum Zurücksetzen deines Passworts.",
-    "errors": {
-      "other-active-flow": "Du hast bereits das Zurücksetzen deiner 2-Faktor-Authentifizierung beantragt. Bitte schließe dies zuerst ab, um auch dein Passwort zurücksetzen zu können."
-    },
     "message": "Gibt es einen Account mit der E-mail-Adresse {email}, bekommst du in Kürze eine Nachricht. Bitte schaue in deinen Posteingang und befolge die Anleitung in der E-Mail. Sollte die E-mail nicht auftauchen, checke deinen Spamordner. ",
     "title": "Passwort vergessen?"
   },
@@ -1126,9 +1123,6 @@
   },
   "lostDevice": {
     "description": "Bitte gib deine E-Mail-Adresse ein, und wir senden dir Anweisungen, wie du dein 2FA zurücksetzen kannst.",
-    "errors": {
-      "other-active-flow": "Du hast bereits das Zurücksetzen deines Passwortes beantragt. Bitte \nschließe dies zuerst ab, um auch dein Zweitgerät zurücksetzen zu können."
-    },
     "message": "Gibt es einen Account mit der E-mail-Adresse {email}, bekommst du in Kürze eine Nachricht. Bitte schaue in deinen Posteingang und befolge die Anleitung in der E-Mail. Sollte die E-mail nicht auftauchen, checke deinen Spamordner. ",
     "title": "Du hast dein 2FA-Gerät verloren?"
   },

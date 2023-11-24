@@ -143,7 +143,7 @@ async function handleSubmit() {
       isRequestError(
         err,
         [RESET_SECURITY_FLOW_ERROR_CODE.MFA_TOKEN_REQUIRED],
-        [401, 403]
+        [400]
       )
     ) {
       hasMFAEnabled.value = true;

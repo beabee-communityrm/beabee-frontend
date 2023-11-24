@@ -11,7 +11,10 @@ meta:
     <AppForm
       :button-text="t('actions.reset2FA')"
       :success-text="t('resetDevice.success')"
-      :error-text="{ unknown: t('resetDevice.failed') }"
+      :error-text="{
+        [LOGIN_CODES.LOGIN_FAILED]: t('resetDevice.invalidPassword'),
+        unknown: t('resetDevice.failed'),
+      }"
       inline-error
       full-button
       @submit="handleSubmit"
@@ -52,6 +55,7 @@ import { resetDeviceComplete } from '@utils/api/reset-security-flow';
 import { isInternalUrl } from '@utils/index';
 
 import { updateCurrentUser } from '@store/index';
+import { LOGIN_CODES } from '@enums/login-codes';
 
 const props = defineProps<{ id: string }>();
 

@@ -83,7 +83,7 @@ async function handleSubmit(evt: Event) {
       });
     }
   } catch (err) {
-    const errorCode = isRequestError(err, undefined, [400, 401, 403])
+    const errorCode = isRequestError(err, undefined, [400, 401])
       ? err.response.data.code
       : 'unknown';
     const errorText =

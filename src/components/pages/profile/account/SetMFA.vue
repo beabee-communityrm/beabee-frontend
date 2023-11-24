@@ -447,7 +447,7 @@ const onDeleteError = (error: unknown) => {
     isRequestError(
       error,
       [LOGIN_CODES.INVALID_TOKEN, LOGIN_CODES.MISSING_TOKEN],
-      [403]
+      [400, 401]
     )
   ) {
     // If server says the token is invalid, set the token as invalid

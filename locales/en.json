@@ -936,9 +936,6 @@
   "forgotPassword": {
     "checkInbox": "Please check your inbox and follow the instructions in the email. Check your spam folder if it doesn't appear.",
     "description": "Please enter your email address and we’ll send you password reset instructions.",
-    "errors": {
-      "other-active-flow": "You have already requested to reset your 2-factor authentication. Please complete this process before attempting to reset your password."
-    },
     "message": "If there is an account associated with {email}, you will receive an email shortly. Check your spam folder if it doesn't appear.",
     "title": "Forgot your password?"
   },
@@ -953,9 +950,8 @@
     "errorMessages": {
       "aggregatorTop": "Something is missing. Please check for errors below.",
       "api": {
-        "account-locked": "Account locked due to too many failed login attempts. Please contact support for help.",
+        "account-locked": "Account locked due to too many failed login attempts. Please reset your password or contact support for help.",
         "duplicate-email": "Email address already exists",
-        "invalid-password": "Invalid password",
         "invalid-token": "Invalid 2FA token",
         "login-failed": "Invalid password/email combination",
         "mfa-token-required": "You have 2FA enabled, enter the token from your authenticator app to proceed"
@@ -1131,9 +1127,6 @@
   },
   "lostDevice": {
     "description": "Please enter your email address, and we will send you instructions on how to reset your 2FA.",
-    "errors": {
-      "other-active-flow": "You have already requested a password reset. Please complete this process first before attempting to reset your secondary device."
-    },
     "message": "If there is an account associated with {email}, you will receive an email shortly. Check your spam folder if it doesn't appear.",
     "title": "Lost your 2FA device?"
   },
@@ -1292,6 +1285,7 @@
   "resetDevice": {
     "description": "Enter your password to reset 2FA protection, you will be able to set up a new device once you are logged in.",
     "failed": "Resetting device was unsuccessful, the link might have expired.",
+    "invalidPassword": "Invalid password",
     "success": "Your 2FA device was successfully reset",
     "title": "Reset your 2FA device?"
   },
