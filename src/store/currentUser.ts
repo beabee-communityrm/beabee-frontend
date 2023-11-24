@@ -1,8 +1,11 @@
 import { RoleType } from '@beabee/beabee-common';
 import { computed, ComputedRef, ref } from 'vue';
-import axios from '../lib/axios';
-import { fetchContact } from '../utils/api/contact';
-import { GetContactData } from '../utils/api/api.interface';
+
+import axios from '@lib/axios';
+
+import { fetchContact } from '@utils/api/contact';
+
+import type { GetContactData } from '@type';
 
 export async function updateCurrentUser(
   contact?: GetContactData

@@ -269,6 +269,9 @@
   "form": {
     "email": "E-mail",
     "errorMessages": {
+      "api": {
+        "mfa-token-required": "U heeft tweefactorauthenticatie ingeschakeld, dus u heeft de token uit \nuw authenticatie-app nodig om uw wachtwoord te resetten. Voer deze \nalstublieft in."
+      },
       "generic": "Oeps, er ging iets fout! Neem contact op met support als het nog een keer gebeurd.",
       "validation": "Er ontbreekt iets. Bekijk de velden hierboven."
     },
@@ -320,7 +323,6 @@
   "join": {
     "errors": {
       "confirmEmail": {},
-      "duplicateEmail": {},
       "failed": {}
     }
   },
@@ -332,8 +334,6 @@
   },
   "lostDevice": {
     "description": "Voer uw e-mailadres in, dan sturen we u instructies om uw 2FA te resetten.",
-    "emailSent": "We hebben een e-mail gestuurd met instructies om je 2FA te resetten. Controleer je inbox.",
-    "resetDevice": "Apparaat resetten",
     "title": "Bent u uw 2FA-apparaat kwijt?"
   },
   "membershipBuilder": {
@@ -365,7 +365,9 @@
     "error": "Er ging iets fout. Probeer de pagina te herladen"
   },
   "pageTitle": {
-    "notFound": "Pagina niet gevonden"
+    "lostDevice": "Bent u uw 2FA-apparaat kwijt?",
+    "notFound": "Pagina niet gevonden",
+    "resetDevice": "Secundair Apparaat Resetten"
   },
   "paymentMethods": {
     "gc_direct-debit": {},
@@ -381,9 +383,7 @@
     "filter": {}
   },
   "resetDevice": {
-    "deleteDevice": "2FA-beveiliging verwijderen",
-    "description": "Om de 2FA-beveiliging te verwijderen, voer alstublieft uw wachtwoord in.\n Hierdoor wordt uw huidige 2FA-instellingen gereset en kunt u een nieuw \napparaat instellen.",
-    "title": "\"2FA-beveiliging resetten"
+    "success": "Het resetten van het 2FA-apparaat is gelukt."
   },
   "resetPassword": {},
   "reviewerEditor": {

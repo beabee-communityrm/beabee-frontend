@@ -40,10 +40,11 @@
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
-import { GetCalloutData } from '../../utils/api/api.interface';
 import AppTime from '../AppTime.vue';
 import AppSubHeading from '../AppSubHeading.vue';
-import { formatLocale } from '../../utils/dates';
+import { formatLocale } from '@utils/dates';
+
+import type { GetCalloutData } from '@type';
 
 defineProps<{ callout: GetCalloutData }>();
 

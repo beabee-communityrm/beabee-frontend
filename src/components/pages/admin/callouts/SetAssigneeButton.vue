@@ -25,10 +25,13 @@
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { GetContactData } from '../../../../utils/api/api.interface';
-import { fetchContacts } from '../../../../utils/api/contact';
-import AppSelectableList from '../../../AppSelectableList.vue';
-import AppDropdownButton from '../../../button/AppDropdownButton.vue';
+
+import AppSelectableList from '@components/AppSelectableList.vue';
+import AppDropdownButton from '@components/button/AppDropdownButton.vue';
+
+import { fetchContacts } from '@utils/api/contact';
+
+import type { GetContactData } from '@type';
 
 const emit = defineEmits<{
   (event: 'assign', id: string | null, successText: string): void;

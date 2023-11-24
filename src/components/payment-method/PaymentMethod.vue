@@ -6,9 +6,11 @@
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { PaymentSource } from '../../utils/api/api.interface';
-import PaymentMethodIcon from './PaymentMethodIcon.vue';
 import { PaymentMethod } from '@beabee/beabee-common';
+
+import PaymentMethodIcon from './PaymentMethodIcon.vue';
+
+import type { PaymentSource } from '@type';
 
 const props = defineProps<{ source: PaymentSource }>();
 

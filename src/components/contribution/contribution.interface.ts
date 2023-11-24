@@ -1,4 +1,4 @@
-import { JoinContent } from '../../utils/api/api.interface';
+import type { JoinContent } from '@type';
 
 export type ContributionContent = Pick<
   JoinContent,

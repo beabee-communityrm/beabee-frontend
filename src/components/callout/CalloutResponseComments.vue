@@ -19,10 +19,6 @@
 
 <script lang="ts" setup>
 import {
-  GetCalloutResponseCommentData,
-  GetCalloutResponseCommentsQuery,
-} from '../../utils/api/api.interface';
-import {
   createCalloutResponseComment,
   fetchCalloutResponseComments,
 } from '../../utils/api/callout-response-comments';
@@ -34,6 +30,11 @@ import { CommentFormData } from './calloutResponseComment.interface';
 import { Paginated } from '@beabee/beabee-common';
 import { onBeforeMount, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+
+import type {
+  GetCalloutResponseCommentData,
+  GetCalloutResponseCommentsQuery,
+} from '@type';
 
 const { t } = useI18n();
 

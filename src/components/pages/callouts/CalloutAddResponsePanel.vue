@@ -18,7 +18,6 @@
 
 <script lang="ts" setup>
 import { CalloutResponseAnswers } from '@beabee/beabee-common';
-import { GetCalloutDataWith } from '../../../utils/api/api.interface';
 import CalloutForm from './CalloutForm.vue';
 import CalloutMemberOnlyPrompt from './CalloutMemberOnlyPrompt.vue';
 import CalloutLoginPrompt from './CalloutLoginPrompt.vue';
@@ -28,6 +27,8 @@ import CalloutSidePanel from './CalloutSidePanel.vue';
 import AppHeading from '../../AppHeading.vue';
 import CalloutThanksBox from './CalloutThanksBox.vue';
 import { useI18n } from 'vue-i18n';
+
+import type { GetCalloutDataWith } from '@type';
 
 defineEmits<(e: 'close') => void>();
 const props = defineProps<{

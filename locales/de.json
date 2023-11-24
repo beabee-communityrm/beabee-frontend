@@ -1,6 +1,5 @@
 {
   "accountPage": {
-    "changePassword": "Passwort ändern",
     "contactInformation": "Kontaktdaten",
     "deliveryAddress": "Adresse",
     "deliveryOptIn": "Postsendung",
@@ -61,7 +60,9 @@
   "actions": {
     "add": "Hinzufügen",
     "back": "Zurück",
+    "backToLogin": "Zurück zum Login",
     "cancel": "Abbrechen",
+    "changePassword": "Passwort ändern",
     "chooseFile": "Datei auswählen",
     "close": "Schließen",
     "continue": "Weiter",
@@ -81,6 +82,7 @@
     "reopen": "Wieder aktivieren",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
+    "resetPassword": "Passwort zurücksetzen",
     "respond": "Antworten",
     "revertToDraft": "Zu Entwurf zurückkehren",
     "save": "Speichern",
@@ -929,11 +931,9 @@
     "terms": "Allgemeine Geschäftsbedingungen"
   },
   "forgotPassword": {
-    "backToLogin": "Zurück zum Login",
     "checkInbox": "Bitte schauen Sie in Ihren Posteingang und befolgen Sie die Anleitung in der E-Mail. Sollte die E-Mail nicht auftauchen, schauen Sie auch in ihrem Spamordner nach.",
     "description": "Bitte geben Sie Ihre E-Mail-Adresse ein. Wir schicken Ihnen die Anleitung zum Zurücksetzten Ihres Passworts.",
-    "message": "Gibt es einen Account mit der E-Mail-Adresse {email}, bekommen Sie in Kürze eine Nachricht.",
-    "resetPassword": "Passwort zurücksetzen",
+    "message": "Gibt es einen Account mit der E-Mail-Adresse {email}, bekommen Sie in Kürze eine Nachricht. Bitte schauen Sie in Ihren Posteingang und befolgen Sie die Anleitung in der E-Mail. Sollte die E-Mail nicht auftauchen, schauen Sie auch in ihrem Spamordner nach.",
     "title": "Passwort vergessen?"
   },
   "form": {
@@ -946,6 +946,12 @@
     "email": "E-Mail",
     "errorMessages": {
       "aggregatorTop": "Hier fehlt etwas! Bitte ergänzen.",
+      "api": {
+        "duplicate-email": "Diese E-Mail-Adresse existiert bereits.",
+        "invalid-token": "Der von Ihnen eingegebene 2FA Token ist nicht korrekt.",
+        "login-failed": "Falsche Kombination von Passwort und E-Mail.",
+        "mfa-token-required": "Bitte geben Sie den Code Ihrer Authentifizierungs-App ein."
+      },
       "generic": "Upps! Etwas ist schiefgelaufen. Bitte wenden Sie sich an den Support, sollte das erneut passieren.",
       "validation": "Es fehlt etwas! Bitte kontrollieren Sie die obigen Felder."
     },
@@ -1077,10 +1083,6 @@
         "proceed": "Wir haben Ihnen eine E-Mail geschickt. Bitte klicken Sie auf den Bestätigung-Link, um fortzufahren.",
         "title": "E-Mail-Adresse bestätigen"
       },
-      "duplicateEmail": {
-        "message": "Diese E-Mail-Adresse ist bereits registriert. Bitte loggen Sie sich ein, um fortzufahren.",
-        "title": "E-Mail-Adresse wiederholen"
-      },
       "failed": {
         "backToJoin": "Zurück zur Registrierung",
         "message": "Es gab ein Problem bei der Registrierung, unser Team wurde benachrichtigt. Bitte kontaktieren Sie uns, wenn das Problem weiterhin auftritt.",
@@ -1114,19 +1116,14 @@
   "login": {
     "backTo": "Zurück zu {newsroomName}",
     "forgotPassword": "Passwort vergessen?",
-    "hasMFAEnabled": "Bitte geben Sie den Code Ihrer Authentifizierungs-App ein.",
-    "hasWrongMFAToken": "Der von Ihnen eingegebene 2FA Token ist nicht korrekt.",
     "joinNow": "Jetzt Mitglied werden!",
-    "login": "Login",
     "lostMfaDevice": "2FA-Gerät verloren?",
     "notMember": "Noch kein Mitglied?",
-    "title": "Einloggen",
-    "wrongCredentials": "Falsche Kombination von Passwort und E-Mail."
+    "title": "Einloggen"
   },
   "lostDevice": {
     "description": "Bitte geben Sie Ihre E-Mail-Adresse ein, und wir senden Ihnen Anweisungen zum Zurücksetzen Ihres 2FA.",
-    "emailSent": "Wir haben eine E-Mail mit Anweisungen zum Zurücksetzen Ihres 2FA versendet. Bitte überprüfen Sie Ihr Postfach.",
-    "resetDevice": "Gerät zurücksetzen",
+    "message": "Gibt es einen Account mit der E-Mail-Adresse {email}, bekommen Sie in Kürze eine Nachricht. Bitte schauen Sie in Ihren Posteingang und befolgen Sie die Anleitung in der E-Mail. Sollte die E-Mail nicht auftauchen, schauen Sie auch in ihrem Spamordner nach.",
     "title": "Haben Sie Ihr 2FA-Gerät verloren?"
   },
   "membershipBuilder": {
@@ -1232,7 +1229,9 @@
     "forgotPassword": "Passwort vergessen",
     "join": "Mitglied werden",
     "login": "Login",
+    "lostDevice": "Haben Sie Ihr 2FA-Gerät verloren?",
     "notFound": "Seite nicht gefunden",
+    "resetDevice": "Zweitgerät zurücksetzen",
     "resetPassword": "Passwort zurücksetzen",
     "setup": "Account fertigstellen"
   },
@@ -1280,19 +1279,15 @@
     "showingOf": "Zahlungen {start} bis {end} von {total}"
   },
   "resetDevice": {
-    "deleteDevice": "2FA-Schutz entfernen",
-    "description": "Um den 2FA-Schutz zu entfernen, geben Sie bitte Ihr Passwort ein. \nDadurch werden Ihre aktuellen 2FA-Einstellungen zurückgesetzt und Sie \nkönnen ein neues Gerät einrichten.",
-    "title": "2FA-Schutz zurücksetzen"
+    "success": "Das Zurücksetzen des 2FA-Gerätes war erfolgreich."
   },
   "resetPassword": {
-    "changePassword": "Passwort ändern",
-    "confirmPassword": "Passwort bestätigen",
     "description": "Neues Passwort eingeben, um fortzufahren.",
     "errorLink": "einen neuen Link anfordern",
     "errorText": "Der Link scheint abgelaufen zu sein. Sie können {newLink}.",
     "errorTitle": "Das Zurücksetzen des Passworts ist schiefgelaufen",
+    "failed": "Das Zurücksetzen des Passworts ist schiefgelaufen",
     "login": "Einloggen",
-    "newPassword": "Neues Passwort",
     "success": "Ihr Passwort wurde aktualisiert.",
     "title": "Passwort aktualisieren?"
   },

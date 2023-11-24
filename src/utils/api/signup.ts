@@ -1,12 +1,13 @@
 import { ContributionPeriod } from '@beabee/beabee-common';
 import axios from '../../lib/axios';
 import env from '../../env';
-import {
+
+import type {
   CompleteSignupData,
   PaymentFlowParams,
   Serial,
   SignupData,
-} from './api.interface';
+} from '@type';
 
 export const completeUrl = env.appUrl + '/join/complete';
 

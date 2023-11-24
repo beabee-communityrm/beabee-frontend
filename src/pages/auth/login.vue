@@ -8,7 +8,12 @@ meta:
 
 <template>
   <AuthBox>
-    <AppForm :button-text="t('login.login')" full-button @submit="submitLogin">
+    <AppForm
+      :button-text="t('common.login')"
+      inline-error
+      full-button
+      @submit="submitLogin"
+    >
       <AppTitle>{{ t('login.title') }}</AppTitle>
 
       <div class="mb-5">
@@ -35,75 +40,78 @@ meta:
           v-model="data.password"
           type="password"
           name="password"
+          autocomplete="current-password"
           required
           :label="t('form.password')"
         />
       </div>
 
-      <div class="mb-3">
-        <AppInput
-          v-if="hasMFAEnabled"
-          v-model="data.token"
-          type="text"
-          name="verifyCode"
-          required
-          min="6"
-          max="6"
-          :label="t('accountPage.mfa.codeInput.label')"
-        />
-      </div>
-
       <div class="mb-4">
-        <router-link class="text-sm underline" to="/auth/forgot-password">
+        <router-link
+          class="text-sm underline"
+          :to="{ path: '/auth/forgot-password', query: { email: data.email } }"
+        >
           {{ t('login.forgotPassword') }}
         </router-link>
       </div>
 
-      <AppNotification
-        v-if="hasCredentialError"
-        class="mb-4"
-        variant="error"
-        :title="t('login.wrongCredentials')"
-      />
+      <template v-if="hasMFAEnabled">
+        <AppNotification
+          class="mb-4"
+          variant="info"
+          :title="t('form.errorMessages.api.mfa-token-required')"
+        />
 
-      <AppNotification
-        v-if="hasMFAEnabled"
-        class="mb-4"
-        variant="info"
-        :title="t('login.hasMFAEnabled')"
-      />
+        <div class="mb-3">
+          <AppInput
+            v-model="data.token"
+            type="text"
+            name="verifyCode"
+            required
+            min="6"
+            max="6"
+            :label="t('accountPage.mfa.codeInput.label')"
+          />
+        </div>
 
-      <AppNotification
-        v-if="hasWrongMFAToken"
-        class="mb-4"
-        variant="error"
-        :title="t('login.hasWrongMFAToken')"
-      />
+        <div class="mb-4">
+          <router-link
+            class="text-sm underline"
+            :to="{ path: '/auth/lost-device', query: { email: data.email } }"
+          >
+            {{ t('login.lostMfaDevice') }}
+          </router-link>
+        </div>
+      </template>
     </AppForm>
   </AuthBox>
 </template>
 
 <script lang="ts" setup>
-import AppInput from '../../components/forms/AppInput.vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { reactive, ref, toRef, watch } from 'vue';
-import { isInternalUrl } from '../../utils';
-import { updateCurrentUser } from '../../store';
-import { LoginData, LOGIN_CODES } from '../../utils/api/api.interface';
-import { login } from '../../utils/api/auth';
-import { isRequestError } from '../../utils/api/index';
-import AppForm from '../../components/forms/AppForm.vue';
-import AppNotification from '../../components/AppNotification.vue';
-import AppTitle from '../../components/AppTitle.vue';
-import AuthBox from '../../components/AuthBox.vue';
+
+import AppInput from '@components/forms/AppInput.vue';
+import AppForm from '@components/forms/AppForm.vue';
+import AppNotification from '@components/AppNotification.vue';
+import AppTitle from '@components/AppTitle.vue';
+import AuthBox from '@components/AuthBox.vue';
+
+import { isInternalUrl } from '@utils/index';
+import { login } from '@utils/api/auth';
+import { isRequestError } from '@utils/api/index';
+
+import { updateCurrentUser } from '@store/index';
+
+import { LOGIN_CODES } from '@enums/login-codes';
+
+import { LoginData } from '@type';
 
 const { t } = useI18n();
 
 const route = useRoute();
 const redirectTo = route.query.next as string | undefined;
-
-const loading = ref(false);
 
 const data = reactive<LoginData>({
   email: '',
@@ -111,32 +119,20 @@ const data = reactive<LoginData>({
   token: '',
 });
 
-const hasCredentialError = ref(false);
 const hasMFAEnabled = ref(false);
-const hasWrongMFAToken = ref(false);
 
 async function submitLogin() {
-  loading.value = true;
-  hasCredentialError.value = false;
-  hasWrongMFAToken.value = false;
-
   try {
     await login(data);
     await updateCurrentUser();
     // TODO: use router when legacy app is gone
     window.location.href = isInternalUrl(redirectTo) ? redirectTo : '/';
   } catch (err) {
-    if (isRequestError(err, undefined, 401)) {
-      if (err.response?.data?.code === LOGIN_CODES.REQUIRES_2FA) {
-        hasMFAEnabled.value = true;
-      } else if (err.response?.data?.code === LOGIN_CODES.INVALID_TOKEN) {
-        hasWrongMFAToken.value = true;
-      } else {
-        hasCredentialError.value = true;
-      }
+    if (isRequestError(err, [LOGIN_CODES.REQUIRES_2FA], [401])) {
+      hasMFAEnabled.value = true;
+    } else {
+      throw err;
     }
-  } finally {
-    loading.value = false;
   }
 }
 

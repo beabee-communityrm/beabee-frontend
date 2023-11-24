@@ -40,14 +40,15 @@ import { Paginated, PaymentStatus } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import { computed, ref, watchEffect } from 'vue';
 
-import AppTable from '../table/AppTable.vue';
-import AppPagination from '../AppPagination.vue';
-import { formatLocale } from '../../utils/dates';
+import AppTable from '@components/table/AppTable.vue';
+import AppPagination from '@components/AppPagination.vue';
+import { Header, SortType } from '@components/table/table.interface';
+import AppHeading from '@components/AppHeading.vue';
 
-import { fetchPayments } from '../../utils/api/contact';
-import { GetPaymentData } from '../../utils/api/api.interface';
-import { Header, SortType } from '../table/table.interface';
-import AppHeading from '../AppHeading.vue';
+import { formatLocale } from '@utils/dates';
+import { fetchPayments } from '@utils/api/contact';
+
+import type { GetPaymentData } from '@type';
 
 const { t, n } = useI18n();
 

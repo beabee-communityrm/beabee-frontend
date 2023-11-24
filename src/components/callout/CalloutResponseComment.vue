@@ -54,22 +54,25 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  GetCalloutResponseCommentData,
-  UpdateCalloutResponseCommentData,
-} from '../../utils/api/api.interface';
+import { onBeforeMount, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+import AppButton from '@components/button/AppButton.vue';
+import AppButtonGroup from '@components/button/AppButtonGroup.vue';
+import AppConfirmDialog from '@components/AppConfirmDialog.vue';
+import CalloutResponseCommentForm from './CalloutResponseCommentForm.vue';
+
 import {
   deleteCalloutResponseComment,
   updateCalloutResponseComment,
-} from '../../utils/api/callout-response-comments';
-import { formatLocale } from '../../utils/dates';
-import AppButton from '../button/AppButton.vue';
-import CalloutResponseCommentForm from './CalloutResponseCommentForm.vue';
-import { onBeforeMount, ref } from 'vue';
-import { useI18n } from 'vue-i18n';
-import AppButtonGroup from '../button/AppButtonGroup.vue';
-import AppConfirmDialog from '../AppConfirmDialog.vue';
-import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
+} from '@utils/api/callout-response-comments';
+import { formatLocale } from '@utils/dates';
+
+import type {
+  GetCalloutResponseCommentData,
+  UpdateCalloutResponseCommentData,
+} from '@type';
 
 const { t } = useI18n();
 

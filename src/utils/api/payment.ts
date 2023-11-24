@@ -2,15 +2,16 @@
 import { Paginated } from '@beabee/beabee-common';
 
 import axios from '../../lib/axios';
-import {
+
+import { deserializeDate } from '.';
+import { deserializeContact } from './contact';
+
+import type {
   GetPaymentDataWith,
   GetPaymentWith,
   GetPaymentsQuery,
   Serial,
-} from './api.interface';
-
-import { deserializeDate } from '.';
-import { deserializeContact } from './contact';
+} from '@type';
 
 // TODO: how to make this type safe?
 export function deserializePayment(

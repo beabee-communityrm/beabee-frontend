@@ -39,24 +39,23 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, ref } from 'vue';
-import AppButton from '../../../button/AppButton.vue';
+import { onBeforeMount, ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import {
-  ManualPaymentSource,
-  PaymentSource,
-} from '../../../../utils/api/api.interface';
+
+import AppButton from '@components/button/AppButton.vue';
+import StripePayment from '@components/StripePayment.vue';
+import AppModal from '@components/AppModal.vue';
+import AppHeading from '@components/AppHeading.vue';
+import PaymentMethod from '@components/payment-method/PaymentMethod.vue';
+import AppNotification from '@components/AppNotification.vue';
+
 import {
   updatePaymentMethod,
   updatePaymentMethodCompleteUrl,
-} from '../../../../utils/api/contact';
-import StripePayment from '../../../StripePayment.vue';
-import AppModal from '../../../AppModal.vue';
-import { computed } from 'vue';
-import AppHeading from '../../../AppHeading.vue';
-import { isRequestError } from '../../../../utils/api';
-import PaymentMethod from '../../../payment-method/PaymentMethod.vue';
-import AppNotification from '../../../AppNotification.vue';
+} from '@utils/api/contact';
+import { isRequestError } from '@utils/api';
+
+import type { ManualPaymentSource, PaymentSource } from '@type';
 
 const { t } = useI18n();
 
@@ -98,7 +97,7 @@ async function handleUpdate() {
     }
   } catch (err) {
     loading.value = false;
-    if (isRequestError(err, 'cant-update-contribution')) {
+    if (isRequestError(err, ['cant-update-contribution'])) {
       cantUpdate.value = true;
     }
   }

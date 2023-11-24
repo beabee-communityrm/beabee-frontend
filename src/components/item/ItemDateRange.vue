@@ -8,8 +8,9 @@
 
 <script lang="ts" setup>
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
-import { ItemWithStatus } from '../../utils/api/api.interface';
-import { formatLocale } from '../../utils/dates';
+import { formatLocale } from '@utils/dates';
+
+import type { ItemWithStatus } from '@type';
 
 defineProps<{ item: ItemWithStatus; inline?: boolean }>();
 </script>

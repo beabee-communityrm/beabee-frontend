@@ -1,8 +1,9 @@
 import { CalloutFormSchema } from '@beabee/beabee-common';
 import { computed, Raw, Component } from 'vue';
 import i18n from '../../../../lib/i18n';
-import { CalloutMapSchema } from '../../../../utils/api/api.interface';
 import { AppStepperStep } from '../../../../type/app-stepper-step';
+
+import type { CalloutMapSchema } from '@type';
 
 const { t } = i18n.global;
 

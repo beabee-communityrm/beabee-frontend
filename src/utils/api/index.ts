@@ -1,31 +1,33 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios from 'axios';
 import { parseISO } from 'date-fns';
 
-interface ApiError {
-  code: string;
-}
+import type { ApiRequestError } from '@type/api-request-error';
+import type { ApiError } from '@type/api-error';
 
-type ApiRequestError<T, D> = AxiosError<T, D> & {
-  response: AxiosResponse<ApiError> & {
-    status: 400;
-  };
-};
-
-export function isRequestError<T = unknown, D = unknown>(
+export function isRequestError<Code extends string>(
   err: unknown,
-  code?: string,
-  status = 400
-): err is ApiRequestError<T, D> {
-  if (axios.isAxiosError(err) && err.response?.status === status) {
-    const data = err.response.data as ApiError;
-    return !code || data.code === code;
+  codes?: Code[]
+): err is ApiRequestError<Code, 400>;
+export function isRequestError<Code extends string, Status extends number>(
+  err: unknown,
+  codes: Code[] | undefined,
+  status: Status[]
+): err is ApiRequestError<Code, Status>;
+export function isRequestError<Code extends string, Status extends number>(
+  err: unknown,
+  codes: string[] = [],
+  status: Status[] = [400] as Status[]
+): err is ApiRequestError<Code, Status> {
+  if (
+    axios.isAxiosError(err) &&
+    typeof err.response?.status === 'number' &&
+    status.includes(err.response.status as Status)
+  ) {
+    const data = err.response.data as ApiError<Code>;
+    return !codes.length || codes.includes(data.code);
   }
 
   return false;
-}
-
-export function getRequestError(err: unknown): string | undefined {
-  return isRequestError(err) ? err.response.data.code : undefined;
 }
 
 export function deserializeDate(s: string): Date;

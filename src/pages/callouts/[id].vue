@@ -3,8 +3,8 @@
 </template>
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue';
-import { GetCalloutDataWith } from '../../utils/api/api.interface';
-import { fetchCallout } from '../../utils/api/callout';
+import { fetchCallout } from '@utils/api/callout';
+import type { GetCalloutDataWith } from '@type';
 
 const props = defineProps<{ id: string }>();
 const callout = ref<GetCalloutDataWith<'form' | 'responseViewSchema'>>();

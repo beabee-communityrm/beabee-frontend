@@ -13,7 +13,7 @@
 -->
 
 <template>
-  <AppHeading class="my-3">
+  <AppHeading class="mt-6">
     {{ t('accountPage.mfa.title') }}
   </AppHeading>
 
@@ -55,6 +55,7 @@
       required
       min="6"
       max="6"
+      @keyup.enter="disableMfaAndNotify()"
       @update:validation="onUserTokenInputValidationChanged"
     />
 
@@ -111,6 +112,7 @@
                 required
                 min="6"
                 max="6"
+                @keyup.enter="nextSlideIfValid()"
                 @update:validation="onUserTokenInputValidationChanged"
               />
 
@@ -178,6 +180,7 @@
             <!-- Last save button -->
             <AppButton
               v-if="isLastSlide"
+              ref="saveButton"
               :disabled="!validationStepsDone"
               variant="link"
               @click="createMfaAndNotify()"
@@ -210,7 +213,16 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, ref, toRef, computed, watch, reactive } from 'vue';
+import {
+  onBeforeMount,
+  ref,
+  toRef,
+  computed,
+  watch,
+  reactive,
+  Ref,
+  nextTick,
+} from 'vue';
 import { useI18n } from 'vue-i18n';
 import { faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import { TOTP, Secret } from 'otpauth';
@@ -221,9 +233,9 @@ import {
   fetchContactMfa,
   deleteContactMfa,
 } from '@utils/api/contact-mfa';
-import { ContactMfaType } from '@utils/api/api.interface';
+import { CONTACT_MFA_TYPE } from '@enums/contact-mfa-type';
 import { isRequestError } from '@utils/api/index';
-import { LOGIN_CODES } from '@utils/api/api.interface';
+import { LOGIN_CODES } from '@enums/login-codes';
 
 import AppButton from '@components/button/AppButton.vue';
 import AppModal from '@components/AppModal.vue';
@@ -242,8 +254,6 @@ import type { AppStepperStep } from '@type/app-stepper-step';
 import type { AppSliderSlideEventDetails } from '@type/app-slider-slide-event-details';
 import type { SetMfaSteps } from '@type/set-mfa-steps';
 import type { SetMfaTotpIdentity } from '@type/set-mfa-totp-identity';
-import type { ContactMfaCreateApiErrorData } from '@type/contact-mfa-create-api-error-data';
-import type { ContactMfaDeleteApiErrorData } from '@type/contact-mfa-delete-api-error-data';
 
 const { t } = useI18n();
 
@@ -254,6 +264,9 @@ const appSliderCo = ref<InstanceType<typeof AppSlider> | null>(null);
 const showMFASettingsModal = ref(false);
 
 const showDisableConfirmModal = ref(false);
+
+/** Reference to the save button */
+const saveButton: Ref<typeof AppButton | null> = ref(null);
 
 /** Is multi factor authentication enabled? */
 const isEnabled = ref(false);
@@ -316,6 +329,14 @@ let totp: TOTP | null = null;
 
 /** Called when the modal is closed */
 const onCloseMFAModal = () => {
+  // If the user closes the modal on the last slide, save the MFA anyway
+  if (
+    appSliderCo.value &&
+    appSliderCo.value.activeSlide === appSliderCo.value.slideCount - 1
+  ) {
+    return createMfaAndNotify();
+  }
+
   closeMFAModal();
   resetState();
 };
@@ -340,7 +361,7 @@ const createMfa = async () => {
     await createContactMfa(props.contactId, {
       secret: totpSecret.value.base32,
       token: userToken.value,
-      type: ContactMfaType.TOTP,
+      type: CONTACT_MFA_TYPE.TOTP,
     });
   } catch (error) {
     onCreateError(error);
@@ -357,7 +378,7 @@ const disableMfa = async () => {
   disableMfaValidated.value = true;
   try {
     await deleteContactMfa(props.contactId, {
-      type: ContactMfaType.TOTP,
+      type: CONTACT_MFA_TYPE.TOTP,
       token: userToken.value,
     });
   } catch (error) {
@@ -365,6 +386,7 @@ const disableMfa = async () => {
     return false;
   }
   isEnabled.value = false;
+  disableMfaValidated.value = false;
   resetState();
   return true;
 };
@@ -403,8 +425,8 @@ const disableMfaAndNotify = async () => {
 /** Called when an error occurs while creating MFA */
 const onCreateError = (error: unknown) => {
   if (
-    isRequestError<ContactMfaCreateApiErrorData>(error, undefined, 401) &&
-    error.response.data.message === LOGIN_CODES.INVALID_TOKEN
+    isRequestError(error, undefined, [401]) &&
+    error.response.data.code === LOGIN_CODES.INVALID_TOKEN
   ) {
     // If server says the token is invalid, set the token as invalid and go to the previous slide
     setValidationStates(false);
@@ -422,9 +444,11 @@ const onCreateError = (error: unknown) => {
 
 const onDeleteError = (error: unknown) => {
   if (
-    isRequestError<ContactMfaDeleteApiErrorData>(error, undefined, 403) &&
-    (error.response.data.code === LOGIN_CODES.INVALID_TOKEN ||
-      error.response.data.code === LOGIN_CODES.MISSING_TOKEN)
+    isRequestError(
+      error,
+      [LOGIN_CODES.INVALID_TOKEN, LOGIN_CODES.MISSING_TOKEN],
+      [400, 401]
+    )
   ) {
     // If server says the token is invalid, set the token as invalid
     setValidationStates(false);
@@ -442,6 +466,15 @@ const onSlideChange = (details: AppSliderSlideEventDetails) => {
   // Reset state if the user goes back to the first slide
   if (details.slideNumber === 0) {
     resetState();
+  }
+
+  // Focus the save button on the last slide, to allow the user to save with enter
+  if (details.slideNumber === stepsInOrder.value.length - 1) {
+    nextTick(() => {
+      if (saveButton.value) {
+        saveButton.value.focus();
+      }
+    });
   }
 
   // Validate previous steps
@@ -560,7 +593,7 @@ watch(
     totpIdentity.value.label = contact.email;
 
     const contactMfa = await fetchContactMfa(contactId);
-    if (contactMfa && contactMfa.type === ContactMfaType.TOTP) {
+    if (contactMfa && contactMfa.type === CONTACT_MFA_TYPE.TOTP) {
       isEnabled.value = true;
     }
   },

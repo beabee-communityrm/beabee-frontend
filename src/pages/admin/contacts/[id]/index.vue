@@ -244,13 +244,6 @@ import App2ColGrid from '@components/App2ColGrid.vue';
 import CalloutForm from '@components/pages/callouts/CalloutForm.vue';
 
 import {
-  GetContactData,
-  GetContactDataWith,
-  ContactRoleData,
-  GetCalloutDataWith,
-  GetCalloutResponseDataWith,
-} from '@utils/api/api.interface';
-import {
   deleteRole,
   fetchContact,
   updateContact,
@@ -259,12 +252,20 @@ import {
 import { formatLocale } from '@utils/dates';
 import { fetchContent } from '@utils/api/content';
 import { fetchContactMfa, deleteContactMfa } from '@utils/api/contact-mfa';
-import { ContactMfaType } from '@utils/api/api.interface';
+import { CONTACT_MFA_TYPE } from '@enums/contact-mfa-type';
 import { fetchCallout, fetchResponses } from '@utils/api/callout';
 
 import { addNotification } from '@store/notifications';
 
-import env from '../../../../env';
+import env from '@env';
+
+import type {
+  GetContactData,
+  GetContactDataWith,
+  ContactRoleData,
+  GetCalloutDataWith,
+  GetCalloutResponseDataWith,
+} from '@type';
 
 const { t, n } = useI18n();
 
@@ -306,7 +307,7 @@ const disableMfaAndNotify = async () => {
 const disableMfa = async () => {
   try {
     await deleteContactMfa(props.contact.id, {
-      type: ContactMfaType.TOTP,
+      type: CONTACT_MFA_TYPE.TOTP,
     });
   } catch (error) {
     onDeleteMfaError();
@@ -372,7 +373,7 @@ onBeforeMount(async () => {
 
   // Fetch MFA information
   const contactMfa = await fetchContactMfa(props.contact.id);
-  if (contactMfa && contactMfa.type === ContactMfaType.TOTP) {
+  if (contactMfa && contactMfa.type === CONTACT_MFA_TYPE.TOTP) {
     mfa.value.isEnabled = true;
   }
 

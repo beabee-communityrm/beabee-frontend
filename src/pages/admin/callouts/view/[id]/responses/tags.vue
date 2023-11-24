@@ -43,25 +43,22 @@ meta:
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppHeading from '../../../../../../components/AppHeading.vue';
-import AppSubHeading from '../../../../../../components/AppSubHeading.vue';
-import AppButton from '../../../../../../components/button/AppButton.vue';
-import TagEditorForm from '../../../../../../components/tag/TagEditorForm.vue';
-import TagEditorItem from '../../../../../../components/tag/TagEditorItem.vue';
-import { addBreadcrumb } from '../../../../../../store/breadcrumb';
-import {
+import AppHeading from '@components/AppHeading.vue';
+import AppSubHeading from '@components/AppSubHeading.vue';
+import AppButton from '@components/button/AppButton.vue';
+import TagEditorForm from '@components/tag/TagEditorForm.vue';
+import TagEditorItem from '@components/tag/TagEditorItem.vue';
+
+import { createTag, deleteTag, fetchTags, updateTag } from '@utils/api/callout';
+
+import { addBreadcrumb } from '@store/breadcrumb';
+
+import type {
   CreateCalloutTagData,
   GetCalloutDataWith,
   GetCalloutTagData,
   UpdateCalloutTagData,
-} from '../../../../../../utils/api/api.interface';
-
-import {
-  createTag,
-  deleteTag,
-  fetchTags,
-  updateTag,
-} from '../../../../../../utils/api/callout';
+} from '@type';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;

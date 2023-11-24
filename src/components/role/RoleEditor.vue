@@ -37,12 +37,15 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppButton from '../button/AppButton.vue';
-import RoleEditorItem from './RoleEditorItem.vue';
-import { ContactRoleData } from '../../utils/api/api.interface';
-import RoleEditorForm from './RoleEditorForm.vue';
 import { RoleTypes } from '@beabee/beabee-common';
-import AppSubHeading from '../AppSubHeading.vue';
+
+import AppButton from '@components/button/AppButton.vue';
+import AppSubHeading from '@components/AppSubHeading.vue';
+
+import RoleEditorItem from './RoleEditorItem.vue';
+import RoleEditorForm from './RoleEditorForm.vue';
+
+import type { ContactRoleData } from '@type';
 
 const emit = defineEmits(['delete', 'update']);
 const props = defineProps<{ roles: ContactRoleData[] }>();

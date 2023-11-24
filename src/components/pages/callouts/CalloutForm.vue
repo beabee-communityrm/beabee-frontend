@@ -71,17 +71,21 @@ import {
   CalloutSlideSchema,
 } from '@beabee/beabee-common';
 import { computed, ref } from 'vue';
-import { GetCalloutDataWith } from '../../../utils/api/api.interface';
 import { useI18n } from 'vue-i18n';
-import { currentUser } from '../../../store';
-import { createResponse } from '../../../utils/api/callout';
-import { isRequestError } from '../../../utils/api';
-import GuestFields from './GuestFields.vue';
-import AppNotification from '../../AppNotification.vue';
-import FormRenderer from '../../form-renderer/FormRenderer.vue';
-import AppButton from '../../button/AppButton.vue';
 import useVuelidate from '@vuelidate/core';
-import { getDecisionComponent } from '../../../utils/callouts';
+
+import GuestFields from './GuestFields.vue';
+import AppNotification from '@components/AppNotification.vue';
+import FormRenderer from '@components/form-renderer/FormRenderer.vue';
+import AppButton from '@components/button/AppButton.vue';
+
+import { currentUser } from '@store';
+
+import { createResponse } from '@utils/api/callout';
+import { isRequestError } from '@utils/api';
+import { getDecisionComponent } from '@utils/callouts';
+
+import type { GetCalloutDataWith } from '@type';
 
 const { t } = useI18n();
 const validation = useVuelidate();

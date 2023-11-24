@@ -1,12 +1,12 @@
 {
   "accountPage": {
-    "changePassword": "Change password",
     "contactInformation": "Contact information",
     "deliveryAddress": "Delivery address",
     "deliveryOptIn": "Delivery opt-in",
     "loginDetail": "Login details",
     "mfa": {
       "codeInput": {
+        "info": "If you have lost your 2FA device please contact support",
         "label": "Code"
       },
       "confirmDelete": {
@@ -61,7 +61,9 @@
   "actions": {
     "add": "Add",
     "back": "Back",
+    "backToLogin": "Back to login page",
     "cancel": "Cancel",
+    "changePassword": "Change password",
     "chooseFile": "Choose file",
     "close": "Close",
     "continue": "Continue",
@@ -81,6 +83,8 @@
     "reopen": "Reopen",
     "replicate": "Replicate",
     "reset": "Reset",
+    "reset2FA": "Reset 2FA",
+    "resetPassword": "Reset password",
     "respond": "Respond",
     "revertToDraft": "Revert to draft",
     "save": "Save",
@@ -931,11 +935,9 @@
     "terms": "Terms and Conditions"
   },
   "forgotPassword": {
-    "backToLogin": "Back to login page",
     "checkInbox": "Please check your inbox and follow the instructions in the email. Check your spam folder if it doesn't appear.",
     "description": "Please enter your email address and we’ll send you password reset instructions.",
-    "message": "If there is an account associated with {email}, you will receive an email shortly.",
-    "resetPassword": "Reset your password",
+    "message": "If there is an account associated with {email}, you will receive an email shortly. Check your spam folder if it doesn't appear.",
     "title": "Forgot your password?"
   },
   "form": {
@@ -948,6 +950,13 @@
     "email": "Email",
     "errorMessages": {
       "aggregatorTop": "Something is missing. Please check for errors below.",
+      "api": {
+        "account-locked": "Account locked due to too many failed login attempts. Please reset your password or contact support for help.",
+        "duplicate-email": "Email address already exists",
+        "invalid-token": "Invalid 2FA token",
+        "login-failed": "Invalid password/email combination",
+        "mfa-token-required": "You have 2FA enabled, enter the token from your authenticator app to proceed"
+      },
       "generic": "Oops, something went wrong! Contact support if this happens again.",
       "validation": "Something is missing. Please check the fields above."
     },
@@ -1079,10 +1088,6 @@
         "proceed": "We've sent you an email. Please click the link to proceed.",
         "title": "Confirm your email address"
       },
-      "duplicateEmail": {
-        "message": "This email address is already registered. You can login to proceed.",
-        "title": "Duplicate email address"
-      },
       "failed": {
         "backToJoin": "Back to join page",
         "message": "There was a problem setting up your membership, our team has been notified. Please contact support if the problem persists.",
@@ -1116,19 +1121,14 @@
   "login": {
     "backTo": "Back to {newsroomName}",
     "forgotPassword": "Forgot your password?",
-    "hasMFAEnabled": "Please enter the code of your authentication app.",
-    "hasWrongMFAToken": "Your entered 2FA token is not correct.",
     "joinNow": "Join now!",
-    "login": "Login",
     "lostMfaDevice": "Lost your 2FA device?",
     "notMember": "Not a member?",
-    "title": "Log in to your account",
-    "wrongCredentials": "Wrong password/email combination"
+    "title": "Log in to your account"
   },
   "lostDevice": {
     "description": "Please enter your email address, and we will send you instructions on how to reset your 2FA.",
-    "emailSent": "We've sent an email with instructions to reset your 2FA. Please check your inbox.",
-    "resetDevice": "Reset Device",
+    "message": "If there is an account associated with {email}, you will receive an email shortly. Check your spam folder if it doesn't appear.",
     "title": "Lost your 2FA device?"
   },
   "membershipBuilder": {
@@ -1234,7 +1234,9 @@
     "forgotPassword": "Forgot password",
     "join": "Join",
     "login": "Login",
+    "lostDevice": "Lost your 2FA device?",
     "notFound": "Page not found",
+    "resetDevice": "Reset Secondary Device",
     "resetPassword": "Reset password",
     "setup": "Setup"
   },
@@ -1282,19 +1284,19 @@
     "showingOf": "Showing {start} to {end} payments out of {total}"
   },
   "resetDevice": {
-    "deleteDevice": "Remove 2FA Protection",
-    "description": "To remove 2FA protection, please enter your password. This will reset your current 2FA settings, allowing you to set up a new device.",
-    "title": "Reset 2FA Protection"
+    "description": "Enter your password to reset 2FA protection, you will be able to set up a new device once you are logged in.",
+    "failed": "Resetting device was unsuccessful, the link might have expired.",
+    "invalidPassword": "Invalid password",
+    "success": "Your 2FA device was successfully reset",
+    "title": "Reset your 2FA device?"
   },
   "resetPassword": {
-    "changePassword": "Change password",
-    "confirmPassword": "Confirm password",
     "description": "Set a new password to login.",
     "errorLink": "request another link",
     "errorText": "The link might have expired, you could {newLink}.",
     "errorTitle": "Password reset failed",
+    "failed": "Password reset failed, the link might have expired.",
     "login": "Login to your account",
-    "newPassword": "New password",
     "success": "Your password has been reset.",
     "title": "Reset your password?"
   },

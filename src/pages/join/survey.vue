@@ -31,19 +31,20 @@ meta:
   </AuthBox>
 </template>
 <script lang="ts" setup>
-import { useI18n } from 'vue-i18n';
-import AuthBox from '../../components/AuthBox.vue';
-import CalloutForm from '../../components/pages/callouts/CalloutForm.vue';
 import { onBeforeMount, ref } from 'vue';
-import { fetchContent } from '../../utils/api/content';
-import {
-  GetCalloutDataWith,
-  JoinSetupContent,
-} from '../../utils/api/api.interface';
-import { fetchCallout } from '../../utils/api/callout';
-import { currentUser } from '../../store';
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-import AppButton from '../../components/button/AppButton.vue';
+
+import AuthBox from '@components/AuthBox.vue';
+import CalloutForm from '@components/pages/callouts/CalloutForm.vue';
+import AppButton from '@components/button/AppButton.vue';
+
+import { fetchContent } from '@utils/api/content';
+import { fetchCallout } from '@utils/api/callout';
+
+import { currentUser } from '@store';
+
+import type { GetCalloutDataWith, JoinSetupContent } from '@type';
 
 const { t } = useI18n();
 const router = useRouter();

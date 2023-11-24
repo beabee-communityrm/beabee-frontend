@@ -143,19 +143,24 @@ meta:
 <script lang="ts" setup>
 import { onBeforeMount, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppImageUpload from '../../../components/forms/AppImageUpload.vue';
-import AppInput from '../../../components/forms/AppInput.vue';
-import AppSelect from '../../../components/forms/AppSelect.vue';
-import AppTextArea from '../../../components/forms/AppTextArea.vue';
-import { ShareContent } from '../../../utils/api/api.interface';
-import { fetchContent, updateContent } from '../../../utils/api/content';
-import { generalContent as storeGeneralContent } from '../../../store';
-import AppHeading from '../../../components/AppHeading.vue';
-import axios from '../../../lib/axios';
-import AppForm from '../../../components/forms/AppForm.vue';
-import App2ColGrid from '../../../components/App2ColGrid.vue';
-import AppSubHeading from '../../../components/AppSubHeading.vue';
-import AppLinkList from '../../../components/forms/AppLinkList.vue';
+
+import axios from '@lib/axios';
+
+import AppImageUpload from '@components/forms/AppImageUpload.vue';
+import AppInput from '@components/forms/AppInput.vue';
+import AppSelect from '@components/forms/AppSelect.vue';
+import AppTextArea from '@components/forms/AppTextArea.vue';
+import AppHeading from '@components/AppHeading.vue';
+import AppForm from '@components/forms/AppForm.vue';
+import App2ColGrid from '@components/App2ColGrid.vue';
+import AppSubHeading from '@components/AppSubHeading.vue';
+import AppLinkList from '@components/forms/AppLinkList.vue';
+
+import { fetchContent, updateContent } from '@utils/api/content';
+
+import { generalContent as storeGeneralContent } from '@store';
+
+import type { ShareContent } from '@type';
 
 const { t } = useI18n();
 
