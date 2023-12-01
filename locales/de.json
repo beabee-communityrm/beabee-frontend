@@ -6,6 +6,7 @@
     "loginDetail": "Anmeldedaten",
     "mfa": {
       "codeInput": {
+        "info": "Wenn Sie Ihr 2FA-Gerät verloren haben, wenden Sie sich bitte an den Support.",
         "label": "Code"
       },
       "confirmDelete": {
@@ -82,6 +83,7 @@
     "reopen": "Wieder aktivieren",
     "replicate": "Kopieren",
     "reset": "Zurücksetzen",
+    "reset2FA": "Zwei-Faktor-Authentisierung",
     "resetPassword": "Passwort zurücksetzen",
     "respond": "Antworten",
     "revertToDraft": "Zu Entwurf zurückkehren",
@@ -812,7 +814,9 @@
             "help": "<p>Das Bild wird verwendet, um die Antwort in der Karten- oder Galerieansicht zu visualisieren. Wichtig: Es muss sich um eine Datei-Upload-Komponente handeln.</p>\n",
             "label": "Welches Feld soll als Bild für Darstellung der Antwort dienen?"
           },
-          "responseLinks": {},
+          "responseLinks": {
+            "label": "Links am Ende von Antworten hinzufügen?"
+          },
           "responseTitleProp": {
             "help": "<p>Der Titel erscheint als Überschrift auf jeder Antwort in der Karten- oder Galerieansicht.</p>\n",
             "label": "Welches Feld soll als Überschrift dienen?"
@@ -937,6 +941,7 @@
     "email": "E-Mail",
     "errorMessages": {
       "api": {
+        "account-locked": "Konto wegen zu vieler fehlgeschlagener Anmeldeversuche gesperrt. Bitte Passwort zurücksetzen oder an den Support wenden, um Hilfe zu erhalten.",
         "duplicate-email": "Diese E-Mail-Adresse existiert bereits.",
         "invalid-token": "Der von Ihnen eingegebene 2FA Token ist nicht korrekt.",
         "login-failed": "Falsche Kombination von Passwort und E-Mail.",
@@ -1269,12 +1274,17 @@
     "showingOf": "Zahlungen {start} bis {end} von {total}"
   },
   "resetDevice": {
-    "success": "Das Zurücksetzen des 2FA-Gerätes war erfolgreich."
+    "description": "Geben Sie Ihr Passwort ein, um den 2FA-Schutz zurückzusetzen. Sobald Sie eingeloggt sind, können Sie ein neues Gerät einrichten.",
+    "failed": "Das Zurücksetzen des Geräts war nicht erfolgreich, möglicherweise ist die Verbindung abgelaufen.",
+    "invalidPassword": "Ungültiges Passwort",
+    "success": "Das Zurücksetzen des 2FA-Gerätes war erfolgreich.",
+    "title": "2FA-Gerät zurücksetzen?"
   },
   "resetPassword": {
     "description": "Neues Passwort eingeben, um fortzufahren.",
     "failed": "Das Zurücksetzen des Passworts ist schiefgelaufen",
     "login": "Einloggen",
+    "lostDevice": "2FA-Gerät verloren? Bitte an den Support wenden.",
     "success": "Ihr Passwort wurde aktualisiert.",
     "title": "Passwort aktualisieren?"
   },
