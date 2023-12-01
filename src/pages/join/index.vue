@@ -5,6 +5,7 @@ meta:
   noAuth: true
   pageTitle: pageTitle.join
   embeddable: true
+  noCnrMode: true
 </route>
 <template>
   <JoinForm

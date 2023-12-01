@@ -8,5 +8,6 @@ declare module 'vue-router' {
     noAuth?: boolean;
     role?: RoleType;
     embeddable?: boolean;
+    noCnrMode?: boolean;
   }
 }
