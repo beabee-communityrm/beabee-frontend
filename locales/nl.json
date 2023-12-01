@@ -255,9 +255,6 @@
   },
   "editCallout": {},
   "editNotice": {},
-  "folderEditor": {
-    "confirmDelete": {}
-  },
   "footer": {
     "contactUs": "Neem contact met ons op",
     "impressum": "Impressum",
@@ -386,9 +383,6 @@
     "success": "Het resetten van het 2FA-apparaat is gelukt."
   },
   "resetPassword": {},
-  "reviewerEditor": {
-    "confirmDelete": {}
-  },
   "roleEditor": {
     "confirmDelete": {},
     "expires": {
