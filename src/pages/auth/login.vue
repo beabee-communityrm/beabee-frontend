@@ -16,7 +16,7 @@ meta:
     >
       <AppTitle>{{ t('login.title') }}</AppTitle>
 
-      <div class="mb-5">
+      <div v-if="!env.cnrMode" class="mb-5">
         <span>{{ t('login.notMember') }}</span>
         <router-link
           to="/join"
@@ -107,6 +107,7 @@ import { updateCurrentUser } from '@store/index';
 import { LOGIN_CODES } from '@enums/login-codes';
 
 import { LoginData } from '@type';
+import env from '@env';
 
 const { t } = useI18n();
 

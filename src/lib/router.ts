@@ -4,6 +4,7 @@ import i18n from './i18n';
 
 import routes from '~pages';
 import { watch } from 'vue';
+import env from '@env';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -25,6 +26,11 @@ router.beforeEach(async (to) => {
 
   // Ensure route is embeddable if we are embedded
   if (isEmbed && !to.meta.embeddable) {
+    return false;
+  }
+
+  // Don't load routes that are not available in CNR mode
+  if (env.cnrMode && to.meta.noCnrMode) {
     return false;
   }
 
