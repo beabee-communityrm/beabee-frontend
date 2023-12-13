@@ -448,7 +448,6 @@ function handleLoad(e: { map: Map }) {
     const geocodeControl = new GeocodingControl({
       apiKey: env.maptilerKey,
       language: generalContent.value.locale,
-      country: generalContent.value.locale,
     });
 
     geocodeControl.addEventListener('pick', (e: Event) => {
