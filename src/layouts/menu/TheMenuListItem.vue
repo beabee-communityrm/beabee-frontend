@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 defineProps<{
   title: string;

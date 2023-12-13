@@ -7,7 +7,7 @@ function shades(color, levels = []) {
   );
 }
 
-module.exports = {
+export default {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   safelist: ['bg-success', 'bg-warning', 'bg-danger'],
   theme: {

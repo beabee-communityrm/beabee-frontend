@@ -27,7 +27,7 @@ export default ({ command, mode }) => {
     '@lib/': `${path.resolve(__dirname, './src/lib')}/`,
     '@pages/': `${path.resolve(__dirname, './src/pages')}/`,
     '@store/': `${path.resolve(__dirname, './src/store')}/`,
-    '@type/': `${path.resolve(__dirname, './src/types')}/`,
+    '@type/': `${path.resolve(__dirname, './src/type')}/`,
     '@utils/': `${path.resolve(__dirname, './src/utils')}/`,
     '@enums/': `${path.resolve(__dirname, './src/enums')}/`,
 
@@ -36,7 +36,7 @@ export default ({ command, mode }) => {
     '@lib': `${path.resolve(__dirname, './src/lib/index')}`,
     '@pages': `${path.resolve(__dirname, './src/pages/index')}`,
     '@store': `${path.resolve(__dirname, './src/store/index')}`,
-    '@type': `${path.resolve(__dirname, './src/types/index')}`,
+    '@type': `${path.resolve(__dirname, './src/type/index')}`,
     '@utils': `${path.resolve(__dirname, './src/utils/index')}`,
     '@enums': `${path.resolve(__dirname, './src/enums/index')}`,
 

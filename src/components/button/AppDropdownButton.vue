@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type IconDefinition } from '@fortawesome/fontawesome-common-types';
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { onBeforeMount, onBeforeUnmount, ref, toRef, watch } from 'vue';
 import AppButton from './AppButton.vue';
 
