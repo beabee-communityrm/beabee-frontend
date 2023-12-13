@@ -31,7 +31,6 @@
   />
 </template>
 <script lang="ts" setup>
-/* __placeholder__ */
 import type { RuleValue } from '@beabee/beabee-common';
 import { computed } from 'vue';
 import { formatLocale } from '../../../utils/dates';

@@ -111,7 +111,6 @@
 </template>
 
 <script lang="ts" setup>
-/* __placeholder__ */
 import type { RuleGroup } from '@beabee/beabee-common';
 import {
   faCaretDown,
