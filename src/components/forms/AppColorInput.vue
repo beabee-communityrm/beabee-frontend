@@ -57,13 +57,13 @@ watch(
 </script>
 
 <style lang="postcss">
+@import url('vue-accessible-color-picker/styles');
+:root {
+  --vacp-color-background: transparent;
+  --vacp-font-family: inherit;
+}
 /* This needs more specificity to apply on production builds */
 .vacp-color-picker.vacp-color-picker {
-  padding: 0;
-  background-color: transparent;
-  .vacp-color-space {
-    height: 100px;
-  }
   .vacp-copy-button,
   .vacp-color-inputs {
     display: none;
