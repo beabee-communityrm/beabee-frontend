@@ -134,8 +134,8 @@ const updateAction = computed(() =>
   isUpdateAction.value
     ? t('actions.update')
     : canStartNow.value
-    ? t('actions.publish')
-    : t('actions.schedule')
+      ? t('actions.publish')
+      : t('actions.schedule')
 );
 
 async function saveCallout(asDraft = false) {

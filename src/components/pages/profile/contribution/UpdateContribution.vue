@@ -182,10 +182,10 @@ const buttonText = computed(() =>
   isManualActiveMember.value
     ? t('contribution.updatePaymentType')
     : isActiveMember.value
-    ? t('contribution.updateContribution')
-    : isExpiringMember.value
-    ? t('contribution.restartContribution')
-    : t('contribution.startContribution')
+      ? t('contribution.updateContribution')
+      : isExpiringMember.value
+        ? t('contribution.restartContribution')
+        : t('contribution.startContribution')
 );
 
 async function handleCreate() {

@@ -135,8 +135,8 @@ async function saveContact() {
           period: undefined,
         }
       : data.contribution.type === ContributionType.Manual
-      ? { ...data.contribution, type: ContributionType.Manual as const }
-      : undefined;
+        ? { ...data.contribution, type: ContributionType.Manual as const }
+        : undefined;
 
   return await createContact({
     email: data.email,

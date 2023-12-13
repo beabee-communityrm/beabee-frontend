@@ -21,18 +21,18 @@ type ContentId =
 type Content<Id extends ContentId> = Id extends 'join'
   ? JoinContent
   : Id extends 'join/setup'
-  ? JoinSetupContent
-  : Id extends 'profile'
-  ? ProfileContent
-  : Id extends 'general'
-  ? GeneralContent
-  : Id extends 'contacts'
-  ? ContactsContent
-  : Id extends 'email'
-  ? EmailContent
-  : Id extends 'share'
-  ? ShareContent
-  : never;
+    ? JoinSetupContent
+    : Id extends 'profile'
+      ? ProfileContent
+      : Id extends 'general'
+        ? GeneralContent
+        : Id extends 'contacts'
+          ? ContactsContent
+          : Id extends 'email'
+            ? EmailContent
+            : Id extends 'share'
+              ? ShareContent
+              : never;
 
 export async function fetchContent<Id extends ContentId>(
   id: Id

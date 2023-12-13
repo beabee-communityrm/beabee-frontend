@@ -12,8 +12,8 @@
         disabled
           ? 'opacity-50'
           : item.value === modelValue
-          ? 'z-20 !bg-link font-bold text-white !outline-link-110'
-          : 'hover:z-10 hover:bg-link-10 hover:outline-link',
+            ? 'z-20 !bg-link font-bold text-white !outline-link-110'
+            : 'hover:z-10 hover:bg-link-10 hover:outline-link',
       ]"
       :disabled="disabled"
       @click="$emit('update:modelValue', item.value)"

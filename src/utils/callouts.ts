@@ -49,8 +49,8 @@ export function convertCalloutToSteps(
           callout?.access === 'anonymous'
             ? 'guests'
             : callout?.access === 'only-anonymous'
-            ? 'all'
-            : 'none',
+              ? 'all'
+              : 'none',
         showOnUserDashboards: !callout?.hidden,
         usersCanEditAnswers: callout?.allowUpdate || false,
         multipleResponses: callout?.allowMultiple || false,
@@ -165,10 +165,10 @@ export function convertStepsToCallout(
       steps.settings.whoCanTakePart === 'members'
         ? 'member'
         : steps.settings.allowAnonymousResponses === 'none'
-        ? 'guest'
-        : steps.settings.allowAnonymousResponses === 'guests'
-        ? 'anonymous'
-        : 'only-anonymous',
+          ? 'guest'
+          : steps.settings.allowAnonymousResponses === 'guests'
+            ? 'anonymous'
+            : 'only-anonymous',
     ...(steps.endMessage.whenFinished === 'message'
       ? {
           thanksText: steps.endMessage.thankYouText,

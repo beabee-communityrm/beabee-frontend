@@ -21,8 +21,8 @@
           step.validated
             ? 'border-link bg-link'
             : stepIndex === modelValue
-            ? 'border-link bg-white'
-            : 'border-grey bg-primary-5'
+              ? 'border-link bg-white'
+              : 'border-grey bg-primary-5'
         "
       />
       <h4 class="font-semibold">{{ step.name }}</h4>

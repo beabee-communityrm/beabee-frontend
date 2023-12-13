@@ -12,8 +12,8 @@
             disabled
               ? ''
               : method === modelValue
-              ? '!border-link-110 bg-link text-white'
-              : 'bg-white hover:border-link hover:bg-link-10'
+                ? '!border-link-110 bg-link text-white'
+                : 'bg-white hover:border-link hover:bg-link-10'
           "
           type="button"
           :disabled="disabled"
