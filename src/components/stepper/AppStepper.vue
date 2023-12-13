@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-import { AppStepperStep } from '@type/app-stepper-step';
+import type { AppStepperStep } from '@type/app-stepper-step';
 defineProps<{ steps: AppStepperStep[]; modelValue: number }>();
 const emit = defineEmits(['update:modelValue']);
 </script>

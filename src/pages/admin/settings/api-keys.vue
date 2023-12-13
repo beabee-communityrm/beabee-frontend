@@ -108,14 +108,14 @@ import useVuelidate from '@vuelidate/core';
 import { useI18n } from 'vue-i18n';
 import { faCopy, faTrash, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { addDays } from 'date-fns';
-import { Paginated } from '@beabee/beabee-common';
+import type { Paginated } from '@beabee/beabee-common';
 
 import AppForm from '@components/forms/AppForm.vue';
 import AppInput from '@components/forms/AppInput.vue';
 import AppButton from '@components/button/AppButton.vue';
 import AppConfirmDialog from '@components/AppConfirmDialog.vue';
 import AppPaginatedTable from '@components/table/AppPaginatedTable.vue';
-import { Header } from '@components/table/table.interface';
+import type { Header } from '@components/table/table.interface';
 import AppHeading from '@components/AppHeading.vue';
 import App2ColGrid from '@components/App2ColGrid.vue';
 import AppSelect from '@components/forms/AppSelect.vue';

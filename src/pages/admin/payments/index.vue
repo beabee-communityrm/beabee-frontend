@@ -43,7 +43,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { Paginated } from '@beabee/beabee-common';
+import type { Paginated } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import { computed, ref, watchEffect } from 'vue';
 import { faEuro } from '@fortawesome/free-solid-svg-icons';

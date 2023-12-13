@@ -30,10 +30,10 @@
 <script lang="ts" setup>
 import {
   faCircleNotch,
-  IconDefinition,
+  type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { computed, ref } from 'vue';
-import { RouteLocationRaw } from 'vue-router';
+import { type RouteLocationRaw } from 'vue-router';
 
 // Variant classes for [base, hover, loading icon]
 const variantClasses = {

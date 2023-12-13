@@ -71,7 +71,7 @@ meta:
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref, watch, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { ItemStatus, Paginated } from '@beabee/beabee-common';
+import { ItemStatus, type Paginated } from '@beabee/beabee-common';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 import PageTitle from '@components/PageTitle.vue';
@@ -80,7 +80,7 @@ import CalloutCard from '@components/callout/CalloutCard.vue';
 import AppSearchInput from '@components/forms/AppSearchInput.vue';
 import AppPagination from '@components/AppPagination.vue';
 import AppToggle from '@components/forms/AppToggle.vue';
-import { Header } from '@components/table/table.interface';
+import type { Header } from '@components/table/table.interface';
 import AppTable from '@components/table/AppTable.vue';
 import AppTime from '@components/AppTime.vue';
 

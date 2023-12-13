@@ -1,3 +1,3 @@
-import { CreateCalloutTagData } from '@type';
+import type { CreateCalloutTagData } from '@type';
 
 export type UpdateCalloutTagData = Partial<CreateCalloutTagData>;

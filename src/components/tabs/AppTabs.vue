@@ -19,7 +19,7 @@
   </ul>
 </template>
 <script lang="ts" setup>
-import { TabItem } from './tabs.interface';
+import type { TabItem } from './tabs.interface';
 
 defineProps<{
   items: TabItem[];

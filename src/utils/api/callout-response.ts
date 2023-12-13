@@ -1,4 +1,4 @@
-import { Paginated, RuleGroup } from '@beabee/beabee-common';
+import type { Paginated, RuleGroup } from '@beabee/beabee-common';
 import axios from '../../lib/axios';
 import { deserializeDate } from '.';
 import { deserializeContact } from './contact';

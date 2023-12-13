@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ContributionPeriod,
-  Paginated,
+  type Paginated,
   PaymentMethod,
-  RoleType,
+  type RoleType,
 } from '@beabee/beabee-common';
 
 import axios from '../../lib/axios';

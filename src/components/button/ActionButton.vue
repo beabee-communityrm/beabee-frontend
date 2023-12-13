@@ -4,7 +4,7 @@
   ></AppButton>
 </template>
 <script lang="ts" setup>
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { type IconDefinition } from '@fortawesome/fontawesome-common-types';
 import AppButton from './AppButton.vue';
 defineProps<{ icon: IconDefinition }>();
 </script>

@@ -51,7 +51,7 @@ import {
   fetchCallout,
   updateCallout,
 } from '../../../utils/api/callout';
-import { CalloutStepsProps } from '../../../components/pages/admin/callouts/callouts.interface';
+import type { CalloutStepsProps } from '../../../components/pages/admin/callouts/callouts.interface';
 import CalloutStepper from '../../../components/pages/admin/callouts/CalloutStepper.vue';
 import {
   convertCalloutToSteps,

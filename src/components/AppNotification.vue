@@ -42,7 +42,10 @@
 </template>
 
 <script lang="ts" setup>
-import { IconDefinition, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+  type IconDefinition,
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons';
 import { computed, ref } from 'vue';
 
 const emit = defineEmits(['remove']);

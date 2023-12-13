@@ -1,5 +1,5 @@
-import { CalloutResponseAnswerAddress } from '@beabee/beabee-common';
-import { GeocodingFeature } from '@maptiler/client';
+import { type CalloutResponseAnswerAddress } from '@beabee/beabee-common';
+import { type GeocodingFeature } from '@maptiler/client';
 import { geocoding } from '../lib/maptiler';
 import { generalContent } from '../store';
 import env from '../env';

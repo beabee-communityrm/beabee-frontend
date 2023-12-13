@@ -45,17 +45,17 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppSelect from '../forms/AppSelect.vue';
 import {
-  FilterType,
+  type FilterType,
   nullableOperators,
   operatorsByTypeMap,
-  Rule,
-  RuleOperator,
+  type Rule,
+  type RuleOperator,
 } from '@beabee/beabee-common';
 import AppSearchRuleValue from './AppSearchRuleValue.vue';
 import {
   createNewRule,
-  FilterGroup,
-  FilterItems,
+  type FilterGroup,
+  type FilterItems,
   getDefaultValue,
 } from './search.interface';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';

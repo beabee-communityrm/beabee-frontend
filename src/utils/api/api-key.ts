@@ -1,4 +1,4 @@
-import { Paginated } from '@beabee/beabee-common';
+import type { Paginated } from '@beabee/beabee-common';
 import axios from '../../lib/axios';
 import { deserializeDate } from '.';
 

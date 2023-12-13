@@ -99,8 +99,8 @@ meta:
 <script lang="ts" setup>
 import {
   ContributionPeriod,
-  Paginated,
-  RuleGroup,
+  type Paginated,
+  type RuleGroup,
 } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';

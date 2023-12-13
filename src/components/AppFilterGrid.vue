@@ -13,7 +13,7 @@
 import { computed } from 'vue';
 import AppSelect from './forms/AppSelect.vue';
 import AppVTabs from './tabs/AppVTabs.vue';
-import { TabItem } from './tabs/tabs.interface';
+import { type TabItem } from './tabs/tabs.interface';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{

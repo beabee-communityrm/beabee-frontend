@@ -99,7 +99,7 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import Contribution from '@components/contribution/Contribution.vue';
 import AppButton from '@components/button/AppButton.vue';
 import ProrateContribution from './ProrateContribution.vue';
-import { ContributionContent } from '@components/contribution/contribution.interface';
+import { type ContributionContent } from '@components/contribution/contribution.interface';
 import AppModal from '@components/AppModal.vue';
 import StripePayment from '@components/StripePayment.vue';
 import AppHeading from '@components/AppHeading.vue';

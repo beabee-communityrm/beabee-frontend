@@ -51,7 +51,7 @@ import { computed, watch } from 'vue';
 import ContributionAmount from './ContributionAmount.vue';
 import ContributionFee from './ContributionFee.vue';
 import ContributionMethod from './ContributionMethod.vue';
-import { ContributionContent } from './contribution.interface';
+import { type ContributionContent } from './contribution.interface';
 import { useI18n } from 'vue-i18n';
 import AppChoice from '../forms/AppChoice.vue';
 

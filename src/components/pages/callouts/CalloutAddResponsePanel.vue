@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { CalloutResponseAnswers } from '@beabee/beabee-common';
+import { type CalloutResponseAnswers } from '@beabee/beabee-common';
 import CalloutForm from './CalloutForm.vue';
 import CalloutMemberOnlyPrompt from './CalloutMemberOnlyPrompt.vue';
 import CalloutLoginPrompt from './CalloutLoginPrompt.vue';

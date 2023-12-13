@@ -58,7 +58,7 @@
 </template>
 
 <script lang="ts" setup>
-import { RoleType } from '@beabee/beabee-common';
+import type { RoleType } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import { computed, reactive } from 'vue';

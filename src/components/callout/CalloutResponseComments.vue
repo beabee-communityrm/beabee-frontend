@@ -26,8 +26,8 @@ import AppHeading from '../AppHeading.vue';
 import AppSubHeading from '../AppSubHeading.vue';
 import CalloutResponseComment from './CalloutResponseComment.vue';
 import CalloutResponseCommentForm from './CalloutResponseCommentForm.vue';
-import { CommentFormData } from './calloutResponseComment.interface';
-import { Paginated } from '@beabee/beabee-common';
+import { type CommentFormData } from './calloutResponseComment.interface';
+import { type Paginated } from '@beabee/beabee-common';
 import { onBeforeMount, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 

@@ -115,7 +115,7 @@ import useVuelidate from '@vuelidate/core';
 import { ref, watch } from 'vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { ContentStepProps } from '../callouts.interface';
+import type { ContentStepProps } from '../callouts.interface';
 import AppNotification from '../../../../AppNotification.vue';
 import FormBuilder from '../../../../form-builder/FormBuilder.vue';
 import {

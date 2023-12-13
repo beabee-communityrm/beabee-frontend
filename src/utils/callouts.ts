@@ -1,13 +1,16 @@
 import {
-  CalloutComponentSchema,
-  CalloutSlideSchema,
+  type CalloutComponentSchema,
+  type CalloutSlideSchema,
   ItemStatus,
-  RadioCalloutComponentSchema,
+  type RadioCalloutComponentSchema,
   flattenComponents,
 } from '@beabee/beabee-common';
 import { format } from 'date-fns';
-import { CalloutStepsProps } from '@components/pages/admin/callouts/callouts.interface';
-import { FilterItem, FilterItems } from '@components/search/search.interface';
+import type { CalloutStepsProps } from '@components/pages/admin/callouts/callouts.interface';
+import type {
+  FilterItem,
+  FilterItems,
+} from '@components/search/search.interface';
 
 import env from '../env';
 import i18n from '@lib/i18n';

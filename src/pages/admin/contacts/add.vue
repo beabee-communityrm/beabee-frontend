@@ -58,7 +58,7 @@ meta:
 import {
   ContributionType,
   NewsletterStatus,
-  RoleType,
+  type RoleType,
 } from '@beabee/beabee-common';
 import useVuelidate from '@vuelidate/core';
 import { computed, reactive, ref } from 'vue';
@@ -68,7 +68,7 @@ import { faUsers } from '@fortawesome/free-solid-svg-icons';
 
 import App2ColGrid from '@components/App2ColGrid.vue';
 import AppHeading from '@components/AppHeading.vue';
-import { UpdateContribution } from '@components/contact/contact.interface';
+import type { UpdateContribution } from '@components/contact/contact.interface';
 import ContactBasicFields from '@components/contact/ContactBasicFields.vue';
 import ContactContributionFields from '@components/contact/ContactContributionFields.vue';
 import AppButton from '@components/button/AppButton.vue';

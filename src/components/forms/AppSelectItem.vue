@@ -4,7 +4,7 @@
   </option>
 </template>
 <script lang="ts" setup>
-import { SelectItem } from './form.interface';
+import type { SelectItem } from './form.interface';
 
 defineProps<{ item: SelectItem }>();
 </script>

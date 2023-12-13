@@ -1,5 +1,5 @@
-import { RoleType } from '@beabee/beabee-common';
-import { computed, ComputedRef, ref } from 'vue';
+import type { RoleType } from '@beabee/beabee-common';
+import { computed, type ComputedRef, ref } from 'vue';
 
 import axios from '@lib/axios';
 

@@ -3,7 +3,7 @@ import {
   ContributionPeriod,
   PaymentMethod,
 } from '@beabee/beabee-common';
-import { reactive, computed, Ref } from 'vue';
+import { reactive, computed, type Ref } from 'vue';
 
 import i18n from '@lib/i18n';
 

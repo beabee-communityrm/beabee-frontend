@@ -3,8 +3,8 @@
   <ArgInput v-model="value[0]" :item="item" :readonly="readonly" />
 </template>
 <script lang="ts" setup>
-import { RuleValue } from '@beabee/beabee-common';
-import { FilterItem } from '../search.interface';
+import type { RuleValue } from '@beabee/beabee-common';
+import type { FilterItem } from '../search.interface';
 import ArgInput from './ArgInput.vue';
 defineProps<{ value: RuleValue[]; item: FilterItem; readonly: boolean }>();
 </script>

@@ -1,4 +1,4 @@
-import { CalloutComponentSchema } from '@beabee/beabee-common';
+import { type CalloutComponentSchema } from '@beabee/beabee-common';
 
 export interface FormBuilderRef {
   builder: { form: { components: CalloutComponentSchema[] } };

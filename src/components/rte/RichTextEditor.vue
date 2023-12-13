@@ -60,7 +60,7 @@
 <script lang="ts" setup="{ emit }">
 import { computed, onBeforeUnmount, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useEditor, EditorContent, ChainedCommands } from '@tiptap/vue-3';
+import { useEditor, EditorContent, type ChainedCommands } from '@tiptap/vue-3';
 import Link from '@tiptap/extension-link';
 import Underline from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';

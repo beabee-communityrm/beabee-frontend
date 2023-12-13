@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts" setup>
-import { RuleGroup } from '@beabee/beabee-common';
+import type { RuleGroup } from '@beabee/beabee-common';
 import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import useVuelidate from '@vuelidate/core';
 import { ref } from 'vue';

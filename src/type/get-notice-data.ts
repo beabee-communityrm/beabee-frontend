@@ -1,5 +1,5 @@
 import { ItemStatus } from '@beabee/beabee-common';
-import { NoticeData } from '@type';
+import type { NoticeData } from '@type';
 
 export interface GetNoticeData extends NoticeData {
   id: string;

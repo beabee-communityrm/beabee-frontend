@@ -176,7 +176,7 @@ import type GeoJSON from 'geojson';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import 'vue-maplibre-gl/dist/vue-maplibre-gl.css';
 
-import {
+import type {
   CalloutResponseAnswerAddress,
   CalloutResponseAnswers,
 } from '@beabee/beabee-common';
@@ -188,7 +188,7 @@ import {
 import { useI18n } from 'vue-i18n';
 import { GeocodingControl } from '@maptiler/geocoding-control/maplibregl';
 import '@maptiler/geocoding-control/style.css';
-import { GeocodingFeature } from '@maptiler/client';
+import { type GeocodingFeature } from '@maptiler/client';
 
 import PageTitle from '@components/PageTitle.vue';
 import CalloutShowResponsePanel from '@components/pages/callouts/CalloutShowResponsePanel.vue';
@@ -200,7 +200,7 @@ import {
 } from '@components/pages/callouts/use-callout';
 
 import {
-  GeocodeResult,
+  type GeocodeResult,
   featureToAddress,
   reverseGeocode,
   formatGeocodeResult,

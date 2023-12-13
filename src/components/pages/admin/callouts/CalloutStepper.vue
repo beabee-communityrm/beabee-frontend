@@ -21,7 +21,7 @@ import { ItemStatus } from '@beabee/beabee-common';
 import { ref, computed, markRaw, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppStepper from '../../../stepper/AppStepper.vue';
-import { CalloutStepsProps, CalloutSteps } from './callouts.interface';
+import type { CalloutStepsProps, CalloutSteps } from './callouts.interface';
 
 import StepSettings from './steps/SettingsStep.vue';
 import StepTitleAndImage from './steps/TitleAndImage.vue';

@@ -1,7 +1,7 @@
 import { deserializeDate } from '.';
 import axios from '@lib/axios';
 import { deserializeContact } from './contact';
-import { Paginated } from '@beabee/beabee-common';
+import type { Paginated } from '@beabee/beabee-common';
 
 import type {
   CreateCalloutResponseCommentData,

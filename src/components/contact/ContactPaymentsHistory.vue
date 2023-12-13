@@ -36,13 +36,13 @@
 </template>
 
 <script lang="ts" setup>
-import { Paginated, PaymentStatus } from '@beabee/beabee-common';
+import { type Paginated, PaymentStatus } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import { computed, ref, watchEffect } from 'vue';
 
 import AppTable from '@components/table/AppTable.vue';
 import AppPagination from '@components/AppPagination.vue';
-import { Header, SortType } from '@components/table/table.interface';
+import { type Header, SortType } from '@components/table/table.interface';
 import AppHeading from '@components/AppHeading.vue';
 
 import { formatLocale } from '@utils/dates';

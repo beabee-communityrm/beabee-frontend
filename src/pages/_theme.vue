@@ -259,7 +259,7 @@ import AppStepper from '../components/stepper/AppStepper.vue';
 import AppCheckbox from '../components/forms/AppCheckbox.vue';
 import AppQRCode from '../components/AppQRCode.vue';
 
-import { AppStepperStep } from '@type/app-stepper-step';
+import type { AppStepperStep } from '@type/app-stepper-step';
 
 import {
   faAngleRight,

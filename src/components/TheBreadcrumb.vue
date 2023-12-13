@@ -19,7 +19,7 @@
 <script lang="ts" setup>
 import {
   faAngleRight,
-  IconDefinition,
+  type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 
 defineProps<{

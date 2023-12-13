@@ -1,9 +1,9 @@
 import { ItemStatus } from '@beabee/beabee-common';
-import { Ref, computed } from 'vue';
+import { type Ref, computed } from 'vue';
 
 import { currentUser } from '@store';
 
-import { GetCalloutData } from '@type';
+import type { GetCalloutData } from '@type';
 
 export const HASH_PREFIX = '#response-' as const;
 

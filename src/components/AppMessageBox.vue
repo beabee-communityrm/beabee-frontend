@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { type IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
 import AppSubHeading from './AppSubHeading.vue';
 

@@ -13,10 +13,10 @@
   />
 </template>
 <script lang="ts" setup>
-import { isRuleGroup, Rule, RuleGroup } from '@beabee/beabee-common';
+import { isRuleGroup, type Rule, type RuleGroup } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import AppSearchRule from './AppSearchRule.vue';
-import { FilterGroup, FilterItems } from './search.interface';
+import type { FilterGroup, FilterItems } from './search.interface';
 
 defineEmits(['update:rule']);
 defineProps<{

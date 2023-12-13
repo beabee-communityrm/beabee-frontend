@@ -41,7 +41,7 @@ import useVuelidate from '@vuelidate/core';
 import { requiredIf } from '@vuelidate/validators';
 import { computed } from 'vue';
 import AppLabel from './AppLabel.vue';
-import { SelectGroup, SelectItem } from './form.interface';
+import type { SelectGroup, SelectItem } from './form.interface';
 import AppSelectItem from './AppSelectItem.vue';
 import AppInputError from './AppInputError.vue';
 import AppInputHelp from './AppInputHelp.vue';
