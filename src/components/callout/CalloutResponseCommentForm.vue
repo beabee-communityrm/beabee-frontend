@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import AppForm from '../forms/AppForm.vue';
 import RichTextEditor from '../rte/RichTextEditor.vue';
-import { CommentFormData } from './calloutResponseComment.interface';
+import { type CommentFormData } from './calloutResponseComment.interface';
 import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';

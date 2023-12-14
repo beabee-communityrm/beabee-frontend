@@ -158,7 +158,7 @@ meta:
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { CalloutResponseAnswers } from '@beabee/beabee-common';
+import type { CalloutResponseAnswers } from '@beabee/beabee-common';
 import {
   faCaretLeft,
   faCaretRight,

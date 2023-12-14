@@ -31,7 +31,7 @@
   />
 </template>
 <script lang="ts" setup>
-import { RuleValue } from '@beabee/beabee-common';
+import type { RuleValue } from '@beabee/beabee-common';
 import { computed } from 'vue';
 import { formatLocale } from '../../../utils/dates';
 import AppInput from '../../forms/AppInput.vue';
@@ -39,7 +39,7 @@ import AppRadioGroup from '../../forms/AppRadioGroup.vue';
 import AppSelect from '../../forms/AppSelect.vue';
 import DateInput from './DateInput.vue';
 import { useI18n } from 'vue-i18n';
-import { FilterItem } from '../search.interface';
+import type { FilterItem } from '../search.interface';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{

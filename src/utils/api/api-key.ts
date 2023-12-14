@@ -1,6 +1,5 @@
-import { Paginated } from '@beabee/beabee-common';
-import axios from '../../lib/axios';
-import { deserializeDate } from '.';
+import type { Paginated } from '@beabee/beabee-common';
+import { deserializeDate, instance } from '.';
 
 import type {
   CreateApiKeyData,
@@ -20,7 +19,7 @@ function deserializeApiKey(apiKey: Serial<GetApiKeyData>): GetApiKeyData {
 export async function createApiKey(
   dataIn: CreateApiKeyData
 ): Promise<{ token: string }> {
-  const { data } = await axios.post<Serial<{ token: string }>>(
+  const { data } = await instance.post<Serial<{ token: string }>>(
     '/api-key',
     dataIn
   );
@@ -30,7 +29,7 @@ export async function createApiKey(
 export async function fetchApiKeys(
   query?: GetApiKeysQuery
 ): Promise<Paginated<GetApiKeyData>> {
-  const { data } = await axios.get<Paginated<Serial<GetApiKeyData>>>(
+  const { data } = await instance.get<Paginated<Serial<GetApiKeyData>>>(
     '/api-key',
     { params: query }
   );
@@ -39,5 +38,5 @@ export async function fetchApiKeys(
 }
 
 export async function deleteApiKey(id: string) {
-  await axios.delete('/api-key/' + id);
+  await instance.delete('/api-key/' + id);
 }

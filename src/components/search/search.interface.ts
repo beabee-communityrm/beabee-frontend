@@ -1,15 +1,15 @@
 import {
-  EnumFilterArgs,
-  Rule,
-  FilterType,
+  type EnumFilterArgs,
+  type Rule,
+  type FilterType,
   operatorsByType,
   operatorsByTypeMap,
-  OtherFilterArgs,
-  RuleValue,
-  RuleOperator,
-  RuleGroup,
+  type OtherFilterArgs,
+  type RuleValue,
+  type RuleOperator,
+  type RuleGroup,
   isRuleGroup,
-  ArrayFilterArgs,
+  type ArrayFilterArgs,
 } from '@beabee/beabee-common';
 
 export interface RuleGroupWithEmpty {

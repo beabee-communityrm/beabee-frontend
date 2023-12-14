@@ -1,15 +1,15 @@
 import {
-  CalloutResponseFilterName,
+  type CalloutResponseFilterName,
   calloutResponseFilters,
 } from '@beabee/beabee-common';
 import { computed } from 'vue';
 import i18n from '../../../lib/i18n';
 import {
-  FilterGroup,
-  FilterItems,
+  type FilterGroup,
+  type FilterItems,
   withLabel,
 } from '../../search/search.interface';
-import { Header } from '../../table/table.interface';
+import { type Header } from '../../table/table.interface';
 
 const { t } = i18n.global;
 

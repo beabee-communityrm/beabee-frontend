@@ -78,7 +78,7 @@ import PaymentSource from '@components/pages/profile/contribution/PaymentSource.
 import PageTitle from '@components/PageTitle.vue';
 import ContactPaymentsHistory from '@components/contact/ContactPaymentsHistory.vue';
 import UpdateContribution from '@components/pages/profile/contribution/UpdateContribution.vue';
-import { ContributionContent } from '@components/contribution/contribution.interface';
+import type { ContributionContent } from '@components/contribution/contribution.interface';
 
 import { fetchContribution } from '@utils/api/contact';
 import { fetchContent } from '@utils/api/content';

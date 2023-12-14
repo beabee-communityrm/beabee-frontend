@@ -8,13 +8,13 @@
   />
 </template>
 <script lang="ts" setup>
-import {
+import type {
   CalloutComponentSchema,
   CalloutResponseAnswers,
 } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref } from 'vue';
 import { Form } from '../../lib/formio';
-import { FormChangeEvent } from './form-renderer.interface';
+import { type FormChangeEvent } from './form-renderer.interface';
 import { config, dom, library } from '@fortawesome/fontawesome-svg-core';
 import {
   faCalendar,

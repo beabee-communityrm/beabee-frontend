@@ -1,6 +1,6 @@
-import { Library, library } from '@fortawesome/fontawesome-svg-core';
+import { type Library, library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { App } from 'vue';
+import type { App } from 'vue';
 
 export default {
   install(app: App): Library {

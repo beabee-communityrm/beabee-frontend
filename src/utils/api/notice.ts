@@ -1,7 +1,5 @@
-import { Paginated } from '@beabee/beabee-common';
-import { deserializeDate } from '.';
-
-import axios from '../../lib/axios';
+import type { Paginated } from '@beabee/beabee-common';
+import { deserializeDate, instance } from '.';
 
 import type {
   CreateNoticeData,
@@ -23,7 +21,7 @@ function deserializeNotice(notice: Serial<GetNoticeData>): GetNoticeData {
 export async function fetchNotices(
   query?: GetNoticesQuery
 ): Promise<Paginated<GetNoticeData>> {
-  const { data } = await axios.get<Paginated<Serial<GetNoticeData>>>(
+  const { data } = await instance.get<Paginated<Serial<GetNoticeData>>>(
     '/notice',
     {
       params: query,
@@ -43,26 +41,29 @@ export async function fetchNotices(
 }
 
 export async function fetchNotice(id: string): Promise<GetNoticeData> {
-  const { data } = await axios.get<Serial<GetNoticeData>>('/notice/' + id);
+  const { data } = await instance.get<Serial<GetNoticeData>>('/notice/' + id);
   return deserializeNotice(data);
 }
 
 export async function createNotice(
   dataIn: CreateNoticeData
 ): Promise<GetNoticeData> {
-  const { data } = await axios.post<Serial<GetNoticeData>>('/notice', dataIn);
+  const { data } = await instance.post<Serial<GetNoticeData>>(
+    '/notice',
+    dataIn
+  );
   return deserializeNotice(data);
 }
 
 export async function deleteNotice(id: string): Promise<void> {
-  await axios.delete('/notice/' + id);
+  await instance.delete('/notice/' + id);
 }
 
 export async function updateNotice(
   id: string,
   noticeData: CreateNoticeData
 ): Promise<GetNoticeData> {
-  const { data } = await axios.patch<Serial<GetNoticeData>>(
+  const { data } = await instance.patch<Serial<GetNoticeData>>(
     '/notice/' + id,
     noticeData
   );

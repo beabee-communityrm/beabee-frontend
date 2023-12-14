@@ -1,4 +1,4 @@
-import axios from '../../lib/axios';
+import { instance } from '.';
 
 import type { GetContactMfaData } from '@type/get-contact-mfa-data';
 import type { CreateContactMfaData } from '@type/create-contact-mfa-data';
@@ -27,7 +27,7 @@ export async function createContactMfa(
   contactId: string,
   dataIn: CreateContactMfaData
 ): Promise<void> {
-  await axios.post<undefined>(`/contact/${contactId}/mfa`, dataIn);
+  await instance.post<undefined>(`/contact/${contactId}/mfa`, dataIn);
 }
 
 /**
@@ -38,7 +38,7 @@ export async function createContactMfa(
 export async function fetchContactMfa(
   contactId: string
 ): Promise<GetContactMfaData> {
-  const { data } = await axios.get<Serial<GetContactMfaData>>(
+  const { data } = await instance.get<Serial<GetContactMfaData>>(
     `/contact/${contactId}/mfa`
   );
   return deserializeContactMfa(data);
@@ -52,5 +52,5 @@ export async function deleteContactMfa(
   id: string,
   dataIn: DeleteContactMfaData
 ): Promise<void> {
-  await axios.delete(`/contact/${id}/mfa`, { data: dataIn });
+  await instance.delete(`/contact/${id}/mfa`, { data: dataIn });
 }

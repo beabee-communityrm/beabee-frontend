@@ -225,7 +225,7 @@ meta:
 
 <script lang="ts" setup>
 import { onBeforeMount, ref, reactive } from 'vue';
-import { ContributionType, RoleType } from '@beabee/beabee-common';
+import { ContributionType, type RoleType } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import { faCircleNotch, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 

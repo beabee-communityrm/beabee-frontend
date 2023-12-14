@@ -63,7 +63,7 @@ import AppOptIn from '@components/AppOptIn.vue';
 import AppForm from '@components/forms/AppForm.vue';
 import AuthBox from '@components/AuthBox.vue';
 
-import { SetupContactData } from './join.interface';
+import { type SetupContactData } from './join.interface';
 
 import { fetchContact } from '@utils/api/contact';
 

@@ -1,13 +1,16 @@
 import {
-  CalloutComponentSchema,
-  CalloutSlideSchema,
+  type CalloutComponentSchema,
+  type CalloutSlideSchema,
   ItemStatus,
-  RadioCalloutComponentSchema,
+  type RadioCalloutComponentSchema,
   flattenComponents,
 } from '@beabee/beabee-common';
 import { format } from 'date-fns';
-import { CalloutStepsProps } from '@components/pages/admin/callouts/callouts.interface';
-import { FilterItem, FilterItems } from '@components/search/search.interface';
+import type { CalloutStepsProps } from '@components/pages/admin/callouts/callouts.interface';
+import type {
+  FilterItem,
+  FilterItems,
+} from '@components/search/search.interface';
 
 import env from '../env';
 import i18n from '@lib/i18n';
@@ -49,8 +52,8 @@ export function convertCalloutToSteps(
           callout?.access === 'anonymous'
             ? 'guests'
             : callout?.access === 'only-anonymous'
-            ? 'all'
-            : 'none',
+              ? 'all'
+              : 'none',
         showOnUserDashboards: !callout?.hidden,
         usersCanEditAnswers: callout?.allowUpdate || false,
         multipleResponses: callout?.allowMultiple || false,
@@ -165,10 +168,10 @@ export function convertStepsToCallout(
       steps.settings.whoCanTakePart === 'members'
         ? 'member'
         : steps.settings.allowAnonymousResponses === 'none'
-        ? 'guest'
-        : steps.settings.allowAnonymousResponses === 'guests'
-        ? 'anonymous'
-        : 'only-anonymous',
+          ? 'guest'
+          : steps.settings.allowAnonymousResponses === 'guests'
+            ? 'anonymous'
+            : 'only-anonymous',
     ...(steps.endMessage.whenFinished === 'message'
       ? {
           thanksText: steps.endMessage.thankYouText,

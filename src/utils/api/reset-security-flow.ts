@@ -1,5 +1,6 @@
-import axios from '@lib/axios';
 import env from '@env';
+
+import { instance } from '.';
 
 import { RESET_SECURITY_FLOW_TYPE } from '@enums/reset-security-flow-type';
 
@@ -20,7 +21,7 @@ export async function resetPasswordBegin(email: string): Promise<void> {
     email,
     resetUrl: env.appUrl + '/auth/reset-password',
   };
-  await axios.post('reset-password', data);
+  await instance.post('reset-password', data);
 }
 
 /**
@@ -38,7 +39,7 @@ export async function resetPasswordComplete(
     password,
     token,
   };
-  await axios.put(`reset-password/${resetPasswordFlowId}`, data);
+  await instance.put(`reset-password/${resetPasswordFlowId}`, data);
 }
 
 /**
@@ -52,7 +53,7 @@ export async function resetDeviceBegin(email: string): Promise<void> {
     resetUrl: env.appUrl + '/auth/reset-device',
     type: RESET_SECURITY_FLOW_TYPE.TOTP,
   };
-  await axios.post('reset-device', data);
+  await instance.post('reset-device', data);
 }
 
 /**
@@ -69,5 +70,5 @@ export async function resetDeviceComplete(
     password,
     type: RESET_SECURITY_FLOW_TYPE.TOTP,
   };
-  await axios.put(`reset-device/${resetMfaFlowId}`, data);
+  await instance.put(`reset-device/${resetMfaFlowId}`, data);
 }

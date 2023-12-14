@@ -1,4 +1,4 @@
-import { Component, reactive } from 'vue';
+import { type Component, reactive } from 'vue';
 
 interface Notification {
   id: number;

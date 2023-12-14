@@ -60,7 +60,7 @@ meta:
 
 <script lang="ts" setup>
 import { ItemStatus } from '@beabee/beabee-common';
-import { ref, onBeforeMount, Ref } from 'vue';
+import { ref, onBeforeMount, type Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 

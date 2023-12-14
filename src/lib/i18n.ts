@@ -1,7 +1,7 @@
 import { watch } from 'vue';
 import {
-  DefaultLocaleMessageSchema,
-  LocaleMessages,
+  type DefaultLocaleMessageSchema,
+  type LocaleMessages,
   createI18n,
 } from 'vue-i18n';
 import { generalContent } from '../store';

@@ -20,11 +20,7 @@
       :row-class="rowClass"
       class="mb-4 w-full"
     >
-      <template
-        v-for="(name, index) of Object.keys($slots)"
-        #[name]="slotData"
-        :key="index"
-      >
+      <template v-for="name of slotNames" #[name]="slotData" :key="name">
         <slot :name="name" v-bind="slotData || {}"></slot>
       </template>
     </AppTable>
@@ -38,10 +34,11 @@
 </template>
 
 <script lang="ts" setup generic="I extends Item">
-import { Paginated } from '@beabee/beabee-common';
+import { type Paginated } from '@beabee/beabee-common';
 import AppPaginatedTableResult from './AppPaginatedTableResult.vue';
 import AppTable from './AppTable.vue';
-import { Header, Item, SortType } from './table.interface';
+import { type Header, type Item, SortType } from './table.interface';
+import { computed, useSlots } from 'vue';
 
 defineProps<{
   headers: Header[];
@@ -58,4 +55,11 @@ defineProps<{
   selectable?: boolean;
   rowClass?: (item: I) => string;
 }>();
+
+// Slots are passed to AppTable, typing is currently lost
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const slotNames = computed<any[]>(() => {
+  const slots = useSlots();
+  return Object.keys(slots);
+});
 </script>

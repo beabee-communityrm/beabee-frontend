@@ -6,8 +6,8 @@
         disabled
           ? 'opacity-50'
           : hasError
-          ? 'border-danger bg-danger-10'
-          : 'bg-white'
+            ? 'border-danger bg-danger-10'
+            : 'bg-white'
       "
     >
       <label class="flex flex-1 items-baseline px-6 font-bold text-body-60">

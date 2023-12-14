@@ -59,7 +59,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { Paginated } from '@beabee/beabee-common';
+import type { Paginated } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import {
@@ -68,7 +68,7 @@ import {
   faEyeSlash,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { Header } from '@components/table/table.interface';
+import type { Header } from '@components/table/table.interface';
 import AppButton from '@components/button/AppButton.vue';
 import PageTitle from '@components/PageTitle.vue';
 import AppItemStatus from '@components/AppItemStatus.vue';

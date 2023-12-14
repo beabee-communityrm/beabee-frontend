@@ -2,7 +2,7 @@ import {
   ContributionPeriod,
   NewsletterStatus,
   ContributionType,
-  ContactFilterName,
+  type ContactFilterName,
   contactFilters,
 } from '@beabee/beabee-common';
 import { computed } from 'vue';
@@ -10,11 +10,11 @@ import { computed } from 'vue';
 import i18n from '../../../../lib/i18n';
 import { generalContent } from '../../../../store';
 import {
-  FilterGroup,
-  FilterItems,
+  type FilterGroup,
+  type FilterItems,
   withLabel,
 } from '../../../search/search.interface';
-import { Header } from '../../../table/table.interface';
+import { type Header } from '../../../table/table.interface';
 
 const { t } = i18n.global;
 

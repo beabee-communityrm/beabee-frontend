@@ -94,7 +94,7 @@ import AppInput from '../../../../forms/AppInput.vue';
 import AppImageUpload from '../../../../forms/AppImageUpload.vue';
 import AppTextArea from '../../../../forms/AppTextArea.vue';
 import useVuelidate from '@vuelidate/core';
-import { TitleAndImageStepProps } from '../callouts.interface';
+import type { TitleAndImageStepProps } from '../callouts.interface';
 import AppRadioGroup from '../../../../forms/AppRadioGroup.vue';
 import AppLabel from '../../../../forms/AppLabel.vue';
 import env from '../../../../../env';

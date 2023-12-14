@@ -51,7 +51,7 @@ import {
   fetchCallout,
   updateCallout,
 } from '../../../utils/api/callout';
-import { CalloutStepsProps } from '../../../components/pages/admin/callouts/callouts.interface';
+import type { CalloutStepsProps } from '../../../components/pages/admin/callouts/callouts.interface';
 import CalloutStepper from '../../../components/pages/admin/callouts/CalloutStepper.vue';
 import {
   convertCalloutToSteps,
@@ -134,8 +134,8 @@ const updateAction = computed(() =>
   isUpdateAction.value
     ? t('actions.update')
     : canStartNow.value
-    ? t('actions.publish')
-    : t('actions.schedule')
+      ? t('actions.publish')
+      : t('actions.schedule')
 );
 
 async function saveCallout(asDraft = false) {

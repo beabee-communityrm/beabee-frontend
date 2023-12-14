@@ -66,7 +66,7 @@
 </template>
 
 <script lang="ts" setup>
-import {
+import type {
   CalloutResponseAnswers,
   CalloutSlideSchema,
 } from '@beabee/beabee-common';

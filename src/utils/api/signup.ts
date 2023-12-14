@@ -1,6 +1,6 @@
 import { ContributionPeriod } from '@beabee/beabee-common';
-import axios from '../../lib/axios';
 import env from '../../env';
+import { instance } from '.';
 
 import type {
   CompleteSignupData,
@@ -13,7 +13,7 @@ export const completeUrl = env.appUrl + '/join/complete';
 
 export async function signUp(data: SignupData): Promise<PaymentFlowParams> {
   return (
-    await axios.post<Serial<PaymentFlowParams>>('/signup', {
+    await instance.post<Serial<PaymentFlowParams>>('/signup', {
       email: data.email,
       password: data.password,
       loginUrl: env.appUrl + '/auth/login',
@@ -34,7 +34,7 @@ export async function signUp(data: SignupData): Promise<PaymentFlowParams> {
 }
 
 export async function completeSignUp(data: CompleteSignupData): Promise<void> {
-  await axios.post('/signup/complete', {
+  await instance.post('/signup/complete', {
     paymentFlowId: data.paymentFlowId,
     firstname: data.firstname,
     lastname: data.lastname,
@@ -44,5 +44,5 @@ export async function completeSignUp(data: CompleteSignupData): Promise<void> {
 export async function confirmEmail(
   joinFlowId: string | string[]
 ): Promise<void> {
-  await axios.post('/signup/confirm-email', { joinFlowId });
+  await instance.post('/signup/confirm-email', { joinFlowId });
 }

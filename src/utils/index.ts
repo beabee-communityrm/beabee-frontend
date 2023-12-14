@@ -1,4 +1,4 @@
-import { Comment, Text, Slot, VNode } from 'vue';
+import { Comment, Text, type Slot, type VNode } from 'vue';
 
 // https://github.com/vuejs/core/issues/4733#issuecomment-1024816095
 export function hasSlotContent(

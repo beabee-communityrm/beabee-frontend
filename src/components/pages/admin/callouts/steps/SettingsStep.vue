@@ -232,8 +232,8 @@ import { useI18n } from 'vue-i18n';
 import AppRadioGroup from '../../../../forms/AppRadioGroup.vue';
 import AppFormSection from '../../../../forms/AppFormSection.vue';
 import {
-  CalloutSteps,
-  SettingsStepProps,
+  type CalloutSteps,
+  type SettingsStepProps,
   buckets,
 } from '../callouts.interface';
 import { sameAs } from '@vuelidate/validators';

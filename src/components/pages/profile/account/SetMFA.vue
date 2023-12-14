@@ -220,7 +220,6 @@ import {
   computed,
   watch,
   reactive,
-  Ref,
   nextTick,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -266,7 +265,7 @@ const showMFASettingsModal = ref(false);
 const showDisableConfirmModal = ref(false);
 
 /** Reference to the save button */
-const saveButton: Ref<typeof AppButton | null> = ref(null);
+const saveButton = ref<typeof AppButton | null>(null);
 
 /** Is multi factor authentication enabled? */
 const isEnabled = ref(false);

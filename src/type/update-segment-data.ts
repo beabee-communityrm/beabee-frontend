@@ -1,3 +1,3 @@
-import { CreateSegmentData } from '@type';
+import type { CreateSegmentData } from '@type';
 
 export type UpdateSegmentData = Partial<CreateSegmentData>;

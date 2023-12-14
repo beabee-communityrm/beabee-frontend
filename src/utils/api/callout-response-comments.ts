@@ -1,7 +1,6 @@
-import { deserializeDate } from '.';
-import axios from '@lib/axios';
+import { deserializeDate, instance } from '.';
 import { deserializeContact } from './contact';
-import { Paginated } from '@beabee/beabee-common';
+import type { Paginated } from '@beabee/beabee-common';
 
 import type {
   CreateCalloutResponseCommentData,
@@ -14,7 +13,7 @@ import type {
 export async function fetchCalloutResponseComments(
   query: GetCalloutResponseCommentsQuery
 ): Promise<Paginated<GetCalloutResponseCommentData>> {
-  const { data } = await axios.get<
+  const { data } = await instance.get<
     Paginated<Serial<GetCalloutResponseCommentData>>
   >(`/callout-response-comments`, { params: query });
   return {
@@ -26,7 +25,7 @@ export async function fetchCalloutResponseComments(
 export async function createCalloutResponseComment(
   dataIn: CreateCalloutResponseCommentData
 ): Promise<GetCalloutResponseCommentData> {
-  const { data } = await axios.post<Serial<GetCalloutResponseCommentData>>(
+  const { data } = await instance.post<Serial<GetCalloutResponseCommentData>>(
     '/callout-response-comments',
     dataIn
   );
@@ -34,14 +33,14 @@ export async function createCalloutResponseComment(
 }
 
 export async function deleteCalloutResponseComment(id: string): Promise<void> {
-  await axios.delete('/callout-response-comments/' + id);
+  await instance.delete('/callout-response-comments/' + id);
 }
 
 export async function updateCalloutResponseComment(
   id: string,
   dataIn: UpdateCalloutResponseCommentData
 ): Promise<GetCalloutResponseCommentData> {
-  const { data } = await axios.patch<Serial<GetCalloutResponseCommentData>>(
+  const { data } = await instance.patch<Serial<GetCalloutResponseCommentData>>(
     '/callout-response-comments/' + id,
     dataIn
   );

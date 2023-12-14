@@ -36,14 +36,14 @@ meta:
   </AppPaginatedTable>
 </template>
 <script lang="ts" setup>
-import { Paginated } from '@beabee/beabee-common';
+import type { Paginated } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { faSignHanging } from '@fortawesome/free-solid-svg-icons';
 
 import AppButton from '@components/button/AppButton.vue';
 import PageTitle from '@components/PageTitle.vue';
-import { Header } from '@components/table/table.interface';
+import type { Header } from '@components/table/table.interface';
 import AppItemStatus from '@components/AppItemStatus.vue';
 import AppPaginatedTable from '@components/table/AppPaginatedTable.vue';
 

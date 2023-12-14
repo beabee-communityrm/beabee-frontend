@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-import { CalloutSlideSchema } from '@beabee/beabee-common';
+import { type CalloutSlideSchema } from '@beabee/beabee-common';
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
 import { getDecisionComponent } from '../../../../utils/callouts';

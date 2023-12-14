@@ -141,10 +141,9 @@ meta:
 </template>
 
 <script lang="ts" setup>
+import axios from 'axios';
 import { onBeforeMount, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-
-import axios from '@lib/axios';
 
 import AppImageUpload from '@components/forms/AppImageUpload.vue';
 import AppInput from '@components/forms/AppInput.vue';
@@ -202,7 +201,7 @@ async function handleSaveGeneral() {
   storeGeneralContent.value = await updateContent('general', generalData);
 
   // Refresh the favicon
-  await axios.get('/favicon.png', { baseURL: '' });
+  await axios.get('/favicon.png');
   const faviconEl = document.getElementById('favicon') as HTMLLinkElement;
   // This just forces the browser to reload the image
   // eslint-disable-next-line no-self-assign

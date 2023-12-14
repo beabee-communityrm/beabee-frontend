@@ -49,7 +49,7 @@ import { watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../../forms/AppInput.vue';
 import AppRadioGroup from '../../../../forms/AppRadioGroup.vue';
-import { EndMessageStepProps } from '../callouts.interface';
+import type { EndMessageStepProps } from '../callouts.interface';
 import RichTextEditor from '../../../../rte/RichTextEditor.vue';
 import AppFormSection from '../../../../forms/AppFormSection.vue';
 

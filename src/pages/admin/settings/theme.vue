@@ -104,7 +104,7 @@ import { computed, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppHeading from '../../../components/AppHeading.vue';
 import { updateContent } from '../../../utils/api/content';
-import { getFullTheme, Theme, validFonts } from '../../../lib/theme';
+import { getFullTheme, type Theme, validFonts } from '../../../lib/theme';
 import { generalContent } from '../../../store';
 import AppColorInput from '../../../components/forms/AppColorInput.vue';
 import AppSelect from '../../../components/forms/AppSelect.vue';

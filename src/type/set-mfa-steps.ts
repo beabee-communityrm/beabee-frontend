@@ -1,4 +1,4 @@
-import { AppStepperStep } from './app-stepper-step';
+import type { AppStepperStep } from './app-stepper-step';
 
 export interface SetMfaSteps {
   qrCode: AppStepperStep;

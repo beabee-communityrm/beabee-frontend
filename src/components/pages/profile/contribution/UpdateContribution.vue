@@ -99,7 +99,7 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import Contribution from '@components/contribution/Contribution.vue';
 import AppButton from '@components/button/AppButton.vue';
 import ProrateContribution from './ProrateContribution.vue';
-import { ContributionContent } from '@components/contribution/contribution.interface';
+import { type ContributionContent } from '@components/contribution/contribution.interface';
 import AppModal from '@components/AppModal.vue';
 import StripePayment from '@components/StripePayment.vue';
 import AppHeading from '@components/AppHeading.vue';
@@ -182,10 +182,10 @@ const buttonText = computed(() =>
   isManualActiveMember.value
     ? t('contribution.updatePaymentType')
     : isActiveMember.value
-    ? t('contribution.updateContribution')
-    : isExpiringMember.value
-    ? t('contribution.restartContribution')
-    : t('contribution.startContribution')
+      ? t('contribution.updateContribution')
+      : isExpiringMember.value
+        ? t('contribution.restartContribution')
+        : t('contribution.startContribution')
 );
 
 async function handleCreate() {

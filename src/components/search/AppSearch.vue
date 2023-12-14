@@ -111,7 +111,7 @@
 </template>
 
 <script lang="ts" setup>
-import { RuleGroup } from '@beabee/beabee-common';
+import type { RuleGroup } from '@beabee/beabee-common';
 import {
   faCaretDown,
   faCaretUp,
@@ -125,11 +125,11 @@ import AppButton from '../button/AppButton.vue';
 import AppSelect from '../forms/AppSelect.vue';
 import AppSearchRuleOrGroup from './AppSearchRuleOrGroup.vue';
 import {
-  FilterGroup,
-  FilterItems,
+  type FilterGroup,
+  type FilterItems,
   copyRuleGroup,
   isEqual,
-  RuleGroupWithEmpty,
+  type RuleGroupWithEmpty,
 } from './search.interface';
 
 const emit = defineEmits(['reset', 'update:modelValue']);

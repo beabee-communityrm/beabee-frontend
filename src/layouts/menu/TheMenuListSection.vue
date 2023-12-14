@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import { MenuSection } from './menu-list.interface';
+import type { MenuSection } from './menu-list.interface';
 import TheMenuListItem from './TheMenuListItem.vue';
 
 defineProps<{

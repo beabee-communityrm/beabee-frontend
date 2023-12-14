@@ -27,7 +27,7 @@ const label = computed(() => {
   return props.timeOnly
     ? time
     : props.datetime > now
-    ? t('common.timeIn', { time })
-    : t('common.timeAgo', { time });
+      ? t('common.timeIn', { time })
+      : t('common.timeAgo', { time });
 });
 </script>

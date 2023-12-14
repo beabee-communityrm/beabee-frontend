@@ -3,7 +3,6 @@
  */
 
 export * from './appsignal';
-export * from './axios';
 export * from './formio';
 export * from './i18n';
 export * from './maptiler';

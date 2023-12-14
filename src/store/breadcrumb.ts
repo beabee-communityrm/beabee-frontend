@@ -1,5 +1,5 @@
-import { onBeforeMount, onBeforeUnmount, Ref, reactive } from 'vue';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { onBeforeMount, onBeforeUnmount, type Ref, reactive } from 'vue';
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 interface Item {
   title: string;

@@ -53,8 +53,8 @@ import AppSelect from '../forms/AppSelect.vue';
 import AppRadioGroup from '../forms/AppRadioGroup.vue';
 import { fetchContent } from '../../utils/api/content';
 import { generalContent } from '../../store';
-import { UpdateContribution } from './contact.interface';
-import { SelectItem } from '../forms/form.interface';
+import { type UpdateContribution } from './contact.interface';
+import { type SelectItem } from '../forms/form.interface';
 
 const { t } = useI18n();
 

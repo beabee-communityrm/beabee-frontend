@@ -32,7 +32,6 @@ import {
   faBars,
   faTimesCircle,
   faPlus,
-  IconName,
   faCode,
   faColumns,
   faThLarge,
@@ -54,6 +53,7 @@ import {
   faRefresh,
   faCloudUpload,
   faCamera,
+  type IconName,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   config,
@@ -64,11 +64,11 @@ import {
 import { onBeforeMount, onBeforeUnmount, ref, toRef, watch } from 'vue';
 
 import { FormBuilder } from '../../lib/formio';
-import {
+import type {
   CalloutComponentSchema,
   CalloutSlideSchema,
 } from '@beabee/beabee-common';
-import { formOpts, FormBuilderRef } from './form-builder.interface';
+import { formOpts, type FormBuilderRef } from './form-builder.interface';
 
 const emit = defineEmits<{
   (e: 'update:modelValue', components: CalloutComponentSchema[]): void;

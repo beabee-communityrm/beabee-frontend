@@ -106,7 +106,7 @@ import { updateCurrentUser } from '@store/index';
 
 import { LOGIN_CODES } from '@enums/login-codes';
 
-import { LoginData } from '@type';
+import { type LoginData } from '@type';
 import env from '@env';
 
 const { t } = useI18n();

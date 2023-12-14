@@ -1,5 +1,5 @@
 import { computed } from 'vue';
-import { MenuSection } from './menu-list.interface';
+import type { MenuSection } from './menu-list.interface';
 import { generalContent } from '@store/generalContent';
 import {
   faAddressCard,

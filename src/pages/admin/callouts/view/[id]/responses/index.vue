@@ -201,9 +201,9 @@ meta:
 </template>
 <script lang="ts" setup>
 import {
-  Paginated,
-  Rule,
-  RuleGroup,
+  type Paginated,
+  type Rule,
+  type RuleGroup,
   getCalloutComponents,
   stringifyAnswer,
 } from '@beabee/beabee-common';

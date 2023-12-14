@@ -48,7 +48,7 @@ import AppInput from '../forms/AppInput.vue';
 import AppSelect from '../forms/AppSelect.vue';
 import { computed } from 'vue';
 
-import {
+import type {
   CalloutNavigationSchema,
   CalloutSlideSchema,
 } from '@beabee/beabee-common';

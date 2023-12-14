@@ -4,7 +4,7 @@
   </p>
 </template>
 <script lang="ts" setup>
-import { Ref } from 'vue';
+import { type Ref } from 'vue';
 
 defineProps<{ message: string | Ref<string> }>();
 </script>

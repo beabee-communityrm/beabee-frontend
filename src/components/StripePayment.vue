@@ -27,7 +27,7 @@
 </template>
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core';
-import { Appearance } from '@stripe/stripe-js';
+import { type Appearance } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';

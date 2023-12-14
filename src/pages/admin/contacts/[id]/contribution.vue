@@ -63,7 +63,7 @@ import { useI18n } from 'vue-i18n';
 
 import AppHeading from '@components/AppHeading.vue';
 import ContactPaymentsHistory from '@components/contact/ContactPaymentsHistory.vue';
-import { UpdateContribution } from '@components/contact/contact.interface';
+import type { UpdateContribution } from '@components/contact/contact.interface';
 import AppForm from '@components/forms/AppForm.vue';
 import ContactContributionFields from '@components/contact/ContactContributionFields.vue';
 import App2ColGrid from '@components/App2ColGrid.vue';

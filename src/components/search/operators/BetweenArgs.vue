@@ -5,9 +5,9 @@
   <ArgInput v-model="value[1]" :item="item" :readonly="readonly" />
 </template>
 <script lang="ts" setup>
-import { RuleValue } from '@beabee/beabee-common';
+import type { RuleValue } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
-import { FilterItem } from '../search.interface';
+import type { FilterItem } from '../search.interface';
 import ArgInput from './ArgInput.vue';
 const { t } = useI18n();
 defineProps<{ value: RuleValue[]; item: FilterItem; readonly: boolean }>();

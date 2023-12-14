@@ -1,7 +1,7 @@
-import { CalloutFormSchema } from '@beabee/beabee-common';
-import { computed, Raw, Component } from 'vue';
+import { type CalloutFormSchema } from '@beabee/beabee-common';
+import { computed, type Raw, type Component } from 'vue';
 import i18n from '../../../../lib/i18n';
-import { AppStepperStep } from '../../../../type/app-stepper-step';
+import { type AppStepperStep } from '../../../../type/app-stepper-step';
 
 import type { CalloutMapSchema } from '@type';
 

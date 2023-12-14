@@ -40,7 +40,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { Paginated } from '@beabee/beabee-common';
+import type { Paginated } from '@beabee/beabee-common';
 import { computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppSelect from '../forms/AppSelect.vue';
