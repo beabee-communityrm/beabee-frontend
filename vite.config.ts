@@ -77,9 +77,7 @@ export default ({ command, mode }) => {
         '^/(api|login|upload|uploads|favicon.png)': {
           target: env.API_PROXY_URL,
           changeOrigin: true,
-          cookieDomainRewrite: {
-            [env.API_PROXY_COOKIE_DOMAIN]: 'localhost',
-          },
+          cookieDomainRewrite: 'localhost',
         },
       },
     },

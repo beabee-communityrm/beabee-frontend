@@ -40,7 +40,7 @@ import useVuelidate from '@vuelidate/core';
 import { helpers, requiredIf, sameAs } from '@vuelidate/validators';
 import { computed, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import axios from '../../lib/axios';
+import { instance, isRequestError } from '@utils/api';
 import env from '../../env';
 import AppButton from '../button/AppButton.vue';
 import AppLabel from './AppLabel.vue';
@@ -104,7 +104,7 @@ async function handleChange() {
   try {
     const uploadFlow = await createUploadFlow();
 
-    const resp = await axios.post('/upload/', data, {
+    const resp = await instance.post('/upload/', data, {
       baseURL: env.appUrl,
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -121,10 +121,9 @@ async function handleChange() {
       `${resp.data.url}?w=${props.width}&h=${props.height}`
     );
   } catch (err) {
-    formError.value =
-      axios.isAxiosError(err) && err.response?.status === 429
-        ? t('form.errors.file.rateLimited')
-        : t('form.errorMessages.generic');
+    formError.value = isRequestError(err, undefined, [429])
+      ? t('form.errors.file.rateLimited')
+      : t('form.errorMessages.generic');
   }
 
   uploading.value = false;

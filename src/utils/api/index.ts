@@ -1,4 +1,7 @@
-import axios from 'axios';
+import axios, { type AxiosResponse } from 'axios';
+import env from '@env';
+import { addNotification } from '@store/notifications';
+import i18n from '../../lib/i18n';
 import { parseISO } from 'date-fns';
 
 import type { ApiRequestError } from '@type/api-request-error';
@@ -39,3 +42,33 @@ export function deserializeDate<T extends null | undefined>(
 ): Date | T {
   return s == null ? s : parseISO(s);
 }
+
+export const instance = axios.create({
+  baseURL: env.apiUrl,
+  withCredentials: true,
+});
+
+instance.interceptors.request.use((config) => {
+  // Rules are sent as JSON object string
+  if (config.params?.rules) {
+    config.params.rules = JSON.stringify(config.params.rules);
+  }
+  return config;
+});
+
+instance.interceptors.response.use(
+  (response: AxiosResponse) => response,
+  (error) => {
+    if (!error.response || error.response.status >= 500) {
+      addNotification({
+        variant: 'error',
+        title: i18n.global.t(
+          'notification.error',
+          'Something went wrong, please try again.'
+        ),
+      });
+    }
+
+    return Promise.reject(error);
+  }
+);

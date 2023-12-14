@@ -1,8 +1,8 @@
-import axios from '@lib/axios';
 import type { LoginData } from '@type';
+import { instance } from '.';
 
 export async function login(data: LoginData): Promise<void> {
-  await axios.post('auth/login', {
+  await instance.post('auth/login', {
     email: data.email,
     password: data.password,
     token: data.token,
@@ -10,5 +10,5 @@ export async function login(data: LoginData): Promise<void> {
 }
 
 export async function logout(): Promise<void> {
-  await axios.post('auth/logout');
+  await instance.post('auth/logout');
 }

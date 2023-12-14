@@ -1,4 +1,4 @@
-import axios from '../../lib/axios';
+import { instance } from '.';
 import type {
   ContactsContent,
   EmailContent,
@@ -37,12 +37,12 @@ type Content<Id extends ContentId> = Id extends 'join'
 export async function fetchContent<Id extends ContentId>(
   id: Id
 ): Promise<Content<Id>> {
-  return (await axios.get('/content/' + id)).data;
+  return (await instance.get('/content/' + id)).data;
 }
 
 export async function updateContent<Id extends ContentId>(
   id: Id,
   content: Partial<Content<Id>>
 ): Promise<Content<Id>> {
-  return (await axios.patch('/content/' + id, content)).data;
+  return (await instance.patch('/content/' + id, content)).data;
 }

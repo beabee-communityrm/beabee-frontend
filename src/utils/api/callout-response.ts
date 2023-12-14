@@ -1,6 +1,5 @@
 import type { Paginated, RuleGroup } from '@beabee/beabee-common';
-import axios from '../../lib/axios';
-import { deserializeDate } from '.';
+import { deserializeDate, instance } from '.';
 import { deserializeContact } from './contact';
 import { deserializeComment } from './callout-response-comments';
 
@@ -36,7 +35,7 @@ export async function fetchCalloutResponses<
   query?: GetCalloutResponsesQuery,
   _with?: readonly With[]
 ): Promise<Paginated<GetCalloutResponseDataWith<With>>> {
-  const { data } = await axios.get<
+  const { data } = await instance.get<
     Paginated<Serial<GetCalloutResponseDataWith<With>>>
   >(`/callout-responses`, { params: { with: _with, ...query } });
   return {
@@ -49,7 +48,7 @@ export async function updateCalloutResponses(
   rules: RuleGroup,
   updates: UpdateCalloutResponseData
 ): Promise<{ affected: number }> {
-  const { data } = await axios.patch<Serial<{ affected: number }>>(
+  const { data } = await instance.patch<Serial<{ affected: number }>>(
     '/callout-responses',
     {
       rules,
@@ -65,7 +64,7 @@ export async function fetchCalloutResponse<
   id: string,
   _with?: readonly With[]
 ): Promise<GetCalloutResponseDataWith<With>> {
-  const { data } = await axios.get<Serial<GetCalloutResponseDataWith<With>>>(
+  const { data } = await instance.get<Serial<GetCalloutResponseDataWith<With>>>(
     `/callout-responses/${id}`,
     { params: { with: _with } }
   );
@@ -76,7 +75,7 @@ export async function updateCalloutResponse(
   id: string,
   dataIn: UpdateCalloutResponseData
 ): Promise<GetCalloutResponseData> {
-  const { data } = await axios.patch<Serial<GetCalloutResponseData>>(
+  const { data } = await instance.patch<Serial<GetCalloutResponseData>>(
     `/callout-responses/${id}`,
     dataIn
   );

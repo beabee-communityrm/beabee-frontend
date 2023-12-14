@@ -1,7 +1,7 @@
 import type { RoleType } from '@beabee/beabee-common';
 import { computed, type ComputedRef, ref } from 'vue';
 
-import axios from '@lib/axios';
+import { instance } from '@utils/api';
 
 import { fetchContact } from '@utils/api/contact';
 
@@ -20,7 +20,7 @@ export async function updateCurrentUser(
 export const currentUser = ref<GetContactData | null>(null);
 export const initCurrentUser = updateCurrentUser();
 
-axios.interceptors.response.use(
+instance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
