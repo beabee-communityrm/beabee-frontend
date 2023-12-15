@@ -177,6 +177,10 @@ const locales = [
     label: 'German (informal)',
   },
   {
+    id: 'ru',
+    label: 'Russian',
+  },
+  {
     id: 'nl',
     label: 'Dutch (callouts only)',
   },
