@@ -8,10 +8,10 @@
  * The script can optional load a second sheet to overwrite the main sheet, we add a new sheet for a
  * branch so changes for different features are kept separate.
  */
-const fs = require('fs');
-const path = require('path');
-const { google } = require('googleapis');
-const MarkdownIt = require('markdown-it');
+import fs from 'node:fs';
+import path from 'node:path';
+import { google } from 'googleapis';
+import MarkdownIt from 'markdown-it';
 
 const simpleMd = new MarkdownIt('zero').enable(['emphasis', 'link']);
 
@@ -33,7 +33,7 @@ const optHandlers = {
 };
 
 const auth = new google.auth.GoogleAuth({
-  keyFile: path.join(__dirname, '.credentials.json'),
+  keyFile: new URL('.credentials.json', import.meta.url).pathname,
   scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
 });
 
@@ -119,7 +119,7 @@ function sortObject(obj) {
   for (const locale in localeData) {
     console.log('Updating ' + locale);
     fs.writeFileSync(
-      path.join(__dirname, '../locales', locale + '.json'),
+      new URL('../locales/' + locale + '.json', import.meta.url),
       JSON.stringify(sortObject(localeData[locale]), null, 2) + '\n'
     );
   }
