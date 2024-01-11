@@ -44,14 +44,14 @@ import { fetchCallout } from '@utils/api/callout';
 
 import { currentUser } from '@store';
 
-import type { GetCalloutDataWith, JoinSetupContent } from '@type';
+import type { GetCalloutDataWith, ContentJoinSetup } from '@type';
 
 const { t } = useI18n();
 const router = useRouter();
 
 const joinSurvey = ref<GetCalloutDataWith<'form'>>();
 
-const setupContent = ref<JoinSetupContent>({
+const setupContent = ref<ContentJoinSetup>({
   welcome: '',
   newsletterText: '',
   newsletterOptIn: '',

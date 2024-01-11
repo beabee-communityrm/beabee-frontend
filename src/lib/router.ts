@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { currentUser, initStore, ContentGeneral, isEmbed } from '../store';
+import { currentUser, initStore, generalContent, isEmbed } from '../store';
 import i18n from './i18n';
 
 import routes from '~pages';
@@ -17,7 +17,7 @@ const router = createRouter({
 watch([i18n.global.locale, router.currentRoute], ([, route]) => {
   document.title =
     (route.meta.pageTitle ? i18n.global.t(route.meta.pageTitle) + ' - ' : '') +
-    ContentGeneral.value.organisationName;
+    generalContent.value.organisationName;
 });
 
 router.beforeEach(async (to) => {

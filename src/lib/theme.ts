@@ -1,6 +1,6 @@
 import { parseToRgba, mix, transparentize } from 'color2k';
 import { watch } from 'vue';
-import { ContentGeneral } from '../store';
+import { generalContent } from '../store';
 
 // [Font name, fallbacks]
 export const validFonts = {
@@ -100,7 +100,7 @@ export function getFullTheme(theme: PartialTheme): Theme {
 }
 
 watch(
-  () => ContentGeneral.value.theme,
+  () => generalContent.value.theme,
   (newTheme) => {
     const { colors, fonts } = getFullTheme(newTheme);
 
