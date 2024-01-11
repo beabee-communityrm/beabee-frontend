@@ -1,38 +1,5 @@
 import { instance } from '.';
-import type {
-  ContentContacts,
-  ContentEmail,
-  ContentGeneral,
-  ContentJoin,
-  ContentJoinSetup,
-  ContentProfile,
-  ContentShare,
-} from '@type';
-
-type ContentId =
-  | 'join'
-  | 'join/setup'
-  | 'profile'
-  | 'general'
-  | 'contacts'
-  | 'email'
-  | 'share';
-
-type Content<Id extends ContentId> = Id extends 'join'
-  ? ContentJoin
-  : Id extends 'join/setup'
-    ? ContentJoinSetup
-    : Id extends 'profile'
-      ? ContentProfile
-      : Id extends 'general'
-        ? ContentGeneral
-        : Id extends 'contacts'
-          ? ContentContacts
-          : Id extends 'email'
-            ? ContentEmail
-            : Id extends 'share'
-              ? ContentShare
-              : never;
+import type { ContentId, Content } from '@type';
 
 export async function fetchContent<Id extends ContentId>(
   id: Id
