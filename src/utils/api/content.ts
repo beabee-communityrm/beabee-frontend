@@ -1,12 +1,12 @@
 import { instance } from '.';
 import type {
-  ContactsContent,
-  EmailContent,
-  GeneralContent,
-  JoinContent,
-  JoinSetupContent,
-  ProfileContent,
-  ShareContent,
+  ContentContacts,
+  ContentEmail,
+  ContentGeneral,
+  ContentJoin,
+  ContentJoinSetup,
+  ContentProfile,
+  ContentShare,
 } from '@type';
 
 type ContentId =
@@ -19,19 +19,19 @@ type ContentId =
   | 'share';
 
 type Content<Id extends ContentId> = Id extends 'join'
-  ? JoinContent
+  ? ContentJoin
   : Id extends 'join/setup'
-    ? JoinSetupContent
+    ? ContentJoinSetup
     : Id extends 'profile'
-      ? ProfileContent
+      ? ContentProfile
       : Id extends 'general'
-        ? GeneralContent
+        ? ContentGeneral
         : Id extends 'contacts'
-          ? ContactsContent
+          ? ContentContacts
           : Id extends 'email'
-            ? EmailContent
+            ? ContentEmail
             : Id extends 'share'
-              ? ShareContent
+              ? ContentShare
               : never;
 
 export async function fetchContent<Id extends ContentId>(

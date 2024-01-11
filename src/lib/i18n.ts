@@ -4,7 +4,7 @@ import {
   type LocaleMessages,
   createI18n,
 } from 'vue-i18n';
-import { generalContent } from '../store';
+import { ContentGeneral } from '../store';
 
 import en from '../../locales/en.json';
 
@@ -15,7 +15,7 @@ const i18n = createI18n({
 });
 
 watch(
-  () => [generalContent.value.locale, generalContent.value.currencyCode],
+  () => [ContentGeneral.value.locale, ContentGeneral.value.currencyCode],
   async ([newLocale, newCurrencyCode]) => {
     // Remove variants (e.g. @informal)
     const [justLocale] = newLocale.split('@');
