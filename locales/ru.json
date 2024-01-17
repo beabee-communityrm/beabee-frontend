@@ -126,7 +126,6 @@
       "revenue": "Доход",
       "title": "За последние 30 дней"
     },
-    "responsesSoFar": "{n} ответ | {n} ответов | {n} ответа",
     "supportInbox": "<p>Нужна помощь? Зайдите в <a href=\"https://wiki.beabee.io/help-center-english/\" target=\"_blank\" rel=\"noopener noreferrer\">Справочный центр</a> или напишите в поддержку: <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
     "welcomeBack": "Рады снова вас видеть, {firstName}!"
   },
@@ -248,8 +247,7 @@
   },
   "calloutResponsePage": {
     "actions": {},
-    "notifications": {},
-    "selectedCount": "{n} ответ выбран | {n} ответов выбрано"
+    "notifications": {}
   },
   "calloutResponsesPage": {
     "moveToBucket": "Перенести в {bucket}",
