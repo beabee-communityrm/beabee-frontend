@@ -516,7 +516,6 @@
       "none": "None"
     },
     "copy": "Kopieren",
-    "every": "pro",
     "goBack": "Zurück",
     "hello": "Hallo",
     "itemsPerPage": "{items} Einträge pro Seite",
@@ -525,7 +524,6 @@
     "login": "Login",
     "month": "Monat | Monaten",
     "monthly": "Monatlich",
-    "new": "neu!",
     "newsletterStatus": {
       "cleaned": "Bereinigt",
       "none": "Kein Status",
@@ -660,7 +658,8 @@
     "cancelledContribution": "Deine Mitgliedschaft wurde gekündigt.",
     "changeBank": "Ändere deine Bankverbindung.",
     "changeBankInfo": "Im nächsten Schritt kannst du deine neue Bankverbindung eingeben.",
-    "contributing": "Du zahlst",
+    "contributing": "Sie zahlen",
+    "contributingAmount": "{amount} pro {period}",
     "contributionUpdateError": "Du kannst deinen Beitrag aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
     "dueToRenew": "Deine Mitgliedschaft wird am {renewalDate} erneuert.",
     "expired": "Deine Mitgliedschaft ist ausgelaufen.",
