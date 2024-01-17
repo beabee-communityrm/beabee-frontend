@@ -1,32 +1,141 @@
 {
+  "accountPage": {
+    "contactInformation": "Контакты",
+    "deliveryAddress": "Адрес",
+    "deliveryOptIn": "Разрешение на доставку",
+    "loginDetail": "Данные для входа",
+    "mfa": {
+      "codeInput": {
+        "info": "Если вы потеряли доступ к устройству для аутентификации, свяжитесь со службой поддержки",
+        "label": "Код"
+      },
+      "confirmDelete": {
+        "desc": "Вы точно хотите отключить двухфакторную аутентификацию? После этого вы сможете заходить в аккаунт только с помощью пароля. Не забудьте удалить запись из вашего приложения-аутентификатора. Если вы передумаете, двухфакторную аутентификацию можно будет подключить снова.",
+        "descToken": "Чтобы отключить двухфакторную аутентификацию, введите код из приложения:",
+        "title": "Отключить двухфакторную аутентификацию"
+      },
+      "createUnknownErrorNotification": "Не удалось создать двухфакторную аутентификацию. Пожалуйста, попробуйте ещё раз или свяжитесь со службой поддержки.",
+      "deleteUnknownErrorNotification": "Не удалось удалить двухфакторную аутентификацию. Пожалуйста, попробуйте ещё раз или свяжитесь со службой поддержки.",
+      "disabledNotification": "Двухфакторная аутентификация отключена",
+      "enabledNotification": "Двухфакторная аутентификация успешно подключена",
+      "enterCode": {
+        "desc": "Введите код из приложения для аутентификации.",
+        "title": "Верификация"
+      },
+      "modalTitle": "Включить двухфакторную аутентификацию",
+      "result": {
+        "invalidCode": "Код не подходит. Попробуйте ещё раз или свяжитесь со службой поддержки",
+        "successful": "Двухфакторная аутентификация успешно подключена",
+        "title": "Готово"
+      },
+      "scan": {
+        "desc": "Отсканируйте QR-код в вашем приложении для аутентификации.",
+        "title": "QR-код"
+      },
+      "secretInput": {
+        "desc": "Также вы можете ввести этот код в ваше приложение для аутентификации.",
+        "label": "Секретный код"
+      },
+      "title": "Двухфакторная аутентификация",
+      "validateButton": {
+        "label": "Проверьте токен для двухфакторной аутентификации"
+      }
+    },
+    "newsletter": {
+      "cantUpdate": "Чтобы изменить статус этого контакта, напишите в поддержку: support{'@'}beabee.io.",
+      "currentStatus": {
+        "cleaned": "Этот контакт был автоматически удалён из вашего списка рассылки: скорее всего, почта не работает.",
+        "none": "Этот контакт не подписан на вашу рассылку.",
+        "pending": "Этот контакт получил письмо, в котором нужно подвердить подписку на рассылку. ",
+        "subscribed": "Этот контакт подписан на вашу рассылку.",
+        "unsubscribed": "Этот контакт не подписан на вашу рассылку."
+      },
+      "subscribe": "Добавить в список рассылки",
+      "title": "Рассылка",
+      "unsubscribe": "Убрать из списка рассылки"
+    },
+    "savedPassword": "Новый пароль сохранён",
+    "subTitle": "Обязательные поля отмечены звёздочкой. Вся информация, которой вы делитесь, конфиденциальна.",
+    "title": "Профиль"
+  },
   "actions": {
-    "participate": "Участвовать"
+    "add": "Добавить",
+    "back": "Назад",
+    "backToLogin": "Назад к странице входа",
+    "cancel": "Отменить",
+    "changePassword": "Поменять пароль",
+    "chooseFile": "Выбрать файл",
+    "close": "Закрыть",
+    "continue": "Продолжить",
+    "create": "Создать",
+    "delete": "Удалить",
+    "disable": "Отключить",
+    "edit": "Редактировать",
+    "enable": "Активировать",
+    "endnow": "Завершить",
+    "export": "Экспортировать",
+    "getStarted": "Начать",
+    "next": "Дальше",
+    "noBack": "Нет, вернуться назад",
+    "participate": "Участвовать",
+    "preview": "Предварительный просмотр",
+    "publish": "Опубликовать",
+    "reopen": "Активировать снова",
+    "replicate": "Копировать",
+    "reset": "Сбросить",
+    "reset2FA": "Сбросить двухфакторную аутентификацию",
+    "resetPassword": "Сбросить пароль",
+    "respond": "Ответить",
+    "revertToDraft": "Вернуться к черновику",
+    "save": "Сохранить",
+    "saveAndAnother": "Сохранить и добавить новое",
+    "saveDraft": "Сохранить черновик",
+    "schedule": "Запланировать",
+    "search": "Искать",
+    "skip": "Пропустить",
+    "submit": "Отправить",
+    "unpublish": "Снять с публикации",
+    "update": "Обновить",
+    "view": "Просмотреть",
+    "yesDelete": "Да, удалить",
+    "yesDisable": "Да, отключить",
+    "yesRemove": "Да, удалить"
+  },
+  "addContact": {
+    "errors": {}
+  },
+  "addNotice": {
+    "form": {}
   },
   "adminDashboard": {
-    "hint1": "",
-    "hint2": "",
-    "hint3": "",
-    "joinSlack": "",
+    "hint1": "<p>Вы знете, что можно создавать опросы без дедлайна — и они будут активны всегда? <a href=\"https://beabee.io/en/beabee-full-feature-list/\" target=\"_blank\" rel=\"noopener noreferrer\">Подробности здесь</a></p>\n",
+    "hint2": "<p><a href=\"https://beabee.io/en/beabee-model/\" target=\"_blank\" rel=\"noopener noreferrer\">Узнайте больше</a> о том, как Beabee может помочь организовать комьюнити и поддерживать отношения с вашей аудиторией</p>\n",
+    "hint3": "<p>Наш <a href=\"https://beabee.io/en/beabee-faq/\" target=\"_blank\" rel=\"noopener noreferrer\">FAQ</a> ответит на большинство вопросов, которые могут у вас возникнуть. Если какого-то ответа не хватает — напишите нам в поддержку.</p>\n",
+    "joinSlack": "Присоединяйтесь к beabee в Slack!",
     "latestCallout": {
-      "createNew": "",
-      "empty": "",
-      "title": ""
+      "createNew": "Создать новый опрос?",
+      "empty": "У вас нет активных опросов.",
+      "title": "Последний опрос"
     },
     "mostRecentMembers": {
-      "title": ""
+      "title": "Недавно присоединились"
     },
     "numbers": {
-      "averageContribution": "",
-      "newMembers": "",
-      "revenue": "",
-      "title": ""
+      "averageContribution": "Средний ежемесячный взнос",
+      "newMembers": "Новые подписчики",
+      "revenue": "Доход",
+      "title": "За последние 30 дней"
     },
-    "responsesSoFar": "",
-    "seeAllResponses": "",
-    "supportInbox": "",
-    "welcomeBack": ""
+    "responsesSoFar": "{n} ответ | {n} ответов | {n} ответа",
+    "supportInbox": "<p>Нужна помощь? Зайдите в <a href=\"https://wiki.beabee.io/help-center-english/\" target=\"_blank\" rel=\"noopener noreferrer\">Справочный центр</a> или напишите в поддержку: <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
+    "welcomeBack": "Рады снова вас видеть, {firstName}!"
   },
   "adminSettings": {
+    "apikey": {
+      "confirmCreate": {},
+      "confirmDelete": {},
+      "expires": {}
+    },
     "email": {},
     "general": {
       "footer": {
@@ -41,39 +150,57 @@
     }
   },
   "advancedSearch": {
-    "button": "Расширенный поиск",
     "matchType": {},
     "matchWord": {},
     "operators": {
       "all": {},
       "array": {},
+      "blob": {},
       "boolean": {},
       "date": {},
       "enum": {},
       "number": {},
       "text": {}
+    },
+    "saveSegment": {
+      "createOrUpdate": {}
     }
   },
+  "apiKey": {
+    "data": {}
+  },
   "callout": {
-    "contactDetails": "Контактная информация",
+    "actions": {
+      "updateResponse": "Обновить ваш ответ"
+    },
+    "addAPoint": "Кликните, чтобы добавить отметку на карту",
+    "addLocation": "Добавить новую локацию",
+    "contactDetails": "Контакты",
+    "ended": "Этот опрос закончился {date}",
     "form": {
-      "email": "Ваш почтовый ящик",
+      "email": "Ваша почта",
       "guestFieldsMissing": "Пожалуйста, сообщите нам свои контактные данные",
       "name": "Ваше имя",
-      "submittingResponseError": "Не удалось отправить ответ. Повторите попытку."
+      "submittingResponseError": "Не удалось отправить ответ. Попробуйте ещё раз"
     },
-    "joinNow": "",
-    "loginToYourAccount": "",
-    "membersOnly": "",
-    "share": {},
-    "status": {
-      "endedOn": "в {duration}",
-      "endsIn": "Заканчивается {duration}",
-      "startsIn": "Начинается с {duration}"
+    "getStarted": "Начать",
+    "joinNow": "Присоединиться",
+    "loginToYourAccount": "Войти в мой профиль",
+    "membersOnly": "Этот опрос доступен только для подписчиков. Зарегистрироваться",
+    "responseSubmitted": "Ответ отправлен",
+    "share": {
+      "address": "Отправить этот опрос на почту:",
+      "services": "Или поделитесь им с помощью одного из этих сервисов:"
     },
-    "toContributionPage": "",
-    "updateContribution": "",
-    "youResponded": "Вы ответили ♥"
+    "showingPreview": "Вы не можете отправить ответ в режиме предварительного просмотра",
+    "toContributionPage": "Изменить мой уровень участия",
+    "updateContribution": "пожалуйста обновите ваш уровень участия",
+    "views": {
+      "gallery": "Галерея",
+      "map": "Карта"
+    },
+    "youResponded": "Вы ответили на этот опрос ♥",
+    "yourResponse": "Ваш ответ"
   },
   "calloutAdmin": {},
   "calloutAdminOverview": {
@@ -88,71 +215,128 @@
       "openTo": {}
     }
   },
+  "calloutBuilder": {
+    "actions": {
+      "addSlide": "Добавить слайд",
+      "removeSlide": "Убрать слайд"
+    },
+    "internalTitle": "Внутренний заголовок",
+    "nextSlide": {},
+    "prevButton": "Текст на кнопке «Назад»",
+    "slideNo": "Слайд {no}"
+  },
+  "calloutResponse": {
+    "data": {
+      "answers": "Ответы",
+      "assignee": "?",
+      "bucket": "Корзина",
+      "callout": "Опрос",
+      "contact": "Контакт",
+      "createdAt": "Установленная дата",
+      "tags": "Теги",
+      "updatedAt": "Обновлённая дата"
+    },
+    "dataGroup": {
+      "answers": "Вопросы",
+      "response": "Ответ"
+    }
+  },
+  "calloutResponseBuckets": {},
+  "calloutResponseComments": {
+    "actions": {},
+    "confirmDelete": {}
+  },
+  "calloutResponsePage": {
+    "actions": {},
+    "notifications": {},
+    "selectedCount": "{n} ответ выбран | {n} ответов выбрано"
+  },
+  "calloutResponsesPage": {
+    "moveToBucket": "Перенести в {bucket}",
+    "noTags": "Нет тегов",
+    "response": "Ответ",
+    "responseNo": "Ответ {no}",
+    "searchTag": "Теги:",
+    "showAnswer": "Ответ",
+    "showLatestComment": "Последний комментарий",
+    "showingOf": "Показать ответы с {start} по {end} из общего количества {total}"
+  },
   "callouts": {
     "archive": "Архив",
     "data": {
-      "callout": "Callout",
-      "endDate": "Последняя Дата"
+      "callout": "Опрос",
+      "endDate": "Дата окончания"
     },
-    "search": "Поиск Callouts",
-    "show": "Показать",
+    "noArchivedCallouts": "Нет опросов",
+    "search": "Поиск опросов",
     "showAll": "Все",
-    "showAnswered": "Отвечен"
+    "showAnswered": "Отвеченные",
+    "showingOf": "Показаны опросы с {start} до {end} из {total}"
   },
   "calloutsAdmin": {
-    "addCallout": "",
-    "data": {
-      "expires": "",
-      "responses": "",
-      "starts": "",
-      "status": "",
-      "title": ""
-    },
-    "filter": {
-      "all": "",
-      "draft": "",
-      "ended": "",
-      "open": "",
-      "scheduled": ""
-    }
+    "data": {},
+    "filter": {}
   },
   "common": {
     "annually": "ежегодно",
-    "backToHome": "Назад к главной странице",
-    "contributing": "Ваш Вклад",
-    "contributionType": {},
-    "every": "каждый/ую",
+    "backToHome": "На главную",
+    "contributing": "Ваш вклад",
+    "contributionType": {
+      "automatic": "Автоматически",
+      "gift": "Подарок",
+      "manual": "Вручную",
+      "none": "Отсутствует"
+    },
+    "copy": "Скопировать",
     "goBack": "Назад",
-    "hello": "Привет",
-    "in": "в",
-    "joined": "Учасник с",
+    "hello": "Привет,",
+    "itemsPerPage": "{items} объектов на странице",
+    "joined": "Вы присоединились",
+    "loading": "Загрузка...",
     "login": "Войти",
-    "month": "Месяц/Месяцев",
+    "month": "месяц | месяцев",
     "monthly": "ежемесячно",
-    "new": "Новый/Новое/Новая",
-    "newsletterStatus": {},
+    "newsletterStatus": {
+      "cleaned": "Очищено",
+      "none": "Нет статуса",
+      "pending": "В работе",
+      "subscribed": "Вы подписаны",
+      "unsubscribed": "Вы отписались от рассылки"
+    },
     "no": "Нет",
+    "noResults": "Ничего не найдено",
+    "pageCount": "Страница {pageNumber} из {pageTotal}",
+    "paymentStatus": {
+      "cancelled": "Отменён",
+      "failed": "Ошибка",
+      "pending": "В работе",
+      "successful": "Успех"
+    },
     "role": {
       "admin": "Администратор",
-      "member": "Учасник",
+      "member": "Участник",
       "superadmin": "Главный aдминистратор"
     },
-    "share": "Поделится",
+    "selectNone": "Отсутствует",
+    "selectOne": "Выбрать одну опцию",
+    "share": "Поделиться",
+    "show": "Показать",
     "status": {
       "draft": "Черновик",
       "ended": "Закрыто",
-      "open": "Открыть",
-      "scheduled": "Запланированно"
+      "open": "Открыто",
+      "scheduled": "Запланировано"
     },
-    "thankYou": "Большое Спасибо",
+    "thankYou": "Большое cпасибо!",
     "timeAgo": "до {time}",
     "timeIn": "в {time}",
     "until": "до",
-    "year": "год/ годов",
+    "year": "год | лет",
     "yes": "Да"
   },
-  "contactInformation": {
-    "deliveryOptIn": "Отправка письма"
+  "contactContribution": {
+    "confirmCancel": {},
+    "updateNotice": {}
   },
   "contactOverview": {
     "about": "О",
@@ -160,101 +344,87 @@
       "copy": "<p>Вся информация, добавленная в этот раздел, <strong>видна только администраторам</strong>. Участники никогда не увидят их в своем профиле или личном кабинете.</p>\n"
     },
     "contribution": "Взнос",
-    "contributionType": "Вид оплаты",
-    "information": "Информация",
     "newsletter": "Новости",
     "overview": "Обзор",
     "roles": "Роль",
     "security": {
       "instructions": "Скопируйте и поделитесь этой ссылкой:",
       "loginOverride": "Автоматический Вход",
+      "mfa": {
+        "desc": "Этот контакт активировал 2FA. Нажмите на кнопку \"{ disableLabel }\", чтобы отключить её.",
+        "disabledDesc": "Этот контакт не активировал 2FA."
+      },
       "resetPassword": "Сбросить пароль",
       "title": "Безопасность",
       "whatDoTheButtonsDo": "Нажмите кнопку, чтобы создать экстренную ссылку:"
     }
   },
   "contacts": {
-    "addContact": "Добавить контакт",
-    "allContacts": "Все контакты",
     "data": {
       "amount": "Сумма",
-      "annotationsCopy": "",
       "contribution": "Взнос",
-      "deliveryOptIn": "Отправка письма",
+      "deliveryOptIn": "Согласие на доставку",
       "description": "Описание",
       "email": "Почтовый ящик",
-      "firstname": "Имя",
-      "groups": "Группа",
+      "groups": "Группы",
       "joined": "Участник с",
       "lastSeen": "Последний раз онлайн",
-      "lastname": "Фамилия",
       "name": "Имя",
       "notes": "Примечания",
-      "payingFee": "Оплатить Транзакцию?",
+      "payingFee": "Оплачивает транзакционные издержки?",
+      "paymentReference": "?",
+      "paymentSource": "Источник оплаты",
       "period": "Период",
       "phone": "Телефон",
       "preferredChannel": "Предпочтительный канал",
-      "roles": {
-        "confirmDelete": {},
-        "expires": {
-          "opts": {}
-        },
-        "starts": {
-          "opts": {}
-        },
-        "title": "Роль",
-        "today": "сегодня"
-      },
       "tags": "Теги"
     },
-    "noContacts": "",
-    "noResults": "Контактов не найдено",
-    "search": "Искать контакт",
-    "showingOf": ""
+    "dataGroup": {}
   },
   "contribution": {
+    "adminCancelDescription": "Если вы отмените взнос этого контакта, он будет считаться членом клуба до завершения подписки {date}.",
     "bankAccount": "Банковский счет",
-    "billing": "Вид оплаты",
-    "cancelContribution": "Удалить учётную запись",
-    "cancelDescription": "Если вы отмените свой взнос, ваше членство прекратится в конце текущего платежного цикла,{day} {month}.",
-    "cancelMessage": "Жаль, что вы покидаете нас",
-    "changeBank": "Измените ваши банковские реквизиты",
+    "billing": "Оплата",
+    "cancelContribution": "Удалить аккаунт",
+    "cancelDescription": "Если вы отмените ваш взнос, вы будете считаться членом клуба до завершения подписки {date}.",
+    "cancelMessage": "Жаль, что вы нас покидаете",
+    "cancelledContribution": "Ваша подписка отменена",
+    "changeBank": "Подключите другой банковский счёт",
     "changeBankInfo": "На следующем шаге вы можете ввести свои новые банковские реквизиты.",
-    "contributing": "Ваш взнос",
-    "contributionUpdateError": "Вы не можете обновить свой взнос, потомучто скоро платёж",
-    "expired": "Ваше членство истекло",
-    "expiredText": "Пожалуйста, рассмотрите возможность продления, даже если наименьшая сумма поможет нам очень сильно. Спасибо!",
-    "hasPendingPayment": "Ваш платеж в настоящее время обрабатывается.",
-    "manualPayment": "Вы платите вручную через банковский перевод прямо сейчас. Чтобы вам было проще управлять своим взносом, а нам было проще узнать, на какую сумму денег от наших участников мы можем рассчитывать из месяца в месяц, обновите автоматическую оплату с помощью прямого дебета.",
+    "contributionUpdateError": "Вы не можете изменить сумму взноса, так как сейчас мы обрабатываем ваш платёж",
+    "dueToRenew": "Ваше подписка будет продлена {renewalDate}",
+    "expired": "Срок вашей подписки истёк",
+    "expiredText": "Может быть, вы сможете продолжить пожертвования, снизив сумму взноса? Даже небольшая сумма очень нам поможет. ",
+    "hasPendingPayment": "Ваш платёж обрабатывается",
+    "manualPayment": "Вы выбрали разовый платёж с банковского счёта. Также вы можете подключить регулярные автоматические платежи: так вам будет легче управлять подпиской, а нам — предсказать, на какую сумму денег от наших участников мы можем рассчитывать из месяца в месяц. ",
+    "manualPaymentSource": "сторонний сервис",
     "nextAmountChanging": "С {renewalDate} ваш взнос изменится на {nextAmount}",
     "paymentHistory": {
-      "status": {},
+      "empty": "Здесь будут отображаться ваши прошлые платежи и счета.\n",
       "title": "Ваша история платежей"
     },
-    "paymentSourceUpdateError": "Вы не можете обновить ваши банковские реквизиты, потомучто скоро платёж",
-    "prorateDecreaseMessage": "У вас осталось {monthsLeft} {months} на ваш текущий взнос, ваш новый взнос начнется {renewalDate}.",
-    "prorateIncreaseMessage": "Ваше членство по-прежнему действует в течение {monthsLeft} {months} ​​под этим сообщением. Вы можете совершить разовый платеж в размере {oneOffPayment}, чтобы немедленно продлить свое членство и увеличить взнос.",
-    "prorateNoText": "До тех пор вы останетесь на своем текущем взносе.",
+    "paymentMethod": "Способ оплаты",
+    "paymentSourceUpdateError": "Вы не можете обновить ваши банковские реквизиты, так как сейчас мы обрабатываем ваш платёж",
+    "prorateDecreaseMessage": "У вас осталось {monthsLeft} {months} с текущей суммой взноса. Размер взноса обновится с {renewalDate}.",
+    "prorateIncreaseMessage": "Ваша подписка будет действовать ещё {monthsLeft} {months}. Вы можете совершить разовый платеж в размере {oneOffPayment}, чтобы продлить подписку.",
+    "prorateNoText": "До тех пор ваш взнос будет прежним.",
     "prorateNoTitle": "Изменить мой взнос с {renewalDate}",
-    "prorateYesText": "С вас будет списан единоразовый платеж в размере {oneOffPayment}, и ваш взнос будет немедленно обновлен.",
-    "prorateYesTitle": "Увеличить мой взнос сейчас",
-    "restartContribution": "Обновить членство",
-    "startContribution": "Начать членство",
-    "startedContribution": "Ваше членство началось",
-    "updateContribution": "Актуализировать взнос",
+    "prorateYesText": "С вас будет списан единоразовый платеж в размере {oneOffPayment}, и ваш взнос будет немедленно обновлён.",
+    "prorateYesTitle": "Изменить мой взнос сейчас",
+    "restartContribution": "Обновить уровень участия",
+    "startContribution": "Стать участником",
+    "startedContribution": "Ваша подписка началась",
+    "updateContribution": "Обновить взнос",
     "updatePaymentType": "Обновить тип оплаты",
     "updatedContribution": "Ваш взнос был изменён",
+    "updatedPaymentSource": "Обновите способ оплаты",
     "willExpire": "Ваша подписка заканчивается через {expires}",
     "willRenew": "Ваше подписка будет автоматически продлена {renewalDate}",
-    "willRenewWithNewAmount": "Ваша подписка будет автоматически продлена {renewalDate} и изменится на выбранную вами сумму {nextAmount}."
+    "willRenewWithNewAmount": "Ваша подписка будет автоматически продлена {renewalDate}. Начиная с этой даты мы будем списывать выбранную вами сумму {nextAmount}."
   },
   "createCallout": {
     "steps": {
-      "content": {
-        "inputs": {
-          "intro": {}
-        }
-      },
+      "content": {},
       "dates": {
         "inputs": {
           "expires": {
@@ -276,26 +446,7 @@
         }
       },
       "mailchimp": {},
-      "titleAndImage": {
-        "inputs": {
-          "description": {},
-          "image": {},
-          "title": {}
-        }
-      },
-      "url": {
-        "inputs": {
-          "description": {},
-          "overrideShare": {
-            "opts": {}
-          },
-          "slug": {
-            "opts": {}
-          },
-          "title": {}
-        }
-      },
-      "visibility": {
+      "settings": {
         "inputs": {
           "anonymous": {
             "opts": {}
@@ -303,20 +454,59 @@
           "editable": {
             "opts": {}
           },
+          "mapSchema": {
+            "addressPattern": {},
+            "addressPatternProp": {},
+            "addressProp": {},
+            "bounds": {},
+            "center": {},
+            "initialZoom": {},
+            "maxZoom": {},
+            "minZoom": {},
+            "style": {}
+          },
+          "multiple": {
+            "opts": {}
+          },
+          "responseImageFilter": {},
+          "responseImageProp": {},
+          "responseLinks": {},
+          "responseTitleProp": {},
+          "showResponses": {},
           "visible": {
+            "opts": {}
+          },
+          "whichResponseBuckets": {},
+          "whichResponseViews": {
             "opts": {}
           },
           "who": {
             "opts": {}
           }
         }
+      },
+      "titleAndImage": {
+        "inputs": {
+          "description": {},
+          "image": {},
+          "intro": {},
+          "overrideShare": {
+            "opts": {}
+          },
+          "shareDescription": {},
+          "shareTitle": {},
+          "slug": {
+            "opts": {}
+          },
+          "title": {}
+        }
       }
     }
   },
   "editCallout": {},
+  "editNotice": {},
   "footer": {
-    "contactUs": "Свяжитесь с нами по",
-    "contacts": "Контакт",
+    "contactUs": "Свяжитесь с нами:",
     "handbookResources": "Справочник и ресурсы",
     "impressum": "Импрессум",
     "joinCommunity": "Стать участником",
@@ -325,164 +515,236 @@
     "terms": "Условия и положения"
   },
   "forgotPassword": {
-    "checkInbox": "Пожалуйста проверьте вашу почту и следуйте присланной инструкции. Если вы не нашли письма проверьте ваш спам-ящик.",
-    "description": "Пожалуйста введите адрес почты. Мы отправим информацию по возобновлению пароля",
-    "message": "Введите ваше имя или адрес почты {email}, вскоре вы получите сообщение.",
-    "resetPassword": "сбросить пароль",
+    "backToLogin": "Назад к странице входа",
+    "description": "Пожалуйста, введите ваш e-mail. Мы отправим вам ссылку на сброс пароля",
+    "message": "Если вы регистрировались с {email}, вскоре вы получите письмо с инструкцией. Если вы не нашли письмо, проверьте папку «Спам»",
     "title": "Забыли пароль?"
   },
   "form": {
     "addressLine1": "Адрес",
-    "addressLine2": "Адрес 2",
+    "addressLine2": "Вторая строчка адреса",
     "cancel": "Отменить",
     "cityOrTown": "Город",
-    "deliveryOptIn": "Согласие на посылку",
+    "deliveryOptIn": "Согласие на рассылку",
     "description": "Описание",
     "email": "Почта",
+    "errorMessages": {
+      "api": {
+        "account-locked": "Ваш аккаунт заблокирован из-за множества неудачных попыток входа. Попробуйте сбросить пароль или обратитесь в поддержку",
+        "duplicate-email": "Этот E-mail уже зарегистрирован",
+        "invalid-token": "Некорректный токен двухфакторной аутентификации",
+        "login-failed": "Неправильная почта и/или пароль",
+        "mfa-token-required": "У вас включена двухфакторная аутентификация, поэтому для сброса пароля вам нужно ввести токен из вашего приложения для аутентификации. Пожалуйста, введите его здесь"
+      },
+      "generic": "Что-то пошло не так. Если ошибка повторится, обратитесь в поддержку",
+      "validation": "Пожалуйста, заполните все поля"
+    },
     "errors": {
       "address": {
-        "required": "Это окно нужно, если хочешь ввести адрес"
+        "required": "В это окно нужно ввести адрес"
       },
-      "addressLine1": {},
-      "aggregator": "Чего-то нехватает! Пожалуйста проконтролируйте верхние поля ввода",
-      "cityOrTown": {},
-      "color": {},
+      "addressLine1": {
+        "required": "Заполните строку «Адрес»"
+      },
+      "cityOrTown": {
+        "required": "Введите город"
+      },
+      "color": {
+        "pattern": "Некорректный цвет",
+        "required": "Нужно выбрать цвет"
+      },
       "confirmPassword": {
-        "password": "Некорректный Пароль",
-        "required": "Нужен пароль",
+        "password": "Некорректный пароль",
+        "required": "Нужно установить пароль",
         "sameAs": "Пароли не совпадают"
       },
       "email": {
-        "email": "Некорректное имя почтового ящика",
-        "required": "Нужен почтовый ящик"
+        "email": "Некорректный почтовый адрес",
+        "required": "Нужно добавить почту"
+      },
+      "file": {
+        "rateLimited": "Загрузка не удалась: вы загрузили слишком много файлов. Подождите пару минут и попробуйте снова",
+        "tooBig": "Загрузка не удалась: файл должен весить меньше 20Mb"
       },
       "firstName": {
-        "required": "Нужно Имя"
+        "required": "Нужно добавить имя"
       },
       "lastName": {
-        "required": "Нужна Фамилия"
+        "required": "Нужно добавить фамилию"
       },
       "name": {
-        "required": "Нужно Имя"
+        "required": "Нужно добавить имя"
       },
       "password": {
-        "password": "Некорректный Пароль",
-        "required": "Нужен пароль",
+        "password": "Некорректный пароль",
+        "required": "Нужно установить пароль",
         "sameAs": "Пароли не совпадают"
       },
-      "postCode": {},
-      "unknown": {
-        "email": "Некорректное имя почтового ящика"
+      "postCode": {
+        "required": "Введите почтовый индекс"
       },
-      "url": {}
+      "unknown": {
+        "email": "Некорректный почтовый адрес",
+        "max": "В этом поле может быть {max} символов",
+        "min": "В этом поле должно быть минимум {min} символов",
+        "required": "Нужно заполнить это поле",
+        "url": "Неверная ссылка"
+      },
+      "url": {
+        "required": "Вставьте ссылку",
+        "url": "Неверная ссылка"
+      },
+      "verifyCode": {
+        "max": "Код должен быть не более {max} символов в длину.",
+        "min": "Код должен быть не менее {min} символов в длину.",
+        "required": "Введите код"
+      }
     },
     "firstName": "Имя",
     "lastName": "Фамилия",
     "newPassword": "Новый пароль",
     "newPasswordConfirm": "Потвердить новый пароль",
-    "notes": "Замечания",
+    "notes": "Заметки",
     "password": "Пароль",
     "passwordInfo": "Пароль должен содержать как минимум 8 символов, минимум одно число, одну заглавную букву и одну строчную букву",
     "phone": "Телефон",
     "postCode": "Почтовый индекс",
-    "richtext": {},
+    "richtext": {
+      "bold": "Жирный",
+      "bulletlist": "Маркированный список",
+      "heading": "Заголовок",
+      "italic": "Курсив",
+      "link": "Ссылка",
+      "numberedlist": "Нумерованный список",
+      "strikethrough": "Перечёркнутый",
+      "underline": "Подчёркнутый"
+    },
     "saveChanges": "Сохранить изменения",
-    "saved": "",
-    "warning": "Пожалуйста меняй информацию на этой странице, только с согласием пользователя. Изменения будут показаны другим пользователям."
+    "saved": "Изменения сохранены",
+    "unsavedChanges": "Есть несохранённые изменения",
+    "warning": "Важно: данные на этой странице можно изменить только с согласия пользователя. Изменения увидят другие пользователи. "
+  },
+  "formRenderer": {
+    "components": {
+      "file": {
+        "browse": "Загрузить с устройства",
+        "dropFiles": "Перетащите файлы, которые хотите приложить",
+        "or": "или",
+        "switchToFileUpload": "Перейти к загрузке файлов",
+        "takePicture": "Сделать фото",
+        "useCamera": "использовать камеру"
+      }
+    }
   },
   "homePage": {
-    "editProfile": "Настроить профиль",
-    "manageContribution": "Поменять взнос",
-    "manageYourContribution": "Поменять ваш взнос",
-    "newCallout": "Новый Callout!",
-    "openCallouts": "Открытые Callouts",
-    "passwordReset": "Ваш пароль был обновлён",
+    "editProfile": "Настроить ваш профиль",
+    "manageYourContribution": "Изменить ваш взнос",
+    "newCallout": "Новый опрос!",
+    "openCallouts": "Открытые опросы",
     "quickActions": "Быстрые действия",
     "title": "Главная страница",
-    "viewAllCallouts": "Показать все Callouts",
-    "viewOpenCallouts": "Показать открытые Callouts",
-    "welcome": "Добро пожаловать {firstName}!",
+    "viewAllCallouts": "Показать все опросы",
+    "viewOpenCallouts": "Показать все открытые опросы",
+    "welcome": "Добро пожаловать, {firstName}!",
     "yourProfile": "Ваш профиль"
   },
-  "informationPage": {
-    "changePassword": "Поменять пароль",
-    "contactInformation": "Контактная информация",
-    "deliveryAddress": "Адрес",
-    "loginDetail": "Данные для входа",
-    "savedPassword": "Новый пароль был сохранён",
-    "subTitle": "Все нужные поля помечены *. Вся информация будет рассматриваться кофеденциально",
-    "title": "Ваша информация"
+  "item": {
+    "status": {
+      "endedOn": "{date}",
+      "endsIn": "Заканчивается через {duration}",
+      "startsIn": "Начинается через {duration}"
+    }
   },
   "join": {
-    "absorbFeeForce": "При взносе в {amount}, вы должны покрыть транзакционные издержки {fee}.",
-    "absorbFeeOptIn": "Да, я покрою транзакционные издержки {fee}.",
-    "absorbFeeText": "Мы платим за каждую транзакцию издержки. Это значит, что мы практически ничего не получим при ежемесячном взносе. Вы не хотите перенять транзакционные издержки? Также вы можете платить ежегодно",
-    "contribute": "Поддержать {amount} в {period}",
-    "contribution": "Взнос",
+    "absorbFeeForce": "При взносе в {amount}, вы должны покрыть транзакционные издержки в размере {fee}.",
+    "absorbFeeOptIn": "Да, я покрою транзакционные издержки в размере {fee}.",
+    "absorbFeeText": "Платёжная система вычитает комиссию из каждого взноса, который мы получаем. Не хотите ли вы взять на себя транзакционные издержки в размере {fee}? Также вы можете выбрать ежегодный взнос.",
+    "contribute": "Внести {amount} в {period}",
     "errors": {
       "confirmEmail": {
-        "message": "Почти готово! Мы только должны подтвердить ваш почтовый ящик, что бы продолжить.",
-        "proceed": "Мы послали вам письмо. Пожалуйста",
-        "title": ""
-      },
-      "duplicateEmail": {
-        "message": "Мы отправили вам электронное письмо, пожалуйста, нажмите на ссылку, чтобы продолжить",
-        "title": "Подтвердите адрес почтового ящика"
+        "message": "Почти готово! Осталось только подтвердить вашу почту.",
+        "proceed": "Мы отправили вам письмо — пожалуйста, откройте его и пройдите по ссылке.",
+        "title": "Подвердите ваш e-mail"
       },
       "failed": {
-        "backToJoin": "Назад к регистрации",
-        "message": "При регистрации возникла проблема, наша команда была уведомлена. Обратитесь в службу поддержки, если проблема не устранена.",
-        "title": "Что то пошло нетак!"
+        "backToJoin": "Назад к странице регистрации",
+        "message": "При регистрации что-то пошло не так. Пожалуйста, попробуйте ещё раз: если проблема не решится, обратитесь в службу поддержки.",
+        "title": "Что-то пошло не так"
       }
     },
     "login": "Войти",
     "memberAccount": "Учётная запись",
-    "memberAlready": "Вы еще не член сообщества?",
+    "memberAlready": "Вы еще не в комьюнити?",
     "minimumContribution": "Минимальный взнос",
-    "noContribution": "Я нехочу сейчас вносить взнос",
-    "notice": "продолжая, вы принимаете нашу",
-    "now": "Стать участником сообщества!",
+    "noContribution": "Я пока не хочу делать взнос",
+    "notice": "Продолжая, вы принимаете нашу",
+    "now": "Станьте участником комьюнити",
+    "paymentMethod": "Способ оплаты",
+    "poweredBy": "Технологии beabee",
     "privacy": "Политика конфиденциальности"
   },
-  "joinPayment": {},
+  "joinPayment": {
+    "genericError": "Что-то пошло не так! Если эта проблема возникнет снова, свяжитесь со службой поддержки.",
+    "goBack": "Что-то пропустили? {back}",
+    "goBackButton": "Назад",
+    "note": "Вы сможете в любое время поменять сумму взноса и посмотреть историю платежей в вашем личном профиле.",
+    "willBeContributing": "Вы будете платить {amount}/{period}"
+  },
   "joinSetup": {
-    "confirmDetails": "Пожалуйста, подтвердите вашу информацию:",
-    "continue": "Дальше",
-    "welcome": "Добро Пожаловать {firstName} {lastName}!"
+    "confirmDetails": "Пожалуйста, подтвердите ваши данные",
+    "continue": "Хорошо! Продолжить",
+    "welcome": "Добро пожаловать, {firstName} {lastName}!"
   },
   "locale": "ru",
   "login": {
     "backTo": "Назад к {newsroomName}",
     "forgotPassword": "Забыли пароль?",
     "joinNow": "Присоединяйся к нам!",
-    "login": "Войти",
-    "notMember": "Ещё не член сообщества?",
-    "title": "Войти",
-    "wrongCredentials": "Неверная комбинация пароля и почтового ящика"
+    "lostMfaDevice": "Потеряли устройство для двухфакторной аутентификации?",
+    "notMember": "Вы ещё не в комьюнити?",
+    "title": "Войти"
+  },
+  "lostDevice": {
+    "description": "Пожалуйста, введите ваш адрес электронной почты, и мы отправим вам инструкции",
+    "message": "Если вы регистрировались с {email}, вскоре вы получите письмо с инструкцией. Если вы не нашли письмо, проверьте папку «Спам»",
+    "title": "Потеряли устройство для двухфакторной аутентификации?"
   },
   "membershipBuilder": {
     "steps": {
-      "accountConfirmation": {},
+      "accountConfirmation": {
+        "joinSurvey": {}
+      },
       "emails": {},
       "intro": {},
       "joinForm": {}
     }
   },
   "menu": {
-    "admin": "Администрация",
-    "callouts": "Callouts",
-    "community": "Сообщетсво",
+    "account": "Аккаунт",
+    "admin": "Администрирование",
+    "adminSettings": "Настройки",
+    "callouts": "Опросы",
+    "contacts": "Контакты",
     "contribution": "Взнос",
-    "dashboard": "приборная доска",
+    "dashboard": "Статистика",
     "home": "Главная страница",
-    "legacyApp": "",
+    "legacyApp": "Старая страница со статистикой",
     "logout": "Выйти",
-    "notices": "уведомление",
+    "membershipBuilder": "Конструктор подписок",
+    "notices": "Уведомления",
+    "payments": "Платежи",
     "settings": "Настройки",
-    "yourInformation": "Ваш аккаунт",
     "yourProfile": "Ваш профиль"
   },
-  "notFound": {},
+  "notFound": {
+    "goBack": "Вернуться на главную",
+    "text": "Страница не найдена. Если вы уверены, что это ошибка, свяжитесь со службой поддержки"
+  },
+  "noticeAdminOverview": {
+    "actions": {
+      "confirmDelete": {}
+    }
+  },
   "notices": {
     "addNotice": "Добавить уведомление",
     "data": {
@@ -492,36 +754,79 @@
     }
   },
   "notification": {
-    "error": "Уупс, что-то пошло нетак!",
-    "success": "Очень хорошо! Это сработало"
+    "error": "Что-то пошло не так. Перезагрузите страницу"
   },
   "pageTitle": {
-    "confirmEmail": "Подтвердить адрес почты",
-    "duplicateEmail": "Скопировать адрес почты",
+    "confirmEmail": "Подтвердить почту",
+    "duplicateEmail": "Скопировать почту",
     "failed": "Ошибка",
-    "forgotPassword": "Забыли пароль",
+    "forgotPassword": "Не помню пароль",
     "join": "Стать участником",
     "login": "Войти",
-    "notFound": "Seite nicht gefunden",
+    "lostDevice": "Вы потеряли своё устройство для двухфакторной аутентификации?",
+    "notFound": "Страница не найдена",
+    "resetDevice": "Сброс устройства для двухфакторной аутентификации",
     "resetPassword": "Сбросить пароль",
     "setup": "Создать аккаунт"
   },
   "paymentMethods": {
-    "gc_direct-debit": {},
-    "s_bacs": {},
-    "s_card": {},
-    "s_sepa": {}
+    "gc_direct-debit": {
+      "changeLabel": "Поменять данные счёта",
+      "label": "Оплата со счёта",
+      "setLabel": "Реквизиты вашего счёта"
+    },
+    "s_bacs": {
+      "changeLabel": "Поменять данные счёта",
+      "label": "Оплата со счёта",
+      "setLabel": "Реквизиты вашего счёта"
+    },
+    "s_card": {
+      "changeLabel": "Поменять платёжные данные",
+      "label": "Карта",
+      "setLabel": "Данные вашей карты"
+    },
+    "s_sepa": {
+      "changeLabel": "Поменять данные счёта",
+      "label": "Оплата со счёта",
+      "setLabel": "Реквизиты вашего счёта"
+    }
+  },
+  "payments": {
+    "data": {},
+    "dataGroup": {}
+  },
+  "paymentsAdmin": {
+    "filter": {}
+  },
+  "resetDevice": {
+    "description": "Введите пароль, чтобы сбросить двухфакторной аутентификации. После входа в систему вы сможете настроить новое устройство.",
+    "failed": "Не получилось сбросить. Возможно, ссылка больше не действует",
+    "invalidPassword": "Неверный пароль",
+    "success": "Сброс 2FA-устройства прошел успешно",
+    "title": "Сбросить ваше устройство для двухфакторной аутентификации?"
   },
   "resetPassword": {
-    "changePassword": "Поменять пароль",
-    "confirmPassword": "Подтвердить пароль",
-    "description": "Введите новый пароль, что бы продолжить",
-    "login": "Войти на ваш аккаунт",
-    "newPassword": "Новый пароль",
-    "title": "Обновить пароль?"
+    "description": "Введите новый пароль",
+    "failed": "Не получилось сбросить пароль",
+    "login": "Войти в ваш аккаунт",
+    "lostDevice": "Если вы потеряли устройство для двухфакторной аутентификации, свяжитесь со службой поддержки",
+    "success": "Ваш пароль сброшен",
+    "title": "Сбросить пароль?"
+  },
+  "roleEditor": {
+    "confirmDelete": {},
+    "expires": {
+      "opts": {}
+    },
+    "starts": {
+      "opts": {}
+    }
   },
   "setPassword": {
-    "description": "Введите новый пароль, что бы продолжить",
-    "title": "поставить пароль"
+    "description": "Введите новый пароль",
+    "title": "Установить пароль"
+  },
+  "tagEditor": {
+    "confirmDelete": {}
   }
 }

@@ -15,13 +15,21 @@
     </template>
 
     <div v-else class="text-center">
-      <div class="mb-2">{{ t('contribution.contributing') }}</div>
-
-      <div class="text-3.5xl font-bold leading-7">
-        {{ n(contribution.amount!, 'currency') }}
-      </div>
-
-      <div class="mb-1.5 font-bold">{{ t('common.every') }} {{ period }}</div>
+      <p>{{ t('contribution.contributing') }}</p>
+      <i18n-t
+        tag="div"
+        class="my-2 font-bold"
+        keypath="contribution.contributingAmount"
+      >
+        <template #amount>
+          <div class="text-3.5xl leading-7">
+            {{ n(contribution.amount!, 'currency') }}
+          </div>
+        </template>
+        <template #period>
+          {{ period }}
+        </template>
+      </i18n-t>
 
       <div v-if="contribution.membershipStatus === MembershipStatus.Expiring">
         <i18n-t keypath="contribution.willExpire">

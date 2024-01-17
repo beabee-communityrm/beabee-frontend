@@ -516,7 +516,6 @@
       "none": "None"
     },
     "copy": "Copy",
-    "every": "every",
     "goBack": "Go back",
     "hello": "Hello",
     "itemsPerPage": "{items} items per page",
@@ -525,7 +524,6 @@
     "login": "Login",
     "month": "month | months",
     "monthly": "Monthly",
-    "new": "new!",
     "newsletterStatus": {
       "cleaned": "Cleaned",
       "none": "None",
@@ -661,6 +659,7 @@
     "changeBank": "Change to a different bank account",
     "changeBankInfo": "You'll be asked for the details of your new bank account in the next step.",
     "contributing": "You're contributing",
+    "contributingAmount": "{amount} a {period}",
     "contributionUpdateError": "You can't update your contribution at the moment as you have a payment pending",
     "dueToRenew": "Your contribution is due to renew on {renewalDate}.",
     "expired": "Your contribution expired.",
