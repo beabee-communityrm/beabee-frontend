@@ -67,10 +67,10 @@ import AppCheckbox from '@components/forms/AppCheckbox.vue';
 import AppForm from '@components/forms/AppForm.vue';
 import AuthBox from '@components/AuthBox.vue';
 
-import type { JoinContent } from '@type';
+import type { ContentJoin } from '@type';
 
 const props = defineProps<{
-  joinContent: JoinContent;
+  joinContent: ContentJoin;
   preview?: boolean;
   onSubmit?: () => Promise<void>;
 }>();

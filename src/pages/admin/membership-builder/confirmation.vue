@@ -143,9 +143,9 @@ import AppSubHeading from '@components/AppSubHeading.vue';
 import { fetchCallouts } from '@utils/api/callout';
 import { fetchContent, updateContent } from '@utils/api/content';
 
-import type { GetCalloutData, JoinSetupContent } from '@type';
+import type { GetCalloutData, ContentJoinSetup } from '@type';
 
-const setupContent = ref<JoinSetupContent>();
+const setupContent = ref<ContentJoinSetup>();
 const openCallouts = ref<GetCalloutData[]>([]);
 
 const { t } = useI18n();

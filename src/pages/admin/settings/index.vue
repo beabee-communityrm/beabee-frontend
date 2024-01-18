@@ -159,7 +159,7 @@ import { fetchContent, updateContent } from '@utils/api/content';
 
 import { generalContent as storeGeneralContent } from '@store';
 
-import type { ShareContent } from '@type';
+import type { ContentShare } from '@type';
 
 const { t } = useI18n();
 
@@ -199,7 +199,7 @@ const footerData = reactive({
   footerLinks: [] as { text: string; url: string }[],
 });
 
-const shareContent = ref<ShareContent>();
+const shareContent = ref<ContentShare>();
 
 async function handleSaveGeneral() {
   storeGeneralContent.value = await updateContent('general', generalData);

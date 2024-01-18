@@ -1,4 +1,4 @@
-export interface JoinSetupContent {
+export interface ContentJoinSetup {
   welcome: string;
   newsletterText: string;
   newsletterOptIn: string;

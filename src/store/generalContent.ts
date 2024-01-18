@@ -2,9 +2,9 @@ import { computed, ref } from 'vue';
 import { fetchContent } from '@utils/api/content';
 import defaultBgUrl from '@assets/images/auth-bg.jpg';
 
-import type { GeneralContent } from '@type';
+import type { ContentGeneral } from '@type';
 
-export const generalContent = ref<GeneralContent>({
+export const generalContent = ref<ContentGeneral>({
   organisationName: '',
   logoUrl: '',
   siteUrl: '',
