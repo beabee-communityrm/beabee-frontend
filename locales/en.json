@@ -1048,7 +1048,7 @@
   },
   "homePage": {
     "editProfile": "Edit your community profile",
-    "manageYourContribution": "Manage your contribution",
+    "manageContribution": "Manage your contribution",
     "newCallout": "New callout!",
     "openCallouts": "Open callouts",
     "quickActions": "Quick actions",

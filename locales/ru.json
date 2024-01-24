@@ -634,7 +634,7 @@
   },
   "homePage": {
     "editProfile": "Настроить ваш профиль",
-    "manageYourContribution": "Изменить ваш взнос",
+    "manageContribution": "Изменить ваш взнос",
     "newCallout": "Новый опрос!",
     "openCallouts": "Открытые опросы",
     "quickActions": "Быстрые действия",
