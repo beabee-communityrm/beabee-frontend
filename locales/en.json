@@ -1032,8 +1032,7 @@
     "saveChanges": "Save Changes",
     "saved": "Saved!",
     "unsavedChanges": "Unsaved changes",
-    "updated": "Updated",
-    "warning": "You should get the user's consent before making updates to this page. All changes you make here will also be visible to the user."
+    "updated": "Updated"
   },
   "formRenderer": {
     "components": {
