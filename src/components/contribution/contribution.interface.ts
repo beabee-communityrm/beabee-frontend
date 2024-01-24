@@ -1,7 +1,7 @@
-import type { JoinContent } from '@type';
+import type { ContentJoin } from '@type';
 
 export type ContributionContent = Pick<
-  JoinContent,
+  ContentJoin,
   | 'initialAmount'
   | 'initialPeriod'
   | 'minMonthlyAmount'

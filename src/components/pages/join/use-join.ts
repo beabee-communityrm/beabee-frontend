@@ -7,7 +7,7 @@ import { reactive, computed, type Ref } from 'vue';
 
 import i18n from '@lib/i18n';
 
-import type { JoinContent } from '@type';
+import type { ContentJoin } from '@type';
 
 const { n, t } = i18n.global;
 
@@ -22,7 +22,7 @@ const signUpData = reactive({
   paymentMethod: PaymentMethod.StripeCard,
 });
 
-export function useJoin(content: Ref<JoinContent>) {
+export function useJoin(content: Ref<ContentJoin>) {
   const signUpDescription = computed(() => {
     const totalAmount =
       signUpData.amount +

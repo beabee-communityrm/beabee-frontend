@@ -49,11 +49,11 @@ import AppInput from '@components/forms/AppInput.vue';
 
 import { fetchContent, updateContent } from '@utils/api/content';
 
-import type { EmailContent } from '@type';
+import type { ContentEmail } from '@type';
 
 const { t } = useI18n();
 
-const emailContent = ref<EmailContent>({
+const emailContent = ref<ContentEmail>({
   footer: '',
   supportEmail: '@',
   supportEmailName: '',

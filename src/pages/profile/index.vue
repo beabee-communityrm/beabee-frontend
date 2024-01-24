@@ -78,7 +78,7 @@ import { fetchCallouts } from '@utils/api/callout';
 
 import { currentUser, generalContent } from '@store';
 
-import type { GetContactData, GetCalloutData, ProfileContent } from '@type';
+import type { GetContactData, GetCalloutData, ContentProfile } from '@type';
 
 const { t } = useI18n();
 
@@ -90,7 +90,7 @@ const removeWelcomeMessage = () => {
   showWelcomeMessage.value = false;
 };
 
-const profileContent = ref<ProfileContent>({
+const profileContent = ref<ContentProfile>({
   introMessage: '',
 });
 

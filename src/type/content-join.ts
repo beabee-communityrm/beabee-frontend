@@ -1,7 +1,7 @@
 import type { ContributionPeriod, PaymentMethod } from '@beabee/beabee-common';
 import type { StripeFeeCountry } from '@type';
 
-export interface JoinContent {
+export interface ContentJoin {
   title: string;
   subtitle: string;
   initialAmount: number;
