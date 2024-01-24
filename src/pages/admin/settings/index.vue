@@ -177,6 +177,10 @@ const locales = [
     label: 'German (informal)',
   },
   {
+    id: 'pt',
+    label: 'Portuguese',
+  },
+  {
     id: 'ru',
     label: 'Russian',
   },
