@@ -1048,7 +1048,7 @@
   },
   "homePage": {
     "editProfile": "Profil bearbeiten",
-    "manageYourContribution": "Beitrag ändern",
+    "manageContribution": "Beitrag ändern",
     "newCallout": "Neuer Callout!",
     "openCallouts": "Aktuelle Callouts",
     "quickActions": "Schnellaktionen",
