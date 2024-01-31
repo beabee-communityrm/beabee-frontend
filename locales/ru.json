@@ -278,7 +278,7 @@
   "common": {
     "annually": "ежегодно",
     "backToHome": "На главную",
-    "contributing": "Ваш вклад",
+    "contributing": "Ваш взнос",
     "contributionType": {
       "automatic": "Автоматически",
       "gift": "Подарок",
@@ -388,6 +388,8 @@
     "cancelledContribution": "Ваша подписка отменена",
     "changeBank": "Подключите другой банковский счёт",
     "changeBankInfo": "На следующем шаге вы можете ввести свои новые банковские реквизиты.",
+    "contributing": "Ваш взнос",
+    "contributingAmount": "{amount} в {period}",
     "contributionUpdateError": "Вы не можете изменить сумму взноса, так как сейчас мы обрабатываем ваш платёж",
     "dueToRenew": "Ваше подписка будет продлена {renewalDate}",
     "expired": "Срок вашей подписки истёк",
@@ -670,7 +672,7 @@
     },
     "login": "Войти",
     "memberAccount": "Учётная запись",
-    "memberAlready": "Вы еще не в комьюнити?",
+    "memberAlready": "У вас уже есть аккаунт?",
     "minimumContribution": "Минимальный взнос",
     "noContribution": "Я пока не хочу делать взнос",
     "notice": "Продолжая, вы принимаете нашу",
