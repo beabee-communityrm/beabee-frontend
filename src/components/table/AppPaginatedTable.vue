@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div>
-    <div class="mb-2 flex gap-4">
+    <div class="mb-2 flex items-end gap-4">
       <slot name="actions"></slot>
       <AppPaginatedTableResult
         v-model:page="query.page"
