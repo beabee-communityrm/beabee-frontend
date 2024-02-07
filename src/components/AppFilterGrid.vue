@@ -1,12 +1,10 @@
 <template>
-  <div class="flex flex-col gap-6 md:flex-row">
-    <div class="flex-none md:basis-menu">
-      <AppTabsCompact v-model="currentItem" :items="items" class="md:hidden" />
-      <AppVTabs v-model="currentItem" :items="items" class="hidden md:block" />
-    </div>
-    <div class="flex-auto">
-      <slot />
-    </div>
+  <div class="flex-none md:basis-menu">
+    <AppTabsCompact v-model="currentItem" :items="items" class="md:hidden" />
+    <AppVTabs v-model="currentItem" :items="items" class="hidden md:block" />
+  </div>
+  <div class="flex flex-auto flex-col gap-6 md:flex-row">
+    <slot />
   </div>
 </template>
 <script lang="ts" setup>

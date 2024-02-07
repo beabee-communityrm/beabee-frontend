@@ -1,22 +1,22 @@
 <template>
   <ul
-    class="d-inline mb-4 border-b border-primary-40 text-sm md:mb-6 xl:text-base"
+    class="flex overflow-x-scroll mb-4 -mx-4 px-4 border-y border-primary-40 text-sm md:mb-6 select-none"
   >
-    <li v-for="item in items" :key="item.id">
+    <li class="flex-none" v-for="item in items" :key="item.id">
       <router-link
         :to="item.to"
-        class="relative inline-block p-2"
+        class="flex items-baseline px-4 py-6 font-semibold text-body-80"
         :class="
-          selected === item.id && 'border-text border-b-2 font-bold text-body'
+          selected === item.id && 'font-bold text-link bg-primary'
         "
       >
-        <span class="text-body-80 hover:text-body">
+        <span class="">
           {{ item.label }}
         </span>
 
         <span
           v-if="item.count !== undefined"
-          class="ml-2 text-xs font-semibold"
+          class="ml-2 text-xs bg-white rounded-xl p-1"
           :class="
             selected ? 'text-body' : 'text-body-60 group-hover:text-body-80'
           "
