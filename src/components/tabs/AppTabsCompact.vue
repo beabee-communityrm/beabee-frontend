@@ -2,7 +2,7 @@
   <ul
     class="d-inline mb-4 border-b border-primary-40 text-sm md:mb-6 xl:text-base"
   >
-    <li v-for="item in items" :key="item.id" 0>
+    <li v-for="item in items" :key="item.id">
       <router-link
         :to="item.to"
         class="relative inline-block p-2"
