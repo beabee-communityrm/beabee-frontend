@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="result"
-    class="items-center justify-between text-sm md:flex md:gap-4"
+    class="flex flex-col items-center justify-end text-sm md:flex-row md:gap-4"
   >
     <p class="mb-3 md:mb-0 md:flex-1">
       <i18n-t v-if="result.count > 0" :keypath="keypath">
