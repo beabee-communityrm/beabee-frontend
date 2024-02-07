@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-none md:basis-menu md:hidden">
+  <div class="flex-none md:hidden md:basis-menu">
     <AppTabsCompact v-model="currentItem" :items="items" />
   </div>
   <div class="flex flex-col gap-6 md:flex-row">
@@ -13,7 +13,6 @@
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue';
-import AppSelect from './forms/AppSelect.vue';
 import AppVTabs from './tabs/AppVTabs.vue';
 import { type TabItem } from './tabs/tabs.interface';
 import AppTabsCompact from './tabs/AppTabsCompact.vue';
