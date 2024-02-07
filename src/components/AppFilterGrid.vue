@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-6 md:flex-row">
     <div class="flex-none md:basis-menu">
-      <AppSelect v-model="currentItem" :items="items" class="md:hidden" />
+      <AppTabsCompact v-model="currentItem" :items="items" class="md:hidden" />
       <AppVTabs v-model="currentItem" :items="items" class="hidden md:block" />
     </div>
     <div class="flex-auto">
@@ -14,6 +14,7 @@ import { computed } from 'vue';
 import AppSelect from './forms/AppSelect.vue';
 import AppVTabs from './tabs/AppVTabs.vue';
 import { type TabItem } from './tabs/tabs.interface';
+import AppTabsCompact from './tabs/AppTabsCompact.vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
