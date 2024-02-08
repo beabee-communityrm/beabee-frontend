@@ -1,8 +1,8 @@
 <template>
   <ul
-    class="-mx-4 mb-4 flex select-none overflow-x-scroll border-y border-primary-40 px-4 text-sm md:mb-6"
+    class="-mx-4 mb-4 flex select-none overflow-x-scroll border-y border-primary-40 px-4 text-sm snap-x snap-mandatory md:mb-6"
   >
-    <li v-for="item in items" :key="item.id" class="flex-none">
+    <li v-for="item in items" :key="item.id" class="flex-none snap-center">
       <AppTabsCompactItem
         :item="item"
         :selected="modelValue === item.id"
