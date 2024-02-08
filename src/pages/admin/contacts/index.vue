@@ -114,7 +114,12 @@ import {
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import { faPlus, faDownload, faTag, faUsers } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlus,
+  faDownload,
+  faTag,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 import { addBreadcrumb } from '@store/breadcrumb';
 
 import PageTitle from '@components/PageTitle.vue';
