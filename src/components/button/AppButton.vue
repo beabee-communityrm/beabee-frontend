@@ -71,6 +71,7 @@ const sizeClasses = {
   xs: 'text-sm px-2 py-1',
   sm: 'text-sm p-2',
   md: 'px-3 py-2.5',
+  lg: 'text-3xl px-4.5 py-4'
 } as const;
 
 const props = withDefaults(
@@ -81,7 +82,7 @@ const props = withDefaults(
     href?: string;
     to?: RouteLocationRaw;
     variant?: keyof typeof variantClasses;
-    size?: 'xs' | 'sm' | 'md';
+    size?: 'xs' | 'sm' | 'md'| 'lg';
     icon?: IconDefinition;
     is?: 'button' | 'label';
   }>(),
