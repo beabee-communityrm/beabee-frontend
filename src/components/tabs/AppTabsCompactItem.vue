@@ -11,7 +11,7 @@
     >
     <span
       v-if="item.count !== undefined"
-      class="ml-1 text-xs bg-white rounded-xl p-1"
+      class="ml-1 rounded-xl bg-white p-1 text-xs"
       :class="selected ? 'text-body' : 'text-body-60 group-hover:text-body-80'"
       >{{ item.count }}</span
     >
