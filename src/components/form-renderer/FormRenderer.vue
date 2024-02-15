@@ -22,7 +22,10 @@ import {
   faCross,
   faRefresh,
   faRemove,
+  faTimesCircle,
   faCamera,
+  type IconName,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { generalContent } from '../../store';
 import { useI18n } from 'vue-i18n';
@@ -78,8 +81,12 @@ onBeforeMount(() => {
     faCamera,
     faCross,
     faCloudUpload,
+    faPlus,
     faRemove,
-    faRefresh
+    faRefresh,
+
+    // Use different icon names so they match
+    { ...faTimesCircle, iconName: 'times-circle-o' as IconName }
   );
   config.autoReplaceSvg = 'nest';
   dom.watch();
