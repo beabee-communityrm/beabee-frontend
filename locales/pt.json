@@ -672,6 +672,9 @@
         "switchToFileUpload": "Mudar para upload de ficheiros",
         "takePicture": "Tirar foto",
         "useCamera": "Usar câmera"
+      },
+      "multiple": {
+        "addAnother": "Adicionar outro"
       }
     }
   },

@@ -631,6 +631,9 @@
         "switchToFileUpload": "Перейти к загрузке файлов",
         "takePicture": "Сделать фото",
         "useCamera": "использовать камеру"
+      },
+      "multiple": {
+        "addAnother": "Добавить еще"
       }
     }
   },
