@@ -783,6 +783,9 @@
             "center": {
               "label": "Initial map center"
             },
+            "geocodeCountries": {
+              "label": "Restrict location search results to specific countries?"
+            },
             "initialZoom": {
               "label": "Initial zoom level"
             },
