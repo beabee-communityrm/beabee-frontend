@@ -79,23 +79,14 @@
     }
 
     &.btn-success {
-      @apply bg-success;
-      &:not([disabled]):hover {
-        @apply bg-success-110;
-      }
+      @apply bg-success enabled:hover:bg-success-110;
     }
     &.btn-danger {
-      @apply bg-danger;
-      &:not([disabled]):hover {
-        @apply bg-danger-110;
-      }
+      @apply bg-danger enabled:hover:bg-danger-110;
     }
     &.btn-light,
     &.btn-secondary {
-      @apply border border-link bg-white text-link;
-      &:not([disabled]):hover {
-        @apply bg-danger-10;
-      }
+      @apply border border-link bg-white text-link enabled:hover:bg-link-10;
     }
 
     &.btn-block {
@@ -105,6 +96,14 @@
     /* Align font-awesome icons */
     &.svg-inline--fa {
       @apply box-content align-top;
+    }
+
+    /* Force stylign on add another button */
+    &.btn.formio-button-add-another {
+      @apply border border-link bg-white text-link enabled:hover:bg-link-10;
+      & > i {
+        @apply mr-2;
+      }
     }
   }
 
