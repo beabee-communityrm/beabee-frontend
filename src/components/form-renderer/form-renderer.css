@@ -308,6 +308,7 @@
     @apply mb-1 block border-t border-t-grey pt-2 leading-tight first:border-0;
   }
 
+  /* Hide file components, this should really be configurable */
   .formio-component-file {
     @apply hidden;
   }
@@ -317,6 +318,11 @@
     &::after {
       @apply hidden;
     }
+  }
+
+  /* Hide the component description */
+  .form-text[id^='d-'] {
+    @apply hidden;
   }
 
   div[ref='element'],
