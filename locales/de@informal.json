@@ -1043,6 +1043,9 @@
         "switchToFileUpload": "Zum Upload wechseln",
         "takePicture": "Foto aufnehmen",
         "useCamera": "Kamera benutzen"
+      },
+      "multiple": {
+        "addAnother": "Neue hinzufügen"
       }
     }
   },

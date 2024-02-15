@@ -1043,6 +1043,9 @@
         "switchToFileUpload": "Switch to file upload",
         "takePicture": "Take Picture",
         "useCamera": "use camera"
+      },
+      "multiple": {
+        "addAnother": "Add another"
       }
     }
   },
