@@ -7,10 +7,19 @@ meta:
 
 <template>
   <PageTitle :title="t('menu.contacts')" border>
-    <div class="flex-0 ml-3">
+    <div class="flex-0 ml-3 hidden md:block">
       <AppButton to="/admin/contacts/add">
         {{ t('contacts.addContact') }}
       </AppButton>
+    </div>
+    <div class="fixed bottom-5 right-5 md:hidden">
+      <AppButton
+        :icon="faPlus"
+        :title="t('contacts.addContact')"
+        class="rounded-full drop-shadow-md"
+        size="lg"
+        to="/admin/contacts/add"
+      />
     </div>
   </PageTitle>
   <AppFilterGrid v-model="currentSegmentId" :items="segmentItems">
@@ -105,7 +114,12 @@ import {
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import { faDownload, faTag, faUsers } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlus,
+  faDownload,
+  faTag,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 import { addBreadcrumb } from '@store/breadcrumb';
 
 import PageTitle from '@components/PageTitle.vue';
