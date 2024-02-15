@@ -448,6 +448,8 @@ function handleLoad(e: { map: Map }) {
     const geocodeControl = new GeocodingControl({
       apiKey: env.maptilerKey,
       language: generalContent.value.locale,
+      proximity: [{ type: 'map-center' }],
+      country: props.callout.responseViewSchema?.map?.geocodeCountries,
     });
 
     geocodeControl.addEventListener('pick', (e: Event) => {
