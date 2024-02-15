@@ -280,6 +280,10 @@
   div[ref='value'] {
     @apply whitespace-pre-wrap break-words;
   }
+
+  a {
+    @apply underline;
+  }
 }
 
 /* Apply to form renderer in small mode */
