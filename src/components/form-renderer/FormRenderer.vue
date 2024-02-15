@@ -71,6 +71,9 @@ const formOpts = computed(() => ({
         'formRenderer.components.file.switchToFileUpload'
       ),
       'Add Another': t('formRenderer.components.multiple.addAnother'),
+      required: t('form.errors.unknown.required'),
+      invalid_email: t('form.errors.unknown.email'),
+      invalid_url: t('form.errors.unknown.url'),
     },
   },
 }));
