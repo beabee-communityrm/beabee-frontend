@@ -1,6 +1,5 @@
 <template>
   <CalloutSidePanel :show="!!answers" @close="$emit('close')">
-    <AppHeading>{{ t('callout.addLocation') }}</AppHeading>
     <CalloutThanksBox v-if="showOnlyThanks" :callout="callout" class="p-0" />
     <template v-else>
       <CalloutLoginPrompt v-if="showLoginPrompt" />
@@ -24,9 +23,7 @@ import CalloutLoginPrompt from './CalloutLoginPrompt.vue';
 import { useCallout } from './use-callout';
 import { ref, toRef, watch } from 'vue';
 import CalloutSidePanel from './CalloutSidePanel.vue';
-import AppHeading from '../../AppHeading.vue';
 import CalloutThanksBox from './CalloutThanksBox.vue';
-import { useI18n } from 'vue-i18n';
 
 import type { GetCalloutDataWith } from '@type';
 
@@ -35,8 +32,6 @@ const props = defineProps<{
   callout: GetCalloutDataWith<'form'>;
   answers?: CalloutResponseAnswers;
 }>();
-
-const { t } = useI18n();
 
 const showOnlyThanks = ref(false);
 
