@@ -692,7 +692,6 @@
   },
   "item": {
     "status": {
-      "endedOn": "a {date}",
       "endsIn": "Acaba em {duration}",
       "startsIn": "Começa em {duration}"
     }

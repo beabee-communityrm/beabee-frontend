@@ -314,7 +314,6 @@
   "homePage": {},
   "item": {
     "status": {
-      "endedOn": "op {date}",
       "endsIn": "Beëindigd op {duration}",
       "startsIn": "Gestart in {duration}"
     }

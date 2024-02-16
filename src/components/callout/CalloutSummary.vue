@@ -9,32 +9,33 @@
         <img class="w-[150px]" :src="callout.image" />
       </div>
     </div>
-    <p>
-      <router-link :to="calloutLink" class="relative z-10">
-        <font-awesome-icon :icon="faExternalLinkAlt" />
-        <span class="ml-2 text-link">{{ env.appUrl }}{{ calloutLink }}</span>
-      </router-link>
-    </p>
-
-    <div class="mt-3 flex flex-1 items-end justify-between md:flex-row">
-      <div class="flex-1">
-        <router-link
-          :to="`/admin/callouts/view/${callout.slug}/responses`"
-          class="relative z-10"
-        >
-          <AppButton class="text-sm font-semibold">
-            {{ t('adminDashboard.seeAllResponses') }} ({{
-              callout.responseCount
-            }})
-          </AppButton>
+    <div class="mb-4 text-sm">
+      <ItemStatusText
+        class="font-semibold text-body-60"
+        :item="callout"
+        inline
+        circle
+      />
+      <ItemDateRange :item="callout"></ItemDateRange>
+      <p>
+        <router-link :to="calloutLink" class="relative z-10">
+          <font-awesome-icon :icon="faExternalLinkAlt" />
+          <span class="ml-2 text-link">{{ env.appUrl }}{{ calloutLink }}</span>
         </router-link>
-      </div>
-      <div class="text-sm font-semibold">
-        <p class="text-body-60">
-          <ItemStatusText :item="callout" inline />
-        </p>
-        <ItemDateRange :item="callout"></ItemDateRange>
-      </div>
+      </p>
+    </div>
+
+    <div class="text-right">
+      <router-link
+        :to="`/admin/callouts/view/${callout.slug}/responses`"
+        class="relative z-10"
+      >
+        <AppButton class="text-sm font-semibold">
+          {{ t('adminDashboard.seeAllResponses') }} ({{
+            callout.responseCount
+          }})
+        </AppButton>
+      </router-link>
     </div>
   </div>
 </template>

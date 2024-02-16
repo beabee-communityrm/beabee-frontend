@@ -1063,7 +1063,6 @@
   },
   "item": {
     "status": {
-      "endedOn": "am {date}",
       "endsIn": "Endet in {duration}",
       "startsIn": "Startet in {duration}"
     }

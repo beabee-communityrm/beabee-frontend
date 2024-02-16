@@ -34,7 +34,7 @@ meta:
           class="flex items-center justify-between"
         >
           <div class="flex items-center text-sm font-semibold text-body-60">
-            <ItemStatusText :item="callout" />
+            <ItemStatusText :item="callout" circle />
             <span
               v-if="latestResponse"
               class="border-body-40 ml-3 w-32 border-l pl-3"
