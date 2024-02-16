@@ -382,29 +382,29 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
     padding: { left: sidePanelRef.value?.offsetWidth || 0 },
   });
 
-  const result = await reverseGeocode(coords.lat, coords.lng);
+  const geocodeResult = await reverseGeocode(coords.lat, coords.lng);
 
   const address: GeocodeResult = {
-    formatted_address: result?.formatted_address || '???',
-    features: result?.features || [],
+    formatted_address: geocodeResult?.formatted_address || '???',
+    features: geocodeResult?.features || [],
     geometry: {
       // Use click location rather than geocode result
       location: coords,
     },
   };
 
-  const newResponse: CalloutResponseAnswers = {};
-  setKey(newResponse, mapSchema.addressProp, address);
+  const responseAnswers: CalloutResponseAnswers = {};
+  setKey(responseAnswers, mapSchema.addressProp, address);
 
-  if (mapSchema.addressPatternProp && result) {
-    const formattedResult = formatGeocodeResult(
-      result,
+  if (mapSchema.addressPatternProp && geocodeResult) {
+    const formattedAddress = formatGeocodeResult(
+      geocodeResult,
       mapSchema.addressPattern
     );
-    setKey(newResponse, mapSchema.addressPatternProp, formattedResult);
+    setKey(responseAnswers, mapSchema.addressPatternProp, formattedAddress);
   }
 
-  newResponseAnswers.value = newResponse;
+  newResponseAnswers.value = responseAnswers;
 }
 
 // Centre map on selected feature when it changes
