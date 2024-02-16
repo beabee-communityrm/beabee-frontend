@@ -139,9 +139,10 @@ const updateAction = computed(() =>
 );
 
 async function saveCallout(asDraft = false) {
-  // TODO: Remove non-null assertion, handlers can't get called if steps is undefined
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const data = convertStepsToCallout(steps.value!);
+  // Handler can't be called if steps aren't set
+  if (!steps.value) throw new Error('Steps are not set');
+
+  const data = convertStepsToCallout(steps.value);
 
   const dataWithDefaults = {
     ...data,
@@ -190,7 +191,6 @@ async function handleSaveDraft() {
 
 async function handlePreview() {
   // Browsers require window.open to be called synchronously
-  // https://www.abeautifulsite.net/posts/opening-a-new-window-after-an-async-operation/
   const previewWindow = window.open('about:blank', 'preview');
   const callout = await saveCallout(status.value === ItemStatus.Draft);
 
