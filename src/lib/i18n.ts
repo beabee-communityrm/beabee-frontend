@@ -5,6 +5,7 @@ import {
   createI18n,
 } from 'vue-i18n';
 import { generalContent } from '../store';
+import router from '@lib/router';
 
 import en from '../../locales/en.json';
 
@@ -25,9 +26,24 @@ const i18n = createI18n({
   },
 });
 
+// Update document title on route or locale change
+watch([i18n.global.locale, router.currentRoute], ([, route]) => {
+  document.title =
+    (route.meta.pageTitle ? i18n.global.t(route.meta.pageTitle) + ' - ' : '') +
+    generalContent.value.organisationName;
+});
+
+// Update i18n language on route or global locale change
 watch(
-  () => [generalContent.value.locale, generalContent.value.currencyCode],
-  async ([newLocale, newCurrencyCode]) => {
+  () =>
+    [
+      router.currentRoute.value?.query.lang,
+      generalContent.value.locale,
+      generalContent.value.currencyCode,
+    ] as const,
+  async ([routeLocale, globalLocale, newCurrencyCode]) => {
+    const newLocale = routeLocale?.toString() || globalLocale;
+
     // Remove variants (e.g. @informal)
     const [justLocale] = newLocale.split('@');
 
