@@ -199,6 +199,7 @@ import {
   useCallout,
 } from '@components/pages/callouts/use-callout';
 
+import { setKey } from '@utils';
 import {
   type GeocodeResult,
   featureToAddress,
@@ -392,27 +393,18 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
     },
   };
 
-  const [addressSlideId, addressKey] = mapSchema.addressProp.split('.');
-
-  newResponseAnswers.value = {
-    [addressSlideId]: { [addressKey]: address },
-  };
+  const newResponse: CalloutResponseAnswers = {};
+  setKey(newResponse, mapSchema.addressProp, address);
 
   if (mapSchema.addressPatternProp && result) {
-    const [patternSlideId, patternKey] =
-      mapSchema.addressPatternProp.split('.');
-
-    newResponseAnswers.value[patternSlideId] ||= {};
-
-    // TODO: clean this up
-    const newResponseAnswer = newResponseAnswers.value[patternSlideId];
-    if (newResponseAnswer) {
-      newResponseAnswer[patternKey] = formatGeocodeResult(
-        result,
-        mapSchema.addressPattern
-      );
-    }
+    const formattedResult = formatGeocodeResult(
+      result,
+      mapSchema.addressPattern
+    );
+    setKey(newResponse, mapSchema.addressPatternProp, formattedResult);
   }
+
+  newResponseAnswers.value = newResponse;
 }
 
 // Centre map on selected feature when it changes
