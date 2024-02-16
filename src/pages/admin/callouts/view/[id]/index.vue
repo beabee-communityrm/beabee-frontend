@@ -61,13 +61,6 @@ meta:
         }}
       </ActionButton>
       <ActionButton
-        v-if="callout.status === ItemStatus.Open"
-        :icon="faReply"
-        :to="`/callouts/${callout.slug}`"
-      >
-        {{ t('actions.participate') }}
-      </ActionButton>
-      <ActionButton
         :icon="faPencilAlt"
         :to="'/admin/callouts/edit/' + callout.slug"
       >
@@ -126,7 +119,6 @@ import {
   faClone,
   faEye,
   faPencilAlt,
-  faReply,
   faTrash,
   faHourglassStart,
   faHourglassEnd,
