@@ -44,7 +44,6 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import AppInput from '../forms/AppInput.vue';
-// import AppCheckbox from '../forms/AppCheckbox.vue';
 import AppSelect from '../forms/AppSelect.vue';
 import { computed } from 'vue';
 
@@ -65,12 +64,7 @@ const props = defineProps<{
 
 const { t } = useI18n();
 
-// const isFirst = computed(() => props.currentPageNo === 0);
-// const isLast = computed(() => props.currentPageNo === props.pages.length - 1);
-
 const slideItems = computed(() =>
-  props.slides
-    // .filter((s) => s.id !== currentPage.value.key)
-    .map((s) => ({ id: s.id, label: s.title }))
+  props.slides.map((s) => ({ id: s.id, label: s.title }))
 );
 </script>
