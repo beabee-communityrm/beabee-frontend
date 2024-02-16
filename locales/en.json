@@ -1066,7 +1066,6 @@
   },
   "item": {
     "status": {
-      "endedOn": "on {date}",
       "endsIn": "Ends in {duration}",
       "startsIn": "Starts in {duration}"
     }

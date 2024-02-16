@@ -199,6 +199,7 @@ import {
   useCallout,
 } from '@components/pages/callouts/use-callout';
 
+import { setKey } from '@utils';
 import {
   type GeocodeResult,
   featureToAddress,
@@ -304,6 +305,7 @@ function handleClick(e: { event: MapMouseEvent; map: Map }) {
   }) as GeoJSON.Feature<GeoJSON.Point>[];
 
   if (clusterPoints.length > 0) {
+    // Zoom to the cluster
     const firstPoint = clusterPoints[0] as GeoJSON.Feature<GeoJSON.Point>;
     const source = e.map.getSource('responses') as GeoJSONSource;
 
@@ -323,6 +325,7 @@ function handleClick(e: { event: MapMouseEvent; map: Map }) {
       layers: ['unclustered-points'],
     });
 
+    // Open the response or clear the hash
     router.push({
       hash:
         pointFeatures.length > 0
@@ -343,12 +346,7 @@ function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
     layers: ['clusters', 'unclustered-points'],
   });
 
-  // TODO: debounce or check for change?
-  if (features.length > 0) {
-    e.map.getCanvas().style.cursor = 'pointer';
-  } else {
-    e.map.getCanvas().style.cursor = '';
-  }
+  e.map.getCanvas().style.cursor = features.length > 0 ? 'pointer' : '';
 }
 
 // Start add response mode
@@ -381,38 +379,29 @@ async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
     padding: { left: sidePanelRef.value?.offsetWidth || 0 },
   });
 
-  const result = await reverseGeocode(coords.lat, coords.lng);
+  const geocodeResult = await reverseGeocode(coords.lat, coords.lng);
 
   const address: GeocodeResult = {
-    formatted_address: result?.formatted_address || '???',
-    features: result?.features || [],
+    formatted_address: geocodeResult?.formatted_address || '???',
+    features: geocodeResult?.features || [],
     geometry: {
       // Use click location rather than geocode result
       location: coords,
     },
   };
 
-  const [addressSlideId, addressKey] = mapSchema.addressProp.split('.');
+  const responseAnswers: CalloutResponseAnswers = {};
+  setKey(responseAnswers, mapSchema.addressProp, address);
 
-  newResponseAnswers.value = {
-    [addressSlideId]: { [addressKey]: address },
-  };
-
-  if (mapSchema.addressPatternProp && result) {
-    const [patternSlideId, patternKey] =
-      mapSchema.addressPatternProp.split('.');
-
-    newResponseAnswers.value[patternSlideId] ||= {};
-
-    // TODO: clean this up
-    const newResponseAnswer = newResponseAnswers.value[patternSlideId];
-    if (newResponseAnswer) {
-      newResponseAnswer[patternKey] = formatGeocodeResult(
-        result,
-        mapSchema.addressPattern
-      );
-    }
+  if (mapSchema.addressPatternProp && geocodeResult) {
+    const formattedAddress = formatGeocodeResult(
+      geocodeResult,
+      mapSchema.addressPattern
+    );
+    setKey(responseAnswers, mapSchema.addressPatternProp, formattedAddress);
   }
+
+  newResponseAnswers.value = responseAnswers;
 }
 
 // Centre map on selected feature when it changes
