@@ -305,6 +305,7 @@ function handleClick(e: { event: MapMouseEvent; map: Map }) {
   }) as GeoJSON.Feature<GeoJSON.Point>[];
 
   if (clusterPoints.length > 0) {
+    // Zoom to the cluster
     const firstPoint = clusterPoints[0] as GeoJSON.Feature<GeoJSON.Point>;
     const source = e.map.getSource('responses') as GeoJSONSource;
 
@@ -324,6 +325,7 @@ function handleClick(e: { event: MapMouseEvent; map: Map }) {
       layers: ['unclustered-points'],
     });
 
+    // Open the response or clear the hash
     router.push({
       hash:
         pointFeatures.length > 0
@@ -344,12 +346,7 @@ function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
     layers: ['clusters', 'unclustered-points'],
   });
 
-  // TODO: debounce or check for change?
-  if (features.length > 0) {
-    e.map.getCanvas().style.cursor = 'pointer';
-  } else {
-    e.map.getCanvas().style.cursor = '';
-  }
+  e.map.getCanvas().style.cursor = features.length > 0 ? 'pointer' : '';
 }
 
 // Start add response mode
