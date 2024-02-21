@@ -7,10 +7,19 @@ meta:
 
 <template>
   <PageTitle :title="t('menu.notices')" border>
-    <div class="flex-0 ml-3">
+    <div class="flex-0 ml-3 hidden md:block">
       <AppButton to="/admin/notices/add">{{
         t('notices.addNotice')
       }}</AppButton>
+    </div>
+    <div class="fixed bottom-5 right-5 md:hidden">
+      <AppButton
+        :icon="faPlus"
+        :title="t('notices.addNotice')"
+        class="rounded-full drop-shadow-md"
+        size="lg"
+        to="/admin/notices/add"
+      />
     </div>
   </PageTitle>
   <AppPaginatedTable
@@ -39,7 +48,7 @@ meta:
 import type { Paginated } from '@beabee/beabee-common';
 import { computed, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { faSignHanging } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSignHanging } from '@fortawesome/free-solid-svg-icons';
 
 import AppButton from '@components/button/AppButton.vue';
 import PageTitle from '@components/PageTitle.vue';

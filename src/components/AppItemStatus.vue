@@ -1,7 +1,11 @@
 <template>
-  <span class="text-sm font-bold uppercase" :class="color[status]">{{
-    t('common.status.' + status)
-  }}</span>
+  <span class="text-sm font-bold uppercase" :class="color[status]"
+    ><span
+      v-if="circle"
+      class="-mt-px inline-block h-3 w-3 rounded-full bg-[currentColor] align-middle"
+    />
+    {{ t('common.status.' + status) }}</span
+  >
 </template>
 <script lang="ts" setup>
 import { ItemStatus } from '@beabee/beabee-common';
@@ -13,7 +17,5 @@ const color = {
   open: 'text-success',
   ended: 'text-body-80',
 };
-defineProps<{
-  status: ItemStatus;
-}>();
+defineProps<{ status: ItemStatus; circle?: boolean }>();
 </script>

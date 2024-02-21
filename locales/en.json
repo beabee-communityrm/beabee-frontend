@@ -783,6 +783,9 @@
             "center": {
               "label": "Initial map center"
             },
+            "geocodeCountries": {
+              "label": "Restrict location search results to specific countries?"
+            },
             "initialZoom": {
               "label": "Initial zoom level"
             },
@@ -1043,6 +1046,9 @@
         "switchToFileUpload": "Switch to file upload",
         "takePicture": "Take Picture",
         "useCamera": "use camera"
+      },
+      "multiple": {
+        "addAnother": "Add another"
       }
     }
   },
@@ -1060,7 +1066,6 @@
   },
   "item": {
     "status": {
-      "endedOn": "on {date}",
       "endsIn": "Ends in {duration}",
       "startsIn": "Starts in {duration}"
     }

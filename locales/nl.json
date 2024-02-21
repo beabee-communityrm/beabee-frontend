@@ -305,13 +305,15 @@
         "switchToFileUpload": "Verander naar bestand upload",
         "takePicture": "Neem een foto",
         "useCamera": "gebruik je camera"
+      },
+      "multiple": {
+        "addAnother": "Een andere toevoegen"
       }
     }
   },
   "homePage": {},
   "item": {
     "status": {
-      "endedOn": "op {date}",
       "endsIn": "Beëindigd op {duration}",
       "startsIn": "Gestart in {duration}"
     }

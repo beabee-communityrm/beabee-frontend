@@ -218,6 +218,12 @@
               required
             />
           </AppFormSection>
+          <AppFormSection>
+            <AppInput
+              v-model="data.mapSchema.geocodeCountries"
+              :label="inputT('mapSchema.geocodeCountries.label')"
+            />
+          </AppFormSection>
         </template>
       </template>
     </template>

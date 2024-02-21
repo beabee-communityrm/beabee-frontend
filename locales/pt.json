@@ -672,6 +672,9 @@
         "switchToFileUpload": "Mudar para upload de ficheiros",
         "takePicture": "Tirar foto",
         "useCamera": "Usar câmera"
+      },
+      "multiple": {
+        "addAnother": "Adicionar outro"
       }
     }
   },
@@ -689,7 +692,6 @@
   },
   "item": {
     "status": {
-      "endedOn": "a {date}",
       "endsIn": "Acaba em {duration}",
       "startsIn": "Começa em {duration}"
     }

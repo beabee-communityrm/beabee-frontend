@@ -631,6 +631,9 @@
         "switchToFileUpload": "Перейти к загрузке файлов",
         "takePicture": "Сделать фото",
         "useCamera": "использовать камеру"
+      },
+      "multiple": {
+        "addAnother": "Добавить еще"
       }
     }
   },
@@ -648,7 +651,6 @@
   },
   "item": {
     "status": {
-      "endedOn": "{date}",
       "endsIn": "Заканчивается через {duration}",
       "startsIn": "Начинается через {duration}"
     }

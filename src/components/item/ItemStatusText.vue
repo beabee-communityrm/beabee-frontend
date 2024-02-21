@@ -1,6 +1,6 @@
 <template>
   <div class="flex" :class="inline ? 'gap-2' : 'flex-col'">
-    <AppItemStatus :status="item.status" />
+    <AppItemStatus :status="item.status" :circle="circle" />
     <span v-if="item.status === ItemStatus.Scheduled && item.starts">
       {{
         t('item.status.startsIn', {
@@ -17,8 +17,8 @@
     </span>
     <span v-else-if="item.status === ItemStatus.Ended && item.expires">
       {{
-        t('item.status.endedOn', {
-          date: formatLocale(item.expires, 'P'),
+        t('common.timeAgo', {
+          time: formatDistanceLocale(item.expires, new Date()),
         })
       }}
     </span>
@@ -29,7 +29,7 @@
 import { ItemStatus } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 
-import { formatDistanceLocale, formatLocale } from '@utils/dates';
+import { formatDistanceLocale } from '@utils/dates';
 
 import AppItemStatus from '@components/AppItemStatus.vue';
 
@@ -37,5 +37,5 @@ import type { ItemWithStatus } from '@type';
 
 const { t } = useI18n();
 
-defineProps<{ item: ItemWithStatus; inline?: boolean }>();
+defineProps<{ item: ItemWithStatus; circle?: boolean; inline?: boolean }>();
 </script>
