@@ -380,6 +380,52 @@ function handleSelectMode() {
   selectMode.value = true;
 }
 
+function handleAddMyLocation() {
+  selectMode.value = false;
+  const mapSchema = props.callout.responseViewSchema?.map;
+  if (!mapSchema) return;
+  navigator.geolocation.getCurrentPosition(async function (position) {
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
+
+    const coords = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    };
+    if (!map.map) return;
+    map.map.getCanvas().style.cursor = '';
+
+    map.map.easeTo({
+      center: coords,
+      padding: { left: sidePanelRef.value?.offsetWidth || 0 },
+    });
+
+    const geocodeResult = await reverseGeocode(lat, lng);
+
+    const address: GeocodeResult = {
+      formatted_address: geocodeResult?.formatted_address || '???',
+      features: geocodeResult?.features || [],
+      geometry: {
+        // Use click location rather than geocode result
+        location: coords,
+      },
+    };
+
+    const responseAnswers: CalloutResponseAnswers = {};
+    setKey(responseAnswers, mapSchema.addressProp, address);
+
+    if (mapSchema.addressPatternProp && geocodeResult) {
+      const formattedAddress = formatGeocodeResult(
+        geocodeResult,
+        mapSchema.addressPattern
+      );
+      setKey(responseAnswers, mapSchema.addressPatternProp, formattedAddress);
+    }
+
+    newResponseAnswers.value = responseAnswers;
+  });
+}
+
 // Start add response mode
 function handleStartAddMode() {
   if (!map.map) return;
