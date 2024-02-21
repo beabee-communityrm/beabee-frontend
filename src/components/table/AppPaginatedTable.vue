@@ -8,7 +8,7 @@
         v-model:limit="query.limit"
         :keypath="keypath"
         :result="result"
-        class="ml-auto"
+        class="ml-auto items-end"
         no-limit
       />
     </div>
@@ -29,6 +29,7 @@
       v-model:limit="query.limit"
       :keypath="keypath"
       :result="result"
+      class="items-center"
     />
   </div>
 </template>
