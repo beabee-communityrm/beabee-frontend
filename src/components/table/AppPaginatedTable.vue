@@ -1,14 +1,14 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div>
-    <div class="mb-2 flex gap-4">
+    <div class="mb-2 flex items-end gap-4">
       <slot name="actions"></slot>
       <AppPaginatedTableResult
         v-model:page="query.page"
         v-model:limit="query.limit"
         :keypath="keypath"
         :result="result"
-        class="ml-auto"
+        class="ml-auto items-end"
         no-limit
       />
     </div>
@@ -29,6 +29,7 @@
       v-model:limit="query.limit"
       :keypath="keypath"
       :result="result"
+      class="items-center"
     />
   </div>
 </template>
