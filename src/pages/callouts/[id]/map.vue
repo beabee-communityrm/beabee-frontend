@@ -22,6 +22,15 @@ meta:
           <font-awesome-icon :icon="faImages" />
           {{ t('callout.views.gallery') }}
         </router-link>
+        <AppButton
+          v-if="isOpen"
+          variant="primary"
+          class="px-2"
+          @click="handleStartAddMode"
+        >
+          <font-awesome-icon :icon="faPlus" class="text" />
+          {{ t('actions.addNew') }}
+        </AppButton>
       </PageTitle>
     </div>
     <div class="relative flex-1">
@@ -118,13 +127,6 @@ meta:
           </p>
         </div>
       </transition>
-      <button
-        v-if="isOpen && !isAddMode"
-        class="absolute bottom-8 right-8 h-20 w-20 rounded-full bg-primary text-white shadow-md"
-        @click="handleStartAddMode"
-      >
-        <font-awesome-icon :icon="faPlus" class="text-4xl" />
-      </button>
     </div>
 
     <!-- Side panel width reference to offset map center -->
@@ -209,6 +211,7 @@ import {
 import { fetchResponsesForMap } from '@utils/api/callout';
 
 import env from '../../../env';
+import AppButton from '@components/button/AppButton.vue';
 
 import { generalContent, isEmbed } from '@store';
 
