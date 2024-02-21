@@ -123,7 +123,10 @@ meta:
         >
           <p class="mx-4 rounded bg-white p-4 font-bold shadow-lg">
             <font-awesome-icon :icon="faInfoCircle" class="mr-1" />
-            {{ t('callout.addAPoint') }}
+            {{ t('callout.addAPoint') }}.
+            <span class="cursor-pointer underline" @click="handleCancelAddMode"
+              >{{ t('actions.cancel') }}?</span
+            >
           </p>
         </div>
       </transition>
