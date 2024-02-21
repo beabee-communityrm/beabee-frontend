@@ -18,6 +18,10 @@ meta:
         >
           <font-awesome-icon :icon="faMap" /> {{ t('callout.views.map') }}
         </router-link>
+        <AppButton variant="primary" class="invisible px-2">
+          <font-awesome-icon :icon="faPlus" class="text" />
+          {{ t('actions.addNew') }}
+        </AppButton>
       </PageTitle>
     </div>
     <div class="overflow-scroll">
@@ -84,6 +88,9 @@ import { fetchResponsesForMap } from '@utils/api/callout';
 import { isEmbed } from '@store';
 
 import type { GetCalloutDataWith, GetCalloutResponseMapData } from '@type';
+
+import AppButton from '@components/button/AppButton.vue';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const HASH_PREFIX = '#response-' as const;
 
