@@ -4,17 +4,19 @@ import type {
   GetSegmentData,
   GetSegmentDataWith,
   GetSegmentWith,
+  GetSegmentsQuery,
   Serial,
   UpdateSegmentData,
 } from '@type';
 
 export async function fetchSegments<With extends GetSegmentWith = void>(
+  query?: GetSegmentsQuery,
   _with?: readonly With[]
 ): Promise<GetSegmentDataWith<With>[]> {
   const { data } = await instance.get<Serial<GetSegmentDataWith<With>>[]>(
     '/segments',
     {
-      params: { with: _with },
+      params: { with: _with, ...query },
     }
   );
   // TODO: needs Serial type guard

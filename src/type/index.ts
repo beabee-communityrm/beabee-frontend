@@ -74,6 +74,7 @@ export * from './get-payments-query';
 export * from './get-segment-data-with';
 export * from './get-segment-data';
 export * from './get-segment-with';
+export * from './get-segments-query';
 export * from './get-stats-data';
 export * from './get-stats-query';
 export * from './get-upload-flow-data';
