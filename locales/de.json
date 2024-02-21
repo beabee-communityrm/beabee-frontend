@@ -316,6 +316,28 @@
       "token": "Token"
     }
   },
+  "bot": {
+    "commands": {},
+    "info": {
+      "messages": {}
+    },
+    "keyboard": {
+      "label": {},
+      "message": {}
+    },
+    "reaction": {
+      "messages": {}
+    },
+    "render": {
+      "callout": {
+        "list": {}
+      }
+    },
+    "response": {
+      "messages": {}
+    },
+    "universal": {}
+  },
   "callout": {
     "actions": {
       "updateResponse": "Antwort bearbeiten"
@@ -783,6 +805,7 @@
             "center": {
               "label": "Karten-Zentrum"
             },
+            "geocodeCountries": {},
             "initialZoom": {
               "label": "Voreingestellter Zoom"
             },

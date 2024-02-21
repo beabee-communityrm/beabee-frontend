@@ -175,6 +175,28 @@
   "apiKey": {
     "data": {}
   },
+  "bot": {
+    "commands": {},
+    "info": {
+      "messages": {}
+    },
+    "keyboard": {
+      "label": {},
+      "message": {}
+    },
+    "reaction": {
+      "messages": {}
+    },
+    "render": {
+      "callout": {
+        "list": {}
+      }
+    },
+    "response": {
+      "messages": {}
+    },
+    "universal": {}
+  },
   "callout": {
     "actions": {
       "updateResponse": "Actualziar a sua resposta"
@@ -499,6 +521,7 @@
             "addressProp": {},
             "bounds": {},
             "center": {},
+            "geocodeCountries": {},
             "initialZoom": {},
             "maxZoom": {},
             "minZoom": {},

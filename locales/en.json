@@ -60,6 +60,7 @@
   },
   "actions": {
     "add": "Add",
+    "addNew": "Add new entry",
     "back": "Back",
     "backToLogin": "Back to login page",
     "cancel": "Cancel",
@@ -314,6 +315,83 @@
       "description": "Description",
       "expires": "Expiry date",
       "token": "Token"
+    }
+  },
+  "bot": {
+    "commands": {
+      "list": "Show open callouts",
+      "show": "Show details about a specific callout",
+      "start": "Start the bot"
+    },
+    "info": {
+      "messages": {
+        "done": "When you are finished with your response, just type \\\"{done}\\\".",
+        "enterAmountOfMoney": "Please enter an amount.",
+        "enterContent": "Please reply with a single message. You can make it as long as you want.",
+        "enterDate": "Please enter a date.",
+        "enterLotsOfText": "Please reply with a single message. You can make it as long as you want.",
+        "enterPassword": "Please enter a password. I will remind you to delete the message once you have sent it.",
+        "enterTelephoneNumber": "Please enter a telephone number.",
+        "enterText": "Please keep your response brief, ideally in one sentence.",
+        "enterTime": "Please enter a time. (e.g. 20:45)",
+        "enterURL": "Please enter a web address. (e.g. www.beabee.io)",
+        "multipleAddressesAllowed": "Enter one or more addresses.",
+        "multipleEmailsAllowed": "Enter one or more e-mail addresses.",
+        "multipleNumbersAllowed": "Enter one or more numbers.",
+        "multipleSelectionsAllowed": "Please type in the answer number. You can pick multiple choices, just send a separate message for each.",
+        "multipleValuesAllowed": "You can enter multiple values by sending each value in a separate message.",
+        "onlyOneAddressAllowed": "Please enter an address.",
+        "onlyOneEmailAllowed": "Please enter an e-mail address.",
+        "onlyOneNumberAllowed": "Please enter a number.",
+        "onlyOneSelectionAllowed": "Please pick your choice by typing its number or pressing its button (you can only pick one).",
+        "onlyOneValueAllowed": "Please enter a single value.",
+        "placeholder": "Please respond with something like \\\"{placeholder}\\\".",
+        "uploadFileHere": "Please send me a file.",
+        "uploadFilesHere": "Please send me one or more files."
+      }
+    },
+    "keyboard": {
+      "label": {
+        "cancel": "Cancel",
+        "continue": "Continue",
+        "no": "No",
+        "yes": "Yes"
+      },
+      "message": {
+        "selectDetailCallout": "Which Callout would you like to get more information about? Choose a number."
+      }
+    },
+    "reaction": {
+      "messages": {
+        "done": "Done",
+        "falsy": "No",
+        "truthy": "Yes"
+      }
+    },
+    "render": {
+      "callout": {
+        "list": {
+          "title": "List of active callouts"
+        }
+      }
+    },
+    "response": {
+      "messages": {
+        "answerWithTruthyOrFalsy": "Please answer with \\\"{truthy}\\\" or \\\"{falsy}\\\".",
+        "calloutNotFound": "I'm sorry, I couldn't find this callout.",
+        "calloutStartResponse": "Would you like to respond to this callout?",
+        "componentNotSupported": "\\\"{type}\\\" not implemented.",
+        "componentUnknown": "Unknown component type \\\"{type}\\\".",
+        "noActiveCallouts": "There are currently no open callouts.",
+        "notAFileMessage": "Please send a file.",
+        "notASelectionMessage": "Please select the number of one of the possible answers.",
+        "notATextMessage": "Please send a text message.",
+        "notTheRightFileType": "Please send a file of type {type}.",
+        "stop": "Ok, no problem."
+      }
+    },
+    "universal": {
+      "or": "or"
     }
   },
   "callout": {
