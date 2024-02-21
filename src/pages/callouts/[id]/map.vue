@@ -30,7 +30,7 @@ meta:
             v-if="isOpen"
             variant="primary"
             class="px-2"
-            @click="handleStartAddMode"
+            @click="handleSelectMode"
           >
             <font-awesome-icon :icon="faPlus" class="text" />
             {{ t('actions.addNew') }}
@@ -153,6 +153,15 @@ meta:
       @close="introOpen = false"
     />
 
+    <CalloutSelectPanel
+      v-if="!isEmbed || route.query.intro !== undefined"
+      :callout="callout"
+      :show="selectMode"
+      @close="selectMode = false"
+      @selectmap="handleStartAddMode"
+      @selectmylocation="handleAddMyLocation"
+    />
+
     <CalloutAddResponsePanel
       :callout="callout"
       :answers="newResponseAnswers"
@@ -204,6 +213,7 @@ import PageTitle from '@components/PageTitle.vue';
 import CalloutShowResponsePanel from '@components/pages/callouts/CalloutShowResponsePanel.vue';
 import CalloutIntroPanel from '@components/pages/callouts/CalloutIntroPanel.vue';
 import CalloutAddResponsePanel from '@components/pages/callouts/CalloutAddResponsePanel.vue';
+import CalloutSelectPanel from '@components/pages/callouts/CalloutSelectPanel.vue';
 import {
   HASH_PREFIX,
   useCallout,
@@ -247,6 +257,7 @@ const responses = ref<GetCalloutResponseMapDataWithAddress[]>([]);
 const { isOpen } = useCallout(toRef(props, 'callout'));
 
 const isAddMode = ref(false);
+const selectMode = ref(false);
 const introOpen = ref(false);
 const newResponseAnswers = ref<CalloutResponseAnswers>();
 const geocodeAddress = ref<CalloutResponseAnswerAddress>();
@@ -361,10 +372,20 @@ function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
 }
 
 // Start add response mode
+function handleSelectMode() {
+  if (!map.map) return;
+  introOpen.value = false;
+  isAddMode.value = false;
+  newResponseAnswers.value = undefined;
+  selectMode.value = true;
+}
+
+// Start add response mode
 function handleStartAddMode() {
   if (!map.map) return;
   isAddMode.value = true;
   introOpen.value = false;
+  selectMode.value = false;
   map.map.getCanvas().style.cursor = 'crosshair';
   router.push({ hash: '' });
 }

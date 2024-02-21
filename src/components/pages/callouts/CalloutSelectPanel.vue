@@ -1,0 +1,40 @@
+<template>
+  <CalloutSidePanel :show="show" @close="$emit('close')">
+    <div class="flex h-full flex-col items-start lg:justify-center">
+      <AppTitle class="pt-8">{{ t('actions.addNew') }}</AppTitle>
+      <AppButton variant="primary" class="px-6" @click="$emit('selectmap')">
+        Select on map
+      </AppButton>
+      <AppButton
+        variant="primary"
+        class="px-6"
+        @click="$emit('selectmylocation')"
+      >
+        Select my location
+      </AppButton>
+      <AppButton variant="primary" class="px-6" @click="$emit('selectsearch')">
+        Search for a location
+      </AppButton>
+    </div>
+  </CalloutSidePanel>
+</template>
+
+<script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
+
+import CalloutSidePanel from './CalloutSidePanel.vue';
+import AppTitle from '@components/AppTitle.vue';
+import AppButton from '@components/button/AppButton.vue';
+
+import type { GetCalloutDataWith } from '@type';
+
+defineEmits<{
+  (e: 'close'): void;
+  (e: 'selectmap'): void;
+  (e: 'selectsearch'): void;
+  (e: 'selectmylocation'): void;
+}>();
+defineProps<{ callout: GetCalloutDataWith<'form'>; show: boolean }>();
+
+const { t } = useI18n();
+</script>
