@@ -11,20 +11,22 @@ meta:
   <div class="absolute inset-0 flex flex-col">
     <div v-if="!isEmbed" class="flex-0 z-10 p-6 pb-1 shadow-lg">
       <PageTitle :title="callout.title" no-collapse>
-        <router-link
-          v-if="callout.responseViewSchema?.map"
-          :to="{
-            name: 'calloutMap',
-            query: { noIntro: 1 },
-          }"
-          class="whitespace-nowrap font-semibold text-link"
-        >
-          <font-awesome-icon :icon="faMap" /> {{ t('callout.views.map') }}
-        </router-link>
-        <AppButton variant="primary" class="invisible px-2">
-          <font-awesome-icon :icon="faPlus" class="text" />
-          {{ t('actions.addNew') }}
-        </AppButton>
+        <div>
+          <router-link
+            v-if="callout.responseViewSchema?.map"
+            :to="{
+              name: 'calloutMap',
+              query: { noIntro: 1 },
+            }"
+            class="mx-8 whitespace-nowrap font-semibold text-link"
+          >
+            <font-awesome-icon :icon="faMap" /> {{ t('callout.views.map') }}
+          </router-link>
+          <AppButton variant="primary" class="invisible px-2">
+            <font-awesome-icon :icon="faPlus" class="text" />
+            {{ t('actions.addNew') }}
+          </AppButton>
+        </div>
       </PageTitle>
     </div>
     <div class="overflow-scroll">
@@ -109,7 +111,7 @@ const { t } = useI18n();
 
 const responses = ref<GetCalloutResponseMapData[]>([]);
 
-const introOpen = ref(true);
+const introOpen = ref(false);
 
 const selectedResponse = computed(() => {
   if (route.hash.startsWith(HASH_PREFIX)) {
@@ -130,8 +132,8 @@ onBeforeMount(async () => {
     await fetchResponsesForMap(props.callout.slug)
   ).items.filter((i) => i.photos.length > 0);
 
-  if (route.query.noIntro) {
-    introOpen.value = false;
+  if (!route.query.noIntro) {
+    introOpen.value = true;
   }
 });
 </script>

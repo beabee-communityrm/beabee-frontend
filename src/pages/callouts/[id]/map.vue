@@ -14,26 +14,28 @@ meta:
   >
     <div v-if="!isEmbed" class="flex-0 z-10 p-6 pb-1 shadow-lg">
       <PageTitle :title="callout.title" no-collapse>
-        <router-link
-          v-if="callout.responseViewSchema.gallery"
-          :to="{
-            name: 'calloutGallery',
-            query: { noIntro: 1 },
-          }"
-          class="whitespace-nowrap font-semibold text-link"
-        >
-          <font-awesome-icon :icon="faImages" />
-          {{ t('callout.views.gallery') }}
-        </router-link>
-        <AppButton
-          v-if="isOpen"
-          variant="primary"
-          class="px-2"
-          @click="handleStartAddMode"
-        >
-          <font-awesome-icon :icon="faPlus" class="text" />
-          {{ t('actions.addNew') }}
-        </AppButton>
+        <div>
+          <router-link
+            v-if="callout.responseViewSchema.gallery"
+            :to="{
+              name: 'calloutGallery',
+              query: { noIntro: 1 },
+            }"
+            class="mx-8 whitespace-nowrap font-semibold text-link"
+          >
+            <font-awesome-icon :icon="faImages" />
+            {{ t('callout.views.gallery') }}
+          </router-link>
+          <AppButton
+            v-if="isOpen"
+            variant="primary"
+            class="px-2"
+            @click="handleStartAddMode"
+          >
+            <font-awesome-icon :icon="faPlus" class="text" />
+            {{ t('actions.addNew') }}
+          </AppButton>
+        </div>
       </PageTitle>
     </div>
     <div class="relative flex-1">
@@ -245,7 +247,7 @@ const responses = ref<GetCalloutResponseMapDataWithAddress[]>([]);
 const { isOpen } = useCallout(toRef(props, 'callout'));
 
 const isAddMode = ref(false);
-const introOpen = ref(true);
+const introOpen = ref(false);
 const newResponseAnswers = ref<CalloutResponseAnswers>();
 const geocodeAddress = ref<CalloutResponseAnswerAddress>();
 
@@ -436,8 +438,8 @@ onBeforeMount(async () => {
     await fetchResponsesForMap(props.callout.slug)
   ).items.filter((r): r is GetCalloutResponseMapDataWithAddress => !!r.address);
 
-  if (route.query.noIntro) {
-    introOpen.value = false;
+  if (!route.query.noIntro) {
+    introOpen.value = true;
   }
 });
 
