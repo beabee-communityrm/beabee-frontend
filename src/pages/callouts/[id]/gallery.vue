@@ -13,7 +13,10 @@ meta:
       <PageTitle :title="callout.title" no-collapse>
         <router-link
           v-if="callout.responseViewSchema?.map"
-          :to="`/callouts/${callout.slug}/map`"
+          :to="{
+            name: 'calloutMap',
+            query: { noIntro: 1 },
+          }"
           class="whitespace-nowrap font-semibold text-link"
         >
           <font-awesome-icon :icon="faMap" /> {{ t('callout.views.map') }}
@@ -126,6 +129,10 @@ onBeforeMount(async () => {
   responses.value = (
     await fetchResponsesForMap(props.callout.slug)
   ).items.filter((i) => i.photos.length > 0);
+
+  if (route.query.noIntro) {
+    introOpen.value = false;
+  }
 });
 </script>
 

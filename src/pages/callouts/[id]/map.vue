@@ -16,7 +16,10 @@ meta:
       <PageTitle :title="callout.title" no-collapse>
         <router-link
           v-if="callout.responseViewSchema.gallery"
-          :to="`/callouts/${callout.slug}/gallery`"
+          :to="{
+            name: 'calloutGallery',
+            query: { noIntro: 1 },
+          }"
           class="whitespace-nowrap font-semibold text-link"
         >
           <font-awesome-icon :icon="faImages" />
@@ -432,6 +435,10 @@ onBeforeMount(async () => {
   responses.value = (
     await fetchResponsesForMap(props.callout.slug)
   ).items.filter((r): r is GetCalloutResponseMapDataWithAddress => !!r.address);
+
+  if (route.query.noIntro) {
+    introOpen.value = false;
+  }
 });
 
 interface GeocodePickEvent extends Event {
