@@ -12,9 +12,6 @@
       >
         Select my location
       </AppButton>
-      <AppButton variant="primary" class="px-6" @click="$emit('selectsearch')">
-        Search for a location
-      </AppButton>
     </div>
   </CalloutSidePanel>
 </template>
