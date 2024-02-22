@@ -24,7 +24,7 @@ meta:
           </router-link>
           <AppButton variant="primary" class="px-2" @click="handleAddNew">
             <font-awesome-icon :icon="faPlus" class="text" />
-            {{ t('actions.addNew') }}
+            {{ t('callout.addLocation') }}
           </AppButton>
         </div>
       </PageTitle>

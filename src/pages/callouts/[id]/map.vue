@@ -33,7 +33,7 @@ meta:
             @click="handleSelectMode"
           >
             <font-awesome-icon :icon="faPlus" class="text" />
-            {{ t('actions.addNew') }}
+            {{ t('callout.addLocation') }}
           </AppButton>
         </div>
       </PageTitle>
