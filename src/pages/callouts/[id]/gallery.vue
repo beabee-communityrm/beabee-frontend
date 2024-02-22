@@ -22,7 +22,7 @@ meta:
           >
             <font-awesome-icon :icon="faMap" /> {{ t('callout.views.map') }}
           </router-link>
-          <AppButton variant="primary" class="invisible px-2">
+          <AppButton variant="primary" class="px-2" @click="handleAddNew">
             <font-awesome-icon :icon="faPlus" class="text" />
             {{ t('actions.addNew') }}
           </AppButton>
@@ -121,6 +121,11 @@ const selectedResponse = computed(() => {
     return undefined;
   }
 });
+
+function handleAddNew() {
+  // redirect to map view and show add new panel
+  router.push({ name: 'calloutMap', query: { noIntro: 1, addNew: 1 } });
+}
 
 onBeforeMount(async () => {
   if (!props.callout.responseViewSchema?.gallery) {

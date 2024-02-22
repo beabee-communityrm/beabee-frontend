@@ -171,7 +171,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { computed, onBeforeMount, ref, toRef, watch } from 'vue';
+import { computed, onBeforeMount, onMounted, ref, toRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import {
   MglMap,
@@ -505,8 +505,19 @@ onBeforeMount(async () => {
     await fetchResponsesForMap(props.callout.slug)
   ).items.filter((r): r is GetCalloutResponseMapDataWithAddress => !!r.address);
 
+  // intro panel is shown by default, but not in some cases (e.g. when
+  // switching from the gallery view)
   if (!route.query.noIntro) {
     introOpen.value = true;
+  }
+});
+
+onMounted(async () => {
+  // needed when "Add New" is clicked in the gallery view,
+  // which switches to the map view and opens the add new
+  // selection menu
+  if (route.query.addNew) {
+    handleSelectMode();
   }
 });
 
