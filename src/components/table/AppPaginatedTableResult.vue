@@ -1,9 +1,6 @@
 <template>
-  <div
-    v-if="result"
-    class="items-center justify-between text-sm md:flex md:gap-4"
-  >
-    <p class="mb-3 md:mb-0 md:flex-1">
+  <div v-if="result" class="flex flex-col items-end md:flex-row md:gap-4">
+    <p class="mb-3 text-sm md:mb-0 md:flex-1">
       <i18n-t v-if="result.count > 0" :keypath="keypath">
         <template #start
           ><b>{{ n(result.offset + 1) }}</b></template
@@ -19,7 +16,7 @@
 
     <div v-if="!noLimit || totalPages > 1" class="flex gap-2">
       <template v-if="!noLimit">
-        <p class="flex-1 self-center">
+        <p class="flex-1 self-center text-sm">
           <i18n-t v-if="result.count > 0" keypath="common.pageCount">
             <template #pageNumber
               ><b>{{ n(props.page + 1) }}</b></template

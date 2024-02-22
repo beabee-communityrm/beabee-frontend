@@ -212,7 +212,7 @@ function handleSavedSegment(segment: GetSegmentDataWith<'contactCount'>) {
 
 onBeforeMount(async () => {
   contactsTotal.value = (await fetchContacts({ limit: 1 })).total;
-  segments.value = await fetchSegments(['contactCount']);
+  segments.value = await fetchSegments({ sort: 'order' }, ['contactCount']);
 });
 
 function getSearchRules(): RuleGroup {
