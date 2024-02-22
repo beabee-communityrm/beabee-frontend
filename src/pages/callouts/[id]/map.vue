@@ -30,7 +30,7 @@ meta:
             v-if="isOpen"
             variant="primary"
             class="px-2"
-            @click="handleSelectMode"
+            @click="handleStartAddMode"
           >
             <font-awesome-icon :icon="faPlus" class="text" />
             {{ t('callout.addLocation') }}
@@ -153,15 +153,6 @@ meta:
       @close="introOpen = false"
     />
 
-    <CalloutSelectPanel
-      v-if="!isEmbed || route.query.intro !== undefined"
-      :callout="callout"
-      :show="selectMode"
-      @close="selectMode = false"
-      @selectmap="handleStartAddMode"
-      @selectmylocation="handleAddMyLocation"
-    />
-
     <CalloutAddResponsePanel
       :callout="callout"
       :answers="newResponseAnswers"
@@ -213,7 +204,6 @@ import PageTitle from '@components/PageTitle.vue';
 import CalloutShowResponsePanel from '@components/pages/callouts/CalloutShowResponsePanel.vue';
 import CalloutIntroPanel from '@components/pages/callouts/CalloutIntroPanel.vue';
 import CalloutAddResponsePanel from '@components/pages/callouts/CalloutAddResponsePanel.vue';
-import CalloutSelectPanel from '@components/pages/callouts/CalloutSelectPanel.vue';
 import {
   HASH_PREFIX,
   useCallout,
@@ -372,61 +362,6 @@ function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
 }
 
 // Start add response mode
-function handleSelectMode() {
-  if (!map.map) return;
-  introOpen.value = false;
-  isAddMode.value = false;
-  newResponseAnswers.value = undefined;
-  selectMode.value = true;
-}
-
-function handleAddMyLocation() {
-  selectMode.value = false;
-  const mapSchema = props.callout.responseViewSchema?.map;
-  if (!mapSchema) return;
-  navigator.geolocation.getCurrentPosition(async function (position) {
-    var lat = position.coords.latitude;
-    var lng = position.coords.longitude;
-
-    const coords = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-    };
-    if (!map.map) return;
-    map.map.getCanvas().style.cursor = '';
-
-    map.map.easeTo({
-      center: coords,
-      padding: { left: sidePanelRef.value?.offsetWidth || 0 },
-    });
-
-    const geocodeResult = await reverseGeocode(lat, lng);
-
-    const address: GeocodeResult = {
-      formatted_address: geocodeResult?.formatted_address || '???',
-      features: geocodeResult?.features || [],
-      geometry: {
-        // Use click location rather than geocode result
-        location: coords,
-      },
-    };
-
-    const responseAnswers: CalloutResponseAnswers = {};
-    setKey(responseAnswers, mapSchema.addressProp, address);
-
-    if (mapSchema.addressPatternProp && geocodeResult) {
-      const formattedAddress = formatGeocodeResult(
-        geocodeResult,
-        mapSchema.addressPattern
-      );
-      setKey(responseAnswers, mapSchema.addressPatternProp, formattedAddress);
-    }
-
-    newResponseAnswers.value = responseAnswers;
-  });
-}
-
-// Start add response mode
 function handleStartAddMode() {
   if (!map.map) return;
   isAddMode.value = true;
@@ -504,20 +439,18 @@ onBeforeMount(async () => {
   responses.value = (
     await fetchResponsesForMap(props.callout.slug)
   ).items.filter((r): r is GetCalloutResponseMapDataWithAddress => !!r.address);
+});
 
+onMounted(async () => {
   // intro panel is shown by default, but not in some cases (e.g. when
   // switching from the gallery view)
   if (!route.query.noIntro) {
     introOpen.value = true;
   }
-});
-
-onMounted(async () => {
   // needed when "Add New" is clicked in the gallery view,
-  // which switches to the map view and opens the add new
-  // selection menu
+  // which switches to the map view first
   if (route.query.addNew) {
-    handleSelectMode();
+    handleStartAddMode();
   }
 });
 
