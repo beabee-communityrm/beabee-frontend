@@ -50,6 +50,7 @@ export interface SettingsStepProps {
   responseImageFilter: string;
   responseLinks: { text: string; url: string }[];
   mapSchema: CalloutMapSchema;
+  locales: string[];
 }
 
 export interface EndMessageStepProps {

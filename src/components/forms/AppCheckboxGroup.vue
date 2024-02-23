@@ -2,11 +2,12 @@
   <div>
     <AppLabel v-if="label" :label="label" :required="required" />
     <AppCheckbox
-      v-for="[value, optLabel] in options"
-      :key="value"
-      :model-value="modelValue.includes(value)"
-      :label="optLabel"
-      @update:model-value="handleUpdate(value, $event)"
+      v-for="option in options"
+      :key="option.id"
+      :model-value="modelValue.includes(option.id)"
+      :label="option.label"
+      class="!font-normal"
+      @update:model-value="handleUpdate(option.id, $event)"
     />
   </div>
 </template>
@@ -16,11 +17,13 @@ import AppCheckbox from './AppCheckbox.vue';
 import AppLabel from './AppLabel.vue';
 import useVuelidate from '@vuelidate/core';
 import { minValue } from '@vuelidate/validators';
+import type { SelectItem } from './form.interface';
 
-const emit = defineEmits<(e: 'update:modelValue', value: string[]) => void>();
+const emit =
+  defineEmits<(e: 'update:modelValue', value: (string | number)[]) => void>();
 const props = defineProps<{
-  modelValue: string[];
-  options: [string, string][];
+  modelValue: (string | number)[];
+  options: SelectItem[];
   label?: string;
   inline?: boolean;
   required?: boolean;
@@ -33,7 +36,7 @@ useVuelidate(
   { v: computed(() => props.modelValue.length) }
 );
 
-function handleUpdate(value: string, checked: boolean) {
+function handleUpdate(value: string | number, checked: boolean) {
   const newModelValue = checked
     ? [...props.modelValue, value]
     : props.modelValue.filter((v) => v !== value);

@@ -107,6 +107,7 @@ export function convertCalloutToSteps(
         addressPattern: '',
         addressPatternProp: '',
       },
+      locales: [],
     },
     endMessage: {
       whenFinished: callout?.thanksRedirect ? 'redirect' : 'message',

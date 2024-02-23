@@ -9,6 +9,33 @@ import router from '@lib/router';
 
 import en from '../../locales/en.json';
 
+export const locales = [
+  {
+    id: 'en',
+    label: 'English',
+  },
+  {
+    id: 'de',
+    label: 'Deutsch (formal)',
+  },
+  {
+    id: 'de@informal',
+    label: 'Deutsch (informal)',
+  },
+  {
+    id: 'pt',
+    label: 'Português',
+  },
+  {
+    id: 'ru',
+    label: 'Русский',
+  },
+  {
+    id: 'nl',
+    label: 'Nederlands (callouts only)',
+  },
+];
+
 const i18n = createI18n({
   legacy: false,
   fallbackLocale: 'en',
