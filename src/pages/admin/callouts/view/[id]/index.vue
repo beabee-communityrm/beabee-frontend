@@ -112,7 +112,6 @@ import AppInfoList from '@components/AppInfoList.vue';
 import AppInfoListItem from '@components/AppInfoListItem.vue';
 import ActionButton from '@components/button/ActionButton.vue';
 import CalloutSummary from '@components/callout/CalloutSummary.vue';
-import { createCallout } from '@utils/api/callout';
 import AppConfirmDialog from '@components/AppConfirmDialog.vue';
 import { addNotification } from '@store/notifications';
 import {
@@ -163,21 +162,13 @@ async function reopenThisCallout() {
 }
 
 async function replicateThisCallout() {
-  const newCalloutData = {
-    ...props.callout,
-    slug: props.callout.slug + '-copy',
-    title: props.callout.title + ' copy',
-    starts: null,
-    expires: null,
-    // TODO: Remove these extra properties, should be handled elsewhere
-    status: undefined,
-    responseCount: undefined,
-  };
+  // TODO: Implement this in the API
+  return;
 
-  const newCallout = await createCallout(newCalloutData);
-  router.push({
-    path: '/admin/callouts/edit/' + newCallout.slug,
-    query: { replicated: null },
-  });
+  // const newCallout = await createCallout(newCalloutData);
+  // router.push({
+  //   path: '/admin/callouts/edit/' + newCallout.slug,
+  //   query: { replicated: null },
+  // });
 }
 </script>

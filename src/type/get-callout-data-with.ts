@@ -3,12 +3,12 @@ import type {
   GetCalloutData,
   Noop,
   CalloutResponseViewSchema,
-  CalloutFormData,
+  GetCalloutFormData,
 } from '@type';
 import type { CalloutVariantData } from './callout-variant-data';
 
 export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
-  ('form' extends With ? CalloutFormData : Noop) &
+  ('form' extends With ? GetCalloutFormData : Noop) &
   ('hasAnswered' extends With ? { hasAnswered: boolean } : Noop) &
   ('responseCount' extends With ? { responseCount: number } : Noop) &
   ('responseViewSchema' extends With

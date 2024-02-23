@@ -15,7 +15,11 @@ import type {
 import env from '../env';
 import i18n from '@lib/i18n';
 
-import type { CreateCalloutData, GetCalloutDataWith } from '@type';
+import type {
+  CalloutVariantData,
+  CreateCalloutData,
+  GetCalloutDataWith,
+} from '@type';
 
 const { t } = i18n.global;
 
@@ -127,14 +131,34 @@ export function convertCalloutToSteps(
 export function convertStepsToCallout(
   steps: CalloutStepsProps
 ): CreateCalloutData {
+  const defaultVariant: CalloutVariantData = {
+    title: steps.titleAndImage.title || t('createCallout.untitledCallout'),
+    excerpt: steps.titleAndImage.description,
+    intro: steps.titleAndImage.introText,
+    ...(steps.endMessage.whenFinished === 'message'
+      ? {
+          thanksText: steps.endMessage.thankYouText,
+          thanksTitle: steps.endMessage.thankYouTitle,
+          thanksRedirect: null,
+        }
+      : {
+          thanksText: '',
+          thanksTitle: '',
+          thanksRedirect: steps.endMessage.thankYouRedirect,
+        }),
+    shareTitle: steps.titleAndImage.overrideShare
+      ? steps.titleAndImage.shareTitle
+      : null,
+    shareDescription: steps.titleAndImage.overrideShare
+      ? steps.titleAndImage.shareDescription
+      : null,
+  };
+
   return {
     slug: steps.titleAndImage.useCustomSlug
       ? steps.titleAndImage.slug
       : steps.titleAndImage.autoSlug,
-    title: steps.titleAndImage.title,
-    excerpt: steps.titleAndImage.description,
     image: steps.titleAndImage.coverImageURL,
-    intro: steps.titleAndImage.introText,
     formSchema: steps.content.formSchema,
     responseViewSchema: steps.settings.showResponses
       ? {
@@ -172,23 +196,7 @@ export function convertStepsToCallout(
           : steps.settings.allowAnonymousResponses === 'guests'
             ? 'anonymous'
             : 'only-anonymous',
-    ...(steps.endMessage.whenFinished === 'message'
-      ? {
-          thanksText: steps.endMessage.thankYouText,
-          thanksTitle: steps.endMessage.thankYouTitle,
-          thanksRedirect: null,
-        }
-      : {
-          thanksText: '',
-          thanksTitle: '',
-          thanksRedirect: steps.endMessage.thankYouRedirect,
-        }),
-    shareTitle: steps.titleAndImage.overrideShare
-      ? steps.titleAndImage.shareTitle
-      : '',
-    shareDescription: steps.titleAndImage.overrideShare
-      ? steps.titleAndImage.shareDescription
-      : '',
+    variants: { default: defaultVariant },
   };
 }
 

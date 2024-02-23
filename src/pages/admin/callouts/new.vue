@@ -146,8 +146,6 @@ async function saveCallout(asDraft = false) {
 
   const dataWithDefaults = {
     ...data,
-    // Title and slug might not be set for new callouts
-    title: data.title || t('createCallout.untitledCallout'),
     slug: data.slug || null,
     ...(asDraft && {
       starts: null,
