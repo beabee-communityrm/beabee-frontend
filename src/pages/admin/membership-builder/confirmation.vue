@@ -96,7 +96,7 @@ meta:
             :items="[
               { id: '', label: t('common.selectNone') },
               ...openCallouts.map((callout) => ({
-                id: callout.slug,
+                id: callout.id,
                 label: callout.title,
               })),
             ]"
