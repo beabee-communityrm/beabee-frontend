@@ -15,16 +15,19 @@
     </AppFormSection>
     <template v-if="data.whenFinished === 'message'">
       <AppFormSection :help="inputT('title.help')">
-        <AppInput
+        <LocaleInput
           v-model="data.thankYouTitle"
+          :locales="steps.settings.data.locales"
           :label="inputT('title.label')"
           :placeholder="inputT('title.placeholder')"
           required
         />
       </AppFormSection>
+
       <AppFormSection :help="inputT('text.help')">
-        <RichTextEditor
+        <LocaleRichTextEditor
           v-model="data.thankYouText"
+          :locales="steps.settings.data.locales"
           :label="inputT('text.label')"
           :placeholder="inputT('text.placeholder')"
           required
@@ -32,8 +35,9 @@
       </AppFormSection>
     </template>
     <AppFormSection v-else :help="inputT('url.help')">
-      <AppInput
+      <LocaleInput
         v-model="data.thankYouRedirect"
+        :locales="steps.settings.data.locales"
         :label="inputT('url.label')"
         :placeholder="inputT('url.placeholder')"
         type="url"
@@ -47,14 +51,14 @@
 import useVuelidate from '@vuelidate/core';
 import { watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AppInput from '../../../../forms/AppInput.vue';
 import AppRadioGroup from '../../../../forms/AppRadioGroup.vue';
-import type { EndMessageStepProps } from '../callouts.interface';
-import RichTextEditor from '../../../../rte/RichTextEditor.vue';
+import type { CalloutSteps, EndMessageStepProps } from '../callouts.interface';
 import AppFormSection from '../../../../forms/AppFormSection.vue';
+import LocaleInput from '../LocaleInput.vue';
+import LocaleRichTextEditor from '../LocaleRichTextEditor.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
-defineProps<{ data: EndMessageStepProps }>();
+defineProps<{ data: EndMessageStepProps; steps: CalloutSteps }>();
 
 const { t } = useI18n();
 const inputT = (key: string) =>
