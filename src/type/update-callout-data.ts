@@ -1,3 +1,3 @@
-import type { CreateCalloutData } from '@type';
+import type { AllowNull, CreateCalloutData } from '@type';
 
-export type UpdateCalloutData = Partial<CreateCalloutData>;
+export type UpdateCalloutData = AllowNull<Partial<CreateCalloutData>>;

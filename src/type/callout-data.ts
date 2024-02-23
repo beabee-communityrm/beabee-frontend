@@ -1,4 +1,5 @@
 export interface CalloutData {
+  id: string;
   slug: string | null;
   title: string;
   excerpt: string;

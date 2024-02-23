@@ -45,11 +45,12 @@ export async function fetchCallouts<With extends GetCalloutWith = void>(
 
 export async function fetchCallout<With extends GetCalloutWith = void>(
   slug: string,
-  _with?: readonly With[]
+  _with?: readonly With[],
+  variant?: string
 ): Promise<GetCalloutDataWith<With>> {
   const { data } = await instance.get<Serial<GetCalloutDataWith<With>>>(
     '/callout/' + slug,
-    { params: { with: _with } }
+    { params: { with: _with, variant } }
   );
   return deserializeCallout(data);
 }

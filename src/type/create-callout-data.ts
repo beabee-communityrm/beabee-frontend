@@ -1,11 +1,11 @@
 import type {
   CalloutData,
-  AllowNull,
   CalloutFormData,
   CalloutResponseViewSchema,
 } from '@type';
+import type { CalloutVariantData } from './callout-variant-data';
 
-export type CreateCalloutData = AllowNull<
-  CalloutData &
-    CalloutFormData & { responseViewSchema?: CalloutResponseViewSchema | null }
->;
+export interface CreateCalloutData extends CalloutData, CalloutFormData {
+  variants: Record<string, CalloutVariantData>;
+  responseViewSchema?: CalloutResponseViewSchema | null;
+}
