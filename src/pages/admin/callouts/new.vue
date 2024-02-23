@@ -147,10 +147,7 @@ async function saveCallout(asDraft = false) {
   const dataWithDefaults = {
     ...data,
     slug: data.slug || null,
-    ...(asDraft && {
-      starts: null,
-      expires: null,
-    }),
+    ...(asDraft && { starts: null, expires: null }),
   };
 
   const callout = props.id

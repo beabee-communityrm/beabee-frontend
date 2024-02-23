@@ -66,6 +66,18 @@ export async function createCallout(
   return deserializeCallout(data);
 }
 
+export async function replicateCallout(
+  fromId: string,
+  calloutData: UpdateCalloutData
+): Promise<GetCalloutData> {
+  const { data } = await instance.post<Serial<GetCalloutData>>(
+    '/callout/',
+    calloutData,
+    { params: { fromId } }
+  );
+  return deserializeCallout(data);
+}
+
 export async function updateCallout(
   slug: string,
   calloutData: UpdateCalloutData

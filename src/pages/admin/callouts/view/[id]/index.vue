@@ -106,7 +106,11 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-import { deleteCallout, updateCallout } from '@utils/api/callout';
+import {
+  deleteCallout,
+  replicateCallout,
+  updateCallout,
+} from '@utils/api/callout';
 import AppHeading from '@components/AppHeading.vue';
 import AppInfoList from '@components/AppInfoList.vue';
 import AppInfoListItem from '@components/AppInfoListItem.vue';
@@ -162,13 +166,13 @@ async function reopenThisCallout() {
 }
 
 async function replicateThisCallout() {
-  // TODO: Implement this in the API
-  return;
-
-  // const newCallout = await createCallout(newCalloutData);
-  // router.push({
-  //   path: '/admin/callouts/edit/' + newCallout.slug,
-  //   query: { replicated: null },
-  // });
+  const newCallout = await replicateCallout(props.callout.id, {
+    starts: null,
+    expires: null,
+  });
+  router.push({
+    path: '/admin/callouts/edit/' + newCallout.slug,
+    query: { replicated: null },
+  });
 }
 </script>
