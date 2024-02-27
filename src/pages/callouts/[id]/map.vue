@@ -12,7 +12,7 @@ meta:
     v-if="callout.responseViewSchema?.map"
     class="absolute inset-0 flex flex-col"
   >
-    <div v-if="!isEmbed" class="flex-0 z-10 p-6 pb-1 shadow-lg">
+    <div v-if="!isEmbed" class="flex-0 z-10 p-4 pb-2 shadow-lg md:p-6">
       <PageTitle :title="callout.title" no-collapse>
         <div>
           <router-link
@@ -21,15 +21,15 @@ meta:
               name: 'calloutGallery',
               query: { noIntro: 1 },
             }"
-            class="mx-8 whitespace-nowrap font-semibold text-link"
+            class="whitespace-nowrap font-semibold text-primary-80 md:mr-6"
           >
             <font-awesome-icon :icon="faImages" />
             {{ t('callout.views.gallery') }}
           </router-link>
           <AppButton
             v-if="isOpen"
-            variant="primary"
-            class="px-2"
+            variant="link"
+            class="hidden px-2 md:inline-block"
             @click="handleStartAddMode"
           >
             <font-awesome-icon :icon="faPlus" class="text" />
@@ -135,6 +135,23 @@ meta:
           </p>
         </div>
       </transition>
+    </div>
+
+    <!-- Bottom bar for mobile only -->
+    <div
+      class="z-20 flex justify-center px-6 py-4 shadow-[0px_-10px_15px_-3px_rgba(0,0,0,0.1)] md:hidden"
+    >
+      <div>
+        <AppButton
+          v-if="isOpen"
+          variant="link"
+          class="px-2"
+          @click="handleStartAddMode"
+        >
+          <font-awesome-icon :icon="faPlus" class="text" />
+          {{ t('callout.addLocation') }}
+        </AppButton>
+      </div>
     </div>
 
     <!-- Side panel width reference to offset map center -->
