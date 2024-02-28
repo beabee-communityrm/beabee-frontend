@@ -1,19 +1,27 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <AppTextArea v-model="data" :label="label" v-bind="$attrs" />
-  <div v-for="locale in locales" :key="locale" class="mt-2">
+  <AppTextArea
+    v-model="props.modelValue.default"
+    :label="label"
+    v-bind="$attrs"
+  />
+  <div v-for="locale in props.locales" :key="locale" class="mt-2">
     <AppTextArea
-      v-model="data"
-      :label="`${label} (${locale})`"
+      v-model="props.modelValue[locale]"
+      :label="`${props.label} (${locale})`"
       v-bind="$attrs"
     />
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { type LocaleInputProps, useLocaleInput } from './use-locale-input';
+
 import AppTextArea from '@components/forms/AppTextArea.vue';
 
+// Must be defined so the event handler isn't in $attrs
+defineEmits(['update:modelValue']);
 defineOptions({ inheritAttrs: false });
-defineProps<{ label: string; locales: string[] }>();
+const props = defineProps<LocaleInputProps>();
 
-const data = ref('');
+useLocaleInput(props);
 </script>

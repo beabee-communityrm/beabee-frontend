@@ -19,21 +19,26 @@ export const buckets = computed(() => [
   },
 ]);
 
+export interface LocaleProp {
+  default: string;
+  [key: string]: string;
+}
+
 export interface ContentStepProps {
   formSchema: CalloutFormSchema;
 }
 
 export interface TitleAndImageStepProps {
-  title: string;
-  description: string;
+  title: LocaleProp;
+  description: LocaleProp;
   coverImageURL: string;
-  introText: string;
+  introText: LocaleProp;
   autoSlug: string;
   useCustomSlug: boolean;
   slug: string;
   overrideShare: boolean;
-  shareTitle: string;
-  shareDescription: string;
+  shareTitle: LocaleProp;
+  shareDescription: LocaleProp;
 }
 
 export interface SettingsStepProps {
@@ -55,9 +60,9 @@ export interface SettingsStepProps {
 
 export interface EndMessageStepProps {
   whenFinished: 'message' | 'redirect';
-  thankYouTitle: string;
-  thankYouText: string;
-  thankYouRedirect: string;
+  thankYouTitle: LocaleProp;
+  thankYouText: LocaleProp;
+  thankYouRedirect: LocaleProp;
 }
 export interface MailchimpSyncStepProps {
   useMailchimpSync: boolean;

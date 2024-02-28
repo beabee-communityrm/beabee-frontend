@@ -6,7 +6,10 @@ import {
   flattenComponents,
 } from '@beabee/beabee-common';
 import { format } from 'date-fns';
-import type { CalloutStepsProps } from '@components/pages/admin/callouts/callouts.interface';
+import type {
+  CalloutStepsProps,
+  LocaleProp,
+} from '@components/pages/admin/callouts/callouts.interface';
 import type {
   FilterItem,
   FilterItems,
@@ -38,8 +41,32 @@ export function getSlideSchema(no: number): CalloutSlideSchema {
   };
 }
 
+function convertVariantsForSteps(
+  variants: Record<string, CalloutVariantData> | undefined
+): Record<keyof CalloutVariantData, LocaleProp> {
+  const result: Record<keyof CalloutVariantData, LocaleProp> = {
+    title: { default: '' },
+    excerpt: { default: '' },
+    intro: { default: '' },
+    thanksText: { default: '' },
+    thanksTitle: { default: '' },
+    thanksRedirect: { default: '' },
+    shareTitle: { default: '' },
+    shareDescription: { default: '' },
+  };
+
+  for (const variant in variants) {
+    for (const field in variants[variant]) {
+      const field2 = field as keyof CalloutVariantData;
+      result[field2][variant] = variants[variant][field2] || '';
+    }
+  }
+
+  return result;
+}
+
 export function convertCalloutToSteps(
-  callout?: GetCalloutDataWith<'form' | 'responseViewSchema'>
+  callout?: GetCalloutDataWith<'form' | 'responseViewSchema' | 'variants'>
 ): CalloutStepsProps {
   const settings = env.cnrMode
     ? ({
@@ -63,23 +90,23 @@ export function convertCalloutToSteps(
         multipleResponses: callout?.allowMultiple || false,
       } as const);
 
+  const variants = convertVariantsForSteps(callout?.variants);
+
   return {
     content: {
-      formSchema: callout?.formSchema || {
-        slides: [getSlideSchema(1)],
-      },
+      formSchema: callout?.formSchema || { slides: [getSlideSchema(1)] },
     },
     titleAndImage: {
-      title: callout?.title || '',
-      description: callout?.excerpt || '',
+      title: variants.title,
+      description: variants.excerpt,
       coverImageURL: callout?.image || '',
-      introText: callout?.intro || '',
+      introText: variants.intro,
       useCustomSlug: !!callout,
       autoSlug: '',
       slug: callout?.slug || '',
       overrideShare: !!callout?.shareTitle,
-      shareTitle: callout?.shareTitle || '',
-      shareDescription: callout?.shareDescription || '',
+      shareTitle: variants.shareTitle,
+      shareDescription: variants.shareDescription,
     },
     settings: {
       ...settings,
@@ -107,13 +134,15 @@ export function convertCalloutToSteps(
         addressPattern: '',
         addressPatternProp: '',
       },
-      locales: [],
+      locales: callout
+        ? Object.keys(callout.variants).filter((v) => v !== 'default')
+        : [],
     },
     endMessage: {
       whenFinished: callout?.thanksRedirect ? 'redirect' : 'message',
-      thankYouTitle: callout?.thanksTitle || '',
-      thankYouText: callout?.thanksText || '',
-      thankYouRedirect: callout?.thanksRedirect || '',
+      thankYouTitle: variants.thanksTitle,
+      thankYouText: variants.thanksText,
+      thankYouRedirect: variants.thanksRedirect,
     },
     /*mailchimp: {
       useMailchimpSync: false,
@@ -132,33 +161,41 @@ export function convertCalloutToSteps(
 export function convertStepsToCallout(
   steps: CalloutStepsProps
 ): CreateCalloutData {
-  const defaultVariant: CalloutVariantData = {
-    title: steps.titleAndImage.title || t('createCallout.untitledCallout'),
-    excerpt: steps.titleAndImage.description,
-    intro: steps.titleAndImage.introText,
-    ...(steps.endMessage.whenFinished === 'message'
-      ? {
-          thanksText: steps.endMessage.thankYouText,
-          thanksTitle: steps.endMessage.thankYouTitle,
-          thanksRedirect: null,
-        }
-      : {
-          thanksText: '',
-          thanksTitle: '',
-          thanksRedirect: steps.endMessage.thankYouRedirect,
-        }),
-    shareTitle: steps.titleAndImage.overrideShare
-      ? steps.titleAndImage.shareTitle
-      : null,
-    shareDescription: steps.titleAndImage.overrideShare
-      ? steps.titleAndImage.shareDescription
-      : null,
-  };
+  const variants: Record<string, CalloutVariantData> = {};
+  for (const variant of [...steps.settings.locales, 'default']) {
+    variants[variant] = {
+      title: steps.titleAndImage.title[variant],
+      excerpt: steps.titleAndImage.description[variant],
+      intro: steps.titleAndImage.introText[variant],
+      ...(steps.endMessage.whenFinished === 'redirect'
+        ? {
+            thanksText: '',
+            thanksTitle: '',
+            thanksRedirect: steps.endMessage.thankYouRedirect[variant],
+          }
+        : {
+            thanksText: steps.endMessage.thankYouText[variant],
+            thanksTitle: steps.endMessage.thankYouTitle[variant],
+            thanksRedirect: null,
+          }),
+      ...(steps.titleAndImage.overrideShare
+        ? {
+            shareTitle: steps.titleAndImage.shareTitle[variant],
+            shareDescription: steps.titleAndImage.shareDescription[variant],
+          }
+        : {
+            shareTitle: null,
+            shareDescription: null,
+          }),
+    };
+  }
+
+  const slug = steps.titleAndImage.useCustomSlug
+    ? steps.titleAndImage.slug
+    : steps.titleAndImage.autoSlug;
 
   return {
-    slug: steps.titleAndImage.useCustomSlug
-      ? steps.titleAndImage.slug
-      : steps.titleAndImage.autoSlug,
+    slug: slug || null,
     image: steps.titleAndImage.coverImageURL,
     formSchema: steps.content.formSchema,
     responseViewSchema: steps.settings.showResponses
@@ -197,7 +234,7 @@ export function convertStepsToCallout(
           : steps.settings.allowAnonymousResponses === 'guests'
             ? 'anonymous'
             : 'only-anonymous',
-    variants: { default: defaultVariant },
+    variants,
   };
 }
 

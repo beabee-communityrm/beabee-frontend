@@ -10,7 +10,7 @@ meta:
     <PageTitle
       :title="
         status
-          ? t('editCallout.title', { title: steps.titleAndImage.title })
+          ? t('editCallout.title', { title: steps.titleAndImage.title.default })
           : t('createCallout.title')
       "
       border
@@ -82,7 +82,7 @@ addBreadcrumb(
           ...(props.id
             ? [
                 {
-                  title: steps.value.titleAndImage.title,
+                  title: steps.value.titleAndImage.title.default,
                   to: '/admin/callouts/view/' + props.id,
                 },
                 {
@@ -144,15 +144,18 @@ async function saveCallout(asDraft = false) {
 
   const data = convertStepsToCallout(steps.value);
 
-  const dataWithDefaults = {
-    ...data,
-    slug: data.slug || null,
-    ...(asDraft && { starts: null, expires: null }),
-  };
+  if (!data.variants.default.title) {
+    data.variants.default.title = t('createCallout.untitledCallout');
+  }
+
+  if (asDraft) {
+    data.starts = null;
+    data.expires = null;
+  }
 
   const callout = props.id
-    ? await updateCallout(props.id, dataWithDefaults)
-    : await createCallout(dataWithDefaults);
+    ? await updateCallout(props.id, data)
+    : await createCallout(data);
 
   lastSaved.value = new Date();
   return callout;
@@ -196,7 +199,7 @@ async function handlePreview() {
 
 async function reset() {
   const callout = props.id
-    ? await fetchCallout(props.id, ['form', 'responseViewSchema'])
+    ? await fetchCallout(props.id, ['form', 'responseViewSchema', 'variants'])
     : undefined;
   steps.value = convertCalloutToSteps(callout);
   status.value = callout?.status;

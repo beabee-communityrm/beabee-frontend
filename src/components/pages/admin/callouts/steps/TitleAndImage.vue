@@ -137,7 +137,7 @@ watch(
   () => props.data.title,
   (title) => {
     // eslint-disable-next-line vue/no-mutating-props
-    props.data.autoSlug = slugify(title, { lower: true });
+    props.data.autoSlug = slugify(title.default, { lower: true });
   }
 );
 
