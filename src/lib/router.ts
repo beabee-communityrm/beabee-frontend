@@ -12,7 +12,7 @@ const router = createRouter({
   },
 });
 
-router.beforeEach(async (to) => {
+router.beforeEach(async (to, from) => {
   // Block route for initial store load, this will only happen once
   await initStore;
 
@@ -26,14 +26,21 @@ router.beforeEach(async (to) => {
     return false;
   }
 
+  // Preserve the language query parameter across routes
+  const lang = to.query.lang || from.query.lang;
+
   const user = currentUser.value;
   // Route requires authentication
   if (user == null && !to.meta.noAuth) {
-    return { path: '/auth/login', query: { next: to.path } };
+    return { path: '/auth/login', query: { next: to.path, lang } };
   }
   // Route requires a specific role
   if (to.meta.role && !user?.activeRoles.includes(to.meta.role)) {
-    return { path: 'profile' };
+    return { path: 'profile', lang };
+  }
+
+  if (to.query.lang !== lang) {
+    return { ...to, query: { ...to.query, lang } };
   }
 });
 
