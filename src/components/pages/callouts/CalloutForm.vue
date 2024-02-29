@@ -153,10 +153,13 @@ const showCaptcha = computed(
     (props.callout.captcha === 'guest' && !currentUser.value)
 );
 
-const validation = useVuelidate(
-  { captchaToken: { required: requiredIf(showCaptcha.value) } },
-  { captchaToken }
-);
+const rules = computed(() => ({
+  captchaToken: {
+    required: requiredIf(showCaptcha.value && isLastSlide.value),
+  },
+}));
+
+const validation = useVuelidate(rules, { captchaToken });
 
 async function handleSubmit() {
   // Only submit answers for slides in the current flow
