@@ -164,6 +164,7 @@ export function convertStepsToCallout(
     allowUpdate:
       !steps.settings.multipleResponses && steps.settings.usersCanEditAnswers,
     hidden: !steps.settings.showOnUserDashboards,
+    captcha: 'none',
     access:
       steps.settings.whoCanTakePart === 'members'
         ? 'member'
