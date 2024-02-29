@@ -22,6 +22,7 @@
         v-model:name="guestName"
         v-model:email="guestEmail"
       />
+      <CalloutFormCaptcha v-if="showCaptcha" class="mb-4" />
       <AppNotification
         v-if="formError"
         class="mb-4"
@@ -86,6 +87,7 @@ import { isRequestError } from '@utils/api';
 import { getDecisionComponent } from '@utils/callouts';
 
 import type { GetCalloutDataWith } from '@type';
+import CalloutFormCaptcha from './CalloutFormCaptcha.vue';
 
 const { t } = useI18n();
 const validation = useVuelidate();
@@ -140,6 +142,12 @@ const isLastSlide = computed(
 
 const showGuestFields = computed(
   () => props.callout.access === 'guest' && !currentUser.value
+);
+
+const showCaptcha = computed(
+  () =>
+    props.callout.captcha === 'all' ||
+    (props.callout.captcha === 'guest' && !currentUser.value)
 );
 
 async function handleSubmit() {
