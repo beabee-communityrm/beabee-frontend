@@ -53,6 +53,7 @@ export default ({ command, mode }) => {
           __apiUrl__: env.API_BASE_URL,
           __revision__: '',
           __appsignalKey__: env.APPSIGNAL_KEY || '',
+          __captchafoxKey__: env.CAPTCHAFOX_KEY || '',
           __maptilerKey__: env.MAPTILER_KEY || '',
           __cnrMode__: env.CNR_MODE || '',
           __experimentalFeatures__: env.EXPERIMENTAL_FEATURES || '',
