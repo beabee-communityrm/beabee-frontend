@@ -17,7 +17,7 @@
       :readonly="readonly"
     />
     <template v-if="isLastSlide && !readonly && !preview">
-      <GuestFields
+      <CalloutFormGuestFields
         v-if="showGuestFields"
         v-model:name="guestName"
         v-model:email="guestEmail"
@@ -74,7 +74,7 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 
-import GuestFields from './GuestFields.vue';
+import CalloutFormGuestFields from './CalloutFormGuestFields.vue';
 import AppNotification from '@components/AppNotification.vue';
 import FormRenderer from '@components/form-renderer/FormRenderer.vue';
 import AppButton from '@components/button/AppButton.vue';
