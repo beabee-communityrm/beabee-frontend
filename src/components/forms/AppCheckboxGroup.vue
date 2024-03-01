@@ -37,6 +37,8 @@ useVuelidate(
 );
 
 function handleUpdate(value: string | number, checked: boolean) {
+  if (checked && props.modelValue.includes(value)) return;
+
   const newModelValue = checked
     ? [...props.modelValue, value]
     : props.modelValue.filter((v) => v !== value);
