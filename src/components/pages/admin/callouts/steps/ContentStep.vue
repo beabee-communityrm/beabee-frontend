@@ -92,6 +92,12 @@
                 :is-last="isLastSlide"
                 :locales="steps.settings.data.locales"
               />
+
+              <FormBuilderTranslations
+                v-model="data.componentText"
+                :components="currentSlide.components"
+                :locales="steps.settings.data.locales"
+              />
             </div>
             <div class="text-right">
               <AppButton
@@ -135,6 +141,7 @@ import env from '../../../../../env';
 import Draggable from 'vuedraggable';
 import { useRoute } from 'vue-router';
 import CalloutSlideItem from '../CalloutSlideItem.vue';
+import FormBuilderTranslations from '@components/form-builder/FormBuilderTranslations.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{

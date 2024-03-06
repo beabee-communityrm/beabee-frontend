@@ -134,6 +134,7 @@ export function convertCalloutToSteps(
       slides: callout
         ? convertSlidesForSteps(callout.formSchema.slides, callout.variants)
         : [getSlideSchema(1)],
+      componentText: {},
     },
     titleAndImage: {
       title: variants.title,
@@ -237,7 +238,7 @@ function convertVariantsForCallout(
             shareDescription: null,
           }),
       slideNavigation,
-      // componentText: {}, // TODO
+      componentText: {}, // TODO
     };
   }
 

@@ -8,7 +8,7 @@ export interface CalloutVariantData {
   shareTitle: string | null;
   shareDescription: string | null;
   slideNavigation: Record<string, CalloutVariantNavigationData>;
-  // componentText: Record<string, string>;
+  componentText: Record<string, string>;
 }
 
 export interface CalloutVariantNavigationData {

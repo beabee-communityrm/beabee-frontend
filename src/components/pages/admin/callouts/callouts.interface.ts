@@ -24,6 +24,7 @@ export const buckets = computed(() => [
 
 export interface ContentStepProps {
   slides: FormBuilderSlide[];
+  componentText: Record<string, LocaleProp>;
 }
 
 export interface TitleAndImageStepProps {
