@@ -66,6 +66,7 @@ export const filterGroups = computed<FilterGroup<PaymentFilterName>[]>(() => [
 ]);
 
 export const filterItems = computed<FilterItems<PaymentFilterName>>(() => ({
+  id: withLabel(paymentFilters.id, t('payments.data.id')),
   chargeDate: withLabel(
     paymentFilters.chargeDate,
     t('payments.data.chargeDate')
