@@ -276,7 +276,7 @@ const hasVisited = ref(!!props.status);
 watch(toRef(props, 'isActive'), (active) => (hasVisited.value ||= active));
 
 const formComponentItems = computed(() =>
-  getCalloutComponents(props.steps.content.data.formSchema)
+  getCalloutComponents(props.steps.content.data)
     .filter((c) => c.input)
     .map((c) => ({
       id: c.fullKey,

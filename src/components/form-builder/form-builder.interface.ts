@@ -4,6 +4,25 @@ export interface FormBuilderRef {
   builder: { form: { components: CalloutComponentSchema[] } };
 }
 
+export interface LocaleProp {
+  default: string;
+  [key: string]: string;
+}
+
+export interface FormBuilderNavigation {
+  prevText: LocaleProp;
+  nextText: LocaleProp;
+  nextSlideId: string;
+  submitText: LocaleProp;
+}
+
+export interface FormBuilderSlide {
+  id: string;
+  title: string;
+  components: CalloutComponentSchema[];
+  navigation: FormBuilderNavigation;
+}
+
 export const formOpts = {
   noDefaultSubmitButton: true,
   builder: {

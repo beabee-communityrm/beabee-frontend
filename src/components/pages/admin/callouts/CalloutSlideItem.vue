@@ -28,24 +28,26 @@
 </template>
 
 <script lang="ts" setup>
-import { type CalloutSlideSchema } from '@beabee/beabee-common';
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
 import { getDecisionComponent } from '../../../../utils/callouts';
+import type { FormBuilderSlide } from '@components/form-builder/form-builder.interface';
 
 const emit = defineEmits<{ (e: 'select', id: string): void }>();
 const props = defineProps<{
   slideNo: number;
-  slides: CalloutSlideSchema[];
+  slides: FormBuilderSlide[];
   active: boolean;
 }>();
 
 const slide = computed(() => props.slides[props.slideNo]);
 
-const nextSlides = computed<[number, CalloutSlideSchema][]>(() => {
+const nextSlides = computed<[number, FormBuilderSlide][]>(() => {
   const nextSlideId = slide.value.navigation.nextSlideId;
   const decisionSlideIds =
-    getDecisionComponent(slide.value)?.values.map((v) => v.nextSlideId) || [];
+    getDecisionComponent(slide.value.components)?.values.map(
+      (v) => v.nextSlideId
+    ) || [];
 
   // Return list of slide titles that can be next, ordered by slide number
   return [nextSlideId, ...decisionSlideIds]

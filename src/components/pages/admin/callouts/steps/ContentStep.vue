@@ -90,6 +90,7 @@
                 :current-slide-no="currentSlideNo"
                 :is-first="isFirstSlide"
                 :is-last="isLastSlide"
+                :locales="steps.settings.data.locales"
               />
             </div>
             <div class="text-right">
@@ -115,7 +116,7 @@ import useVuelidate from '@vuelidate/core';
 import { ref, watch } from 'vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { ContentStepProps } from '../callouts.interface';
+import type { CalloutSteps, ContentStepProps } from '../callouts.interface';
 import AppNotification from '../../../../AppNotification.vue';
 import FormBuilder from '../../../../form-builder/FormBuilder.vue';
 import {
@@ -138,6 +139,7 @@ import CalloutSlideItem from '../CalloutSlideItem.vue';
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   data: ContentStepProps;
+  steps: CalloutSteps;
   status: ItemStatus | undefined;
 }>();
 
@@ -148,9 +150,9 @@ const wasJustReplicated = useRoute().query.replicated !== undefined;
 const showAdvancedOptions = ref(false);
 
 const slides = computed({
-  get: () => props.data.formSchema.slides,
+  get: () => props.data.slides,
   // eslint-disable-next-line vue/no-mutating-props
-  set: (v) => (props.data.formSchema.slides = v),
+  set: (v) => (props.data.slides = v),
 });
 
 const currentSlideId = ref(slides.value[0].id);

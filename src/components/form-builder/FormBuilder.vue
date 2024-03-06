@@ -64,11 +64,12 @@ import {
 import { onBeforeMount, onBeforeUnmount, ref, toRef, watch } from 'vue';
 
 import { FormBuilder } from '../../lib/formio';
-import type {
-  CalloutComponentSchema,
-  CalloutSlideSchema,
-} from '@beabee/beabee-common';
-import { formOpts, type FormBuilderRef } from './form-builder.interface';
+import type { CalloutComponentSchema } from '@beabee/beabee-common';
+import {
+  formOpts,
+  type FormBuilderRef,
+  type FormBuilderSlide,
+} from './form-builder.interface';
 
 const emit = defineEmits<{
   (e: 'update:modelValue', components: CalloutComponentSchema[]): void;
@@ -77,7 +78,7 @@ const emit = defineEmits<{
 const props = defineProps<{
   modelValue: CalloutComponentSchema[];
   advanced?: boolean;
-  slides?: CalloutSlideSchema[];
+  slides?: FormBuilderSlide[];
 }>();
 
 const formBuilderRef = ref<FormBuilderRef>();

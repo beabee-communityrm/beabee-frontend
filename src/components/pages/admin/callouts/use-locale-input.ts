@@ -1,5 +1,5 @@
 import { watch, toRef } from 'vue';
-import type { LocaleProp } from './callouts.interface';
+import type { LocaleProp } from '@components/form-builder/form-builder.interface';
 
 export interface LocaleInputProps {
   modelValue: LocaleProp;

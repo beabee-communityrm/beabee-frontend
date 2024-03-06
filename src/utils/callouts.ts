@@ -1,15 +1,12 @@
 import {
   type CalloutComponentSchema,
-  type CalloutSlideSchema,
   ItemStatus,
   type RadioCalloutComponentSchema,
   flattenComponents,
+  type CalloutSlideSchema,
 } from '@beabee/beabee-common';
 import { format } from 'date-fns';
-import type {
-  CalloutStepsProps,
-  LocaleProp,
-} from '@components/pages/admin/callouts/callouts.interface';
+import type { CalloutStepsProps } from '@components/pages/admin/callouts/callouts.interface';
 import type {
   FilterItem,
   FilterItems,
@@ -20,31 +17,48 @@ import i18n from '@lib/i18n';
 
 import type {
   CalloutVariantData,
+  CalloutVariantNavigationData,
   CreateCalloutData,
   GetCalloutDataWith,
 } from '@type';
+import type {
+  FormBuilderNavigation,
+  FormBuilderSlide,
+  LocaleProp,
+} from '@components/form-builder/form-builder.interface';
 
 const { t } = i18n.global;
 
-export function getSlideSchema(no: number): CalloutSlideSchema {
+export function getSlideSchema(no: number): FormBuilderSlide {
   const id = 'slide' + Math.random().toString(36).substring(2, 8);
   return {
     id,
     title: t('calloutBuilder.slideNo', { no }),
     components: [],
     navigation: {
-      nextText: t('actions.next'),
-      prevText: t('actions.back'),
+      nextText: { default: t('actions.next') },
+      prevText: { default: t('actions.back') },
       nextSlideId: '',
-      submitText: t('actions.submit'),
+      submitText: { default: t('actions.submit') },
     },
   };
 }
 
+const textFields = [
+  'title',
+  'excerpt',
+  'intro',
+  'thanksTitle',
+  'thanksText',
+  'thanksRedirect',
+  'shareTitle',
+  'shareDescription',
+] as const;
+
 function convertVariantsForSteps(
   variants: Record<string, CalloutVariantData> | undefined
-): Record<keyof CalloutVariantData, LocaleProp> {
-  const result: Record<keyof CalloutVariantData, LocaleProp> = {
+): Record<(typeof textFields)[number], LocaleProp> {
+  const result: Record<(typeof textFields)[number], LocaleProp> = {
     title: { default: '' },
     excerpt: { default: '' },
     intro: { default: '' },
@@ -56,13 +70,35 @@ function convertVariantsForSteps(
   };
 
   for (const variant in variants) {
-    for (const field in variants[variant]) {
-      const field2 = field as keyof CalloutVariantData;
-      result[field2][variant] = variants[variant][field2] || '';
+    for (const field of textFields) {
+      result[field][variant] = variants[variant][field] || '';
     }
   }
 
   return result;
+}
+
+function convertSlidesForSteps(
+  slides: CalloutSlideSchema[],
+  variants: Record<string, CalloutVariantData> | undefined
+): FormBuilderSlide[] {
+  return slides.map((slide) => {
+    const navigation: FormBuilderNavigation = {
+      prevText: { default: '' },
+      nextText: { default: '' },
+      submitText: { default: '' },
+      nextSlideId: slide.navigation.nextSlideId,
+    };
+
+    for (const variant in variants) {
+      for (const field of ['prevText', 'nextText', 'submitText'] as const) {
+        navigation[field][variant] =
+          variants[variant].slideNavigation[slide.id][field];
+      }
+    }
+
+    return { ...slide, navigation };
+  });
 }
 
 export function convertCalloutToSteps(
@@ -94,7 +130,9 @@ export function convertCalloutToSteps(
 
   return {
     content: {
-      formSchema: callout?.formSchema || { slides: [getSlideSchema(1)] },
+      slides: callout
+        ? convertSlidesForSteps(callout.formSchema.slides, callout.variants)
+        : [getSlideSchema(1)],
     },
     titleAndImage: {
       title: variants.title,
@@ -163,6 +201,16 @@ export function convertStepsToCallout(
 ): CreateCalloutData {
   const variants: Record<string, CalloutVariantData> = {};
   for (const variant of [...steps.settings.locales, 'default']) {
+    const slideNavigation: Record<string, CalloutVariantNavigationData> = {};
+
+    for (const slide of steps.content.slides) {
+      slideNavigation[slide.id] = {
+        nextText: slide.navigation.nextText[variant],
+        prevText: slide.navigation.prevText[variant],
+        submitText: slide.navigation.submitText[variant],
+      };
+    }
+
     variants[variant] = {
       title: steps.titleAndImage.title[variant],
       excerpt: steps.titleAndImage.description[variant],
@@ -187,6 +235,8 @@ export function convertStepsToCallout(
             shareTitle: null,
             shareDescription: null,
           }),
+      slideNavigation,
+      componentText: {}, // TODO
     };
   }
 
@@ -197,7 +247,7 @@ export function convertStepsToCallout(
   return {
     slug: slug || null,
     image: steps.titleAndImage.coverImageURL,
-    formSchema: steps.content.formSchema,
+    formSchema: { slides: [] }, // TODO
     responseViewSchema: steps.settings.showResponses
       ? {
           buckets: steps.settings.responseBuckets,
@@ -301,7 +351,7 @@ function isDecisionComponent(
 }
 
 export function getDecisionComponent(
-  slide: CalloutSlideSchema
+  components: CalloutComponentSchema[]
 ): RadioCalloutComponentSchema | undefined {
-  return flattenComponents(slide.components).find(isDecisionComponent);
+  return flattenComponents(components).find(isDecisionComponent);
 }

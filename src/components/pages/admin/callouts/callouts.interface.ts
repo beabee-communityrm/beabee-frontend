@@ -1,9 +1,12 @@
-import { type CalloutFormSchema } from '@beabee/beabee-common';
 import { computed, type Raw, type Component } from 'vue';
 import i18n from '../../../../lib/i18n';
 import { type AppStepperStep } from '../../../../type/app-stepper-step';
 
 import type { CalloutMapSchema } from '@type';
+import type {
+  FormBuilderSlide,
+  LocaleProp,
+} from '@components/form-builder/form-builder.interface';
 
 const { t } = i18n.global;
 
@@ -19,13 +22,8 @@ export const buckets = computed(() => [
   },
 ]);
 
-export interface LocaleProp {
-  default: string;
-  [key: string]: string;
-}
-
 export interface ContentStepProps {
-  formSchema: CalloutFormSchema;
+  slides: FormBuilderSlide[];
 }
 
 export interface TitleAndImageStepProps {
