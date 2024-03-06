@@ -1,9 +1,10 @@
 import {
-  type CalloutComponentSchema,
-  ItemStatus,
-  type RadioCalloutComponentSchema,
   flattenComponents,
-  type CalloutSlideSchema,
+  ItemStatus,
+  type CalloutComponentSchema,
+  type RadioCalloutComponentSchema,
+  type GetCalloutSlideSchema,
+  type SetCalloutSlideSchema,
 } from '@beabee/beabee-common';
 import { format } from 'date-fns';
 import type { CalloutStepsProps } from '@components/pages/admin/callouts/callouts.interface';
@@ -79,7 +80,7 @@ function convertVariantsForSteps(
 }
 
 function convertSlidesForSteps(
-  slides: CalloutSlideSchema[],
+  slides: GetCalloutSlideSchema[],
   variants: Record<string, CalloutVariantData> | undefined
 ): FormBuilderSlide[] {
   return slides.map((slide) => {
@@ -196,9 +197,9 @@ export function convertCalloutToSteps(
   };
 }
 
-export function convertStepsToCallout(
+function convertVariantsForCallout(
   steps: CalloutStepsProps
-): CreateCalloutData {
+): Record<string, CalloutVariantData> {
   const variants: Record<string, CalloutVariantData> = {};
   for (const variant of [...steps.settings.locales, 'default']) {
     const slideNavigation: Record<string, CalloutVariantNavigationData> = {};
@@ -236,10 +237,27 @@ export function convertStepsToCallout(
             shareDescription: null,
           }),
       slideNavigation,
-      componentText: {}, // TODO
+      // componentText: {}, // TODO
     };
   }
 
+  return variants;
+}
+
+function convertSlidesForCallout(
+  steps: CalloutStepsProps
+): SetCalloutSlideSchema[] {
+  return steps.content.slides.map((slide) => ({
+    ...slide,
+    navigation: {
+      nextSlideId: slide.navigation.nextSlideId,
+    },
+  }));
+}
+
+export function convertStepsToCallout(
+  steps: CalloutStepsProps
+): CreateCalloutData {
   const slug = steps.titleAndImage.useCustomSlug
     ? steps.titleAndImage.slug
     : steps.titleAndImage.autoSlug;
@@ -247,7 +265,7 @@ export function convertStepsToCallout(
   return {
     slug: slug || null,
     image: steps.titleAndImage.coverImageURL,
-    formSchema: { slides: [] }, // TODO
+    formSchema: { slides: convertSlidesForCallout(steps) },
     responseViewSchema: steps.settings.showResponses
       ? {
           buckets: steps.settings.responseBuckets,
@@ -284,7 +302,7 @@ export function convertStepsToCallout(
           : steps.settings.allowAnonymousResponses === 'guests'
             ? 'anonymous'
             : 'only-anonymous',
-    variants,
+    variants: convertVariantsForCallout(steps),
   };
 }
 

@@ -66,10 +66,7 @@
 </template>
 
 <script lang="ts" setup>
-import type {
-  CalloutResponseAnswers,
-  CalloutSlideSchema,
-} from '@beabee/beabee-common';
+import type { CalloutResponseAnswers } from '@beabee/beabee-common';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
@@ -127,8 +124,7 @@ const answersProxy = ref<CalloutResponseAnswers>(initialAnswers);
 const slideIds = ref<string[]>([slides.value[0].id]);
 
 const currentSlide = computed(
-  () =>
-    slides.value.find((s) => s.id === slideIds.value[0]) as CalloutSlideSchema // Should always be defined
+  () => slides.value.find((s) => s.id === slideIds.value[0])! // Should always be defined
 );
 
 const currentSlideNo = computed(() => slides.value.indexOf(currentSlide.value));

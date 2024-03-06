@@ -49,7 +49,6 @@
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
 
-import type { CalloutNavigationSchema } from '@beabee/beabee-common';
 import LocaleInput from '@components/pages/admin/callouts/LocaleInput.vue';
 import AppSelect from '@components/forms/AppSelect.vue';
 import type {
@@ -58,7 +57,7 @@ import type {
 } from './form-builder.interface';
 
 defineEmits<{
-  (e: 'update:modelValue', value: CalloutNavigationSchema): void;
+  (e: 'update:modelValue', value: FormBuilderNavigation): void;
 }>();
 const props = defineProps<{
   slides: FormBuilderSlide[];
