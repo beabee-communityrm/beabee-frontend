@@ -94,6 +94,7 @@
               />
 
               <FormBuilderTranslations
+                v-if="steps.settings.data.locales.length > 0"
                 v-model="data.componentText"
                 :components="currentSlide.components"
                 :locales="steps.settings.data.locales"
