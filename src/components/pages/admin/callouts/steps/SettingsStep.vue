@@ -70,6 +70,24 @@
         />
       </AppFormSection>
     </template>
+
+    <AppFormSection
+      v-if="env.captchafoxKey"
+      :help="inputT('requireCaptcha.help')"
+    >
+      <AppRadioGroup
+        v-model="data.requireCaptcha"
+        name="requireCaptcha"
+        :label="inputT('requireCaptcha.label')"
+        :options="[
+          ['none', inputT('requireCaptcha.opts.none')],
+          ['guest', inputT('requireCaptcha.opts.guests')],
+          ['all', inputT('requireCaptcha.opts.all')],
+        ]"
+        required
+      />
+    </AppFormSection>
+
     <template v-if="env.experimentalFeatures">
       <AppFormSection :help="inputT('showResponses.help')">
         <AppRadioGroup

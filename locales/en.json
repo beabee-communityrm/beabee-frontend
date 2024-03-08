@@ -322,6 +322,7 @@
     },
     "addAPoint": "Click on the map where you want to add a point",
     "addLocation": "Add a new location",
+    "confirmHuman": "Please confirm you are human",
     "contactDetails": "Contact details",
     "ended": "This callout ended on {date}",
     "form": {
@@ -807,6 +808,15 @@
             "opts": {
               "no": "No, only one response",
               "yes": "Yes"
+            }
+          },
+          "requireCaptcha": {
+            "help": "<p>If you enable <strong>bot spam protection</strong> users will be required to complete a Captcha to confirm they are human. This is useful to prevent your callout being spammed by bots</p>\n",
+            "label": "Enable bot spam protection on the callout?",
+            "opts": {
+              "all": "Yes, ask all users to confirm they are human",
+              "guests": "Yes, ask guests to confirm they are human",
+              "none": "No"
             }
           },
           "responseImageFilter": {
