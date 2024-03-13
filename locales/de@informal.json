@@ -322,6 +322,7 @@
     },
     "addAPoint": "Klicken Sie dort auf die Karte, wo Sie einen Ort ergänzen möchten",
     "addLocation": "Neuen Ort eingeben",
+    "confirmHuman": "Bitte bestätige, dass du ein Mensch bist",
     "contactDetails": "Kontaktdaten",
     "ended": "Dieser Callout ist seit dem {date} beendet.",
     "form": {
@@ -344,7 +345,7 @@
     "updateContribution": "Bitte ändere deinen Beitrag. ",
     "views": {
       "gallery": "Galerie",
-      "map": "Karten"
+      "map": "Karte"
     },
     "youResponded": "Du hast geantwortet ♥",
     "yourResponse": "Deine Antwort"
@@ -806,6 +807,15 @@
               "yes": "Ja"
             }
           },
+          "requireCaptcha": {
+            "help": "<p>Wenn du den <strong>Bot-Spam-Schutz</strong> aktivierst, müssen die Teilnehmenden ein Captcha ausfüllen, um zu bestätigen, dass sie Menschen sind. Das verhindert Spamming von Bots.</p>\n",
+            "label": "Bot-Spam-Schutz für den Callout aktivieren?",
+            "opts": {
+              "all": "Ja, alle Teilnehmenden müssen bestätigen, dass sie Menschen sind.",
+              "guests": "Ja, Gastteilnehmer müssen bestätigen, dass sie Menschen sind.",
+              "none": "Nein"
+            }
+          },
           "responseImageFilter": {
             "label": "Möchtest du einen Filter auf die Bilder legen?"
           },
@@ -1038,7 +1048,7 @@
     "components": {
       "file": {
         "browse": "Upload vom Gerät",
-        "dropFiles": "Files hierher ziehen,",
+        "dropFiles": "Dateien hierher ziehen",
         "or": "oder",
         "switchToFileUpload": "Zum Upload wechseln",
         "takePicture": "Foto aufnehmen",

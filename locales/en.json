@@ -1051,7 +1051,7 @@
     "components": {
       "file": {
         "browse": "upload from device",
-        "dropFiles": "Drop files to attach,",
+        "dropFiles": "Drop files to attach",
         "or": "or",
         "switchToFileUpload": "Switch to file upload",
         "takePicture": "Take Picture",
