@@ -150,6 +150,7 @@ export function convertCalloutToSteps(
     },
     settings: {
       ...settings,
+      requireCaptcha: callout?.captcha || 'none',
       showResponses: !!callout?.responseViewSchema,
       responseViews: [
         ...(callout?.responseViewSchema?.gallery ? ['gallery' as const] : []),
@@ -295,6 +296,7 @@ export function convertStepsToCallout(
     allowUpdate:
       !steps.settings.multipleResponses && steps.settings.usersCanEditAnswers,
     hidden: !steps.settings.showOnUserDashboards,
+    captcha: steps.settings.requireCaptcha,
     access:
       steps.settings.whoCanTakePart === 'members'
         ? 'member'

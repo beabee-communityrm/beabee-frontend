@@ -17,11 +17,14 @@
       :readonly="readonly"
     />
     <template v-if="isLastSlide && !readonly && !preview">
-      <GuestFields
+      <CalloutFormGuestFields
         v-if="showGuestFields"
         v-model:name="guestName"
         v-model:email="guestEmail"
       />
+
+      <CalloutFormCaptcha v-if="showCaptcha" v-model="captchaToken" />
+
       <AppNotification
         v-if="formError"
         class="mb-4"
@@ -71,7 +74,7 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 
-import GuestFields from './GuestFields.vue';
+import CalloutFormGuestFields from './CalloutFormGuestFields.vue';
 import AppNotification from '@components/AppNotification.vue';
 import FormRenderer from '@components/form-renderer/FormRenderer.vue';
 import AppButton from '@components/button/AppButton.vue';
@@ -83,9 +86,10 @@ import { isRequestError } from '@utils/api';
 import { getDecisionComponent } from '@utils/callouts';
 
 import type { GetCalloutDataWith } from '@type';
+import CalloutFormCaptcha from './CalloutFormCaptcha.vue';
+import { requiredIf } from '@vuelidate/validators';
 
 const { t } = useI18n();
-const validation = useVuelidate();
 
 const emit = defineEmits<{ (e: 'submitted'): void }>();
 const props = defineProps<{
@@ -101,6 +105,7 @@ const props = defineProps<{
 
 const guestName = ref('');
 const guestEmail = ref('');
+const captchaToken = ref('');
 const formError = ref('');
 const isLoading = ref(false);
 
@@ -138,6 +143,20 @@ const showGuestFields = computed(
   () => props.callout.access === 'guest' && !currentUser.value
 );
 
+const showCaptcha = computed(
+  () =>
+    props.callout.captcha === 'all' ||
+    (props.callout.captcha === 'guest' && !currentUser.value)
+);
+
+const rules = computed(() => ({
+  captchaToken: {
+    required: requiredIf(showCaptcha.value && isLastSlide.value),
+  },
+}));
+
+const validation = useVuelidate(rules, { captchaToken });
+
 async function handleSubmit() {
   // Only submit answers for slides in the current flow
   // The user might have visited other flows then gone back
@@ -153,14 +172,18 @@ async function handleSubmit() {
   formError.value = '';
   isLoading.value = true;
   try {
-    await createResponse(props.callout.slug, {
-      ...(!currentUser.value &&
-        props.callout?.access === 'guest' && {
-          guestName: guestName.value,
-          guestEmail: guestEmail.value,
-        }),
-      answers: validAnswers,
-    });
+    await createResponse(
+      props.callout.slug,
+      {
+        ...(!currentUser.value &&
+          props.callout?.access === 'guest' && {
+            guestName: guestName.value,
+            guestEmail: guestEmail.value,
+          }),
+        answers: validAnswers,
+      },
+      captchaToken.value
+    );
     emit('submitted');
   } catch (err) {
     formError.value = t('callout.form.submittingResponseError');

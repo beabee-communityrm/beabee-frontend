@@ -121,13 +121,18 @@ export async function fetchResponsesForMap(
 
 export async function createResponse(
   slug: string,
-  data: CreateCalloutResponseData
+  data: CreateCalloutResponseData,
+  captchaToken?: string
 ): Promise<void> {
-  await instance.post(`/callout/${slug}/responses`, {
-    answers: data.answers,
-    guestName: data.guestName,
-    guestEmail: data.guestEmail,
-  });
+  await instance.post(
+    `/callout/${slug}/responses`,
+    {
+      answers: data.answers,
+      guestName: data.guestName,
+      guestEmail: data.guestEmail,
+    },
+    { params: { captchaToken } }
+  );
 }
 
 export async function fetchTags(slug: string): Promise<GetCalloutTagData[]> {

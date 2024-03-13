@@ -43,6 +43,7 @@ export interface TitleAndImageStepProps {
 export interface SettingsStepProps {
   whoCanTakePart: 'members' | 'everyone';
   allowAnonymousResponses: 'none' | 'guests' | 'all';
+  requireCaptcha: 'none' | 'guest' | 'all';
   showOnUserDashboards: boolean;
   multipleResponses: boolean;
   usersCanEditAnswers: boolean;

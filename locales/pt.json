@@ -134,7 +134,7 @@
     "responsesSoFar": "{n} resposta dada | {n} respostas dadas",
     "seeAllResponses": "Ver todas as respostas",
     "supportInbox": "<p>É preciso ajuda? Temos à disposição o <a href=\"https://wiki.beabee.io/help-center-english/\" target=\"_blank\" rel=\"noopener noreferrer\">Centro de Ajuda beabee</a> ou o nosso e-mail de suporte: <a href=\"mailto:support{'@'}beabee.io\">support{'@'}beabee.io</a></p>\n",
-    "welcomeBack": "Bem-vindo/a de volta, {firstName}!"
+    "welcomeBack": "Boas-vindas, {firstName}!"
   },
   "adminSettings": {
     "apikey": {
@@ -734,7 +734,7 @@
   "joinSetup": {
     "confirmDetails": "Por favor confirme os seus detalhes",
     "continue": "Tudo certo! Continuar",
-    "welcome": "Bem-vindo/a {firstName}!"
+    "welcome": "Boas-vindas {firstName}!"
   },
   "locale": "pt",
   "login": {
