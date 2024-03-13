@@ -57,11 +57,11 @@ const fields = [
   ['placeholder', LocaleInput],
 ] as const;
 
-function getValue(ref: string): LocaleProp {
+function getValue(ref: string | undefined = ''): LocaleProp {
   return props.modelValue[ref] || { default: ref };
 }
 
-function setValue(ref: string, val: LocaleProp) {
+function setValue(ref: string | undefined = '', val: LocaleProp) {
   emit('update:modelValue', { ...props.modelValue, [ref]: val });
 }
 
