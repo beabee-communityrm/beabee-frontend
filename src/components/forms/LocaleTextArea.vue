@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div v-if="readonlyDefault">
     <AppLabel :label="label" />
@@ -6,28 +5,30 @@
   </div>
   <AppTextArea
     v-else
-    v-model="modelValue.default"
+    :model-value="modelValue.default"
     :label="label"
     v-bind="$attrs"
+    @update:model-value="
+      emit('update:modelValue', { ...modelValue, default: $event })
+    "
   />
   <div v-for="locale in locales" :key="locale" class="mt-1.5">
     <AppTextArea
-      v-model="modelValue[locale]"
+      :model-value="modelValue[locale] || ''"
       :label="`${label} (${locale})`"
       v-bind="$attrs"
+      @update:model-value="
+        emit('update:modelValue', { ...modelValue, [locale]: $event })
+      "
     />
   </div>
 </template>
 <script lang="ts" setup>
-import { type LocaleInputProps, useLocaleInput } from './use-locale-input';
-
 import AppLabel from '@components/forms/AppLabel.vue';
 import AppTextArea from '@components/forms/AppTextArea.vue';
+import type { LocaleInputProps } from '@type';
 
-// Must be defined so the event handler isn't in $attrs
-defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue']);
 defineOptions({ inheritAttrs: false });
-const props = defineProps<LocaleInputProps>();
-
-useLocaleInput(props);
+defineProps<LocaleInputProps>();
 </script>

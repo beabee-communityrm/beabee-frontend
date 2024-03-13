@@ -92,13 +92,6 @@
                 :is-last="isLastSlide"
                 :locales="steps.settings.data.locales"
               />
-
-              <FormBuilderTranslations
-                v-if="steps.settings.data.locales.length > 0"
-                v-model="data.componentText"
-                :components="currentSlide.components"
-                :locales="steps.settings.data.locales"
-              />
             </div>
             <div class="text-right">
               <AppButton
@@ -109,6 +102,23 @@
               >
                 {{ t('calloutBuilder.actions.removeSlide') }}
               </AppButton>
+            </div>
+            <div
+              v-if="steps.settings.data.locales.length > 0"
+              class="my-4 bg-white p-6 shadow-md"
+            >
+              <AppSubHeading>
+                {{ t('calloutBuilder.translationsTitle') }}
+              </AppSubHeading>
+              <p class="mb-4">
+                {{ t('calloutBuilder.translationsText') }}
+              </p>
+
+              <FormBuilderTranslations
+                v-model="data.componentText"
+                :components="currentSlide.components"
+                :locales="steps.settings.data.locales"
+              />
             </div>
           </div>
           <div class="flex-0 basis-[15rem]" />
@@ -143,6 +153,7 @@ import Draggable from 'vuedraggable';
 import { useRoute } from 'vue-router';
 import CalloutSlideItem from '../CalloutSlideItem.vue';
 import FormBuilderTranslations from '@components/form-builder/FormBuilderTranslations.vue';
+import AppSubHeading from '@components/AppSubHeading.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{

@@ -1,6 +1,9 @@
 <template>
-  <AppSubHeading>Translations</AppSubHeading>
-  <div v-for="component in components" :key="component.id" class="mb-8">
+  <div
+    v-for="component in components"
+    :key="component.id"
+    class="mb-8 border-t border-t-primary-20 pt-6"
+  >
     <h3 class="mb-2 font-title text-xl font-semibold">
       {{ component.label }}
     </h3>
@@ -34,11 +37,10 @@
 </template>
 <script lang="ts" setup>
 import type { CalloutComponentSchema } from '@beabee/beabee-common';
-import type { LocaleProp } from './form-builder.interface';
 
-import AppSubHeading from '@components/AppSubHeading.vue';
-import LocaleTextArea from '@components/pages/admin/callouts/LocaleTextArea.vue';
-import LocaleInput from '@components/pages/admin/callouts/LocaleInput.vue';
+import LocaleTextArea from '@components/forms/LocaleTextArea.vue';
+import LocaleInput from '@components/forms/LocaleInput.vue';
+import type { LocaleProp } from '@type';
 
 const emit = defineEmits<{
   (e: 'update:modelValue', v: Record<string, LocaleProp | undefined>): void;

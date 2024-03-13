@@ -1,12 +1,8 @@
 import { type CalloutComponentSchema } from '@beabee/beabee-common';
+import type { LocaleProp } from '@type';
 
 export interface FormBuilderRef {
   builder: { form: { components: CalloutComponentSchema[] } };
-}
-
-export interface LocaleProp {
-  default: string;
-  [key: string]: string;
 }
 
 export interface FormBuilderNavigation {

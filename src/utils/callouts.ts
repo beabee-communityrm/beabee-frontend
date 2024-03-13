@@ -21,11 +21,11 @@ import type {
   CalloutVariantNavigationData,
   CreateCalloutData,
   GetCalloutDataWith,
+  LocaleProp,
 } from '@type';
 import type {
   FormBuilderNavigation,
   FormBuilderSlide,
-  LocaleProp,
 } from '@components/form-builder/form-builder.interface';
 
 const { t } = i18n.global;
@@ -208,31 +208,32 @@ function convertVariantsForCallout(
 
     for (const slide of steps.content.slides) {
       slideNavigation[slide.id] = {
-        nextText: slide.navigation.nextText[variant],
-        prevText: slide.navigation.prevText[variant],
-        submitText: slide.navigation.submitText[variant],
+        nextText: slide.navigation.nextText[variant] || '',
+        prevText: slide.navigation.prevText[variant] || '',
+        submitText: slide.navigation.submitText[variant] || '',
       };
     }
 
     variants[variant] = {
-      title: steps.titleAndImage.title[variant],
-      excerpt: steps.titleAndImage.description[variant],
-      intro: steps.titleAndImage.introText[variant],
+      title: steps.titleAndImage.title[variant] || '',
+      excerpt: steps.titleAndImage.description[variant] || '',
+      intro: steps.titleAndImage.introText[variant] || '',
       ...(steps.endMessage.whenFinished === 'redirect'
         ? {
             thanksText: '',
             thanksTitle: '',
-            thanksRedirect: steps.endMessage.thankYouRedirect[variant],
+            thanksRedirect: steps.endMessage.thankYouRedirect[variant] || '',
           }
         : {
-            thanksText: steps.endMessage.thankYouText[variant],
-            thanksTitle: steps.endMessage.thankYouTitle[variant],
+            thanksText: steps.endMessage.thankYouText[variant] || '',
+            thanksTitle: steps.endMessage.thankYouTitle[variant] || '',
             thanksRedirect: null,
           }),
       ...(steps.titleAndImage.overrideShare
         ? {
-            shareTitle: steps.titleAndImage.shareTitle[variant],
-            shareDescription: steps.titleAndImage.shareDescription[variant],
+            shareTitle: steps.titleAndImage.shareTitle[variant] || '',
+            shareDescription:
+              steps.titleAndImage.shareDescription[variant] || '',
           }
         : {
             shareTitle: null,

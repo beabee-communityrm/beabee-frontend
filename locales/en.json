@@ -410,7 +410,9 @@
     "prevButton": "Back button text",
     "showAdvancedOptions": "Show advanced options",
     "slideNo": "Slide {no}",
-    "submitButton": "Submit button text"
+    "submitButton": "Submit button text",
+    "translationsText": "Set the translations for each component in your form",
+    "translationsTitle": "Translations"
   },
   "calloutResponse": {
     "data": {

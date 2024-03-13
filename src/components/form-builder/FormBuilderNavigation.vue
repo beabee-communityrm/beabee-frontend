@@ -49,7 +49,7 @@
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
 
-import LocaleInput from '@components/pages/admin/callouts/LocaleInput.vue';
+import LocaleInput from '@components/forms/LocaleInput.vue';
 import AppSelect from '@components/forms/AppSelect.vue';
 import type {
   FormBuilderNavigation,
