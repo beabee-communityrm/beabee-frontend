@@ -214,6 +214,11 @@ function convertVariantsForCallout(
       };
     }
 
+    const componentText: Record<string, string> = {};
+    for (const key in steps.content.componentText) {
+      componentText[key] = steps.content.componentText[key][variant] || '';
+    }
+
     variants[variant] = {
       title: steps.titleAndImage.title[variant] || '',
       excerpt: steps.titleAndImage.description[variant] || '',
@@ -240,7 +245,7 @@ function convertVariantsForCallout(
             shareDescription: null,
           }),
       slideNavigation,
-      componentText: {}, // TODO
+      componentText,
     };
   }
 
@@ -265,10 +270,13 @@ export function convertStepsToCallout(
     ? steps.titleAndImage.slug
     : steps.titleAndImage.autoSlug;
 
+  const slides = convertSlidesForCallout(steps);
+  const variants = convertVariantsForCallout(steps);
+
   return {
     slug: slug || null,
     image: steps.titleAndImage.coverImageURL,
-    formSchema: { slides: convertSlidesForCallout(steps) },
+    formSchema: { slides },
     responseViewSchema: steps.settings.showResponses
       ? {
           buckets: steps.settings.responseBuckets,
@@ -306,7 +314,7 @@ export function convertStepsToCallout(
           : steps.settings.allowAnonymousResponses === 'guests'
             ? 'anonymous'
             : 'only-anonymous',
-    variants: convertVariantsForCallout(steps),
+    variants,
   };
 }
 
