@@ -4,7 +4,12 @@
     <AppLabel :label="label" />
     {{ modelValue.default }}
   </div>
-  <AppInput v-else :label="label" v-bind="$attrs" />
+  <AppInput
+    v-else
+    v-model="modelValue.default"
+    :label="label"
+    v-bind="$attrs"
+  />
   <div v-for="locale in locales" :key="locale" class="mt-1.5">
     <AppInput
       v-model="modelValue[locale]"
