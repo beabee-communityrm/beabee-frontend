@@ -1,21 +1,14 @@
 <template>
   <form :class="formClass" @submit.prevent>
-    <template v-if="allSlides">
-      <FormRenderer
-        v-for="slide in slides"
-        :key="slide.id"
-        v-model="answersProxy[slide.id]"
-        :components="slide.components"
-        :readonly="readonly"
-      />
-    </template>
     <FormRenderer
-      v-else
-      :key="currentSlide.id"
-      v-model="answersProxy[currentSlide.id]"
-      :components="currentSlide.components"
+      v-for="slide in visibleSlides"
+      :key="slide.id"
+      v-model="answersProxy[slide.id]"
+      :components="slide.components"
+      :component-i18n-text="callout.formSchema.componentText"
       :readonly="readonly"
     />
+
     <template v-if="isLastSlide && !readonly && !preview">
       <CalloutFormGuestFields
         v-if="showGuestFields"
@@ -130,6 +123,10 @@ const slideIds = ref<string[]>([slides.value[0].id]);
 
 const currentSlide = computed(
   () => slides.value.find((s) => s.id === slideIds.value[0])! // Should always be defined
+);
+
+const visibleSlides = computed(() =>
+  props.allSlides ? slides.value : [currentSlide.value]
 );
 
 const currentSlideNo = computed(() => slides.value.indexOf(currentSlide.value));
