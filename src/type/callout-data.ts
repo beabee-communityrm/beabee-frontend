@@ -1,7 +1,5 @@
 export interface CalloutData {
   slug: string | null;
-  title: string;
-  excerpt: string;
   image: string;
   starts: Date | null;
   expires: Date | null;

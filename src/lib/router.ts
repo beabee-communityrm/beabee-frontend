@@ -1,9 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { currentUser, initStore, generalContent, isEmbed } from '../store';
-import i18n from './i18n';
+import { currentUser, initStore, isEmbed } from '../store';
 
 import routes from '~pages';
-import { watch } from 'vue';
 import env from '@env';
 
 const router = createRouter({
@@ -12,12 +10,6 @@ const router = createRouter({
   scrollBehavior(to, from) {
     return from && to.name === from.name ? undefined : { top: 0 };
   },
-});
-
-watch([i18n.global.locale, router.currentRoute], ([, route]) => {
-  document.title =
-    (route.meta.pageTitle ? i18n.global.t(route.meta.pageTitle) + ' - ' : '') +
-    generalContent.value.organisationName;
 });
 
 router.beforeEach(async (to) => {

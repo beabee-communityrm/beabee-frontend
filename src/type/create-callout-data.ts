@@ -1,11 +1,13 @@
+import type { CalloutFormSchema } from '@beabee/beabee-common';
+
 import type {
   CalloutData,
-  AllowNull,
-  CalloutFormData,
   CalloutResponseViewSchema,
+  CalloutVariantData,
 } from '@type';
 
-export type CreateCalloutData = AllowNull<
-  CalloutData &
-    CalloutFormData & { responseViewSchema?: CalloutResponseViewSchema | null }
->;
+export interface CreateCalloutData extends CalloutData {
+  formSchema: CalloutFormSchema;
+  variants: Record<string, CalloutVariantData>;
+  responseViewSchema: CalloutResponseViewSchema | null;
+}
