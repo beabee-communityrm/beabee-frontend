@@ -67,6 +67,7 @@
     "chooseFile": "Datei auswählen",
     "close": "Schließen",
     "continue": "Weiter",
+    "copy": "Kopieren",
     "create": "Erstellen",
     "delete": "Löschen",
     "disable": "Deaktivieren",
@@ -75,6 +76,7 @@
     "endnow": "Jetzt beenden",
     "export": "Exportieren",
     "getStarted": "Starten",
+    "goBack": "Zurück",
     "next": "Weiter",
     "noBack": "Nein, gehe zurück",
     "participate": "Teilnehmen",
@@ -507,24 +509,23 @@
     }
   },
   "common": {
-    "annually": "Jährlich",
     "backToHome": "Zurück zur Startseite",
     "contributing": "Ihr Beitrag",
+    "contributionPeriod": {
+      "annually": "Jährlich",
+      "monthly": "Monatlich"
+    },
     "contributionType": {
       "automatic": "Automatisch",
       "gift": "Geschenk",
       "manual": "Manuell",
       "none": "None"
     },
-    "copy": "Kopieren",
-    "goBack": "Zurück",
     "hello": "Hallo",
     "itemsPerPage": "{items} Einträge pro Seite",
     "joined": "Mitglied seit",
     "loading": "Lädt...",
     "login": "Login",
-    "month": "Monat | Monaten",
-    "monthly": "Monatlich",
     "newsletterStatus": {
       "cleaned": "Bereinigt",
       "none": "Kein Status",
@@ -541,6 +542,10 @@
       "pending": "In Bearbeitung",
       "successful": "Erfolgreich"
     },
+    "perMonth": "/ Monat",
+    "perMonthText": "pro Monat",
+    "perYear": "/ Jahr",
+    "perYearText": "pro Jahr",
     "role": {
       "admin": "Admin",
       "member": "Mitglied",
@@ -560,7 +565,6 @@
     "timeAgo": "vor {time}",
     "timeIn": "in {time}",
     "until": "bis",
-    "year": "Jahr | Jahren",
     "yes": "Ja"
   },
   "contactContribution": {
@@ -660,7 +664,6 @@
     "changeBank": "Ändern Sie Ihre Bankverbindung.",
     "changeBankInfo": "Im nächsten Schritt können Sie Ihre neue Bankverbindung eingeben.",
     "contributing": "Sie zahlen",
-    "contributingAmount": "{amount} pro {period}",
     "contributionUpdateError": "Sie können Ihren Beitrag aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
     "dueToRenew": "Ihre Mitgliedschaft wird am {renewalDate} erneuert.",
     "expired": "Ihre Mitgliedschaft ist ausgelaufen.",
@@ -675,8 +678,8 @@
     },
     "paymentMethod": "Zahlungsart",
     "paymentSourceUpdateError": "Sie können Ihre Bankverbindung aktuell nicht ändern, weil eine Zahlung kurz bevorsteht.",
-    "prorateDecreaseMessage": "Ihr Beitrag bleibt noch für {monthsLeft} {months} gleich. Der neue Beitrag wird am {renewalDate} zum ersten Mal eingezogen.",
-    "prorateIncreaseMessage": "Ihre Mitgliedschaft mit dem oben angezeigten Beitrag läuft noch {monthsLeft} {months}. Sie können aber eine Einmalzahlung in Höhe von {oneOffPayment} leisten um Ihre Mitgliedschaft sofort zu verlängern und den Beitrag zu erhöhen.",
+    "prorateDecreaseMessage": "Ihr Beitrag bleibt noch für 1 Monat gleich. Der neue Beitrag wird am {renewalDate} zum ersten Mal eingezogen. | Ihr Beitrag bleibt noch für {n} Monaten gleich. Der neue Beitrag wird am {renewalDate} zum ersten Mal eingezogen.",
+    "prorateIncreaseMessage": "Ihre Mitgliedschaft mit dem oben angezeigten Beitrag läuft noch 1 Monat. Sie können aber eine Einmalzahlung in Höhe von {oneOffPayment} leisten um Ihre Mitgliedschaft sofort zu verlängern und den Beitrag zu erhöhen. | Ihre Mitgliedschaft mit dem oben angezeigten Beitrag läuft noch {n} Monaten. Sie können aber eine Einmalzahlung in Höhe von {oneOffPayment} leisten um Ihre Mitgliedschaft sofort zu verlängern und den Beitrag zu erhöhen.",
     "prorateNoText": "Wählen Sie diese Option, bleibt Ihr Beitrag bis zum neuen Abrechnungszeitrarum gleich.",
     "prorateNoTitle": "Ändern Sie meinen Beitrag ab dem {renewalDate}.",
     "prorateYesText": "Wählen Sie diese Option, buchen wir eine Einmalzahlung in Höhe von {oneOffPayment} ab und Ihre Mitgliedschaft wird mit Ihrem neuen Beitrag sofort verlängert.",
@@ -1081,7 +1084,7 @@
     "absorbFeeForce": "Bei einem Beitrag von {amount}, müssen Sie die {fee} Transaktionskosten übernehmen.",
     "absorbFeeOptIn": "Ja, ich übernehme die {fee} Transaktionskosten.",
     "absorbFeeText": "Bei unserem Zahlungsdienstleister zahlen wir für jede einzelne Transaktion. Das heißt, wir erhalten weniger von Ihrem monatlichen Beitrag. Sie haben die Möglichkeit, die Kosten dafür für uns zu übernehmen. Möchten Sie das? Alternativ können Sie auch jährlich bezahlen.",
-    "contribute": "Mit {amount} pro {period} unterstützen.",
+    "contribute": "Mit {contribution} unterstützen.",
     "errors": {
       "confirmEmail": {
         "message": "Fast geschafft! Wir müssen nur noch Ihre E-Mail-Adresse bestätigen, um fortzufahren.",
@@ -1110,7 +1113,7 @@
     "goBack": "Möchten Sie etwas ändern? {back}",
     "goBackButton": "Zurück zum letzten Schritt",
     "note": "Sie können Ihre Zahlungsdaten jederzeit in Ihrem Nutzer-Account ändern und dort auch sehen, wie viel Sie in der Vergangenheit bereits gezahlt haben. ",
-    "willBeContributing": "Sie zahlen {amount}/{period}"
+    "willBeContributing": "Sie zahlen {contribution}"
   },
   "joinSetup": {
     "confirmDetails": "Bitte bestätigen Sie Ihre Angaben:",

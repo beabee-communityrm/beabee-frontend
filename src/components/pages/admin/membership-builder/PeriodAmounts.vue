@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppLabel :label="t('common.' + period)" />
+    <AppLabel :label="t('common.contributionPeriod.' + period)" />
     <PeriodAmountValue
       v-for="(amount, i) in modelValue"
       :key="i"
