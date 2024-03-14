@@ -1,6 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <AppChoice
+    v-if="showPeriod"
     v-model="periodProxy"
     :items="
       content.periods.map((period) => ({
