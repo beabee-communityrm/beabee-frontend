@@ -26,6 +26,8 @@ const i18n = createI18n({
   },
 });
 
+const userOnlyLocales = ['pt', 'ru'];
+
 // Update document title on route or locale change
 watch([i18n.global.locale, router.currentRoute], ([, route]) => {
   document.title =
@@ -35,14 +37,21 @@ watch([i18n.global.locale, router.currentRoute], ([, route]) => {
 
 // Update i18n language on route or global locale change
 watch(
-  () =>
-    [
-      router.currentRoute.value?.query.lang,
-      generalContent.value.locale,
-      generalContent.value.currencyCode,
-    ] as const,
-  async ([routeLocale, globalLocale, newCurrencyCode]) => {
-    const newLocale = routeLocale?.toString() || globalLocale;
+  [
+    router.currentRoute,
+    () => generalContent.value.locale,
+    () => generalContent.value.currencyCode,
+  ],
+  async ([route, globalLocale, newCurrencyCode]) => {
+    let newLocale = route.query.lang?.toString() || globalLocale;
+
+    // Some locales have only been translated in non-admin areas
+    if (
+      userOnlyLocales.includes(newLocale) &&
+      route.path.startsWith('/admin')
+    ) {
+      newLocale = 'en';
+    }
 
     // Remove variants (e.g. @informal)
     const [justLocale] = newLocale.split('@');
