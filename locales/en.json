@@ -411,6 +411,12 @@
     "showAdvancedOptions": "Show advanced options",
     "slideNo": "Slide {no}",
     "submitButton": "Submit button text",
+    "translationFields": {
+      "description": "Description",
+      "label": "Label",
+      "option": "Option {n}",
+      "placeholder": "Placeholder"
+    },
     "translationsText": "Set the translations for each component in your form",
     "translationsTitle": "Translations"
   },

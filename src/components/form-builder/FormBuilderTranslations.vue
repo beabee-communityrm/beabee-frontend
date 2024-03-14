@@ -12,7 +12,7 @@
         :is="fcomp"
         v-if="component[field]"
         :model-value="getValue(component[field])"
-        :label="field"
+        :label="t('calloutBuilder.translationFields.' + field)"
         :locales="locales"
         readonly-default
         required
@@ -25,12 +25,12 @@
       class="mb-4"
     >
       <LocaleInput
-        :model-value="getValue(value.value)"
-        :label="'Option ' + (i + 1)"
+        :model-value="getValue(value.label)"
+        :label="t('calloutBuilder.translationFields.option', { n: i + 1 })"
         :locales="locales"
         readonly-default
         required
-        @update:model-value="setValue(value.value, $event)"
+        @update:model-value="setValue(value.label, $event)"
       />
     </div>
   </div>
@@ -41,6 +41,7 @@ import type { CalloutComponentSchema } from '@beabee/beabee-common';
 import LocaleTextArea from '@components/forms/LocaleTextArea.vue';
 import LocaleInput from '@components/forms/LocaleInput.vue';
 import type { LocaleProp } from '@type';
+import { useI18n } from 'vue-i18n';
 
 const emit = defineEmits<{
   (e: 'update:modelValue', v: Record<string, LocaleProp | undefined>): void;
@@ -50,6 +51,8 @@ const props = defineProps<{
   components: CalloutComponentSchema[];
   locales: string[];
 }>();
+
+const { t } = useI18n();
 
 const fields = [
   ['label', LocaleInput],
