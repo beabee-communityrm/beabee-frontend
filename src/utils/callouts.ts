@@ -80,10 +80,14 @@ function convertVariantsForSteps(
 }
 
 function convertSlidesForSteps(
-  slides: GetCalloutSlideSchema[],
+  slidesIn: GetCalloutSlideSchema[] | undefined,
   variants: Record<string, CalloutVariantData> | undefined
-): FormBuilderSlide[] {
-  return slides.map((slide) => {
+): { slides: FormBuilderSlide[]; componentText: Record<string, LocaleProp> } {
+  const componentText: Record<string, LocaleProp> = {};
+
+  if (!slidesIn) return { slides: [getSlideSchema(1)], componentText };
+
+  const slides = slidesIn.map((slide) => {
     const navigation: FormBuilderNavigation = {
       prevText: { default: '' },
       nextText: { default: '' },
@@ -96,10 +100,17 @@ function convertSlidesForSteps(
         navigation[field][variant] =
           variants[variant].slideNavigation[slide.id][field];
       }
+
+      for (const text in variants[variant].componentText) {
+        componentText[text] ||= { default: '' };
+        componentText[text][variant] = variants[variant].componentText[text];
+      }
     }
 
     return { ...slide, navigation };
   });
+
+  return { slides, componentText };
 }
 
 export function convertCalloutToSteps(
@@ -129,13 +140,13 @@ export function convertCalloutToSteps(
 
   const variants = convertVariantsForSteps(callout?.variants);
 
+  const content = convertSlidesForSteps(
+    callout?.formSchema.slides,
+    callout?.variants
+  );
+
   return {
-    content: {
-      slides: callout
-        ? convertSlidesForSteps(callout.formSchema.slides, callout.variants)
-        : [getSlideSchema(1)],
-      componentText: {},
-    },
+    content,
     titleAndImage: {
       title: variants.title,
       description: variants.excerpt,
