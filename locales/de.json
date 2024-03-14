@@ -322,6 +322,7 @@
     },
     "addAPoint": "Klicken Sie dort auf die Karte, wo Sie einen Ort ergänzen möchten",
     "addLocation": "Neuen Ort eingeben",
+    "confirmHuman": "Bitte bestätigen Sie, dass Sie ein Mensch sind",
     "contactDetails": "Kontaktdaten",
     "ended": "Dieser Callout ist seit dem {date} beendet.",
     "form": {
@@ -344,7 +345,7 @@
     "updateContribution": "Bitte ändern Sie ihren Beitrag.",
     "views": {
       "gallery": "Galerie",
-      "map": "Karten"
+      "map": "Karte"
     },
     "youResponded": "Sie haben geantwortet ♥",
     "yourResponse": "Ihre Antwort"
@@ -409,7 +410,13 @@
     "prevButton": "Text für den Zurück-Button",
     "showAdvancedOptions": "Erweiterte Optionen anzeigen",
     "slideNo": "Slide {no}",
-    "submitButton": "Text für den Submit-Button"
+    "submitButton": "Text für den Submit-Button",
+    "translationFields": {
+      "description": "Description",
+      "label": "Label",
+      "option": "Option {n}",
+      "placeholder": "Placeholder"
+    }
   },
   "calloutResponse": {
     "data": {
@@ -806,6 +813,15 @@
               "yes": "Ja"
             }
           },
+          "requireCaptcha": {
+            "help": "<p>Wenn du den <strong>Bot-Spam-Schutz</strong> aktivierst, müssen die Teilnehmenden ein Captcha ausfüllen, um zu bestätigen, dass sie Menschen sind. Das verhindert Spamming von Bots.</p>\n",
+            "label": "Bot-Spam-Schutz für den Callout aktivieren?",
+            "opts": {
+              "all": "Ja, alle Teilnehmenden müssen bestätigen, dass sie Menschen sind.",
+              "guests": "Ja, Gastteilnehmer müssen bestätigen, dass sie Menschen sind.",
+              "none": "Nein"
+            }
+          },
           "responseImageFilter": {
             "label": "Möchtest du einen Filter auf die Bilder legen?"
           },
@@ -1038,7 +1054,7 @@
     "components": {
       "file": {
         "browse": "Upload vom Gerät",
-        "dropFiles": "Files hierher ziehen,",
+        "dropFiles": "Dateien hierher ziehen",
         "or": "oder",
         "switchToFileUpload": "Zum Upload wechseln",
         "takePicture": "Foto aufnehmen",

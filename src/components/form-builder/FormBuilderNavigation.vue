@@ -3,25 +3,29 @@
   <div class="mb-4 flex gap-8">
     <div class="flex-1">
       <div v-if="!isFirst">
-        <AppInput
+        <LocaleInput
           v-model="modelValue.prevText"
           :label="t('calloutBuilder.prevButton')"
+          :locales="locales"
+          required
         />
       </div>
     </div>
     <div class="flex-1">
       <div v-if="isLast">
-        <AppInput
+        <LocaleInput
           v-model="modelValue.submitText"
           :label="t('calloutBuilder.submitButton')"
+          :locales="locales"
           required
         />
       </div>
       <div v-else>
         <div class="mb-4">
-          <AppInput
+          <LocaleInput
             v-model="modelValue.nextText"
             :label="t('calloutBuilder.nextButton')"
+            :locales="locales"
             required
           />
         </div>
@@ -43,23 +47,24 @@
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
-import AppInput from '../forms/AppInput.vue';
-import AppSelect from '../forms/AppSelect.vue';
 import { computed } from 'vue';
 
+import LocaleInput from '@components/forms/LocaleInput.vue';
+import AppSelect from '@components/forms/AppSelect.vue';
 import type {
-  CalloutNavigationSchema,
-  CalloutSlideSchema,
-} from '@beabee/beabee-common';
+  FormBuilderNavigation,
+  FormBuilderSlide,
+} from './form-builder.interface';
 
 defineEmits<{
-  (e: 'update:modelValue', value: CalloutNavigationSchema): void;
+  (e: 'update:modelValue', value: FormBuilderNavigation): void;
 }>();
 const props = defineProps<{
-  slides: CalloutSlideSchema[];
+  slides: FormBuilderSlide[];
   isFirst: boolean;
   isLast: boolean;
-  modelValue: CalloutNavigationSchema;
+  modelValue: FormBuilderNavigation;
+  locales: string[];
 }>();
 
 const { t } = useI18n();

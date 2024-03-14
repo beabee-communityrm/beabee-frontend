@@ -322,6 +322,7 @@
     },
     "addAPoint": "Click on the map where you want to add a point",
     "addLocation": "Add a new location",
+    "confirmHuman": "Please confirm you are human",
     "contactDetails": "Contact details",
     "ended": "This callout ended on {date}",
     "form": {
@@ -409,7 +410,15 @@
     "prevButton": "Back button text",
     "showAdvancedOptions": "Show advanced options",
     "slideNo": "Slide {no}",
-    "submitButton": "Submit button text"
+    "submitButton": "Submit button text",
+    "translationFields": {
+      "description": "Description",
+      "label": "Label",
+      "option": "Option {n}",
+      "placeholder": "Placeholder"
+    },
+    "translationsText": "Set the translations for each component in your form",
+    "translationsTitle": "Translations"
   },
   "calloutResponse": {
     "data": {
@@ -809,6 +818,15 @@
               "yes": "Yes"
             }
           },
+          "requireCaptcha": {
+            "help": "<p>If you enable <strong>bot spam protection</strong> users will be required to complete a Captcha to confirm they are human. This is useful to prevent your callout being spammed by bots</p>\n",
+            "label": "Enable bot spam protection on the callout?",
+            "opts": {
+              "all": "Yes, ask all users to confirm they are human",
+              "guests": "Yes, ask guests to confirm they are human",
+              "none": "No"
+            }
+          },
           "responseImageFilter": {
             "label": "Do you want to apply a filter to images?"
           },
@@ -1041,7 +1059,7 @@
     "components": {
       "file": {
         "browse": "upload from device",
-        "dropFiles": "Drop files to attach,",
+        "dropFiles": "Drop files to attach",
         "or": "or",
         "switchToFileUpload": "Switch to file upload",
         "takePicture": "Take Picture",

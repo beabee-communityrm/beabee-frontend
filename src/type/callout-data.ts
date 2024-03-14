@@ -6,5 +6,6 @@ export interface CalloutData {
   allowUpdate: boolean;
   allowMultiple: boolean;
   access: 'member' | 'guest' | 'anonymous' | 'only-anonymous';
+  captcha: 'all' | 'guest' | 'none';
   hidden: boolean;
 }

@@ -1,4 +1,4 @@
-import type { CalloutFormSchema } from '@beabee/beabee-common';
+import type { SetCalloutFormSchema } from '@beabee/beabee-common';
 
 import type {
   CalloutData,
@@ -7,7 +7,7 @@ import type {
 } from '@type';
 
 export interface CreateCalloutData extends CalloutData {
-  formSchema: CalloutFormSchema;
+  formSchema: SetCalloutFormSchema;
   variants: Record<string, CalloutVariantData>;
   responseViewSchema: CalloutResponseViewSchema | null;
 }

@@ -1,15 +1,13 @@
 import {
-  type CalloutComponentSchema,
-  type CalloutSlideSchema,
-  ItemStatus,
-  type RadioCalloutComponentSchema,
   flattenComponents,
+  ItemStatus,
+  type CalloutComponentSchema,
+  type RadioCalloutComponentSchema,
+  type GetCalloutSlideSchema,
+  type SetCalloutSlideSchema,
 } from '@beabee/beabee-common';
 import { format } from 'date-fns';
-import type {
-  CalloutStepsProps,
-  LocaleProp,
-} from '@components/pages/admin/callouts/callouts.interface';
+import type { CalloutStepsProps } from '@components/pages/admin/callouts/callouts.interface';
 import type {
   FilterItem,
   FilterItems,
@@ -20,31 +18,48 @@ import i18n from '@lib/i18n';
 
 import type {
   CalloutVariantData,
+  CalloutVariantNavigationData,
   CreateCalloutData,
   GetCalloutDataWith,
+  LocaleProp,
 } from '@type';
+import type {
+  FormBuilderNavigation,
+  FormBuilderSlide,
+} from '@components/form-builder/form-builder.interface';
 
 const { t } = i18n.global;
 
-export function getSlideSchema(no: number): CalloutSlideSchema {
+export function getSlideSchema(no: number): FormBuilderSlide {
   const id = 'slide' + Math.random().toString(36).substring(2, 8);
   return {
     id,
     title: t('calloutBuilder.slideNo', { no }),
     components: [],
     navigation: {
-      nextText: t('actions.next'),
-      prevText: t('actions.back'),
+      nextText: { default: t('actions.next') },
+      prevText: { default: t('actions.back') },
       nextSlideId: '',
-      submitText: t('actions.submit'),
+      submitText: { default: t('actions.submit') },
     },
   };
 }
 
+const textFields = [
+  'title',
+  'excerpt',
+  'intro',
+  'thanksTitle',
+  'thanksText',
+  'thanksRedirect',
+  'shareTitle',
+  'shareDescription',
+] as const;
+
 function convertVariantsForSteps(
   variants: Record<string, CalloutVariantData> | undefined
-): Record<keyof CalloutVariantData, LocaleProp> {
-  const result: Record<keyof CalloutVariantData, LocaleProp> = {
+): Record<(typeof textFields)[number], LocaleProp> {
+  const result: Record<(typeof textFields)[number], LocaleProp> = {
     title: { default: '' },
     excerpt: { default: '' },
     intro: { default: '' },
@@ -56,13 +71,46 @@ function convertVariantsForSteps(
   };
 
   for (const variant in variants) {
-    for (const field in variants[variant]) {
-      const field2 = field as keyof CalloutVariantData;
-      result[field2][variant] = variants[variant][field2] || '';
+    for (const field of textFields) {
+      result[field][variant] = variants[variant][field] || '';
     }
   }
 
   return result;
+}
+
+function convertSlidesForSteps(
+  slidesIn: GetCalloutSlideSchema[] | undefined,
+  variants: Record<string, CalloutVariantData> | undefined
+): { slides: FormBuilderSlide[]; componentText: Record<string, LocaleProp> } {
+  const componentText: Record<string, LocaleProp> = {};
+
+  if (!slidesIn) return { slides: [getSlideSchema(1)], componentText };
+
+  const slides = slidesIn.map((slide) => {
+    const navigation: FormBuilderNavigation = {
+      prevText: { default: '' },
+      nextText: { default: '' },
+      submitText: { default: '' },
+      nextSlideId: slide.navigation.nextSlideId,
+    };
+
+    for (const variant in variants) {
+      for (const field of ['prevText', 'nextText', 'submitText'] as const) {
+        navigation[field][variant] =
+          variants[variant].slideNavigation[slide.id][field];
+      }
+
+      for (const text in variants[variant].componentText) {
+        componentText[text] ||= { default: '' };
+        componentText[text][variant] = variants[variant].componentText[text];
+      }
+    }
+
+    return { ...slide, navigation };
+  });
+
+  return { slides, componentText };
 }
 
 export function convertCalloutToSteps(
@@ -92,10 +140,13 @@ export function convertCalloutToSteps(
 
   const variants = convertVariantsForSteps(callout?.variants);
 
+  const content = convertSlidesForSteps(
+    callout?.formSchema.slides,
+    callout?.variants
+  );
+
   return {
-    content: {
-      formSchema: callout?.formSchema || { slides: [getSlideSchema(1)] },
-    },
+    content,
     titleAndImage: {
       title: variants.title,
       description: variants.excerpt,
@@ -110,6 +161,7 @@ export function convertCalloutToSteps(
     },
     settings: {
       ...settings,
+      requireCaptcha: callout?.captcha || 'none',
       showResponses: !!callout?.responseViewSchema,
       responseViews: [
         ...(callout?.responseViewSchema?.gallery ? ['gallery' as const] : []),
@@ -158,46 +210,84 @@ export function convertCalloutToSteps(
   };
 }
 
-export function convertStepsToCallout(
+function convertVariantsForCallout(
   steps: CalloutStepsProps
-): CreateCalloutData {
+): Record<string, CalloutVariantData> {
   const variants: Record<string, CalloutVariantData> = {};
   for (const variant of [...steps.settings.locales, 'default']) {
+    const slideNavigation: Record<string, CalloutVariantNavigationData> = {};
+
+    for (const slide of steps.content.slides) {
+      slideNavigation[slide.id] = {
+        nextText: slide.navigation.nextText[variant] || '',
+        prevText: slide.navigation.prevText[variant] || '',
+        submitText: slide.navigation.submitText[variant] || '',
+      };
+    }
+
+    const componentText: Record<string, string> = {};
+    for (const key in steps.content.componentText) {
+      componentText[key] = steps.content.componentText[key][variant] || '';
+    }
+
     variants[variant] = {
-      title: steps.titleAndImage.title[variant],
-      excerpt: steps.titleAndImage.description[variant],
-      intro: steps.titleAndImage.introText[variant],
+      title: steps.titleAndImage.title[variant] || '',
+      excerpt: steps.titleAndImage.description[variant] || '',
+      intro: steps.titleAndImage.introText[variant] || '',
       ...(steps.endMessage.whenFinished === 'redirect'
         ? {
             thanksText: '',
             thanksTitle: '',
-            thanksRedirect: steps.endMessage.thankYouRedirect[variant],
+            thanksRedirect: steps.endMessage.thankYouRedirect[variant] || '',
           }
         : {
-            thanksText: steps.endMessage.thankYouText[variant],
-            thanksTitle: steps.endMessage.thankYouTitle[variant],
+            thanksText: steps.endMessage.thankYouText[variant] || '',
+            thanksTitle: steps.endMessage.thankYouTitle[variant] || '',
             thanksRedirect: null,
           }),
       ...(steps.titleAndImage.overrideShare
         ? {
-            shareTitle: steps.titleAndImage.shareTitle[variant],
-            shareDescription: steps.titleAndImage.shareDescription[variant],
+            shareTitle: steps.titleAndImage.shareTitle[variant] || '',
+            shareDescription:
+              steps.titleAndImage.shareDescription[variant] || '',
           }
         : {
             shareTitle: null,
             shareDescription: null,
           }),
+      slideNavigation,
+      componentText,
     };
   }
 
+  return variants;
+}
+
+function convertSlidesForCallout(
+  steps: CalloutStepsProps
+): SetCalloutSlideSchema[] {
+  return steps.content.slides.map((slide) => ({
+    ...slide,
+    navigation: {
+      nextSlideId: slide.navigation.nextSlideId,
+    },
+  }));
+}
+
+export function convertStepsToCallout(
+  steps: CalloutStepsProps
+): CreateCalloutData {
   const slug = steps.titleAndImage.useCustomSlug
     ? steps.titleAndImage.slug
     : steps.titleAndImage.autoSlug;
 
+  const slides = convertSlidesForCallout(steps);
+  const variants = convertVariantsForCallout(steps);
+
   return {
     slug: slug || null,
     image: steps.titleAndImage.coverImageURL,
-    formSchema: steps.content.formSchema,
+    formSchema: { slides },
     responseViewSchema: steps.settings.showResponses
       ? {
           buckets: steps.settings.responseBuckets,
@@ -226,6 +316,7 @@ export function convertStepsToCallout(
     allowUpdate:
       !steps.settings.multipleResponses && steps.settings.usersCanEditAnswers,
     hidden: !steps.settings.showOnUserDashboards,
+    captcha: steps.settings.requireCaptcha,
     access:
       steps.settings.whoCanTakePart === 'members'
         ? 'member'
@@ -301,7 +392,7 @@ function isDecisionComponent(
 }
 
 export function getDecisionComponent(
-  slide: CalloutSlideSchema
+  components: CalloutComponentSchema[]
 ): RadioCalloutComponentSchema | undefined {
-  return flattenComponents(slide.components).find(isDecisionComponent);
+  return flattenComponents(components).find(isDecisionComponent);
 }

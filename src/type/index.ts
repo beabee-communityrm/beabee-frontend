@@ -81,6 +81,8 @@ export * from './get-stats-query';
 export * from './get-upload-flow-data';
 export * from './go-cardless-direct-debit-payment-source';
 export * from './item-with-status';
+export * from './locale-input-props';
+export * from './locale-prop';
 export * from './login-data';
 export * from './manual-payment-source';
 export * from './noop';

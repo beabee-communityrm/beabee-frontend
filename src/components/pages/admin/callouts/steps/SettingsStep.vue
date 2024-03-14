@@ -70,6 +70,24 @@
         />
       </AppFormSection>
     </template>
+
+    <AppFormSection
+      v-if="env.captchafoxKey"
+      :help="inputT('requireCaptcha.help')"
+    >
+      <AppRadioGroup
+        v-model="data.requireCaptcha"
+        name="requireCaptcha"
+        :label="inputT('requireCaptcha.label')"
+        :options="[
+          ['none', inputT('requireCaptcha.opts.none')],
+          ['guest', inputT('requireCaptcha.opts.guests')],
+          ['all', inputT('requireCaptcha.opts.all')],
+        ]"
+        required
+      />
+    </AppFormSection>
+
     <template v-if="env.experimentalFeatures">
       <AppFormSection :help="inputT('showResponses.help')">
         <AppRadioGroup
@@ -276,7 +294,7 @@ const hasVisited = ref(!!props.status);
 watch(toRef(props, 'isActive'), (active) => (hasVisited.value ||= active));
 
 const formComponentItems = computed(() =>
-  getCalloutComponents(props.steps.content.data.formSchema)
+  getCalloutComponents(props.steps.content.data)
     .filter((c) => c.input)
     .map((c) => ({
       id: c.fullKey,

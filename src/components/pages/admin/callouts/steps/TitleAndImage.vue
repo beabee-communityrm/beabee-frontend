@@ -107,9 +107,9 @@ import AppLabel from '../../../../forms/AppLabel.vue';
 import env from '../../../../../env';
 import slugify from 'slugify';
 import AppFormSection from '../../../../forms/AppFormSection.vue';
-import LocaleInput from '../LocaleInput.vue';
-import LocaleRichTextEditor from '../LocaleRichTextEditor.vue';
-import LocaleTextArea from '../LocaleTextArea.vue';
+import LocaleTextArea from '@components/forms/LocaleTextArea.vue';
+import LocaleInput from '@components/forms/LocaleInput.vue';
+import LocaleRichTextEditor from '@components/forms/LocaleRichTextEditor.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{

@@ -54,8 +54,8 @@ import { useI18n } from 'vue-i18n';
 import AppRadioGroup from '../../../../forms/AppRadioGroup.vue';
 import type { CalloutSteps, EndMessageStepProps } from '../callouts.interface';
 import AppFormSection from '../../../../forms/AppFormSection.vue';
-import LocaleInput from '../LocaleInput.vue';
-import LocaleRichTextEditor from '../LocaleRichTextEditor.vue';
+import LocaleRichTextEditor from '@components/forms/LocaleRichTextEditor.vue';
+import LocaleInput from '@components/forms/LocaleInput.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 defineProps<{ data: EndMessageStepProps; steps: CalloutSteps }>();

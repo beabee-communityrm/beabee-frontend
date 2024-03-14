@@ -40,6 +40,7 @@ const props = defineProps<{
   components: CalloutComponentSchema[];
   modelValue?: CalloutResponseAnswers[string];
   readonly?: boolean;
+  componentI18nText?: Record<string, string>;
 }>();
 
 const { t } = useI18n();
@@ -75,6 +76,7 @@ const formOpts = computed(() => ({
       required: t('form.errors.unknown.required'),
       invalid_email: t('form.errors.unknown.email'),
       invalid_url: t('form.errors.unknown.url'),
+      ...props.componentI18nText,
     },
   },
 }));

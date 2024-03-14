@@ -1,9 +1,9 @@
-import { type CalloutFormSchema } from '@beabee/beabee-common';
 import { computed, type Raw, type Component } from 'vue';
 import i18n from '../../../../lib/i18n';
 import { type AppStepperStep } from '../../../../type/app-stepper-step';
 
-import type { CalloutMapSchema } from '@type';
+import type { CalloutMapSchema, LocaleProp } from '@type';
+import type { FormBuilderSlide } from '@components/form-builder/form-builder.interface';
 
 const { t } = i18n.global;
 
@@ -19,13 +19,9 @@ export const buckets = computed(() => [
   },
 ]);
 
-export interface LocaleProp {
-  default: string;
-  [key: string]: string;
-}
-
 export interface ContentStepProps {
-  formSchema: CalloutFormSchema;
+  slides: FormBuilderSlide[];
+  componentText: Record<string, LocaleProp>;
 }
 
 export interface TitleAndImageStepProps {
@@ -44,6 +40,7 @@ export interface TitleAndImageStepProps {
 export interface SettingsStepProps {
   whoCanTakePart: 'members' | 'everyone';
   allowAnonymousResponses: 'none' | 'guests' | 'all';
+  requireCaptcha: 'none' | 'guest' | 'all';
   showOnUserDashboards: boolean;
   multipleResponses: boolean;
   usersCanEditAnswers: boolean;

@@ -1,7 +1,7 @@
-import type { CalloutFormSchema } from '@beabee/beabee-common';
+import type { GetCalloutFormSchema } from '@beabee/beabee-common';
 
 export interface GetCalloutFormData {
-  formSchema: CalloutFormSchema;
+  formSchema: GetCalloutFormSchema;
   intro: string;
   thanksText: string;
   thanksTitle: string;
