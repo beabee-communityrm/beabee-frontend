@@ -7,11 +7,7 @@ meta:
 </route>
 
 <template>
-  <CalloutVariantToggle
-    v-if="!thanks"
-    :callout="callout"
-    class="mb-6 bg-white md:max-w-2xl"
-  />
+  <CalloutVariantToggle :callout="callout" class="mb-6 bg-white md:max-w-2xl" />
 
   <AppTitle v-if="!isEmbed" big>{{ callout.title }}</AppTitle>
 
