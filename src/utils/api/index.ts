@@ -46,6 +46,9 @@ export function deserializeDate<T extends null | undefined>(
 export const instance = axios.create({
   baseURL: env.apiUrl,
   withCredentials: true,
+  headers: {
+    'X-Beabee-Version': `${env.version} / ${env.revision}`,
+  },
 });
 
 instance.interceptors.request.use((config) => {
