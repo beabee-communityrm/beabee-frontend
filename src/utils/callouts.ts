@@ -4,6 +4,7 @@ import {
   ItemStatus,
   type RadioCalloutComponentSchema,
   flattenComponents,
+  type CalloutNavigationSchema,
 } from '@beabee/beabee-common';
 import { format } from 'date-fns';
 import type { CalloutStepsProps } from '@components/pages/admin/callouts/callouts.interface';
@@ -17,6 +18,7 @@ import i18n from '@lib/i18n';
 
 import type {
   CalloutVariantData,
+  CalloutVariantNavigationData,
   CreateCalloutData,
   GetCalloutDataWith,
 } from '@type';
@@ -132,6 +134,22 @@ export function convertCalloutToSteps(
 export function convertStepsToCallout(
   steps: CalloutStepsProps
 ): CreateCalloutData {
+  const slideNavigation: Record<string, CalloutVariantNavigationData> = {};
+
+  const slides = steps.content.formSchema.slides.map((slide) => {
+    const { nextText, prevText, submitText, ...navigation } = slide.navigation;
+    slideNavigation[slide.id] = { nextText, prevText, submitText };
+
+    return {
+      ...slide,
+      // TEMP: force type as beabee-common is outdated
+      navigation: navigation as CalloutNavigationSchema,
+    };
+  });
+
+  // TEMP: remove componentText as beabee-common is outdated
+  const formSchema = { slides, componentText: undefined };
+
   const defaultVariant: CalloutVariantData = {
     title: steps.titleAndImage.title || t('createCallout.untitledCallout'),
     excerpt: steps.titleAndImage.description,
@@ -153,6 +171,8 @@ export function convertStepsToCallout(
     shareDescription: steps.titleAndImage.overrideShare
       ? steps.titleAndImage.shareDescription
       : null,
+    slideNavigation,
+    componentText: {},
   };
 
   return {
@@ -160,7 +180,7 @@ export function convertStepsToCallout(
       ? steps.titleAndImage.slug
       : steps.titleAndImage.autoSlug,
     image: steps.titleAndImage.coverImageURL,
-    formSchema: steps.content.formSchema,
+    formSchema,
     responseViewSchema: steps.settings.showResponses
       ? {
           buckets: steps.settings.responseBuckets,
