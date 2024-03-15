@@ -65,18 +65,16 @@ watch([i18n.global.locale, router.currentRoute], ([, route]) => {
 // Update i18n language on route or global locale change
 watch(
   [
-    router.currentRoute,
+    () => router.currentRoute.value.path,
+    () => router.currentRoute.value.query.lang,
     () => generalContent.value.locale,
     () => generalContent.value.currencyCode,
   ],
-  async ([route, globalLocale, newCurrencyCode]) => {
-    let newLocale = route.query.lang?.toString() || globalLocale;
+  async ([path, routeLang, globalLocale, newCurrencyCode]) => {
+    let newLocale = routeLang?.toString() || globalLocale;
 
     // Some locales have only been translated in non-admin areas
-    if (
-      userOnlyLocales.includes(newLocale) &&
-      route.path.startsWith('/admin')
-    ) {
+    if (userOnlyLocales.includes(newLocale) && path.startsWith('/admin')) {
       newLocale = 'en';
     }
 
