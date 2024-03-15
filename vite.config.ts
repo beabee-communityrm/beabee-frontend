@@ -51,7 +51,8 @@ export default ({ command, mode }) => {
         values: {
           __appUrl__: 'http://localhost:3000',
           __apiUrl__: env.API_BASE_URL,
-          __revision__: '',
+          __revision__: 'dev',
+          __version__: 'dev',
           __appsignalKey__: env.APPSIGNAL_KEY || '',
           __captchafoxKey__: env.CAPTCHAFOX_KEY || '',
           __maptilerKey__: env.MAPTILER_KEY || '',
