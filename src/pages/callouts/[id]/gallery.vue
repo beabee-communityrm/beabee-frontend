@@ -88,7 +88,7 @@ import type { GetCalloutDataWith, GetCalloutResponseMapData } from '@type';
 const HASH_PREFIX = '#response-' as const;
 
 const props = defineProps<{
-  callout: GetCalloutDataWith<'form' | 'responseViewSchema'>;
+  callout: GetCalloutDataWith<'form' | 'responseViewSchema' | 'variantNames'>;
   // Suppress the warning about the ID prop being passed by the router
   id: string;
 }>();

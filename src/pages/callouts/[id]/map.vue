@@ -121,7 +121,8 @@ meta:
       <button
         v-if="isOpen && !isAddMode"
         class="absolute bottom-8 right-8 h-20 w-20 rounded-full bg-primary text-white shadow-md"
-        @click="handleStartAddMode"
+        type="button"
+        @click.prevent="handleStartAddMode"
       >
         <font-awesome-icon :icon="faPlus" class="text-4xl" />
       </button>
@@ -133,7 +134,7 @@ meta:
     <CalloutShowResponsePanel
       :callout="callout"
       :response="selectedResponseFeature?.properties"
-      @close="router.push({ hash: '' })"
+      @close="router.push({ ...route, hash: '' })"
     />
 
     <CalloutIntroPanel
@@ -219,7 +220,7 @@ type GetCalloutResponseMapDataWithAddress = GetCalloutResponseMapData & {
 };
 
 const props = defineProps<{
-  callout: GetCalloutDataWith<'form' | 'responseViewSchema'>;
+  callout: GetCalloutDataWith<'form' | 'responseViewSchema' | 'variantNames'>;
   // Suppress the warning about the ID prop being passed by the router
   id: string;
 }>();
@@ -327,6 +328,7 @@ function handleClick(e: { event: MapMouseEvent; map: Map }) {
 
     // Open the response or clear the hash
     router.push({
+      ...route,
       hash:
         pointFeatures.length > 0
           ? HASH_PREFIX + pointFeatures[0].properties.number
@@ -355,7 +357,7 @@ function handleStartAddMode() {
   isAddMode.value = true;
   introOpen.value = false;
   map.map.getCanvas().style.cursor = 'crosshair';
-  router.push({ hash: '' });
+  router.push({ ...route, hash: '' });
 }
 
 // Cancel add response mode, clearing any state that is left over

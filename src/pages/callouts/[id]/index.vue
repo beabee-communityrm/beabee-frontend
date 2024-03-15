@@ -7,6 +7,12 @@ meta:
 </route>
 
 <template>
+  <CalloutVariantToggle
+    v-if="!thanks"
+    :callout="callout"
+    class="mb-6 bg-white md:max-w-2xl"
+  />
+
   <AppTitle v-if="!isEmbed" big>{{ callout.title }}</AppTitle>
 
   <div v-if="responses /* Avoids layout thrashing */">
@@ -57,6 +63,7 @@ meta:
         </transition>
 
         <img class="w-full" :src="callout.image" />
+
         <div class="content-message text-lg" v-html="callout.intro" />
       </template>
 
@@ -68,7 +75,10 @@ meta:
           class="w-full"
           :to="{
             path: '/callouts/' + callout.slug + '/respond',
-            query: { preview: isPreview ? null : undefined },
+            query: {
+              preview: isPreview ? null : undefined,
+              lang: route.query.lang,
+            },
           }"
         >
           {{
@@ -137,9 +147,10 @@ import { addNotification } from '@store/notifications';
 import { addBreadcrumb } from '@store/breadcrumb';
 
 import type { GetCalloutDataWith, GetCalloutResponseDataWith } from '@type';
+import CalloutVariantToggle from '@components/pages/callouts/CalloutVariantToggle.vue';
 
 const props = defineProps<{
-  callout: GetCalloutDataWith<'form'>;
+  callout: GetCalloutDataWith<'form' | 'variantNames'>;
   respond?: boolean; // Flag for /respond route
   thanks?: boolean; // Flag for /thanks route
   // Suppress the warning about the ID prop being passed by the router
