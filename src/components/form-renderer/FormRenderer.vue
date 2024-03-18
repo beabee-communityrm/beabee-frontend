@@ -4,7 +4,7 @@
     :form="{ components }"
     :submission="modelValue && { data: modelValue }"
     :options="formOpts"
-    :language="generalContent.locale"
+    language="custom"
     @change="handleChange"
   />
 </template>
@@ -31,7 +31,6 @@ import {
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import { sameAs } from '@vuelidate/validators';
-import { generalContent } from '@store/generalContent';
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: CalloutResponseAnswers[string]): void;
@@ -62,7 +61,7 @@ const formOpts = computed(() => ({
   noAlerts: true,
   renderMode: props.readonly ? 'html' : 'form',
   i18n: {
-    [generalContent.value.locale]: {
+    custom: {
       'Drop files to attach,': t('formRenderer.components.file.dropFiles'),
       'use camera': t('formRenderer.components.file.useCamera'),
       or: t('formRenderer.components.file.or'),
