@@ -136,9 +136,9 @@ meta:
         </div>
       </transition>
       <button
-        v-if="isOpen && !isAddMode && isEmbed"
+        v-if="isOpen && !isAddMode"
         variant="link"
-        class="text-bold absolute bottom-8 right-8 bg-link px-4 py-3 font-bold text-white shadow-md"
+        class="text-bold absolute bottom-8 right-8 hidden bg-link px-4 py-3 font-bold text-white shadow-md md:block"
         @click="handleStartAddMode"
       >
         <font-awesome-icon :icon="faPlus" class="text" />
