@@ -60,7 +60,6 @@
   },
   "actions": {
     "add": "Add",
-    "addNew": "Add new entry",
     "back": "Back",
     "backToLogin": "Back to login page",
     "cancel": "Cancel",
@@ -399,7 +398,7 @@
       "updateResponse": "Update your response"
     },
     "addAPoint": "Click on the map where you want to add a point",
-    "addLocation": "Add a new location",
+    "addLocation": "Add a new entry",
     "contactDetails": "Contact details",
     "ended": "This callout ended on {date}",
     "form": {
