@@ -12,16 +12,30 @@ meta:
     v-if="callout.responseViewSchema?.map"
     class="absolute inset-0 flex flex-col"
   >
-    <div v-if="!isEmbed" class="flex-0 z-10 p-6 pb-1 shadow-lg">
+    <div v-if="!isEmbed" class="flex-0 z-10 p-4 pb-2 shadow-lg md:p-6">
       <PageTitle :title="callout.title" no-collapse>
-        <router-link
-          v-if="callout.responseViewSchema.gallery"
-          :to="`/callouts/${callout.slug}/gallery`"
-          class="whitespace-nowrap font-semibold text-link"
-        >
-          <font-awesome-icon :icon="faImages" />
-          {{ t('callout.views.gallery') }}
-        </router-link>
+        <div>
+          <router-link
+            v-if="callout.responseViewSchema.gallery"
+            :to="{
+              name: 'calloutGallery',
+              query: { noIntro: 1 },
+            }"
+            class="whitespace-nowrap font-semibold text-primary-80 md:mr-6"
+          >
+            <font-awesome-icon :icon="faImages" />
+            {{ t('callout.views.gallery') }}
+          </router-link>
+          <AppButton
+            v-if="isOpen"
+            variant="link"
+            class="hidden px-2 md:inline-block"
+            @click="handleStartAddMode"
+          >
+            <font-awesome-icon :icon="faPlus" class="text" />
+            {{ t('callout.addLocation') }}
+          </AppButton>
+        </div>
       </PageTitle>
     </div>
     <div class="relative flex-1">
@@ -114,17 +128,39 @@ meta:
         >
           <p class="mx-4 rounded bg-white p-4 font-bold shadow-lg">
             <font-awesome-icon :icon="faInfoCircle" class="mr-1" />
-            {{ t('callout.addAPoint') }}
+            {{ t('callout.addAPoint') }}.
+            <span class="cursor-pointer underline" @click="handleCancelAddMode"
+              >{{ t('actions.cancel') }}?</span
+            >
           </p>
         </div>
       </transition>
-      <button
-        v-if="isOpen && !isAddMode"
-        class="absolute bottom-8 right-8 h-20 w-20 rounded-full bg-primary text-white shadow-md"
-        @click="handleStartAddMode"
-      >
-        <font-awesome-icon :icon="faPlus" class="text-4xl" />
-      </button>
+    </div>
+    <div
+      v-if="isOpen && !isAddMode && isEmbed"
+      class="absolute bottom-8 right-8 hidden md:block"
+    >
+      <AppButton variant="link" class="shadow-md" @click="handleStartAddMode">
+        <font-awesome-icon :icon="faPlus" class="text" />
+        {{ t('callout.addLocation') }}
+      </AppButton>
+    </div>
+
+    <!-- Bottom bar for mobile only -->
+    <div
+      class="z-20 flex justify-center px-6 py-4 shadow-[0px_-10px_15px_-3px_rgba(0,0,0,0.1)] md:hidden"
+    >
+      <div>
+        <AppButton
+          v-if="isOpen"
+          variant="link"
+          class="px-2"
+          @click="handleStartAddMode"
+        >
+          <font-awesome-icon :icon="faPlus" class="text" />
+          {{ t('callout.addLocation') }}
+        </AppButton>
+      </div>
     </div>
 
     <!-- Side panel width reference to offset map center -->
@@ -152,7 +188,7 @@ meta:
 </template>
 
 <script lang="ts" setup>
-import { computed, onBeforeMount, ref, toRef, watch } from 'vue';
+import { computed, onBeforeMount, onMounted, ref, toRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import {
   MglMap,
@@ -209,6 +245,7 @@ import {
 import { fetchResponsesForMap } from '@utils/api/callout';
 
 import env from '../../../env';
+import AppButton from '@components/button/AppButton.vue';
 
 import { generalContent, isEmbed } from '@store';
 
@@ -236,7 +273,8 @@ const responses = ref<GetCalloutResponseMapDataWithAddress[]>([]);
 const { isOpen } = useCallout(toRef(props, 'callout'));
 
 const isAddMode = ref(false);
-const introOpen = ref(true);
+const selectMode = ref(false);
+const introOpen = ref(false);
 const newResponseAnswers = ref<CalloutResponseAnswers>();
 const geocodeAddress = ref<CalloutResponseAnswerAddress>();
 
@@ -354,6 +392,7 @@ function handleStartAddMode() {
   if (!map.map) return;
   isAddMode.value = true;
   introOpen.value = false;
+  selectMode.value = false;
   map.map.getCanvas().style.cursor = 'crosshair';
   router.push({ hash: '' });
 }
@@ -426,6 +465,19 @@ onBeforeMount(async () => {
   responses.value = (
     await fetchResponsesForMap(props.callout.slug)
   ).items.filter((r): r is GetCalloutResponseMapDataWithAddress => !!r.address);
+});
+
+onMounted(async () => {
+  // intro panel is shown by default, but not in some cases (e.g. when
+  // switching from the gallery view)
+  if (!route.query.noIntro) {
+    introOpen.value = true;
+  }
+  // needed when "Add New" is clicked in the gallery view,
+  // which switches to the map view first
+  if (route.query.addNew) {
+    handleStartAddMode();
+  }
 });
 
 interface GeocodePickEvent extends Event {

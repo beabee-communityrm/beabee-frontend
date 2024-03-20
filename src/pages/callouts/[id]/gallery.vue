@@ -9,15 +9,28 @@ meta:
 
 <template>
   <div class="absolute inset-0 flex flex-col">
-    <div v-if="!isEmbed" class="flex-0 z-10 p-6 pb-1 shadow-lg">
+    <div v-if="!isEmbed" class="flex-0 z-10 p-6 pb-1 shadow-lg md:p-6">
       <PageTitle :title="callout.title" no-collapse>
-        <router-link
-          v-if="callout.responseViewSchema?.map"
-          :to="`/callouts/${callout.slug}/map`"
-          class="whitespace-nowrap font-semibold text-link"
-        >
-          <font-awesome-icon :icon="faMap" /> {{ t('callout.views.map') }}
-        </router-link>
+        <div>
+          <router-link
+            v-if="callout.responseViewSchema?.map"
+            :to="{
+              name: 'calloutMap',
+              query: { noIntro: 1 },
+            }"
+            class="mx-8 whitespace-nowrap font-semibold text-link"
+          >
+            <font-awesome-icon :icon="faMap" /> {{ t('callout.views.map') }}
+          </router-link>
+          <AppButton
+            variant="link"
+            class="hidden px-2 md:inline-block"
+            @click="handleAddNew"
+          >
+            <font-awesome-icon :icon="faPlus" class="text" />
+            {{ t('callout.addLocation') }}
+          </AppButton>
+        </div>
       </PageTitle>
     </div>
     <div class="overflow-scroll">
@@ -85,6 +98,9 @@ import { isEmbed } from '@store';
 
 import type { GetCalloutDataWith, GetCalloutResponseMapData } from '@type';
 
+import AppButton from '@components/button/AppButton.vue';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 const HASH_PREFIX = '#response-' as const;
 
 const props = defineProps<{
@@ -99,7 +115,7 @@ const { t } = useI18n();
 
 const responses = ref<GetCalloutResponseMapData[]>([]);
 
-const introOpen = ref(true);
+const introOpen = ref(false);
 
 const selectedResponse = computed(() => {
   if (route.hash.startsWith(HASH_PREFIX)) {
@@ -110,6 +126,11 @@ const selectedResponse = computed(() => {
   }
 });
 
+function handleAddNew() {
+  // redirect to map view and show add new panel
+  router.push({ name: 'calloutMap', query: { noIntro: 1, addNew: 1 } });
+}
+
 onBeforeMount(async () => {
   if (!props.callout.responseViewSchema?.gallery) {
     throw new Error('Callout does not have a gallery');
@@ -119,6 +140,10 @@ onBeforeMount(async () => {
   responses.value = (
     await fetchResponsesForMap(props.callout.slug)
   ).items.filter((i) => i.photos.length > 0);
+
+  if (!route.query.noIntro) {
+    introOpen.value = true;
+  }
 });
 </script>
 
