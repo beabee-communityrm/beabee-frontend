@@ -135,15 +135,15 @@ meta:
           </p>
         </div>
       </transition>
-      <button
-        v-if="isOpen && !isAddMode && isEmbed"
-        variant="link"
-        class="text-bold absolute bottom-8 right-8 hidden bg-link px-4 py-3 font-bold text-white shadow-md md:block"
-        @click="handleStartAddMode"
-      >
+    </div>
+    <div
+      v-if="isOpen && !isAddMode && isEmbed"
+      class="absolute bottom-8 right-8 hidden md:block"
+    >
+      <AppButton variant="link" class="shadow-md" @click="handleStartAddMode">
         <font-awesome-icon :icon="faPlus" class="text" />
         {{ t('callout.addLocation') }}
-      </button>
+      </AppButton>
     </div>
 
     <!-- Bottom bar for mobile only -->
