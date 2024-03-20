@@ -45,11 +45,12 @@ export async function fetchCallouts<With extends GetCalloutWith = void>(
 
 export async function fetchCallout<With extends GetCalloutWith = void>(
   slug: string,
-  _with?: readonly With[]
+  _with?: readonly With[],
+  variant?: string
 ): Promise<GetCalloutDataWith<With>> {
   const { data } = await instance.get<Serial<GetCalloutDataWith<With>>>(
     '/callout/' + slug,
-    { params: { with: _with } }
+    { params: { with: _with, variant } }
   );
   return deserializeCallout(data);
 }
@@ -61,6 +62,18 @@ export async function createCallout(
     '/callout',
     // TODO: passing calloutData directly is not safe, it could contain extra properties
     calloutData
+  );
+  return deserializeCallout(data);
+}
+
+export async function replicateCallout(
+  fromId: string,
+  calloutData: UpdateCalloutData
+): Promise<GetCalloutData> {
+  const { data } = await instance.post<Serial<GetCalloutData>>(
+    '/callout/',
+    calloutData,
+    { params: { fromId } }
   );
   return deserializeCallout(data);
 }
@@ -108,13 +121,18 @@ export async function fetchResponsesForMap(
 
 export async function createResponse(
   slug: string,
-  data: CreateCalloutResponseData
+  data: CreateCalloutResponseData,
+  captchaToken?: string
 ): Promise<void> {
-  await instance.post(`/callout/${slug}/responses`, {
-    answers: data.answers,
-    guestName: data.guestName,
-    guestEmail: data.guestEmail,
-  });
+  await instance.post(
+    `/callout/${slug}/responses`,
+    {
+      answers: data.answers,
+      guestName: data.guestName,
+      guestEmail: data.guestEmail,
+    },
+    { params: { captchaToken } }
+  );
 }
 
 export async function fetchTags(slug: string): Promise<GetCalloutTagData[]> {

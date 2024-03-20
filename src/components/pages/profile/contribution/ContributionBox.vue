@@ -16,20 +16,12 @@
 
     <div v-else class="text-center">
       <p>{{ t('contribution.contributing') }}</p>
-      <i18n-t
-        tag="div"
-        class="my-2 font-bold"
-        keypath="contribution.contributingAmount"
-      >
-        <template #amount>
-          <div class="text-3.5xl leading-7">
-            {{ n(contribution.amount!, 'currency') }}
-          </div>
-        </template>
-        <template #period>
-          {{ period }}
-        </template>
-      </i18n-t>
+      <div class="my-2 font-bold">
+        <div class="text-3.5xl leading-7">
+          {{ n(contribution.amount!, 'currency') }}
+        </div>
+        {{ perPeriod }}
+      </div>
 
       <div v-if="contribution.membershipStatus === MembershipStatus.Expiring">
         <i18n-t keypath="contribution.willExpire">
@@ -91,9 +83,9 @@ const props = defineProps<{
   contribution: ContributionInfo;
 }>();
 
-const period = computed(() =>
+const perPeriod = computed(() =>
   props.contribution.period === ContributionPeriod.Monthly
-    ? t('common.month')
-    : t('common.year')
+    ? t('common.perMonthText')
+    : t('common.perYearText')
 );
 </script>

@@ -67,6 +67,7 @@
     "chooseFile": "Choose file",
     "close": "Close",
     "continue": "Continue",
+    "copy": "Copy",
     "create": "Create",
     "delete": "Delete",
     "disable": "Disable",
@@ -75,6 +76,7 @@
     "endnow": "End now",
     "export": "Export",
     "getStarted": "Get started",
+    "goBack": "Go back",
     "next": "Next",
     "noBack": "No, go back",
     "participate": "Participate",
@@ -316,89 +318,13 @@
       "token": "Token"
     }
   },
-  "bot": {
-    "commands": {
-      "list": "Show open callouts",
-      "show": "Show details about a specific callout",
-      "start": "Start the bot"
-    },
-    "info": {
-      "messages": {
-        "done": "When you are finished with your response, just type \\\"{done}\\\".",
-        "enterAmountOfMoney": "Please enter an amount.",
-        "enterContent": "Please reply with a single message. You can make it as long as you want.",
-        "enterDate": "Please enter a date.",
-        "enterLotsOfText": "Please reply with a single message. You can make it as long as you want.",
-        "enterPassword": "Please enter a password. I will remind you to delete the message once you have sent it.",
-        "enterTelephoneNumber": "Please enter a telephone number.",
-        "enterText": "Please keep your response brief, ideally in one sentence.",
-        "enterTime": "Please enter a time. (e.g. 20:45)",
-        "enterURL": "Please enter a web address. (e.g. www.beabee.io)",
-        "multipleAddressesAllowed": "Enter one or more addresses.",
-        "multipleEmailsAllowed": "Enter one or more e-mail addresses.",
-        "multipleNumbersAllowed": "Enter one or more numbers.",
-        "multipleSelectionsAllowed": "Please type in the answer number. You can pick multiple choices, just send a separate message for each.",
-        "multipleValuesAllowed": "You can enter multiple values by sending each value in a separate message.",
-        "onlyOneAddressAllowed": "Please enter an address.",
-        "onlyOneEmailAllowed": "Please enter an e-mail address.",
-        "onlyOneNumberAllowed": "Please enter a number.",
-        "onlyOneSelectionAllowed": "Please pick your choice by typing its number or pressing its button (you can only pick one).",
-        "onlyOneValueAllowed": "Please enter a single value.",
-        "placeholder": "Please respond with something like \\\"{placeholder}\\\".",
-        "uploadFileHere": "Please send me a file.",
-        "uploadFilesHere": "Please send me one or more files."
-      }
-    },
-    "keyboard": {
-      "label": {
-        "cancel": "Cancel",
-        "continue": "Continue",
-        "no": "No",
-        "yes": "Yes"
-      },
-      "message": {
-        "selectDetailCallout": "Which Callout would you like to get more information about? Choose a number."
-      }
-    },
-    "reaction": {
-      "messages": {
-        "done": "Done",
-        "falsy": "No",
-        "truthy": "Yes"
-      }
-    },
-    "render": {
-      "callout": {
-        "list": {
-          "title": "List of active callouts"
-        }
-      }
-    },
-    "response": {
-      "messages": {
-        "answerWithTruthyOrFalsy": "Please answer with \\\"{truthy}\\\" or \\\"{falsy}\\\".",
-        "calloutNotFound": "I'm sorry, I couldn't find this callout.",
-        "calloutStartResponse": "Would you like to respond to this callout?",
-        "componentNotSupported": "\\\"{type}\\\" not implemented.",
-        "componentUnknown": "Unknown component type \\\"{type}\\\".",
-        "noActiveCallouts": "There are currently no open callouts.",
-        "notAFileMessage": "Please send a file.",
-        "notASelectionMessage": "Please select the number of one of the possible answers.",
-        "notATextMessage": "Please send a text message.",
-        "notTheRightFileType": "Please send a file of type {type}.",
-        "stop": "Ok, no problem."
-      }
-    },
-    "universal": {
-      "or": "or"
-    }
-  },
   "callout": {
     "actions": {
       "updateResponse": "Update your response"
     },
     "addAPoint": "Click on the map where you want to add a point",
     "addLocation": "Add a new entry",
+    "confirmHuman": "Please confirm you are human",
     "contactDetails": "Contact details",
     "ended": "This callout ended on {date}",
     "form": {
@@ -585,24 +511,23 @@
     }
   },
   "common": {
-    "annually": "Annually",
     "backToHome": "Back to home",
     "contributing": "Contributing",
+    "contributionPeriod": {
+      "annually": "Annually",
+      "monthly": "Monthly"
+    },
     "contributionType": {
       "automatic": "Automatic",
       "gift": "Gift",
       "manual": "Manual",
       "none": "None"
     },
-    "copy": "Copy",
-    "goBack": "Go back",
     "hello": "Hello",
     "itemsPerPage": "{items} items per page",
     "joined": "Joined",
     "loading": "Loading...",
     "login": "Login",
-    "month": "month | months",
-    "monthly": "Monthly",
     "newsletterStatus": {
       "cleaned": "Cleaned",
       "none": "None",
@@ -619,6 +544,10 @@
       "pending": "Pending",
       "successful": "Successful"
     },
+    "perMonth": "/ month",
+    "perMonthText": "a month",
+    "perYear": "/ year",
+    "perYearText": "a year",
     "role": {
       "admin": "Admin",
       "member": "Member",
@@ -638,7 +567,6 @@
     "timeAgo": "{time} ago",
     "timeIn": "in {time}",
     "until": "until",
-    "year": "year | years",
     "yes": "Yes"
   },
   "contactContribution": {
@@ -738,7 +666,6 @@
     "changeBank": "Change to a different bank account",
     "changeBankInfo": "You'll be asked for the details of your new bank account in the next step.",
     "contributing": "You're contributing",
-    "contributingAmount": "{amount} a {period}",
     "contributionUpdateError": "You can't update your contribution at the moment as you have a payment pending",
     "dueToRenew": "Your contribution is due to renew on {renewalDate}.",
     "expired": "Your contribution expired.",
@@ -753,8 +680,10 @@
     },
     "paymentMethod": "Payment method",
     "paymentSourceUpdateError": "You can't update your bank account at the moment as you have a payment pending",
-    "prorateDecreaseMessage": "You have {monthsLeft} {months} left on your current contribution, your new contribution will start on {renewalDate}.",
-    "prorateIncreaseMessage": "You have {monthsLeft} {months} left on your current contribution. You can make a one-off payment of {oneOffPayment} to start your new contribution immediately.",
+    "prorateDecreaseMessage": "You have one month left on your current contribution. | You have {n} months left on your current contribution.",
+    "prorateDecreaseMessageWillStart": "Your new contribution will start on {renewalDate}.",
+    "prorateIncreaseMessage": "You have one month left on your current contribution. | You have {n} months left on your current contribution.",
+    "prorateIncreaseMessageOneOff": "You can make a one-off payment of {oneOffPayment} to start your new contribution immediately.",
     "prorateNoText": "You'll stay on your current contribution until then.",
     "prorateNoTitle": "Update my contribution on {renewalDate}",
     "prorateYesText": "You'll be charged a one-off payment of {oneOffPayment} now and your contribution will be updated immedately",
@@ -886,6 +815,15 @@
             "opts": {
               "no": "No, only one response",
               "yes": "Yes"
+            }
+          },
+          "requireCaptcha": {
+            "help": "<p>If you enable <strong>bot spam protection</strong> users will be required to complete a Captcha to confirm they are human. This is useful to prevent your callout being spammed by bots</p>\n",
+            "label": "Enable bot spam protection on the callout?",
+            "opts": {
+              "all": "Yes, ask all users to confirm they are human",
+              "guests": "Yes, ask guests to confirm they are human",
+              "none": "No"
             }
           },
           "responseImageFilter": {
@@ -1120,7 +1058,7 @@
     "components": {
       "file": {
         "browse": "upload from device",
-        "dropFiles": "Drop files to attach,",
+        "dropFiles": "Drop files to attach",
         "or": "or",
         "switchToFileUpload": "Switch to file upload",
         "takePicture": "Take Picture",
@@ -1153,7 +1091,7 @@
     "absorbFeeForce": "{amount} contributions must absorb the {fee} fee.",
     "absorbFeeOptIn": "Yes, I'll absorb the {fee} fee.",
     "absorbFeeText": "Our payment processor charges us per transaction which means we receive less from monthly contributions. Are you happy to absorb the {fee} transaction fee?  Alternatively you could pay annually.",
-    "contribute": "Contribute {amount} / {period}",
+    "contribute": "Contribute {contribution}",
     "errors": {
       "confirmEmail": {
         "message": "Almost there! We just need to confirm your email address to finish setting up your membership.",
@@ -1182,7 +1120,7 @@
     "goBack": "Did you miss something? {back}",
     "goBackButton": "Back to the previous screen",
     "note": "You'll be able to modify your contribution and access your payment history at any time in your member account",
-    "willBeContributing": "You'll be contributing {amount}/{period}"
+    "willBeContributing": "You'll be contributing {contribution}"
   },
   "joinSetup": {
     "confirmDetails": "Please confirm your details",

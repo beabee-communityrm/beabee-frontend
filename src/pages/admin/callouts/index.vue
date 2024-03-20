@@ -106,7 +106,7 @@ addBreadcrumb(
   ])
 );
 
-const statusItems = [
+const statusItems = computed(() => [
   {
     id: '',
     label: t('calloutsAdmin.filter.all'),
@@ -132,7 +132,7 @@ const statusItems = [
     label: t('calloutsAdmin.filter.draft'),
     to: '/admin/callouts?filter=draft',
   },
-];
+]);
 
 const headers: Header[] = [
   {

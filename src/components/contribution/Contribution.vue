@@ -1,10 +1,11 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <AppChoice
+    v-if="showPeriod"
     v-model="periodProxy"
     :items="
       content.periods.map((period) => ({
-        label: t('common.' + period.name),
+        label: t('common.contributionPeriod.' + period.name),
         value: period.name,
       }))
     "

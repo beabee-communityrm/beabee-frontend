@@ -5,6 +5,7 @@ import {
   createI18n,
 } from 'vue-i18n';
 import { generalContent } from '../store';
+import router from '@lib/router';
 
 import en from '../../locales/en.json';
 
@@ -13,10 +14,15 @@ const i18n = createI18n({
   fallbackLocale: 'en',
   messages: { en } as LocaleMessages<DefaultLocaleMessageSchema>,
   pluralRules: {
-    // Format: 0 | ends in 1 (except 11) | ends in 2,3,4 (except teens) | ...
+    // Format: 0 | ends in 1 (except 11) | ends in 2,3,4 (except teens) | the rest
     ru: (n) => {
       if (n === 0) {
         return 0;
+      }
+
+      // Assume no number given is singular
+      if (n === -1) {
+        return 1;
       }
 
       const endsWith = n % 10;
@@ -25,9 +31,33 @@ const i18n = createI18n({
   },
 });
 
+const userOnlyLocales = ['pt', 'ru'];
+
+// Update document title on route or locale change
+watch([i18n.global.locale, router.currentRoute], ([, route]) => {
+  document.title =
+    (route.meta.pageTitle ? i18n.global.t(route.meta.pageTitle) + ' - ' : '') +
+    generalContent.value.organisationName;
+});
+
+// Update i18n language on route or global locale change
 watch(
-  () => [generalContent.value.locale, generalContent.value.currencyCode],
-  async ([newLocale, newCurrencyCode]) => {
+  [
+    router.currentRoute,
+    () => generalContent.value.locale,
+    () => generalContent.value.currencyCode,
+  ],
+  async ([route, globalLocale, newCurrencyCode]) => {
+    let newLocale = route.query.lang?.toString() || globalLocale;
+
+    // Some locales have only been translated in non-admin areas
+    if (
+      userOnlyLocales.includes(newLocale) &&
+      route.path.startsWith('/admin')
+    ) {
+      newLocale = 'en';
+    }
+
     // Remove variants (e.g. @informal)
     const [justLocale] = newLocale.split('@');
 

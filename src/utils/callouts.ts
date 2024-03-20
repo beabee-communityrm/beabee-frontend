@@ -4,6 +4,7 @@ import {
   ItemStatus,
   type RadioCalloutComponentSchema,
   flattenComponents,
+  type CalloutNavigationSchema,
 } from '@beabee/beabee-common';
 import { format } from 'date-fns';
 import type { CalloutStepsProps } from '@components/pages/admin/callouts/callouts.interface';
@@ -15,7 +16,12 @@ import type {
 import env from '../env';
 import i18n from '@lib/i18n';
 
-import type { CreateCalloutData, GetCalloutDataWith } from '@type';
+import type {
+  CalloutVariantData,
+  CalloutVariantNavigationData,
+  CreateCalloutData,
+  GetCalloutDataWith,
+} from '@type';
 
 const { t } = i18n.global;
 
@@ -79,6 +85,7 @@ export function convertCalloutToSteps(
     },
     settings: {
       ...settings,
+      requireCaptcha: callout?.captcha || 'none',
       showResponses: !!callout?.responseViewSchema,
       responseViews: [
         ...(callout?.responseViewSchema?.gallery ? ['gallery' as const] : []),
@@ -127,15 +134,53 @@ export function convertCalloutToSteps(
 export function convertStepsToCallout(
   steps: CalloutStepsProps
 ): CreateCalloutData {
+  const slideNavigation: Record<string, CalloutVariantNavigationData> = {};
+
+  const slides = steps.content.formSchema.slides.map((slide) => {
+    const { nextText, prevText, submitText, ...navigation } = slide.navigation;
+    slideNavigation[slide.id] = { nextText, prevText, submitText };
+
+    return {
+      ...slide,
+      // TEMP: force type as beabee-common is outdated
+      navigation: navigation as CalloutNavigationSchema,
+    };
+  });
+
+  // TEMP: remove componentText as beabee-common is outdated
+  const formSchema = { slides, componentText: undefined };
+
+  const defaultVariant: CalloutVariantData = {
+    title: steps.titleAndImage.title || t('createCallout.untitledCallout'),
+    excerpt: steps.titleAndImage.description,
+    intro: steps.titleAndImage.introText,
+    ...(steps.endMessage.whenFinished === 'message'
+      ? {
+          thanksText: steps.endMessage.thankYouText,
+          thanksTitle: steps.endMessage.thankYouTitle,
+          thanksRedirect: null,
+        }
+      : {
+          thanksText: '',
+          thanksTitle: '',
+          thanksRedirect: steps.endMessage.thankYouRedirect,
+        }),
+    shareTitle: steps.titleAndImage.overrideShare
+      ? steps.titleAndImage.shareTitle
+      : null,
+    shareDescription: steps.titleAndImage.overrideShare
+      ? steps.titleAndImage.shareDescription
+      : null,
+    slideNavigation,
+    componentText: {},
+  };
+
   return {
     slug: steps.titleAndImage.useCustomSlug
       ? steps.titleAndImage.slug
       : steps.titleAndImage.autoSlug,
-    title: steps.titleAndImage.title,
-    excerpt: steps.titleAndImage.description,
     image: steps.titleAndImage.coverImageURL,
-    intro: steps.titleAndImage.introText,
-    formSchema: steps.content.formSchema,
+    formSchema,
     responseViewSchema: steps.settings.showResponses
       ? {
           buckets: steps.settings.responseBuckets,
@@ -164,6 +209,7 @@ export function convertStepsToCallout(
     allowUpdate:
       !steps.settings.multipleResponses && steps.settings.usersCanEditAnswers,
     hidden: !steps.settings.showOnUserDashboards,
+    captcha: steps.settings.requireCaptcha,
     access:
       steps.settings.whoCanTakePart === 'members'
         ? 'member'
@@ -172,23 +218,7 @@ export function convertStepsToCallout(
           : steps.settings.allowAnonymousResponses === 'guests'
             ? 'anonymous'
             : 'only-anonymous',
-    ...(steps.endMessage.whenFinished === 'message'
-      ? {
-          thanksText: steps.endMessage.thankYouText,
-          thanksTitle: steps.endMessage.thankYouTitle,
-          thanksRedirect: null,
-        }
-      : {
-          thanksText: '',
-          thanksTitle: '',
-          thanksRedirect: steps.endMessage.thankYouRedirect,
-        }),
-    shareTitle: steps.titleAndImage.overrideShare
-      ? steps.titleAndImage.shareTitle
-      : '',
-    shareDescription: steps.titleAndImage.overrideShare
-      ? steps.titleAndImage.shareDescription
-      : '',
+    variants: { default: defaultVariant },
   };
 }
 

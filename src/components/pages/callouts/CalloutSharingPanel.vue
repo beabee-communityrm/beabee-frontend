@@ -7,7 +7,7 @@
     >
       <span class="mr-2 text-link">{{ calloutUrl }}</span>
       <AppButton :icon="faCopy" size="sm" @click="copyToClipboard">
-        {{ t('common.copy') }}
+        {{ t('actions.copy') }}
       </AppButton>
     </div>
 

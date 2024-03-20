@@ -31,9 +31,12 @@ export function useJoin(content: Ref<ContentJoin>) {
         : 0);
 
     return {
-      amount: n(totalAmount, 'currency'),
-      period:
-        signUpData.period === 'monthly' ? t('common.month') : t('common.year'),
+      contribution:
+        n(totalAmount, 'currency') +
+        ' ' +
+        (signUpData.period === ContributionPeriod.Monthly
+          ? t('common.perMonthText')
+          : t('common.perYearText')),
     };
   });
 
