@@ -73,28 +73,6 @@
   "apiKey": {
     "data": {}
   },
-  "bot": {
-    "commands": {},
-    "info": {
-      "messages": {}
-    },
-    "keyboard": {
-      "label": {},
-      "message": {}
-    },
-    "reaction": {
-      "messages": {}
-    },
-    "render": {
-      "callout": {
-        "list": {}
-      }
-    },
-    "response": {
-      "messages": {}
-    },
-    "universal": {}
-  },
   "callout": {
     "actions": {},
     "addAPoint": "Klik op de kaart als je een punt wilt toevoegen",
