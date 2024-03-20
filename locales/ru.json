@@ -224,7 +224,13 @@
     "internalTitle": "Внутренний заголовок",
     "nextSlide": {},
     "prevButton": "Текст на кнопке «Назад»",
-    "slideNo": "Слайд {no}"
+    "slideNo": "Слайд {no}",
+    "translationFields": {
+      "description": "Description",
+      "label": "Label",
+      "option": "Option {n}",
+      "placeholder": "Placeholder"
+    }
   },
   "calloutResponse": {
     "data": {

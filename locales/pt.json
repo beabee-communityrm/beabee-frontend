@@ -224,7 +224,13 @@
   },
   "calloutBuilder": {
     "actions": {},
-    "nextSlide": {}
+    "nextSlide": {},
+    "translationFields": {
+      "description": "Description",
+      "label": "Label",
+      "option": "Option {n}",
+      "placeholder": "Placeholder"
+    }
   },
   "calloutResponse": {
     "data": {

@@ -40,6 +40,7 @@ const auth = new google.auth.GoogleAuth({
 const sheets = google.sheets({ version: 'v4', auth });
 
 const localeData = {};
+const localeConfig = {};
 
 function processKeyData(keyOpts, keyData) {
   if (keyData) {
@@ -74,26 +75,38 @@ async function loadSheet(name) {
   for (const locale of locales) {
     if (!localeData[locale]) {
       localeData[locale] = {};
+      localeConfig[locale] = {};
     }
   }
 
   // Construct nested objects from a.b.c key paths
   for (const row of rows) {
+    let isConfig = false;
+    if (row.key.startsWith('_')) {
+      row.key = row.key.slice(1);
+      isConfig = true;
+    }
+
     const keyParts = row.key.split('.');
     const [lastKeyPart, ...keyOpts] = keyParts.pop().split(':');
 
     for (const locale of locales) {
-      let localeDataPart = localeData[locale];
+      let localeDataPart = isConfig ? localeConfig[locale] : localeData[locale];
+
       for (const part of keyParts) {
         if (!localeDataPart[part]) {
           localeDataPart[part] = {};
         }
         localeDataPart = localeDataPart[part];
       }
+
       if (localeDataPart[lastKeyPart] !== undefined) {
         console.log('Duplicate key ' + row.key);
       }
-      localeDataPart[lastKeyPart] = processKeyData(keyOpts, row[locale]);
+
+      localeDataPart[lastKeyPart] = isConfig
+        ? row[locale]
+        : processKeyData(keyOpts, row[locale]);
     }
   }
 }
@@ -123,6 +136,11 @@ function sortObject(obj) {
       JSON.stringify(sortObject(localeData[locale]), null, 2) + '\n'
     );
   }
+
+  fs.writeFileSync(
+    path.join(__dirname, '../locales/config.json'),
+    JSON.stringify(localeConfig, null, 2) + '\n'
+  );
 })().catch((err) => {
   console.error(err);
   process.exit(1);
