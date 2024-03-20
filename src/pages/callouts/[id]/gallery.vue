@@ -9,7 +9,7 @@ meta:
 
 <template>
   <div class="absolute inset-0 flex flex-col">
-    <div v-if="!isEmbed" class="flex-0 z-10 p-6 pb-1 shadow-lg">
+    <div v-if="!isEmbed" class="flex-0 z-10 p-6 pb-1 shadow-lg md:p-6">
       <PageTitle :title="callout.title" no-collapse>
         <div>
           <router-link
@@ -22,7 +22,11 @@ meta:
           >
             <font-awesome-icon :icon="faMap" /> {{ t('callout.views.map') }}
           </router-link>
-          <AppButton variant="primary" class="px-2" @click="handleAddNew">
+          <AppButton
+            variant="link"
+            class="hidden px-2 md:inline-block"
+            @click="handleAddNew"
+          >
             <font-awesome-icon :icon="faPlus" class="text" />
             {{ t('callout.addLocation') }}
           </AppButton>
