@@ -18,6 +18,7 @@
   },
   "actions": {
     "back": "Terug",
+    "copy": "Kopiëren",
     "getStarted": "Start",
     "next": "Volgende",
     "submit": "Indienen"
@@ -106,13 +107,7 @@
   },
   "calloutBuilder": {
     "actions": {},
-    "nextSlide": {},
-    "translationFields": {
-      "description": "Description",
-      "label": "Label",
-      "option": "Option {n}",
-      "placeholder": "Placeholder"
-    }
+    "nextSlide": {}
   },
   "calloutResponse": {
     "data": {},
@@ -136,8 +131,8 @@
     "filter": {}
   },
   "common": {
+    "contributionPeriod": {},
     "contributionType": {},
-    "copy": "Kopiëren",
     "hello": "Hallo",
     "loading": "Ladt...",
     "newsletterStatus": {},
@@ -215,12 +210,16 @@
             "addressProp": {},
             "bounds": {},
             "center": {},
+            "geocodeCountries": {},
             "initialZoom": {},
             "maxZoom": {},
             "minZoom": {},
             "style": {}
           },
           "multiple": {
+            "opts": {}
+          },
+          "requireCaptcha": {
             "opts": {}
           },
           "responseImageFilter": {},

@@ -61,7 +61,7 @@ meta:
                 type="number"
                 :min="1"
                 :prefix="generalContent.currencySymbol"
-                :suffix="'/ ' + t('common.month')"
+                :suffix="t('common.perMonth')"
                 required
                 class="block w-32"
               />
@@ -144,10 +144,10 @@ const defaultAmounts = computed(() => {
     ? joinContent.value.periods.flatMap((period) =>
         period.presetAmounts.map((amount) => ({
           id: `${period.name}_${amount}`,
-          label: `${n(amount, 'currency')} / ${
+          label: `${n(amount, 'currency')} ${
             period.name === ContributionPeriod.Monthly
-              ? t('common.month')
-              : t('common.year')
+              ? t('common.perMonth')
+              : t('common.perYear')
           }`,
         }))
       )

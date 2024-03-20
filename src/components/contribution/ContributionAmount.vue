@@ -28,7 +28,7 @@
             @keyup.down="changeAmount(amount - 1)"
           />
         </div>
-        <div class="flex-0">/ {{ period }}</div>
+        <div class="flex-0">{{ perPeriod }}</div>
       </label>
 
       <div class="flex h-full flex-none flex-col">
@@ -72,7 +72,7 @@
       role="alert"
     >
       {{ t('join.minimumContribution') }}
-      {{ n(minAmount, 'currency') }} / {{ period }}
+      {{ n(minAmount, 'currency') }} {{ perPeriod }}
     </div>
   </div>
 </template>
@@ -128,8 +128,8 @@ const rules = computed(() =>
 
 const validation = useVuelidate(rules, { amount });
 
-const period = computed(() => {
-  return props.isMonthly ? t('common.month') : t('common.year');
+const perPeriod = computed(() => {
+  return props.isMonthly ? t('common.perMonth') : t('common.perYear');
 });
 </script>
 

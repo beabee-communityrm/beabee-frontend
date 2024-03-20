@@ -73,11 +73,12 @@ meta:
         </router-link>
       </template>
       <template #value-contributionMonthlyAmount="{ item }">
-        <span v-if="item.contributionAmount">
-          {{ n(item.contributionAmount, 'currency') }}/{{
+        <span v-if="item.contributionAmount" class="whitespace-nowrap">
+          {{ n(item.contributionAmount, 'currency') }}
+          {{
             item.contributionPeriod === ContributionPeriod.Monthly
-              ? t('common.month')
-              : t('common.year')
+              ? t('common.perMonth')
+              : t('common.perYear')
           }}
         </span>
       </template>

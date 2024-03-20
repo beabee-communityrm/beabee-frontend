@@ -67,6 +67,7 @@
     "chooseFile": "Выбрать файл",
     "close": "Закрыть",
     "continue": "Продолжить",
+    "copy": "Скопировать",
     "create": "Создать",
     "delete": "Удалить",
     "disable": "Отключить",
@@ -75,6 +76,7 @@
     "endnow": "Завершить",
     "export": "Экспортировать",
     "getStarted": "Начать",
+    "goBack": "Назад",
     "next": "Дальше",
     "noBack": "Нет, вернуться назад",
     "participate": "Участвовать",
@@ -222,13 +224,7 @@
     "internalTitle": "Внутренний заголовок",
     "nextSlide": {},
     "prevButton": "Текст на кнопке «Назад»",
-    "slideNo": "Слайд {no}",
-    "translationFields": {
-      "description": "Description",
-      "label": "Label",
-      "option": "Option {n}",
-      "placeholder": "Placeholder"
-    }
+    "slideNo": "Слайд {no}"
   },
   "calloutResponse": {
     "data": {
@@ -282,23 +278,22 @@
     "filter": {}
   },
   "common": {
-    "annually": "ежегодно",
     "backToHome": "На главную",
     "contributing": "Ваш взнос",
+    "contributionPeriod": {
+      "annually": "ежегодно",
+      "monthly": "ежемесячно"
+    },
     "contributionType": {
       "automatic": "Автоматически",
       "gift": "Подарок",
       "manual": "Вручную",
       "none": "Отсутствует"
     },
-    "copy": "Скопировать",
-    "goBack": "Назад",
     "hello": "Привет,",
     "joined": "Вы присоединились",
     "loading": "Загрузка...",
     "login": "Войти",
-    "month": "месяц | месяца | месяцев",
-    "monthly": "ежемесячно",
     "newsletterStatus": {
       "cleaned": "Очищено",
       "none": "Нет статуса",
@@ -315,6 +310,10 @@
       "pending": "В работе",
       "successful": "Успех"
     },
+    "perMonth": "/ месяц",
+    "perMonthText": "в месяц",
+    "perYear": "/ год",
+    "perYearText": "в год",
     "role": {
       "admin": "Администратор",
       "member": "Участник",
@@ -334,7 +333,6 @@
     "timeAgo": "до {time}",
     "timeIn": "в {time}",
     "until": "до",
-    "year": "год | года | лет",
     "yes": "Да"
   },
   "contactContribution": {
@@ -395,7 +393,6 @@
     "changeBank": "Подключите другой банковский счёт",
     "changeBankInfo": "На следующем шаге вы можете ввести свои новые банковские реквизиты.",
     "contributing": "Ваш взнос",
-    "contributingAmount": "{amount} в {period}",
     "contributionUpdateError": "Вы не можете изменить сумму взноса, так как сейчас мы обрабатываем ваш платёж",
     "dueToRenew": "Ваше подписка будет продлена {renewalDate}",
     "expired": "Срок вашей подписки истёк",
@@ -410,8 +407,10 @@
     },
     "paymentMethod": "Способ оплаты",
     "paymentSourceUpdateError": "Вы не можете обновить ваши банковские реквизиты, так как сейчас мы обрабатываем ваш платёж",
-    "prorateDecreaseMessage": "У вас осталось {monthsLeft} {months} с текущей суммой взноса. Размер взноса обновится с {renewalDate}.",
-    "prorateIncreaseMessage": "Ваша подписка будет действовать ещё {monthsLeft} {months}. Вы можете совершить разовый платеж в размере {oneOffPayment}, чтобы продлить подписку.",
+    "prorateDecreaseMessage": "Подписка на пожертвования с выбранной вами суммой будет действовать ещё 1 месяц. | Подписка на пожертвования с выбранной вами суммой будет действовать ещё {n} месяцев.",
+    "prorateDecreaseMessageWillStart": "Сумма пожертвования обновится {renewalDate}.",
+    "prorateIncreaseMessage": "Подписка на пожертвования с этой суммой будет действовать ещё 1 месяц. | Подписка на пожертвования с этой суммой будет действовать ещё {n} месяцев. ",
+    "prorateIncreaseMessageOneOff": "Вы можете сделать единоразовый взнос в {oneOffPayment}, чтобы подписка начала действовать прямо сейчас. ",
     "prorateNoText": "До тех пор ваш взнос будет прежним.",
     "prorateNoTitle": "Изменить мой взнос с {renewalDate}",
     "prorateYesText": "С вас будет списан единоразовый платеж в размере {oneOffPayment}, и ваш взнос будет немедленно обновлён.",
@@ -465,12 +464,16 @@
             "addressProp": {},
             "bounds": {},
             "center": {},
+            "geocodeCountries": {},
             "initialZoom": {},
             "maxZoom": {},
             "minZoom": {},
             "style": {}
           },
           "multiple": {
+            "opts": {}
+          },
+          "requireCaptcha": {
             "opts": {}
           },
           "responseImageFilter": {},
@@ -665,7 +668,7 @@
     "absorbFeeForce": "При взносе в {amount}, вы должны покрыть транзакционные издержки в размере {fee}.",
     "absorbFeeOptIn": "Да, я покрою транзакционные издержки в размере {fee}.",
     "absorbFeeText": "Платёжная система вычитает комиссию из каждого взноса, который мы получаем. Не хотите ли вы взять на себя транзакционные издержки в размере {fee}? Также вы можете выбрать ежегодный взнос.",
-    "contribute": "Внести {amount} в {period}",
+    "contribute": "Внести {contribution}",
     "errors": {
       "confirmEmail": {
         "message": "Почти готово! Осталось только подтвердить вашу почту.",
@@ -694,7 +697,7 @@
     "goBack": "Что-то пропустили? {back}",
     "goBackButton": "Назад",
     "note": "Вы сможете в любое время поменять сумму взноса и посмотреть историю платежей в вашем личном профиле.",
-    "willBeContributing": "Вы будете платить {amount}/{period}"
+    "willBeContributing": "Вы будете платить {contribution}"
   },
   "joinSetup": {
     "confirmDetails": "Пожалуйста, подтвердите ваши данные",

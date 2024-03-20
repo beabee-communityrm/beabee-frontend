@@ -1,10 +1,9 @@
 <template>
   <div v-if="oneOffPayment < 0" class="mb-5">
     <p class="mb-3">
+      {{ t('contribution.prorateDecreaseMessage', monthsLeft) }}
       {{
-        t('contribution.prorateDecreaseMessage', {
-          monthsLeft: n(monthsLeft),
-          months: t('common.month', monthsLeft),
+        t('contribution.prorateDecreaseMessageWillStart', {
           renewalDate: formattedRenewalDate,
         })
       }}
@@ -12,10 +11,9 @@
   </div>
   <div v-if="aboveThreshold" class="mb-5">
     <p class="mb-3">
+      {{ t('contribution.prorateIncreaseMessage', monthsLeft) }}
       {{
-        t('contribution.prorateIncreaseMessage', {
-          monthsLeft: n(monthsLeft),
-          months: t('common.month', monthsLeft),
+        t('contribution.prorateIncreaseMessageOneOff', {
           oneOffPayment: n(oneOffPayment, 'currency'),
         })
       }}

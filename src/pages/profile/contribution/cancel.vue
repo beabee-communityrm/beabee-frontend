@@ -12,9 +12,9 @@ meta:
   </h3>
 
   <div class="flex">
-    <AppButton to="/profile/contribution" variant="primaryOutlined">{{
-      t('common.goBack')
-    }}</AppButton>
+    <AppButton to="/profile/contribution" variant="primaryOutlined">
+      {{ t('actions.goBack') }}
+    </AppButton>
 
     <AppButton
       class="ml-4"

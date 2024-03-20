@@ -129,8 +129,8 @@ export const filterItems = computed<FilterItems<ContactFilterName>>(() => ({
     contactFilters.contributionPeriod,
     t('contacts.data.contributionPeriod'),
     {
-      [ContributionPeriod.Monthly]: t('common.monthly'),
-      [ContributionPeriod.Annually]: t('common.annually'),
+      [ContributionPeriod.Monthly]: t('common.contributionPeriod.monthly'),
+      [ContributionPeriod.Annually]: t('common.contributionPeriod.annually'),
     }
   ),
   manualPaymentSource: withLabel(
