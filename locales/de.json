@@ -1129,7 +1129,6 @@
     "continue": "Weiter",
     "welcome": "Willkommen {firstName} {lastName}!"
   },
-  "locale": "de",
   "login": {
     "backTo": "Zurück zu {newsroomName}",
     "forgotPassword": "Passwort vergessen?",

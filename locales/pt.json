@@ -751,7 +751,6 @@
     "continue": "Tudo certo! Continuar",
     "welcome": "Boas-vindas {firstName}!"
   },
-  "locale": "pt",
   "login": {
     "backTo": "Voltar a {newsroomName}",
     "forgotPassword": "Esqueceu-se da palavra-passe?",

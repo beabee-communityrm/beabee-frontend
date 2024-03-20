@@ -710,7 +710,6 @@
     "continue": "Хорошо! Продолжить",
     "welcome": "Добро пожаловать, {firstName} {lastName}!"
   },
-  "locale": "ru",
   "login": {
     "backTo": "Назад к {newsroomName}",
     "forgotPassword": "Забыли пароль?",

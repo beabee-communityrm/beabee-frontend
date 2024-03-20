@@ -337,7 +337,6 @@
   },
   "joinPayment": {},
   "joinSetup": {},
-  "locale": "nl",
   "login": {
     "lostMfaDevice": "2FA-apparaat kwijt?"
   },
