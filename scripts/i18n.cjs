@@ -138,7 +138,7 @@ function sortObject(obj) {
   }
 
   fs.writeFileSync(
-    path.join(__dirname, '../locales/config.json'),
+    path.join(__dirname, '../src/lib/i18n-config.json'),
     JSON.stringify(localeConfig, null, 2) + '\n'
   );
 })().catch((err) => {

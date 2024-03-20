@@ -249,7 +249,7 @@
         <AppCheckboxGroup
           v-model="data.locales"
           label="Enable multiple languages?"
-          :options="locales"
+          :options="localeItems"
         />
       </AppFormSection>
     </template>
@@ -276,7 +276,7 @@ import env from '../../../../../env';
 import AppCheckboxGroup from '../../../../forms/AppCheckboxGroup.vue';
 import AppLinkList from '../../../../forms/AppLinkList.vue';
 import AppLabel from '../../../../forms/AppLabel.vue';
-import { locales } from '@lib/i18n';
+import { localeItems } from '@lib/i18n';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{

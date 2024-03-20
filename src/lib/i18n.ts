@@ -7,34 +7,20 @@ import {
 import { generalContent } from '../store';
 import router from '@lib/router';
 
+import i18nConfig from './i18n-config.json';
+
 import en from '../../locales/en.json';
 
-export const locales = [
-  {
-    id: 'en',
-    label: 'English',
-  },
-  {
-    id: 'de',
-    label: 'Deutsch (formal)',
-  },
-  {
-    id: 'de@informal',
-    label: 'Deutsch (informal)',
-  },
-  {
-    id: 'pt',
-    label: 'Português',
-  },
-  {
-    id: 'ru',
-    label: 'Русский',
-  },
-  {
-    id: 'nl',
-    label: 'Nederlands (callouts only)',
-  },
-];
+type LocaleKey = keyof typeof i18nConfig;
+
+export function isLocaleKey(key: string): key is LocaleKey {
+  return key in i18nConfig;
+}
+
+export const localeItems = Object.entries(i18nConfig).map(([id, config]) => ({
+  id,
+  label: config.name,
+}));
 
 const i18n = createI18n({
   legacy: false,
@@ -58,8 +44,6 @@ const i18n = createI18n({
   },
 });
 
-const userOnlyLocales = ['pt', 'ru'];
-
 // Update document title on route or locale change
 watch([i18n.global.locale, router.currentRoute], ([, route]) => {
   document.title =
@@ -79,8 +63,8 @@ watch(
     let newLocale = routeLang?.toString() || globalLocale;
 
     // Some locales have only been translated in non-admin areas
-    if (userOnlyLocales.includes(newLocale) && path.startsWith('/admin')) {
-      newLocale = 'en';
+    if (isLocaleKey(newLocale) && path.startsWith('/admin')) {
+      newLocale = i18nConfig[newLocale].adminLocale;
     }
 
     // Remove variants (e.g. @informal)

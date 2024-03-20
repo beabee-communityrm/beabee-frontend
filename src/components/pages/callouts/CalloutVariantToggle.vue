@@ -13,8 +13,10 @@ import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import AppToggle from '@components/forms/AppToggle.vue';
-import { locales } from '@lib/i18n';
 import { generalContent } from '@store/generalContent';
+
+import { isLocaleKey } from '@lib/i18n';
+import i18nConfig from '@lib/i18n-config.json';
 
 import type { GetCalloutDataWith } from '@type/get-callout-data-with';
 
@@ -26,11 +28,14 @@ const route = useRoute();
 const router = useRouter();
 
 const localeItems = computed(() =>
-  props.callout.variantNames.map((name) => {
-    const name2 = name === 'default' ? generalContent.value.locale : name;
+  props.callout.variantNames.map((variantName) => {
+    const localeName =
+      variantName === 'default' ? generalContent.value.locale : variantName;
     return {
-      id: name === 'default' ? '' : name,
-      label: locales.find((l) => l.id === name2)?.label || name2,
+      id: variantName === 'default' ? '' : variantName,
+      label: isLocaleKey(localeName)
+        ? i18nConfig[localeName].displayName
+        : localeName,
     };
   })
 );
