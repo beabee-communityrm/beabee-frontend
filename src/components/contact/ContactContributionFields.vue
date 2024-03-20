@@ -22,8 +22,8 @@
       name="period"
       :label="t('contacts.data.period')"
       :options="[
-        ['monthly', t('common.monthly')],
-        ['annually', t('common.annually')],
+        ['monthly', t('common.contributionPeriod.monthly')],
+        ['annually', t('common.contributionPeriod.annually')],
       ]"
       class="mb-4"
     />

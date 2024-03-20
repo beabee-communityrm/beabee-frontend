@@ -14,10 +14,15 @@ const i18n = createI18n({
   fallbackLocale: 'en',
   messages: { en } as LocaleMessages<DefaultLocaleMessageSchema>,
   pluralRules: {
-    // Format: 0 | ends in 1 (except 11) | ends in 2,3,4 (except teens) | ...
+    // Format: 0 | ends in 1 (except 11) | ends in 2,3,4 (except teens) | the rest
     ru: (n) => {
       if (n === 0) {
         return 0;
+      }
+
+      // Assume no number given is singular
+      if (n === -1) {
+        return 1;
       }
 
       const endsWith = n % 10;

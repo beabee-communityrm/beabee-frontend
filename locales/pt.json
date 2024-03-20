@@ -67,6 +67,7 @@
     "chooseFile": "Escolher um ficheiro",
     "close": "Fechar",
     "continue": "Continuar",
+    "copy": "Copiar",
     "create": "Criar",
     "delete": "Apagar",
     "disable": "Desactivar",
@@ -75,6 +76,7 @@
     "endnow": "Concluir agora",
     "export": "Exportar",
     "getStarted": "Começar",
+    "goBack": "Voltar atrás",
     "next": "Próxima",
     "noBack": "Não, voltar atrás",
     "participate": "Participar",
@@ -303,24 +305,23 @@
     "filter": {}
   },
   "common": {
-    "annually": "Anualmente",
     "backToHome": "Voltar ao início",
     "contributing": "Contribuindo",
+    "contributionPeriod": {
+      "annually": "Anualmente",
+      "monthly": "Mensalmente"
+    },
     "contributionType": {
       "automatic": "Automática",
       "gift": "Presente",
       "manual": "Manual",
       "none": "Nenhuma"
     },
-    "copy": "Copiar",
-    "goBack": "Voltar atrás",
     "hello": "Olá",
     "itemsPerPage": "{items} itens por página",
     "joined": "Juntou-se",
     "loading": "A carregar...",
     "login": "Login",
-    "month": "mês | meses",
-    "monthly": "Mensalmente",
     "newsletterStatus": {
       "cleaned": "Limpo",
       "none": "Nenhum",
@@ -337,6 +338,10 @@
       "pending": "A aguardar",
       "successful": "Sucesso"
     },
+    "perMonth": "/ mês",
+    "perMonthText": "por mês",
+    "perYear": "/ ano",
+    "perYearText": "por ano",
     "role": {
       "admin": "Administrador",
       "member": "Membro",
@@ -356,7 +361,6 @@
     "timeAgo": "há {time}",
     "timeIn": "em {time}",
     "until": "até",
-    "year": "ano | anos",
     "yes": "Sim"
   },
   "contactContribution": {
@@ -429,7 +433,6 @@
     "changeBank": "Mudar para outra conta bancária",
     "changeBankInfo": "No próximo passo vai poder inserir os detalhes bancários da sua nova conta.",
     "contributing": "Está a contribuir",
-    "contributingAmount": "{amount} por {period}",
     "contributionUpdateError": "Não é possível actualizar o seu pagamento já que este se encontra pendente.",
     "dueToRenew": "A sua contribuição vai renovar a {renewalDate}.",
     "expired": "A sua contribuição expirou.",
@@ -444,8 +447,10 @@
     },
     "paymentMethod": "Método de pagamento",
     "paymentSourceUpdateError": "Não é possível actualizar a sua conta bancária já que o sue pagamento se encontra pendente.",
-    "prorateDecreaseMessage": "Restam {monthsLeft} {months} na sua contribuição actual. A sua nova contriuibção começará a {renewalDate}.",
-    "prorateIncreaseMessage": "Tem {monthsLeft} {months} restantes na sua contribuição actual. Pode fazer um pagamento único {oneOffPayment} para arrancar com a sua contribuição desde já.",
+    "prorateDecreaseMessage": "Restam 1 mês na sua contribuição actual. | Restam {n} meses na sua contribuição actual.",
+    "prorateDecreaseMessageWillStart": "A sua nova contriuibção começará a {renewalDate}.",
+    "prorateIncreaseMessage": "Tem 1 mês restantes na sua contribuição actual. | Tem {n} meses restantes na sua contribuição actual.",
+    "prorateIncreaseMessageOneOff": "Pode fazer um pagamento único {oneOffPayment} para arrancar com a sua contribuição desde já.",
     "prorateNoText": "Manter-se-á na sua contribuição actual ate lá.",
     "prorateNoTitle": "Actualizar a minha contribuição a {renewalDate}",
     "prorateYesText": "Ser-lhe-á cobrado um pagamento único {oneOffPayment} agora e a sua contribuição será actualizada de forma imediata.",
@@ -700,7 +705,7 @@
     "absorbFeeForce": "É necessário que {amount} contributos suportem a taxa de {fee}.",
     "absorbFeeOptIn": "Sim, posso suportar a taxa de {fee}.",
     "absorbFeeText": "O nosso processador de pagamentos cobra-nos por transação, o que significa que perdemos uma parte de cada contributo mensal. Estaria disposto/a a suportar a taxa de {fee}? Em alternativa, pode pagar anualmente.",
-    "contribute": "Contribuir {amount} / {period}",
+    "contribute": "Contribuir {contribution}",
     "errors": {
       "confirmEmail": {
         "message": "Estamos quase lá! Precisamos apenas de confirmar o seu endereço de e-mail para concluir a criação da sua conta.",
@@ -729,7 +734,7 @@
     "goBack": "Faltou algo? {back}",
     "goBackButton": "Voltar ao passo anterior",
     "note": "Pode alterar o seu contributo e aceder ao seu historial de pagamentos a qualquer altura na sua conta de membro",
-    "willBeContributing": "O seu contributo será de {amount}/{period}"
+    "willBeContributing": "O seu contributo será de {contribution}"
   },
   "joinSetup": {
     "confirmDetails": "Por favor confirme os seus detalhes",
