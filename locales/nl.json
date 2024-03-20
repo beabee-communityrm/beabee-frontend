@@ -210,12 +210,16 @@
             "addressProp": {},
             "bounds": {},
             "center": {},
+            "geocodeCountries": {},
             "initialZoom": {},
             "maxZoom": {},
             "minZoom": {},
             "style": {}
           },
           "multiple": {
+            "opts": {}
+          },
+          "requireCaptcha": {
             "opts": {}
           },
           "responseImageFilter": {},
