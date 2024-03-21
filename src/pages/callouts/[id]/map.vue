@@ -12,32 +12,12 @@ meta:
     v-if="callout.responseViewSchema?.map"
     class="absolute inset-0 flex flex-col"
   >
-    <div v-if="!isEmbed" class="flex-0 z-10 p-4 pb-2 shadow-lg md:p-6">
-      <PageTitle :title="callout.title" no-collapse>
-        <div>
-          <router-link
-            v-if="callout.responseViewSchema.gallery"
-            :to="{
-              name: 'calloutGallery',
-              query: { noIntro: 1 },
-            }"
-            class="whitespace-nowrap font-semibold text-primary-80 md:mr-6"
-          >
-            <font-awesome-icon :icon="faImages" />
-            {{ t('callout.views.gallery') }}
-          </router-link>
-          <AppButton
-            v-if="isOpen"
-            variant="link"
-            class="hidden px-2 md:inline-block"
-            @click="handleStartAddMode"
-          >
-            <font-awesome-icon :icon="faPlus" class="text" />
-            {{ t('callout.addLocation') }}
-          </AppButton>
-        </div>
-      </PageTitle>
-    </div>
+    <CalloutHeader
+      v-if="!isEmbed"
+      :callout="callout"
+      map
+      @addnew="handleStartAddMode"
+    />
     <div class="relative flex-1">
       <MglMap
         :center="callout.responseViewSchema.map.center"
@@ -222,17 +202,12 @@ import type {
   CalloutResponseAnswerAddress,
   CalloutResponseAnswers,
 } from '@beabee/beabee-common';
-import {
-  faImages,
-  faInfoCircle,
-  faPlus,
-} from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useI18n } from 'vue-i18n';
 import { GeocodingControl } from '@maptiler/geocoding-control/maplibregl';
 import '@maptiler/geocoding-control/style.css';
 import { type GeocodingFeature } from '@maptiler/client';
 
-import PageTitle from '@components/PageTitle.vue';
 import CalloutShowResponsePanel from '@components/pages/callouts/CalloutShowResponsePanel.vue';
 import CalloutIntroPanel from '@components/pages/callouts/CalloutIntroPanel.vue';
 import CalloutAddResponsePanel from '@components/pages/callouts/CalloutAddResponsePanel.vue';
@@ -258,6 +233,7 @@ import { isEmbed } from '@store';
 import type { GetCalloutDataWith, GetCalloutResponseMapData } from '@type';
 import { isLocaleKey } from '@lib/i18n';
 import i18nConfig from '@lib/i18n-config.json';
+import CalloutHeader from '@components/pages/callouts/CalloutHeader.vue';
 
 type GetCalloutResponseMapDataWithAddress = GetCalloutResponseMapData & {
   address: CalloutResponseAnswerAddress;

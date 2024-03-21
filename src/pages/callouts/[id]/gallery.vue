@@ -9,30 +9,7 @@ meta:
 
 <template>
   <div class="absolute inset-0 flex flex-col">
-    <div v-if="!isEmbed" class="flex-0 z-10 p-6 pb-1 shadow-lg md:p-6">
-      <PageTitle :title="callout.title" no-collapse>
-        <div>
-          <router-link
-            v-if="callout.responseViewSchema?.map"
-            :to="{
-              name: 'calloutMap',
-              query: { noIntro: 1 },
-            }"
-            class="mx-8 whitespace-nowrap font-semibold text-link"
-          >
-            <font-awesome-icon :icon="faMap" /> {{ t('callout.views.map') }}
-          </router-link>
-          <AppButton
-            variant="link"
-            class="hidden px-2 md:inline-block"
-            @click="handleAddNew"
-          >
-            <font-awesome-icon :icon="faPlus" class="text" />
-            {{ t('callout.addLocation') }}
-          </AppButton>
-        </div>
-      </PageTitle>
-    </div>
+    <CalloutHeader v-if="!isEmbed" :callout="callout" @addnew="handleAddNew" />
     <div class="overflow-scroll">
       <ul class="m-3 flex flex-wrap">
         <li
@@ -59,7 +36,7 @@ meta:
     <transition name="response-panel-bg">
       <div
         v-if="selectedResponse"
-        class="fixed inset-0 bg-black/50"
+        class="fixed inset-0 z-10 bg-black/50"
         @click="router.push({ hash: '' })"
       />
     </transition>
@@ -84,22 +61,17 @@ meta:
 </template>
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref } from 'vue';
-import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
-import { faMap } from '@fortawesome/free-solid-svg-icons';
 
 import CalloutShowResponsePanel from '@components/pages/callouts/CalloutShowResponsePanel.vue';
 import CalloutIntroPanel from '@components/pages/callouts/CalloutIntroPanel.vue';
-import PageTitle from '@components/PageTitle.vue';
+import CalloutHeader from '@components/pages/callouts/CalloutHeader.vue';
 
 import { fetchResponsesForMap } from '@utils/api/callout';
 
 import { isEmbed } from '@store';
 
 import type { GetCalloutDataWith, GetCalloutResponseMapData } from '@type';
-
-import AppButton from '@components/button/AppButton.vue';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const HASH_PREFIX = '#response-' as const;
 
@@ -111,7 +83,6 @@ const props = defineProps<{
 
 const route = useRoute();
 const router = useRouter();
-const { t } = useI18n();
 
 const responses = ref<GetCalloutResponseMapData[]>([]);
 

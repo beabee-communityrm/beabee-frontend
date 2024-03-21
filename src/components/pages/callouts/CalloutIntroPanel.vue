@@ -1,7 +1,6 @@
 <template>
   <CalloutSidePanel :show="show" @close="$emit('close')">
     <div class="flex h-full flex-col items-start lg:justify-center">
-      <CalloutVariantToggle :callout="callout" class="w-full bg-primary-5" />
       <AppTitle class="pt-8">{{ callout.title }}</AppTitle>
       <figure class="mb-6">
         <img class="w-full object-cover" :src="callout.image" />
@@ -22,11 +21,10 @@ import AppTitle from '@components/AppTitle.vue';
 import AppButton from '@components/button/AppButton.vue';
 
 import type { GetCalloutDataWith } from '@type';
-import CalloutVariantToggle from './CalloutVariantToggle.vue';
 
 defineEmits<{ (e: 'close'): void }>();
 defineProps<{
-  callout: GetCalloutDataWith<'form' | 'variantNames'>;
+  callout: GetCalloutDataWith<'form'>;
   show: boolean;
 }>();
 
