@@ -7,7 +7,13 @@ meta:
 </route>
 
 <template>
-  <CalloutVariantToggle :callout="callout" class="mb-6 bg-white md:max-w-2xl" />
+  <div
+    v-if="variantItems.length > 1"
+    class="mb-6 flex flex-wrap items-center rounded bg-white p-4 md:max-w-2xl"
+  >
+    <font-awesome-icon :icon="faGlobe" class="mr-2" />
+    <AppToggle v-model="currentVariant" :items="variantItems" />
+  </div>
 
   <AppTitle v-if="!isEmbed" big>{{ callout.title }}</AppTitle>
 
@@ -118,6 +124,7 @@ import { useRoute, useRouter } from 'vue-router';
 import {
   faBullhorn,
   faCaretDown,
+  faGlobe,
   faInfoCircle,
   faShare,
 } from '@fortawesome/free-solid-svg-icons';
@@ -143,7 +150,7 @@ import { addNotification } from '@store/notifications';
 import { addBreadcrumb } from '@store/breadcrumb';
 
 import type { GetCalloutDataWith, GetCalloutResponseDataWith } from '@type';
-import CalloutVariantToggle from '@components/pages/callouts/CalloutVariantToggle.vue';
+import AppToggle from '@components/forms/AppToggle.vue';
 
 const props = defineProps<{
   callout: GetCalloutDataWith<'form' | 'variantNames'>;
@@ -197,9 +204,13 @@ const isPreview = computed(
   () => route.query.preview === null && canAdmin.value
 );
 
-const { isOpen, showLoginPrompt, showMemberOnlyPrompt } = useCallout(
-  toRef(props, 'callout')
-);
+const {
+  isOpen,
+  showLoginPrompt,
+  showMemberOnlyPrompt,
+  variantItems,
+  currentVariant,
+} = useCallout(toRef(props, 'callout'));
 
 const latestResponse = computed(() =>
   props.callout.allowMultiple || isPreview.value

@@ -1,4 +1,4 @@
-import { watch } from 'vue';
+import { computed, watch } from 'vue';
 import {
   type DefaultLocaleMessageSchema,
   type LocaleMessages,
@@ -11,7 +11,19 @@ import i18nConfig from './i18n-config.json';
 
 import en from '../../locales/en.json';
 
+type Diff<T, U> = T extends U ? never : T;
+
+// It seems slightly odd that we have to define these types, why can't the JSON
+// import be const typed?
 type LocaleKey = keyof typeof i18nConfig;
+// Remove any variant languages (can't be base languages)
+type BaseLocaleKey = Diff<LocaleKey, `${string}@${string}`>;
+interface LocaleConfig {
+  baseLocale: BaseLocaleKey;
+  name: string;
+  displayName: string;
+  adminLocale: LocaleKey;
+}
 
 export function isLocaleKey(key: string): key is LocaleKey {
   return key in i18nConfig;
@@ -44,29 +56,33 @@ const i18n = createI18n({
   },
 });
 
+export const currentLocale = computed<LocaleKey>(() => {
+  const route = router.currentRoute.value;
+  const newLocale = route.query.lang?.toString() || generalContent.value.locale;
+
+  const realLocale = isLocaleKey(newLocale) ? newLocale : 'en';
+
+  // Some locales have only been translated in non-admin areas
+  return route.path.startsWith('/admin')
+    ? (i18nConfig[realLocale].adminLocale as LocaleKey)
+    : realLocale;
+});
+
+export const currentLocaleConfig = computed<LocaleConfig>(
+  () => i18nConfig[currentLocale.value] as LocaleConfig
+);
+
 // Update document title on route or locale change
-watch([i18n.global.locale, router.currentRoute], ([, route]) => {
+watch([currentLocale, router.currentRoute], ([, route]) => {
   document.title =
     (route.meta.pageTitle ? i18n.global.t(route.meta.pageTitle) + ' - ' : '') +
     generalContent.value.organisationName;
 });
 
-// Update i18n language on route or global locale change
+// Update i18n library locale when the current locale changes
 watch(
-  [
-    () => router.currentRoute.value.path,
-    () => router.currentRoute.value.query.lang,
-    () => generalContent.value.locale,
-    () => generalContent.value.currencyCode,
-  ],
-  async ([path, routeLang, globalLocale, newCurrencyCode]) => {
-    let newLocale = routeLang?.toString() || globalLocale;
-
-    // Some locales have only been translated in non-admin areas
-    if (isLocaleKey(newLocale) && path.startsWith('/admin')) {
-      newLocale = i18nConfig[newLocale].adminLocale;
-    }
-
+  [currentLocale, () => generalContent.value.currencyCode],
+  async ([newLocale, newCurrencyCode]) => {
     // Remove variants (e.g. @informal)
     const [justLocale] = newLocale.split('@');
 

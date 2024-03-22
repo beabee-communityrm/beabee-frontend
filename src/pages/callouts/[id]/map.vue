@@ -26,7 +26,7 @@ meta:
         :max-zoom="callout.responseViewSchema.map.maxZoom"
         :min-zoom="callout.responseViewSchema.map.minZoom"
         :max-bounds="callout.responseViewSchema.map.bounds"
-        :language="mapLanguage"
+        :language="currentLocaleConfig.baseLocale"
         @map:load="handleLoad"
         @map:click="handleClick"
         @map:mousemove="handleMouseOver"
@@ -185,7 +185,6 @@ import {
   MglNavigationControl,
   MglScaleControl,
   MglGeolocationControl,
-  type ValidLanguages,
 } from 'vue-maplibre-gl';
 import type {
   GeoJSONSource,
@@ -231,8 +230,7 @@ import AppButton from '@components/button/AppButton.vue';
 import { isEmbed } from '@store';
 
 import type { GetCalloutDataWith, GetCalloutResponseMapData } from '@type';
-import { isLocaleKey } from '@lib/i18n';
-import i18nConfig from '@lib/i18n-config.json';
+import { currentLocaleConfig } from '@lib/i18n';
 import CalloutHeader from '@components/pages/callouts/CalloutHeader.vue';
 
 type GetCalloutResponseMapDataWithAddress = GetCalloutResponseMapData & {
@@ -248,19 +246,13 @@ const props = defineProps<{
 const map = useMap();
 const route = useRoute();
 const router = useRouter();
-const { locale, t } = useI18n();
+const { t } = useI18n();
 
 const sidePanelRef = ref<HTMLElement>();
 
 const responses = ref<GetCalloutResponseMapDataWithAddress[]>([]);
 
 const { isOpen } = useCallout(toRef(props, 'callout'));
-
-const mapLanguage = computed(() => {
-  return isLocaleKey(locale.value)
-    ? (i18nConfig[locale.value].baseLocale as ValidLanguages)
-    : null;
-});
 
 const isAddMode = ref(false);
 const selectMode = ref(false);
@@ -479,17 +471,20 @@ function handleLoad(e: { map: Map }) {
   if (env.maptilerKey) {
     const geocodeControl = new GeocodingControl({
       apiKey: env.maptilerKey,
-      language: locale.value,
+      language: currentLocaleConfig.value.baseLocale,
       proximity: [{ type: 'map-center' }],
       country: props.callout.responseViewSchema?.map?.geocodeCountries,
     });
 
-    watch(locale, (newLocale) => {
-      geocodeControl.setOptions({
-        apiKey: env.maptilerKey, // Incorrect type means we have to pass this again
-        language: newLocale,
-      });
-    });
+    watch(
+      () => currentLocaleConfig.value.baseLocale,
+      (newLocale) => {
+        geocodeControl.setOptions({
+          apiKey: env.maptilerKey, // Incorrect type means we have to pass this again
+          language: newLocale,
+        });
+      }
+    );
 
     geocodeControl.addEventListener('pick', (e: Event) => {
       const event = e as GeocodePickEvent;
