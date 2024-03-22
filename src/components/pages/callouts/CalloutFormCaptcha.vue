@@ -6,6 +6,7 @@
     <CaptchaFox
       :sitekey="env.captchafoxKey"
       :model-value="modelValue"
+      :lang="currentLocaleConfig.baseLocale"
       @update:model-value="$emit('update:modelValue', $event)"
     />
   </div>
@@ -13,6 +14,7 @@
 <script setup lang="ts">
 import { CaptchaFox } from '@captchafox/vue';
 import env from '@env';
+import { currentLocaleConfig } from '@lib/i18n';
 
 import { useI18n } from 'vue-i18n';
 
