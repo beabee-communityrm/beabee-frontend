@@ -29,7 +29,7 @@ import type { GetCalloutDataWith } from '@type';
 
 defineEmits<(e: 'close') => void>();
 const props = defineProps<{
-  callout: GetCalloutDataWith<'form'>;
+  callout: GetCalloutDataWith<'form' | 'variantNames'>;
   answers?: CalloutResponseAnswers;
 }>();
 
