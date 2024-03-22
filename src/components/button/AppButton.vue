@@ -65,6 +65,11 @@ const variantClasses = {
   ],
   text: ['underline text-link border-0', 'hover:text-link-110', ''],
   dangerText: ['underline text-danger border-0', 'hover:text-danger-110', ''],
+  greyText: [
+    'bg-white border-primary/0',
+    'hover:border-grey hover:bg-grey-lighter',
+    '',
+  ],
 } as const;
 
 const sizeClasses = {

@@ -5,11 +5,36 @@
     <AppTitle :title="callout.title" light no-margin class="flex-1">
       {{ callout.title }}
     </AppTitle>
-    <div v-if="variantItems" class="mr-2">
-      <font-awesome-icon :icon="faGlobe" class="mr-2" />{{
-        variantItems.find((vi) => vi.id === currentVariant)?.label
-      }}
+
+    <div v-if="variantItems" class="relative mr-2">
+      <AppButton
+        variant="greyText"
+        :icon="faGlobe"
+        @click.prevent="langOpen = !langOpen"
+      >
+        {{ variantItems.find((vi) => vi.id === currentVariant)?.label }}
+      </AppButton>
+
+      <div
+        v-if="langOpen"
+        class="absolute -left-2 top-full mt-2 min-w-full bg-white shadow-lg"
+      >
+        <div class="p-2">
+          <template v-for="vi in variantItems" :key="vi.id">
+            <AppButton
+              v-if="vi.id !== currentVariant"
+              variant="greyText"
+              class="w-full"
+              :icon="faGlobe"
+              @click="currentVariant = vi.id"
+            >
+              {{ vi.label }}
+            </AppButton>
+          </template>
+        </div>
+      </div>
     </div>
+
     <AppButton
       v-if="viewLink"
       variant="linkOutlined"
@@ -46,6 +71,8 @@ import AppButton from '@components/button/AppButton.vue';
 import AppTitle from '@components/AppTitle.vue';
 import { useCallout } from './use-callout';
 import { toRef } from 'vue';
+import { ref } from 'vue';
+import { watch } from 'vue';
 
 defineEmits<{ (e: 'addnew'): void }>();
 const props = defineProps<{
@@ -58,6 +85,12 @@ const { t } = useI18n();
 const { currentVariant, isOpen, variantItems } = useCallout(
   toRef(props, 'callout')
 );
+
+const langOpen = ref(false);
+
+watch(currentVariant, () => {
+  langOpen.value = false;
+});
 
 const viewLink = computed(() =>
   props.callout.responseViewSchema?.gallery && props.map

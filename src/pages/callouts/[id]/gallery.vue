@@ -18,7 +18,7 @@ meta:
           class="min-w-[250px] flex-1 p-3 sm:max-w-sm"
         >
           <router-link
-            :to="`${HASH_PREFIX}${response.number}`"
+            :to="{ ...route, hash: HASH_PREFIX + response.number }"
             @click="introOpen = false"
           >
             <img
@@ -37,7 +37,7 @@ meta:
       <div
         v-if="selectedResponse"
         class="fixed inset-0 z-10 bg-black/50"
-        @click="router.push({ hash: '' })"
+        @click="router.push({ ...route, hash: '' })"
       />
     </transition>
 
@@ -45,7 +45,7 @@ meta:
       :callout="callout"
       :response="selectedResponse"
       @close="
-        router.push({ hash: '' });
+        router.push({ ...route, hash: '' });
         introOpen = false;
       "
       @click.stop
