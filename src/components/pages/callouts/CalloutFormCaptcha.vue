@@ -23,3 +23,8 @@ defineProps<{ modelValue: string }>();
 
 const { t } = useI18n();
 </script>
+<style>
+.cf-button {
+  max-width: 100% !important;
+}
+</style>
