@@ -77,10 +77,7 @@ meta:
           class="w-full"
           :to="{
             path: '/callouts/' + callout.slug + '/respond',
-            query: {
-              preview: isPreview ? null : undefined,
-              lang: route.query.lang,
-            },
+            query: route.query,
           }"
         >
           {{

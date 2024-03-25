@@ -23,10 +23,7 @@ import AppButton from '@components/button/AppButton.vue';
 import type { GetCalloutDataWith } from '@type';
 
 defineEmits<{ (e: 'close'): void }>();
-defineProps<{
-  callout: GetCalloutDataWith<'form'>;
-  show: boolean;
-}>();
+defineProps<{ callout: GetCalloutDataWith<'form'>; show: boolean }>();
 
 const { t } = useI18n();
 </script>

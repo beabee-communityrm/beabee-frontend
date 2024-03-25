@@ -13,7 +13,9 @@ meta:
       v-if="!isEmbed"
       :callout="callout"
       class="flex-0"
-      @addnew="handleAddNew"
+      @addnew="
+        router.push({ name: 'calloutMap', query: route.query, hash: '#add' })
+      "
     />
     <div class="overflow-scroll">
       <ul class="m-3 flex flex-wrap">
@@ -101,15 +103,6 @@ const selectedResponse = computed(() => {
     return undefined;
   }
 });
-
-function handleAddNew() {
-  // redirect to map view and show add new panel
-  router.push({
-    name: 'calloutMap',
-    query: { ...route.query },
-    hash: '#add',
-  });
-}
 
 onBeforeMount(async () => {
   if (!props.callout.responseViewSchema?.gallery) {
