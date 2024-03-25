@@ -104,7 +104,11 @@ const selectedResponse = computed(() => {
 
 function handleAddNew() {
   // redirect to map view and show add new panel
-  router.push({ name: 'calloutMap', query: { noIntro: 1, addNew: 1 } });
+  router.push({
+    name: 'calloutMap',
+    query: { ...route.query },
+    hash: '#add',
+  });
 }
 
 onBeforeMount(async () => {

@@ -255,11 +255,21 @@ const responses = ref<GetCalloutResponseMapDataWithAddress[]>([]);
 
 const { isOpen } = useCallout(toRef(props, 'callout'));
 
-const isAddMode = ref(false);
-const selectMode = ref(false);
 const introOpen = ref(false);
 const newResponseAnswers = ref<CalloutResponseAnswers>();
 const geocodeAddress = ref<CalloutResponseAnswerAddress>();
+
+const isAddMode = computed(() => route.hash === '#add');
+
+// Start add response mode
+function handleStartAddMode() {
+  router.push({ ...route, hash: '#add' });
+}
+
+// Cancel add response mode, clearing any state that is left over
+function handleCancelAddMode() {
+  router.push({ ...route, hash: '' });
+}
 
 // Use the address from the new response to show a marker on the map
 const newResponseAddress = computed(() => {
@@ -371,24 +381,6 @@ function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
   e.map.getCanvas().style.cursor = features.length > 0 ? 'pointer' : '';
 }
 
-// Start add response mode
-function handleStartAddMode() {
-  if (!map.map) return;
-  isAddMode.value = true;
-  introOpen.value = false;
-  selectMode.value = false;
-  map.map.getCanvas().style.cursor = 'crosshair';
-  router.push({ ...route, hash: '' });
-}
-
-// Cancel add response mode, clearing any state that is left over
-function handleCancelAddMode() {
-  if (!map.map) return;
-  isAddMode.value = false;
-  newResponseAnswers.value = undefined;
-  map.map.getCanvas().style.cursor = '';
-}
-
 // Geolocate where the user has clicked
 async function handleAddClick(e: { event: MapMouseEvent; map: Map }) {
   const mapSchema = props.callout.responseViewSchema?.map;
@@ -439,6 +431,18 @@ watch(selectedResponseFeature, (newFeature) => {
   });
 });
 
+// Toggle add mode
+watch(isAddMode, (v) => {
+  if (!map.map) return;
+  if (v) {
+    introOpen.value = false;
+    map.map.getCanvas().style.cursor = 'crosshair';
+  } else {
+    newResponseAnswers.value = undefined;
+    map.map.getCanvas().style.cursor = '';
+  }
+});
+
 // Load callout and responses
 onBeforeMount(async () => {
   if (!props.callout.responseViewSchema?.map) {
@@ -456,11 +460,6 @@ onMounted(async () => {
   // switching from the gallery view)
   if (!route.query.noIntro) {
     introOpen.value = true;
-  }
-  // needed when "Add New" is clicked in the gallery view,
-  // which switches to the map view first
-  if (route.query.addNew) {
-    handleStartAddMode();
   }
 });
 

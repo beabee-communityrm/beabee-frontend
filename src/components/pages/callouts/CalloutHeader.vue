@@ -64,6 +64,7 @@ import { useCallout } from './use-callout';
 import { computed, toRef, ref, watch } from 'vue';
 import AppDropdownButton from '@components/button/AppDropdownButton.vue';
 import AppSelectableList from '@components/AppSelectableList.vue';
+import { useRoute } from 'vue-router';
 
 defineEmits<{ (e: 'addnew'): void }>();
 const props = defineProps<{
@@ -77,6 +78,8 @@ const { currentVariant, isOpen, variantItems } = useCallout(
   toRef(props, 'callout')
 );
 
+const route = useRoute();
+
 const langOpen = ref(false);
 
 watch(currentVariant, () => {
@@ -86,13 +89,13 @@ watch(currentVariant, () => {
 const viewLink = computed(() =>
   props.callout.responseViewSchema?.gallery && props.map
     ? {
-        to: { name: 'calloutGallery', query: { noIntro: 1 } },
+        to: { name: 'calloutGallery', query: { ...route.query, noIntro: 1 } },
         label: t('callout.views.gallery'),
         icon: faImages,
       }
     : props.callout.responseViewSchema?.map && !props.map
       ? {
-          to: { name: 'calloutMap', query: { noIntro: 1 } },
+          to: { name: 'calloutMap', query: { ...route.query, noIntro: 1 } },
           label: t('callout.views.map'),
           icon: faMap,
         }
