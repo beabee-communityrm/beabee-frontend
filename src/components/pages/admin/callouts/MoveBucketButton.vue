@@ -3,24 +3,19 @@
     :icon="faFolder"
     variant="primaryOutlined"
     :title="t('calloutResponsePage.actions.moveBucket')"
+    :show-title="withText"
   >
-    <span v-if="withText">
-      {{ t('calloutResponsePage.actions.moveBucket') }}
-    </span>
-
-    <template #dropdown>
-      <AppSelectableList
-        v-slot="{ item }"
-        :items="selectableBuckets"
-        @click="handleMove"
-      >
-        {{
-          t('calloutResponsesPage.moveToBucket', {
-            bucket: item.label,
-          })
-        }}
-      </AppSelectableList>
-    </template>
+    <AppSelectableList
+      v-slot="{ item }"
+      :items="selectableBuckets"
+      @click="handleMove"
+    >
+      {{
+        t('calloutResponsesPage.moveToBucket', {
+          bucket: item.label,
+        })
+      }}
+    </AppSelectableList>
   </AppDropdownButton>
 </template>
 

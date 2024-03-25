@@ -3,21 +3,16 @@
     :icon="faUser"
     variant="primaryOutlined"
     :title="t('calloutResponsePage.actions.assignTo')"
+    :show-title="withText"
   >
-    <span v-if="withText">
-      {{ t('calloutResponsePage.actions.assignTo') }}
-    </span>
-
-    <template #dropdown>
-      <AppSelectableList
-        v-slot="{ item }"
-        :items="admins"
-        :selected-item-ids="currentAssigneeId ? [currentAssigneeId] : []"
-        @click="handleAssign"
-      >
-        {{ item.displayName }}
-      </AppSelectableList>
-    </template>
+    <AppSelectableList
+      v-slot="{ item }"
+      :items="admins"
+      :selected-item-ids="currentAssigneeId ? [currentAssigneeId] : []"
+      @click="handleAssign"
+    >
+      {{ item.displayName }}
+    </AppSelectableList>
   </AppDropdownButton>
 </template>
 

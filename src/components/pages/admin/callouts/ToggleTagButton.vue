@@ -3,34 +3,29 @@
     :icon="faTag"
     variant="primaryOutlined"
     :title="t('calloutResponsePage.actions.toggleTag')"
+    :show-title="withText"
   >
-    <span v-if="withText">
-      {{ t('calloutResponsePage.actions.toggleTag') }}
-    </span>
+    <p v-if="tagItems.length === 0" class="px-3 py-2 italic">
+      {{ t('calloutResponsesPage.noTags') }}
+    </p>
+    <AppSelectableList
+      v-else
+      v-slot="{ item }"
+      :items="tagItems"
+      :selected-item-ids="selectedTags"
+      @click="handleToggle"
+    >
+      <font-awesome-icon class="mr-2" :icon="faTag" />{{ item.label }}
+    </AppSelectableList>
 
-    <template #dropdown>
-      <p v-if="tagItems.length === 0" class="px-3 py-2 italic">
-        {{ t('calloutResponsesPage.noTags') }}
-      </p>
-      <AppSelectableList
-        v-else
-        v-slot="{ item }"
-        :items="tagItems"
-        :selected-item-ids="selectedTags"
-        @click="handleToggle"
-      >
-        <font-awesome-icon class="mr-2" :icon="faTag" />{{ item.label }}
-      </AppSelectableList>
-
-      <router-link
-        class="block border-t border-primary-40 px-3 py-2 font-semibold text-primary underline hover:bg-primary-5 group-hover:border-primary"
-        :to="manageUrl"
-      >
-        <font-awesome-icon class="mr-2" :icon="faCog" />{{
-          t('calloutResponsePage.manageTags')
-        }}
-      </router-link>
-    </template>
+    <router-link
+      class="block border-t border-primary-40 px-3 py-2 font-semibold text-primary underline hover:bg-primary-5 group-hover:border-primary"
+      :to="manageUrl"
+    >
+      <font-awesome-icon class="mr-2" :icon="faCog" />{{
+        t('calloutResponsePage.manageTags')
+      }}
+    </router-link>
   </AppDropdownButton>
 </template>
 <script lang="ts" setup>

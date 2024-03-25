@@ -6,16 +6,18 @@
     class="group"
     :class="open ? '!rounded-b-none !bg-white' : ''"
     :disabled="disabled"
+    :title="title"
     @click="open = !open"
   >
-    <slot />
+    <span v-if="showTitle">{{ title }} </span>
+
     <template #after>
       <div
         class="border text-left text-sm font-normal text-body-80 shadow-lg"
         :class="{ [sharedClasses]: true, hidden: !open }"
         @click.stop
       >
-        <slot name="dropdown" />
+        <slot />
       </div>
       <div
         v-show="open"
@@ -33,6 +35,8 @@ import AppButton from './AppButton.vue';
 
 const props = defineProps<{
   icon: IconDefinition;
+  title: string;
+  showTitle?: boolean;
   disabled?: boolean;
 }>();
 
