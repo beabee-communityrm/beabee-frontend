@@ -1,39 +1,31 @@
 <template>
-  <div
-    class="flex-0 z-10 flex flex-col gap-2 p-4 shadow-lg md:flex-row md:items-center md:p-6"
+  <header
+    class="z-10 flex flex-wrap items-center justify-end gap-2 p-4 shadow-lg md:p-6"
   >
-    <AppTitle :title="callout.title" light no-margin class="flex-1">
+    <AppTitle
+      :title="callout.title"
+      light
+      no-margin
+      class="w-full md:w-auto md:flex-1"
+    >
       {{ callout.title }}
     </AppTitle>
 
-    <div v-if="variantItems" class="relative mr-2">
-      <AppButton
-        variant="greyText"
-        :icon="faGlobe"
-        @click.prevent="langOpen = !langOpen"
+    <AppDropdownButton
+      v-if="variantItems.length > 1"
+      :icon="faGlobe"
+      variant="greyOutlined"
+      :title="variantItems.find((vi) => vi.id === currentVariant)?.label || ''"
+      show-title
+    >
+      <AppSelectableList
+        v-slot="{ item }"
+        :items="variantItems"
+        @click="currentVariant = $event.id"
       >
-        {{ variantItems.find((vi) => vi.id === currentVariant)?.label }}
-      </AppButton>
-
-      <div
-        v-if="langOpen"
-        class="absolute -left-2 top-full mt-2 min-w-full bg-white shadow-lg"
-      >
-        <div class="p-2">
-          <template v-for="vi in variantItems" :key="vi.id">
-            <AppButton
-              v-if="vi.id !== currentVariant"
-              variant="greyText"
-              class="w-full"
-              :icon="faGlobe"
-              @click="currentVariant = vi.id"
-            >
-              {{ vi.label }}
-            </AppButton>
-          </template>
-        </div>
-      </div>
-    </div>
+        <font-awesome-icon :icon="faGlobe" class="mr-2" />{{ item.label }}
+      </AppSelectableList>
+    </AppDropdownButton>
 
     <AppButton
       v-if="viewLink"
@@ -54,7 +46,7 @@
       <font-awesome-icon :icon="faPlus" class="text" />
       {{ t('callout.addLocation') }}
     </AppButton>
-  </div>
+  </header>
 </template>
 
 <script lang="ts" setup>
@@ -66,13 +58,12 @@ import {
   faMap,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
-import { computed } from 'vue';
 import AppButton from '@components/button/AppButton.vue';
 import AppTitle from '@components/AppTitle.vue';
 import { useCallout } from './use-callout';
-import { toRef } from 'vue';
-import { ref } from 'vue';
-import { watch } from 'vue';
+import { computed, toRef, ref, watch } from 'vue';
+import AppDropdownButton from '@components/button/AppDropdownButton.vue';
+import AppSelectableList from '@components/AppSelectableList.vue';
 
 defineEmits<{ (e: 'addnew'): void }>();
 const props = defineProps<{

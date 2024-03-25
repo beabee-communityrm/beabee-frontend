@@ -9,7 +9,12 @@ meta:
 
 <template>
   <div class="absolute inset-0 flex flex-col">
-    <CalloutHeader v-if="!isEmbed" :callout="callout" @addnew="handleAddNew" />
+    <CalloutHeader
+      v-if="!isEmbed"
+      :callout="callout"
+      class="flex-0"
+      @addnew="handleAddNew"
+    />
     <div class="overflow-scroll">
       <ul class="m-3 flex flex-wrap">
         <li

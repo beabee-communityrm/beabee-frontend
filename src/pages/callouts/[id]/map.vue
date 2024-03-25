@@ -15,6 +15,7 @@ meta:
     <CalloutHeader
       v-if="!isEmbed"
       :callout="callout"
+      class="flex-0"
       map
       @addnew="handleStartAddMode"
     />

@@ -1,7 +1,7 @@
 <template>
   <AppButton
     ref="buttonRef"
-    variant="primaryOutlined"
+    :variant="variant"
     :icon="icon"
     class="group"
     :class="open ? '!rounded-b-none !bg-white' : ''"
@@ -32,16 +32,33 @@
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { onBeforeMount, onBeforeUnmount, ref, toRef, watch } from 'vue';
 import AppButton from './AppButton.vue';
+import { computed } from 'vue';
 
 const props = defineProps<{
   icon: IconDefinition;
   title: string;
+  variant:
+    | 'primaryOutlined'
+    | 'linkOutlined'
+    | 'dangerOutlined'
+    | 'greyOutlined';
   showTitle?: boolean;
   disabled?: boolean;
 }>();
 
-const sharedClasses =
-  'absolute top-full min-w-full -left-px z-20 border-primary-40 group-hover:border-primary-80 bg-white';
+const baseClasses = 'absolute top-full min-w-full -left-px z-20 bg-white';
+
+// Border styles from AppButton
+const variantClasses = {
+  primaryOutlined: 'border-primary-40 group-hover:border-primary-70',
+  linkOutlined: 'border-link',
+  dangerOutlined: 'border-danger',
+  greyOutlined: 'border-grey-light group-hover:border-grey',
+} as const;
+
+const sharedClasses = computed(
+  () => `${baseClasses} ${variantClasses[props.variant]}`
+);
 
 const buttonRef = ref<InstanceType<typeof AppButton>>();
 const open = ref(false);
