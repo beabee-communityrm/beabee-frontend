@@ -242,7 +242,14 @@ const canRespond = computed(
 );
 
 function handleSubmitResponse() {
-  router.push({ path: `/callouts/${props.callout.slug}/thanks` });
+  if (props.callout.thanksRedirect) {
+    window.location.href = props.callout.thanksRedirect;
+  } else {
+    router.push({
+      path: `/callouts/${props.callout.slug}/thanks`,
+      query: route.query,
+    });
+  }
 
   addNotification({
     title: t('callout.responseSubmitted'),
