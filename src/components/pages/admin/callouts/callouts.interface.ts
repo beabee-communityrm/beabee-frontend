@@ -1,9 +1,9 @@
-import { type CalloutFormSchema } from '@beabee/beabee-common';
 import { computed, type Raw, type Component } from 'vue';
 import i18n from '../../../../lib/i18n';
 import { type AppStepperStep } from '../../../../type/app-stepper-step';
 
-import type { CalloutMapSchema } from '@type';
+import type { CalloutMapSchema, LocaleProp } from '@type';
+import type { FormBuilderSlide } from '@components/form-builder/form-builder.interface';
 
 const { t } = i18n.global;
 
@@ -20,20 +20,21 @@ export const buckets = computed(() => [
 ]);
 
 export interface ContentStepProps {
-  formSchema: CalloutFormSchema;
+  slides: FormBuilderSlide[];
+  componentText: Record<string, LocaleProp>;
 }
 
 export interface TitleAndImageStepProps {
-  title: string;
-  description: string;
+  title: LocaleProp;
+  description: LocaleProp;
   coverImageURL: string;
-  introText: string;
+  introText: LocaleProp;
   autoSlug: string;
   useCustomSlug: boolean;
   slug: string;
   overrideShare: boolean;
-  shareTitle: string;
-  shareDescription: string;
+  shareTitle: LocaleProp;
+  shareDescription: LocaleProp;
 }
 
 export interface SettingsStepProps {
@@ -51,13 +52,14 @@ export interface SettingsStepProps {
   responseImageFilter: string;
   responseLinks: { text: string; url: string }[];
   mapSchema: CalloutMapSchema;
+  locales: string[];
 }
 
 export interface EndMessageStepProps {
   whenFinished: 'message' | 'redirect';
-  thankYouTitle: string;
-  thankYouText: string;
-  thankYouRedirect: string;
+  thankYouTitle: LocaleProp;
+  thankYouText: LocaleProp;
+  thankYouRedirect: LocaleProp;
 }
 export interface MailchimpSyncStepProps {
   useMailchimpSync: boolean;

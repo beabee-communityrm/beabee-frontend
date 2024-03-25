@@ -90,6 +90,7 @@
                 :current-slide-no="currentSlideNo"
                 :is-first="isFirstSlide"
                 :is-last="isLastSlide"
+                :locales="steps.settings.data.locales"
               />
             </div>
             <div class="text-right">
@@ -101,6 +102,23 @@
               >
                 {{ t('calloutBuilder.actions.removeSlide') }}
               </AppButton>
+            </div>
+            <div
+              v-if="steps.settings.data.locales.length > 0"
+              class="my-4 bg-white p-6 shadow-md"
+            >
+              <AppSubHeading>
+                {{ t('calloutBuilder.translationsTitle') }}
+              </AppSubHeading>
+              <p class="mb-4">
+                {{ t('calloutBuilder.translationsText') }}
+              </p>
+
+              <FormBuilderTranslations
+                v-model="data.componentText"
+                :components="currentSlide.components"
+                :locales="steps.settings.data.locales"
+              />
             </div>
           </div>
           <div class="flex-0 basis-[15rem]" />
@@ -115,7 +133,7 @@ import useVuelidate from '@vuelidate/core';
 import { ref, watch } from 'vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { ContentStepProps } from '../callouts.interface';
+import type { CalloutSteps, ContentStepProps } from '../callouts.interface';
 import AppNotification from '../../../../AppNotification.vue';
 import FormBuilder from '../../../../form-builder/FormBuilder.vue';
 import {
@@ -134,10 +152,13 @@ import env from '../../../../../env';
 import Draggable from 'vuedraggable';
 import { useRoute } from 'vue-router';
 import CalloutSlideItem from '../CalloutSlideItem.vue';
+import FormBuilderTranslations from '@components/form-builder/FormBuilderTranslations.vue';
+import AppSubHeading from '@components/AppSubHeading.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   data: ContentStepProps;
+  steps: CalloutSteps;
   status: ItemStatus | undefined;
 }>();
 
@@ -148,9 +169,9 @@ const wasJustReplicated = useRoute().query.replicated !== undefined;
 const showAdvancedOptions = ref(false);
 
 const slides = computed({
-  get: () => props.data.formSchema.slides,
+  get: () => props.data.slides,
   // eslint-disable-next-line vue/no-mutating-props
-  set: (v) => (props.data.formSchema.slides = v),
+  set: (v) => (props.data.slides = v),
 });
 
 const currentSlideId = ref(slides.value[0].id);

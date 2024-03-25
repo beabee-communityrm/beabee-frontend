@@ -7,7 +7,6 @@ export interface CalloutVariantData {
   thanksRedirect: string | null;
   shareTitle: string | null;
   shareDescription: string | null;
-
   slideNavigation: Record<string, CalloutVariantNavigationData>;
   componentText: Record<string, string>;
 }

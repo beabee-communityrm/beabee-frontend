@@ -3,5 +3,6 @@ export type GetCalloutWith =
   | 'hasAnswered'
   | 'responseCount'
   | 'responseViewSchema'
+  | 'variantNames'
   | 'variants'
   | void;

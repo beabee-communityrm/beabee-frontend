@@ -1,10 +1,10 @@
 import {
-  type CalloutComponentSchema,
-  type CalloutSlideSchema,
-  ItemStatus,
-  type RadioCalloutComponentSchema,
   flattenComponents,
-  type CalloutNavigationSchema,
+  ItemStatus,
+  type CalloutComponentSchema,
+  type RadioCalloutComponentSchema,
+  type GetCalloutSlideSchema,
+  type SetCalloutSlideSchema,
 } from '@beabee/beabee-common';
 import { format } from 'date-fns';
 import type { CalloutStepsProps } from '@components/pages/admin/callouts/callouts.interface';
@@ -21,27 +21,100 @@ import type {
   CalloutVariantNavigationData,
   CreateCalloutData,
   GetCalloutDataWith,
+  LocaleProp,
 } from '@type';
+import type {
+  FormBuilderNavigation,
+  FormBuilderSlide,
+} from '@components/form-builder/form-builder.interface';
 
 const { t } = i18n.global;
 
-export function getSlideSchema(no: number): CalloutSlideSchema {
+export function getSlideSchema(no: number): FormBuilderSlide {
   const id = 'slide' + Math.random().toString(36).substring(2, 8);
   return {
     id,
     title: t('calloutBuilder.slideNo', { no }),
     components: [],
     navigation: {
-      nextText: t('actions.next'),
-      prevText: t('actions.back'),
+      nextText: { default: t('actions.next') },
+      prevText: { default: t('actions.back') },
       nextSlideId: '',
-      submitText: t('actions.submit'),
+      submitText: { default: t('actions.submit') },
     },
   };
 }
 
+const textFields = [
+  'title',
+  'excerpt',
+  'intro',
+  'thanksTitle',
+  'thanksText',
+  'thanksRedirect',
+  'shareTitle',
+  'shareDescription',
+] as const;
+
+function convertVariantsForSteps(
+  variants: Record<string, CalloutVariantData> | undefined
+): Record<(typeof textFields)[number], LocaleProp> {
+  const result: Record<(typeof textFields)[number], LocaleProp> = {
+    title: { default: '' },
+    excerpt: { default: '' },
+    intro: { default: '' },
+    thanksText: { default: '' },
+    thanksTitle: { default: '' },
+    thanksRedirect: { default: '' },
+    shareTitle: { default: '' },
+    shareDescription: { default: '' },
+  };
+
+  for (const variant in variants) {
+    for (const field of textFields) {
+      result[field][variant] = variants[variant][field] || '';
+    }
+  }
+
+  return result;
+}
+
+function convertSlidesForSteps(
+  slidesIn: GetCalloutSlideSchema[] | undefined,
+  variants: Record<string, CalloutVariantData> | undefined
+): { slides: FormBuilderSlide[]; componentText: Record<string, LocaleProp> } {
+  const componentText: Record<string, LocaleProp> = {};
+
+  if (!slidesIn) return { slides: [getSlideSchema(1)], componentText };
+
+  const slides = slidesIn.map((slide) => {
+    const navigation: FormBuilderNavigation = {
+      prevText: { default: '' },
+      nextText: { default: '' },
+      submitText: { default: '' },
+      nextSlideId: slide.navigation.nextSlideId,
+    };
+
+    for (const variant in variants) {
+      for (const field of ['prevText', 'nextText', 'submitText'] as const) {
+        navigation[field][variant] =
+          variants[variant].slideNavigation[slide.id][field];
+      }
+
+      for (const text in variants[variant].componentText) {
+        componentText[text] ||= { default: '' };
+        componentText[text][variant] = variants[variant].componentText[text];
+      }
+    }
+
+    return { ...slide, navigation };
+  });
+
+  return { slides, componentText };
+}
+
 export function convertCalloutToSteps(
-  callout?: GetCalloutDataWith<'form' | 'responseViewSchema'>
+  callout?: GetCalloutDataWith<'form' | 'responseViewSchema' | 'variants'>
 ): CalloutStepsProps {
   const settings = env.cnrMode
     ? ({
@@ -65,23 +138,26 @@ export function convertCalloutToSteps(
         multipleResponses: callout?.allowMultiple || false,
       } as const);
 
+  const variants = convertVariantsForSteps(callout?.variants);
+
+  const content = convertSlidesForSteps(
+    callout?.formSchema.slides,
+    callout?.variants
+  );
+
   return {
-    content: {
-      formSchema: callout?.formSchema || {
-        slides: [getSlideSchema(1)],
-      },
-    },
+    content,
     titleAndImage: {
-      title: callout?.title || '',
-      description: callout?.excerpt || '',
+      title: variants.title,
+      description: variants.excerpt,
       coverImageURL: callout?.image || '',
-      introText: callout?.intro || '',
+      introText: variants.intro,
       useCustomSlug: !!callout,
       autoSlug: '',
       slug: callout?.slug || '',
       overrideShare: !!callout?.shareTitle,
-      shareTitle: callout?.shareTitle || '',
-      shareDescription: callout?.shareDescription || '',
+      shareTitle: variants.shareTitle,
+      shareDescription: variants.shareDescription,
     },
     settings: {
       ...settings,
@@ -110,12 +186,15 @@ export function convertCalloutToSteps(
         addressPattern: '',
         addressPatternProp: '',
       },
+      locales: callout
+        ? Object.keys(callout.variants).filter((v) => v !== 'default')
+        : [],
     },
     endMessage: {
       whenFinished: callout?.thanksRedirect ? 'redirect' : 'message',
-      thankYouTitle: callout?.thanksTitle || '',
-      thankYouText: callout?.thanksText || '',
-      thankYouRedirect: callout?.thanksRedirect || '',
+      thankYouTitle: variants.thanksTitle,
+      thankYouText: variants.thanksText,
+      thankYouRedirect: variants.thanksRedirect,
     },
     /*mailchimp: {
       useMailchimpSync: false,
@@ -131,56 +210,84 @@ export function convertCalloutToSteps(
   };
 }
 
+function convertVariantsForCallout(
+  steps: CalloutStepsProps
+): Record<string, CalloutVariantData> {
+  const variants: Record<string, CalloutVariantData> = {};
+  for (const variant of [...steps.settings.locales, 'default']) {
+    const slideNavigation: Record<string, CalloutVariantNavigationData> = {};
+
+    for (const slide of steps.content.slides) {
+      slideNavigation[slide.id] = {
+        nextText: slide.navigation.nextText[variant] || '',
+        prevText: slide.navigation.prevText[variant] || '',
+        submitText: slide.navigation.submitText[variant] || '',
+      };
+    }
+
+    const componentText: Record<string, string> = {};
+    for (const key in steps.content.componentText) {
+      componentText[key] = steps.content.componentText[key][variant] || '';
+    }
+
+    variants[variant] = {
+      title: steps.titleAndImage.title[variant] || '',
+      excerpt: steps.titleAndImage.description[variant] || '',
+      intro: steps.titleAndImage.introText[variant] || '',
+      ...(steps.endMessage.whenFinished === 'redirect'
+        ? {
+            thanksText: '',
+            thanksTitle: '',
+            thanksRedirect: steps.endMessage.thankYouRedirect[variant] || '',
+          }
+        : {
+            thanksText: steps.endMessage.thankYouText[variant] || '',
+            thanksTitle: steps.endMessage.thankYouTitle[variant] || '',
+            thanksRedirect: null,
+          }),
+      ...(steps.titleAndImage.overrideShare
+        ? {
+            shareTitle: steps.titleAndImage.shareTitle[variant] || '',
+            shareDescription:
+              steps.titleAndImage.shareDescription[variant] || '',
+          }
+        : {
+            shareTitle: null,
+            shareDescription: null,
+          }),
+      slideNavigation,
+      componentText,
+    };
+  }
+
+  return variants;
+}
+
+function convertSlidesForCallout(
+  steps: CalloutStepsProps
+): SetCalloutSlideSchema[] {
+  return steps.content.slides.map((slide) => ({
+    ...slide,
+    navigation: {
+      nextSlideId: slide.navigation.nextSlideId,
+    },
+  }));
+}
+
 export function convertStepsToCallout(
   steps: CalloutStepsProps
 ): CreateCalloutData {
-  const slideNavigation: Record<string, CalloutVariantNavigationData> = {};
+  const slug = steps.titleAndImage.useCustomSlug
+    ? steps.titleAndImage.slug
+    : steps.titleAndImage.autoSlug;
 
-  const slides = steps.content.formSchema.slides.map((slide) => {
-    const { nextText, prevText, submitText, ...navigation } = slide.navigation;
-    slideNavigation[slide.id] = { nextText, prevText, submitText };
-
-    return {
-      ...slide,
-      // TEMP: force type as beabee-common is outdated
-      navigation: navigation as CalloutNavigationSchema,
-    };
-  });
-
-  // TEMP: remove componentText as beabee-common is outdated
-  const formSchema = { slides, componentText: undefined };
-
-  const defaultVariant: CalloutVariantData = {
-    title: steps.titleAndImage.title || t('createCallout.untitledCallout'),
-    excerpt: steps.titleAndImage.description,
-    intro: steps.titleAndImage.introText,
-    ...(steps.endMessage.whenFinished === 'message'
-      ? {
-          thanksText: steps.endMessage.thankYouText,
-          thanksTitle: steps.endMessage.thankYouTitle,
-          thanksRedirect: null,
-        }
-      : {
-          thanksText: '',
-          thanksTitle: '',
-          thanksRedirect: steps.endMessage.thankYouRedirect,
-        }),
-    shareTitle: steps.titleAndImage.overrideShare
-      ? steps.titleAndImage.shareTitle
-      : null,
-    shareDescription: steps.titleAndImage.overrideShare
-      ? steps.titleAndImage.shareDescription
-      : null,
-    slideNavigation,
-    componentText: {},
-  };
+  const slides = convertSlidesForCallout(steps);
+  const variants = convertVariantsForCallout(steps);
 
   return {
-    slug: steps.titleAndImage.useCustomSlug
-      ? steps.titleAndImage.slug
-      : steps.titleAndImage.autoSlug,
+    slug: slug || null,
     image: steps.titleAndImage.coverImageURL,
-    formSchema,
+    formSchema: { slides },
     responseViewSchema: steps.settings.showResponses
       ? {
           buckets: steps.settings.responseBuckets,
@@ -218,7 +325,7 @@ export function convertStepsToCallout(
           : steps.settings.allowAnonymousResponses === 'guests'
             ? 'anonymous'
             : 'only-anonymous',
-    variants: { default: defaultVariant },
+    variants,
   };
 }
 
@@ -285,7 +392,7 @@ function isDecisionComponent(
 }
 
 export function getDecisionComponent(
-  slide: CalloutSlideSchema
+  components: CalloutComponentSchema[]
 ): RadioCalloutComponentSchema | undefined {
-  return flattenComponents(slide.components).find(isDecisionComponent);
+  return flattenComponents(components).find(isDecisionComponent);
 }

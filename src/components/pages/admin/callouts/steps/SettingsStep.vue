@@ -106,9 +106,7 @@
           <AppCheckboxGroup
             v-model="data.responseBuckets"
             :label="inputT('whichResponseBuckets.label')"
-            :options="
-              buckets.map((bucket) => [bucket.id, bucket.label || bucket.id])
-            "
+            :options="buckets"
             required
           />
         </AppFormSection>
@@ -117,8 +115,11 @@
             v-model="data.responseViews"
             :label="inputT('whichResponseViews.label')"
             :options="[
-              ['gallery', inputT('whichResponseViews.opts.gallery')],
-              ['map', inputT('whichResponseViews.opts.map')],
+              {
+                id: 'gallery',
+                label: inputT('whichResponseViews.opts.gallery'),
+              },
+              { id: 'map', label: inputT('whichResponseViews.opts.map') },
             ]"
             required
           />
@@ -244,6 +245,13 @@
           </AppFormSection>
         </template>
       </template>
+      <AppFormSection>
+        <AppCheckboxGroup
+          v-model="data.locales"
+          label="Enable multiple languages?"
+          :options="localeItems"
+        />
+      </AppFormSection>
     </template>
   </div>
 </template>
@@ -268,6 +276,7 @@ import env from '../../../../../env';
 import AppCheckboxGroup from '../../../../forms/AppCheckboxGroup.vue';
 import AppLinkList from '../../../../forms/AppLinkList.vue';
 import AppLabel from '../../../../forms/AppLabel.vue';
+import { localeItems } from '@lib/i18n';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
@@ -285,7 +294,7 @@ const hasVisited = ref(!!props.status);
 watch(toRef(props, 'isActive'), (active) => (hasVisited.value ||= active));
 
 const formComponentItems = computed(() =>
-  getCalloutComponents(props.steps.content.data.formSchema)
+  getCalloutComponents(props.steps.content.data)
     .filter((c) => c.input)
     .map((c) => ({
       id: c.fullKey,

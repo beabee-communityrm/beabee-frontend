@@ -11,6 +11,6 @@ meta:
 import CalloutPage from './index.vue';
 import type { GetCalloutDataWith } from '@type';
 defineProps<{
-  callout: GetCalloutDataWith<'form' | 'responseViewSchema'>;
+  callout: GetCalloutDataWith<'form' | 'responseViewSchema' | 'variantNames'>;
 }>();
 </script>

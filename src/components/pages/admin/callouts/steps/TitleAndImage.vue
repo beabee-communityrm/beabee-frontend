@@ -2,16 +2,18 @@
 <template>
   <div>
     <AppFormSection :help="inputT('title.help')">
-      <AppInput
+      <LocaleInput
         v-model="data.title"
+        :locales="steps.settings.data.locales"
         :label="inputT('title.label')"
         :placeholder="inputT('title.placeholder')"
         required
       />
     </AppFormSection>
     <AppFormSection :help="inputT('description.help')">
-      <AppTextArea
+      <LocaleTextArea
         v-model="data.description"
+        :locales="steps.settings.data.locales"
         :label="inputT('description.label')"
         :placeholder="inputT('description.placeholder')"
         required
@@ -27,8 +29,9 @@
       />
     </AppFormSection>
     <AppFormSection :help="inputT('intro.help')">
-      <RichTextEditor
+      <LocaleRichTextEditor
         v-model="data.introText"
+        :locales="steps.settings.data.locales"
         :label="inputT('intro.label')"
         required
       />
@@ -67,16 +70,18 @@
     </AppFormSection>
     <template v-if="data.overrideShare">
       <AppFormSection :help="inputT('shareTitle.help')">
-        <AppInput
+        <LocaleInput
           v-model="data.shareTitle"
+          :locales="steps.settings.data.locales"
           :label="inputT('shareTitle.label')"
           :placeholder="inputT('shareTitle.placeholder')"
           required
         />
       </AppFormSection>
       <AppFormSection :help="inputT('shareDescription.help')">
-        <AppTextArea
+        <LocaleTextArea
           v-model="data.shareDescription"
+          :locales="steps.settings.data.locales"
           :label="inputT('shareDescription.label')"
           :placeholder="inputT('shareDescription.placeholder')"
           required
@@ -92,19 +97,24 @@ import { computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppInput from '../../../../forms/AppInput.vue';
 import AppImageUpload from '../../../../forms/AppImageUpload.vue';
-import AppTextArea from '../../../../forms/AppTextArea.vue';
 import useVuelidate from '@vuelidate/core';
-import type { TitleAndImageStepProps } from '../callouts.interface';
+import type {
+  CalloutSteps,
+  TitleAndImageStepProps,
+} from '../callouts.interface';
 import AppRadioGroup from '../../../../forms/AppRadioGroup.vue';
 import AppLabel from '../../../../forms/AppLabel.vue';
 import env from '../../../../../env';
 import slugify from 'slugify';
 import AppFormSection from '../../../../forms/AppFormSection.vue';
-import RichTextEditor from '../../../../rte/RichTextEditor.vue';
+import LocaleTextArea from '@components/forms/LocaleTextArea.vue';
+import LocaleInput from '@components/forms/LocaleInput.vue';
+import LocaleRichTextEditor from '@components/forms/LocaleRichTextEditor.vue';
 
 const emit = defineEmits(['update:error', 'update:validated']);
 const props = defineProps<{
   data: TitleAndImageStepProps;
+  steps: CalloutSteps;
   status: ItemStatus | undefined;
 }>();
 
@@ -127,7 +137,7 @@ watch(
   () => props.data.title,
   (title) => {
     // eslint-disable-next-line vue/no-mutating-props
-    props.data.autoSlug = slugify(title, { lower: true });
+    props.data.autoSlug = slugify(title.default, { lower: true });
   }
 );
 

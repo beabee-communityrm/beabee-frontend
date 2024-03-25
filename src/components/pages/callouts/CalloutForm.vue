@@ -1,21 +1,14 @@
 <template>
   <form :class="formClass" @submit.prevent>
-    <template v-if="allSlides">
-      <FormRenderer
-        v-for="slide in slides"
-        :key="slide.id"
-        v-model="answersProxy[slide.id]"
-        :components="slide.components"
-        :readonly="readonly"
-      />
-    </template>
     <FormRenderer
-      v-else
-      :key="currentSlide.id"
-      v-model="answersProxy[currentSlide.id]"
-      :components="currentSlide.components"
+      v-for="slide in visibleSlides"
+      :key="slide.id"
+      v-model="answersProxy[slide.id]"
+      :components="slide.components"
+      :component-i18n-text="callout.formSchema.componentText"
       :readonly="readonly"
     />
+
     <template v-if="isLastSlide && !readonly && !preview">
       <CalloutFormGuestFields
         v-if="showGuestFields"
@@ -69,10 +62,7 @@
 </template>
 
 <script lang="ts" setup>
-import type {
-  CalloutResponseAnswers,
-  CalloutSlideSchema,
-} from '@beabee/beabee-common';
+import type { CalloutResponseAnswers } from '@beabee/beabee-common';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
@@ -132,8 +122,11 @@ const answersProxy = ref<CalloutResponseAnswers>(initialAnswers);
 const slideIds = ref<string[]>([slides.value[0].id]);
 
 const currentSlide = computed(
-  () =>
-    slides.value.find((s) => s.id === slideIds.value[0]) as CalloutSlideSchema // Should always be defined
+  () => slides.value.find((s) => s.id === slideIds.value[0])! // Should always be defined
+);
+
+const visibleSlides = computed(() =>
+  props.allSlides ? slides.value : [currentSlide.value]
 );
 
 const currentSlideNo = computed(() => slides.value.indexOf(currentSlide.value));
@@ -201,7 +194,7 @@ function handleNextSlide() {
   let nextSlideId;
 
   // If there is a decision component check if the user has selected a value
-  const decisionComponent = getDecisionComponent(currentSlide.value);
+  const decisionComponent = getDecisionComponent(currentSlide.value.components);
   if (decisionComponent) {
     const value =
       answersProxy.value[currentSlide.value.id]?.[decisionComponent.key];

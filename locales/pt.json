@@ -224,7 +224,13 @@
   },
   "calloutBuilder": {
     "actions": {},
-    "nextSlide": {}
+    "nextSlide": {},
+    "translationFields": {
+      "description": "Description",
+      "label": "Label",
+      "option": "Option {n}",
+      "placeholder": "Placeholder"
+    }
   },
   "calloutResponse": {
     "data": {
@@ -745,7 +751,6 @@
     "continue": "Tudo certo! Continuar",
     "welcome": "Boas-vindas {firstName}!"
   },
-  "locale": "pt",
   "login": {
     "backTo": "Voltar a {newsroomName}",
     "forgotPassword": "Esqueceu-se da palavra-passe?",

@@ -107,7 +107,13 @@
   },
   "calloutBuilder": {
     "actions": {},
-    "nextSlide": {}
+    "nextSlide": {},
+    "translationFields": {
+      "description": "Description",
+      "label": "Label",
+      "option": "Option {n}",
+      "placeholder": "Placeholder"
+    }
   },
   "calloutResponse": {
     "data": {},
@@ -331,7 +337,6 @@
   },
   "joinPayment": {},
   "joinSetup": {},
-  "locale": "nl",
   "login": {
     "lostMfaDevice": "2FA-apparaat kwijt?"
   },

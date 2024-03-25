@@ -7,6 +7,14 @@ meta:
 </route>
 
 <template>
+  <div
+    v-if="variantItems.length > 1"
+    class="mb-6 flex flex-wrap items-center rounded bg-white p-4 md:max-w-2xl"
+  >
+    <font-awesome-icon :icon="faGlobe" class="mr-2" />
+    <AppToggle v-model="currentVariant" :items="variantItems" />
+  </div>
+
   <AppTitle v-if="!isEmbed" big>{{ callout.title }}</AppTitle>
 
   <div v-if="responses /* Avoids layout thrashing */">
@@ -57,6 +65,7 @@ meta:
         </transition>
 
         <img class="w-full" :src="callout.image" />
+
         <div class="content-message text-lg" v-html="callout.intro" />
       </template>
 
@@ -68,7 +77,7 @@ meta:
           class="w-full"
           :to="{
             path: '/callouts/' + callout.slug + '/respond',
-            query: { preview: isPreview ? null : undefined },
+            query: route.query,
           }"
         >
           {{
@@ -112,6 +121,7 @@ import { useRoute, useRouter } from 'vue-router';
 import {
   faBullhorn,
   faCaretDown,
+  faGlobe,
   faInfoCircle,
   faShare,
 } from '@fortawesome/free-solid-svg-icons';
@@ -137,9 +147,10 @@ import { addNotification } from '@store/notifications';
 import { addBreadcrumb } from '@store/breadcrumb';
 
 import type { GetCalloutDataWith, GetCalloutResponseDataWith } from '@type';
+import AppToggle from '@components/forms/AppToggle.vue';
 
 const props = defineProps<{
-  callout: GetCalloutDataWith<'form'>;
+  callout: GetCalloutDataWith<'form' | 'variantNames'>;
   respond?: boolean; // Flag for /respond route
   thanks?: boolean; // Flag for /thanks route
   // Suppress the warning about the ID prop being passed by the router
@@ -190,9 +201,13 @@ const isPreview = computed(
   () => route.query.preview === null && canAdmin.value
 );
 
-const { isOpen, showLoginPrompt, showMemberOnlyPrompt } = useCallout(
-  toRef(props, 'callout')
-);
+const {
+  isOpen,
+  showLoginPrompt,
+  showMemberOnlyPrompt,
+  variantItems,
+  currentVariant,
+} = useCallout(toRef(props, 'callout'));
 
 const latestResponse = computed(() =>
   props.callout.allowMultiple || isPreview.value
@@ -224,7 +239,14 @@ const canRespond = computed(
 );
 
 function handleSubmitResponse() {
-  router.push({ path: `/callouts/${props.callout.slug}/thanks` });
+  if (props.callout.thanksRedirect) {
+    window.location.href = props.callout.thanksRedirect;
+  } else {
+    router.push({
+      path: `/callouts/${props.callout.slug}/thanks`,
+      query: route.query,
+    });
+  }
 
   addNotification({
     title: t('callout.responseSubmitted'),

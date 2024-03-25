@@ -412,7 +412,13 @@
     "prevButton": "Text für den Zurück-Button",
     "showAdvancedOptions": "Erweiterte Optionen anzeigen",
     "slideNo": "Slide {no}",
-    "submitButton": "Text für den Submit-Button"
+    "submitButton": "Text für den Submit-Button",
+    "translationFields": {
+      "description": "Description",
+      "label": "Label",
+      "option": "Option {n}",
+      "placeholder": "Placeholder"
+    }
   },
   "calloutResponse": {
     "data": {
@@ -1123,7 +1129,6 @@
     "continue": "Weiter",
     "welcome": "Willkommen {firstName}!"
   },
-  "locale": "de",
   "login": {
     "backTo": "Zurück zu {newsroomName}",
     "forgotPassword": "Passwort vergessen?",

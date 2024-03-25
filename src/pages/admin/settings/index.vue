@@ -33,7 +33,7 @@ meta:
           <AppSelect
             v-model="generalData.locale"
             :label="t('adminSettings.general.language')"
-            :items="locales"
+            :items="localeItems"
             class="w-60"
             required
           />
@@ -160,35 +160,9 @@ import { fetchContent, updateContent } from '@utils/api/content';
 import { generalContent as storeGeneralContent } from '@store';
 
 import type { ContentShare } from '@type';
+import { localeItems } from '@lib/i18n';
 
 const { t } = useI18n();
-
-const locales = [
-  {
-    id: 'en',
-    label: 'English',
-  },
-  {
-    id: 'de',
-    label: 'German (formal)',
-  },
-  {
-    id: 'de@informal',
-    label: 'German (informal)',
-  },
-  {
-    id: 'pt',
-    label: 'Portuguese',
-  },
-  {
-    id: 'ru',
-    label: 'Russian',
-  },
-  {
-    id: 'nl',
-    label: 'Dutch (callouts only)',
-  },
-];
 
 const generalData = reactive({
   organisationName: '',

@@ -14,15 +14,9 @@
     </li>
   </ul>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup generic="Item extends { id: string }">
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
-
-// Should be a generic
-interface Item {
-  id: string;
-  [k: string]: unknown;
-}
 
 defineEmits<{ (event: 'click', item: Item, selected: boolean): void }>();
 

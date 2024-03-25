@@ -12,32 +12,13 @@ meta:
     v-if="callout.responseViewSchema?.map"
     class="absolute inset-0 flex flex-col"
   >
-    <div v-if="!isEmbed" class="flex-0 z-10 p-4 pb-2 shadow-lg md:p-6">
-      <PageTitle :title="callout.title" no-collapse>
-        <div>
-          <router-link
-            v-if="callout.responseViewSchema.gallery"
-            :to="{
-              name: 'calloutGallery',
-              query: { noIntro: 1 },
-            }"
-            class="whitespace-nowrap font-semibold text-primary-80 md:mr-6"
-          >
-            <font-awesome-icon :icon="faImages" />
-            {{ t('callout.views.gallery') }}
-          </router-link>
-          <AppButton
-            v-if="isOpen"
-            variant="link"
-            class="hidden px-2 md:inline-block"
-            @click="handleStartAddMode"
-          >
-            <font-awesome-icon :icon="faPlus" class="text" />
-            {{ t('callout.addLocation') }}
-          </AppButton>
-        </div>
-      </PageTitle>
-    </div>
+    <CalloutHeader
+      v-if="!isEmbed"
+      :callout="callout"
+      class="flex-0"
+      map
+      @addnew="handleStartAddMode"
+    />
     <div class="relative flex-1">
       <MglMap
         :center="callout.responseViewSchema.map.center"
@@ -46,6 +27,7 @@ meta:
         :max-zoom="callout.responseViewSchema.map.maxZoom"
         :min-zoom="callout.responseViewSchema.map.minZoom"
         :max-bounds="callout.responseViewSchema.map.bounds"
+        :language="currentLocaleConfig.baseLocale"
         @map:load="handleLoad"
         @map:click="handleClick"
         @map:mousemove="handleMouseOver"
@@ -140,7 +122,11 @@ meta:
       v-if="isOpen && !isAddMode && isEmbed"
       class="absolute bottom-8 right-8 hidden md:block"
     >
-      <AppButton variant="link" class="shadow-md" @click="handleStartAddMode">
+      <AppButton
+        variant="link"
+        class="shadow-md"
+        @click.prevent="handleStartAddMode"
+      >
         <font-awesome-icon :icon="faPlus" class="text" />
         {{ t('callout.addLocation') }}
       </AppButton>
@@ -155,7 +141,7 @@ meta:
           v-if="isOpen"
           variant="link"
           class="px-2"
-          @click="handleStartAddMode"
+          @click.prevent="handleStartAddMode"
         >
           <font-awesome-icon :icon="faPlus" class="text" />
           {{ t('callout.addLocation') }}
@@ -169,7 +155,7 @@ meta:
     <CalloutShowResponsePanel
       :callout="callout"
       :response="selectedResponseFeature?.properties"
-      @close="router.push({ hash: '' })"
+      @close="router.push({ ...route, hash: '' })"
     />
 
     <CalloutIntroPanel
@@ -216,17 +202,12 @@ import type {
   CalloutResponseAnswerAddress,
   CalloutResponseAnswers,
 } from '@beabee/beabee-common';
-import {
-  faImages,
-  faInfoCircle,
-  faPlus,
-} from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useI18n } from 'vue-i18n';
 import { GeocodingControl } from '@maptiler/geocoding-control/maplibregl';
 import '@maptiler/geocoding-control/style.css';
 import { type GeocodingFeature } from '@maptiler/client';
 
-import PageTitle from '@components/PageTitle.vue';
 import CalloutShowResponsePanel from '@components/pages/callouts/CalloutShowResponsePanel.vue';
 import CalloutIntroPanel from '@components/pages/callouts/CalloutIntroPanel.vue';
 import CalloutAddResponsePanel from '@components/pages/callouts/CalloutAddResponsePanel.vue';
@@ -247,16 +228,18 @@ import { fetchResponsesForMap } from '@utils/api/callout';
 import env from '../../../env';
 import AppButton from '@components/button/AppButton.vue';
 
-import { generalContent, isEmbed } from '@store';
+import { isEmbed } from '@store';
 
 import type { GetCalloutDataWith, GetCalloutResponseMapData } from '@type';
+import { currentLocaleConfig } from '@lib/i18n';
+import CalloutHeader from '@components/pages/callouts/CalloutHeader.vue';
 
 type GetCalloutResponseMapDataWithAddress = GetCalloutResponseMapData & {
   address: CalloutResponseAnswerAddress;
 };
 
 const props = defineProps<{
-  callout: GetCalloutDataWith<'form' | 'responseViewSchema'>;
+  callout: GetCalloutDataWith<'form' | 'responseViewSchema' | 'variantNames'>;
   // Suppress the warning about the ID prop being passed by the router
   id: string;
 }>();
@@ -272,11 +255,21 @@ const responses = ref<GetCalloutResponseMapDataWithAddress[]>([]);
 
 const { isOpen } = useCallout(toRef(props, 'callout'));
 
-const isAddMode = ref(false);
-const selectMode = ref(false);
 const introOpen = ref(false);
 const newResponseAnswers = ref<CalloutResponseAnswers>();
 const geocodeAddress = ref<CalloutResponseAnswerAddress>();
+
+const isAddMode = computed(() => route.hash === '#add');
+
+// Start add response mode
+function handleStartAddMode() {
+  router.push({ ...route, hash: '#add' });
+}
+
+// Cancel add response mode, clearing any state that is left over
+function handleCancelAddMode() {
+  router.push({ ...route, hash: '' });
+}
 
 // Use the address from the new response to show a marker on the map
 const newResponseAddress = computed(() => {
@@ -365,6 +358,7 @@ function handleClick(e: { event: MapMouseEvent; map: Map }) {
 
     // Open the response or clear the hash
     router.push({
+      ...route,
       hash:
         pointFeatures.length > 0
           ? HASH_PREFIX + pointFeatures[0].properties.number
@@ -385,24 +379,6 @@ function handleMouseOver(e: { event: MapMouseEvent; map: Map }) {
   });
 
   e.map.getCanvas().style.cursor = features.length > 0 ? 'pointer' : '';
-}
-
-// Start add response mode
-function handleStartAddMode() {
-  if (!map.map) return;
-  isAddMode.value = true;
-  introOpen.value = false;
-  selectMode.value = false;
-  map.map.getCanvas().style.cursor = 'crosshair';
-  router.push({ hash: '' });
-}
-
-// Cancel add response mode, clearing any state that is left over
-function handleCancelAddMode() {
-  if (!map.map) return;
-  isAddMode.value = false;
-  newResponseAnswers.value = undefined;
-  map.map.getCanvas().style.cursor = '';
 }
 
 // Geolocate where the user has clicked
@@ -455,6 +431,18 @@ watch(selectedResponseFeature, (newFeature) => {
   });
 });
 
+// Toggle add mode
+watch(isAddMode, (v) => {
+  if (!map.map) return;
+  if (v) {
+    introOpen.value = false;
+    map.map.getCanvas().style.cursor = 'crosshair';
+  } else {
+    newResponseAnswers.value = undefined;
+    map.map.getCanvas().style.cursor = '';
+  }
+});
+
 // Load callout and responses
 onBeforeMount(async () => {
   if (!props.callout.responseViewSchema?.map) {
@@ -473,11 +461,6 @@ onMounted(async () => {
   if (!route.query.noIntro) {
     introOpen.value = true;
   }
-  // needed when "Add New" is clicked in the gallery view,
-  // which switches to the map view first
-  if (route.query.addNew) {
-    handleStartAddMode();
-  }
 });
 
 interface GeocodePickEvent extends Event {
@@ -488,10 +471,20 @@ function handleLoad(e: { map: Map }) {
   if (env.maptilerKey) {
     const geocodeControl = new GeocodingControl({
       apiKey: env.maptilerKey,
-      language: generalContent.value.locale,
+      language: currentLocaleConfig.value.baseLocale,
       proximity: [{ type: 'map-center' }],
       country: props.callout.responseViewSchema?.map?.geocodeCountries,
     });
+
+    watch(
+      () => currentLocaleConfig.value.baseLocale,
+      (newLocale) => {
+        geocodeControl.setOptions({
+          apiKey: env.maptilerKey, // Incorrect type means we have to pass this again
+          language: newLocale,
+        });
+      }
+    );
 
     geocodeControl.addEventListener('pick', (e: Event) => {
       const event = e as GeocodePickEvent;

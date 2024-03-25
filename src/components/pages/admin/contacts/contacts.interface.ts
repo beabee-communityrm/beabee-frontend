@@ -82,6 +82,7 @@ export const filterGroups = computed<FilterGroup<ContactFilterName>[]>(() => [
 ]);
 
 export const filterItems = computed<FilterItems<ContactFilterName>>(() => ({
+  id: withLabel(contactFilters.id, t('contacts.data.id')),
   firstname: withLabel(contactFilters.firstname, t('contacts.data.firstname')),
   lastname: withLabel(contactFilters.lastname, t('contacts.data.lastname')),
   email: withLabel(contactFilters.email, t('contacts.data.email')),

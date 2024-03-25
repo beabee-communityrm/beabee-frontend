@@ -14,6 +14,7 @@ export type GetCalloutDataWith<With extends GetCalloutWith> = GetCalloutData &
   ('responseViewSchema' extends With
     ? { responseViewSchema: CalloutResponseViewSchema | null }
     : Noop) &
+  ('variantNames' extends With ? { variantNames: string[] } : Noop) &
   ('variants' extends With
     ? { variants: Record<string, CalloutVariantData> }
     : Noop);
