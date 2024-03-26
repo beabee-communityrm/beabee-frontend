@@ -1267,6 +1267,11 @@
       "label": "Kreditkarte",
       "setLabel": "Deine Kreditkartendetails"
     },
+    "s_paypal": {
+      "changeLabel": "PayPal ändern",
+      "label": "PayPal",
+      "setLabel": "Deine PayPal-Daten"
+    },
     "s_sepa": {
       "changeLabel": "Lastschrift ändern",
       "label": "Lastschrift",
