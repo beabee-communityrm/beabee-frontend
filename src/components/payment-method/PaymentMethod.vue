@@ -26,6 +26,8 @@ const description = computed(() => {
       return `${source.country}••${source.bankCode}${source.branchCode}••••${source.last4}`;
     case PaymentMethod.GoCardlessDirectDebit:
       return `${source.accountHolderName}, ${source.bankName}, ••••••••••${source.accountNumberEnding}`;
+    case PaymentMethod.StripePayPal:
+      return `${source.payerEmail}`;
     default:
       return '';
   }
