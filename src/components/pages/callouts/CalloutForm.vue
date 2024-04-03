@@ -196,8 +196,10 @@ function handleNextSlide() {
   // If there is a decision component check if the user has selected a value
   const decisionComponent = getDecisionComponent(currentSlide.value.components);
   if (decisionComponent) {
-    const value =
-      answersProxy.value[currentSlide.value.id]?.[decisionComponent.key];
+    const answers = answersProxy.value[currentSlide.value.id];
+    const value = answers
+      ? answers[decisionComponent.key as keyof typeof answers]
+      : undefined;
 
     nextSlideId = decisionComponent.values.find((v) => v.value === value)
       ?.nextSlideId;

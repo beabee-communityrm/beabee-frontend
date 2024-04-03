@@ -7,10 +7,9 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { PaymentMethod } from '@beabee/beabee-common';
+import type { PaymentSource } from '@beabee/beabee-common';
 
 import PaymentMethodIcon from './PaymentMethodIcon.vue';
-
-import type { PaymentSource } from '@type';
 
 const props = defineProps<{ source: PaymentSource }>();
 

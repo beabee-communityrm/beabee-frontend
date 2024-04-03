@@ -1,5 +1,4 @@
-import type { ContributionPeriod, PaymentMethod } from '@beabee/beabee-common';
-import type { StripeFeeCountry } from '@type';
+import type { ContributionPeriod, PaymentMethod, StripeFeeCountry } from '@beabee/beabee-common';
 
 export interface ContentJoin {
   title: string;

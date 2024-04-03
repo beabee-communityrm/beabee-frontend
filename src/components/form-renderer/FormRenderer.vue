@@ -3,7 +3,7 @@
     :key="formOptsChanged"
     class="callout-form-renderer"
     :form="{ components }"
-    :submission="modelValue && { data: modelValue }"
+    :submission="modelValue && ({ data: modelValue } as any)"
     :options="formOpts"
     language="custom"
     @change="handleChange"

@@ -11,12 +11,14 @@
       <component
         :is="fcomp"
         v-if="component[field]"
-        :model-value="getValue(component[field])"
+        :model-value="getValue(component[field] as string | undefined)"
         :label="t('calloutBuilder.translationFields.' + field)"
         :locales="locales"
         readonly-default
         required
-        @update:model-value="setValue(component[field], $event)"
+        @update:model-value="
+          setValue(component[field] as string | undefined, $event)
+        "
       />
     </div>
     <div
