@@ -118,25 +118,25 @@ export function convertCalloutToSteps(
 ): CalloutStepsProps {
   const settings = env.cnrMode
     ? ({
-      whoCanTakePart: 'everyone',
-      allowAnonymousResponses: 'guests',
-      showOnUserDashboards: false,
-      usersCanEditAnswers: false,
-      multipleResponses: true,
-    } as const)
+        whoCanTakePart: 'everyone',
+        allowAnonymousResponses: 'guests',
+        showOnUserDashboards: false,
+        usersCanEditAnswers: false,
+        multipleResponses: true,
+      } as const)
     : ({
-      whoCanTakePart:
-        !callout || callout.access === 'member' ? 'members' : 'everyone',
-      allowAnonymousResponses:
-        callout?.access === 'anonymous'
-          ? 'guests'
-          : callout?.access === 'only-anonymous'
-            ? 'all'
-            : 'none',
-      showOnUserDashboards: !callout?.hidden,
-      usersCanEditAnswers: callout?.allowUpdate || false,
-      multipleResponses: callout?.allowMultiple || false,
-    } as const);
+        whoCanTakePart:
+          !callout || callout.access === 'member' ? 'members' : 'everyone',
+        allowAnonymousResponses:
+          callout?.access === 'anonymous'
+            ? 'guests'
+            : callout?.access === 'only-anonymous'
+              ? 'all'
+              : 'none',
+        showOnUserDashboards: !callout?.hidden,
+        usersCanEditAnswers: callout?.allowUpdate || false,
+        multipleResponses: callout?.allowMultiple || false,
+      } as const);
 
   const variants = convertVariantsForSteps(callout?.variants);
 
@@ -236,25 +236,25 @@ function convertVariantsForCallout(
       intro: steps.titleAndImage.introText[variant] || '',
       ...(steps.endMessage.whenFinished === 'redirect'
         ? {
-          thanksText: '',
-          thanksTitle: '',
-          thanksRedirect: steps.endMessage.thankYouRedirect[variant] || '',
-        }
+            thanksText: '',
+            thanksTitle: '',
+            thanksRedirect: steps.endMessage.thankYouRedirect[variant] || '',
+          }
         : {
-          thanksText: steps.endMessage.thankYouText[variant] || '',
-          thanksTitle: steps.endMessage.thankYouTitle[variant] || '',
-          thanksRedirect: null,
-        }),
+            thanksText: steps.endMessage.thankYouText[variant] || '',
+            thanksTitle: steps.endMessage.thankYouTitle[variant] || '',
+            thanksRedirect: null,
+          }),
       ...(steps.titleAndImage.overrideShare
         ? {
-          shareTitle: steps.titleAndImage.shareTitle[variant] || '',
-          shareDescription:
-            steps.titleAndImage.shareDescription[variant] || '',
-        }
+            shareTitle: steps.titleAndImage.shareTitle[variant] || '',
+            shareDescription:
+              steps.titleAndImage.shareDescription[variant] || '',
+          }
         : {
-          shareTitle: null,
-          shareDescription: null,
-        }),
+            shareTitle: null,
+            shareDescription: null,
+          }),
       slideNavigation,
       componentText,
     };
@@ -290,21 +290,21 @@ export function convertStepsToCallout(
     formSchema: { slides },
     responseViewSchema: steps.settings.showResponses
       ? {
-        buckets: steps.settings.responseBuckets,
-        titleProp: steps.settings.responseTitleProp,
-        imageProp: steps.settings.responseImageProp,
-        imageFilter: steps.settings.responseImageFilter,
-        gallery: steps.settings.responseViews.includes('gallery'),
-        links: steps.settings.responseLinks,
-        map: steps.settings.responseViews.includes('map')
-          ? {
-            ...steps.settings.mapSchema,
-            addressPattern: steps.settings.mapSchema.addressPatternProp
-              ? steps.settings.mapSchema.addressPattern
-              : '',
-          }
-          : null,
-      }
+          buckets: steps.settings.responseBuckets,
+          titleProp: steps.settings.responseTitleProp,
+          imageProp: steps.settings.responseImageProp,
+          imageFilter: steps.settings.responseImageFilter,
+          gallery: steps.settings.responseViews.includes('gallery'),
+          links: steps.settings.responseLinks,
+          map: steps.settings.responseViews.includes('map')
+            ? {
+                ...steps.settings.mapSchema,
+                addressPattern: steps.settings.mapSchema.addressPatternProp
+                  ? steps.settings.mapSchema.addressPattern
+                  : '',
+              }
+            : null,
+        }
       : null,
     starts: steps.dates.startNow
       ? new Date()
