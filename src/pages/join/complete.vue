@@ -27,6 +27,10 @@ onBeforeMount(async () => {
         paymentFlowId,
         firstname: route.query.firstName?.toString(),
         lastname: route.query.lastName?.toString(),
+        vatNumber: route.query.vatNumber?.toString(),
+        billingAddress: route.query.billingAddress
+          ? JSON.parse(route.query.billingAddress.toString())
+          : undefined,
       });
       router.replace('/join/confirm-email');
       return;
