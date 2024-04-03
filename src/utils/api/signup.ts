@@ -38,6 +38,7 @@ export async function completeSignUp(data: CompleteSignupData): Promise<void> {
     paymentFlowId: data.paymentFlowId,
     firstname: data.firstname,
     lastname: data.lastname,
+    vatNumber: data.vatNumber,
   });
 }
 
