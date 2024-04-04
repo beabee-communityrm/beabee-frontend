@@ -14,7 +14,7 @@
     </li>
     <li v-if="!generalContent.hideContribution">
       <router-link to="/profile/contribution">
-        {{ t('homePage.manageYourContribution') }}
+        {{ t('homePage.manageContribution') }}
       </router-link>
     </li>
   </ul>
