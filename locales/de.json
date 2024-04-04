@@ -1249,6 +1249,7 @@
     "notFound": "Seite nicht gefunden",
     "resetDevice": "Zweitgerät zurücksetzen",
     "resetPassword": "Passwort zurücksetzen",
+    "setPassword": "Passwort vergeben",
     "setup": "Account fertigstellen"
   },
   "paymentMethods": {
