@@ -1255,6 +1255,7 @@
     "notFound": "Page not found",
     "resetDevice": "Reset 2FA device",
     "resetPassword": "Reset password",
+    "setPassword": "Set password",
     "setup": "Setup"
   },
   "paymentMethods": {

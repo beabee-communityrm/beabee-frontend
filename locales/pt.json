@@ -814,6 +814,7 @@
     "notFound": "Página não encontrada",
     "resetDevice": "Redefinir dispositivo secundário",
     "resetPassword": "Redefinir palavra-passe",
+    "setPassword": "Definir uma palavra-passe",
     "setup": "Setup"
   },
   "paymentMethods": {
