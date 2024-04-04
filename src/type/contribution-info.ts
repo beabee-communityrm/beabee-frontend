@@ -5,8 +5,6 @@ import type {
   PaymentSource,
 } from '@beabee/beabee-common';
 
-import type {} from '@type';
-
 export interface ContributionInfo {
   type: ContributionType;
   amount?: number;
