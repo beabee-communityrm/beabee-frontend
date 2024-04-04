@@ -55,13 +55,13 @@ import {
 } from '@utils/api/contact';
 import { isRequestError } from '@utils/api';
 
-import type { ManualPaymentSource, PaymentSource } from '@type';
+import type { PaymentSourceManual, PaymentSource } from '@beabee/beabee-common';
 
 const { t } = useI18n();
 
 const props = defineProps<{
   stripePublicKey: string;
-  paymentSource: Exclude<PaymentSource, ManualPaymentSource>;
+  paymentSource: Exclude<PaymentSource, PaymentSourceManual>;
   email: string;
 }>();
 

@@ -1274,6 +1274,11 @@
       "label": "Card",
       "setLabel": "Your card details"
     },
+    "s_paypal": {
+      "changeLabel": "Change PayPal",
+      "label": "PayPal",
+      "setLabel": "Your PayPal details"
+    },
     "s_sepa": {
       "changeLabel": "Change direct debit",
       "label": "Direct debit",

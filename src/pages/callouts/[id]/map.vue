@@ -276,8 +276,12 @@ const newResponseAddress = computed(() => {
   const addressProp = props.callout.responseViewSchema?.map?.addressProp;
   if (addressProp && newResponseAnswers.value) {
     const [slideId, answerKey] = addressProp.split('.');
-    const addressAnswer = newResponseAnswers.value[slideId]?.[answerKey];
-    return addressAnswer as CalloutResponseAnswerAddress | undefined;
+    const slide = newResponseAnswers.value[slideId];
+    if (slide && typeof slide === 'object' && answerKey in slide) {
+      const addressAnswer = (slide as CalloutResponseAnswers)[answerKey];
+      return addressAnswer as CalloutResponseAnswerAddress | undefined;
+    }
+    return undefined;
   } else {
     return undefined;
   }

@@ -2,7 +2,7 @@ import {
   flattenComponents,
   ItemStatus,
   type CalloutComponentSchema,
-  type RadioCalloutComponentSchema,
+  type CalloutComponentInputSelectableRadioSchema,
   type GetCalloutSlideSchema,
   type SetCalloutSlideSchema,
 } from '@beabee/beabee-common';
@@ -385,7 +385,7 @@ export function convertComponentsToFilters(
 
 function isDecisionComponent(
   component: CalloutComponentSchema
-): component is RadioCalloutComponentSchema {
+): component is CalloutComponentInputSelectableRadioSchema {
   return (
     component.type === 'radio' && component.values.some((v) => v.nextSlideId)
   );
@@ -393,6 +393,6 @@ function isDecisionComponent(
 
 export function getDecisionComponent(
   components: CalloutComponentSchema[]
-): RadioCalloutComponentSchema | undefined {
+): CalloutComponentInputSelectableRadioSchema | undefined {
   return flattenComponents(components).find(isDecisionComponent);
 }

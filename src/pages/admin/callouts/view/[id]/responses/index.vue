@@ -174,7 +174,7 @@ meta:
                 {{
                   stringifyAnswer(
                     currentInlineComponent,
-                    item.answers[currentInlineComponent.slideId]?.[
+                    (item.answers[currentInlineComponent.slideId] as any)?.[
                       currentInlineComponent.key
                     ]
                   )
@@ -321,9 +321,7 @@ const bucketItems = computed(() =>
 );
 
 const formComponents = computed(() =>
-  getCalloutComponents(props.callout.formSchema).filter(
-    (c) => !!c.input && c.type !== 'button'
-  )
+  getCalloutComponents(props.callout.formSchema).filter((c) => !!c.input)
 );
 
 const formFilterItems = computed(

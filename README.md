@@ -42,7 +42,7 @@ Our locale data is stored in [this Google Sheet](https://docs.google.com/spreads
 To update the locale data in the repository you run the following
 
 ```
-node scripts/i18n.js
+node scripts/i18n.cjs
 git add -A locales/ && git commit locales/ -m 'chore: updated locales'
 ```
 
