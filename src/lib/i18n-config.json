@@ -31,8 +31,14 @@
   },
   "nl": {
     "baseLocale": "nl",
-    "name": "Nederlands",
+    "name": "Nederlands (callouts only)",
     "displayName": "Nederlands",
     "adminLocale": "en"
+  },
+  "de@easy": {
+    "baseLocale": "de@easy",
+    "name": "Deutsch (easy, callouts only)",
+    "displayName": "Leichte Sprache",
+    "adminLocale": "de"
   }
 }
