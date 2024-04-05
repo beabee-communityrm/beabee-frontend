@@ -94,6 +94,7 @@
     "saveDraft": "Gravar rascunho",
     "schedule": "Agendar",
     "search": "Pesquisar",
+    "share": "Partilhar",
     "skip": "Saltar",
     "submit": "Enviar",
     "unpublish": "Despublicar",
@@ -356,7 +357,6 @@
     },
     "selectNone": "Nenhum",
     "selectOne": "Escolhe uma opção...",
-    "share": "Partilhar",
     "show": "Mostrar",
     "status": {
       "draft": "Rascunho",
@@ -833,6 +833,7 @@
       "label": "Cartão",
       "setLabel": "Detalhes do teu cartão"
     },
+    "s_paypal": {},
     "s_sepa": {
       "changeLabel": "Alterar débito direto",
       "label": "Débito direto",

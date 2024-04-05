@@ -94,6 +94,7 @@
     "saveDraft": "Entwurf speichern",
     "schedule": "Planen",
     "search": "Suchen",
+    "share": "Teilen",
     "skip": "Überspringen",
     "submit": "Abschicken",
     "unpublish": "Veröffentlichung aufheben",
@@ -559,7 +560,6 @@
     },
     "selectNone": "-- Keine --",
     "selectOne": "Auswählen",
-    "share": "Teilen",
     "show": "Anzeigen",
     "status": {
       "draft": "Entwurf",
@@ -1267,6 +1267,11 @@
       "changeLabel": "Kreditkartendetails ändern",
       "label": "Kreditkarte",
       "setLabel": "Ihre Kreditkartendetails"
+    },
+    "s_paypal": {
+      "changeLabel": "PayPal ändern",
+      "label": "PayPal",
+      "setLabel": "Ihre PayPal-Daten"
     },
     "s_sepa": {
       "changeLabel": "Lastschrift ändern",

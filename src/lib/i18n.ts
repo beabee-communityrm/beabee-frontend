@@ -86,23 +86,21 @@ watch(
     // Remove variants (e.g. @informal)
     const [justLocale] = newLocale.split('@');
 
-    if (i18n.global.locale.value !== justLocale) {
-      // en is already loaded
-      if (newLocale !== 'en') {
-        const messages = await import(`../../locales/${newLocale}.json`);
-        i18n.global.setLocaleMessage(justLocale, messages.default);
-      }
-
-      i18n.global.setNumberFormat(justLocale, {
-        currency: {
-          style: 'currency',
-          currency: newCurrencyCode,
-        },
-      });
-
-      i18n.global.locale.value = justLocale;
-      document.documentElement.setAttribute('lang', justLocale);
+    // en is already loaded
+    if (newLocale !== 'en') {
+      const messages = await import(`../../locales/${newLocale}.json`);
+      i18n.global.setLocaleMessage(justLocale, messages.default);
     }
+
+    i18n.global.setNumberFormat(justLocale, {
+      currency: {
+        style: 'currency',
+        currency: newCurrencyCode,
+      },
+    });
+
+    i18n.global.locale.value = justLocale;
+    document.documentElement.setAttribute('lang', justLocale);
   }
 );
 

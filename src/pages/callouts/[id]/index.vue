@@ -56,7 +56,7 @@ meta:
             variant="primaryOutlined"
             @click="showSharingPanel = !showSharingPanel"
           >
-            {{ t('common.share') }}
+            {{ t('actions.share') }}
           </AppButton>
         </div>
 
