@@ -21,6 +21,7 @@
     "copy": "Kopiëren",
     "getStarted": "Start",
     "next": "Volgende",
+    "share": "Delen",
     "submit": "Indienen"
   },
   "addContact": {
@@ -147,7 +148,6 @@
     "role": {},
     "selectNone": "Geen",
     "selectOne": "Kiies er één",
-    "share": "Delen",
     "show": "Laat zien",
     "status": {
       "draft": "Ontwerp",
@@ -381,6 +381,7 @@
     "gc_direct-debit": {},
     "s_bacs": {},
     "s_card": {},
+    "s_paypal": {},
     "s_sepa": {}
   },
   "payments": {

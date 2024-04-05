@@ -94,6 +94,7 @@
     "saveDraft": "Save draft",
     "schedule": "Schedule",
     "search": "Search",
+    "share": "Share",
     "skip": "Skip",
     "submit": "Submit",
     "unpublish": "Unpublish",
@@ -563,7 +564,6 @@
     },
     "selectNone": "-- None --",
     "selectOne": "Select one...",
-    "share": "Share",
     "show": "Show",
     "status": {
       "draft": "Draft",
@@ -1275,7 +1275,7 @@
       "setLabel": "Your card details"
     },
     "s_paypal": {
-      "changeLabel": "Change PayPal",
+      "changeLabel": "Change PayPal details",
       "label": "PayPal",
       "setLabel": "Your PayPal details"
     },
