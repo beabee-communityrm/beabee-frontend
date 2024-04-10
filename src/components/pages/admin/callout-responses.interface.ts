@@ -4,12 +4,10 @@ import {
 } from '@beabee/beabee-common';
 import { computed } from 'vue';
 import i18n from '../../../lib/i18n';
-import {
-  type FilterGroup,
-  type FilterItems,
-  withLabel,
-} from '../../search/search.interface';
 import { type Header } from '../../table/table.interface';
+
+import type { FilterGroup, FilterItems } from '@type';
+import { withLabel } from '@utils/rules';
 
 const { t } = i18n.global;
 

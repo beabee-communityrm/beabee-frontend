@@ -8,10 +8,8 @@ import {
 } from '@beabee/beabee-common';
 import { format } from 'date-fns';
 import type { CalloutStepsProps } from '@components/pages/admin/callouts/callouts.interface';
-import type {
-  FilterItem,
-  FilterItems,
-} from '@components/search/search.interface';
+
+import type { FilterItem, FilterItems } from '@type';
 
 import env from '../env';
 import i18n from '@lib/i18n';

@@ -124,13 +124,9 @@ import { useI18n } from 'vue-i18n';
 import AppButton from '../button/AppButton.vue';
 import AppSelect from '../forms/AppSelect.vue';
 import AppSearchRuleOrGroup from './AppSearchRuleOrGroup.vue';
-import {
-  type FilterGroup,
-  type FilterItems,
-  copyRuleGroup,
-  isEqual,
-  type RuleGroupWithEmpty,
-} from './search.interface';
+
+import type { FilterGroup, FilterItems, RuleGroupWithEmpty } from '@type';
+import { copyRuleGroup, isRuleGroupEqual } from '@utils/rules';
 
 const emit = defineEmits(['reset', 'update:modelValue']);
 const props = defineProps<{
@@ -153,7 +149,7 @@ const hasChanged = computed(
   () =>
     props.hasChanged ||
     (props.modelValue
-      ? !isEqual(props.modelValue, selectedRuleGroup)
+      ? !isRuleGroupEqual(props.modelValue, selectedRuleGroup)
       : selectedRuleGroup.rules.length > 1 ||
         selectedRuleGroup.rules[0] !== null)
 );

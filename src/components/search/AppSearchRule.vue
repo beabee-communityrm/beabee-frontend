@@ -52,13 +52,9 @@ import {
   type RuleOperator,
 } from '@beabee/beabee-common';
 import AppSearchRuleValue from './AppSearchRuleValue.vue';
-import {
-  createNewRule,
-  type FilterGroup,
-  type FilterItems,
-  getDefaultValue,
-} from './search.interface';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import type { FilterGroup, FilterItems } from '@type';
+import { createNewRule, getDefaultRuleValue } from '@utils/rules';
 
 const emit = defineEmits(['update:rule', 'remove']);
 const props = defineProps<{
@@ -145,7 +141,7 @@ function changeOperator(operator: RuleOperator) {
     value:
       newArgs === oldArgs
         ? props.rule.value
-        : new Array(newArgs).fill(getDefaultValue(type)),
+        : new Array(newArgs).fill(getDefaultRuleValue(type)),
   });
 }
 </script>

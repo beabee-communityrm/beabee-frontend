@@ -9,12 +9,11 @@ import { computed } from 'vue';
 
 import i18n from '../../../../lib/i18n';
 import { generalContent } from '../../../../store';
-import {
-  type FilterGroup,
-  type FilterItems,
-  withLabel,
-} from '../../../search/search.interface';
 import { type Header } from '../../../table/table.interface';
+
+import { withLabel } from '@utils/rules';
+
+import type { FilterItems, FilterGroup } from '@type';
 
 const { t } = i18n.global;
 
