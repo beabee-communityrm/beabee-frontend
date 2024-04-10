@@ -22,7 +22,7 @@
     >
       <font-awesome-icon :icon="faTimes" />
     </button>
-    <div>
+    <div class="flex-1">
       <div v-if="filterGroups.length > 1" class="-mx-2 mb-2">
         <AppToggle v-model="selectedFilterGroupId" :items="filterGroups" />
       </div>
@@ -37,6 +37,7 @@
             ...selectedFilterGroupItems,
           ]"
           required
+          class="max-w-[60%]"
           @update:model-value="changeRule"
         />
         <template
@@ -49,6 +50,7 @@
             :model-value="rule.operator"
             :items="filterOperatorItems"
             required
+            class="flex-none"
             @update:model-value="changeOperator($event)"
           />
           <span v-else>{{ filterOperatorItems[0].label }}</span>

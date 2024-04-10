@@ -28,6 +28,7 @@
     :prefix="prefix"
     required
     hide-error-message
+    class="min-w-[10rem]"
   />
 </template>
 <script lang="ts" setup>
