@@ -13,7 +13,7 @@ import { type Header } from '../../../table/table.interface';
 
 import { withLabel } from '@utils/rules';
 
-import type { FilterItems, FilterGroup } from '@type';
+import type { FilterItems, FilterGroups } from '@type';
 
 const { t } = i18n.global;
 
@@ -45,8 +45,9 @@ export const headers = computed<Header[]>(() => [
   },
 ]);
 
-export const filterGroups = computed<FilterGroup<ContactFilterName>[]>(() => [
+export const filterGroups = computed<FilterGroups<ContactFilterName>>(() => [
   {
+    id: 'contact',
     label: t('contacts.dataGroup.contact'),
     items: [
       'firstname',
@@ -60,6 +61,7 @@ export const filterGroups = computed<FilterGroup<ContactFilterName>[]>(() => [
     ],
   },
   {
+    id: 'contribution',
     label: t('contacts.dataGroup.contribution'),
     items: [
       'contributionType',
@@ -70,6 +72,7 @@ export const filterGroups = computed<FilterGroup<ContactFilterName>[]>(() => [
     ],
   },
   {
+    id: 'role',
     label: t('contacts.dataGroup.role'),
     items: [
       'activePermission',

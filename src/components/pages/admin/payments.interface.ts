@@ -1,7 +1,7 @@
 import { computed } from 'vue';
 import i18n from '../../../lib/i18n';
 import { type Header } from '../../table/table.interface';
-import type { FilterGroup, FilterItems } from '@type';
+import type { FilterGroups, FilterItems } from '@type';
 import { type PaymentFilterName, paymentFilters } from '@beabee/beabee-common';
 import { withLabel } from '@utils/rules';
 
@@ -55,8 +55,9 @@ export const headers = computed<Header[]>(() => [
   },
 ]);
 
-export const filterGroups = computed<FilterGroup<PaymentFilterName>[]>(() => [
+export const filterGroups = computed<FilterGroups<PaymentFilterName>>(() => [
   {
+    id: 'payment',
     label: t('payments.dataGroup.payment'),
     items: ['amount', 'chargeDate'],
   },

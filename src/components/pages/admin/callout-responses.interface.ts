@@ -6,7 +6,7 @@ import { computed } from 'vue';
 import i18n from '../../../lib/i18n';
 import { type Header } from '../../table/table.interface';
 
-import type { FilterGroup, FilterItems } from '@type';
+import type { FilterGroups, FilterItems } from '@type';
 import { withLabel } from '@utils/rules';
 
 const { t } = i18n.global;
@@ -33,9 +33,10 @@ export const headers = computed<Header[]>(() => [
   },
 ]);
 
-export const filterGroups = computed<FilterGroup<CalloutResponseFilterName>[]>(
+export const filterGroups = computed<FilterGroups<CalloutResponseFilterName>>(
   () => [
     {
+      id: 'response',
       label: t('calloutResponse.dataGroup.response'),
       items: ['createdAt', 'tags', 'answers'],
     },

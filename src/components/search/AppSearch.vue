@@ -86,7 +86,7 @@
         </div>
       </form>
       <ul
-        v-else-if="hasRules && modelValue"
+        v-else-if="hasRules && modelValue /* narrow type */"
         class="flex flex-wrap items-center gap-2 text-sm text-body-80"
       >
         <template v-for="(rule, i) in modelValue.rules" :key="i">
@@ -125,13 +125,13 @@ import AppButton from '../button/AppButton.vue';
 import AppSelect from '../forms/AppSelect.vue';
 import AppSearchRuleOrGroup from './AppSearchRuleOrGroup.vue';
 
-import type { FilterGroup, FilterItems, RuleGroupWithEmpty } from '@type';
+import type { FilterGroups, FilterItems, RuleGroupWithEmpty } from '@type';
 import { copyRuleGroup, isRuleGroupEqual } from '@utils/rules';
 
 const emit = defineEmits(['reset', 'update:modelValue']);
 const props = defineProps<{
   filterItems: FilterItems;
-  filterGroups: FilterGroup[];
+  filterGroups: FilterGroups;
   modelValue: RuleGroup | undefined;
   hasChanged?: boolean;
 }>();

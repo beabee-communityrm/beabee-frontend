@@ -13,6 +13,7 @@
       </button>
     </template>
   </template>
+
   <div v-else class="flex items-center gap-2">
     <button
       class="-ml-2 p-2 leading-tight text-primary-80 hover:text-primary"
@@ -21,23 +22,40 @@
     >
       <font-awesome-icon :icon="faTimes" />
     </button>
-    <AppSelect
-      :model-value="rule?.field || ''"
-      :items="filterGroupsWithDefault"
-      required
-      @update:model-value="changeRule"
-    />
-    <template v-if="rule">
-      <AppSelect
-        v-if="filterOperatorItems.length > 1"
-        :model-value="rule.operator"
-        :items="filterOperatorItems"
-        required
-        @update:model-value="changeOperator($event)"
-      />
-      <span v-else>{{ filterOperatorItems[0].label }}</span>
-      <AppSearchRuleValue :rule="rule" :item="filterItems[rule.field]" />
-    </template>
+    <div>
+      <div v-if="filterGroups.length > 1" class="-mx-2 mb-2">
+        <AppToggle v-model="selectedFilterGroupId" :items="filterGroups" />
+      </div>
+      <div class="flex items-center gap-2">
+        <AppSelect
+          :model-value="rule?.field || ''"
+          :items="[
+            {
+              id: '',
+              label: t('advancedSearch.selectFilter'),
+            },
+            ...selectedFilterGroupItems,
+          ]"
+          required
+          @update:model-value="changeRule"
+        />
+        <template
+          v-if="
+            rule && selectedFilterGroupItems.some((i) => i.id === rule?.field)
+          "
+        >
+          <AppSelect
+            v-if="filterOperatorItems.length > 1"
+            :model-value="rule.operator"
+            :items="filterOperatorItems"
+            required
+            @update:model-value="changeOperator($event)"
+          />
+          <span v-else>{{ filterOperatorItems[0].label }}</span>
+          <AppSearchRuleValue :rule="rule" :item="filterItems[rule.field]" />
+        </template>
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -48,21 +66,20 @@ import {
   type FilterType,
   nullableOperators,
   operatorsByTypeMap,
-  type Rule,
   type RuleOperator,
+  type Rule,
 } from '@beabee/beabee-common';
 import AppSearchRuleValue from './AppSearchRuleValue.vue';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import type { FilterGroup, FilterItems } from '@type';
 import { createNewRule, getDefaultRuleValue } from '@utils/rules';
+import type { SearchRuleEmits, SearchRuleProps } from './search.interface';
+import { ref } from 'vue';
+import AppToggle from '@components/forms/AppToggle.vue';
+import { watch } from 'vue';
+import { toRef } from 'vue';
 
-const emit = defineEmits(['update:rule', 'remove']);
-const props = defineProps<{
-  filterGroups: FilterGroup[];
-  filterItems: FilterItems;
-  rule: Rule | null;
-  readonly?: boolean;
-}>();
+const emit = defineEmits<SearchRuleEmits>();
+const props = defineProps<SearchRuleProps<Rule>>();
 
 const { t } = useI18n();
 
@@ -78,19 +95,32 @@ function operatorT(type: FilterType | 'all', operator: RuleOperator) {
   return t(`advancedSearch.operators.${type}.${operator}`);
 }
 
-const filterGroupsWithDefault = computed(() => [
-  {
-    id: '',
-    label: t('advancedSearch.selectFilter'),
+const selectedFilterGroupId = ref('');
+
+// Select the filter group that contains the rule
+watch(
+  toRef(props, 'rule'),
+  (newRule) => {
+    const group =
+      newRule &&
+      props.filterGroups.find((g) => g.items.includes(newRule.field));
+
+    selectedFilterGroupId.value = group?.id || props.filterGroups[0].id;
   },
-  ...props.filterGroups.map((group) => ({
-    label: group.label,
-    items: group.items.map((id) => ({
-      id,
-      label: props.filterItems[id].label,
-    })),
-  })),
-]);
+  { immediate: true }
+);
+
+const selectedFilterGroupItems = computed(() => {
+  const group = props.filterGroups.find(
+    (g) => g.id === selectedFilterGroupId.value
+  );
+  return group
+    ? group.items.map((id) => ({
+        id: id,
+        label: props.filterItems[id].label,
+      }))
+    : [];
+});
 
 const operatorItems = Object.fromEntries(
   Object.entries(operatorsByTypeMap).map(([type, typeOperators]) => [
