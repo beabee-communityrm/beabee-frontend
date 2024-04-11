@@ -372,10 +372,11 @@ function convertComponentToFilter(
 }
 
 export function convertComponentsToFilters(
-  components: (CalloutComponentSchema & { fullKey: string })[]
+  components: (CalloutComponentSchema & { fullKey: string })[],
+  prefix: string
 ): FilterItems {
   const items = components.map((c) => {
-    return [`answers.${c.fullKey}`, convertComponentToFilter(c)] as const;
+    return [`${prefix}.${c.fullKey}`, convertComponentToFilter(c)] as const;
   });
 
   return Object.fromEntries(items);

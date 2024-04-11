@@ -325,7 +325,7 @@ const formComponents = computed(() =>
 );
 
 const formFilterItems = computed(
-  () => convertComponentsToFilters(formComponents.value) // TODO: Use @beabee/beabee-common method
+  () => convertComponentsToFilters(formComponents.value, 'answers') // TODO: Use @beabee/beabee-common method
 );
 
 const filterGroupsWithQuestions = computed(() => [

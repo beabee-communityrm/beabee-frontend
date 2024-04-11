@@ -23,10 +23,18 @@
       <font-awesome-icon :icon="faTimes" />
     </button>
     <div class="flex-1">
+      {{ rule }}
       <div v-if="filterGroups.length > 1" class="-mx-2 mb-2">
         <AppToggle v-model="selectedFilterGroupId" :items="filterGroups" />
       </div>
-      <AppSearchFilterGroup
+      <component
+        :is="selectedFilterGroup.custom"
+        v-if="selectedFilterGroup?.custom"
+        :rule="rule"
+        @update:rule="emit('update:rule', $event)"
+      />
+      <AppSearchRuleFilterGroup
+        v-else
         :rule="selectedFilterGroupId === ruleFilterGroupId ? rule : null"
         :filter-items="selectedFilterGroupItems"
         @update:rule="emit('update:rule', $event)"
@@ -47,7 +55,7 @@ import {
 import { ref } from 'vue';
 import AppToggle from '@components/forms/AppToggle.vue';
 import { watch } from 'vue';
-import AppSearchFilterGroup from './AppSearchFilterGroup.vue';
+import AppSearchRuleFilterGroup from './AppSearchRuleFilterGroup.vue';
 import type { FilterItems } from '@type';
 
 const emit = defineEmits<SearchRuleEmits>();
@@ -55,12 +63,13 @@ const props = defineProps<SearchRuleProps<Rule>>();
 
 const selectedFilterGroupId = ref('');
 
+const selectedFilterGroup = computed(() => {
+  return props.filterGroups.find((g) => g.id === selectedFilterGroupId.value);
+});
+
 const selectedFilterGroupItems = computed(() => {
-  const group = props.filterGroups.find(
-    (g) => g.id === selectedFilterGroupId.value
-  );
   const ret: FilterItems = {};
-  group?.items.forEach((id) => {
+  selectedFilterGroup.value?.items.forEach((id) => {
     ret[id] = props.filterItems[id];
   });
   return ret;
@@ -74,11 +83,11 @@ const ruleFilterGroupId = computed(() => {
 });
 
 // Select the group of the current rule, or the first group
-watch(
-  ruleFilterGroupId,
-  (newGroupId) => {
-    selectedFilterGroupId.value = newGroupId || props.filterGroups[0].id;
-  },
-  { immediate: true }
-);
+// watch(
+//   ruleFilterGroupId,
+//   (newGroupId) => {
+//     selectedFilterGroupId.value = newGroupId || props.filterGroups[0].id;
+//   },
+//   { immediate: true }
+// );
 </script>

@@ -14,6 +14,7 @@ import { type Header } from '../../../table/table.interface';
 import { withLabel } from '@utils/rules';
 
 import type { FilterItems, FilterGroups } from '@type';
+import CalloutResponseFilterGroup from './CalloutResponseFilterGroup.vue';
 
 const { t } = i18n.global;
 
@@ -80,6 +81,12 @@ export const filterGroups = computed<FilterGroups<ContactFilterName>>(() => [
       'membershipStarts',
       'membershipExpires',
     ],
+  },
+  {
+    id: 'calloutResponse',
+    label: t('contacts.dataGroup.calloutResponse'),
+    items: [],
+    custom: CalloutResponseFilterGroup,
   },
 ]);
 

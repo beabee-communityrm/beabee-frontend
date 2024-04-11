@@ -29,19 +29,22 @@
 </template>
 
 <script setup lang="ts">
-import AppSelect from '../forms/AppSelect.vue';
-
-import { computed } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { operatorItems, nullableOperatorItems } from './search.interface';
 import {
   operatorsByTypeMap,
   type Rule,
   type RuleOperator,
 } from '@beabee/beabee-common';
-import type { FilterItem } from '@type/filter-item';
-import { createNewRule, getDefaultRuleValue } from '@utils/rules';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+import AppSelect from '../forms/AppSelect.vue';
 import AppSearchRuleValue from './AppSearchRuleValue.vue';
+
+import { operatorItems, nullableOperatorItems } from './search.interface';
+
+import { createNewRule, getDefaultRuleValue } from '@utils/rules';
+
+import type { FilterItem } from '@type';
 
 const emit = defineEmits<(event: 'update:rule', rule: Rule) => void>();
 const props = defineProps<{
