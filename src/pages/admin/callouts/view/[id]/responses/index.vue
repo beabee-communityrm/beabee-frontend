@@ -52,7 +52,7 @@ meta:
             :items="[
               { id: '', label: t('common.selectOne') },
               ...Object.entries(formFilterItems).map(([id, item]) => ({
-                id: id.substring(8),
+                id: id,
                 label: item.label,
               })),
             ]"
@@ -260,6 +260,8 @@ const props = defineProps<{ callout: GetCalloutDataWith<'form'> }>();
 const { t, n } = useI18n();
 const route = useRoute();
 
+const ANSWERS_PREFIX = 'answers';
+
 const responses = ref<
   Paginated<
     GetCalloutResponseDataWith<
@@ -277,7 +279,9 @@ const currentInlineAnswer = ref('');
 const currentInlineComponent = computed(
   () =>
     showInlineAnswer.value &&
-    formComponents.value.find((c) => c.fullKey === currentInlineAnswer.value)
+    formComponents.value.find(
+      (c) => `${ANSWERS_PREFIX}.${c.fullKey}` === currentInlineAnswer.value
+    )
 );
 
 const selectedResponseItems = computed(
@@ -325,7 +329,7 @@ const formComponents = computed(() =>
 );
 
 const formFilterItems = computed(
-  () => convertComponentsToFilters(formComponents.value, 'answers') // TODO: Use @beabee/beabee-common method
+  () => convertComponentsToFilters(formComponents.value, ANSWERS_PREFIX) // TODO: Use @beabee/beabee-common method
 );
 
 const filterGroupsWithQuestions = computed(() => [
