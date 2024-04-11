@@ -614,6 +614,7 @@
   },
   "contacts": {
     "addContact": "Kontakt hinzufügen",
+    "advancedSearch": {},
     "allContacts": "Alle Kontakte",
     "data": {
       "activeMembership": "Aktive Mitgliedschaft",

@@ -367,6 +367,7 @@
     }
   },
   "contacts": {
+    "advancedSearch": {},
     "data": {
       "amount": "Сумма",
       "contribution": "Взнос",

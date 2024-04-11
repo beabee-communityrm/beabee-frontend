@@ -5,6 +5,7 @@ export interface FilterGroup<T extends string = string> {
   label: string;
   items: T[];
   custom?: Component;
+  itemsPrefix?: string;
 }
 
 export type FilterGroups<T extends string = string> = FilterGroup<T>[];

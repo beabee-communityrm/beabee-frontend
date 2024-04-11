@@ -17,8 +17,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { getCalloutComponents, type Rule } from '@beabee/beabee-common';
-import { computed, onBeforeMount, ref } from 'vue';
+import {
+  ItemStatus,
+  getCalloutComponents,
+  type Rule,
+} from '@beabee/beabee-common';
+import { computed, onBeforeMount, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import AppSelect from '@components/forms/AppSelect.vue';
@@ -30,12 +34,22 @@ import { fetchCallouts } from '@utils/api/callout';
 import type { FilterItems, GetCalloutDataWith } from '@type/index';
 
 const emit = defineEmits<(event: 'update:rule', rule: Rule) => void>();
-defineProps<{ rule: Rule | null }>();
+const props = defineProps<{ rule: Rule | null }>();
 
 const { t } = useI18n();
 
 const callouts = ref<GetCalloutDataWith<'form'>[]>([]);
 const selectedCalloutId = ref('');
+
+watch(
+  toRef(props, 'rule'),
+  (newRule) => {
+    if (newRule) {
+      selectedCalloutId.value = newRule.field.split('.')[1];
+    }
+  },
+  { immediate: true }
+);
 
 const calloutItems = computed(() => {
   return callouts.value.map((callout) => ({
@@ -55,8 +69,6 @@ const filterItems = computed<FilterItems | null>(() => {
     (c) => !!c.input
   );
 
-  console.log('filterItems', component);
-
   return convertComponentsToFilters(
     component,
     `callouts.${callout.id}.responses.answers`
@@ -64,7 +76,21 @@ const filterItems = computed<FilterItems | null>(() => {
 });
 
 onBeforeMount(async () => {
-  // Fetch callouts
-  callouts.value = (await fetchCallouts({ sort: 'title' }, ['form'])).items;
+  // TODO: handle pagination
+  callouts.value = (
+    await fetchCallouts(
+      {
+        rules: {
+          condition: 'OR',
+          rules: [
+            { field: 'status', operator: 'equal', value: [ItemStatus.Open] },
+            { field: 'status', operator: 'equal', value: [ItemStatus.Ended] },
+          ],
+        },
+        sort: 'title',
+      },
+      ['form']
+    )
+  ).items;
 });
 </script>

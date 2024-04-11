@@ -1,6 +1,6 @@
 <template>
   <template v-if="readonly">
-    <template v-if="rule">
+    <template v-if="rule && filterItems[rule.field]">
       <b>{{ filterItems[rule.field].label }}</b>
       {{ operatorT(filterItems[rule.field].type, rule.operator) }}
       <AppSearchRuleValue
@@ -23,10 +23,10 @@
       <font-awesome-icon :icon="faTimes" />
     </button>
     <div class="flex-1">
-      {{ rule }}
       <div v-if="filterGroups.length > 1" class="-mx-2 mb-2">
         <AppToggle v-model="selectedFilterGroupId" :items="filterGroups" />
       </div>
+
       <component
         :is="selectedFilterGroup.custom"
         v-if="selectedFilterGroup?.custom"
@@ -76,18 +76,24 @@ const selectedFilterGroupItems = computed(() => {
 });
 
 const ruleFilterGroupId = computed(() => {
-  return (
-    props.rule &&
-    props.filterGroups.find((g) => g.items.includes(props.rule!.field))?.id
-  );
+  if (!props.rule) return null;
+  for (const group of props.filterGroups) {
+    if (
+      group.items.includes(props.rule.field) ||
+      (group.itemsPrefix && props.rule.field.startsWith(group.itemsPrefix))
+    ) {
+      return group.id;
+    }
+  }
+  return null;
 });
 
 // Select the group of the current rule, or the first group
-// watch(
-//   ruleFilterGroupId,
-//   (newGroupId) => {
-//     selectedFilterGroupId.value = newGroupId || props.filterGroups[0].id;
-//   },
-//   { immediate: true }
-// );
+watch(
+  ruleFilterGroupId,
+  (newGroupId) => {
+    selectedFilterGroupId.value = newGroupId || props.filterGroups[0].id;
+  },
+  { immediate: true }
+);
 </script>

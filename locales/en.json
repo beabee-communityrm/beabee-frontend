@@ -618,6 +618,9 @@
   },
   "contacts": {
     "addContact": "Add contact",
+    "advancedSearch": {
+      "selectCallout": "Select callout..."
+    },
     "allContacts": "All contacts",
     "data": {
       "activeMembership": "Active membership",
@@ -653,6 +656,7 @@
       "tags": "Tags"
     },
     "dataGroup": {
+      "calloutResponse": "Callout response",
       "contact": "Contact information",
       "contribution": "Contribution",
       "role": "Role"

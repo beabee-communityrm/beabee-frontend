@@ -385,6 +385,7 @@
   },
   "contacts": {
     "addContact": "Adicionar contacto",
+    "advancedSearch": {},
     "allContacts": "Todos os contactos",
     "data": {
       "activeMembership": "Membro ativo",
