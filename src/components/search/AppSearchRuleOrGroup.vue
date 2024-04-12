@@ -6,7 +6,6 @@
   <AppSearchRule
     v-else
     :filter-groups="filterGroups"
-    :filter-items="filterItems"
     :rule="rule"
     :readonly="readonly"
     @update:rule="$emit('update:rule', $event)"

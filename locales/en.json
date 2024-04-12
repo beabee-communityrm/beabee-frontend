@@ -619,6 +619,7 @@
   "contacts": {
     "addContact": "Add contact",
     "advancedSearch": {
+      "responseTo": "response to",
       "selectCallout": "Select callout..."
     },
     "allContacts": "All contacts",

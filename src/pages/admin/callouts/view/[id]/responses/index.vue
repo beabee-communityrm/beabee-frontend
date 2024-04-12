@@ -13,8 +13,7 @@ meta:
     <div class="flex-1">
       <AppSearch
         v-model="currentRules"
-        :filter-groups="filterGroupsWithQuestions"
-        :filter-items="filterItemsWithExtras"
+        :filter-groups="filterGroupsWithExtras"
         @reset="currentRules = undefined"
       >
         <AppSelect
@@ -215,7 +214,6 @@ import AppSelect from '@components/forms/AppSelect.vue';
 import AppVTabs from '@components/tabs/AppVTabs.vue';
 import {
   filterGroups,
-  filterItems,
   headers,
 } from '@components/pages/admin/callout-responses.interface';
 import AppSearch from '@components/search/AppSearch.vue';
@@ -332,25 +330,23 @@ const formFilterItems = computed(
   () => convertComponentsToFilters(formComponents.value, ANSWERS_PREFIX) // TODO: Use @beabee/beabee-common method
 );
 
-const filterGroupsWithQuestions = computed(() => [
-  ...filterGroups.value,
+const filterGroupsWithExtras = computed(() => [
+  {
+    ...filterGroups.value[0],
+    items: {
+      ...filterGroups.value[0].items,
+      tags: {
+        ...filterGroups.value[0].items.tags,
+        options: tagItems.value,
+      },
+    },
+  },
   {
     id: 'answers',
     label: t('calloutResponse.dataGroup.answers'),
-    items: Object.keys(formFilterItems.value),
+    items: formFilterItems.value,
   },
 ]);
-
-const filterItemsWithExtras = computed(() => {
-  return {
-    ...filterItems.value,
-    tags: {
-      ...filterItems.value.tags,
-      options: tagItems.value,
-    },
-    ...formFilterItems.value,
-  };
-});
 
 const currentAssignee = defineParam('assignee', (v) => v || '');
 const currentTag = defineParam('tag', (v) => v || '');

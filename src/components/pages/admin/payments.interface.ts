@@ -3,7 +3,7 @@ import i18n from '../../../lib/i18n';
 import { type Header } from '../../table/table.interface';
 import type { FilterGroups, FilterItems } from '@type';
 import { type PaymentFilterName, paymentFilters } from '@beabee/beabee-common';
-import { withLabel } from '@utils/rules';
+import { withItems, withLabel } from '@utils/rules';
 
 const { t } = i18n.global;
 
@@ -55,15 +55,7 @@ export const headers = computed<Header[]>(() => [
   },
 ]);
 
-export const filterGroups = computed<FilterGroups<PaymentFilterName>>(() => [
-  {
-    id: 'payment',
-    label: t('payments.dataGroup.payment'),
-    items: ['amount', 'chargeDate'],
-  },
-]);
-
-export const filterItems = computed<FilterItems<PaymentFilterName>>(() => ({
+const filterItems = computed<FilterItems<PaymentFilterName>>(() => ({
   id: withLabel(paymentFilters.id, t('payments.data.id')),
   chargeDate: withLabel(
     paymentFilters.chargeDate,
@@ -78,3 +70,11 @@ export const filterItems = computed<FilterItems<PaymentFilterName>>(() => ({
     cancelled: t('common.paymentStatus.cancelled'),
   }),
 }));
+
+export const filterGroups = computed<FilterGroups>(() => [
+  {
+    id: 'payment',
+    label: t('payments.dataGroup.payment'),
+    items: withItems(filterItems, ['amount', 'chargeDate']),
+  },
+]);

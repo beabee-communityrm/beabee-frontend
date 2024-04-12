@@ -4,7 +4,6 @@
       <li class="rounded-full border border-primary-70 bg-primary-10 px-2 py-1">
         <AppSearchRuleOrGroup
           :filter-groups="filterGroups"
-          :filter-items="filterItems"
           :rule="rule"
           readonly
           @remove="handleRemove(i)"
@@ -21,13 +20,12 @@ import type { RuleGroup } from '@beabee/beabee-common';
 import { useI18n } from 'vue-i18n';
 import AppSearchRuleOrGroup from './AppSearchRuleOrGroup.vue';
 
-import type { FilterGroups, FilterItems } from '@type';
+import type { FilterGroups } from '@type';
 
 const emit = defineEmits<(e: 'update:modelValue', value: RuleGroup) => void>();
 const props = defineProps<{
   modelValue: RuleGroup;
   filterGroups: FilterGroups;
-  filterItems: FilterItems;
 }>();
 
 const { t } = useI18n();

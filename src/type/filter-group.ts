@@ -1,11 +1,12 @@
 import type { Component } from 'vue';
+import type { FilterItems } from './filter-item';
 
-export interface FilterGroup<T extends string = string> {
+export interface FilterGroup {
   id: string;
   label: string;
-  items: T[];
+  items: FilterItems;
   custom?: Component;
-  itemsPrefix?: string;
+  itemsMatch?: RegExp;
 }
 
-export type FilterGroups<T extends string = string> = FilterGroup<T>[];
+export type FilterGroups = FilterGroup[];

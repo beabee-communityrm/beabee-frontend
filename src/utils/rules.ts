@@ -11,12 +11,14 @@ import {
   type RuleGroup,
   isRuleGroup,
 } from '@beabee/beabee-common';
+import type { Ref } from 'vue';
 import type {
   FilterItemEnum,
   FilterItemArray,
   FilterItemOther,
   FilterItem,
   RuleGroupWithEmpty,
+  FilterItems,
 } from '@type';
 
 interface LabelOpts {
@@ -63,6 +65,17 @@ export function withLabel<T extends readonly string[]>(
     const opts = extraArg as LabelOpts | undefined;
     return { ...args2, label, ...opts };
   }
+}
+
+export function withItems<T extends string, S extends T>(
+  items: Ref<FilterItems<T>>,
+  itemIds: S[]
+): FilterItems<S> {
+  const ret: Partial<FilterItems<S>> = {};
+  for (const id of itemIds) {
+    ret[id] = items.value[id];
+  }
+  return ret as FilterItems<S>;
 }
 
 export function getDefaultRuleValue(type: FilterType): RuleValue {

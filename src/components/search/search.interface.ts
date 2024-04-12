@@ -7,13 +7,12 @@ import {
 } from '@beabee/beabee-common';
 
 import i18n from '@lib/i18n';
-import type { FilterGroups, FilterItems } from '@type';
+import type { FilterGroups } from '@type';
 
 const { t } = i18n.global;
 
 export interface SearchRuleProps<R> {
   filterGroups: FilterGroups;
-  filterItems: FilterItems;
   rule: R | null;
   readonly?: boolean;
 }

@@ -27,7 +27,6 @@
         v-if="showExpanded"
         :model-value="modelValue"
         :filter-groups="filterGroups"
-        :filter-items="filterItems"
         :has-changed="!!hasChanged"
         @update:model-value="emit('update:modelValue', $event)"
       />
@@ -35,7 +34,6 @@
         v-else-if="hasRules && modelValue /* narrow type */"
         :model-value="modelValue"
         :filter-groups="filterGroups"
-        :filter-items="filterItems"
         @update:model-value="emit('update:modelValue', $event)"
       />
     </div>
@@ -53,7 +51,7 @@ import { computed, ref, toRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppButton from '../button/AppButton.vue';
 
-import type { FilterGroups, FilterItems } from '@type';
+import type { FilterGroups } from '@type';
 import AppSearchForm from './AppSearchForm.vue';
 import AppSearchSummary from './AppSearchSummary.vue';
 
@@ -62,7 +60,6 @@ const emit = defineEmits<{
   (e: 'reset'): void;
 }>();
 const props = defineProps<{
-  filterItems: FilterItems;
   filterGroups: FilterGroups;
   modelValue: RuleGroup | undefined;
   hasChanged?: boolean;

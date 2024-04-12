@@ -7,14 +7,15 @@ import {
 } from '@beabee/beabee-common';
 import { computed } from 'vue';
 
-import i18n from '../../../../lib/i18n';
-import { generalContent } from '../../../../store';
-import { type Header } from '../../../table/table.interface';
+import i18n from '@lib/i18n';
+import { generalContent } from '@store';
+import { type Header } from '@components/table/table.interface';
 
-import { withLabel } from '@utils/rules';
+import { withItems, withLabel } from '@utils/rules';
+
+import CalloutResponseFilterGroup from './CalloutResponseFilterGroup.vue';
 
 import type { FilterItems, FilterGroups } from '@type';
-import CalloutResponseFilterGroup from './CalloutResponseFilterGroup.vue';
 
 const { t } = i18n.global;
 
@@ -46,52 +47,7 @@ export const headers = computed<Header[]>(() => [
   },
 ]);
 
-export const filterGroups = computed<FilterGroups<ContactFilterName>>(() => [
-  {
-    id: 'contact',
-    label: t('contacts.dataGroup.contact'),
-    items: [
-      'firstname',
-      'lastname',
-      'email',
-      'joined',
-      'lastSeen',
-      'newsletterStatus',
-      'tags',
-      'deliveryOptIn',
-    ],
-  },
-  {
-    id: 'contribution',
-    label: t('contacts.dataGroup.contribution'),
-    items: [
-      'contributionType',
-      'contributionMonthlyAmount',
-      'contributionPeriod',
-      'contributionCancelled',
-      'manualPaymentSource',
-    ],
-  },
-  {
-    id: 'role',
-    label: t('contacts.dataGroup.role'),
-    items: [
-      'activePermission',
-      'activeMembership',
-      'membershipStarts',
-      'membershipExpires',
-    ],
-  },
-  {
-    id: 'calloutResponse',
-    label: t('contacts.dataGroup.calloutResponse'),
-    items: [],
-    custom: CalloutResponseFilterGroup,
-    itemsPrefix: 'callouts.',
-  },
-]);
-
-export const filterItems = computed<FilterItems<ContactFilterName>>(() => ({
+const filterItems = computed<FilterItems<ContactFilterName>>(() => ({
   id: withLabel(contactFilters.id, t('contacts.data.id')),
   firstname: withLabel(contactFilters.firstname, t('contacts.data.firstname')),
   lastname: withLabel(contactFilters.lastname, t('contacts.data.lastname')),
@@ -169,3 +125,48 @@ export const filterItems = computed<FilterItems<ContactFilterName>>(() => ({
     t('contacts.data.membershipExpires')
   ),
 }));
+
+export const filterGroups = computed<FilterGroups>(() => [
+  {
+    id: 'contact',
+    label: t('contacts.dataGroup.contact'),
+    items: withItems(filterItems, [
+      'firstname',
+      'lastname',
+      'email',
+      'joined',
+      'lastSeen',
+      'newsletterStatus',
+      'tags',
+      'deliveryOptIn',
+    ]),
+  },
+  {
+    id: 'contribution',
+    label: t('contacts.dataGroup.contribution'),
+    items: withItems(filterItems, [
+      'contributionType',
+      'contributionMonthlyAmount',
+      'contributionPeriod',
+      'contributionCancelled',
+      'manualPaymentSource',
+    ]),
+  },
+  {
+    id: 'role',
+    label: t('contacts.dataGroup.role'),
+    items: withItems(filterItems, [
+      'activePermission',
+      'activeMembership',
+      'membershipStarts',
+      'membershipExpires',
+    ]),
+  },
+  {
+    id: 'calloutResponse',
+    label: t('contacts.dataGroup.calloutResponse'),
+    items: {},
+    custom: CalloutResponseFilterGroup,
+    itemsMatch: /^callouts\.[a-z0-9A-Z-]+\.responses\./,
+  },
+]);

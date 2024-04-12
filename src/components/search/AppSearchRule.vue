@@ -1,17 +1,13 @@
 <template>
   <template v-if="readonly">
-    <template v-if="rule && filterItems[rule.field]">
-      <b>{{ filterItems[rule.field].label }}</b>
-      {{ operatorT(filterItems[rule.field].type, rule.operator) }}
-      <AppSearchRuleValue
-        :rule="rule"
-        :item="filterItems[rule.field]"
-        readonly
-      />
-      <button type="button" class="-mr-2 px-2" @click="emit('remove')">
-        <font-awesome-icon :icon="faTimes" />
-      </button>
-    </template>
+    <component
+      :is="selectedFilterGroup.custom || AppSearchRuleFilterGroup"
+      v-if="selectedFilterGroup"
+      :filter-group="selectedFilterGroup"
+      :rule="rule"
+      readonly
+      @remove="emit('remove')"
+    />
   </template>
 
   <div v-else class="flex items-center gap-2">
@@ -28,35 +24,23 @@
       </div>
 
       <component
-        :is="selectedFilterGroup.custom"
-        v-if="selectedFilterGroup?.custom"
+        :is="selectedFilterGroup.custom || AppSearchRuleFilterGroup"
+        v-if="selectedFilterGroup"
+        :filter-group="selectedFilterGroup"
         :rule="rule"
-        @update:rule="emit('update:rule', $event)"
-      />
-      <AppSearchRuleFilterGroup
-        v-else
-        :rule="selectedFilterGroupId === ruleFilterGroupId ? rule : null"
-        :filter-items="selectedFilterGroupItems"
         @update:rule="emit('update:rule', $event)"
       />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, watchEffect } from 'vue';
 import { type Rule } from '@beabee/beabee-common';
-import AppSearchRuleValue from './AppSearchRuleValue.vue';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import {
-  operatorT,
-  type SearchRuleEmits,
-  type SearchRuleProps,
-} from './search.interface';
+import type { SearchRuleEmits, SearchRuleProps } from './search.interface';
 import { ref } from 'vue';
 import AppToggle from '@components/forms/AppToggle.vue';
-import { watch } from 'vue';
 import AppSearchRuleFilterGroup from './AppSearchRuleFilterGroup.vue';
-import type { FilterItems } from '@type';
 
 const emit = defineEmits<SearchRuleEmits>();
 const props = defineProps<SearchRuleProps<Rule>>();
@@ -67,33 +51,22 @@ const selectedFilterGroup = computed(() => {
   return props.filterGroups.find((g) => g.id === selectedFilterGroupId.value);
 });
 
-const selectedFilterGroupItems = computed(() => {
-  const ret: FilterItems = {};
-  selectedFilterGroup.value?.items.forEach((id) => {
-    ret[id] = props.filterItems[id];
-  });
-  return ret;
-});
+// Select the group of the current rule, or the first group
+watchEffect(() => {
+  let groupId = props.filterGroups[0].id;
 
-const ruleFilterGroupId = computed(() => {
-  if (!props.rule) return null;
-  for (const group of props.filterGroups) {
-    if (
-      group.items.includes(props.rule.field) ||
-      (group.itemsPrefix && props.rule.field.startsWith(group.itemsPrefix))
-    ) {
-      return group.id;
+  if (props.rule) {
+    for (const group of props.filterGroups) {
+      if (
+        group.items[props.rule.field] ||
+        group.itemsMatch?.test(props.rule.field)
+      ) {
+        groupId = group.id;
+        break;
+      }
     }
   }
-  return null;
-});
 
-// Select the group of the current rule, or the first group
-watch(
-  ruleFilterGroupId,
-  (newGroupId) => {
-    selectedFilterGroupId.value = newGroupId || props.filterGroups[0].id;
-  },
-  { immediate: true }
-);
+  selectedFilterGroupId.value = groupId;
+});
 </script>

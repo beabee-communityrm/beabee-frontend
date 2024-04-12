@@ -1,20 +1,25 @@
 <template>
-  <div>
-    <AppSelect
-      v-model="selectedCalloutId"
-      :items="[
-        { id: '', label: t('contacts.advancedSearch.selectCallout') },
-        ...calloutItems,
-      ]"
-    />
-    <AppSearchRuleFilterGroup
-      v-if="filterItems"
-      :rule="rule && filterItems[rule.field] ? rule : null"
-      :filter-items="filterItems"
-      class="mt-2"
-      @update:rule="emit('update:rule', $event)"
-    />
-  </div>
+  <span v-if="readonly">
+    <b>{{ selectedCallout?.title || '???' }}</b>
+    {{ t('contacts.advancedSearch.responseTo') }}{{ ' ' }}
+  </span>
+  <AppSelect
+    v-else
+    v-model="selectedCalloutId"
+    :items="[
+      { id: '', label: t('contacts.advancedSearch.selectCallout') },
+      ...calloutItems,
+    ]"
+    class="mb-2"
+  />
+
+  <AppSearchRuleFilterGroup
+    v-if="filterItems"
+    :rule="rule && filterItems[rule.field] ? rule : null"
+    :filter-group="{ items: filterItems }"
+    :readonly="readonly"
+    @update:rule="emit('update:rule', $event)"
+  />
 </template>
 <script lang="ts" setup>
 import {
@@ -22,35 +27,30 @@ import {
   getCalloutComponents,
   type Rule,
 } from '@beabee/beabee-common';
-import { computed, onBeforeMount, ref, toRef, watch } from 'vue';
+import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import AppSelect from '@components/forms/AppSelect.vue';
 import AppSearchRuleFilterGroup from '@components/search/AppSearchRuleFilterGroup.vue';
 
+import { fetchCallout, fetchCallouts } from '@utils/api/callout';
 import { convertComponentsToFilters } from '@utils/callouts';
-import { fetchCallouts } from '@utils/api/callout';
 
-import type { FilterItems, GetCalloutDataWith } from '@type/index';
+import type { GetCalloutDataWith, FilterGroup, GetCalloutData } from '@type';
 
 const emit = defineEmits<(event: 'update:rule', rule: Rule) => void>();
-const props = defineProps<{ rule: Rule | null }>();
+const props = defineProps<{
+  rule: Rule | null;
+  filterGroup: FilterGroup;
+  readonly?: boolean;
+}>();
 
 const { t } = useI18n();
 
-const callouts = ref<GetCalloutDataWith<'form'>[]>([]);
+const callouts = ref<GetCalloutData[]>([]);
 const selectedCalloutId = ref('');
 
-watch(
-  toRef(props, 'rule'),
-  (newRule) => {
-    if (newRule) {
-      selectedCalloutId.value = newRule.field.split('.')[1];
-    }
-  },
-  { immediate: true }
-);
-
+const selectedCallout = ref<GetCalloutDataWith<'form'>>();
 const calloutItems = computed(() => {
   return callouts.value.map((callout) => ({
     id: callout.id,
@@ -58,39 +58,44 @@ const calloutItems = computed(() => {
   }));
 });
 
-const filterItems = computed<FilterItems | null>(() => {
-  const callout = callouts.value.find(
-    (callout) => callout.id === selectedCalloutId.value
-  );
+const filterItems = computed(() => {
+  if (!selectedCallout.value) return {};
 
-  if (!callout) return null;
-
-  const component = getCalloutComponents(callout.formSchema).filter(
-    (c) => !!c.input
-  );
+  const component = getCalloutComponents(
+    selectedCallout.value.formSchema
+  ).filter((c) => !!c.input);
 
   return convertComponentsToFilters(
     component,
-    `callouts.${callout.id}.responses.answers`
+    `callouts.${selectedCallout.value.id}.responses.answers`
   );
+});
+
+// Set the callout ID to the current rule when it changes
+watchEffect(() => {
+  selectedCalloutId.value = props.rule ? props.rule.field.split('.')[1] : '';
+});
+
+// Load the selected callout
+watchEffect(async () => {
+  selectedCallout.value = selectedCalloutId.value
+    ? await fetchCallout(selectedCalloutId.value, ['form'])
+    : undefined;
 });
 
 onBeforeMount(async () => {
   // TODO: handle pagination
   callouts.value = (
-    await fetchCallouts(
-      {
-        rules: {
-          condition: 'OR',
-          rules: [
-            { field: 'status', operator: 'equal', value: [ItemStatus.Open] },
-            { field: 'status', operator: 'equal', value: [ItemStatus.Ended] },
-          ],
-        },
-        sort: 'title',
+    await fetchCallouts({
+      rules: {
+        condition: 'OR',
+        rules: [
+          { field: 'status', operator: 'equal', value: [ItemStatus.Open] },
+          { field: 'status', operator: 'equal', value: [ItemStatus.Ended] },
+        ],
       },
-      ['form']
-    )
+      sort: 'title',
+    })
   ).items;
 });
 </script>

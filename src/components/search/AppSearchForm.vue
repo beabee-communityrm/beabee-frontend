@@ -27,7 +27,6 @@
           <AppSearchRuleOrGroup
             v-model:rule="ruleGroup.rules[i]"
             :filter-groups="filterGroups"
-            :filter-items="filterItems"
             @remove="removeRule(i)"
           />
           <span
@@ -68,7 +67,7 @@ import { useI18n } from 'vue-i18n';
 import AppSearchRuleOrGroup from './AppSearchRuleOrGroup.vue';
 import type { RuleGroupWithEmpty } from '@type/rule-group-with-empty';
 import { computed, reactive, toRef, watch } from 'vue';
-import type { FilterGroups, FilterItems } from '@type/index';
+import type { FilterGroups } from '@type/index';
 import useVuelidate from '@vuelidate/core';
 import { copyRuleGroup, isRuleGroupEqual } from '@utils/rules';
 import type { Rule, RuleGroup } from '@beabee/beabee-common';
@@ -81,7 +80,6 @@ const emit = defineEmits<{
 }>();
 const props = defineProps<{
   filterGroups: FilterGroups;
-  filterItems: FilterItems;
   modelValue: RuleGroup | undefined;
   hasChanged: boolean;
 }>();
