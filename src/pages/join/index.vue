@@ -91,6 +91,7 @@ const joinContent = ref<ContentJoin>({
   paymentMethods: [],
   stripePublicKey: '',
   stripeCountry: 'eu',
+  taxRate: 7,
 });
 
 const { signUpData, signUpDescription } = useJoin(joinContent);
