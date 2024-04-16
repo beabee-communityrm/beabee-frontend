@@ -54,6 +54,22 @@ meta:
         </div>
         <div class="mb-4 flex gap-4">
           <div class="flex-1">
+            <AppLabel :label="stepT('taxRate')" />
+            <div class="max-w-[8rem]">
+              <AppInput
+                v-model="joinContent.taxRate"
+                type="number"
+                :min="1"
+                :max="100"
+                prefix="%"
+                required
+                class="block w-32"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="mb-4 flex gap-4">
+          <div class="flex-1">
             <AppLabel :label="stepT('minAmount')" />
             <div class="max-w-[12rem]">
               <AppInput
@@ -155,7 +171,9 @@ const defaultAmounts = computed(() => {
 });
 
 const validation = useVuelidate(
-  { backgroundUrl: { required } },
+  {
+    backgroundUrl: { required },
+  },
   { backgroundUrl }
 );
 

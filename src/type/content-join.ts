@@ -19,4 +19,5 @@ export interface ContentJoin {
   paymentMethods: PaymentMethod[];
   stripePublicKey: string;
   stripeCountry: StripeFeeCountry;
+  taxRate: number;
 }
