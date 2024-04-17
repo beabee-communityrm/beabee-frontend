@@ -37,7 +37,10 @@ meta:
           />
           <AppInfoListItem
             :name="t('contacts.data.period')"
-            :value="contact.contributionPeriod"
+            :value="
+              contact.contributionPeriod &&
+              t('common.contributionPeriod.' + contact.contributionPeriod)
+            "
           />
           <AppInfoListItem
             v-if="contact.contribution.type === ContributionType.Automatic"
