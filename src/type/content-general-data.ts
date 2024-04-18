@@ -1,4 +1,4 @@
-export interface ContentGeneral {
+export interface ContentGeneralData {
   organisationName: string;
   logoUrl: string;
   siteUrl: string;

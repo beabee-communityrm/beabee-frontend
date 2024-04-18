@@ -132,9 +132,9 @@ import { fetchContent, updateContent } from '@utils/api/content';
 
 import { generalContent } from '@store';
 
-import type { ContentJoin } from '@type';
+import type { ContentJoinData } from '@type';
 
-const joinContent = ref<ContentJoin>();
+const joinContent = ref<ContentJoinData>();
 const backgroundUrl = ref('');
 
 const { n, t } = useI18n();

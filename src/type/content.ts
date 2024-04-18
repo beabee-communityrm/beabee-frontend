@@ -1,26 +1,26 @@
 import type {
-  ContentContacts,
-  ContentEmail,
-  ContentGeneral,
-  ContentJoin,
-  ContentJoinSetup,
-  ContentProfile,
-  ContentShare,
+  ContentContactsData,
+  ContentEmailData,
+  ContentGeneralData,
+  ContentJoinData,
+  ContentJoinSetupData,
+  ContentProfileData,
+  ContentShareData,
   ContentId,
 } from '@type';
 
 export type Content<Id extends ContentId> = Id extends 'join'
-  ? ContentJoin
+  ? ContentJoinData
   : Id extends 'join/setup'
-    ? ContentJoinSetup
+    ? ContentJoinSetupData
     : Id extends 'profile'
-      ? ContentProfile
+      ? ContentProfileData
       : Id extends 'general'
-        ? ContentGeneral
+        ? ContentGeneralData
         : Id extends 'contacts'
-          ? ContentContacts
+          ? ContentContactsData
           : Id extends 'email'
-            ? ContentEmail
+            ? ContentEmailData
             : Id extends 'share'
-              ? ContentShare
+              ? ContentShareData
               : never;

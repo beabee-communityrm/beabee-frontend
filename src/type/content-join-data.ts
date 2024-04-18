@@ -4,20 +4,20 @@ import type {
   StripeFeeCountry,
 } from '@beabee/beabee-common';
 
-export interface ContentJoin {
+import type { ContentJoinPeriodData } from './index';
+
+export interface ContentJoinData {
   title: string;
   subtitle: string;
   initialAmount: number;
   initialPeriod: ContributionPeriod;
   minMonthlyAmount: number;
-  periods: {
-    name: ContributionPeriod;
-    presetAmounts: number[];
-  }[];
+  periods: ContentJoinPeriodData[];
   showAbsorbFee: boolean;
   showNoContribution: boolean;
   paymentMethods: PaymentMethod[];
   stripePublicKey: string;
   stripeCountry: StripeFeeCountry;
   taxRate: number;
+  taxRateStrapiId: string;
 }

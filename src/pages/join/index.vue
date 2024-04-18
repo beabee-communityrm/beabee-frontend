@@ -70,7 +70,7 @@ import { signUp, completeUrl } from '@utils/api/signup';
 
 import { generalContent } from '@store';
 
-import type { ContentJoin } from '@type';
+import type { ContentJoinData } from '@type';
 
 const { t } = useI18n();
 
@@ -79,7 +79,7 @@ const router = useRouter();
 
 const stripeClientSecret = ref('');
 
-const joinContent = ref<ContentJoin>({
+const joinContent = ref<ContentJoinData>({
   initialAmount: 5,
   initialPeriod: ContributionPeriod.Monthly,
   minMonthlyAmount: 5,
@@ -92,6 +92,7 @@ const joinContent = ref<ContentJoin>({
   stripePublicKey: '',
   stripeCountry: 'eu',
   taxRate: 7,
+  taxRateStrapiId: '',
 });
 
 const { signUpData, signUpDescription } = useJoin(joinContent);
