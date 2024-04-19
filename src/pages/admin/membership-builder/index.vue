@@ -87,36 +87,6 @@ meta:
           :label="stepT('showAbsorbFee')"
           class="mb-4 font-semibold"
         />
-
-        <AppSubHeading> {{ stepT('tax') }}</AppSubHeading>
-        <div class="mb-4 flex gap-4">
-          <div class="flex-1">
-            <div class="max-w-[8rem]">
-              <AppCheckbox
-                v-model="joinContent.taxRateEnabled"
-                :label="stepT('taxRateEnabled')"
-                class="font-bold"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="mb-4 flex gap-4">
-          <div class="flex-1">
-            <AppLabel :label="stepT('taxRate')" />
-            <div class="max-w-[8rem]">
-              <AppInput
-                v-model="joinContent.taxRate"
-                type="number"
-                :min="1"
-                :max="100"
-                :disabled="!joinContent.taxRateEnabled"
-                prefix="%"
-                required
-                class="block w-32"
-              />
-            </div>
-          </div>
-        </div>
       </AppForm>
     </template>
     <template #col2>

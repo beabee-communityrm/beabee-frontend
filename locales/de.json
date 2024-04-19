@@ -206,6 +206,11 @@
         "twitterHandle": "Twitter-Handle"
       }
     },
+    "payment": {
+      "paymentTitle": "Zahlungen",
+      "taxRate": "Steuersatz",
+      "taxRateEnabled": "Steuern aktivieren"
+    },
     "theme": {
       "bodyFont": "Text",
       "colorNames": {
@@ -1188,9 +1193,6 @@
         "showAbsorbFee": "Nutzer um Ausgleich der Gebühren bitten",
         "showNoContribution": "Registrierung ohne Zahlung erlauben",
         "suggestedAmounts": "Beiträge vorschlagen",
-        "tax": "Steuerberechnung",
-        "taxRate": "Steuersatz",
-        "taxRateEnabled": "Steuern aktivieren",
         "text": "In diesem Abschnitt kannst du dein Registrierungsformular bearbeiten, optimieren und ansehen.",
         "title": "Registrierung"
       }

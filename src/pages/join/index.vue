@@ -93,7 +93,6 @@ const joinContent = ref<ContentJoinData>({
   stripeCountry: 'eu',
   taxRateEnabled: false,
   taxRate: 7,
-  taxRateStrapiId: '',
 });
 
 const { signUpData, signUpDescription } = useJoin(joinContent);

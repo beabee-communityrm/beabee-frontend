@@ -87,6 +87,47 @@ meta:
     </template>
     <template #col2>
       <div class="my-8 border-b border-b-primary-40 md:hidden" />
+
+      <AppForm
+        :button-text="t('actions.update')"
+        :success-text="t('form.saved')"
+        @submit="handleSavePayment"
+      >
+        <AppSubHeading>
+          {{ t('adminSettings.payment.paymentTitle') }}</AppSubHeading
+        >
+        <div class="mb-4 flex gap-4">
+          <div class="flex-1">
+            <div class="max-w-[8rem]">
+              <AppCheckbox
+                v-model="paymentData.taxRateEnabled"
+                :label="t('adminSettings.payment.taxRateEnabled')"
+                class="font-bold"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="mb-4 flex gap-4">
+          <div class="flex-1">
+            <AppLabel :label="t('adminSettings.payment.taxRate')" />
+            <div class="max-w-[8rem]">
+              <AppInput
+                v-model="paymentData.taxRate"
+                type="number"
+                :min="1"
+                :max="100"
+                :disabled="!paymentData.taxRateEnabled"
+                prefix="%"
+                required
+                class="block w-32"
+              />
+            </div>
+          </div>
+        </div>
+      </AppForm>
+
+      <div class="my-8 border-b border-b-primary-40" />
+
       <AppForm
         :button-text="t('actions.update')"
         :success-text="t('form.saved')"
@@ -154,12 +195,13 @@ import AppForm from '@components/forms/AppForm.vue';
 import App2ColGrid from '@components/App2ColGrid.vue';
 import AppSubHeading from '@components/AppSubHeading.vue';
 import AppLinkList from '@components/forms/AppLinkList.vue';
+import AppCheckbox from '@components/forms/AppCheckbox.vue';
 
 import { fetchContent, updateContent } from '@utils/api/content';
 
 import { generalContent as storeGeneralContent } from '@store';
 
-import type { ContentShareData } from '@type';
+import type { ContentShareData, ContentJoinData } from '@type';
 import { localeItems } from '@lib/i18n';
 
 const { t } = useI18n();
@@ -175,6 +217,11 @@ const footerData = reactive({
   termsLink: '',
   impressumLink: '',
   footerLinks: [] as { text: string; url: string }[],
+});
+
+const paymentData = ref<Pick<ContentJoinData, 'taxRateEnabled' | 'taxRate'>>({
+  taxRateEnabled: false,
+  taxRate: 7,
 });
 
 const shareContent = ref<ContentShareData>();
@@ -198,6 +245,9 @@ async function handleSaveShare() {
 async function handleSaveFooter() {
   storeGeneralContent.value = await updateContent('general', footerData);
 }
+async function handleSavePayment() {
+  await updateContent('join', paymentData.value);
+}
 
 onBeforeMount(async () => {
   generalData.organisationName = storeGeneralContent.value.organisationName;
@@ -212,5 +262,11 @@ onBeforeMount(async () => {
     storeGeneralContent.value.footerLinks?.map((l) => ({ ...l })) || [];
 
   shareContent.value = await fetchContent('share');
+
+  const joinContent = await fetchContent('join');
+  paymentData.value = {
+    taxRateEnabled: joinContent.taxRateEnabled,
+    taxRate: joinContent.taxRate,
+  };
 });
 </script>
