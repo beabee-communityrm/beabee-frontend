@@ -1,9 +1,9 @@
-import { de, enGB, nl, pt, ru } from 'date-fns/locale';
+import { de, enGB, nl, pt, ru, it } from 'date-fns/locale';
 import { formatDistance, format } from 'date-fns';
 import i18n from '../lib/i18n';
 
 const { locale } = i18n.global;
-const locales = { en: enGB, de, nl, pt, ru };
+const locales = { en: enGB, de, nl, pt, ru, it };
 
 export function formatDistanceLocale(
   firstDate: Date,
