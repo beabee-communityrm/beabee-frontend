@@ -15,7 +15,8 @@
   },
   "actions": {
     "add": "Aggiungi",
-    "back": "Indietro"
+    "back": "Indietro",
+    "continue": "Prosegui"
   },
   "addContact": {
     "errors": {}
@@ -42,6 +43,7 @@
       },
       "socialSharing": {}
     },
+    "payment": {},
     "theme": {
       "colorNames": {},
       "presetColors": {}
@@ -320,14 +322,22 @@
         "proceed": "Ti abbiamo inviato una mail. Clicca il link all'interno per procedere. ",
         "title": "Conferma il tuo account."
       },
-      "failed": {}
+      "failed": {
+        "title": "Qualcosa è andato storto"
+      }
     },
     "login": "Log in",
     "memberAccount": "Il tuo account",
     "memberAlready": "Sei già iscritto?",
     "paymentMethod": "Metodo di pagamento"
   },
-  "joinPayment": {},
+  "joinPayment": {
+    "genericError": "Ops! Qualcosa è andato storto",
+    "goBack": "Ti sei perso qualcosa? {back}",
+    "goBackButton": "Torna alla schermata precedente",
+    "note": "Potrai modificare l'ammontare del tuo contributo e accedere allo storico delle tue donazioni in qualsiasi momento tramite il tuo account.",
+    "willBeContributing": "Contribuirai con {contribution}"
+  },
   "joinSetup": {
     "confirmDetails": "Per favore, conferma i tuoi dettagli.",
     "continue": "Ottimo! Prosegui",
