@@ -201,7 +201,7 @@ import { fetchContent, updateContent } from '@utils/api/content';
 
 import { generalContent as storeGeneralContent } from '@store';
 
-import type { ContentShareData, ContentJoinData } from '@type';
+import type { ContentShareData, ContentStripeData } from '@type';
 import { localeItems } from '@lib/i18n';
 
 const { t } = useI18n();
@@ -219,7 +219,7 @@ const footerData = reactive({
   footerLinks: [] as { text: string; url: string }[],
 });
 
-const paymentData = ref<Pick<ContentJoinData, 'taxRateEnabled' | 'taxRate'>>({
+const paymentData = ref<Pick<ContentStripeData, 'taxRateEnabled' | 'taxRate'>>({
   taxRateEnabled: false,
   taxRate: 7,
 });
@@ -246,7 +246,7 @@ async function handleSaveFooter() {
   storeGeneralContent.value = await updateContent('general', footerData);
 }
 async function handleSavePayment() {
-  await updateContent('join', paymentData.value);
+  await updateContent('stripe', paymentData.value);
 }
 
 onBeforeMount(async () => {
@@ -263,10 +263,10 @@ onBeforeMount(async () => {
 
   shareContent.value = await fetchContent('share');
 
-  const joinContent = await fetchContent('join');
+  const stripeContent = await fetchContent('stripe');
   paymentData.value = {
-    taxRateEnabled: joinContent.taxRateEnabled,
-    taxRate: joinContent.taxRate,
+    taxRateEnabled: stripeContent.taxRateEnabled,
+    taxRate: stripeContent.taxRate,
   };
 });
 </script>

@@ -76,7 +76,7 @@
       </AppHeading>
       <StripePayment
         :client-secret="stripeClientSecret"
-        :public-key="content.stripePublicKey"
+        :public-key="content.stripe.publicKey"
         :email="email"
         :return-url="startContributionCompleteUrl"
         @loaded="onStripeLoaded"

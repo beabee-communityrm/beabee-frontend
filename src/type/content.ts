@@ -6,6 +6,7 @@ import type {
   ContentJoinSetupData,
   ContentProfileData,
   ContentShareData,
+  ContentStripeData,
   ContentId,
 } from '@type';
 
@@ -23,4 +24,6 @@ export type Content<Id extends ContentId> = Id extends 'join'
             ? ContentEmailData
             : Id extends 'share'
               ? ContentShareData
-              : never;
+              : Id extends 'stripe'
+                ? ContentStripeData
+                : never;
