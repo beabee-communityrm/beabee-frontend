@@ -90,7 +90,11 @@ meta:
       </AppForm>
     </template>
     <template #col2>
-      <JoinForm :join-content="joinContent" preview />
+      <JoinForm
+        :join-content="joinContent"
+        :stripe-content="stripeContent!"
+        preview
+      />
     </template>
   </App2ColGrid>
 </template>
@@ -117,9 +121,10 @@ import { fetchContent, updateContent } from '@utils/api/content';
 
 import { generalContent } from '@store';
 
-import type { ContentJoinData } from '@type';
+import type { ContentJoinData, ContentStripeData } from '@type';
 
 const joinContent = ref<ContentJoinData>();
+const stripeContent = ref<ContentStripeData>();
 const backgroundUrl = ref('');
 
 const { n, t } = useI18n();
@@ -175,6 +180,7 @@ async function handleUpdate() {
 
 onBeforeMount(async () => {
   joinContent.value = await fetchContent('join');
+  stripeContent.value = await fetchContent('stripe');
   backgroundUrl.value = generalContent.value.backgroundUrl || '';
 });
 </script>

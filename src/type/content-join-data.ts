@@ -1,8 +1,4 @@
-import type {
-  ContributionPeriod,
-  PaymentMethod,
-  StripeFeeCountry,
-} from '@beabee/beabee-common';
+import type { ContributionPeriod, PaymentMethod } from '@beabee/beabee-common';
 
 import type { ContentJoinPeriodData } from './index';
 
@@ -16,8 +12,4 @@ export interface ContentJoinData {
   showAbsorbFee: boolean;
   showNoContribution: boolean;
   paymentMethods: PaymentMethod[];
-  stripePublicKey: string;
-  stripeCountry: StripeFeeCountry;
-  taxRateEnabled: boolean;
-  taxRate: number;
 }

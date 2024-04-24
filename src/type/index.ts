@@ -31,6 +31,7 @@ export * from './content-join-period-data';
 export * from './content-join-setup-data';
 export * from './content-profile-data';
 export * from './content-share-data';
+export * from './content-stripe-data';
 export * from './content';
 export * from './contribution-info';
 export * from './create-api-key-data';

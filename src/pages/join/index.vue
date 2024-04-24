@@ -11,6 +11,7 @@ meta:
   <JoinForm
     v-if="!stripeClientSecret"
     :join-content="joinContent"
+    :stripe-content="stripeContent"
     @submit.prevent="submitSignUp"
   />
 
@@ -44,7 +45,7 @@ meta:
 
     <StripePayment
       :client-secret="stripeClientSecret"
-      :public-key="joinContent.stripePublicKey"
+      :public-key="stripeContent.publicKey"
       :email="signUpData.email"
       :return-url="completeUrl"
       show-name-fields
@@ -70,7 +71,7 @@ import { signUp, completeUrl } from '@utils/api/signup';
 
 import { generalContent } from '@store';
 
-import type { ContentJoinData } from '@type';
+import type { ContentJoinData, ContentStripeData } from '@type';
 
 const { t } = useI18n();
 
@@ -89,13 +90,16 @@ const joinContent = ref<ContentJoinData>({
   subtitle: '',
   title: '',
   paymentMethods: [],
-  stripePublicKey: '',
-  stripeCountry: 'eu',
+});
+
+const stripeContent = ref<ContentStripeData>({
+  publicKey: '',
+  country: 'eu',
   taxRateEnabled: false,
   taxRate: 7,
 });
 
-const { signUpData, signUpDescription } = useJoin(joinContent);
+const { signUpData, signUpDescription } = useJoin(stripeContent);
 
 async function submitSignUp() {
   const data = await signUp(signUpData);
@@ -112,6 +116,8 @@ onBeforeMount(async () => {
   stripeClientSecret.value = '';
 
   joinContent.value = await fetchContent('join');
+
+  stripeContent.value = await fetchContent('stripe');
 
   signUpData.amount =
     (route.query.amount && Number(route.query.amount)) ||
