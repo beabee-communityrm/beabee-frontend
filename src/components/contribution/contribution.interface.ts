@@ -1,4 +1,4 @@
-import type { ContentJoinData, ContentStripeData } from '@type';
+import type { ContentJoinData, ContentPaymentData } from '@type';
 
 export type ContributionContent = Pick<
   ContentJoinData,
@@ -9,5 +9,5 @@ export type ContributionContent = Pick<
   | 'periods'
   | 'paymentMethods'
 > & {
-  stripe: Pick<ContentStripeData, 'publicKey' | 'country'>;
+  payment: Pick<ContentPaymentData, 'stripePublicKey' | 'stripeCountry'>;
 };
