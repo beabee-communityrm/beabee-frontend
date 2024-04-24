@@ -114,10 +114,10 @@ meta:
               <AppInput
                 v-model="paymentData.taxRate"
                 type="number"
-                :min="1"
+                :min="0"
                 :max="100"
                 :disabled="!paymentData.taxRateEnabled"
-                prefix="%"
+                suffix="%"
                 required
                 class="block w-32"
               />
