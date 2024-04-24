@@ -72,7 +72,7 @@ const props = withDefaults(
 
 const { t } = useI18n();
 
-const fee = computed(() => calcPaymentFee(props, props.content.stripeCountry));
+const fee = computed(() => calcPaymentFee(props, props.content.stripe.country));
 
 const emit = defineEmits([
   'update:amount',

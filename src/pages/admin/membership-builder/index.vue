@@ -52,22 +52,7 @@ meta:
             class="flex-1"
           />
         </div>
-        <div class="mb-4 flex gap-4">
-          <div class="flex-1">
-            <AppLabel :label="stepT('taxRate')" />
-            <div class="max-w-[8rem]">
-              <AppInput
-                v-model="joinContent.taxRate"
-                type="number"
-                :min="1"
-                :max="100"
-                prefix="%"
-                required
-                class="block w-32"
-              />
-            </div>
-          </div>
-        </div>
+
         <div class="mb-4 flex gap-4">
           <div class="flex-1">
             <AppLabel :label="stepT('minAmount')" />
@@ -105,7 +90,11 @@ meta:
       </AppForm>
     </template>
     <template #col2>
-      <JoinForm :join-content="joinContent" preview />
+      <JoinForm
+        :join-content="joinContent"
+        :stripe-content="stripeContent!"
+        preview
+      />
     </template>
   </App2ColGrid>
 </template>
@@ -132,9 +121,10 @@ import { fetchContent, updateContent } from '@utils/api/content';
 
 import { generalContent } from '@store';
 
-import type { ContentJoin } from '@type';
+import type { ContentJoinData, ContentStripeData } from '@type';
 
-const joinContent = ref<ContentJoin>();
+const joinContent = ref<ContentJoinData>();
+const stripeContent = ref<ContentStripeData>();
 const backgroundUrl = ref('');
 
 const { n, t } = useI18n();
@@ -190,6 +180,7 @@ async function handleUpdate() {
 
 onBeforeMount(async () => {
   joinContent.value = await fetchContent('join');
+  stripeContent.value = await fetchContent('stripe');
   backgroundUrl.value = generalContent.value.backgroundUrl || '';
 });
 </script>

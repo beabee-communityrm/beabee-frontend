@@ -28,11 +28,11 @@ import { updateContact } from '@utils/api/contact';
 import { updateCurrentUser } from '@store';
 
 import type { SetupContactData } from '@components/pages/join/join.interface';
-import type { ContentJoinSetup, UpdateContactData } from '@type';
+import type { ContentJoinSetupData, UpdateContactData } from '@type';
 
 const router = useRouter();
 
-const setupContent = ref<ContentJoinSetup>({
+const setupContent = ref<ContentJoinSetupData>({
   welcome: '',
   newsletterText: '',
   newsletterOptIn: '',
