@@ -1,8 +1,8 @@
 <template>
   <span v-if="readonly">
-    <b>{{ selectedCallout?.title || '???' }}</b>
-    {{ t('contacts.advancedSearch.responseTo') }}{{ ' ' }}
+    <b>{{ selectedCallout?.title || '???' }}</b> /
   </span>
+
   <AppSelect
     v-else
     v-model="selectedCalloutId"
@@ -25,6 +25,7 @@
 <script lang="ts" setup>
 import {
   ItemStatus,
+  contactCalloutFilters,
   getCalloutComponents,
   type Rule,
 } from '@beabee/beabee-common';
@@ -65,7 +66,7 @@ const calloutItems = computed(() => {
   }));
 });
 
-const filterItems = computed<FilterItems>(() => {
+const filterItems = computed(() => {
   if (!selectedCallout.value) return {};
 
   const component = getCalloutComponents(
@@ -73,10 +74,10 @@ const filterItems = computed<FilterItems>(() => {
   ).filter((c) => !!c.input);
 
   return {
-    [`callouts.${selectedCallout.value.id}.hasAnswered`]: {
-      type: 'boolean',
-      label: t('contacts.advancedSearch.hasAnswered'),
-    },
+    [`callouts.${selectedCallout.value.id}.hasAnswered`]: withLabel(
+      contactCalloutFilters.hasAnswered,
+      t('contacts.advancedSearch.hasAnswered')
+    ),
     ...convertComponentsToFilters(
       component,
       `callouts.${selectedCallout.value.id}.responses.answers`

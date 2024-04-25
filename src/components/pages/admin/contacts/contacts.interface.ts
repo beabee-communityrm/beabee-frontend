@@ -167,6 +167,6 @@ export const filterGroups = computed<FilterGroups>(() => [
     label: t('contacts.dataGroup.calloutResponse'),
     items: {},
     custom: CalloutResponseFilterGroup,
-    itemsMatch: /^callouts\.[a-z0-9A-Z-]+\.responses\./,
+    itemsMatch: /^callouts\.[a-z0-9A-Z-]+\./,
   },
 ]);
