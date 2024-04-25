@@ -322,7 +322,8 @@
     "errors": {
       "confirmEmail": {},
       "failed": {}
-    }
+    },
+    "tax": {}
   },
   "joinPayment": {},
   "joinSetup": {},

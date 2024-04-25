@@ -1120,7 +1120,10 @@
     "now": "Jetzt Mitglied werden! ",
     "paymentMethod": "Zahlungsart",
     "poweredBy": "Powered by beabee",
-    "privacy": "Datenschutzerklärung"
+    "privacy": "Datenschutzerklärung",
+    "tax": {
+      "included": "Beitrag inklusive {taxRate}% MwSt."
+    }
   },
   "joinPayment": {
     "genericError": "Upps! Etwas ist schiefgelaufen. Bitte wenden Sie sich an den Support, sollte das erneut passieren.",

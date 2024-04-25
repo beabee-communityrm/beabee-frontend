@@ -738,7 +738,8 @@
     "now": "Entrar agora!",
     "paymentMethod": "Forma de pagamento",
     "poweredBy": "Powered by beabee",
-    "privacy": "Política de Privacidade"
+    "privacy": "Política de Privacidade",
+    "tax": {}
   },
   "joinPayment": {
     "genericError": "Ups, houve aqui um erro. Fala connosco se isto voltar a acontecer.",

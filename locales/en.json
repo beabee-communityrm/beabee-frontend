@@ -1126,7 +1126,10 @@
     "now": "Join now!",
     "paymentMethod": "Payment method",
     "poweredBy": "Powered by beabee",
-    "privacy": "Privacy Policy"
+    "privacy": "Privacy Policy",
+    "tax": {
+      "included": "Contribution Including {taxRate}% VAT."
+    }
   },
   "joinPayment": {
     "genericError": "Oops, something went wrong! Contact support if this happens again.",
