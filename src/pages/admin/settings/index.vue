@@ -98,13 +98,11 @@ meta:
         >
         <div class="mb-4 flex gap-4">
           <div class="flex-1">
-            <div class="max-w-[8rem]">
-              <AppCheckbox
-                v-model="paymentData.taxRateEnabled"
-                :label="t('adminSettings.payment.taxRateEnabled')"
-                class="font-bold"
-              />
-            </div>
+            <AppCheckbox
+              v-model="paymentData.taxRateEnabled"
+              :label="t('adminSettings.payment.taxRateEnabled')"
+              class="font-bold"
+            />
           </div>
         </div>
         <div class="mb-4 flex gap-4">
