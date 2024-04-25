@@ -19,6 +19,7 @@
     :filter-group="{ items: filterItems }"
     :readonly="readonly"
     @update:rule="emit('update:rule', $event)"
+    @remove="emit('remove')"
   />
 </template>
 <script lang="ts" setup>
@@ -40,10 +41,11 @@ import {
   type GetCalloutData,
   type GetCalloutDataWith,
   type FilterGroup,
-  type FilterItems,
 } from '@type';
+import { withLabel } from '@utils/rules';
+import { type SearchRuleEmits } from '@components/search/search.interface';
 
-const emit = defineEmits<(event: 'update:rule', rule: Rule) => void>();
+const emit = defineEmits<SearchRuleEmits>();
 const props = defineProps<{
   rule: Rule | null;
   filterGroup: FilterGroup;
