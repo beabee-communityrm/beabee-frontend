@@ -67,7 +67,7 @@ const calloutItems = computed(() => {
 });
 
 const filterItems = computed(() => {
-  if (!selectedCallout.value) return {};
+  if (!selectedCallout.value) return undefined;
 
   const component = getCalloutComponents(
     selectedCallout.value.formSchema
