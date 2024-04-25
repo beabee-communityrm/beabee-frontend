@@ -619,6 +619,7 @@
   "contacts": {
     "addContact": "Add contact",
     "advancedSearch": {
+      "hasAnswered": "Has participated in this callout?",
       "responseTo": "response to",
       "selectCallout": "Select callout..."
     },

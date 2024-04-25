@@ -36,7 +36,12 @@ import AppSearchRuleFilterGroup from '@components/search/AppSearchRuleFilterGrou
 import { fetchCallout, fetchCallouts } from '@utils/api/callout';
 import { convertComponentsToFilters } from '@utils/callouts';
 
-import type { GetCalloutDataWith, FilterGroup, GetCalloutData } from '@type';
+import {
+  type GetCalloutData,
+  type GetCalloutDataWith,
+  type FilterGroup,
+  type FilterItems,
+} from '@type';
 
 const emit = defineEmits<(event: 'update:rule', rule: Rule) => void>();
 const props = defineProps<{
@@ -58,17 +63,23 @@ const calloutItems = computed(() => {
   }));
 });
 
-const filterItems = computed(() => {
+const filterItems = computed<FilterItems>(() => {
   if (!selectedCallout.value) return {};
 
   const component = getCalloutComponents(
     selectedCallout.value.formSchema
   ).filter((c) => !!c.input);
 
-  return convertComponentsToFilters(
-    component,
-    `callouts.${selectedCallout.value.id}.responses.answers`
-  );
+  return {
+    [`callouts.${selectedCallout.value.id}.hasAnswered`]: {
+      type: 'boolean',
+      label: t('contacts.advancedSearch.hasAnswered'),
+    },
+    ...convertComponentsToFilters(
+      component,
+      `callouts.${selectedCallout.value.id}.responses.answers`
+    ),
+  };
 });
 
 // Set the callout ID to the current rule when it changes
