@@ -217,12 +217,13 @@ const footerData = reactive({
   footerLinks: [] as { text: string; url: string }[],
 });
 
-const paymentData = ref<Pick<ContentPaymentData, 'taxRateEnabled' | 'taxRate'>>(
-  {
-    taxRateEnabled: false,
-    taxRate: 7,
-  }
-);
+const paymentData = ref<
+  Pick<ContentPaymentData, 'taxRateEnabled' | 'taxRate' | 'stripeTaxRateId'>
+>({
+  taxRateEnabled: false,
+  taxRate: 7,
+  stripeTaxRateId: '',
+});
 
 const shareContent = ref<ContentShareData>();
 
@@ -267,6 +268,7 @@ onBeforeMount(async () => {
   paymentData.value = {
     taxRateEnabled: paymentContent.taxRateEnabled,
     taxRate: paymentContent.taxRate,
+    stripeTaxRateId: paymentContent.stripeTaxRateId,
   };
 });
 </script>
