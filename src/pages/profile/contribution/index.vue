@@ -109,6 +109,8 @@ const content = ref<ContributionContent>({
   payment: {
     stripePublicKey: '',
     stripeCountry: 'eu',
+    taxRate: 0,
+    taxRateEnabled: false,
   },
 });
 

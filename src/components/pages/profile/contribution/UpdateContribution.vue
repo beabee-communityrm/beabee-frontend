@@ -63,6 +63,10 @@
       >
         {{ buttonText }}
       </AppButton>
+
+      <p v-if="content.payment.taxRateEnabled" class="text-sm">
+        {{ t('join.tax.included', { taxRate: content.payment.taxRate }) }}
+      </p>
     </form>
 
     <AppModal
