@@ -1,3 +1,4 @@
+/** @deprecated Use this type from the common package instead */
 export interface CalloutVariantData {
   title: string;
   excerpt: string;
@@ -11,6 +12,7 @@ export interface CalloutVariantData {
   componentText: Record<string, string>;
 }
 
+/** @deprecated Use this type from the common package instead */
 export interface CalloutVariantNavigationData {
   prevText: string;
   nextText: string;
