@@ -485,7 +485,7 @@
   },
   "setPassword": {
     "description": "Imposta una nuova password.",
-    "title": "Impposta una password"
+    "title": "Imposta una password"
   },
   "tagEditor": {
     "confirmDelete": {}
