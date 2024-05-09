@@ -144,7 +144,9 @@
     "loading": "Ladt...",
     "newsletterStatus": {},
     "noResults": "Geen resultaten gevonden",
-    "paymentStatus": {},
+    "paymentStatus": {
+      "draft": "Ontwerp"
+    },
     "role": {},
     "selectNone": "Geen",
     "selectOne": "Kiies er één",
