@@ -13,8 +13,8 @@
         {{ formatLocale(value, 'PPP') }}
       </template>
       <template #value-amount="{ value, item }">
-        <span class="mr-3">
-          {{ getStatusText(item) }}
+        <span v-if="item.status !== PaymentStatus.Successful" class="mr-3">
+          {{ t('common.paymentStatus.' + item.status) }}
         </span>
         <b>{{ n(value, 'currency') }}</b>
       </template>
@@ -79,20 +79,10 @@ function getRowClass(item: GetPaymentData) {
     case PaymentStatus.Failed:
       return 'text-danger';
     case PaymentStatus.Pending:
+    case PaymentStatus.Draft:
       return 'text-body-60';
     default:
       return '';
-  }
-}
-
-function getStatusText(item: GetPaymentData) {
-  switch (item.status) {
-    case PaymentStatus.Cancelled:
-      return t('common.paymentStatus.cancelled');
-    case PaymentStatus.Failed:
-      return t('common.paymentStatus.failed');
-    case PaymentStatus.Pending:
-      return t('common.paymentStatus.pending');
   }
 }
 
