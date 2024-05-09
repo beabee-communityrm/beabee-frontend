@@ -208,8 +208,8 @@
     },
     "payment": {
       "paymentTitle": "Payment",
-      "taxRate": "Tax rate",
-      "taxRateEnabled": "Enable taxes"
+      "taxRate": "VAT rate",
+      "taxRateEnabled": "Enable VAT"
     },
     "theme": {
       "bodyFont": "Body text",
@@ -1127,7 +1127,10 @@
     "now": "Join now!",
     "paymentMethod": "Payment method",
     "poweredBy": "Powered by beabee",
-    "privacy": "Privacy Policy"
+    "privacy": "Privacy Policy",
+    "tax": {
+      "included": "Contribution includes {taxRate}% VAT."
+    }
   },
   "joinPayment": {
     "genericError": "Oops, something went wrong! Contact support if this happens again.",
@@ -1364,5 +1367,8 @@
       "title": "Remove tag"
     },
     "name": "Name"
+  },
+  "taxRate": {
+    "invoiceName": "VAT"
   }
 }

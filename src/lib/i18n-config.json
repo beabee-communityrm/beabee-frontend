@@ -5,12 +5,6 @@
     "displayName": "English",
     "adminLocale": "en"
   },
-  "it": {
-    "baseLocale": "it",
-    "name": "Italiano",
-    "displayName": "Italiano",
-    "adminLocale": "en"
-  },
   "de": {
     "baseLocale": "de",
     "name": "Deutsch (formal)",
