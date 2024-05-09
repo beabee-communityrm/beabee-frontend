@@ -160,6 +160,7 @@
     "pageCount": "Pagina {pageNumber} di {pageTotal}",
     "paymentStatus": {
       "cancelled": "Cancellato",
+      "draft": "Bozza",
       "failed": "Errore",
       "pending": "In attesa",
       "successful": "Riuscito"

@@ -549,6 +549,7 @@
     "pageCount": "Page {pageNumber} out of {pageTotal}",
     "paymentStatus": {
       "cancelled": "Cancelled",
+      "draft": "Draft",
       "failed": "Failed",
       "pending": "Pending",
       "successful": "Successful"
