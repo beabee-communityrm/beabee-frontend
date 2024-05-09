@@ -48,7 +48,7 @@ import AppHeading from '@components/AppHeading.vue';
 import { formatLocale } from '@utils/dates';
 import { fetchPayments } from '@utils/api/contact';
 
-import type { GetPaymentData } from '@type';
+import type { GetPaymentData, GetPaymentsQuery } from '@type';
 
 const { t, n } = useI18n();
 
@@ -97,11 +97,15 @@ function getStatusText(item: GetPaymentData) {
 }
 
 watchEffect(async () => {
-  const query = {
+  const query: GetPaymentsQuery = {
     offset: currentPage.value * pageSize,
     limit: pageSize,
     sort: 'chargeDate',
     order: SortType.Desc,
+    rules: {
+      condition: 'AND',
+      rules: [{ field: 'status', operator: 'not_equal', value: ['draft'] }],
+    },
   };
   paymentsHistoryTable.value = await fetchPayments(props.id, query);
 });
