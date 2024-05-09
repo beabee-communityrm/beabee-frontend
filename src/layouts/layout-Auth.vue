@@ -5,7 +5,7 @@
     "
     :style="isEmbed ? undefined : backgroundStyle"
   >
-    <div class="mb-4">
+    <div v-if="!isEmbed" class="mb-4">
       <AppButton :href="generalContent.siteUrl" size="sm">
         ←
         {{

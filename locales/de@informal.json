@@ -550,6 +550,7 @@
     "pageCount": "Seite {pageNumber} von {pageTotal}",
     "paymentStatus": {
       "cancelled": "Gekündigt",
+      "draft": "Entwurf",
       "failed": "Fehlgeschlagen",
       "pending": "In Bearbeitung",
       "successful": "Erfolgreich"
