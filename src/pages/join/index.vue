@@ -11,6 +11,7 @@ meta:
   <JoinForm
     v-if="!stripeClientSecret"
     :join-content="joinContent"
+    :payment-content="paymentContent"
     @submit.prevent="submitSignUp"
   />
 
@@ -44,7 +45,7 @@ meta:
 
     <StripePayment
       :client-secret="stripeClientSecret"
-      :public-key="joinContent.stripePublicKey"
+      :public-key="paymentContent.stripePublicKey"
       :email="signUpData.email"
       :return-url="completeUrl"
       show-name-fields
@@ -70,7 +71,7 @@ import { signUp, completeUrl } from '@utils/api/signup';
 
 import { generalContent } from '@store';
 
-import type { ContentJoin } from '@type';
+import type { ContentJoinData, ContentPaymentData } from '@type';
 
 const { t } = useI18n();
 
@@ -79,7 +80,7 @@ const router = useRouter();
 
 const stripeClientSecret = ref('');
 
-const joinContent = ref<ContentJoin>({
+const joinContent = ref<ContentJoinData>({
   initialAmount: 5,
   initialPeriod: ContributionPeriod.Monthly,
   minMonthlyAmount: 5,
@@ -89,11 +90,16 @@ const joinContent = ref<ContentJoin>({
   subtitle: '',
   title: '',
   paymentMethods: [],
-  stripePublicKey: '',
-  stripeCountry: 'eu',
 });
 
-const { signUpData, signUpDescription } = useJoin(joinContent);
+const paymentContent = ref<ContentPaymentData>({
+  stripePublicKey: '',
+  stripeCountry: 'eu',
+  taxRateEnabled: false,
+  taxRate: 7,
+});
+
+const { signUpData, signUpDescription } = useJoin(paymentContent);
 
 async function submitSignUp() {
   const data = await signUp(signUpData);
@@ -110,6 +116,8 @@ onBeforeMount(async () => {
   stripeClientSecret.value = '';
 
   joinContent.value = await fetchContent('join');
+
+  paymentContent.value = await fetchContent('payment');
 
   signUpData.amount =
     (route.query.amount && Number(route.query.amount)) ||

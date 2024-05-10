@@ -17,7 +17,7 @@
         v-model:period="signUpData.period"
         v-model:payFee="signUpData.payFee"
         v-model:paymentMethod="signUpData.paymentMethod"
-        :content="joinContent"
+        :content="{ ...joinContent, payment: paymentContent }"
         :disabled="signUpData.noContribution"
       >
         <AppCheckbox
@@ -67,17 +67,20 @@ import AppCheckbox from '@components/forms/AppCheckbox.vue';
 import AppForm from '@components/forms/AppForm.vue';
 import AuthBox from '@components/AuthBox.vue';
 
-import type { ContentJoin } from '@type';
+import type { ContentJoinData, ContentPaymentData } from '@type';
 
 const props = defineProps<{
-  joinContent: ContentJoin;
+  joinContent: ContentJoinData;
+  paymentContent: ContentPaymentData;
   preview?: boolean;
   onSubmit?: () => Promise<void>;
 }>();
 
 const { t } = useI18n();
 
-const { signUpData, signUpDescription } = useJoin(toRef(props, 'joinContent'));
+const { signUpData, signUpDescription } = useJoin(
+  toRef(props, 'paymentContent')
+);
 
 const buttonText = computed(() => {
   return signUpData.noContribution
