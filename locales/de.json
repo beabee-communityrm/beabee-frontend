@@ -207,7 +207,9 @@
       }
     },
     "payment": {
-      "paymentTitle": "Zahlungen"
+      "paymentTitle": "Zahlungen",
+      "taxRate": "Mehrwertsteuersatz",
+      "taxRateEnabled": "Mehrwertsteuer aktivieren"
     },
     "theme": {
       "bodyFont": "Text",
