@@ -10,7 +10,7 @@
       { id: '', label: t('contacts.advancedSearch.selectCallout') },
       ...calloutItems,
     ]"
-    class="mb-2"
+    :class="filterItems && 'mb-2'"
   />
 
   <AppSearchRuleFilterGroup
