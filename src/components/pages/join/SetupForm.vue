@@ -67,10 +67,10 @@ import { type SetupContactData } from './join.interface';
 
 import { fetchContact } from '@utils/api/contact';
 
-import type { ContentJoinSetup } from '@type';
+import type { ContentJoinSetupData } from '@type';
 
 const props = defineProps<{
-  setupContent: ContentJoinSetup;
+  setupContent: ContentJoinSetupData;
   onSubmit?: (data: SetupContactData) => Promise<unknown> | unknown;
   preview?: boolean;
 }>();

@@ -46,6 +46,7 @@
       },
       "socialSharing": {}
     },
+    "payment": {},
     "theme": {
       "colorNames": {},
       "presetColors": {}
@@ -139,7 +140,9 @@
     "loading": "Der Computer arbeitet.",
     "newsletterStatus": {},
     "noResults": "Der Computer hat keine Ergebnisse gefunden.",
-    "paymentStatus": {},
+    "paymentStatus": {
+      "draft": "Hier ist ein erster Vorschlag."
+    },
     "role": {},
     "selectNone": "keine",
     "selectOne": "Hier kannst du ein Bild / eine Unterschrift / … aus-suchen",
@@ -322,7 +325,8 @@
     "errors": {
       "confirmEmail": {},
       "failed": {}
-    }
+    },
+    "tax": {}
   },
   "joinPayment": {},
   "joinSetup": {},
@@ -387,5 +391,8 @@
   "setPassword": {},
   "tagEditor": {
     "confirmDelete": {}
+  },
+  "taxRate": {
+    "invoiceName": "MwSt"
   }
 }

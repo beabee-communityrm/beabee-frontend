@@ -8,6 +8,7 @@ export const validFonts = {
   'fira-sans-condensed': ['Fira Sans Condensed', 'sans-serif'],
   'nunito-sans': ['Nunito Sans', 'sans-serif'],
   'open-sans': ['Open Sans', 'sans-serif'],
+  roboto: ['Roboto', 'sans-serif'],
   'roboto-slab': ['Roboto Slab', 'serif'],
   rubik: ['Rubik', 'sans-serif'],
   ubuntu: ['Ubuntu', 'sans-serif'],

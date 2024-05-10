@@ -64,8 +64,9 @@ const filterItems = computed<FilterItems<PaymentFilterName>>(() => ({
   contact: withLabel(paymentFilters.contact, t('payments.data.contact')),
   amount: withLabel(paymentFilters.amount, t('payments.data.amount')),
   status: withLabel(paymentFilters.status, t('payments.data.status'), {
-    successful: t('common.paymentStatus.successful'),
+    draft: t('common.paymentStatus.draft'),
     pending: t('common.paymentStatus.pending'),
+    successful: t('common.paymentStatus.successful'),
     failed: t('common.paymentStatus.failed'),
     cancelled: t('common.paymentStatus.cancelled'),
   }),

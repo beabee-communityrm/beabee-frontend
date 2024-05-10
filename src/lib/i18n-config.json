@@ -17,6 +17,12 @@
     "displayName": "Deutsch",
     "adminLocale": "de@informal"
   },
+  "it": {
+    "baseLocale": "it",
+    "name": "Italiano",
+    "displayName": "Italiano",
+    "adminLocale": "en"
+  },
   "ru": {
     "baseLocale": "ru",
     "name": "Русский",
