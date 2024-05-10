@@ -18,7 +18,7 @@ meta:
 import ContactUpdateAccount from '@components/contact/ContactUpdateAccount.vue';
 import App2ColGrid from '@components/App2ColGrid.vue';
 
-import type { GetContactData } from '@type';
+import type { GetContactData } from '@beabee/beabee-common';
 
 defineProps<{
   contact: GetContactData;

@@ -45,7 +45,10 @@ import { fetchCalloutResponses } from '@utils/api/callout-response';
 import { definePaginatedQuery } from '@utils/pagination';
 import AppPaginatedTable from '@components/table/AppPaginatedTable.vue';
 
-import type { GetCalloutResponseDataWith, GetContactData } from '@type';
+import type {
+  GetCalloutResponseDataWith,
+  GetContactData,
+} from '@beabee/beabee-common';
 
 const props = defineProps<{
   contact: GetContactData;

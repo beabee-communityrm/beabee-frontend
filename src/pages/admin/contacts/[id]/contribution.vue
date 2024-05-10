@@ -75,7 +75,7 @@ import AppNotification from '@components/AppNotification.vue';
 
 import { fetchContact, forceUpdateContribution } from '@utils/api/contact';
 
-import type { ContributionInfo, GetContactData } from '@type';
+import type { ContributionInfo, GetContactData } from '@beabee/beabee-common';
 
 const { t } = useI18n();
 
