@@ -26,6 +26,12 @@ meta:
       :icon="faHandSparkles"
       class="mb-4"
     />
+    <p
+      v-if="paymentContent.taxRateEnabled"
+      class="-mt-2 mb-4 text-right text-xs"
+    >
+      {{ t('join.tax.included', { taxRate: paymentContent.taxRate }) }}
+    </p>
 
     <p class="mb-3 text-xs font-semibold text-body-80">
       {{ t('joinPayment.note') }}
