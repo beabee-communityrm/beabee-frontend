@@ -75,7 +75,7 @@ import AuthBox from '@components/AuthBox.vue';
 import { fetchContent } from '@utils/api/content';
 import { signUp, completeUrl } from '@utils/api/signup';
 
-import { generalContent } from '@store';
+import { generalContent, isEmbed } from '@store';
 
 import type { ContentJoinData, ContentPaymentData } from '@type';
 
@@ -109,12 +109,17 @@ const { signUpData, signUpDescription } = useJoin(paymentContent);
 
 async function submitSignUp() {
   const data = await signUp(signUpData);
+  const topWindow = window.top || window;
   if (data.redirectUrl) {
-    (window.top || window).location.href = data.redirectUrl;
+    topWindow.location.href = data.redirectUrl;
   } else if (data.clientSecret) {
     stripeClientSecret.value = data.clientSecret;
   } else {
-    router.push({ path: '/join/confirm-email' });
+    if (isEmbed) {
+      topWindow.location.href = '/join/confirm-email';
+    } else {
+      router.push({ path: '/join/confirm-email' });
+    }
   }
 }
 
