@@ -63,6 +63,13 @@
       >
         {{ buttonText }}
       </AppButton>
+
+      <p
+        v-if="content.payment.taxRateEnabled"
+        class="-mt-2 mb-4 text-center text-sm"
+      >
+        {{ t('join.tax.included', { taxRate: content.payment.taxRate }) }}
+      </p>
     </form>
 
     <AppModal
@@ -76,7 +83,7 @@
       </AppHeading>
       <StripePayment
         :client-secret="stripeClientSecret"
-        :public-key="content.stripePublicKey"
+        :public-key="content.payment.stripePublicKey"
         :email="email"
         :return-url="startContributionCompleteUrl"
         @loaded="onStripeLoaded"

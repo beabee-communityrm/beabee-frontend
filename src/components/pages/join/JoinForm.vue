@@ -17,7 +17,7 @@
         v-model:period="signUpData.period"
         v-model:payFee="signUpData.payFee"
         v-model:paymentMethod="signUpData.paymentMethod"
-        :content="joinContent"
+        :content="{ ...joinContent, payment: paymentContent }"
         :disabled="signUpData.noContribution"
       >
         <AppCheckbox
@@ -34,22 +34,30 @@
       </Contribution>
     </AppForm>
 
-    <p class="mb-2 mt-6 text-center text-xs">
-      {{ t('join.notice') }}
-      <a
-        class="text-link underline hover:text-primary"
-        :href="generalContent.privacyLink"
-        target="_blank"
-        rel="noreferrer"
-        >{{ t('join.privacy') }}</a
-      >.
-    </p>
-    <p class="text-center text-xs">
-      <a href="https://beabee.io" target="_blank">
-        <img class="inline" :src="beabeeLogo" width="30" />
-        {{ t('join.poweredBy') }}
-      </a>
-    </p>
+    <div class="mt-3 text-center text-xs">
+      <p
+        v-if="!signUpData.noContribution && paymentContent.taxRateEnabled"
+        class="mb-2"
+      >
+        {{ t('join.tax.included', { taxRate: paymentContent.taxRate }) }}
+      </p>
+      <p class="mb-2">
+        {{ t('join.notice') }}
+        <a
+          class="text-link underline hover:text-primary"
+          :href="generalContent.privacyLink"
+          target="_blank"
+          rel="noreferrer"
+          >{{ t('join.privacy') }}</a
+        >.
+      </p>
+      <p>
+        <a href="https://beabee.io" target="_blank">
+          <img class="inline" :src="beabeeLogo" width="30" />
+          {{ t('join.poweredBy') }}
+        </a>
+      </p>
+    </div>
   </AuthBox>
 </template>
 <script lang="ts" setup>
@@ -67,17 +75,20 @@ import AppCheckbox from '@components/forms/AppCheckbox.vue';
 import AppForm from '@components/forms/AppForm.vue';
 import AuthBox from '@components/AuthBox.vue';
 
-import type { ContentJoin } from '@type';
+import type { ContentJoinData, ContentPaymentData } from '@type';
 
 const props = defineProps<{
-  joinContent: ContentJoin;
+  joinContent: ContentJoinData;
+  paymentContent: ContentPaymentData;
   preview?: boolean;
   onSubmit?: () => Promise<void>;
 }>();
 
 const { t } = useI18n();
 
-const { signUpData, signUpDescription } = useJoin(toRef(props, 'joinContent'));
+const { signUpData, signUpDescription } = useJoin(
+  toRef(props, 'paymentContent')
+);
 
 const buttonText = computed(() => {
   return signUpData.noContribution

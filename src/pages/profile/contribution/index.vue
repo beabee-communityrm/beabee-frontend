@@ -47,7 +47,7 @@ meta:
         class="mb-7 md:mb-9"
         :email="email"
         :payment-source="contribution.paymentSource"
-        :stripe-public-key="content.stripePublicKey"
+        :stripe-public-key="content.payment.stripePublicKey"
       />
       <ContactCancelContribution
         id="me"
@@ -106,8 +106,12 @@ const content = ref<ContributionContent>({
   periods: [],
   showAbsorbFee: true,
   paymentMethods: [PaymentMethod.StripeCard],
-  stripePublicKey: '',
-  stripeCountry: 'eu',
+  payment: {
+    stripePublicKey: '',
+    stripeCountry: 'eu',
+    taxRate: 0,
+    taxRateEnabled: false,
+  },
 });
 
 const email = computed(() =>
@@ -122,7 +126,13 @@ const contribution = ref<ContributionInfo>({
 
 onBeforeMount(async () => {
   isIniting.value = true;
-  content.value = await fetchContent('join');
+  const joinContent = await fetchContent('join');
+  const paymentContent = await fetchContent('payment');
+
+  content.value = {
+    ...joinContent,
+    payment: paymentContent,
+  };
   contribution.value = await fetchContribution();
   isIniting.value = false;
 });

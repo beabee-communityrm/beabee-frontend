@@ -52,6 +52,7 @@ meta:
             class="flex-1"
           />
         </div>
+
         <div class="mb-4 flex gap-4">
           <div class="flex-1">
             <AppLabel :label="stepT('minAmount')" />
@@ -89,7 +90,11 @@ meta:
       </AppForm>
     </template>
     <template #col2>
-      <JoinForm :join-content="joinContent" preview />
+      <JoinForm
+        :join-content="joinContent"
+        :payment-content="paymentContent!"
+        preview
+      />
     </template>
   </App2ColGrid>
 </template>
@@ -116,9 +121,10 @@ import { fetchContent, updateContent } from '@utils/api/content';
 
 import { generalContent } from '@store';
 
-import type { ContentJoin } from '@type';
+import type { ContentJoinData, ContentPaymentData } from '@type';
 
-const joinContent = ref<ContentJoin>();
+const joinContent = ref<ContentJoinData>();
+const paymentContent = ref<ContentPaymentData>();
 const backgroundUrl = ref('');
 
 const { n, t } = useI18n();
@@ -155,7 +161,9 @@ const defaultAmounts = computed(() => {
 });
 
 const validation = useVuelidate(
-  { backgroundUrl: { required } },
+  {
+    backgroundUrl: { required },
+  },
   { backgroundUrl }
 );
 
@@ -172,6 +180,7 @@ async function handleUpdate() {
 
 onBeforeMount(async () => {
   joinContent.value = await fetchContent('join');
+  paymentContent.value = await fetchContent('payment');
   backgroundUrl.value = generalContent.value.backgroundUrl || '';
 });
 </script>

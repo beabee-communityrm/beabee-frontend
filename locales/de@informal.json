@@ -206,6 +206,11 @@
         "twitterHandle": "Twitter-Handle"
       }
     },
+    "payment": {
+      "paymentTitle": "Zahlungen",
+      "taxRate": "Mehrwertsteuersatz",
+      "taxRateEnabled": "Mehrwertsteuer aktivieren"
+    },
     "theme": {
       "bodyFont": "Text",
       "colorNames": {
@@ -545,6 +550,7 @@
     "pageCount": "Seite {pageNumber} von {pageTotal}",
     "paymentStatus": {
       "cancelled": "Gekündigt",
+      "draft": "Entwurf",
       "failed": "Fehlgeschlagen",
       "pending": "In Bearbeitung",
       "successful": "Erfolgreich"
@@ -1106,7 +1112,7 @@
         "title": "Etwas ist schief gelaufen"
       }
     },
-    "login": "Log in",
+    "login": "Anmelden",
     "memberAccount": "Mitglieder-Account",
     "memberAlready": "Bist du bereits Mitglied?",
     "minimumContribution": "Der minimale Beitrag ist",
@@ -1115,7 +1121,10 @@
     "now": "Jetzt Mitglied werden! ",
     "paymentMethod": "Zahlungsart",
     "poweredBy": "Powered by beabee",
-    "privacy": "Datenschutzerklärung"
+    "privacy": "Datenschutzerklärung",
+    "tax": {
+      "included": "Beitrag inklusive {taxRate}% MwSt."
+    }
   },
   "joinPayment": {
     "genericError": "Upps! Etwas ist schiefgelaufen. Bitte wende dich an den Support, sollte das erneut passieren.",
@@ -1352,5 +1361,8 @@
       "title": "Tag entfernen"
     },
     "name": "Name"
+  },
+  "taxRate": {
+    "invoiceName": "MwSt"
   }
 }

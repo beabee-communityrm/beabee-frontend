@@ -87,6 +87,37 @@ meta:
     </template>
     <template #col2>
       <div class="my-8 border-b border-b-primary-40 md:hidden" />
+
+      <AppForm
+        :button-text="t('actions.update')"
+        :success-text="t('form.saved')"
+        @submit="handleSavePayment"
+      >
+        <AppSubHeading>
+          {{ t('adminSettings.payment.paymentTitle') }}</AppSubHeading
+        >
+        <div class="mb-4">
+          <AppCheckbox
+            v-model="paymentData.taxRateEnabled"
+            :label="t('adminSettings.payment.taxRateEnabled')"
+            class="font-bold"
+          />
+        </div>
+        <div v-if="paymentData.taxRateEnabled" class="mb-4 max-w-[8rem]">
+          <AppInput
+            v-model="paymentData.taxRate"
+            type="number"
+            :label="t('adminSettings.payment.taxRate')"
+            :min="0"
+            :max="100"
+            suffix="%"
+            required
+          />
+        </div>
+      </AppForm>
+
+      <div class="my-8 border-b border-b-primary-40" />
+
       <AppForm
         :button-text="t('actions.update')"
         :success-text="t('form.saved')"
@@ -154,12 +185,13 @@ import AppForm from '@components/forms/AppForm.vue';
 import App2ColGrid from '@components/App2ColGrid.vue';
 import AppSubHeading from '@components/AppSubHeading.vue';
 import AppLinkList from '@components/forms/AppLinkList.vue';
+import AppCheckbox from '@components/forms/AppCheckbox.vue';
 
 import { fetchContent, updateContent } from '@utils/api/content';
 
 import { generalContent as storeGeneralContent } from '@store';
 
-import type { ContentShare } from '@type';
+import type { ContentShareData, ContentPaymentData } from '@type';
 import { localeItems } from '@lib/i18n';
 
 const { t } = useI18n();
@@ -177,7 +209,14 @@ const footerData = reactive({
   footerLinks: [] as { text: string; url: string }[],
 });
 
-const shareContent = ref<ContentShare>();
+const paymentData = ref<Pick<ContentPaymentData, 'taxRateEnabled' | 'taxRate'>>(
+  {
+    taxRateEnabled: false,
+    taxRate: 7,
+  }
+);
+
+const shareContent = ref<ContentShareData>();
 
 async function handleSaveGeneral() {
   storeGeneralContent.value = await updateContent('general', generalData);
@@ -198,6 +237,9 @@ async function handleSaveShare() {
 async function handleSaveFooter() {
   storeGeneralContent.value = await updateContent('general', footerData);
 }
+async function handleSavePayment() {
+  await updateContent('payment', paymentData.value);
+}
 
 onBeforeMount(async () => {
   generalData.organisationName = storeGeneralContent.value.organisationName;
@@ -212,5 +254,11 @@ onBeforeMount(async () => {
     storeGeneralContent.value.footerLinks?.map((l) => ({ ...l })) || [];
 
   shareContent.value = await fetchContent('share');
+
+  const paymentContent = await fetchContent('payment');
+  paymentData.value = {
+    taxRateEnabled: paymentContent.taxRateEnabled,
+    taxRate: paymentContent.taxRate,
+  };
 });
 </script>
