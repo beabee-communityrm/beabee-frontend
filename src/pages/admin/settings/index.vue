@@ -96,31 +96,23 @@ meta:
         <AppSubHeading>
           {{ t('adminSettings.payment.paymentTitle') }}</AppSubHeading
         >
-        <div class="mb-4 flex gap-4">
-          <div class="flex-1">
-            <AppCheckbox
-              v-model="paymentData.taxRateEnabled"
-              :label="t('adminSettings.payment.taxRateEnabled')"
-              class="font-bold"
-            />
-          </div>
+        <div class="mb-4">
+          <AppCheckbox
+            v-model="paymentData.taxRateEnabled"
+            :label="t('adminSettings.payment.taxRateEnabled')"
+            class="font-bold"
+          />
         </div>
-        <div class="mb-4 flex gap-4">
-          <div class="flex-1">
-            <AppLabel :label="t('adminSettings.payment.taxRate')" />
-            <div class="max-w-[8rem]">
-              <AppInput
-                v-model="paymentData.taxRate"
-                type="number"
-                :min="0"
-                :max="100"
-                :disabled="!paymentData.taxRateEnabled"
-                suffix="%"
-                required
-                class="block w-32"
-              />
-            </div>
-          </div>
+        <div v-if="paymentData.taxRateEnabled" class="mb-4 max-w-[8rem]">
+          <AppInput
+            v-model="paymentData.taxRate"
+            type="number"
+            :label="t('adminSettings.payment.taxRate')"
+            :min="0"
+            :max="100"
+            suffix="%"
+            required
+          />
         </div>
       </AppForm>
 

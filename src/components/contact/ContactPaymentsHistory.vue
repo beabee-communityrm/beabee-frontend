@@ -13,8 +13,8 @@
         {{ formatLocale(value, 'PPP') }}
       </template>
       <template #value-amount="{ value, item }">
-        <span class="mr-3">
-          {{ getStatusText(item) }}
+        <span v-if="item.status !== PaymentStatus.Successful" class="mr-3">
+          {{ t('common.paymentStatus.' + item.status) }}
         </span>
         <b>{{ n(value, 'currency') }}</b>
       </template>
@@ -48,7 +48,7 @@ import AppHeading from '@components/AppHeading.vue';
 import { formatLocale } from '@utils/dates';
 import { fetchPayments } from '@utils/api/contact';
 
-import type { GetPaymentData } from '@type';
+import type { GetPaymentData, GetPaymentsQuery } from '@type';
 
 const { t, n } = useI18n();
 
@@ -79,29 +79,23 @@ function getRowClass(item: GetPaymentData) {
     case PaymentStatus.Failed:
       return 'text-danger';
     case PaymentStatus.Pending:
+    case PaymentStatus.Draft:
       return 'text-body-60';
     default:
       return '';
   }
 }
 
-function getStatusText(item: GetPaymentData) {
-  switch (item.status) {
-    case PaymentStatus.Cancelled:
-      return t('common.paymentStatus.cancelled');
-    case PaymentStatus.Failed:
-      return t('common.paymentStatus.failed');
-    case PaymentStatus.Pending:
-      return t('common.paymentStatus.pending');
-  }
-}
-
 watchEffect(async () => {
-  const query = {
+  const query: GetPaymentsQuery = {
     offset: currentPage.value * pageSize,
     limit: pageSize,
     sort: 'chargeDate',
     order: SortType.Desc,
+    rules: {
+      condition: 'AND',
+      rules: [{ field: 'status', operator: 'not_equal', value: ['draft'] }],
+    },
   };
   paymentsHistoryTable.value = await fetchPayments(props.id, query);
 });
