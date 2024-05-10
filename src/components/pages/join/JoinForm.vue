@@ -34,22 +34,30 @@
       </Contribution>
     </AppForm>
 
-    <p class="mb-2 mt-6 text-center text-xs">
-      {{ t('join.notice') }}
-      <a
-        class="text-link underline hover:text-primary"
-        :href="generalContent.privacyLink"
-        target="_blank"
-        rel="noreferrer"
-        >{{ t('join.privacy') }}</a
-      >.
-    </p>
-    <p class="text-center text-xs">
-      <a href="https://beabee.io" target="_blank">
-        <img class="inline" :src="beabeeLogo" width="30" />
-        {{ t('join.poweredBy') }}
-      </a>
-    </p>
+    <div class="mt-3 text-center text-xs">
+      <p
+        v-if="!signUpData.noContribution && paymentContent.taxRateEnabled"
+        class="mb-2"
+      >
+        {{ t('join.tax.included', { taxRate: paymentContent.taxRate }) }}
+      </p>
+      <p class="mb-2">
+        {{ t('join.notice') }}
+        <a
+          class="text-link underline hover:text-primary"
+          :href="generalContent.privacyLink"
+          target="_blank"
+          rel="noreferrer"
+          >{{ t('join.privacy') }}</a
+        >.
+      </p>
+      <p>
+        <a href="https://beabee.io" target="_blank">
+          <img class="inline" :src="beabeeLogo" width="30" />
+          {{ t('join.poweredBy') }}
+        </a>
+      </p>
+    </div>
   </AuthBox>
 </template>
 <script lang="ts" setup>

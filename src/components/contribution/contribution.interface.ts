@@ -9,5 +9,5 @@ export type ContributionContent = Pick<
   | 'periods'
   | 'paymentMethods'
 > & {
-  payment: Pick<ContentPaymentData, 'stripePublicKey' | 'stripeCountry'>;
+  payment: ContentPaymentData;
 };
