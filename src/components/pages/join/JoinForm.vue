@@ -35,7 +35,10 @@
     </AppForm>
 
     <div class="mt-3 text-center text-xs">
-      <p v-if="paymentContent.taxRateEnabled" class="mb-2">
+      <p
+        v-if="!signUpData.noContribution && paymentContent.taxRateEnabled"
+        class="mb-2"
+      >
         {{ t('join.tax.included', { taxRate: paymentContent.taxRate }) }}
       </p>
       <p class="mb-2">
