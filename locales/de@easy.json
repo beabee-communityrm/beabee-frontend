@@ -156,6 +156,9 @@
     "timeAgo": "vor",
     "timeIn": "in"
   },
+  "contactAccount": {
+    "confirmDelete": {}
+  },
   "contactContribution": {
     "confirmCancel": {},
     "updateNotice": {}

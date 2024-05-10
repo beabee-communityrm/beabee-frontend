@@ -574,6 +574,9 @@
     "until": "bis",
     "yes": "Ja"
   },
+  "contactAccount": {
+    "confirmDelete": {}
+  },
   "contactContribution": {
     "confirmCancel": {
       "confirm": "Ja, Mitgliedschaft kündigen",

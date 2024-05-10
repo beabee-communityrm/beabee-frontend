@@ -12,15 +12,61 @@ meta:
         <ContactUpdateAccount :id="contact.id" />
       </Suspense>
     </template>
+    <template #col2>
+      <div class="text-right">
+        <ActionButton
+          :icon="faTrash"
+          variant="danger"
+          @click="showDeleteModal = true"
+        >
+          {{ t('contactAccount.confirmDelete.title') }}
+        </ActionButton>
+      </div>
+      <AppConfirmDialog
+        :open="showDeleteModal"
+        :title="t('contactAccount.confirmDelete.title')"
+        :cancel="t('actions.noBack')"
+        :confirm="t('actions.yesDelete')"
+        variant="danger"
+        @close="showDeleteModal = false"
+        @confirm="handleDelete"
+      >
+        <i18n-t
+          tag="p"
+          class="mb-4"
+          keypath="contactAccount.confirmDelete.text"
+          :email="contact.email"
+        >
+          <template #email
+            ><b>{{ contact.email }}</b></template
+          >
+        </i18n-t>
+        <p>
+          <b>{{ t('contactAccount.confirmDelete.warning') }}</b>
+        </p>
+      </AppConfirmDialog>
+    </template>
   </App2ColGrid>
 </template>
 <script lang="ts" setup>
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import ContactUpdateAccount from '@components/contact/ContactUpdateAccount.vue';
 import App2ColGrid from '@components/App2ColGrid.vue';
 
 import type { GetContactData } from '@type';
+import AppConfirmDialog from '@components/AppConfirmDialog.vue';
+import { deleteContact } from '@utils/api/contact';
+import ActionButton from '@components/button/ActionButton.vue';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-defineProps<{
-  contact: GetContactData;
-}>();
+const props = defineProps<{ contact: GetContactData }>();
+
+const { t } = useI18n();
+
+const showDeleteModal = ref(false);
+
+async function handleDelete() {
+  await deleteContact(props.contact.id);
+}
 </script>
