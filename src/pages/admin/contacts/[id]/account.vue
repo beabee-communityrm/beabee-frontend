@@ -51,22 +51,31 @@ meta:
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 import ContactUpdateAccount from '@components/contact/ContactUpdateAccount.vue';
 import App2ColGrid from '@components/App2ColGrid.vue';
-
-import type { GetContactData } from '@type';
 import AppConfirmDialog from '@components/AppConfirmDialog.vue';
 import { deleteContact } from '@utils/api/contact';
 import ActionButton from '@components/button/ActionButton.vue';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { addNotification } from '@store/notifications';
+
+import type { GetContactData } from '@type';
 
 const props = defineProps<{ contact: GetContactData }>();
 
 const { t } = useI18n();
+const router = useRouter();
 
 const showDeleteModal = ref(false);
 
 async function handleDelete() {
   await deleteContact(props.contact.id);
+  addNotification({
+    variant: 'success',
+    title: t('contactAccount.contactDeleted'),
+  });
+
+  router.push('/admin/contacts');
 }
 </script>
