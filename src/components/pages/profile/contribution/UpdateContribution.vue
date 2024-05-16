@@ -36,6 +36,7 @@
         v-model:period="newContribution.period"
         v-model:paymentMethod="newContribution.paymentMethod"
         :content="content"
+        :payment-content="paymentContent"
         :show-period="showChangePeriod"
         :show-payment-method="!isAutoActiveMember"
       />
@@ -65,10 +66,10 @@
       </AppButton>
 
       <p
-        v-if="content.payment.taxRateEnabled"
+        v-if="paymentContent.taxRateEnabled"
         class="-mt-2 mb-4 text-center text-sm"
       >
-        {{ t('join.tax.included', { taxRate: content.payment.taxRate }) }}
+        {{ t('join.tax.included', { taxRate: paymentContent.taxRate }) }}
       </p>
     </form>
 
@@ -83,7 +84,7 @@
       </AppHeading>
       <StripePayment
         :client-secret="stripeClientSecret"
-        :public-key="content.payment.stripePublicKey"
+        :public-key="paymentContent.stripePublicKey"
         :email="email"
         :return-url="startContributionCompleteUrl"
         @loaded="onStripeLoaded"
@@ -124,7 +125,7 @@ import { isRequestError } from '@utils/api';
 
 import { addNotification } from '@store/notifications';
 
-import type { ContributionInfo } from '@type';
+import type { ContentPaymentData, ContributionInfo } from '@type';
 
 const validation = useVuelidate();
 
@@ -134,6 +135,7 @@ const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
   modelValue: ContributionInfo;
   content: ContributionContent;
+  paymentContent: ContentPaymentData;
 }>();
 
 const newContribution = reactive({

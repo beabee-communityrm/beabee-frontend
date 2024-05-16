@@ -39,6 +39,7 @@ meta:
       <UpdateContribution
         v-model="contribution"
         :content="content"
+        :payment-content="paymentContent"
         class="mb-7 md:mb-9"
       />
 
@@ -47,7 +48,7 @@ meta:
         class="mb-7 md:mb-9"
         :email="email"
         :payment-source="contribution.paymentSource"
-        :stripe-public-key="content.payment.stripePublicKey"
+        :stripe-public-key="paymentContent.stripePublicKey"
       />
       <ContactCancelContribution
         id="me"
@@ -88,7 +89,7 @@ import AppNotification from '@components/AppNotification.vue';
 
 import { currentUser } from '@store';
 
-import type { ContributionInfo } from '@type';
+import { type ContentPaymentData, type ContributionInfo } from '@type';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -106,12 +107,13 @@ const content = ref<ContributionContent>({
   periods: [],
   showAbsorbFee: true,
   paymentMethods: [PaymentMethod.StripeCard],
-  payment: {
-    stripePublicKey: '',
-    stripeCountry: 'eu',
-    taxRate: 0,
-    taxRateEnabled: false,
-  },
+});
+
+const paymentContent = ref<ContentPaymentData>({
+  stripePublicKey: '',
+  stripeCountry: 'eu',
+  taxRate: 0,
+  taxRateEnabled: false,
 });
 
 const email = computed(() =>
@@ -126,13 +128,10 @@ const contribution = ref<ContributionInfo>({
 
 onBeforeMount(async () => {
   isIniting.value = true;
-  const joinContent = await fetchContent('join');
-  const paymentContent = await fetchContent('payment');
 
-  content.value = {
-    ...joinContent,
-    payment: paymentContent,
-  };
+  content.value = await fetchContent('join');
+  paymentContent.value = await fetchContent('payment');
+
   contribution.value = await fetchContribution();
   isIniting.value = false;
 });

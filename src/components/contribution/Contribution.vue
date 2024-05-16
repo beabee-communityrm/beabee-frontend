@@ -55,6 +55,7 @@ import ContributionMethod from './ContributionMethod.vue';
 import { type ContributionContent } from './contribution.interface';
 import { useI18n } from 'vue-i18n';
 import AppChoice from '../forms/AppChoice.vue';
+import type { ContentPaymentData } from '@type/content-payment-data';
 
 const props = withDefaults(
   defineProps<{
@@ -63,6 +64,7 @@ const props = withDefaults(
     payFee: boolean;
     paymentMethod: PaymentMethod;
     content: ContributionContent;
+    paymentContent: ContentPaymentData;
     showPeriod?: boolean;
     showPaymentMethod?: boolean;
     disabled?: boolean;
@@ -73,7 +75,7 @@ const props = withDefaults(
 const { t } = useI18n();
 
 const fee = computed(() =>
-  calcPaymentFee(props, props.content.payment.stripeCountry)
+  calcPaymentFee(props, props.paymentContent.stripeCountry)
 );
 
 const emit = defineEmits([
