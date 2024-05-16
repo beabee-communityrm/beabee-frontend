@@ -1,4 +1,4 @@
-import type { ContentJoinData, ContentPaymentData } from '@type';
+import type { ContentJoinData } from '@type';
 
 export type ContributionContent = Pick<
   ContentJoinData,
@@ -8,6 +8,4 @@ export type ContributionContent = Pick<
   | 'showAbsorbFee'
   | 'periods'
   | 'paymentMethods'
-> & {
-  payment: ContentPaymentData;
-};
+>;
