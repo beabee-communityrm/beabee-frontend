@@ -17,7 +17,8 @@
         v-model:period="signUpData.period"
         v-model:payFee="signUpData.payFee"
         v-model:paymentMethod="signUpData.paymentMethod"
-        :content="{ ...joinContent, payment: paymentContent }"
+        :content="joinContent"
+        :payment-content="paymentContent"
         :disabled="signUpData.noContribution"
       >
         <AppCheckbox
