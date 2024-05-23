@@ -4,8 +4,7 @@
       class="mb-3 flex items-center gap-2 text-sm font-semibold text-body-80"
     >
       <span>
-        {{ t('advancedSearch.createFilters') }}
-        {{ t('advancedSearch.matchBefore') }}
+        {{ t('advancedSearch.createFiltersBefore') }}
       </span>
       <AppSelect
         v-model="ruleGroup.condition"
@@ -15,7 +14,7 @@
         ]"
         input-class="font-bold uppercase"
       />
-      <span>{{ t('advancedSearch.matchAfter') }}</span>
+      <span>{{ t('advancedSearch.createFiltersAfter') }}</span>
     </div>
 
     <div class="relative mb-4">
