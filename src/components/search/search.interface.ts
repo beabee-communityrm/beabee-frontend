@@ -26,7 +26,7 @@ export const operatorItems = Object.fromEntries(
   Object.entries(operatorsByTypeMap).map(([type, typeOperators]) => [
     type,
     Object.entries(typeOperators).map(([operator]) => ({
-      id: operator,
+      id: operator as RuleOperator,
       label: operatorT(type as FilterType, operator as RuleOperator),
     })),
   ])
@@ -34,7 +34,7 @@ export const operatorItems = Object.fromEntries(
 
 export const nullableOperatorItems = Object.entries(nullableOperators).map(
   ([operator]) => ({
-    id: operator,
+    id: operator as RuleOperator,
     label: operatorT('all', operator as RuleOperator),
   })
 );

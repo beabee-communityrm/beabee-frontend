@@ -1,60 +1,40 @@
 <template>
   <div>
     <AppLabel v-if="label" :label="label" :required="required" />
-    <select
+    <VueMultiselect
       v-model="value"
-      class="w-full rounded border p-2 leading-tight focus:shadow-input focus:outline-none"
-      :class="{
-        [inputClass || '']: true,
-        'cursor-not-allowed border-primary-20 bg-grey-lighter': disabled,
-        'border-primary-40 bg-white': !disabled,
-      }"
       :disabled="disabled"
-      :required="required"
-    >
-      <template v-for="item in items">
-        <optgroup v-if="isGroup(item)" :key="item.label" :label="item.label">
-          <AppSelectItem
-            v-for="groupItem in item.items"
-            :key="groupItem.id"
-            :item="groupItem"
-            :selected="modelValue === groupItem.id"
-            :disabled="groupItem.id === '' && required"
-          />
-        </optgroup>
-        <AppSelectItem
-          v-else
-          :key="item.id"
-          :item="item"
-          :selected="modelValue === item.id"
-          :disabled="item.id === '' && required"
-        />
-      </template>
-    </select>
+      :allow-empty="!required"
+      :options="items"
+      track-by="id"
+      label="label"
+      :searchable="searchable"
+      :show-labels="false"
+      :show-pointer="false"
+      :placeholder="placeholder"
+    />
     <AppInputError v-if="hasError" :message="validation.$errors[0].$message" />
     <AppInputHelp v-if="infoMessage" :message="infoMessage" />
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup generic="T extends string | number">
 import useVuelidate from '@vuelidate/core';
 import { requiredIf } from '@vuelidate/validators';
 import { computed } from 'vue';
+import VueMultiselect from 'vue-multiselect';
 import AppLabel from './AppLabel.vue';
-import type { SelectGroup, SelectItem } from './form.interface';
-import AppSelectItem from './AppSelectItem.vue';
+import type { SelectItem } from './form.interface';
 import AppInputError from './AppInputError.vue';
 import AppInputHelp from './AppInputHelp.vue';
 
-function isGroup(item: SelectItem | SelectGroup): item is SelectGroup {
-  return 'items' in item;
-}
-
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits<(e: 'update:modelValue', value: T) => void>();
 const props = defineProps<{
   label?: string;
-  modelValue?: string | number | null;
-  items: (SelectItem | SelectGroup)[];
+  modelValue?: T;
+  items: SelectItem<T>[];
+  searchable?: boolean;
+  placeholder?: string;
   disabled?: boolean;
   required?: boolean;
   inputClass?: string;
@@ -62,8 +42,8 @@ const props = defineProps<{
 }>();
 
 const value = computed({
-  get: () => props.modelValue,
-  set: (newValue) => emit('update:modelValue', newValue),
+  get: () => props.items.find((i) => i.id === props.modelValue),
+  set: (newValue) => emit('update:modelValue', newValue!.id),
 });
 
 const isRequired = computed(() => !!props.required);

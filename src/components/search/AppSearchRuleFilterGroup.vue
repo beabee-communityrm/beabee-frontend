@@ -14,13 +14,8 @@
   <div v-else class="flex items-center gap-2">
     <AppSelect
       :model-value="rule?.field || ''"
-      :items="[
-        {
-          id: '',
-          label: t('advancedSearch.selectFilter'),
-        },
-        ...filterSelectItems,
-      ]"
+      :placeholder="t('advancedSearch.selectFilter')"
+      :items="filterSelectItems"
       required
       class="max-w-[60%]"
       @update:model-value="changeRule"

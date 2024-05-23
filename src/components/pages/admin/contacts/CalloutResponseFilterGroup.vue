@@ -6,10 +6,8 @@
   <AppSelect
     v-else
     v-model="selectedCalloutId"
-    :items="[
-      { id: '', label: t('contacts.advancedSearch.selectCallout') },
-      ...calloutItems,
-    ]"
+    :placeholder="t('contacts.advancedSearch.selectCallout')"
+    :items="calloutItems"
     :class="filterItems && 'mb-2'"
   />
 

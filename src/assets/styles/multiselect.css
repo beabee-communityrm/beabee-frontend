@@ -1,0 +1,33 @@
+@import '../../../node_modules/vue-multiselect/dist/vue-multiselect.css';
+
+.multiselect,
+.multiselect__tags {
+  @apply box-border min-h-[40px];
+}
+
+.multiselect,
+.multiselect__input,
+.multiselect__single {
+  /* @apply text-[length:inherit]; */
+}
+
+.multiselect__tags,
+.multiselect__content-wrapper {
+  @apply rounded border border-primary-40 bg-white;
+}
+
+.multiselect__content-wrapper {
+  @apply w-fit;
+}
+
+.multiselect--active > .multiselect__tags {
+  @apply shadow-input;
+}
+
+.multiselect__element {
+  @apply hover:bg-grey-lighter;
+}
+
+.multiselect__option.multiselect__option--selected {
+  @apply bg-grey-lighter;
+}

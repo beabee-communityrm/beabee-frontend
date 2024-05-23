@@ -18,17 +18,13 @@ meta:
       >
         <AppSelect
           v-model="currentTag"
-          :items="[
-            { id: '', label: t('calloutResponsesPage.searchTag') },
-            ...tagItems,
-          ]"
+          :placeholder="t('calloutResponsesPage.searchTag')"
+          :items="tagItems"
         />
         <AppSelect
           v-model="currentAssignee"
-          :items="[
-            { id: '', label: t('calloutResponsesPage.searchAssignee') },
-            ...adminItems,
-          ]"
+          :placeholder="t('calloutResponsesPage.searchAssignee')"
+          :items="adminItems"
         />
       </AppSearch>
       <p class="text-sm font-semibold text-body-80">{{ t('common.show') }}</p>
@@ -48,13 +44,13 @@ meta:
             v-model="currentInlineAnswer"
             class="max-w-xs"
             :class="!showInlineAnswer && 'invisible'"
-            :items="[
-              { id: '', label: t('common.selectOne') },
-              ...Object.entries(formFilterItems).map(([id, item]) => ({
+            :placeholder="t('common.selectOne')"
+            :items="
+              Object.entries(formFilterItems).map(([id, item]) => ({
                 id: id,
                 label: item.label,
-              })),
-            ]"
+              }))
+            "
             required
           />
         </div>
