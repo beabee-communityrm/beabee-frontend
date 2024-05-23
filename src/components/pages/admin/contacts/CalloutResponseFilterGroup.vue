@@ -9,6 +9,7 @@
     :placeholder="t('contacts.advancedSearch.selectCallout')"
     :items="calloutItems"
     :class="filterItems && 'mb-2'"
+    searchable
   />
 
   <AppSearchRuleFilterGroup
