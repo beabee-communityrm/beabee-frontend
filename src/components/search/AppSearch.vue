@@ -6,22 +6,25 @@
         variant="primaryOutlined"
         size="sm"
         :icon="faFilter"
-        class="bg-white/0"
-        :class="showExpanded && 'relative rounded-b-none'"
+        :class="
+          showExpanded
+            ? 'relative rounded-b-none bg-white hover:border-primary-40 hover:bg-white'
+            : 'bg-white/0'
+        "
         @click="showExpanded = !showExpanded"
       >
         {{ t('advancedSearch.button') }}
         <font-awesome-icon :icon="showExpanded ? faCaretUp : faCaretDown" />
         <div
           v-show="showExpanded || hasRules"
-          class="absolute -left-px top-full box-content h-2 w-full border-x border-x-primary-40 bg-primary-5 py-px"
+          class="absolute -left-px top-full box-content h-2 w-full border-x border-x-primary-40 bg-white py-px"
         />
       </AppButton>
     </div>
 
     <div
       v-if="showExpanded || hasRules"
-      class="rounded border border-primary-40 p-4"
+      class="rounded border border-primary-40 bg-white px-4 py-3"
     >
       <AppSearchForm
         v-if="showExpanded"

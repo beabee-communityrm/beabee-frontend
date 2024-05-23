@@ -1,11 +1,12 @@
 <template>
   <form @submit.prevent="handleSubmit">
-    <h4 class="mb-3 font-semibold">
-      {{ t('advancedSearch.createFilters') }}
-    </h4>
-
-    <div class="mb-3 flex items-center gap-2 text-sm text-body-80">
-      <span>{{ t('advancedSearch.matchBefore') }}</span>
+    <div
+      class="mb-3 flex items-center gap-2 text-sm font-semibold text-body-80"
+    >
+      <span>
+        {{ t('advancedSearch.createFilters') }}
+        {{ t('advancedSearch.matchBefore') }}
+      </span>
       <AppSelect
         v-model="ruleGroup.condition"
         :items="[
@@ -17,12 +18,12 @@
       <span>{{ t('advancedSearch.matchAfter') }}</span>
     </div>
 
-    <div class="relative mb-8">
-      <ul class="mb-3 text-sm">
+    <div class="relative mb-4">
+      <ul class="mb-2 text-sm">
         <li
           v-for="(_, i) in ruleGroup.rules"
           :key="i"
-          class="group relative -mx-4 gap-2 border-b border-primary-40 bg-primary-10 px-4 py-6 first:border-t"
+          class="group relative -mx-4 gap-2 border-b border-t-4 border-white bg-primary-5 px-4 pb-5 pt-3 first:border-t"
         >
           <AppSearchRuleOrGroup
             v-model:rule="ruleGroup.rules[i]"
