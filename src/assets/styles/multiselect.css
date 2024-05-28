@@ -11,17 +11,26 @@
   /* @apply text-[length:inherit]; */
 }
 
-.multiselect__tags,
-.multiselect__content-wrapper {
+.multiselect__tags {
   @apply rounded border border-primary-40 bg-white;
+
+  .multiselect--active > & {
+    @apply shadow-input;
+  }
 }
 
 .multiselect__content-wrapper {
-  @apply w-fit;
-}
+  @apply -mt-px w-fit min-w-full rounded-b bg-white shadow-md;
 
-.multiselect--active > .multiselect__tags {
-  @apply shadow-input;
+  /* Force a border above or below */
+  &,
+  .multiselect--above > & {
+    @apply border border-solid border-primary-40;
+  }
+
+  .multiselect--above > & {
+    @apply -mb-px -mt-0 rounded-t;
+  }
 }
 
 .multiselect__element {
