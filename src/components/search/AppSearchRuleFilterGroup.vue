@@ -15,12 +15,12 @@
     <AppSelect
       :model-value="rule?.field || ''"
       :placeholder="t('advancedSearch.selectFilter')"
-      :items="filterSelectItems"
+      :items="filterItems"
       required
       class="basis-2/5"
       @update:model-value="changeRule"
     />
-    <template v-if="rule">
+    <template v-if="rule && ruleFilterItem">
       <AppSelect
         v-if="filterOperatorItems.length > 1"
         :model-value="rule.operator"
@@ -31,10 +31,7 @@
       />
       <span v-else>{{ filterOperatorItems[0].label }}</span>
       <div class="flex-1">
-        <AppSearchRuleValue
-          :rule="rule"
-          :item="filterGroup.items[rule.field]"
-        />
+        <AppSearchRuleValue :rule="rule" :item="ruleFilterItem" />
       </div>
     </template>
   </div>
@@ -73,7 +70,11 @@ const props = defineProps<{
 
 const { t } = useI18n();
 
-const filterSelectItems = computed(() => {
+const ruleFilterItem = computed(() => {
+  return props.rule ? props.filterGroup.items[props.rule.field] : undefined;
+});
+
+const filterItems = computed(() => {
   return Object.entries(props.filterGroup.items).map(([id, item]) => ({
     id,
     label: item.label,
@@ -81,18 +82,14 @@ const filterSelectItems = computed(() => {
 });
 
 const filterOperatorItems = computed(() => {
+  const item = ruleFilterItem.value;
   // Shouldn't be possible as rule must be selected first
-  if (!props.rule) return [];
+  if (!item) return [];
 
-  const args = props.filterGroup.items[props.rule.field];
   return [
-    ...operatorItems[args.type],
-    ...(args.nullable ? nullableOperatorItems : []),
+    ...operatorItems[item.type],
+    ...(item.nullable ? nullableOperatorItems : []),
   ];
-});
-
-const ruleFilterItem = computed(() => {
-  return props.rule ? props.filterGroup.items[props.rule.field] : null;
 });
 
 function changeRule(id: string) {

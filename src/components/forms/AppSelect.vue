@@ -2,7 +2,7 @@
   <div>
     <AppLabel v-if="label" :label="label" :required="required" />
     <VueMultiselect
-      v-model="value"
+      :model-value="props.items.find((i) => i.id === props.modelValue)"
       :disabled="disabled"
       :allow-empty="!required"
       :options="items"
@@ -12,6 +12,7 @@
       :show-labels="false"
       :show-pointer="false"
       :placeholder="placeholder"
+      @update:model-value="emit('update:modelValue', $event.id)"
     />
     <AppInputError v-if="hasError" :message="validation.$errors[0].$message" />
     <AppInputHelp v-if="infoMessage" :message="infoMessage" />
@@ -27,6 +28,7 @@ import AppLabel from './AppLabel.vue';
 import type { SelectItem } from './form.interface';
 import AppInputError from './AppInputError.vue';
 import AppInputHelp from './AppInputHelp.vue';
+import { toRef } from 'vue';
 
 const emit = defineEmits<(e: 'update:modelValue', value: T) => void>();
 const props = defineProps<{
@@ -37,20 +39,14 @@ const props = defineProps<{
   placeholder?: string;
   disabled?: boolean;
   required?: boolean;
-  inputClass?: string;
+  // inputClass?: string;
   infoMessage?: string;
 }>();
 
-const value = computed({
-  get: () => props.items.find((i) => i.id === props.modelValue),
-  set: (newValue) => emit('update:modelValue', newValue!.id),
-});
+const rules = computed(() => ({
+  v: { required: requiredIf(!!props.required) },
+}));
 
-const isRequired = computed(() => !!props.required);
-
-const validation = useVuelidate(
-  { v: { required: requiredIf(isRequired) } },
-  { v: value }
-);
+const validation = useVuelidate(rules, { v: toRef(props, 'modelValue') });
 const hasError = computed(() => validation.value.$errors.length > 0);
 </script>
