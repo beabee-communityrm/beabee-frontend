@@ -17,7 +17,7 @@
       :placeholder="t('advancedSearch.selectFilter')"
       :items="filterSelectItems"
       required
-      class="max-w-[60%]"
+      class="basis-2/5"
       @update:model-value="changeRule"
     />
     <template v-if="rule">
@@ -26,11 +26,16 @@
         :model-value="rule.operator"
         :items="filterOperatorItems"
         required
-        class="flex-none basis-[200px]"
+        class="basis-[200px]"
         @update:model-value="changeOperator($event)"
       />
       <span v-else>{{ filterOperatorItems[0].label }}</span>
-      <AppSearchRuleValue :rule="rule" :item="filterGroup.items[rule.field]" />
+      <div class="flex-1">
+        <AppSearchRuleValue
+          :rule="rule"
+          :item="filterGroup.items[rule.field]"
+        />
+      </div>
     </template>
   </div>
 </template>
