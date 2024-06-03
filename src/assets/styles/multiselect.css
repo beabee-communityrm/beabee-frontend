@@ -2,13 +2,14 @@
 
 .multiselect,
 .multiselect__tags {
-  @apply box-border min-h-[40px];
+  @apply box-border h-[38px] min-h-0;
 }
 
 .multiselect,
+.multiselect__tags,
 .multiselect__input,
 .multiselect__single {
-  /* @apply text-[length:inherit]; */
+  @apply text-[length:100%] leading-[20px];
 }
 
 .multiselect__tags {
@@ -39,4 +40,8 @@
 
 .multiselect__option.multiselect__option--selected {
   @apply bg-grey-lighter;
+}
+
+.multiselect__placeholder {
+  @apply p-0;
 }

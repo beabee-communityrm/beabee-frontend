@@ -48,7 +48,7 @@
       >
         <input
           v-model.trim="value"
-          class="w-full bg-white/0 p-2 leading-tight focus:outline-none"
+          class="w-full bg-white/0 p-2 leading-[20px] focus:outline-none"
           :type="type"
           :name="name"
           :required="required"

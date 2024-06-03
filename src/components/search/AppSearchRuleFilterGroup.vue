@@ -26,7 +26,7 @@
         :model-value="rule.operator"
         :items="filterOperatorItems"
         required
-        class="flex-none"
+        class="flex-none basis-[200px]"
         @update:model-value="changeOperator($event)"
       />
       <span v-else>{{ filterOperatorItems[0].label }}</span>
