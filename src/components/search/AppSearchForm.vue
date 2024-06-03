@@ -12,7 +12,7 @@
           { id: 'AND', label: t('advancedSearch.matchType.AND') },
           { id: 'OR', label: t('advancedSearch.matchType.OR') },
         ]"
-        input-class="font-bold uppercase"
+        required
       />
       <span>{{ t('advancedSearch.createFiltersAfter') }}</span>
     </div>
