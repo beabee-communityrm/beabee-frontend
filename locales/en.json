@@ -444,8 +444,8 @@
       "updatedAt": "Date updated"
     },
     "dataGroup": {
-      "answers": "Questions",
-      "response": "Response"
+      "answers": "Response answers",
+      "response": "Response information"
     }
   },
   "calloutResponseBuckets": {
@@ -585,14 +585,6 @@
     "until": "until",
     "yes": "Yes"
   },
-  "contactAccount": {
-    "actions": "Actions",
-    "confirmDelete": {
-      "text": "This will delete all data associated with {email}. If they have an active contribution this will be cancelled.",
-      "title": "Delete contact",
-      "warning": "This is irreversible. Are you sure you want to proceed?"
-    }
-  },
   "contactContribution": {
     "confirmCancel": {
       "confirm": "Yes, cancel it",
@@ -673,7 +665,7 @@
       "tags": "Tags"
     },
     "dataGroup": {
-      "calloutResponse": "Callout response",
+      "callout": "Callout",
       "contact": "Contact information",
       "contribution": "Contribution",
       "role": "Role"

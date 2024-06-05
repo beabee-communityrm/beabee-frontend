@@ -245,10 +245,7 @@
       "tags": "Теги",
       "updatedAt": "Обновлённая дата"
     },
-    "dataGroup": {
-      "answers": "Вопросы",
-      "response": "Ответ"
-    }
+    "dataGroup": {}
   },
   "calloutResponseBuckets": {},
   "calloutResponseComments": {
@@ -342,9 +339,6 @@
     "timeIn": "в {time}",
     "until": "до",
     "yes": "Да"
-  },
-  "contactAccount": {
-    "confirmDelete": {}
   },
   "contactContribution": {
     "confirmCancel": {},

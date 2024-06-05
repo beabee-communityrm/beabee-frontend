@@ -13,7 +13,7 @@
   <AppSearchRuleFilter
     v-if="selectedCallout"
     :rule="rule"
-    :filter-groups="filterGroups"
+    :filter-groups="filterGroupsWithExtras"
     :readonly="readonly"
     :class="!readonly && 'mt-2 border-l border-primary-20 pl-2'"
     @update:rule="emit('update:rule', $event)"
@@ -21,7 +21,7 @@
   />
 </template>
 <script lang="ts" setup>
-import { ItemStatus } from '@beabee/beabee-common';
+import { ItemStatus, contactCalloutFilters } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 
@@ -36,6 +36,7 @@ import type {
 } from '@components/search/search.interface';
 import { useCalloutResponseFilters } from '../callout-responses.interface';
 import AppSearchRuleFilter from '@components/search/AppSearchRuleFilter.vue';
+import { withLabel } from '@utils/rules';
 
 const emit = defineEmits<SearchRuleEmits>();
 const props = defineProps<SearchRuleFilterGroupProps>();
@@ -46,6 +47,7 @@ const callouts = ref<GetCalloutData[]>([]);
 const selectedCalloutId = ref('');
 
 const selectedCallout = ref<GetCalloutDataWith<'form'>>();
+
 const calloutItems = computed(() => {
   return callouts.value.map((callout) => ({
     id: callout.id,
@@ -53,14 +55,28 @@ const calloutItems = computed(() => {
   }));
 });
 
+const selectedCalloutPrefix = computed(() =>
+  selectedCallout.value ? `callouts.${selectedCallout.value.id}.` : ''
+);
+
 const { filterGroups } = useCalloutResponseFilters(
   selectedCallout,
-  computed(() =>
-    selectedCallout.value
-      ? `callouts.${selectedCallout.value.id}.responses.`
-      : ''
-  )
+  computed(() => `${selectedCalloutPrefix.value}responses.`)
 );
+
+const filterGroupsWithExtras = computed(() => [
+  {
+    ...filterGroups.value[0],
+    items: {
+      [selectedCalloutPrefix.value + 'hasAnswered']: withLabel(
+        contactCalloutFilters.hasAnswered,
+        t('contacts.advancedSearch.hasAnswered')
+      ),
+      ...filterGroups.value[0].items,
+    },
+  },
+  filterGroups.value[1],
+]);
 
 // Set the callout ID to the current rule when it changes
 watchEffect(() => {

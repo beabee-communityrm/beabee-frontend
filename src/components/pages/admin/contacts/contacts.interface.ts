@@ -163,8 +163,8 @@ export const filterGroups = computed<FilterGroups>(() => [
     ]),
   },
   {
-    id: 'calloutResponse',
-    label: t('contacts.dataGroup.calloutResponse'),
+    id: 'callout',
+    label: t('contacts.dataGroup.callout'),
     items: {},
     custom: CalloutResponseFilterGroup,
     itemsMatch: /^callouts\.[a-z0-9A-Z-]+\./,
