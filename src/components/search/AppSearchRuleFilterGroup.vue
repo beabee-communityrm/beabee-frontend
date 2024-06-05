@@ -3,7 +3,11 @@
     <template v-if="rule && ruleFilterItem">
       <b>{{ ruleFilterItem.label }}</b>
       {{ operatorT(ruleFilterItem.type, rule.operator) }}
-      <AppSearchRuleValue :rule="rule" :item="ruleFilterItem" readonly />
+      <AppSearchRuleFilterGroupItem
+        :rule="rule"
+        :item="ruleFilterItem"
+        readonly
+      />
       <button type="button" class="-mr-2 px-2" @click="emit('remove')">
         <font-awesome-icon :icon="faTimes" />
       </button>
@@ -31,23 +35,19 @@
       />
       <span v-else>{{ filterOperatorItems[0].label }}</span>
       <div class="flex-1">
-        <AppSearchRuleValue :rule="rule" :item="ruleFilterItem" />
+        <AppSearchRuleFilterGroupItem :rule="rule" :item="ruleFilterItem" />
       </div>
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  operatorsByTypeMap,
-  type Rule,
-  type RuleOperator,
-} from '@beabee/beabee-common';
+import { operatorsByTypeMap, type RuleOperator } from '@beabee/beabee-common';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import AppSelect from '../forms/AppSelect.vue';
-import AppSearchRuleValue from './AppSearchRuleValue.vue';
+import AppSearchRuleFilterGroupItem from './AppSearchRuleFilterGroupItem.vue';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -55,18 +55,13 @@ import {
   operatorT,
   nullableOperatorItems,
   type SearchRuleEmits,
+  type SearchRuleFilterGroupProps,
 } from './search.interface';
 
 import { createNewRule, getDefaultRuleValue } from '@utils/rules';
 
-import type { FilterItems } from '@type';
-
 const emit = defineEmits<SearchRuleEmits>();
-const props = defineProps<{
-  filterGroup: { items: FilterItems };
-  rule: Rule | null;
-  readonly?: boolean;
-}>();
+const props = defineProps<SearchRuleFilterGroupProps>();
 
 const { t } = useI18n();
 

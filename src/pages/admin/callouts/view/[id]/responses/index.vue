@@ -13,7 +13,7 @@ meta:
     <div class="flex-1">
       <AppSearch
         v-model="currentRules"
-        :filter-groups="filterGroupsWithExtras"
+        :filter-groups="filterGroups"
         @reset="currentRules = undefined"
       >
         <AppSelect
@@ -45,12 +45,7 @@ meta:
             class="max-w-xs"
             :class="!showInlineAnswer && 'invisible'"
             :placeholder="t('common.selectOne')"
-            :items="
-              Object.entries(formFilterItems).map(([id, item]) => ({
-                id: id,
-                label: item.label,
-              }))
-            "
+            :items="answerItems"
             required
           />
         </div>
@@ -199,7 +194,6 @@ import {
   type Paginated,
   type Rule,
   type RuleGroup,
-  getCalloutComponents,
   stringifyAnswer,
 } from '@beabee/beabee-common';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
@@ -209,13 +203,12 @@ import AppButton from '@components/button/AppButton.vue';
 import AppSelect from '@components/forms/AppSelect.vue';
 import AppVTabs from '@components/tabs/AppVTabs.vue';
 import {
-  filterGroups,
   headers,
+  useCalloutResponseFilters,
 } from '@components/pages/admin/callout-responses.interface';
 import AppSearch from '@components/search/AppSearch.vue';
 
-import { fetchResponses, fetchTags } from '@utils/api/callout';
-import { convertComponentsToFilters } from '@utils/callouts';
+import { fetchResponses } from '@utils/api/callout';
 import AppButtonGroup from '@components/button/AppButtonGroup.vue';
 import { updateCalloutResponses } from '@utils/api/callout-response';
 import AppTag from '@components/AppTag.vue';
@@ -248,13 +241,12 @@ import type {
   GetCalloutResponseDataWith,
   UpdateCalloutResponseData,
 } from '@type';
+import { toRef } from 'vue';
 
 const props = defineProps<{ callout: GetCalloutDataWith<'form'> }>();
 
 const { t, n } = useI18n();
 const route = useRoute();
-
-const ANSWERS_PREFIX = 'answers';
 
 const responses = ref<
   Paginated<
@@ -274,7 +266,7 @@ const currentInlineComponent = computed(
   () =>
     showInlineAnswer.value &&
     formComponents.value.find(
-      (c) => `${ANSWERS_PREFIX}.${c.fullKey}` === currentInlineAnswer.value
+      (c) => `answers.${c.fullKey}` === currentInlineAnswer.value
     )
 );
 
@@ -309,7 +301,6 @@ const selectedAssigneeId = computed(() => {
 });
 
 const adminItems = ref<{ id: string; label: string }[]>([]);
-const tagItems = ref<{ id: string; label: string }[]>([]);
 
 const bucketItems = computed(() =>
   buckets.value.map((bucket) => ({
@@ -318,31 +309,8 @@ const bucketItems = computed(() =>
   }))
 );
 
-const formComponents = computed(() =>
-  getCalloutComponents(props.callout.formSchema).filter((c) => !!c.input)
-);
-
-const formFilterItems = computed(
-  () => convertComponentsToFilters(formComponents.value, ANSWERS_PREFIX) // TODO: Use @beabee/beabee-common method
-);
-
-const filterGroupsWithExtras = computed(() => [
-  {
-    ...filterGroups.value[0],
-    items: {
-      ...filterGroups.value[0].items,
-      tags: {
-        ...filterGroups.value[0].items.tags,
-        options: tagItems.value,
-      },
-    },
-  },
-  {
-    id: 'answers',
-    label: t('calloutResponse.dataGroup.answers'),
-    items: formFilterItems.value,
-  },
-]);
+const { formComponents, answerItems, filterGroups, tagItems } =
+  useCalloutResponseFilters(toRef(props, 'callout'));
 
 const currentAssignee = defineParam('assignee', (v) => v || '');
 const currentTag = defineParam('tag', (v) => v || '');
@@ -351,9 +319,6 @@ const currentPaginatedQuery = definePaginatedQuery('createdAt');
 const currentRules = defineRulesParam();
 
 onBeforeMount(async () => {
-  const tags = await fetchTags(props.callout.slug);
-  tagItems.value = tags.map((tag) => ({ id: tag.id, label: tag.name }));
-
   const admins = await fetchContacts({
     rules: {
       condition: 'AND',
