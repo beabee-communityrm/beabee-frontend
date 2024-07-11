@@ -57,7 +57,7 @@
   @apply font-body text-base text-body !important;
 
   .formio-dialog-content {
-    @apply bg-white !important;
+    @apply bg-primary-5 px-6 py-10 !important;
   }
 
   .nav {
@@ -80,7 +80,7 @@
   }
 
   .form-group {
-    @apply mb-3;
+    @apply mb-0;
   }
 
   .table {
@@ -98,6 +98,10 @@
     .form-group {
       @apply mb-0;
     }
+  }
+
+  .col-form-label {
+    @apply mb-1 mt-2 font-body text-base font-semibold;
   }
 
   .card[class*='border'] {
@@ -121,8 +125,8 @@
     }
   }
 
-  .preview-panel .card-body {
-    @apply bg-white;
+  .preview-panel {
+    @apply mb-6 rounded bg-white p-3;
   }
 
   /* Hide first row (contains a header and link to help) */
