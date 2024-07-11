@@ -1,6 +1,6 @@
 .callout-form-builder {
   .drag-and-drop-alert {
-    @apply mb-4 border border-dashed border-primary p-4;
+    @apply mb-4 border border-dashed border-primary bg-primary-5 px-4 py-10;
   }
 
   .formbuilder {
@@ -125,13 +125,13 @@
     thead,
     th,
     td {
-      @apply p-1 border-0 !important;
+      @apply border-0 p-1 !important;
     }
     .form-group {
       @apply mb-0;
     }
     &.datagrid-table {
-      @apply border-0 my-2 !important;
+      @apply my-2 border-0 !important;
     }
   }
 
@@ -165,16 +165,16 @@
   }
 
   .component-edit-container .btn {
-    @apply font-body text-base px-3 py-2.5 mr-0.5 border !important;
+    @apply mr-0.5 border px-3 py-2.5 font-body text-base !important;
 
     &.btn-success {
-      @apply bg-primary-70 text-white border-primary-70 hover:bg-primary-80 !important;
+      @apply border-primary-70 bg-primary-70 text-white hover:bg-primary-80 !important;
     }
     &.btn-secondary {
-      @apply bg-white text-primary-80 border-primary-40 hover:bg-primary-10 hover:text-primary hover:border-primary-70 !important;
+      @apply border-primary-40 bg-white text-primary-80 hover:border-primary-70 hover:bg-primary-10 hover:text-primary !important;
     }
     &.btn-danger {
-      @apply bg-white text-danger border-danger hover:bg-danger-10 !important;
+      @apply border-danger bg-white text-danger hover:bg-danger-10 !important;
     }
   }
 
