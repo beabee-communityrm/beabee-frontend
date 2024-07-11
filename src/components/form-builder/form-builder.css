@@ -99,6 +99,17 @@
     @apply p-0 !important;
   }
 
+  .alert {
+    @apply border-t-[12px] border-danger-70 bg-white px-3 py-2 text-sm text-danger;
+
+    span[role='link'] {
+      @apply font-bold text-link no-underline;
+      &:hover {
+        @apply text-link-110;
+      }
+    }
+  }
+
   .form-group {
     @apply mb-0;
   }
