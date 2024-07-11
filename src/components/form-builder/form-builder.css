@@ -22,6 +22,30 @@
     }
   }
 
+  .builder-component {
+    @apply mb-0 px-2 py-4;
+    &:hover {
+      @apply bg-primary-5;
+    }
+
+    .form-group {
+      @apply mb-1;
+    }
+
+    /* Disable interaction with form elements in form editor */
+    .form-group input,
+    .form-group .form-check {
+      @apply pointer-events-none !important;
+    }
+  }
+
+  .component-settings-button {
+    @apply h-auto w-8 rounded border border-primary-40 bg-primary-5 text-center text-base text-primary-80 shadow-md;
+    &:hover {
+      @apply border-primary-70 text-primary;
+    }
+  }
+
   .form-builder-panel {
     @apply mb-2;
   }
@@ -42,10 +66,6 @@
   #group-container-custom2,
   #group-container-layout {
     @apply flex w-full flex-col gap-1 border border-primary-10 p-2;
-  }
-
-  .component-settings-button {
-    @apply h-auto w-8 bg-white text-center text-base;
   }
 
   .form-radio-nextslide {
