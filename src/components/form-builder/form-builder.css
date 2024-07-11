@@ -160,6 +160,20 @@
     @apply mb-6 rounded bg-white p-3;
   }
 
+  .component-edit-container .btn {
+    @apply font-body text-base px-3 py-2.5 mr-0.5 border !important;
+
+    &.btn-success {
+      @apply bg-primary-70 text-white border-primary-70 hover:bg-primary-80 !important;
+    }
+    &.btn-secondary {
+      @apply bg-white text-primary-80 border-primary-40 hover:bg-primary-10 hover:text-primary hover:border-primary-70 !important;
+    }
+    &.btn-danger {
+      @apply bg-white text-danger border-danger hover:bg-danger-10 !important;
+    }
+  }
+
   /* Hide first row (contains a header and link to help) */
   .component-edit-container > .row:first-child {
     @apply hidden;
