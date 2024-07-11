@@ -115,19 +115,23 @@
   }
 
   .table {
-    @apply w-full border-collapse;
+    @apply w-full border-collapse border-0;
     thead {
       @apply border-b border-primary-20 text-sm;
     }
     th {
       @apply text-left;
     }
+    thead,
     th,
     td {
-      @apply p-1;
+      @apply p-1 border-0 !important;
     }
     .form-group {
       @apply mb-0;
+    }
+    &.datagrid-table {
+      @apply border-0 my-2 !important;
     }
   }
 
