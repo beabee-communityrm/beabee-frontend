@@ -78,7 +78,11 @@ import { fetchCallouts } from '@utils/api/callout';
 
 import { currentUser, generalContent } from '@store';
 
-import type { GetContactData, GetCalloutData, ContentProfileData } from '@type';
+import type {
+  GetContactData,
+  GetCalloutData,
+  ContentProfileData,
+} from '@beabee/beabee-common';
 
 const { t } = useI18n();
 

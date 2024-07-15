@@ -60,7 +60,7 @@ import ActionButton from '@components/button/ActionButton.vue';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { addNotification } from '@store/notifications';
 
-import type { GetContactData } from '@type';
+import type { GetContactData } from '@beabee/beabee-common';
 
 const props = defineProps<{ contact: GetContactData }>();
 

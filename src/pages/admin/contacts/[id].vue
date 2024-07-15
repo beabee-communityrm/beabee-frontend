@@ -33,7 +33,7 @@ import env from '../../../env';
 
 import { fetchContact } from '@utils/api/contact';
 
-import type { GetContactData } from '@type';
+import type { GetContactData } from '@beabee/beabee-common';
 
 const props = defineProps<{ id: string }>();
 
