@@ -23,9 +23,11 @@
   }
 
   .builder-component {
-    @apply mb-0 px-2 py-4;
-    &:hover {
-      @apply bg-primary-5;
+    .formio-component {
+      @apply -mx-4 -my-2 rounded border border-solid border-white px-4 py-4;
+    }
+    &:hover .formio-component {
+      @apply border-primary-20 !important;
     }
 
     .form-group {
@@ -39,10 +41,16 @@
     }
   }
 
+  .component-btn-group {
+    @apply -right-4;
+  }
   .component-settings-button {
-    @apply h-auto w-8 rounded border border-primary-40 bg-primary-5 text-center text-base text-primary-80 shadow-md;
+    @apply mr-0.5 h-auto w-8 rounded border border-primary-40 bg-primary-5 text-center text-base text-primary-80 shadow-md;
     &:hover {
       @apply border-primary-70 text-primary;
+    }
+    &:not(:first-child) {
+      @apply mr-1 !important;
     }
   }
 
@@ -71,13 +79,18 @@
   .form-radio-nextslide {
     @apply text-sm text-body-80;
   }
+
+  .formio-component-content,
+  .formio-component-htmlelement {
+    @apply border-0;
+  }
 }
 
 .formio-dialog {
   @apply font-body text-base text-body !important;
 
   .formio-dialog-content {
-    @apply bg-primary-5 px-6 py-10 !important;
+    @apply max-h-min bg-primary-5 px-6 py-10 !important;
   }
 
   .nav {
@@ -102,6 +115,10 @@
   .alert {
     @apply border-t-[12px] border-danger-70 bg-white px-3 py-2 text-sm text-danger;
 
+    &:not(:first-child) {
+      @apply mt-4 border border-t-[12px];
+    }
+
     span[role='link'] {
       @apply font-bold text-link no-underline;
       &:hover {
@@ -111,7 +128,19 @@
   }
 
   .form-group {
-    @apply mb-0;
+    @apply my-1 mb-0;
+
+    &.formio-component-html {
+      @apply mb-6 mt-0;
+    }
+
+    .form-check-label {
+      @apply mb-0 text-base !important;
+    }
+  }
+
+  .form-control {
+    @apply text-base !important;
   }
 
   .table {
@@ -125,13 +154,16 @@
     thead,
     th,
     td {
-      @apply border-0 p-1 !important;
+      @apply border-0 p-1 align-middle !important;
     }
     .form-group {
       @apply mb-0;
     }
     &.datagrid-table {
       @apply my-2 border-0 !important;
+    }
+    .formio-drag-button {
+      @apply border-link !important;
     }
   }
 
@@ -161,27 +193,51 @@
   }
 
   .preview-panel {
-    @apply mb-6 rounded bg-white p-3;
-  }
-
-  .component-edit-container .btn {
-    @apply mr-0.5 border px-3 py-2.5 font-body text-base !important;
-
-    &.btn-success {
-      @apply border-primary-70 bg-primary-70 text-white hover:bg-primary-80 !important;
+    .card-header {
+      @apply px-0;
     }
-    &.btn-secondary {
-      @apply border-primary-40 bg-white text-primary-80 hover:border-primary-70 hover:bg-primary-10 hover:text-primary !important;
+    .card-body {
+      @apply mb-6 rounded bg-white p-8;
     }
-    &.btn-danger {
-      @apply border-danger bg-white text-danger hover:bg-danger-10 !important;
+    .list-group-item .row:first-child {
+      @apply flex text-sm;
     }
   }
 
-  /* Hide first row (contains a header and link to help) */
-  .component-edit-container > .row:first-child {
-    @apply hidden;
+  .component-edit-container {
+    .row {
+      @apply gap-4;
+      /* Hide first row (contains a header and link to help) */
+      &:first-child {
+        @apply hidden;
+      }
+    }
+    .formio-component-defaultValue {
+      .form-radio {
+        @apply grid grid-cols-3 gap-x-4 gap-y-2 pb-8 pt-2;
+      }
+    }
+    .btn {
+      @apply rounded px-3 py-2.5 font-body text-base !important;
+
+      &.btn-success {
+        @apply mr-1 border-primary-70 bg-primary-70 text-white hover:bg-primary-80 !important;
+      }
+      &.btn-secondary {
+        @apply mr-1 border-primary-40 bg-white text-primary-80 hover:border-primary-70 hover:bg-primary-10 hover:text-primary !important;
+      }
+      &.btn-danger {
+        @apply border-danger bg-white text-danger hover:bg-danger-10 !important;
+      }
+    }
   }
+}
+
+/* Remove error div margin when empty */
+.callout-form-renderer .formio-errors:empty,
+.callout-form-builder .formarea .formio-errors:empty,
+.formio-dialog .formio-errors:empty {
+  @apply mt-0 !important;
 }
 
 .formio-component-mask,
